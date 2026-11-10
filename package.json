@@ -1,0 +1,27 @@
+{
+  "name": "portfolio-builder",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "predev": "node scripts/bundle-template.mjs",
+    "dev": "next dev",
+    "prebuild": "node scripts/bundle-template.mjs",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0",
+    "jszip": "^3.10.2",
+    "marked": "^18.1.1",
+    "next": "^15.5.27",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^5.9.3"
+  }
+}
