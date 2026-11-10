@@ -1,6 +1,6 @@
 # My portfolio
 
-Built with Portfolio Builder. It is a small React site (Vite). All the words, colours and fonts live in one file:
+Built with Portfolio Builder. It is a small React site (Vite). All the words, colours, fonts and motion settings live in one file:
 **`src/portfolio-data.json`**. Change that file and the site changes.
 
 ## Put it online with Vercel (free, no coding)

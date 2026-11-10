@@ -1,6 +1,6 @@
 "use client";
 
-import { clonePreset } from "./presets";
+import { clonePreset, normalizeDesign } from "./presets";
 import type { PortfolioProject, StepId } from "./types";
 import { STEPS } from "./types";
 
@@ -34,7 +34,9 @@ function write(key: string, value: unknown) {
 }
 
 export function listProjects(): PortfolioProject[] {
-  return read<PortfolioProject[]>(KEY, []).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  return read<PortfolioProject[]>(KEY, [])
+    .map((p) => ({ ...p, design: normalizeDesign(p.design) }))
+    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 }
 
 export function getProject(id: string): PortfolioProject | null {

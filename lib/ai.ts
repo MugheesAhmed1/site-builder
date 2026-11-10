@@ -27,7 +27,24 @@ export async function askClaude<T>(req: AiRequest, onProgress?: (chars: number) 
   }
   const errAt = text.indexOf("[[ERROR]]");
   if (errAt >= 0) throw new Error(text.slice(errAt + 9).trim());
-  return parseJson<T>(text);
+  return removeDashes(parseJson<T>(text));
+}
+
+// House style: no em or en dashes in visible text. Claude is asked not to use them;
+// this catches any that slip through. Ranges become "to", other dashes become commas.
+export function removeDashes<T>(value: T): T {
+  if (typeof value === "string") {
+    return value
+      .replace(/(\d)\s*[–—]\s*(\d)/g, "$1 to $2")
+      .replace(/\s*—\s*/g, ", ")
+      .replace(/\s+–\s+/g, ", ")
+      .replace(/–/g, " to ") as T;
+  }
+  if (Array.isArray(value)) return value.map(removeDashes) as T;
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, removeDashes(v)])) as T;
+  }
+  return value;
 }
 
 export function parseJson<T>(text: string): T {

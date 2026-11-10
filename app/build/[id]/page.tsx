@@ -5,11 +5,13 @@ import { useParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import DesignEditor from "@/components/DesignEditor";
 import FieldsEditor from "@/components/FieldsEditor";
+import Icon from "@/components/Icon";
 import Preview from "@/components/Preview";
 import Topbar from "@/components/Topbar";
 import { askClaude, fileToBase64 } from "@/lib/ai";
 import { downloadZip, saveBlob } from "@/lib/export";
 import { contentFromProfile } from "@/lib/fromProfile";
+import { normalizeDesign } from "@/lib/presets";
 import { getProject, markChanged, saveProject } from "@/lib/store";
 import type { Design, PortfolioContent, PortfolioProject, Profile, Question, SectionId, StepId } from "@/lib/types";
 import { STEPS } from "@/lib/types";
@@ -19,7 +21,7 @@ const ALL_SECTIONS: { id: SectionId; label: string }[] = [
   { id: "about", label: "About" },
   { id: "process", label: "How I work" },
   { id: "experience", label: "Experience" },
-  { id: "projects", label: "Projects" },
+  { id: "projects", label: "Work" },
   { id: "skills", label: "Skills" },
   { id: "education", label: "Education" },
   { id: "certifications", label: "Certifications" },
@@ -29,15 +31,16 @@ const ALL_SECTIONS: { id: SectionId; label: string }[] = [
 
 function Busy({ text, chars }: { text: string; chars: number }) {
   return (
-    <span className="busy">
-      <span className="spinner" /> {text}
-      {chars > 0 ? ` (${Math.round(chars / 100) / 10}k characters written)` : " (Claude is thinking…)"}
+    <span className="busy" role="status">
+      <span className="spinner" aria-hidden="true" />
+      {text}
+      <span className="mono">{chars > 0 ? `${(chars / 1000).toFixed(1)}k characters` : "thinking"}</span>
     </span>
   );
 }
 
 function StatusBadge({ s }: { s: string }) {
-  const text = s === "todo" ? "Not started" : s === "approved" ? "Approved" : s === "stale" ? "Needs refresh" : "Draft";
+  const text = s === "todo" ? "Not started" : s === "approved" ? "Approved" : s === "stale" ? "Needs a look" : "Draft";
   return <span className={`badge badge-${s}`}>{text}</span>;
 }
 
@@ -48,7 +51,7 @@ export default function BuildPage() {
   const [busy, setBusy] = useState<string>("");
   const [chars, setChars] = useState(0);
   const [error, setError] = useState("");
-  const loaded = useRef(false);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const proj = getProject(id);
@@ -57,7 +60,7 @@ export default function BuildPage() {
       const firstOpen = STEPS.find((s) => proj.steps[s.id] !== "approved");
       setStep(firstOpen?.id ?? "deploy");
     }
-    loaded.current = true;
+    setLoaded(true);
   }, [id]);
 
   // Save on every change, so nothing is lost if the tab closes.
@@ -84,22 +87,31 @@ export default function BuildPage() {
     }
   };
 
+  const go = (s: StepId) => {
+    setStep(s);
+    setError("");
+    window.scrollTo({ top: 0 });
+  };
+
   const approve = (s: StepId) => {
     update((prev) => ({ ...prev, steps: { ...prev.steps, [s]: "approved" } }));
     const i = STEPS.findIndex((x) => x.id === s);
-    if (i < STEPS.length - 1) setStep(STEPS[i + 1].id);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (i < STEPS.length - 1) go(STEPS[i + 1].id);
   };
 
-  if (!loaded.current && !p) return null;
+  if (!loaded) return null;
   if (!p) {
     return (
       <>
         <Topbar />
-        <main className="page">
-          <p>
-            This portfolio isn't saved in this browser. <Link href="/">Go back</Link>
+        <main className="page" style={{ paddingTop: 64 }}>
+          <h1>We couldn&apos;t find that portfolio</h1>
+          <p className="muted" style={{ marginTop: 10 }}>
+            Portfolios are saved in the browser they were made in. If you made it elsewhere, import its backup on the home page.
           </p>
+          <Link className="btn" href="/" style={{ marginTop: 20 }}>
+            Go to home
+          </Link>
         </main>
       </>
     );
@@ -112,215 +124,232 @@ export default function BuildPage() {
   };
   const previewContent: PortfolioContent | null = p.content ?? (p.profile ? contentFromProfile(p.profile) : null);
 
-  const head = (title: string, intro: string, extra?: React.ReactNode) => (
+  const head = (title: string, intro: string, action?: React.ReactNode) => (
     <div className="main-head">
       <div>
-        <div className="row" style={{ marginBottom: 6 }}>
-          <span className="muted small">
+        <div className="eyebrow">
+          <span className="mono">
             Step {stepIndex + 1} of {STEPS.length}
           </span>
           <StatusBadge s={p.steps[step]} />
         </div>
         <h1>{title}</h1>
-        <p className="muted" style={{ maxWidth: 640 }}>
-          {intro}
-        </p>
+        <p className="intro">{intro}</p>
       </div>
-      {extra}
-    </div>
-  );
-
-  const errorBox = error && <div className="notice notice-error" style={{ marginBottom: 16 }}>{error}</div>;
-  const staleBox = p.steps[step] === "stale" && (
-    <div className="notice notice-warn" style={{ marginBottom: 16 }}>
-      You changed an earlier step after this one was made. Review it, regenerate it, or approve it as it is.
+      {action}
     </div>
   );
 
   return (
     <>
       <Topbar>
-        <span className="muted small" style={{ marginRight: 8 }}>
-          {p.content?.hero.name || p.profile?.name || "New portfolio"} · saved
-        </span>
+        <span className="saved">Saved in this browser</span>
       </Topbar>
       <div className="builder">
-        <aside className="sidebar">
-          {STEPS.map((s, i) => (
-            <button
-              key={s.id}
-              className={`step-link ${s.id === step ? "is-active" : ""} is-${p.steps[s.id]}`}
-              disabled={!canOpen(s.id)}
-              style={{ opacity: canOpen(s.id) ? 1 : 0.45 }}
-              onClick={() => setStep(s.id)}
-            >
-              <span className="step-num">{p.steps[s.id] === "approved" ? "✓" : i + 1}</span>
-              <span>
-                <div className="step-title">{s.title}</div>
-                <div className="step-hint">{p.steps[s.id] === "stale" ? "Needs refresh" : s.hint}</div>
-              </span>
-            </button>
-          ))}
+        <aside className="sidebar" aria-label="Steps">
+          <ol className="stepper">
+            {STEPS.map((s, i) => (
+              <li key={s.id}>
+                <button
+                  className={`step-link ${s.id === step ? "is-active" : ""} is-${p.steps[s.id]}`}
+                  disabled={!canOpen(s.id)}
+                  aria-current={s.id === step ? "step" : undefined}
+                  onClick={() => go(s.id)}
+                >
+                  <span className="step-num">{p.steps[s.id] === "approved" ? <Icon name="check" size={14} /> : i + 1}</span>
+                  <span>
+                    <span className="step-title" style={{ display: "block" }}>
+                      {s.title}
+                    </span>
+                    <span className="step-hint">{p.steps[s.id] === "stale" ? "Changed earlier, needs a look" : s.hint}</span>
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ol>
         </aside>
 
         <main className="main">
-          {errorBox}
-          {staleBox}
-
-          {step === "resume" && (
-            <ResumeStep
-              p={p}
-              busy={busy}
-              chars={chars}
-              head={head}
-              onExtract={async (text, file) => {
-                const pdfBase64 = file && file.type === "application/pdf" ? await fileToBase64(file) : undefined;
-                const resumeText = file && file.type !== "application/pdf" ? await file.text() : text;
-                const profile = await run<Profile>("Reading your résumé", { task: "extract", resumeText, pdfBase64 });
-                if (profile) {
-                  update((prev) =>
-                    markChanged(
-                      { ...prev, profile, resumeText: resumeText ?? "", resumeFileName: file?.name ?? "", name: profile.name || prev.name },
-                      "resume"
-                    )
-                  );
-                }
-              }}
-              onEdit={(profile) => update((prev) => markChanged({ ...prev, profile }, "resume"))}
-              onApprove={() => approve("resume")}
-            />
-          )}
-
-          {step === "design" && (
-            <>
-              {head(
-                "Define your design system",
-                "Pick a starting look, then adjust colours, fonts, roundness and animation. The preview uses your own résumé details.",
-                <button className="btn btn-primary" onClick={() => approve("design")}>
-                  Approve design →
-                </button>
-              )}
-              <div className="design-grid">
-                <div className="card stack">
-                  <DesignEditor design={p.design} onChange={(design) => update((prev) => markChanged({ ...prev, design }, "design"))} />
-                  <AskBox
-                    placeholder="Or describe it: “warmer colours, rounder corners, calmer animation”"
-                    busy={busy}
-                    chars={chars}
-                    onAsk={async (instruction) => {
-                      const design = await run<Design>("Updating the design", { task: "design", profile: p.profile, design: p.design, instruction });
-                      if (design) update((prev) => markChanged({ ...prev, design }, "design"));
-                    }}
-                  />
-                </div>
-                <div className="sticky-preview">
-                  {previewContent ? <Preview design={p.design} content={previewContent} /> : <div className="card muted">Add your résumé first to see a preview.</div>}
-                </div>
+          <div className="step-body" key={step}>
+            {error && (
+              <div className="notice notice-error" role="alert" style={{ marginBottom: 20 }}>
+                <strong>That didn&apos;t work.</strong> {error}
               </div>
-            </>
-          )}
+            )}
+            {p.steps[step] === "stale" && (
+              <div className="notice notice-warn" style={{ marginBottom: 20 }}>
+                You changed an earlier step after this one was made. Check it still fits, regenerate it, or approve it as it is.
+              </div>
+            )}
 
-          {step === "questions" && (
-            <QuestionsStep
-              p={p}
-              busy={busy}
-              chars={chars}
-              head={head}
-              onGenerate={async () => {
-                if (!p.profile) return;
-                const res = await run<{ questions: Omit<Question, "answer">[] }>("Writing questions about you", {
-                  task: "questions",
-                  profile: p.profile,
-                  design: p.design,
-                });
-                if (res) update((prev) => markChanged({ ...prev, questions: res.questions.map((q) => ({ ...q, answer: "" })) }, "questions"));
-              }}
-              onChange={(questions) => update((prev) => markChanged({ ...prev, questions }, "questions"))}
-              onApprove={() => approve("questions")}
-            />
-          )}
+            {step === "resume" && (
+              <ResumeStep
+                p={p}
+                busy={busy}
+                chars={chars}
+                head={head}
+                onExtract={async (text, file) => {
+                  const pdfBase64 = file && file.type === "application/pdf" ? await fileToBase64(file) : undefined;
+                  const resumeText = file && file.type !== "application/pdf" ? await file.text() : text;
+                  const profile = await run<Profile>("Reading your résumé", { task: "extract", resumeText, pdfBase64 });
+                  if (profile) {
+                    update((prev) =>
+                      markChanged({ ...prev, profile, resumeText: resumeText ?? "", resumeFileName: file?.name ?? "", name: profile.name || prev.name }, "resume")
+                    );
+                  }
+                }}
+                onEdit={(profile) => update((prev) => markChanged({ ...prev, profile }, "resume"))}
+                onApprove={() => approve("resume")}
+              />
+            )}
 
-          {step === "build" && (
-            <BuildStep
-              p={p}
-              busy={busy}
-              chars={chars}
-              head={head}
-              onBuild={async () => {
-                if (!p.profile) return;
-                const content = await run<PortfolioContent>("Writing your portfolio", {
-                  task: "build",
-                  profile: p.profile,
-                  design: p.design,
-                  questions: p.questions,
-                });
-                if (content) {
-                  update((prev) => ({
-                    ...prev,
-                    content,
-                    history: [...(prev.content ? [{ at: new Date().toISOString(), label: "Before rebuild", content: prev.content }] : []), ...prev.history].slice(0, 10),
-                    steps: { ...prev.steps, build: "draft", deploy: prev.steps.deploy === "approved" ? "stale" : prev.steps.deploy },
-                  }));
-                }
-              }}
-              onRevise={async (instruction) => {
-                if (!p.profile || !p.content) return;
-                const content = await run<PortfolioContent>("Applying your change", {
-                  task: "revise",
-                  profile: p.profile,
-                  design: p.design,
-                  content: p.content,
-                  instruction,
-                });
-                if (content) {
+            {step === "design" && (
+              <>
+                {head(
+                  "Define your design system",
+                  "Choose a preset, then tune colour, type, shape and motion. The preview uses your own résumé.",
+                  <button className="btn btn-primary" onClick={() => approve("design")}>
+                    Use this design
+                    <Icon name="arrow" size={16} />
+                  </button>
+                )}
+                <div className="design-grid">
+                  <div className="stack" style={{ gap: 28 }}>
+                    <DesignEditor design={p.design} onChange={(design) => update((prev) => markChanged({ ...prev, design }, "design"))} />
+                    <AskBox
+                      label="Or describe the look"
+                      placeholder="Warmer colours, sharper corners, calmer motion"
+                      button="Restyle"
+                      busy={busy}
+                      chars={chars}
+                      onAsk={async (instruction) => {
+                        const design = await run<Design>("Restyling", { task: "design", profile: p.profile, design: p.design, instruction });
+                        if (design) update((prev) => markChanged({ ...prev, design: normalizeDesign({ ...prev.design, ...design }) }, "design"));
+                      }}
+                    />
+                  </div>
+                  <div className="sticky-preview">
+                    {previewContent ? <Preview design={p.design} content={previewContent} /> : <div className="panel muted">Add your résumé first to see a preview.</div>}
+                  </div>
+                </div>
+              </>
+            )}
+
+            {step === "questions" && (
+              <QuestionsStep
+                p={p}
+                busy={busy}
+                chars={chars}
+                head={head}
+                onGenerate={async () => {
+                  if (!p.profile) return;
+                  const res = await run<{ questions: Omit<Question, "answer">[] }>("Writing questions about you", { task: "questions", profile: p.profile, design: p.design });
+                  if (res) update((prev) => markChanged({ ...prev, questions: res.questions.map((q) => ({ ...q, answer: "" })) }, "questions"));
+                }}
+                onChange={(questions) => update((prev) => markChanged({ ...prev, questions }, "questions"))}
+                onApprove={() => approve("questions")}
+              />
+            )}
+
+            {step === "build" && (
+              <BuildStep
+                p={p}
+                busy={busy}
+                chars={chars}
+                head={head}
+                onBuild={async () => {
+                  if (!p.profile) return;
+                  const content = await run<PortfolioContent>("Writing your portfolio", { task: "build", profile: p.profile, design: p.design, questions: p.questions });
+                  if (content) {
+                    update((prev) => ({
+                      ...prev,
+                      content,
+                      history: [...(prev.content ? [{ at: new Date().toISOString(), label: "Before rewrite", content: prev.content }] : []), ...prev.history].slice(0, 10),
+                      steps: { ...prev.steps, build: "draft", deploy: prev.steps.deploy === "approved" ? "stale" : prev.steps.deploy },
+                    }));
+                  }
+                }}
+                onRevise={async (instruction) => {
+                  if (!p.profile || !p.content) return;
+                  const content = await run<PortfolioContent>("Applying your change", { task: "revise", profile: p.profile, design: p.design, content: p.content, instruction });
+                  if (content) {
+                    update((prev) =>
+                      markChanged({ ...prev, content, history: [{ at: new Date().toISOString(), label: instruction.slice(0, 60), content: prev.content! }, ...prev.history].slice(0, 10) }, "build")
+                    );
+                  }
+                }}
+                onEdit={(content) => update((prev) => markChanged({ ...prev, content }, "build"))}
+                onUndo={(i) =>
                   update((prev) =>
                     markChanged(
-                      { ...prev, content, history: [{ at: new Date().toISOString(), label: instruction.slice(0, 60), content: prev.content! }, ...prev.history].slice(0, 10) },
+                      {
+                        ...prev,
+                        content: prev.history[i].content,
+                        history: [{ at: new Date().toISOString(), label: "Before undo", content: prev.content! }, ...prev.history.filter((_, j) => j !== i)].slice(0, 10),
+                      },
                       "build"
                     )
-                  );
-                }
-              }}
-              onEdit={(content) => update((prev) => markChanged({ ...prev, content }, "build"))}
-              onUndo={(i) =>
-                update((prev) =>
-                  markChanged(
-                    { ...prev, content: prev.history[i].content, history: [{ at: new Date().toISOString(), label: "Before undo", content: prev.content! }, ...prev.history.filter((_, j) => j !== i)].slice(0, 10) },
-                    "build"
                   )
-                )
-              }
-              onApprove={() => approve("build")}
-            />
-          )}
+                }
+                onApprove={() => approve("build")}
+              />
+            )}
 
-          {step === "deploy" && <DeployStep p={p} head={head} onDone={() => approve("deploy")} />}
+            {step === "deploy" && <DeployStep p={p} head={head} onDone={() => approve("deploy")} />}
+          </div>
         </main>
       </div>
     </>
   );
 }
 
-type Head = (title: string, intro: string, extra?: React.ReactNode) => React.ReactNode;
+type Head = (title: string, intro: string, action?: React.ReactNode) => React.ReactNode;
 
-function AskBox({ placeholder, busy, chars, onAsk }: { placeholder: string; busy: string; chars: number; onAsk: (s: string) => Promise<void> }) {
+function AskBox({
+  label,
+  placeholder,
+  button,
+  busy,
+  chars,
+  onAsk,
+  children,
+}: {
+  label: string;
+  placeholder: string;
+  button: string;
+  busy: string;
+  chars: number;
+  onAsk: (s: string) => Promise<void>;
+  children?: React.ReactNode;
+}) {
   const [text, setText] = useState("");
+  const submit = async () => {
+    if (!text.trim() || busy) return;
+    await onAsk(text.trim());
+    setText("");
+  };
   return (
     <div className="stack" style={{ gap: 8 }}>
-      <label className="lbl">Ask Claude to change it</label>
-      <textarea rows={2} value={text} placeholder={placeholder} onChange={(e) => setText(e.target.value)} />
-      <div className="row">
-        <button
-          className="btn"
-          disabled={!!busy || !text.trim()}
-          onClick={async () => {
-            await onAsk(text.trim());
-            setText("");
-          }}
-        >
-          Apply change
+      <label className="lbl" htmlFor={"ask-" + button}>
+        {label}
+      </label>
+      <textarea
+        id={"ask-" + button}
+        rows={2}
+        value={text}
+        placeholder={placeholder}
+        onChange={(e) => setText(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) submit();
+        }}
+      />
+      <div className="row wrap">
+        <button className="btn" disabled={!!busy || !text.trim()} onClick={submit}>
+          <Icon name="sparkle" size={16} />
+          {button}
         </button>
-        {busy && <Busy text={busy} chars={chars} />}
+        {busy ? <Busy text={busy} chars={chars} /> : <span className="hint">Ctrl or Cmd + Enter</span>}
+        {children && <span className="row wrap" style={{ marginLeft: "auto", gap: 6 }}>{children}</span>}
       </div>
     </div>
   );
@@ -352,17 +381,21 @@ function ResumeStep({
     <>
       {head(
         "Start with your résumé",
-        "Upload a PDF or paste the text. Claude pulls out your details, and you can fix anything before moving on.",
+        "Upload a PDF or paste the text. Claude pulls out your details and you correct anything it got wrong.",
         p.profile && (
           <button className="btn btn-primary" onClick={onApprove}>
-            Looks right →
+            Details look right
+            <Icon name="arrow" size={16} />
           </button>
         )
       )}
-      <div className="stack">
+      <div className="stack" style={{ gap: 16, maxWidth: 760 }}>
         <div
-          className={"dropzone " + (over ? "is-over" : "")}
+          className={"dropzone" + (over ? " is-over" : "")}
+          role="button"
+          tabIndex={0}
           onClick={() => inputRef.current?.click()}
+          onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && inputRef.current?.click()}
           onDragOver={(e) => {
             e.preventDefault();
             setOver(true);
@@ -375,45 +408,38 @@ function ResumeStep({
             if (f) setFile(f);
           }}
         >
-          <div style={{ fontSize: 28 }}>📄</div>
-          <strong>{file ? file.name : p.resumeFileName ? `Last used: ${p.resumeFileName}` : "Drop your résumé here, or click to choose"}</strong>
-          <div className="muted small">PDF, TXT or Markdown, up to about 10 MB</div>
-          <input
-            ref={inputRef}
-            type="file"
-            accept=".pdf,.txt,.md,application/pdf,text/plain"
-            hidden
-            onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-          />
+          <Icon name="upload" size={24} />
+          <strong>{file ? file.name : p.resumeFileName ? `Last used: ${p.resumeFileName}` : "Drop your résumé here, or choose a file"}</strong>
+          <span className="small muted">PDF, TXT or Markdown, up to about 10 MB</span>
+          <input ref={inputRef} type="file" accept=".pdf,.txt,.md,application/pdf,text/plain" hidden onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
         </div>
-        <details>
-          <summary className="muted small" style={{ cursor: "pointer" }}>
-            Or paste the text instead
-          </summary>
-          <textarea rows={8} value={text} placeholder="Paste your résumé here" onChange={(e) => setText(e.target.value)} style={{ marginTop: 8 }} />
+        <details className="disclosure">
+          <summary>Paste the text instead</summary>
+          <textarea rows={8} value={text} placeholder="Paste your résumé here" onChange={(e) => setText(e.target.value)} style={{ marginTop: 10 }} aria-label="Résumé text" />
         </details>
-        <div className="row">
+        <div className="row wrap">
           <button className="btn btn-primary" disabled={!ready || !!busy} onClick={() => onExtract(text, file)}>
             {p.profile ? "Read it again" : "Read my résumé"}
           </button>
           {busy && <Busy text={busy} chars={chars} />}
         </div>
-
-        {p.profile && (
-          <div className="card stack" style={{ marginTop: 8 }}>
-            <div className="row between">
-              <h2>What Claude found</h2>
-              <span className="muted small">Edit anything that's wrong or missing</span>
-            </div>
-            <FieldsEditor value={p.profile} onChange={onEdit} />
-            <div className="row">
-              <button className="btn btn-primary" onClick={onApprove}>
-                Looks right, continue →
-              </button>
-            </div>
-          </div>
-        )}
       </div>
+
+      {p.profile && (
+        <section className="panel" style={{ marginTop: 32, maxWidth: 760 }}>
+          <div className="panel-title">
+            <h2>What Claude found</h2>
+            <span className="small muted">Fix anything wrong or missing</span>
+          </div>
+          <FieldsEditor value={p.profile} onChange={onEdit} />
+          <div className="row" style={{ marginTop: 20 }}>
+            <button className="btn btn-primary" onClick={onApprove}>
+              Details look right
+              <Icon name="arrow" size={16} />
+            </button>
+          </div>
+        </section>
+      )}
     </>
   );
 }
@@ -444,52 +470,54 @@ function QuestionsStep({
     <>
       {head(
         "A few questions about you",
-        "Your answers shape the headline, what gets featured and the tone. Each one has a suggestion from your résumé; leave a box empty to use it.",
+        "Your answers set the headline, what gets featured and the tone. Leave a box empty to go with the suggestion.",
         p.questions.length > 0 && (
           <button className="btn btn-primary" disabled={!!busy} onClick={onApprove}>
-            Done, build my portfolio →
+            Build my portfolio
+            <Icon name="arrow" size={16} />
           </button>
         )
       )}
       {busy && (
-        <div style={{ marginBottom: 16 }}>
+        <div style={{ marginBottom: 20 }}>
           <Busy text={busy} chars={chars} />
         </div>
       )}
-      <div className="stack">
+      <ol className="q-list" style={{ listStyle: "none", padding: 0, margin: 0, maxWidth: 760 }}>
         {p.questions.map((q, i) => (
-          <div className="card q-card" key={q.id}>
-            <strong>
-              {i + 1}. {q.question}
-            </strong>
-            <span className="muted small">{q.why}</span>
-            <textarea rows={2} value={q.answer} placeholder={`Suggested: ${q.suggested}`} onChange={(e) => set(i, { answer: e.target.value })} />
-            <div className="row">
-              <button className="btn btn-sm" onClick={() => set(i, { answer: q.suggested })}>
-                Use suggestion
-              </button>
-              <button className="btn btn-ghost btn-sm btn-danger" onClick={() => onChange(p.questions.filter((_, j) => j !== i))}>
-                Skip this question
-              </button>
+          <li className="q-item" key={q.id}>
+            <span className="q-num">{String(i + 1).padStart(2, "0")}</span>
+            <div className="q-body">
+              <label htmlFor={"q-" + q.id}>
+                <h3>{q.question}</h3>
+              </label>
+              {q.why && <p className="q-why">{q.why}</p>}
+              <textarea id={"q-" + q.id} rows={2} value={q.answer} placeholder={q.suggested ? `Suggested: ${q.suggested}` : "Your answer"} onChange={(e) => set(i, { answer: e.target.value })} />
+              <div className="row wrap" style={{ gap: 6 }}>
+                {q.suggested && q.answer !== q.suggested && (
+                  <button className="btn btn-sm" onClick={() => set(i, { answer: q.suggested })}>
+                    Use suggestion
+                  </button>
+                )}
+                <button className="btn btn-ghost btn-sm" onClick={() => onChange(p.questions.filter((_, j) => j !== i))}>
+                  Skip question
+                </button>
+              </div>
             </div>
-          </div>
+          </li>
         ))}
-        {p.questions.length > 0 && (
-          <div className="row wrap">
-            <button
-              className="btn"
-              onClick={() =>
-                onChange([...p.questions, { id: "custom" + Date.now(), question: "Anything else to include?", why: "Your own note to Claude.", suggested: "", answer: "" }])
-              }
-            >
-              + Add your own note
-            </button>
-            <button className="btn btn-ghost" disabled={!!busy} onClick={onGenerate}>
-              Ask different questions
-            </button>
-          </div>
-        )}
-      </div>
+      </ol>
+      {p.questions.length > 0 && (
+        <div className="row wrap" style={{ marginTop: 20 }}>
+          <button className="btn" onClick={() => onChange([...p.questions, { id: "custom" + Date.now(), question: "Anything else Claude should know?", why: "Your own note, used when writing the site.", suggested: "", answer: "" }])}>
+            <Icon name="plus" size={16} />
+            Add a note
+          </button>
+          <button className="btn btn-ghost" disabled={!!busy} onClick={onGenerate}>
+            Ask different questions
+          </button>
+        </div>
+      )}
     </>
   );
 }
@@ -525,49 +553,59 @@ function BuildStep({
     <>
       {head(
         "Your portfolio",
-        "Preview it on desktop and phone. Edit any text directly, turn sections on or off, or ask Claude for changes.",
+        "Check it on desktop and phone, in light and dark. Edit any text, show or hide sections, or ask Claude for changes.",
         c && (
           <button className="btn btn-primary" disabled={!!busy} onClick={onApprove}>
-            Approve portfolio →
+            Approve portfolio
+            <Icon name="arrow" size={16} />
           </button>
         )
       )}
-      {!c && (busy ? <Busy text={busy} chars={chars} /> : <button className="btn btn-primary" onClick={onBuild}>Build my portfolio</button>)}
+      {!c &&
+        (busy ? (
+          <Busy text={busy} chars={chars} />
+        ) : (
+          <button className="btn btn-primary" onClick={onBuild}>
+            Write my portfolio
+          </button>
+        ))}
       {c && (
         <>
-          <div className="card" style={{ marginBottom: 16 }}>
-            <AskBox placeholder="e.g. “Make the tagline punchier”, “Feature the remittance app first”, “Add a stat for years of experience”" busy={busy} chars={chars} onAsk={onRevise} />
-            <div className="row wrap" style={{ marginTop: 10 }}>
-              <button className="btn btn-ghost btn-sm" disabled={!!busy} onClick={() => confirm("Rewrite the whole portfolio from scratch? You can undo it.") && onBuild()}>
-                Rewrite from scratch
-              </button>
+          <div style={{ marginBottom: 28, maxWidth: 860 }}>
+            <AskBox
+              label="Ask Claude for a change"
+              placeholder="Make the headline bolder. Feature the remittance app first."
+              button="Apply change"
+              busy={busy}
+              chars={chars}
+              onAsk={onRevise}
+            >
               {p.history.length > 0 && (
-                <select
-                  style={{ width: "auto", minHeight: 30, fontSize: 13 }}
-                  value=""
-                  onChange={(e) => e.target.value !== "" && onUndo(Number(e.target.value))}
-                >
-                  <option value="">Undo: restore an earlier version…</option>
+                <select style={{ width: "auto", minHeight: 34, fontSize: 14 }} value="" onChange={(e) => e.target.value !== "" && onUndo(Number(e.target.value))} aria-label="Restore an earlier version">
+                  <option value="">Restore an earlier version</option>
                   {p.history.map((h, i) => (
                     <option key={i} value={i}>
-                      {new Date(h.at).toLocaleTimeString()} · {h.label}
+                      {new Date(h.at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}, {h.label}
                     </option>
                   ))}
                 </select>
               )}
-            </div>
+              <button className="btn btn-ghost btn-sm" disabled={!!busy} onClick={() => confirm("Rewrite the whole portfolio from scratch? You can restore this version afterwards.") && onBuild()}>
+                Rewrite from scratch
+              </button>
+            </AskBox>
           </div>
-          <div className="tabs">
+          <div className="tabs" role="tablist">
             {(["preview", "content", "sections"] as const).map((t) => (
-              <button key={t} className={"tab " + (tab === t ? "is-on" : "")} onClick={() => setTab(t)}>
+              <button key={t} role="tab" aria-selected={tab === t} className={"tab" + (tab === t ? " is-on" : "")} onClick={() => setTab(t)}>
                 {t === "preview" ? "Preview" : t === "content" ? "Edit text" : "Sections"}
               </button>
             ))}
           </div>
           {tab === "preview" && <Preview design={p.design} content={c} />}
           {tab === "content" && (
-            <div className="design-grid" style={{ gridTemplateColumns: "minmax(0, 420px) minmax(0, 1fr)" }}>
-              <div className="card">
+            <div className="design-grid" style={{ gridTemplateColumns: "minmax(0, 400px) minmax(0, 1fr)" }}>
+              <div className="panel">
                 <FieldsEditor value={c} onChange={onEdit} skip={["sections"]} />
               </div>
               <div className="sticky-preview">
@@ -577,36 +615,53 @@ function BuildStep({
           )}
           {tab === "sections" && (
             <div className="design-grid">
-              <div className="card stack" style={{ gap: 8 }}>
-                <p className="muted small">Tick the sections to show, and use the arrows to change their order.</p>
-                {[...c.sections, ...ALL_SECTIONS.map((s) => s.id).filter((s) => !c.sections.includes(s))].map((sid) => {
-                  const on = c.sections.includes(sid);
-                  const idx = c.sections.indexOf(sid);
-                  const label = ALL_SECTIONS.find((s) => s.id === sid)?.label ?? sid;
-                  const empty = sid !== "contact" && sid !== "about" && Array.isArray(c[sid]) && (c[sid] as unknown[]).length === 0;
-                  return (
-                    <div className="section-row" key={sid}>
-                      <input
-                        type="checkbox"
-                        checked={on}
-                        onChange={() => onEdit({ ...c, sections: on ? c.sections.filter((x) => x !== sid) : [...c.sections.filter((x) => x !== "contact"), sid, ...(c.sections.includes("contact") ? (["contact"] as SectionId[]) : [])] })}
-                      />
-                      <span className="grow">
-                        {label} {empty && <span className="muted small">(no content yet, add it in Edit text)</span>}
-                      </span>
-                      {on && (
-                        <>
-                          <button className="btn btn-ghost btn-sm" disabled={idx === 0} onClick={() => onEdit({ ...c, sections: swap(c.sections, idx, idx - 1) })}>
-                            ↑
-                          </button>
-                          <button className="btn btn-ghost btn-sm" disabled={idx === c.sections.length - 1} onClick={() => onEdit({ ...c, sections: swap(c.sections, idx, idx + 1) })}>
-                            ↓
-                          </button>
-                        </>
-                      )}
-                    </div>
-                  );
-                })}
+              <div>
+                <p className="hint" style={{ marginBottom: 10 }}>
+                  Tick the sections to show and use the arrows to set their order.
+                </p>
+                <div>
+                  {[...c.sections, ...ALL_SECTIONS.map((s) => s.id).filter((s) => !c.sections.includes(s))].map((sid) => {
+                    const on = c.sections.includes(sid);
+                    const idx = c.sections.indexOf(sid);
+                    const label = ALL_SECTIONS.find((s) => s.id === sid)?.label ?? sid;
+                    const empty = sid !== "contact" && sid !== "about" && Array.isArray(c[sid]) && (c[sid] as unknown[]).length === 0;
+                    return (
+                      <label className="section-row" key={sid}>
+                        <input
+                          type="checkbox"
+                          checked={on}
+                          onChange={() =>
+                            onEdit({
+                              ...c,
+                              sections: on
+                                ? c.sections.filter((x) => x !== sid)
+                                : [...c.sections.filter((x) => x !== "contact"), sid, ...(c.sections.includes("contact") ? (["contact"] as SectionId[]) : [])],
+                            })
+                          }
+                        />
+                        <span className="grow">
+                          {label}
+                          {empty && <span className="small muted">. Empty, add content in Edit text</span>}
+                        </span>
+                        {on && (
+                          <>
+                            <button className="btn btn-ghost btn-sm btn-icon" aria-label={`Move ${label} up`} disabled={idx === 0} onClick={(e) => (e.preventDefault(), onEdit({ ...c, sections: swap(c.sections, idx, idx - 1) }))}>
+                              <Icon name="up" size={16} />
+                            </button>
+                            <button
+                              className="btn btn-ghost btn-sm btn-icon"
+                              aria-label={`Move ${label} down`}
+                              disabled={idx === c.sections.length - 1}
+                              onClick={(e) => (e.preventDefault(), onEdit({ ...c, sections: swap(c.sections, idx, idx + 1) }))}
+                            >
+                              <Icon name="down" size={16} />
+                            </button>
+                          </>
+                        )}
+                      </label>
+                    );
+                  })}
+                </div>
               </div>
               <div className="sticky-preview">
                 <Preview design={p.design} content={c} />
@@ -631,60 +686,75 @@ function DeployStep({ p, head, onDone }: { p: PortfolioProject; head: Head; onDo
     <>
       {head(
         "Put it online",
-        "Download your portfolio as a React project, then publish it free on Vercel. No coding needed.",
+        "Download your portfolio as a React project, then publish it on Vercel for free. No coding needed.",
         <button className="btn btn-primary" onClick={onDone}>
-          Mark as done ✓
+          <Icon name="check" size={16} />
+          Mark as published
         </button>
       )}
-      <div className="stack">
-        <div className="card row wrap between">
-          <div>
-            <h2>1. Download your site</h2>
-            <p className="muted small" style={{ margin: 0 }}>
-              A ready React (Vite) project. All your text and colours are in <code>src/portfolio-data.json</code>.
-            </p>
-          </div>
-          <div className="row">
+      <div className="deploy-grid">
+        <section>
+          <h2>1. Download your site</h2>
+          <p className="muted" style={{ margin: "8px 0 18px" }}>
+            A ready React (Vite) project. Every word, colour and setting lives in <code>src/portfolio-data.json</code>.
+          </p>
+          <div className="row wrap">
             <button className="btn btn-primary" onClick={() => downloadZip(p)}>
-              Download .zip
+              <Icon name="download" size={16} />
+              Download site (.zip)
             </button>
-            <button
-              className="btn"
-              onClick={() => saveBlob(new Blob([JSON.stringify(p, null, 2)], { type: "application/json" }), `${p.id}-portfolio-builder.json`)}
-            >
-              Save builder file
+            <button className="btn" onClick={() => saveBlob(new Blob([JSON.stringify(p, null, 2)], { type: "application/json" }), `${p.id}-portfolio-builder.json`)}>
+              Save a backup
             </button>
           </div>
-        </div>
-        <div className="card">
-          <h2>2. Publish on Vercel (free)</h2>
-          <ol className="howto">
+          <h2 style={{ marginTop: 40 }}>Add a photo or your CV</h2>
+          <p className="muted" style={{ marginTop: 8 }}>
+            In your GitHub repository, create a folder called <code>public</code> and upload <code>photo.jpg</code> and <code>resume.pdf</code>. Then in <b>Portfolio, Edit text, hero</b>, set the photo URL to <code>/photo.jpg</code> and the résumé URL to <code>/resume.pdf</code>, and download again. A link to an image that&apos;s already online works too.
+          </p>
+        </section>
+        <section>
+          <h2>2. Publish on Vercel</h2>
+          <ol className="howto" style={{ marginTop: 14 }}>
             <li>
-              Unzip the download. You'll get a folder with files like <code>package.json</code> and a <code>src</code> folder.
+              <span>
+                Unzip the download. You&apos;ll get a folder with <code>package.json</code> and a <code>src</code> folder inside.
+              </span>
             </li>
             <li>
-              Sign in at <a href="https://github.com" target="_blank" rel="noreferrer">github.com</a> (create a free account if needed) and click <b>New repository</b>. Name it <code>portfolio</code>, keep it Public, and click <b>Create repository</b>.
+              <span>
+                Sign in to{" "}
+                <a href="https://github.com/new" target="_blank" rel="noreferrer">
+                  GitHub
+                </a>{" "}
+                (free) and create a repository called <code>portfolio</code>. Keep it public.
+              </span>
             </li>
             <li>
-              On the new repository page click <b>uploading an existing file</b>. Open the unzipped folder, select <b>everything inside it</b> (including the <code>src</code> folder) and drag it into the browser. Click <b>Commit changes</b>.
+              <span>
+                On the new repository page, choose <b>uploading an existing file</b>. Drag in everything inside the unzipped folder, including <code>src</code>, then choose <b>Commit changes</b>.
+              </span>
             </li>
             <li>
-              Go to <a href="https://vercel.com/new" target="_blank" rel="noreferrer">vercel.com/new</a>, choose <b>Continue with GitHub</b>, and click <b>Import</b> next to your <code>portfolio</code> repository.
+              <span>
+                Open{" "}
+                <a href="https://vercel.com/new" target="_blank" rel="noreferrer">
+                  vercel.com/new
+                </a>
+                , continue with GitHub, and choose <b>Import</b> next to <code>portfolio</code>.
+              </span>
             </li>
             <li>
-              Leave every setting as it is (Vercel recognises it as a Vite project) and click <b>Deploy</b>. After about a minute you get a live link like <code>portfolio-yourname.vercel.app</code>.
+              <span>
+                Leave the settings as they are (Vercel recognises Vite) and choose <b>Deploy</b>. About a minute later you get a link like <code>portfolio-yourname.vercel.app</code>.
+              </span>
             </li>
             <li>
-              To change something later, edit it here, download again and upload the changed files to GitHub. Vercel republishes automatically. You can also add your own domain in Vercel under <b>Settings → Domains</b>.
+              <span>
+                To update it, edit here, download again and upload the changed files to GitHub. Vercel republishes on its own. Add your own domain under <b>Settings, Domains</b>.
+              </span>
             </li>
           </ol>
-        </div>
-        <div className="card">
-          <h2>Adding a photo or your résumé PDF</h2>
-          <p className="muted" style={{ margin: 0 }}>
-            In your GitHub repository, create a folder called <code>public</code> and upload <code>photo.jpg</code> and <code>resume.pdf</code> into it. Then, back here in <b>Portfolio → Edit text → hero</b>, set Photo Url to <code>/photo.jpg</code> and Resume Url to <code>/resume.pdf</code>, and download again. Or paste a link to an image that's already online.
-          </p>
-        </div>
+        </section>
       </div>
     </>
   );

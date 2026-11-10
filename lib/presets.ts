@@ -1,102 +1,99 @@
 import type { Design } from "./types";
 
-// Starting points for the design system. The user can change every value afterwards.
-// "Ledger" takes its cues from Mughees's portfolio: deep navy (#0F1620), fintech
-// receipt-style experience cards, monospace reference codes and animated counters.
+// Starting points for the design system. Every value can be changed afterwards.
+// Each preset is one neutral hue, one accent and a deliberate type pairing; light and
+// dark palettes are derived from those in template/src/theme.js.
+//
+// "Ledger" is inspired by Mughees's portfolio (mugheesahmed-portfolio.vercel.app):
+// deep navy base (#0F1620 sits at hue ~257), a settlement-green accent, monospace
+// reference codes and the "career ledger" experience layout. It is an approximation,
+// not a copy of that site's stylesheet.
 
-export const PRESETS: Design[] = [
+export const PRESETS: (Design & { blurb: string })[] = [
   {
     preset: "Ledger",
+    blurb: "Fintech calm. Navy, settlement green, reference codes.",
     mode: "dark",
-    colors: {
-      bg: "#0F1620",
-      surface: "#16212E",
-      text: "#E7EDF4",
-      muted: "#8D9DB2",
-      primary: "#34D399",
-      accent: "#F5B941",
-      border: "#243244",
-    },
-    fonts: { heading: "Space Grotesk", body: "Inter", mono: "JetBrains Mono" },
-    radius: 14,
-    animation: "rich",
-    heroStyle: "split",
-    experienceStyle: "receipts",
-  },
-  {
-    preset: "Minimal",
-    mode: "light",
-    colors: {
-      bg: "#FFFFFF",
-      surface: "#F6F7F9",
-      text: "#111827",
-      muted: "#5B6474",
-      primary: "#2563EB",
-      accent: "#0EA5E9",
-      border: "#E5E7EB",
-    },
-    fonts: { heading: "Inter", body: "Inter", mono: "IBM Plex Mono" },
+    hue: 257,
+    tint: 0.015,
+    accent: "#34D399",
+    fonts: { display: "Space Grotesk", body: "IBM Plex Sans", mono: "IBM Plex Mono" },
     radius: 10,
-    animation: "subtle",
-    heroStyle: "centered",
-    experienceStyle: "timeline",
+    motion: "expressive",
+    heroStyle: "statement",
+    experienceStyle: "ledger",
   },
   {
-    preset: "Neon",
-    mode: "dark",
-    colors: {
-      bg: "#0B0716",
-      surface: "#161029",
-      text: "#F4F0FF",
-      muted: "#A49BC2",
-      primary: "#A78BFA",
-      accent: "#F472B6",
-      border: "#2A2147",
-    },
-    fonts: { heading: "Sora", body: "DM Sans", mono: "Fira Code" },
-    radius: 20,
-    animation: "rich",
-    heroStyle: "centered",
-    experienceStyle: "cards",
+    preset: "Studio",
+    blurb: "Warm paper, vermilion, confident display type.",
+    mode: "light",
+    hue: 70,
+    tint: 0.02,
+    accent: "#D9480F",
+    fonts: { display: "Bricolage Grotesque", body: "Hanken Grotesk", mono: "JetBrains Mono" },
+    radius: 4,
+    motion: "subtle",
+    heroStyle: "portrait",
+    experienceStyle: "list",
+  },
+  {
+    preset: "Quiet",
+    blurb: "Cool greys, cobalt, nothing in the way of the work.",
+    mode: "auto",
+    hue: 230,
+    tint: 0.01,
+    accent: "#2A5BD7",
+    fonts: { display: "Instrument Sans", body: "Instrument Sans", mono: "DM Mono" },
+    radius: 8,
+    motion: "subtle",
+    heroStyle: "statement",
+    experienceStyle: "timeline",
   },
   {
     preset: "Editorial",
+    blurb: "For writers and designers. Serif display, forest green.",
     mode: "light",
-    colors: {
-      bg: "#FBF7F0",
-      surface: "#F3ECE0",
-      text: "#2A211B",
-      muted: "#6E6156",
-      primary: "#B4532A",
-      accent: "#2F6B5B",
-      border: "#E2D7C6",
-    },
-    fonts: { heading: "Fraunces", body: "Source Sans 3", mono: "IBM Plex Mono" },
-    radius: 6,
-    animation: "subtle",
-    heroStyle: "split",
-    experienceStyle: "timeline",
+    hue: 85,
+    tint: 0.018,
+    accent: "#2F6B4F",
+    fonts: { display: "Fraunces", body: "Public Sans", mono: "IBM Plex Mono" },
+    radius: 2,
+    motion: "subtle",
+    heroStyle: "portrait",
+    experienceStyle: "list",
   },
 ];
 
-export const FONT_CHOICES = [
-  "Inter",
-  "Space Grotesk",
-  "Sora",
-  "DM Sans",
-  "Manrope",
-  "Plus Jakarta Sans",
-  "Outfit",
-  "Poppins",
-  "Fraunces",
-  "Playfair Display",
-  "Source Sans 3",
-  "JetBrains Mono",
-  "IBM Plex Mono",
-  "Fira Code",
+export const FONT_CHOICES = {
+  display: ["Space Grotesk", "Bricolage Grotesque", "Instrument Sans", "Fraunces", "Schibsted Grotesk", "Familjen Grotesk", "Syne", "Newsreader", "Hanken Grotesk"],
+  body: ["IBM Plex Sans", "Hanken Grotesk", "Instrument Sans", "Public Sans", "Source Sans 3", "Figtree", "Schibsted Grotesk", "Atkinson Hyperlegible"],
+  mono: ["IBM Plex Mono", "JetBrains Mono", "DM Mono", "Space Mono", "Geist Mono"],
+};
+
+export const HUE_CHOICES = [
+  { name: "Navy", hue: 257 },
+  { name: "Slate", hue: 230 },
+  { name: "Teal", hue: 190 },
+  { name: "Moss", hue: 140 },
+  { name: "Sand", hue: 85 },
+  { name: "Clay", hue: 50 },
+  { name: "Plum", hue: 330 },
 ];
 
 export function clonePreset(name: string): Design {
   const p = PRESETS.find((x) => x.preset === name) ?? PRESETS[0];
-  return JSON.parse(JSON.stringify(p));
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { blurb, ...design } = p;
+  return JSON.parse(JSON.stringify(design));
+}
+
+// Projects saved by the first version used a different design shape. Map them over.
+export function normalizeDesign(d: unknown): Design {
+  const x = (d ?? {}) as Partial<Design> & Record<string, unknown>;
+  if (typeof x.hue === "number" && x.fonts && "display" in (x.fonts as object)) return x as Design;
+  const base = clonePreset(String(x.preset ?? "Ledger").split(" ")[0]);
+  const old = x as unknown as { colors?: { primary?: string }; mode?: string };
+  if (old.colors?.primary) base.accent = old.colors.primary;
+  if (old.mode === "light" || old.mode === "dark") base.mode = old.mode;
+  return base;
 }

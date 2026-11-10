@@ -58,11 +58,11 @@ const content = {
   hero: {
     name: "Sara Malik",
     role: "Senior Product Manager",
-    rotatingRoles: ["Product Manager", "Payments builder", "Fintech PM"],
-    tagline: "I turn messy money journeys into products millions can trust.",
-    intro: "Six years shipping remittance, wallet and agritech products across Pakistan and the Gulf.",
+    rotatingRoles: ["Cross-border payments", "Onboarding and KYC", "Mobile wallets"],
+    tagline: "I make sending money home feel simple.",
+    intro: "Six years shipping remittance, wallet and agritech products used by 1.6M people in Pakistan and the Gulf.",
     location: "Lahore, Pakistan",
-    availability: "Open to opportunities",
+    availability: "Open to new roles",
     photoUrl: "",
     resumeUrl: "",
   },
@@ -94,7 +94,7 @@ const content = {
       end: "Present",
       location: "Lahore",
       summary: "Own the remittance and onboarding products.",
-      highlights: ["Launched a UAE–Pakistan remittance app that reached 400K users in year one", "Redesigned KYC, cutting onboarding drop-off by 31%", "Lead a squad of 9 engineers and 2 designers"],
+      highlights: ["Launched a UAE to Pakistan remittance app that reached 400K users in year one", "Redesigned KYC, cutting onboarding drop-off by 31%", "Lead a squad of 9 engineers and 2 designers"],
       tags: ["Remittance", "KYC", "Mobile"],
     },
     {
@@ -109,7 +109,7 @@ const content = {
     },
   ],
   projects: [
-    { name: "PayLink Remit", category: "Fintech", summary: "Mobile remittance for the UAE–Pakistan corridor.", impact: "400K users in the first year.", tags: ["Mobile", "Payments"], link: "" },
+    { name: "PayLink Remit", category: "Fintech", summary: "Mobile remittance for the UAE to Pakistan corridor.", impact: "400K users in the first year.", tags: ["Mobile", "Payments"], link: "" },
     { name: "Wallet Rewards", category: "Fintech", summary: "Cashback engine for a mobile wallet.", impact: "", tags: ["Growth"], link: "" },
     { name: "Kissan SMS Advisor", category: "AgriTech", summary: "Weather and crop advice over plain SMS.", impact: "Reached 1.2M farmers.", tags: ["SMS", "VAS"], link: "" },
   ],
@@ -142,8 +142,8 @@ export function mockAnswer(req: AiRequest): string {
     case "build":
       return JSON.stringify(content);
     case "revise":
-      return JSON.stringify({ ...req.content, hero: { ...req.content.hero, tagline: req.content.hero.tagline + " (revised)" } });
+      return JSON.stringify({ ...req.content, hero: { ...req.content.hero, tagline: "Remittance that feels like a text message." } });
     case "design":
-      return JSON.stringify({ ...req.design, colors: { ...req.design.colors, primary: "#F97316" } });
+      return JSON.stringify({ ...req.design, accent: "#D9480F" });
   }
 }

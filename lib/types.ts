@@ -5,11 +5,11 @@ export type StepId = "resume" | "design" | "questions" | "build" | "deploy";
 export type StepStatus = "todo" | "draft" | "approved" | "stale";
 
 export const STEPS: { id: StepId; title: string; hint: string }[] = [
-  { id: "resume", title: "Resume", hint: "Upload or paste your resume" },
-  { id: "design", title: "Design system", hint: "Colours, fonts, animation" },
+  { id: "resume", title: "Resume", hint: "Upload a PDF or paste text" },
+  { id: "design", title: "Design system", hint: "Colour, type and motion" },
   { id: "questions", title: "Questions", hint: "A few questions about you" },
   { id: "build", title: "Portfolio", hint: "Preview and edit" },
-  { id: "deploy", title: "Deploy", hint: "Download and go live" },
+  { id: "deploy", title: "Deploy", hint: "Download and publish" },
 ];
 
 export interface Profile {
@@ -27,23 +27,19 @@ export interface Profile {
   certifications: { name: string; issuer: string; year: string }[];
 }
 
+// How the portfolio looks. Colours come from just a neutral hue and one accent;
+// template/src/theme.js derives a full light and dark palette from them.
 export interface Design {
   preset: string;
-  mode: "dark" | "light";
-  colors: {
-    bg: string;
-    surface: string;
-    text: string;
-    muted: string;
-    primary: string;
-    accent: string;
-    border: string;
-  };
-  fonts: { heading: string; body: string; mono: string };
+  mode: "auto" | "light" | "dark";
+  hue: number;
+  tint: number;
+  accent: string;
+  fonts: { display: string; body: string; mono: string };
   radius: number;
-  animation: "none" | "subtle" | "rich";
-  heroStyle: "split" | "centered";
-  experienceStyle: "timeline" | "receipts" | "cards";
+  motion: "none" | "subtle" | "expressive";
+  heroStyle: "statement" | "portrait";
+  experienceStyle: "ledger" | "timeline" | "list";
 }
 
 export interface Question {

@@ -2,6 +2,7 @@
 
 import JSZip from "jszip";
 import { TEMPLATE_FILES } from "./template-files";
+import { palette, resolveScheme } from "@/template/src/theme.js";
 import type { PortfolioProject } from "./types";
 
 // Builds the downloadable React (Vite) project: the template files plus this
@@ -25,7 +26,7 @@ export async function downloadZip(p: PortfolioProject) {
       out = out
         .replace("%PORTFOLIO_TITLE%", esc(p.content.meta.title || p.content.hero.name))
         .replace("%PORTFOLIO_DESCRIPTION%", esc(p.content.meta.description))
-        .replace("%PORTFOLIO_THEME%", esc(p.design.colors.bg));
+        .replace("%PORTFOLIO_THEME%", esc(palette(p.design, resolveScheme(p.design, false)).bg));
     }
     if (path === "package.json") out = out.replace('"my-portfolio"', JSON.stringify(slug(p.content.hero.name) + "-portfolio"));
     folder.file(path, out);
