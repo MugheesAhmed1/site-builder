@@ -3,37 +3,43 @@
 import JSZip from "jszip";
 import { TEMPLATE_FILES } from "./template-files";
 import { palette, resolveScheme } from "@/template/src/theme.js";
-import type { PortfolioProject } from "./types";
+import type { PortfolioContent, Project, WebsiteContent } from "./types";
 
 // Builds the downloadable React (Vite) project: the template files plus this
-// person's design and content in src/portfolio-data.json.
+// site's kind, design system and content in src/site-data.json.
 
-function slug(s: string) {
-  return (s || "portfolio").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "portfolio";
+export function slug(s: string) {
+  return (s || "site").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "site";
 }
 
 function esc(s: string) {
   return (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
 }
 
-export async function downloadZip(p: PortfolioProject) {
+export function siteName(p: Project) {
+  if (!p.content) return p.name;
+  return p.kind === "website" ? (p.content as WebsiteContent).brand.name : (p.content as PortfolioContent).hero.name;
+}
+
+export async function downloadZip(p: Project) {
   if (!p.content) return;
   const zip = new JSZip();
-  const folder = zip.folder(slug(p.content.hero.name) + "-portfolio")!;
+  const base = slug(siteName(p)) + (p.kind === "website" ? "-site" : "-portfolio");
+  const folder = zip.folder(base)!;
   for (const [path, text] of Object.entries(TEMPLATE_FILES)) {
     let out = text;
     if (path === "index.html") {
       out = out
-        .replace("%PORTFOLIO_TITLE%", esc(p.content.meta.title || p.content.hero.name))
-        .replace("%PORTFOLIO_DESCRIPTION%", esc(p.content.meta.description))
-        .replace("%PORTFOLIO_THEME%", esc(palette(p.design, resolveScheme(p.design, false)).bg));
+        .replace("%SITE_TITLE%", esc(p.content.meta.title || siteName(p)))
+        .replace("%SITE_DESCRIPTION%", esc(p.content.meta.description))
+        .replace("%SITE_THEME%", esc(palette(p.design, resolveScheme(p.design, false)).bg));
     }
-    if (path === "package.json") out = out.replace('"my-portfolio"', JSON.stringify(slug(p.content.hero.name) + "-portfolio"));
+    if (path === "package.json") out = out.replace('"my-site"', JSON.stringify(base));
     folder.file(path, out);
   }
-  folder.file("src/portfolio-data.json", JSON.stringify({ design: p.design, content: p.content }, null, 2));
+  folder.file("src/site-data.json", JSON.stringify({ kind: p.kind, design: p.design, content: p.content }, null, 2));
   const blob = await zip.generateAsync({ type: "blob" });
-  saveBlob(blob, slug(p.content.hero.name) + "-portfolio.zip");
+  saveBlob(blob, base + ".zip");
 }
 
 export function saveBlob(blob: Blob, name: string) {

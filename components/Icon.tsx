@@ -10,6 +10,19 @@ const PATHS: Record<string, React.ReactNode> = {
   download: <path d="M12 4v12m0 0-4-4m4 4 4-4M5 20h14" />,
   sparkle: <path d="M12 4v4m0 8v4M4 12h4m8 0h4M6.5 6.5l2.5 2.5m6 6 2.5 2.5m0-11-2.5 2.5m-6 6-2.5 2.5" />,
   undo: <path d="M9 14 4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3" />,
+  lock: (
+    <>
+      <rect x="5" y="11" width="14" height="9" rx="2" />
+      <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+    </>
+  ),
+  unlock: (
+    <>
+      <rect x="5" y="11" width="14" height="9" rx="2" />
+      <path d="M8 11V8a4 4 0 0 1 7.5-2" />
+    </>
+  ),
+  shuffle: <path d="M4 7h3.5c4 0 5 10 9 10H20m0 0-3-3m3 3-3 3M4 17h3.5c1.4 0 2.4-1.2 3.2-2.8M20 7h-3.5c-1.4 0-2.4 1.2-3.2 2.8M20 7l-3-3m3 3-3 3" />,
   settings: (
     <>
       <circle cx="12" cy="12" r="3" />

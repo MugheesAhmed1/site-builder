@@ -1,21 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-// The exact same component that ships in the downloaded project.
+// The exact same components that ship in the downloaded project.
 import Portfolio from "@/template/src/Portfolio.jsx";
-import type { Design, PortfolioContent } from "@/lib/types";
+import Website from "@/template/src/Website.jsx";
+import type { Design, SiteContent, SiteKind } from "@/lib/types";
 
-export default function Preview({ design, content }: { design: Design; content: PortfolioContent }) {
+export default function Preview({ kind, design, content, compact }: { kind: SiteKind; design: Design; content: SiteContent; compact?: boolean }) {
   const [device, setDevice] = useState<"desktop" | "mobile">("desktop");
   const [scheme, setScheme] = useState<"light" | "dark">(design.mode === "dark" ? "dark" : "light");
-  // Follow the design's starting theme when it changes (e.g. a new preset).
+  // Follow the design's starting theme when it changes (a new system, for example).
   useEffect(() => {
     if (design.mode !== "auto") setScheme(design.mode);
   }, [design.mode]);
+  const Site = (kind === "website" ? Website : Portfolio) as React.ComponentType<{ design: Design; content: SiteContent; preview: boolean; scheme: string }>;
   return (
-    <div className="preview">
+    <div className={"preview" + (compact ? " is-compact" : "")}>
       <div className="preview-bar">
-        <span className="small muted">Preview</span>
+        <span className="small muted">Live preview</span>
         <div className="row" style={{ gap: 6 }}>
           <div className="seg" role="group" aria-label="Theme">
             <button aria-pressed={scheme === "light"} className={scheme === "light" ? "is-on" : ""} onClick={() => setScheme("light")}>
@@ -37,7 +39,7 @@ export default function Preview({ design, content }: { design: Design; content: 
       </div>
       <div className={"preview-viewport" + (device === "mobile" ? " is-mobile" : "")}>
         <div className="preview-device">
-          <Portfolio design={design} content={content} preview scheme={scheme} />
+          <Site design={design} content={content} preview scheme={scheme} />
         </div>
       </div>
     </div>

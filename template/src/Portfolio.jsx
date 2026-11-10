@@ -24,7 +24,7 @@ const SECTION_TITLES = {
   contact: "Contact",
 };
 
-function fontsHref(fonts) {
+export function fontsHref(fonts) {
   const fams = Array.from(new Set([fonts.display, fonts.body, fonts.mono])).filter(Boolean);
   const q = fams.map((f) => "family=" + encodeURIComponent(f).replace(/%20/g, "+") + ":wght@400;500;600;700").join("&");
   return "https://fonts.googleapis.com/css2?" + q + "&display=swap";
@@ -38,7 +38,7 @@ function refCode(s, i) {
 
 const isCurrent = (end) => /present|current|now/i.test(end || "");
 
-function useSystemDark() {
+export function useSystemDark() {
   const [dark, setDark] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
@@ -51,7 +51,7 @@ function useSystemDark() {
 }
 
 // Adds .is-in to .pf-reveal blocks the first time they scroll into view.
-function useReveal(rootRef, key) {
+export function useReveal(rootRef, key) {
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
@@ -76,7 +76,7 @@ function useReveal(rootRef, key) {
   }, [rootRef, key]);
 }
 
-function Counter({ value, suffix, animate }) {
+export function Counter({ value, suffix, animate }) {
   const ref = useRef(null);
   const [shown, setShown] = useState(animate ? 0 : value);
   useEffect(() => {
@@ -132,7 +132,7 @@ function RoleCycle({ roles, animate }) {
   );
 }
 
-function Icon({ name }) {
+export function Icon({ name }) {
   const common = { width: 18, height: 18, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true };
   if (name === "sun")
     return (
@@ -162,7 +162,25 @@ function Icon({ name }) {
   return null;
 }
 
-function Section({ id, title, children, wide }) {
+// CSS variables for one design system and colour scheme. Shared with Website.jsx.
+export function themeStyle(d, pal, scheme) {
+  return {
+    "--pf-bg": pal.bg,
+    "--pf-surface": pal.surface,
+    "--pf-text": pal.text,
+    "--pf-muted": pal.muted,
+    "--pf-border": pal.border,
+    "--pf-accent": pal.accent,
+    "--pf-on-accent": pal.onAccent,
+    "--pf-radius": d.radius + "px",
+    "--pf-font-display": `'${d.fonts.display}', ui-sans-serif, system-ui, sans-serif`,
+    "--pf-font-body": `'${d.fonts.body}', ui-sans-serif, system-ui, sans-serif`,
+    "--pf-font-mono": `'${d.fonts.mono}', ui-monospace, monospace`,
+    colorScheme: scheme,
+  };
+}
+
+export function Section({ id, title, children, wide }) {
   return (
     <section id={"pf-" + id} className={"pf-section" + (wide ? " pf-section-wide" : "")}>
       <div className="pf-container pf-split">
@@ -312,7 +330,7 @@ function Projects({ items }) {
   );
 }
 
-function CopyEmail({ email }) {
+export function CopyEmail({ email }) {
   const [copied, setCopied] = useState(false);
   if (!email) return null;
   return (
@@ -366,23 +384,12 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
     return () => io.disconnect();
   }, [visible.join(",")]);
 
-  const style = {
-    "--pf-bg": pal.bg,
-    "--pf-surface": pal.surface,
-    "--pf-text": pal.text,
-    "--pf-muted": pal.muted,
-    "--pf-border": pal.border,
-    "--pf-accent": pal.accent,
-    "--pf-on-accent": pal.onAccent,
-    "--pf-radius": d.radius + "px",
-    "--pf-font-display": `'${d.fonts.display}', ui-sans-serif, system-ui, sans-serif`,
-    "--pf-font-body": `'${d.fonts.body}', ui-sans-serif, system-ui, sans-serif`,
-    "--pf-font-mono": `'${d.fonts.mono}', ui-monospace, monospace`,
-    colorScheme: scheme,
-  };
+  const style = themeStyle(d, pal, scheme);
 
   const h = c.hero;
-  const nav = visible.filter((s) => s !== "stats");
+  // Keep the menu short: minor sections drop out of the nav when there are many.
+  let nav = visible.filter((s) => s !== "stats");
+  if (nav.length > 6) nav = nav.filter((s) => !["certifications", "education", "testimonials", "process"].includes(s));
   const portrait = d.heroStyle === "portrait" && (h.photoUrl || preview);
   const roles = h.rotatingRoles && h.rotatingRoles.length ? h.rotatingRoles : [h.role];
 
@@ -548,7 +555,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
   };
 
   return (
-    <div ref={rootRef} className={"pf pf-scheme-" + scheme + (preview ? " pf-is-preview" : "")} data-motion={motion} style={style}>
+    <div ref={rootRef} className={"pf pf-scheme-" + scheme + (preview ? " pf-is-preview" : "")} data-motion={motion} data-density={d.density || "regular"} style={style}>
       <link rel="stylesheet" href={fontsHref(d.fonts)} />
       <header className="pf-nav">
         <div className="pf-container pf-nav-inner">
@@ -585,7 +592,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
                 {h.role ? ", " + h.role : ""}
               </span>
             </p>
-            <h1 className="pf-display pf-enter" style={{ "--i": 1 }}>
+            <h1 className={"pf-display pf-enter" + ((h.tagline || "").length > 34 ? " is-long" : "")} style={{ "--i": 1 }}>
               {h.tagline}
             </h1>
             {h.intro && (
