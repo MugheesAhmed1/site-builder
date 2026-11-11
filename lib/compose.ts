@@ -297,11 +297,12 @@ export function composePortfolioFromInput(inp: PortfolioInput): PortfolioContent
   // Order follows the goal (landing patterns from ui-ux-pro-max: Portfolio Grid puts work first,
   // Trust & Authority puts proof first, Service pages lead with what's on offer).
   const order: SectionId[] = freelance
-    ? ["stats", "services", "projects", "process", "testimonials", "about", "experience", "skills", "awards", "certifications", "languages", "custom", "cta", "contact"]
+    ? ["tiles", "services", "projects", "process", "testimonials", "about", "experience", "skills", "awards", "certifications", "languages", "custom", "cta", "contact"]
     : showcase
-      ? ["projects", "about", "stats", "skills", "experience", "testimonials", "awards", "certifications", "education", "languages", "custom", "cta", "contact"]
-      : ["stats", "about", "experience", "projects", "skills", "testimonials", "awards", "certifications", "education", "languages", "custom", "cta", "contact"];
+      ? ["projects", "tiles", "about", "skills", "experience", "testimonials", "awards", "certifications", "education", "languages", "custom", "cta", "contact"]
+      : ["tiles", "about", "experience", "projects", "skills", "testimonials", "awards", "certifications", "education", "languages", "custom", "cta", "contact"];
   content.sections = order.filter((s) => {
+    if (s === "tiles") return content.stats.length > 0 || content.skills.length > 0 || !!content.hero.location;
     const v = content[s as keyof PortfolioContent];
     return Array.isArray(v) ? v.length > 0 : true;
   });
@@ -402,10 +403,11 @@ export function composeWebsite(categoryId: string, a: Record<string, string>): W
   // Section order by business type, after landing patterns in ui-ux-pro-max: places people
   // visit lead with the offer and photos; service firms lead with proof and process.
   const order: WebsiteSectionId[] = c.physical
-    ? ["highlights", "services", "gallery", "about", "team", "testimonials", "pricing", "custom", "faq", "cta", "visit", "contact"]
-    : ["highlights", "clients", "services", "process", "about", "team", "gallery", "testimonials", "pricing", "custom", "faq", "cta", "visit", "contact"];
+    ? ["tiles", "services", "gallery", "about", "team", "testimonials", "pricing", "custom", "faq", "cta", "visit", "contact"]
+    : ["tiles", "clients", "services", "process", "about", "team", "gallery", "testimonials", "pricing", "custom", "faq", "cta", "visit", "contact"];
   content.sections = order.filter((s) => {
     if (s === "cta") return true;
+    if (s === "tiles") return content.highlights.length > 0 || content.services.length > 0;
     if (s === "visit") return !!(address || hours.length);
     if (s === "gallery") return c.id === "photo" || c.id === "food" || c.id === "beauty" || c.id === "events" || c.id === "property" || c.id === "shop";
     const v = content[s as keyof WebsiteContent];

@@ -134,7 +134,7 @@ function rollShape(r: () => number, mood: Mood): Pick<Design, "radius" | "densit
 
 function rollLayout(r: () => number, mood: Mood): Pick<Design, "heroStyle" | "experienceStyle" | "projectStyle" | "serviceStyle"> {
   return {
-    heroStyle: mood === "editorial" ? pick(r, ["portrait", "split", "statement"] as const) : mood === "bold" ? pick(r, ["statement", "centered", "split"] as const) : pick(r, ["statement", "portrait", "split", "centered"] as const),
+    heroStyle: r() < 0.4 ? "stage" : mood === "editorial" ? pick(r, ["portrait", "split", "statement"] as const) : mood === "bold" ? pick(r, ["statement", "centered", "split"] as const) : pick(r, ["statement", "portrait", "split", "centered"] as const),
     experienceStyle: mood === "tech" ? (r() < 0.7 ? "ledger" : "timeline") : mood === "editorial" ? (r() < 0.7 ? "list" : "timeline") : pick(r, ["ledger", "timeline", "list"] as const),
     projectStyle: mood === "editorial" ? pick(r, ["case", "index"] as const) : pick(r, ["grid", "case", "index"] as const),
     serviceStyle: pick(r, ["menu", "bento", "rows"] as const),
@@ -145,7 +145,7 @@ function rollLayout(r: () => number, mood: Mood): Pick<Design, "heroStyle" | "ex
 function rollMotion(r: () => number, mood: Mood): Pick<Design, "motion" | "anim" | "hover" | "progress" | "marquee" | "backdrop"> {
   const pool = MOTIONS.slice(1).filter((m: { tempo: string }) => (mood === "minimal" || mood === "editorial" ? m.tempo !== "quick" || r() < 0.5 : true));
   const m = pick(r, pool) as { id: string; hover: Design["hover"] };
-  const backdrop: Design["backdrop"] = mood === "bold" || mood === "tech" ? (r() < 0.6 ? "aurora" : "grid") : r() < 0.25 ? "aurora" : "none";
+  const backdrop: Design["backdrop"] = pick(r, mood === "bold" || mood === "tech" ? (["aurora", "particles", "mesh", "grid"] as const) : (["none", "aurora", "mesh", "particles"] as const));
   return { motion: "expressive", anim: m.id, hover: r() < 0.25 ? "spotlight" : m.hover, progress: r() < 0.5, marquee: r() < 0.6, backdrop };
 }
 

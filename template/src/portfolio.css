@@ -414,6 +414,97 @@
 @keyframes pf-aurora { to { transform: translate3d(4%, 3%, 0) scale(1.08); } }
 @media (prefers-reduced-motion: reduce) { .pf[data-backdrop="aurora"] .pf-hero::before { animation: none; } }
 
+
+/* ---- Rich motion: stage hero, character, widgets, live tiles, backgrounds (src/rich.jsx) ---- */
+.pf-hero-stage { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(32px, 5cqi, 80px); align-items: center; width: 100%; }
+.pf-hero-stage .pf-display { font-size: clamp(34px, 4.3cqi, 60px); max-width: 17ch; }
+.pf-stage { position: relative; justify-self: center; width: min(100%, 440px); aspect-ratio: 1; display: grid; place-items: center; }
+.pf-stage-ring { position: absolute; inset: 4%; border-radius: 50%; border: 1px dashed color-mix(in srgb, var(--pf-text) 18%, transparent); }
+.pf-stage-dot { position: absolute; top: -5px; left: 50%; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: var(--pf-accent); box-shadow: 0 0 0 5px color-mix(in srgb, var(--pf-accent) 22%, transparent); }
+.pf-stage-char { position: relative; width: 68%; }
+.pf-char { display: block; width: 100%; height: auto; overflow: visible; }
+.pf-char-disc { fill: color-mix(in srgb, var(--pf-accent) 16%, var(--pf-surface)); }
+.pf-char-shirt { fill: var(--pf-accent); }
+.pf-char-sleeve { stroke: var(--pf-accent); }
+.pf-char-badge { fill: var(--pf-on-accent); font-family: var(--pf-font-display); font-weight: 700; font-size: 16px; letter-spacing: 0.04em; }
+.pf-char-eye { fill: #1d1a19; }
+.pf-char-blob { fill: var(--pf-accent); }
+.pf-char-eye-bg { fill: #fff; }
+.pf-char-mouth { color: var(--pf-on-accent); }
+.pf-char-spark { fill: var(--pf-accent); }
+
+.pf-w-anchor { position: absolute; z-index: 2; }
+.pf-w { min-width: 150px; max-width: 220px; padding: 12px 14px; border-radius: 16px; color: var(--pf-text);
+  background: color-mix(in srgb, var(--pf-surface) 72%, transparent); border: 1px solid color-mix(in srgb, var(--pf-text) 12%, transparent);
+  backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 18px 40px -22px color-mix(in srgb, #000 60%, transparent); font-size: 14px; }
+.pf-w-label { display: block; font-size: 12px; color: var(--pf-muted); }
+.pf-w-value { display: block; font-family: var(--pf-font-display); font-size: 26px; line-height: 1.1; letter-spacing: -0.02em; }
+.pf-w-spark { display: block; width: 100%; height: 30px; margin-top: 6px; stroke: var(--pf-accent); }
+.pf-w-chat { min-height: 2.6em; line-height: 1.35; }
+.pf-w-caret { display: inline-block; width: 2px; height: 1em; margin-left: 2px; vertical-align: -2px; background: var(--pf-accent); animation: pf-caret 0.9s steps(1) infinite; }
+@keyframes pf-caret { 50% { opacity: 0; } }
+.pf-w-stars { display: flex; gap: 2px; color: #F5B301; font-size: 18px; }
+.pf-w-stars span { display: inline-block; }
+.pf-w-status { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+.pf-w-pulse { position: relative; width: 9px; height: 9px; border-radius: 50%; background: #22C55E; }
+.pf-w-pulse::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: inherit; animation: pf-ping 1.8s var(--pf-ease-out) infinite; }
+@keyframes pf-ping { to { transform: scale(2.8); opacity: 0; } }
+.pf-w-taglist { display: flex; flex-wrap: wrap; gap: 6px; }
+.pf-w-taglist span { padding: 3px 9px; border-radius: 999px; background: color-mix(in srgb, var(--pf-accent) 18%, transparent); font-size: 12px; font-weight: 600; }
+
+.pf-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(150px, auto); gap: clamp(12px, 1.6cqi, 18px); }
+.pf-tile { display: flex; flex-direction: column; gap: 6px; padding: clamp(18px, 2cqi, 24px); overflow: hidden; }
+.pf-tile.is-wide { grid-column: span 2; grid-row: span 2; }
+.pf-tile-label { font-size: 13px; color: var(--pf-muted); }
+.pf-tile-num { font-family: var(--pf-font-display); font-size: clamp(34px, 4cqi, 56px); line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.pf-tile.is-wide .pf-tile-num { font-size: clamp(44px, 6cqi, 84px); }
+.pf-tile-big { font-family: var(--pf-font-display); font-size: clamp(22px, 2.4cqi, 30px); letter-spacing: -0.02em; line-height: 1.15; }
+.pf-tile-cycle { display: inline-grid; overflow: hidden; }
+.pf-tile-cycle > span { grid-area: 1 / 1; color: var(--pf-accent); }
+.pf-tile-bars { display: flex; align-items: flex-end; gap: 8px; height: 110px; margin-top: auto; }
+.pf-tile-bars span { flex: 1; border-radius: 6px 6px 2px 2px; background: color-mix(in srgb, var(--pf-accent) 75%, transparent); transform-origin: bottom; }
+.pf-tile-bars span:nth-child(odd) { background: color-mix(in srgb, var(--pf-accent) 35%, transparent); }
+.pf-tile .pf-w-spark { margin-top: auto; height: 44px; }
+.pf-tile-toggle { display: flex; flex-direction: column; justify-content: space-between; height: 100%; gap: 16px; font-weight: 600; font-size: 17px; }
+.pf-switch { display: flex; width: 64px; height: 36px; padding: 4px; border-radius: 999px; background: color-mix(in srgb, var(--pf-text) 14%, transparent); transition: background-color 240ms ease; }
+.pf-switch.is-on { justify-content: flex-end; background: var(--pf-accent); }
+.pf-switch span { width: 28px; height: 28px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgb(0 0 0 / 0.2); }
+.pf-tile-clock { display: flex; align-items: center; gap: 14px; height: 100%; }
+.pf-tile-clock div { display: grid; gap: 2px; }
+.pf-tile-clock strong { font-size: 17px; }
+.pf-tile-pin { position: relative; flex: none; width: 46px; height: 46px; border-radius: 50%; background: color-mix(in srgb, var(--pf-accent) 16%, transparent); display: grid; place-items: center; }
+.pf-tile-pin span { width: 12px; height: 12px; border-radius: 50%; background: var(--pf-accent); }
+.pf-tile-pin::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--pf-accent); animation: pf-ping 2.2s var(--pf-ease-out) infinite; }
+
+.pf-tile-go { background: var(--pf-accent); color: var(--pf-on-accent); }
+.pf-tile-go .pf-tile-label { color: inherit; opacity: 0.8; }
+.pf-tile-link { display: flex; flex-direction: column; gap: 6px; height: 100%; }
+.pf-tile-arrow { margin-top: auto; font-size: 28px; line-height: 1; }
+.pf-particles { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; color: var(--pf-accent); pointer-events: none; }
+.pf-mesh { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.pf-mesh span { position: absolute; width: 46%; aspect-ratio: 1; border-radius: 50%; filter: blur(70px); opacity: 0.45; background: var(--pf-accent); animation: pf-blob 18s ease-in-out infinite alternate; }
+.pf-mesh span:nth-child(1) { left: -8%; top: -10%; }
+.pf-mesh span:nth-child(2) { right: -10%; top: 20%; background: color-mix(in oklch, var(--pf-accent), #7c3aed 55%); animation-duration: 22s; animation-delay: -6s; }
+.pf-mesh span:nth-child(3) { left: 30%; bottom: -30%; background: color-mix(in oklch, var(--pf-accent), #f59e0b 50%); animation-duration: 26s; animation-delay: -12s; opacity: 0.3; }
+.pf-scheme-light .pf-mesh span { opacity: 0.28; }
+@keyframes pf-blob { 33% { transform: translate(14%, 10%) scale(1.1); } 66% { transform: translate(-8%, 16%) scale(0.92); } 100% { transform: translate(6%, -10%) scale(1.05); } }
+@media (prefers-reduced-motion: reduce) {
+  .pf-mesh span, .pf-w-pulse::after, .pf-tile-pin::after, .pf-w-caret { animation: none; }
+}
+@container (max-width: 920px) {
+  .pf-hero-stage { grid-template-columns: minmax(0, 1fr); }
+  .pf-stage { width: min(100%, 380px); margin-top: 12px; }
+  .pf-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container (max-width: 520px) {
+  .pf-stage { width: 84%; }
+  .pf-w { min-width: 0; max-width: 140px; padding: 9px 11px; font-size: 12.5px; }
+  .pf-w-value { font-size: 20px; }
+  .pf-tile.is-wide { grid-column: 1 / -1; grid-row: auto; }
+  .pf-tile-bars { height: 80px; }
+}
+
 /* Smaller screens. Container queries, so the builder's phone preview matches real phones. */
 @container (max-width: 920px) {
   .pf-nav-links { display: none; }

@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import { palette, resolveScheme } from "./theme.js";
+import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
 import { Avatar, Counter, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
 // The whole portfolio, driven by two objects:
@@ -257,6 +258,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
     if (s === "about") return c.about && (c.about.paragraphs || []).filter(Boolean).length > 0;
     if (s === "contact") return true;
     if (s === "cta") return !!(c.cta && c.cta.heading);
+    if (s === "tiles") return arr("stats").length > 0 || arr("skills").length > 0 || !!(c.hero && c.hero.location);
     return arr(s).length > 0;
   };
   const visible = (c.sections || []).filter(hasData);
@@ -338,7 +340,28 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
     </figure>
   );
 
+  const first = (h.name || "").split(" ")[0];
+  const widgets = [
+    c.stats[0] && { type: "stat", label: c.stats[0].label, value: (c.stats[0].value ?? "") + (c.stats[0].suffix || "") },
+    { type: "chat", text: first ? `Hi, I'm ${first}. ${h.role ? h.role + "." : ""} Say hello!` : "Hi there. Say hello!" },
+    h.availability ? { type: "status", text: h.availability } : c.stats[1] && { type: "stat", label: c.stats[1].label, value: (c.stats[1].value ?? "") + (c.stats[1].suffix || "") },
+    skillsFlat.length > 0 && { type: "tags", items: skillsFlat },
+  ].filter(Boolean);
+
   const renderHero = () => {
+    if (hero === "stage") {
+      return (
+        <div className="pf-container pf-hero-stage">
+          <div className="pf-hero-text">
+            {kicker}
+            {headline}
+            {intro}
+            {ctas}
+          </div>
+          <Stage name={h.name} kind="person" widgets={widgets} still={!animated} />
+        </div>
+      );
+    }
     if (hero === "centered") {
       return (
         <div className="pf-container pf-hero-centered">
@@ -408,6 +431,8 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
 
   const render = (s) => {
     switch (s) {
+      case "tiles":
+        return <LiveTiles key={s} stats={c.stats} words={skillsFlat.slice(0, 6)} place={h.location} status={h.availability} />;
       case "stats":
         if (hero === "split") return null;
         return (
@@ -634,6 +659,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
       </header>
 
       <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
+        {animated && <Backdrop kind={d.backdrop} />}
         {renderHero()}
       </section>
 

@@ -43,11 +43,11 @@ export interface Design {
   density: "compact" | "regular" | "airy";
   motion: "none" | "subtle" | "expressive";
   anim: string;
-  backdrop?: "none" | "aurora" | "grid"; // an id from template/src/motion.js, M-000 is "Still"
+  backdrop?: "none" | "aurora" | "grid" | "mesh" | "particles"; // an id from template/src/motion.js, M-000 is "Still"
   hover: "lift" | "glow" | "line" | "spotlight" | "none";
   progress: boolean; // reading progress bar at the top
   marquee: boolean; // skills, clients or services scroll past in a strip
-  heroStyle: "statement" | "portrait" | "split" | "centered";
+  heroStyle: "statement" | "portrait" | "split" | "centered" | "stage";
   experienceStyle: "ledger" | "timeline" | "list";
   projectStyle: "grid" | "case" | "index";
   serviceStyle: "menu" | "bento" | "rows";
@@ -68,6 +68,7 @@ export interface Question {
 
 export type SectionId =
   | "stats"
+  | "tiles"
   | "services"
   | "awards"
   | "languages"
@@ -114,7 +115,7 @@ export interface PortfolioContent {
   sections: SectionId[];
 }
 
-export type WebsiteSectionId = "highlights" | "clients" | "services" | "about" | "process" | "gallery" | "team" | "pricing" | "testimonials" | "faq" | "cta" | "visit" | "custom" | "contact";
+export type WebsiteSectionId = "tiles" | "highlights" | "clients" | "services" | "about" | "process" | "gallery" | "team" | "pricing" | "testimonials" | "faq" | "cta" | "visit" | "custom" | "contact";
 
 export interface WebsiteContent {
   meta: { title: string; description: string };

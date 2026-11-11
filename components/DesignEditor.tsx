@@ -2,7 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Icon from "@/components/Icon";
-import { ALL_FONTS, HUES, LIBRARY, TYPE_PAIRINGS, colourOptions, contrastReport, fontsHref, fromBrandColour, moodFor, remix, shuffle, styleOf } from "@/lib/designs";
+import { useLibrary } from "@/lib/library";
+import { ALL_FONTS, HUES, TYPE_PAIRINGS, colourOptions, contrastReport, fontsHref, fromBrandColour, moodFor, remix, shuffle, styleOf } from "@/lib/designs";
 import { removeSavedDesign, saveDesign, savedDesigns } from "@/lib/store";
 import type { Design, DesignPart, SiteKind } from "@/lib/types";
 import { oklchToHex, palette } from "@/template/src/theme.js";
@@ -97,6 +98,7 @@ export default function DesignEditor({
   onLocks: (l: Partial<Record<DesignPart, boolean>>) => void;
 }) {
   const [tab, setTab] = useState<"tune" | "library">("tune");
+  const { list: LIBRARY, source } = useLibrary();
   const [q, setQ] = useState("");
   const [mode, setMode] = useState<"any" | "light" | "dark">("any");
   const [style, setStyle] = useState<"any" | "grotesk" | "geometric" | "humanist" | "serif">("any");
@@ -123,7 +125,7 @@ export default function DesignEditor({
       if (term && !`${d.preset} ${d.id} ${d.fonts.display} ${d.fonts.body} ${moodFor(d)}`.toLowerCase().includes(term)) return false;
       return true;
     });
-  }, [q, mode, style, corners]);
+  }, [LIBRARY, q, mode, style, corners]);
 
   return (
     <div className="design-controls">
@@ -306,8 +308,8 @@ export default function DesignEditor({
               <Seg
                 label="Opening"
                 value={design.heroStyle}
-                options={["statement", "portrait", "split", "centered"]}
-                labels={{ statement: "Big statement", portrait: "With photo", split: "With side panel", centered: "Centred" }}
+                options={["stage", "statement", "portrait", "split", "centered"]}
+                labels={{ stage: "Character and widgets", statement: "Big statement", portrait: "With photo", split: "With side panel", centered: "Centred" }}
                 onChange={(heroStyle) => set({ heroStyle })}
               />
             </div>
@@ -333,6 +335,7 @@ export default function DesignEditor({
 
       {tab === "library" && (
         <div className="stack" style={{ gap: 14 }}>
+          <p className="hint">{source === "github" ? "Up to date with the library on GitHub." : "Built-in library. The latest from GitHub loads when you're online."}</p>
           <input type="text" value={q} placeholder="Search by name, font or mood (warm, tech, editorial)" onChange={(e) => setQ(e.target.value)} aria-label="Search design systems" />
           <div className="row wrap" style={{ gap: 6 }}>
             <Seg label="Theme" value={mode} options={["any", "light", "dark"]} labels={{ any: "Any theme" }} onChange={setMode} />

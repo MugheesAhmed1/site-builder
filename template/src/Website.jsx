@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { palette, resolveScheme } from "./theme.js";
+import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
 import { Avatar, Counter, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
 // A one-page business website, driven by the same design system and animation styles
@@ -116,6 +117,7 @@ export default function Website({ design, content, preview = false, scheme: forc
     if (s === "visit") return c.visit && (c.visit.address || (c.visit.hours || []).length);
     if (s === "contact") return true;
     if (s === "cta") return !!(c.cta && c.cta.heading);
+    if (s === "tiles") return arr("highlights").length > 0 || arr("services").length > 0;
     return arr(s).length > 0;
   };
   const visible = (c.sections || []).filter(has);
@@ -173,7 +175,30 @@ export default function Website({ design, content, preview = false, scheme: forc
     </dl>
   );
 
+  const hl = arr("highlights");
+  const rating = hl.find((x) => /rating|stars|review/i.test(x.label));
+  const openNow = c.visit && c.visit.hours && c.visit.hours[0];
+  const widgets = [
+    rating ? { type: "rating", value: rating.value, label: rating.value + " " + rating.label } : hl[0] && { type: "stat", label: hl[0].label, value: hl[0].value },
+    { type: "chat", text: `Hi! ${h.primaryCta ? h.primaryCta + " in one tap." : "Message us any time."}` },
+    openNow ? { type: "status", text: openNow.days + ", " + openNow.time } : hl[1] && { type: "stat", label: hl[1].label, value: hl[1].value },
+    arr("services").length > 0 && { type: "tags", items: arr("services").map((x) => x.name) },
+  ].filter(Boolean);
+
   const renderHero = () => {
+    if (hero === "stage") {
+      return (
+        <div className="pf-container pf-hero-stage">
+          <div className="pf-hero-text">
+            {kicker}
+            {headline}
+            {sub}
+            {ctas}
+          </div>
+          <Stage name={c.brand.name} kind="blob" widgets={widgets} still={!animated} />
+        </div>
+      );
+    }
     if (hero === "centered") {
       return (
         <div className="pf-container pf-hero-centered">
@@ -250,6 +275,8 @@ export default function Website({ design, content, preview = false, scheme: forc
 
   const render = (s) => {
     switch (s) {
+      case "tiles":
+        return <LiveTiles key={s} stats={hl} words={arr("services").map((x) => x.name).slice(0, 6)} place={c.visit && c.visit.address ? c.visit.address.split(",").slice(-1)[0].trim() : ""} status={openNow ? "Open " + openNow.days : ""} />;
       case "highlights":
         if (hero === "split") return null;
         return (
@@ -516,6 +543,7 @@ export default function Website({ design, content, preview = false, scheme: forc
       </header>
 
       <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
+        {animated && <Backdrop kind={d.backdrop} />}
         {renderHero()}
       </section>
 

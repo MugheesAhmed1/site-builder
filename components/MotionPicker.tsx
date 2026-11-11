@@ -122,9 +122,9 @@ export default function MotionPicker({ design, onChange }: { design: Design; onC
         <div>
           <label className="lbl">Behind the opening</label>
           <div className="seg" role="group" aria-label="Opening backdrop">
-            {(["none", "aurora", "grid"] as const).map((b) => (
+            {(["none", "aurora", "mesh", "particles", "grid"] as const).map((b) => (
               <button key={b} aria-pressed={(design.backdrop ?? "none") === b} className={(design.backdrop ?? "none") === b ? "is-on" : ""} onClick={() => onChange({ backdrop: b })}>
-                {b === "none" ? "Plain" : b === "aurora" ? "Moving glow" : "Fine grid"}
+                {b === "none" ? "Plain" : b === "aurora" ? "Moving glow" : b === "mesh" ? "Colour blobs" : b === "particles" ? "Particles" : "Fine grid"}
               </button>
             ))}
           </div>

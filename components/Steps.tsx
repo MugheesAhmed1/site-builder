@@ -12,6 +12,7 @@ import type { PortfolioContent, Project, SiteContent, WebsiteContent } from "@/l
 export type Head = (title: string, intro: string, action?: React.ReactNode) => React.ReactNode;
 
 export const PORTFOLIO_SECTIONS: Record<string, string> = {
+  tiles: "Live tiles",
   stats: "Impact numbers",
   about: "About",
   process: "How I work",
@@ -29,6 +30,7 @@ export const PORTFOLIO_SECTIONS: Record<string, string> = {
   contact: "Contact",
 };
 export const WEBSITE_SECTIONS: Record<string, string> = {
+  tiles: "Live tiles",
   highlights: "Numbers",
   clients: "Trusted by strip",
   services: "Services or menu",
