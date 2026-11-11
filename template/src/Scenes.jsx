@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { REAL_SCENES, SCENE_PALETTES, sceneType } from "./scenes.js";
+import { asset } from "./real.js";
 
 // Draws the live scenes from scenes.js. Canvas scenes share one loop: it sizes the canvas
 // for sharp pixels, tracks the pointer (even when text sits on top), pauses when the
@@ -1370,7 +1371,7 @@ function loadImg(src, env) {
   const im = new Image();
   im.decoding = "async";
   im.onload = () => env.redraw && env.redraw();
-  im.src = src;
+  im.src = asset(src);
   return im;
 }
 
