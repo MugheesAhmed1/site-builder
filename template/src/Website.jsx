@@ -1,11 +1,11 @@
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { palette, resolveScheme } from "./theme.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
 import { CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
 import { Scene } from "./Scenes.jsx";
 import { Carousel, Film, Flight, Grain, LineLoader, ScrollWords, SmoothScroll } from "./studio.jsx";
 import { Extras } from "./extras.jsx";
-import { Avatar, Counter, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
+import { Avatar, Counter, cleanContent, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
 // A one-page business website, driven by the same design system and animation styles
 // as the portfolio. Edit src/site-data.json to change words, prices, hours or sections.
@@ -105,7 +105,7 @@ function Services({ items, style }) {
 
 export default function Website({ design, content, preview = false, scheme: forcedScheme }) {
   const rootRef = useRef(null);
-  const c = content;
+  const c = useMemo(() => cleanContent(content), [content]);
   const d = design;
   const systemDark = useSystemDark();
   const [override, setOverride] = useState(null);
