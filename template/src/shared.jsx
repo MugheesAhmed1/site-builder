@@ -10,6 +10,27 @@ export function fontsHref(fonts) {
   return "https://fonts.googleapis.com/css2?" + q + "&display=swap";
 }
 
+// Words and links come from a form (or a backup file), so a link is only kept when it is
+// something a visitor can safely open: web, mail, phone, WhatsApp, a page anchor, a relative
+// file or a picture. Anything else ("javascript:", "data:text/html", ...) is dropped.
+const SAFE_LINK = /^(https?:|mailto:|tel:|sms:|whatsapp:|#|\/|\.\/|\.\.\/)/i;
+const NO_SCHEME = /^[^:]*$/;
+export function safeUrl(v, image) {
+  if (typeof v !== "string") return v;
+  const t = v.trim();
+  if (!t) return v;
+  if (image && /^data:image\/(png|jpe?g|webp|gif|avif);base64,/i.test(t)) return v;
+  return SAFE_LINK.test(t) || NO_SCHEME.test(t) ? v : "";
+}
+
+// Returns a copy of the content with every link-like field made safe.
+export function cleanContent(node, key) {
+  if (Array.isArray(node)) return node.map((x) => cleanContent(x, key));
+  if (node && typeof node === "object") return Object.fromEntries(Object.entries(node).map(([k, v]) => [k, cleanContent(v, k)]));
+  if (typeof node === "string" && key && /(url|href|link|linkedin|github|website|instagram|facebook|twitter|whatsapp|map)s?$/i.test(key)) return safeUrl(node, /(photo|image|img|avatar|logo|poster)/i.test(key));
+  return node;
+}
+
 export function useSystemDark() {
   const [dark, setDark] = useState(false);
   useEffect(() => {

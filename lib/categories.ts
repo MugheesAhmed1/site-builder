@@ -262,7 +262,7 @@ export const CATEGORIES: Category[] = [
   {
     id: "dentist",
     label: "Dentist",
-    keywords: ["dentist", "dental", "teeth", "orthodontist", "braces", "smile clinic", "implants", "whitening"],
+    keywords: ["dentist", "dentistry", "dental clinic", "dental", "teeth", "orthodontist", "braces", "smile clinic", "implants", "whitening"],
     physical: true,
     pricing: true,
     primaryCta: "Book a check-up",

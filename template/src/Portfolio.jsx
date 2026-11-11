@@ -5,7 +5,7 @@ import { CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx"
 import { Scene } from "./Scenes.jsx";
 import { Carousel, Film, Flight, Grain, LineLoader, ScrollWords, SmoothScroll } from "./studio.jsx";
 import { Extras } from "./extras.jsx";
-import { Avatar, Counter, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
+import { Avatar, Counter, cleanContent, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
 // The whole portfolio, driven by two objects:
 //   design: colours, fonts, shape, layout choices and one of 728 animation styles
@@ -247,7 +247,7 @@ function CopyEmail({ email }) {
 
 export default function Portfolio({ design, content, preview = false, scheme: forcedScheme }) {
   const rootRef = useRef(null);
-  const c = content;
+  const c = useMemo(() => cleanContent(content), [content]);
   const d = design;
   const systemDark = useSystemDark();
   const [override, setOverride] = useState(null);
