@@ -1,6 +1,9 @@
 /* ---------------------------------------------------------------- The cast: characters */
 .cc { display: block; overflow: visible; }
 .cc-body { transform-box: fill-box; transform-origin: 50% 100%; }
+.cc-real { position: relative; display: block; width: var(--cc-size, 160px); height: auto; aspect-ratio: 1; flex: none; perspective: 700px; }
+.cc-real .cc-body { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; transform-origin: 50% 100%; user-select: none; -webkit-user-drag: none; filter: drop-shadow(0 10px 18px rgb(0 0 0 / 0.16)); }
+.cc-real-shadow { position: absolute; left: 22%; right: 22%; bottom: -2%; height: 7%; border-radius: 50%; background: radial-gradient(closest-side, rgb(0 0 0 / 0.22), transparent); }
 .cc-eyes { animation: cc-blink 5.2s infinite; transform-box: fill-box; transform-origin: center; }
 @keyframes cc-blink { 0%, 46%, 50%, 100% { scale: 1 1; } 48% { scale: 1 0.1; } }
 

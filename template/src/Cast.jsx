@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
 import { PALETTES } from "./cast.js";
 
-// Draws the cast from src/cast.js: 520 characters and 512 widgets, each with its own idle
+// Draws the cast from src/cast.js: 520 drawn characters, 60 real-life ones and 512 widgets, each with its own idle
 // animation. Loops are CSS (cheap, run off the main thread); eyes that follow the pointer
 // and the scroll story use Motion. Reduced motion stops the loops.
 
@@ -459,7 +459,27 @@ function Accessory({ kind, f, top, neck, P }) {
   return null;
 }
 
+// A photoreal character from the real-life pack: a cut-out picture that idles like the
+// drawn ones, leans toward the pointer when live and sits on a soft contact shadow.
+function RealCharacter({ def, size, live, className, label }) {
+  const reduce = useReducedMotion();
+  const eyes = usePointerEyes(live && !reduce);
+  const rotateY = useTransform(eyes.x, (v) => v * 2.2);
+  const rotateX = useTransform(eyes.y, (v) => v * -1.6);
+  return (
+    <span className={`cc cc-real cc-idle-${def.idle} cc-fam-${def.family} ${className}`} style={{ "--cc-size": size + "px" }} role="img" aria-label={label || def.name}>
+      <span className="cc-real-shadow" aria-hidden="true" />
+      <motion.img className="cc-body" src={def.src} alt="" draggable={false} loading="lazy" decoding="async" style={live ? { rotateY, rotateX } : undefined} />
+    </span>
+  );
+}
+
 export function CastCharacter({ def, size = 160, live = false, className = "", label = "" }) {
+  if (def && def.src) return <RealCharacter def={def} size={size} live={live} className={className} label={label} />;
+  return <DrawnCharacter def={def} size={size} live={live} className={className} label={label} />;
+}
+
+function DrawnCharacter({ def, size, live, className, label }) {
   const reduce = useReducedMotion();
   const eyes = usePointerEyes(live && !reduce);
   if (!def) return null;

@@ -4,6 +4,7 @@ import { getMedia, mediaRefs, swapMedia } from "@/lib/media";
 import JSZip from "jszip";
 import { TEMPLATE_FILES } from "./template-files";
 import { palette, resolveScheme } from "@/template/src/theme.js";
+import { sceneAssets } from "@/template/src/scenes.js";
 import type { PortfolioContent, Project, WebsiteContent } from "./types";
 
 // Builds the downloadable React (Vite) project: the template files plus this
@@ -59,9 +60,24 @@ export async function downloadZip(p: Project) {
     folder.file("public/" + name, m[2], { base64: true });
     return "/" + name;
   });
+  // Real-life pack pictures (a photoreal character, real fish or sprites) are files served by
+  // the builder under /real; the download gets its own copy at the same path.
+  for (const path of realAssets(p)) {
+    const r = await fetch(path).catch(() => null);
+    if (r && r.ok) folder.file("public" + path, await r.blob());
+  }
   folder.file("src/site-data.json", JSON.stringify({ kind: p.kind, design: swapMedia(p.design, (r) => vids.get(r) || ""), content }, null, 2));
   const blob = await zip.generateAsync({ type: "blob" });
   saveBlob(blob, base + ".zip");
+}
+
+export function realAssets(p: Project): string[] {
+  const out = new Set<string>(sceneAssets(p.design.scene));
+  JSON.stringify([p.design, p.content], (_k, v) => {
+    if (typeof v === "string" && /^\/real\/[\w/-]+\.webp$/.test(v)) out.add(v);
+    return v;
+  });
+  return [...out];
 }
 
 export function saveBlob(blob: Blob, name: string) {

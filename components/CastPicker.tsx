@@ -14,7 +14,7 @@ import { SCENES } from "@/template/src/scenes.js";
 import { categoryLabel, fitFor, fitsCharacter, fitsWidget } from "@/lib/fit";
 import type { Design } from "@/lib/types";
 
-// The Characters step: 520 characters and 512 widgets, all already animated. Pick one
+// The Characters step: 580 characters (520 drawn, 60 real-life) and 512 widgets, all already animated. Pick one
 // character and up to six widgets; the site is then built around them (the opening scene,
 // a pinned scroll story, a live widget wall and a character that peeks in near the end).
 
@@ -62,7 +62,7 @@ export default function CastPicker({ design, onChange, ctx, kind, category, phot
   const vars = themeStyle(design, pal, design.mode === "dark" ? "dark" : "light") as React.CSSProperties;
 
   const chars = useMemo(() => {
-    const list = lib.characters.filter((c) => (family === "all" || c.family === family) && (scope === "all" || family !== "all" || fitsCharacter(c, fit)));
+    const list = lib.characters.filter((c) => (family === "all" || c.family === family) && (scope === "all" || (family !== "all" && !c.fits) || fitsCharacter(c, fit)));
     // Best fitting families first, in the order the category lists them.
     return scope === "fit" ? [...list].sort((a, b) => fit.families.indexOf(a.family) - fit.families.indexOf(b.family)) : list;
   }, [lib.characters, family, scope, fit]);
@@ -169,7 +169,7 @@ export default function CastPicker({ design, onChange, ctx, kind, category, phot
         </div>
         {tab === "scenes" ? null : tab === "characters" ? (
           <div className="chips-scroll" role="group" aria-label="Family">
-            {[{ id: "all", name: scope === "fit" ? "Best families" : "Every family" }, ...(scope === "fit" ? FAMILIES.filter((f) => fit.families.includes(f.id)).sort((a, b) => fit.families.indexOf(a.id) - fit.families.indexOf(b.id)) : FAMILIES)].map((f) => (
+            {[{ id: "all", name: scope === "fit" ? "Best families" : "Every family" }, ...(scope === "fit" ? FAMILIES.filter((f) => fit.families.includes(f.id) || lib.characters.some((c) => c.family === f.id && c.fits && fitsCharacter(c, fit))).sort((a, b) => fit.families.indexOf(a.id) - fit.families.indexOf(b.id)) : FAMILIES)].map((f) => (
               <button key={f.id} className={"chip chip-sm" + (family === f.id ? " is-on" : "")} aria-pressed={family === f.id} onClick={() => (setFamily(f.id), resetPage())}>
                 {f.name}
               </button>
@@ -194,7 +194,7 @@ export default function CastPicker({ design, onChange, ctx, kind, category, phot
           </>
         )}
         {tab !== "scenes" && <p className="hint">
-          {list.length} {tab} shown{scope === "fit" ? ` that suit ${categoryLabel(suitKind, suit).toLowerCase()}` : ""}{lib.source === "github" ? ", including the latest from your GitHub library" : ""}. {tab === "widgets" ? (cast ? `Choose up to ${MAX_WIDGETS}; they fill with your own words and numbers.` : "Pick a character first.") : "Each one is already animated; the preview shows it on your site."}
+          {list.length} {tab} shown{scope === "fit" ? ` that suit ${categoryLabel(suitKind, suit).toLowerCase()}` : ""}{lib.source === "github" ? ", including the latest from your GitHub library" : ""}. {tab === "widgets" ? (cast ? `Choose up to ${MAX_WIDGETS}; they fill with your own words and numbers.` : "Pick a character first.") : "Each one is already animated; the preview shows it on your site."}{tab === "characters" && family.startsWith("real-") ? " Real-life pictures were made for this library with Pollinations.ai and are saved with your site, so nothing is generated while it runs." : ""}
         </p>}
       </div>
 

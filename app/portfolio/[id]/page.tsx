@@ -29,7 +29,7 @@ const ease = [0.23, 1, 0.32, 1] as const;
 const FLOW: { id: StepId; title: string; hint: string }[] = [
   { id: "questions", title: "Your details", hint: "Fill the form or import a résumé" },
   { id: "design", title: "Look", hint: "500 design systems to remix" },
-  { id: "cast", title: "Characters", hint: "520 characters, 512 widgets" },
+  { id: "cast", title: "Characters", hint: "580 characters, 512 widgets" },
   { id: "motion", title: "Animation", hint: "728 styles played by Motion" },
   { id: "build", title: "Check and edit", hint: "Every word, every section" },
   { id: "deploy", title: "Publish", hint: "Download and put it online" },
