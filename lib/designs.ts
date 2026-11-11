@@ -1,5 +1,6 @@
 import type { Design, DesignPart } from "./types";
 import { hexToOklch, oklchToHex, palette, contrast } from "@/template/src/theme.js";
+import { MOTIONS } from "@/template/src/motion.js";
 
 // Rule-based design-system generator. No AI: every system is built from curated parts
 // (type pairings, accent colours, neutral tints, shape and layout settings) combined with
@@ -131,13 +132,21 @@ function rollShape(r: () => number, mood: Mood): Pick<Design, "radius" | "densit
   return { radius, density: d < 0.25 ? "compact" : d < 0.7 ? "regular" : "airy" };
 }
 
-function rollLayout(r: () => number, mood: Mood): Pick<Design, "motion" | "heroStyle" | "experienceStyle"> {
-  const m = r();
+function rollLayout(r: () => number, mood: Mood): Pick<Design, "heroStyle" | "experienceStyle" | "projectStyle" | "serviceStyle"> {
   return {
-    motion: m < 0.12 ? "none" : m < 0.6 ? "subtle" : "expressive",
-    heroStyle: r() < 0.6 ? "statement" : "portrait",
+    heroStyle: mood === "editorial" ? pick(r, ["portrait", "split", "statement"] as const) : mood === "bold" ? pick(r, ["statement", "centered", "split"] as const) : pick(r, ["statement", "portrait", "split", "centered"] as const),
     experienceStyle: mood === "tech" ? (r() < 0.7 ? "ledger" : "timeline") : mood === "editorial" ? (r() < 0.7 ? "list" : "timeline") : pick(r, ["ledger", "timeline", "list"] as const),
+    projectStyle: mood === "editorial" ? pick(r, ["case", "index"] as const) : pick(r, ["grid", "case", "index"] as const),
+    serviceStyle: pick(r, ["menu", "bento", "rows"] as const),
   };
+}
+
+// Always animated by default; "Still" is only ever a deliberate choice.
+function rollMotion(r: () => number, mood: Mood): Pick<Design, "motion" | "anim" | "hover" | "progress" | "marquee" | "backdrop"> {
+  const pool = MOTIONS.slice(1).filter((m: { tempo: string }) => (mood === "minimal" || mood === "editorial" ? m.tempo !== "quick" || r() < 0.5 : true));
+  const m = pick(r, pool) as { id: string; hover: Design["hover"] };
+  const backdrop: Design["backdrop"] = mood === "bold" || mood === "tech" ? (r() < 0.6 ? "aurora" : "grid") : r() < 0.25 ? "aurora" : "none";
+  return { motion: "expressive", anim: m.id, hover: r() < 0.25 ? "spotlight" : m.hover, progress: r() < 0.5, marquee: r() < 0.6, backdrop };
 }
 
 function hexHue(hex: string): number {
@@ -169,6 +178,7 @@ export function generateDesign(seed: number, id?: string): Design {
     ...type,
     ...rollShape(r, mood),
     ...rollLayout(r, mood),
+    ...rollMotion(r, mood),
   };
 }
 
@@ -181,6 +191,7 @@ export function remix(d: Design, part: DesignPart, seed = Math.floor(Math.random
   if (part === "type") Object.assign(next, rollType(r));
   if (part === "shape") Object.assign(next, rollShape(r, mood));
   if (part === "layout") Object.assign(next, rollLayout(r, mood));
+  if (part === "motion") Object.assign(next, rollMotion(r, mood));
   return next;
 }
 
@@ -191,7 +202,8 @@ export function shuffle(d: Design, locks: Partial<Record<DesignPart, boolean>>, 
   if (locks.colour) Object.assign(keep, { accent: d.accent, hue: d.hue, tint: d.tint, mode: d.mode });
   if (locks.type) Object.assign(keep, { fonts: d.fonts });
   if (locks.shape) Object.assign(keep, { radius: d.radius, density: d.density });
-  if (locks.layout) Object.assign(keep, { motion: d.motion, heroStyle: d.heroStyle, experienceStyle: d.experienceStyle });
+  if (locks.layout) Object.assign(keep, { heroStyle: d.heroStyle, experienceStyle: d.experienceStyle, projectStyle: d.projectStyle, serviceStyle: d.serviceStyle });
+  if (locks.motion) Object.assign(keep, { motion: d.motion, anim: d.anim, hover: d.hover, progress: d.progress, marquee: d.marquee });
   return { ...fresh, ...keep };
 }
 
@@ -272,6 +284,7 @@ const HAND_MADE: Design[] = [
     // Inspired by Mughees's portfolio (mugheesahmed-portfolio.vercel.app): deep navy base,
     // settlement green, reference codes and the "career ledger". An approximation only.
     id: "DS-001",
+    anim: "M-020", hover: "glow", progress: true, marquee: true, projectStyle: "grid", serviceStyle: "rows",
     preset: "Ledger",
     mode: "dark",
     hue: 257,
@@ -286,6 +299,7 @@ const HAND_MADE: Design[] = [
   },
   {
     id: "DS-002",
+    anim: "M-056", hover: "lift", progress: false, marquee: true, projectStyle: "case", serviceStyle: "bento",
     preset: "Studio",
     mode: "light",
     hue: 70,
@@ -294,12 +308,13 @@ const HAND_MADE: Design[] = [
     fonts: { display: "Bricolage Grotesque", body: "Hanken Grotesk", mono: "JetBrains Mono" },
     radius: 4,
     density: "airy",
-    motion: "subtle",
+    motion: "expressive",
     heroStyle: "portrait",
     experienceStyle: "list",
   },
   {
     id: "DS-003",
+    anim: "M-004", hover: "line", progress: true, marquee: false, projectStyle: "index", serviceStyle: "menu",
     preset: "Quiet",
     mode: "auto",
     hue: 230,
@@ -308,12 +323,13 @@ const HAND_MADE: Design[] = [
     fonts: { display: "Instrument Sans", body: "Instrument Sans", mono: "DM Mono" },
     radius: 8,
     density: "regular",
-    motion: "subtle",
+    motion: "expressive",
     heroStyle: "statement",
     experienceStyle: "timeline",
   },
   {
     id: "DS-004",
+    anim: "M-060", hover: "line", progress: false, marquee: false, projectStyle: "case", serviceStyle: "menu",
     preset: "Editorial",
     mode: "light",
     hue: 85,
@@ -322,7 +338,7 @@ const HAND_MADE: Design[] = [
     fonts: { display: "Fraunces", body: "Public Sans", mono: "IBM Plex Mono" },
     radius: 2,
     density: "airy",
-    motion: "subtle",
+    motion: "expressive",
     heroStyle: "portrait",
     experienceStyle: "list",
   },
@@ -362,8 +378,11 @@ export function fontsHref(families: string[], weights = "500;600") {
 // Projects saved by earlier versions used other design shapes. Map them over.
 export function normalizeDesign(d: unknown): Design {
   const x = (d ?? {}) as Partial<Design> & Record<string, unknown>;
+  const defaults: Partial<Design> = { density: "regular", anim: "M-002", hover: "lift", progress: false, marquee: false, projectStyle: "grid", serviceStyle: "menu", motion: "expressive" };
   if (typeof x.hue === "number" && x.fonts && "display" in (x.fonts as object)) {
-    return { ...LIBRARY[0], ...x, id: x.id ?? "custom", density: x.density ?? "regular" } as Design;
+    const out = { ...LIBRARY[0], ...defaults, ...x, id: x.id ?? "custom" } as Design;
+    if (out.motion === "none" && !x.anim) out.anim = "M-000";
+    return out;
   }
   const base = { ...LIBRARY[0] };
   const old = x as unknown as { colors?: { primary?: string }; mode?: string };

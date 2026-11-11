@@ -1,26 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { palette, resolveScheme } from "./theme.js";
-import { Counter, Icon, Section, fontsHref, themeStyle, useReveal, useSystemDark } from "./Portfolio.jsx";
+import { Avatar, Counter, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
-// A one-page business website, driven by the same design system as the portfolio.
-// Edit src/site-data.json to change words, prices, hours or sections.
+// A one-page business website, driven by the same design system and animation styles
+// as the portfolio. Edit src/site-data.json to change words, prices, hours or sections.
+// Section order follows proven landing patterns per business type (ui-ux-pro-max).
 
-const TITLES = {
-  highlights: "At a glance",
-  services: "What we offer",
-  about: "About",
-  process: "How it works",
-  gallery: "Gallery",
-  pricing: "Prices",
-  testimonials: "What people say",
-  faq: "Questions",
-  visit: "Visit us",
-  contact: "Contact",
-};
+const NAV = { services: "Services", about: "About", gallery: "Gallery", team: "Team", pricing: "Prices", faq: "FAQ", visit: "Visit", contact: "Contact" };
 
-const NAV = { services: "Services", about: "About", pricing: "Prices", faq: "FAQ", visit: "Visit", contact: "Contact" };
-
-// "3000+" -> 3000 and "+", "4.9" -> 4.9. Anything else is shown as written.
 function splitNumber(v) {
   const m = /^\s*([\d.,]+)\s*([^\d\s].*)?$/.exec(String(v));
   if (!m) return null;
@@ -32,9 +19,9 @@ function digits(s) {
   return (s || "").replace(/[^\d]/g, "");
 }
 
-function PhotoSlot({ label, preview, tall }) {
+function PhotoSlot({ label, preview }) {
   return (
-    <div className={"pf-photo-slot ws-slot" + (tall ? " is-tall" : "")}>
+    <div className="pf-photo-slot ws-slot">
       <span>Photo: {label}</span>
       {preview && <small>Add an image link for this slot in the editor.</small>}
     </div>
@@ -62,6 +49,55 @@ function Faq({ items }) {
   );
 }
 
+function Services({ items, style }) {
+  const priced = items.some((x) => x.price);
+  const mode = style === "menu" && !priced ? "rows" : style;
+  if (mode === "bento") {
+    return (
+      <div className="pf-bento">
+        {items.map((x, i) => (
+          <article className="pf-bento-cell pf-card pf-reveal" key={i} style={{ "--i": i }}>
+            <span className="pf-mono pf-quiet">{String(i + 1).padStart(2, "0")}</span>
+            <h3 className="pf-h3">{x.name}</h3>
+            {x.description && <p className="pf-muted">{x.description}</p>}
+            {x.price && <p className="pf-price pf-mono">{x.price}</p>}
+          </article>
+        ))}
+      </div>
+    );
+  }
+  if (mode === "rows") {
+    return (
+      <ol className="pf-index">
+        {items.map((x, i) => (
+          <li className="pf-index-row pf-reveal" key={i} style={{ "--i": i }}>
+            <span className="pf-mono pf-quiet">{String(i + 1).padStart(2, "0")}</span>
+            <div>
+              <h3 className="pf-index-title">{x.name}</h3>
+              {x.description && <p className="pf-muted">{x.description}</p>}
+            </div>
+            {x.price && <span className="ws-price pf-mono">{x.price}</span>}
+          </li>
+        ))}
+      </ol>
+    );
+  }
+  return (
+    <ul className="ws-menu">
+      {items.map((x, i) => (
+        <li className="ws-menu-row pf-reveal" key={i} style={{ "--i": i }}>
+          <div>
+            <h3 className="pf-h3">{x.name}</h3>
+            {x.description && <p className="pf-muted">{x.description}</p>}
+          </div>
+          <span className="ws-leader" aria-hidden="true" />
+          {x.price && <span className="ws-price pf-mono">{x.price}</span>}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export default function Website({ design, content, preview = false, scheme: forcedScheme }) {
   const rootRef = useRef(null);
   const c = content;
@@ -70,42 +106,152 @@ export default function Website({ design, content, preview = false, scheme: forc
   const [override, setOverride] = useState(null);
   const scheme = forcedScheme || override || resolveScheme(d, systemDark);
   const pal = palette(d, scheme);
-  const motion = d.motion || "subtle";
-  const animate = motion !== "none";
+  const animated = d.motion !== "none" && d.anim !== "M-000";
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState("");
+  const arr = (k) => (Array.isArray(c[k]) ? c[k] : []);
 
   const has = (s) => {
-    if (s === "about") return c.about && c.about.paragraphs && c.about.paragraphs.filter(Boolean).length > 0;
+    if (s === "about") return c.about && (c.about.paragraphs || []).filter(Boolean).length > 0;
     if (s === "visit") return c.visit && (c.visit.address || (c.visit.hours || []).length);
     if (s === "contact") return true;
-    return Array.isArray(c[s]) && c[s].length > 0;
+    if (s === "cta") return !!(c.cta && c.cta.heading);
+    return arr(s).length > 0;
   };
-  const visible = (c.sections || []).filter((s) => TITLES[s] && has(s));
-  useReveal(rootRef, JSON.stringify(c) + motion);
-
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root || !("IntersectionObserver" in window)) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) if (e.isIntersecting) setActiveId(e.target.id.replace("pf-", ""));
-      },
-      { rootMargin: "-45% 0px -50% 0px" }
-    );
-    root.querySelectorAll(".pf-section").forEach((s) => io.observe(s));
-    return () => io.disconnect();
-  }, [visible.join(",")]);
+  const visible = (c.sections || []).filter(has);
+  useReveal(rootRef, JSON.stringify(c) + JSON.stringify(d), d);
+  useSpotlight(rootRef, animated && d.hover === "spotlight");
+  useActiveSection(rootRef, visible.join(","), setActiveId);
 
   const h = c.hero;
-  const ct = c.contact;
+  const ct = c.contact || {};
+  const hero = d.heroStyle || "statement";
   const external = /^https?:|^tel:|^mailto:/.test(h.primaryHref || "");
   const secondaryHref = visible.includes("visit") && h.secondaryCta === "Find us" ? "#pf-visit" : visible.includes("services") ? "#pf-services" : "#pf-contact";
   const showImage = h.imageUrl || preview;
+  const facts = [
+    c.visit && c.visit.address && ["Find us", c.visit.address.split(",").slice(-2).join(",").trim()],
+    c.visit && c.visit.hours && c.visit.hours[0] && ["Open", c.visit.hours[0].days + ", " + c.visit.hours[0].time],
+    (ct.phone || ct.whatsapp) && ["Call or message", ct.phone || ct.whatsapp],
+    !(c.visit && c.visit.address) && ct.email && ["Email", ct.email],
+  ]
+    .filter(Boolean)
+    .slice(0, 3);
+
+  const kicker = (
+    <p className="pf-hero-kicker pf-enter" style={{ "--i": 0 }}>
+      <span className="pf-dot" aria-hidden="true" />
+      <span>{h.kicker}</span>
+    </p>
+  );
+  const headline = <Headline text={h.headline} mode={animated ? motionAttrs(d)["data-headline"] : "none"} className={"pf-display" + ((h.headline || "").length > 34 ? " is-long" : "")} />;
+  const sub = h.sub && (
+    <p className="pf-hero-sub pf-enter" style={{ "--i": 2 }}>
+      {h.sub}
+    </p>
+  );
+  const ctas = (
+    <div className="pf-row pf-wrap pf-hero-ctas pf-enter" style={{ "--i": 3 }}>
+      <a className="pf-btn pf-btn-primary" href={h.primaryHref || "#pf-contact"} target={/^https?:/.test(h.primaryHref) ? "_blank" : undefined} rel="noreferrer">
+        {h.primaryCta}
+      </a>
+      {h.secondaryCta && (
+        <a className="pf-btn pf-btn-quiet" href={secondaryHref}>
+          {h.secondaryCta}
+        </a>
+      )}
+    </div>
+  );
+  const factList = facts.length > 0 && (
+    <dl className="pf-facts pf-enter" style={{ "--i": 4 }}>
+      {facts.map(([k, v]) => (
+        <div key={k}>
+          <dt>{k}</dt>
+          <dd>{v}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+
+  const renderHero = () => {
+    if (hero === "centered") {
+      return (
+        <div className="pf-container pf-hero-centered">
+          {kicker}
+          {headline}
+          {sub}
+          {ctas}
+          {h.imageUrl && (
+            <figure className="ws-hero-wide pf-enter" style={{ "--i": 4 }}>
+              <img src={h.imageUrl} alt={c.brand.name} />
+            </figure>
+          )}
+        </div>
+      );
+    }
+    if (hero === "split") {
+      const hl = arr("highlights").slice(0, 3);
+      return (
+        <div className="pf-container pf-hero-split">
+          <div className="pf-hero-text">
+            {kicker}
+            {headline}
+            {sub}
+            {ctas}
+          </div>
+          <aside className="pf-hero-panel pf-enter" style={{ "--i": 3 }}>
+            <div className="pf-row" style={{ gap: 14 }}>
+              <Avatar name={c.brand.name} size={52} />
+              <div>
+                <strong>{c.brand.name}</strong>
+                <p className="pf-small pf-muted">{c.brand.category}</p>
+              </div>
+            </div>
+            {hl.length > 0 && (
+              <dl className="pf-panel-stats">
+                {hl.map((x, i) => {
+                  const n = splitNumber(x.value);
+                  return (
+                    <div key={i}>
+                      <dd>{n ? <Counter value={n.value} suffix={n.suffix} animate={animated} /> : x.value}</dd>
+                      <dt>{x.label}</dt>
+                    </div>
+                  );
+                })}
+              </dl>
+            )}
+            {facts.map(([k, v]) => (
+              <p className="pf-small" key={k}>
+                <span className="pf-muted">{k}: </span>
+                {v}
+              </p>
+            ))}
+          </aside>
+        </div>
+      );
+    }
+    return (
+      <div className={"pf-container pf-hero-inner" + (showImage && hero === "portrait" ? " is-portrait" : "")}>
+        <div className="pf-hero-text">
+          {kicker}
+          {headline}
+          {sub}
+          {ctas}
+        </div>
+        {showImage && hero === "portrait" && (
+          <figure className="pf-portrait ws-hero-img pf-enter" style={{ "--i": 2 }}>
+            {h.imageUrl ? <img src={h.imageUrl} alt={c.brand.name} /> : <PhotoSlot label="main photo" preview={preview} />}
+          </figure>
+        )}
+        {factList}
+      </div>
+    );
+  };
 
   const render = (s) => {
     switch (s) {
       case "highlights":
+        if (hero === "split") return null;
         return (
           <section id="pf-highlights" className="pf-stats-band" key={s} aria-label="At a glance">
             <div className="pf-container">
@@ -115,7 +261,7 @@ export default function Website({ design, content, preview = false, scheme: forc
                   return (
                     <div className="pf-stat pf-reveal" key={i} style={{ "--i": i }}>
                       <dt className="pf-stat-label">{x.label}</dt>
-                      <dd className="pf-stat-value">{n ? <Counter value={n.value} suffix={n.suffix} animate={animate} /> : x.value}</dd>
+                      <dd className="pf-stat-value">{n ? <Counter value={n.value} suffix={n.suffix} animate={animated} /> : x.value}</dd>
                     </div>
                   );
                 })}
@@ -123,21 +269,29 @@ export default function Website({ design, content, preview = false, scheme: forc
             </div>
           </section>
         );
+      case "clients":
+        return animated && d.marquee ? (
+          <div key={s} className="ws-clients">
+            <p className="pf-container pf-small pf-muted ws-clients-label">Trusted by</p>
+            <Marquee items={c.clients} label="Clients" />
+          </div>
+        ) : (
+          <section key={s} className="ws-clients">
+            <div className="pf-container">
+              <p className="pf-small pf-muted ws-clients-label">Trusted by</p>
+              <ul className="ws-client-list">
+                {c.clients.map((x) => (
+                  <li key={x}>{x}</li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        );
       case "services":
         return (
-          <Section id="services" title={TITLES.services} key={s}>
-            <ul className="ws-menu">
-              {c.services.map((x, i) => (
-                <li className="ws-menu-row pf-reveal" key={i} style={{ "--i": i }}>
-                  <div>
-                    <h3 className="pf-h3">{x.name}</h3>
-                    {x.description && <p className="pf-muted">{x.description}</p>}
-                  </div>
-                  {x.price && <span className="ws-price pf-mono">{x.price}</span>}
-                </li>
-              ))}
-            </ul>
-          </Section>
+          <Wide id="services" title={c.servicesTitle || "What we offer"} key={s}>
+            <Services items={c.services} style={d.serviceStyle || "menu"} />
+          </Wide>
         );
       case "about":
         return (
@@ -153,7 +307,7 @@ export default function Website({ design, content, preview = false, scheme: forc
         );
       case "process":
         return (
-          <Section id="process" title={TITLES.process} key={s}>
+          <Section id="process" title="How it works" key={s}>
             <ol className="pf-process">
               {c.process.map((x, i) => (
                 <li className="pf-process-row pf-reveal" key={i} style={{ "--i": i }}>
@@ -167,77 +321,92 @@ export default function Website({ design, content, preview = false, scheme: forc
         );
       case "gallery":
         return (
-          <section id="pf-gallery" className="pf-section" key={s}>
-            <div className="pf-container">
-              <h2 className="pf-h2 pf-reveal ws-gallery-title">{TITLES.gallery}</h2>
-              <div className="ws-gallery">
-                {c.gallery.map((g, i) => (
-                  <figure className={"ws-shot pf-reveal" + (i === 0 ? " is-lead" : "")} key={i} style={{ "--i": i }}>
-                    {g.imageUrl ? <img src={g.imageUrl} alt={g.caption} loading="lazy" /> : <PhotoSlot label={g.caption} preview={preview} />}
-                    {g.imageUrl && <figcaption className="pf-small pf-muted">{g.caption}</figcaption>}
-                  </figure>
-                ))}
-              </div>
-            </div>
-          </section>
-        );
-      case "pricing":
-        return (
-          <section id="pf-pricing" className="pf-section" key={s}>
-            <div className="pf-container">
-              <h2 className="pf-h2 pf-reveal ws-gallery-title">{TITLES.pricing}</h2>
-              <div className="ws-plans">
-                {c.pricing.map((p, i) => (
-                  <article className={"ws-plan pf-reveal" + (p.featured ? " is-featured" : "")} key={i} style={{ "--i": i }}>
-                    <div className="pf-row pf-between pf-baseline">
-                      <h3 className="pf-h3">{p.name}</h3>
-                      {p.featured && <span className="pf-small pf-accent-text">Most popular</span>}
-                    </div>
-                    <p className="ws-plan-price">
-                      {p.price}
-                      {p.period && <span className="pf-muted pf-small"> {p.period}</span>}
-                    </p>
-                    {p.features.length > 0 && (
-                      <ul className="pf-bullets">
-                        {p.features.map((f, j) => (
-                          <li key={j}>{f}</li>
-                        ))}
-                      </ul>
-                    )}
-                    <a className={"pf-btn " + (p.featured ? "pf-btn-primary" : "pf-btn-quiet") + " ws-plan-cta"} href={external ? h.primaryHref : "#pf-contact"}>
-                      Choose {p.name}
-                    </a>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </section>
-        );
-      case "testimonials":
-        return (
-          <Section id="testimonials" title={TITLES.testimonials} key={s}>
-            <div className="pf-quotes">
-              {c.testimonials.map((x, i) => (
-                <figure className="pf-quote pf-reveal" key={i} style={{ "--i": i }}>
-                  <blockquote>“{x.quote}”</blockquote>
-                  <figcaption className="pf-small pf-muted">
-                    <strong>{x.name}</strong>
-                    {x.role ? ", " + x.role : ""}
-                  </figcaption>
+          <Wide id="gallery" title="Gallery" key={s}>
+            <div className="ws-gallery">
+              {c.gallery.map((g, i) => (
+                <figure className={"ws-shot pf-reveal" + (i === 0 ? " is-lead" : "")} key={i} style={{ "--i": i }}>
+                  {g.imageUrl ? <img src={g.imageUrl} alt={g.caption} loading="lazy" /> : <PhotoSlot label={g.caption} preview={preview} />}
+                  {g.imageUrl && <figcaption className="pf-small">{g.caption}</figcaption>}
                 </figure>
               ))}
             </div>
-          </Section>
+          </Wide>
+        );
+      case "team":
+        return (
+          <Wide id="team" title="The people" key={s}>
+            <div className="ws-team">
+              {c.team.map((m, i) => (
+                <article className="ws-member pf-card pf-reveal" key={i} style={{ "--i": i }}>
+                  {m.photoUrl ? <img className="ws-member-photo" src={m.photoUrl} alt={m.name} loading="lazy" /> : <Avatar name={m.name} size={64} />}
+                  <h3 className="pf-h3">{m.name}</h3>
+                  {m.role && <p className="pf-small pf-accent-text">{m.role}</p>}
+                  {m.bio && <p className="pf-muted pf-small">{m.bio}</p>}
+                </article>
+              ))}
+            </div>
+          </Wide>
+        );
+      case "pricing":
+        return (
+          <Wide id="pricing" title="Prices" key={s}>
+            <div className="ws-plans">
+              {c.pricing.map((p, i) => (
+                <article className={"ws-plan pf-card pf-reveal" + (p.featured ? " is-featured" : "")} key={i} style={{ "--i": i }}>
+                  <div className="pf-row pf-between pf-baseline">
+                    <h3 className="pf-h3">{p.name}</h3>
+                    {p.featured && <span className="pf-small pf-accent-text">Most popular</span>}
+                  </div>
+                  <p className="ws-plan-price">
+                    {p.price}
+                    {p.period && <span className="pf-muted pf-small"> {p.period}</span>}
+                  </p>
+                  {p.features.length > 0 && (
+                    <ul className="pf-bullets">
+                      {p.features.map((f, j) => (
+                        <li key={j}>{f}</li>
+                      ))}
+                    </ul>
+                  )}
+                  <a className={"pf-btn " + (p.featured ? "pf-btn-primary" : "pf-btn-quiet") + " ws-plan-cta"} href={external ? h.primaryHref : "#pf-contact"}>
+                    Choose {p.name}
+                  </a>
+                </article>
+              ))}
+            </div>
+          </Wide>
+        );
+      case "testimonials":
+        return (
+          <section id="pf-testimonials" className="pf-section" key={s}>
+            <div className="pf-container">
+              <QuoteSlider items={c.testimonials} />
+            </div>
+          </section>
         );
       case "faq":
         return (
-          <Section id="faq" title={TITLES.faq} key={s}>
+          <Section id="faq" title="Questions" key={s}>
             <Faq items={c.faq} />
           </Section>
         );
+      case "cta":
+        return (
+          <section id="pf-cta" className="pf-band" key={s}>
+            <div className="pf-container pf-band-inner pf-reveal">
+              <div>
+                <h2 className="pf-band-title">{c.cta.heading}</h2>
+                {c.cta.text && <p className="pf-band-text">{c.cta.text}</p>}
+              </div>
+              <a className="pf-btn pf-btn-invert" href={h.primaryHref || "#pf-contact"} target={/^https?:/.test(h.primaryHref) ? "_blank" : undefined} rel="noreferrer">
+                {c.cta.button || h.primaryCta}
+              </a>
+            </div>
+          </section>
+        );
       case "visit":
         return (
-          <Section id="visit" title={TITLES.visit} key={s}>
+          <Section id="visit" title="Visit us" key={s}>
             <div className="ws-visit pf-reveal">
               {c.visit.address && (
                 <div>
@@ -261,6 +430,25 @@ export default function Website({ design, content, preview = false, scheme: forc
               )}
             </div>
           </Section>
+        );
+      case "custom":
+        return (
+          <div key={s}>
+            {c.custom
+              .filter((x) => x.title)
+              .map((cs, k) => (
+                <Section id={"custom-" + k} title={cs.title} key={k}>
+                  <div className="pf-custom">
+                    {cs.items.map((it, i) => (
+                      <div className="pf-custom-item pf-reveal" key={i} style={{ "--i": i }}>
+                        {it.title && <h3 className="pf-h3">{it.title}</h3>}
+                        {it.text && <p className="pf-muted">{it.text}</p>}
+                      </div>
+                    ))}
+                  </div>
+                </Section>
+              ))}
+          </div>
         );
       case "contact": {
         const actions = [
@@ -296,17 +484,12 @@ export default function Website({ design, content, preview = false, scheme: forc
     }
   };
 
-  const nav = visible.filter((s) => NAV[s]);
-  const facts = [
-    c.visit && c.visit.address && ["Find us", c.visit.address.split(",").slice(-2).join(",").trim()],
-    c.visit && c.visit.hours && c.visit.hours[0] && ["Open", c.visit.hours[0].days + ", " + c.visit.hours[0].time],
-    (ct.phone || ct.whatsapp) && ["Call or message", ct.phone || ct.whatsapp],
-    !c.visit?.address && ct.email && ["Email", ct.email],
-  ].filter(Boolean).slice(0, 3);
+  const nav = visible.filter((s) => NAV[s]).slice(0, 6);
 
   return (
-    <div ref={rootRef} className={"pf ws pf-scheme-" + scheme + (preview ? " pf-is-preview" : "")} data-motion={motion} data-density={d.density || "regular"} style={themeStyle(d, pal, scheme)}>
+    <div ref={rootRef} className={"pf ws pf-scheme-" + scheme + (preview ? " pf-is-preview" : "")} {...motionAttrs(d)} style={themeStyle(d, pal, scheme)}>
       <link rel="stylesheet" href={fontsHref(d.fonts)} />
+      <Progress on={animated && d.progress} />
       <header className="pf-nav">
         <div className="pf-container pf-nav-inner">
           <a href="#pf-top" className="pf-brand">
@@ -332,48 +515,8 @@ export default function Website({ design, content, preview = false, scheme: forc
         </div>
       </header>
 
-      <section id="pf-top" className={"pf-hero" + (showImage ? " is-portrait" : "")}>
-        <div className="pf-container pf-hero-inner">
-          <div className="pf-hero-text">
-            <p className="pf-hero-kicker pf-enter" style={{ "--i": 0 }}>
-              <span className="pf-dot" aria-hidden="true" />
-              <span>{h.kicker}</span>
-            </p>
-            <h1 className={"pf-display pf-enter" + ((h.headline || "").length > 34 ? " is-long" : "")} style={{ "--i": 1 }}>
-              {h.headline}
-            </h1>
-            {h.sub && (
-              <p className="pf-hero-sub pf-enter" style={{ "--i": 2 }}>
-                {h.sub}
-              </p>
-            )}
-            <div className="pf-row pf-wrap pf-hero-ctas pf-enter" style={{ "--i": 3 }}>
-              <a className="pf-btn pf-btn-primary" href={h.primaryHref || "#pf-contact"} target={/^https?:/.test(h.primaryHref) ? "_blank" : undefined} rel="noreferrer">
-                {h.primaryCta}
-              </a>
-              {h.secondaryCta && (
-                <a className="pf-btn pf-btn-quiet" href={secondaryHref}>
-                  {h.secondaryCta}
-                </a>
-              )}
-            </div>
-          </div>
-          {showImage && (
-            <figure className="pf-portrait ws-hero-img pf-enter" style={{ "--i": 2 }}>
-              {h.imageUrl ? <img src={h.imageUrl} alt={c.brand.name} /> : <PhotoSlot label="main photo" preview={preview} tall />}
-            </figure>
-          )}
-          {facts.length > 0 && (
-            <dl className="pf-facts pf-enter" style={{ "--i": 4 }}>
-              {facts.map(([k, v]) => (
-                <div key={k}>
-                  <dt>{k}</dt>
-                  <dd>{v}</dd>
-                </div>
-              ))}
-            </dl>
-          )}
-        </div>
+      <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
+        {renderHero()}
       </section>
 
       {visible.map(render)}

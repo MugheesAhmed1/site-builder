@@ -58,6 +58,10 @@ export function websiteQuestions(categoryId: string): Question[] {
   }
   qs.push(
     { id: "testimonials", label: "What customers say", type: "list", placeholder: "Best cake in town. | Ayesha R.", help: "One per line: quote | name." },
+    { id: "team", label: "The people behind it (optional)", type: "list", placeholder: "Hina Raza | Head chef | Trained in Istanbul, 12 years in kitchens", help: "One per line: name | role | one line about them | photo link. Adds a Team section." },
+    { id: "clients", label: "Clients or partners you can name (optional)", type: "text", placeholder: "Daraz, Careem, LUMS", help: "Separate with commas. Adds a Trusted by strip." },
+    { id: "customTitle", label: "Anything else to show? Give it a title (optional)", type: "text", placeholder: "Our promise", help: "Adds a section of your own." },
+    { id: "customItems", label: "Points for that section", type: "list", placeholder: "Fresh daily | Everything is baked the morning you buy it", help: "One per line: title | text." },
     { id: "cta", label: "What should visitors do first?", type: "choice", options: Array.from(new Set([c.primaryCta, ...CTA_OPTIONS])), suggest: c.primaryCta },
     { id: "phone", label: "Phone", type: "text", placeholder: "+92 300 0000000" },
     { id: "whatsapp", label: "WhatsApp number", type: "text", placeholder: "+92 300 0000000" },

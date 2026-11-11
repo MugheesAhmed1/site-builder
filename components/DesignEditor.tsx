@@ -300,24 +300,33 @@ export default function DesignEditor({
             </div>
           </Group>
 
-          <Group title="Layout and motion" part="layout" locks={locks} onLock={lockToggle} onRemix={doRemix}>
-            <div>
-              <label className="lbl">Motion</label>
-              <Seg label="Motion" value={design.motion} options={["none", "subtle", "expressive"]} onChange={(motion) => set({ motion })} />
-              <p className="hint" style={{ marginTop: 6 }}>
-                {design.motion === "expressive" ? "Sections rise in as you scroll and numbers count up." : design.motion === "subtle" ? "Gentle fades only. Nothing moves around." : "Everything is still."}
-              </p>
-            </div>
+          <Group title="Layout" hint="How the sections are arranged. Animation has its own step next." part="layout" locks={locks} onLock={lockToggle} onRemix={doRemix}>
             <div>
               <label className="lbl">Opening</label>
-              <Seg label="Opening" value={design.heroStyle} options={["statement", "portrait"]} labels={{ statement: "Big statement", portrait: "With photo" }} onChange={(heroStyle) => set({ heroStyle })} />
+              <Seg
+                label="Opening"
+                value={design.heroStyle}
+                options={["statement", "portrait", "split", "centered"]}
+                labels={{ statement: "Big statement", portrait: "With photo", split: "With side panel", centered: "Centred" }}
+                onChange={(heroStyle) => set({ heroStyle })}
+              />
             </div>
             {kind === "portfolio" && (
-              <div>
-                <label className="lbl">Experience</label>
-                <Seg label="Experience" value={design.experienceStyle} options={["ledger", "timeline", "list"]} onChange={(experienceStyle) => set({ experienceStyle })} />
-              </div>
+              <>
+                <div>
+                  <label className="lbl">Work</label>
+                  <Seg label="Work" value={design.projectStyle} options={["grid", "case", "index"]} labels={{ grid: "Card grid", case: "Case studies", index: "Index list" }} onChange={(projectStyle) => set({ projectStyle })} />
+                </div>
+                <div>
+                  <label className="lbl">Experience</label>
+                  <Seg label="Experience" value={design.experienceStyle} options={["ledger", "timeline", "list"]} onChange={(experienceStyle) => set({ experienceStyle })} />
+                </div>
+              </>
             )}
+            <div>
+              <label className="lbl">Services</label>
+              <Seg label="Services" value={design.serviceStyle} options={["menu", "bento", "rows"]} labels={{ menu: "Price menu", bento: "Bento grid", rows: "Numbered rows" }} onChange={(serviceStyle) => set({ serviceStyle })} />
+            </div>
           </Group>
         </>
       )}

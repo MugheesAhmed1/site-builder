@@ -1,4 +1,4 @@
-import type { PortfolioContent, Profile, SectionId, WebsiteContent, WebsiteSectionId } from "./types";
+import type { PortfolioContent, PortfolioInput, Profile, SectionId, WebsiteContent, WebsiteSectionId } from "./types";
 import { categoryById } from "./categories";
 import { rows } from "./questions";
 import { hashString } from "./designs";
@@ -129,106 +129,178 @@ export function mergeProfile(profile: Profile | null, a: Record<string, string>)
   };
 }
 
-export function composePortfolio(profile: Profile | null, a: Record<string, string>): PortfolioContent {
-  const p = mergeProfile(profile, a);
-  const role = (a.role || p.headline.split(/[,|]/)[0] || "").trim();
-  const fam = familyOf(role);
-  const goal = a.goal || "Get hired full time";
-  const freelance = /freelance|both/i.test(goal);
+export function emptyInput(): PortfolioInput {
+  return {
+    name: "", role: "", tagline: "", location: "", email: "", phone: "", photoUrl: "", resumeUrl: "",
+    availability: "Open to new roles", goal: "Get hired full time", tone: "Confident and clear",
+    links: [], about: "", results: [], experience: [], projects: [], skills: [], education: [], certifications: [],
+    awards: [], services: [], testimonials: [], languages: [], custom: [],
+  };
+}
 
-  const results = rows(a.results).map((r) => r.join(" "));
-  const bullets = p.experience.flatMap((e) => e.bullets);
+// Turns a parsed résumé (plus any answers already given) into the portfolio form.
+export function profileToInput(profile: Profile | null, a: Record<string, string> = {}): PortfolioInput {
+  const p = mergeProfile(profile, a);
+  const base = emptyInput();
+  return {
+    ...base,
+    name: p.name,
+    role: (a.role || p.headline.split(/[,|]/)[0] || "").trim(),
+    tagline: a.headline || "",
+    location: p.location,
+    email: p.email,
+    phone: p.phone,
+    photoUrl: a.photoUrl ?? "",
+    resumeUrl: a.resumeUrl ?? "",
+    availability: a.availability || base.availability,
+    goal: a.goal || base.goal,
+    tone: a.tone || base.tone,
+    links: p.links.map((l) => ({ label: /linkedin/i.test(l.url) ? "LinkedIn" : /github/i.test(l.url) ? "GitHub" : /behance/i.test(l.url) ? "Behance" : /dribbble/i.test(l.url) ? "Dribbble" : "Website", url: l.url })),
+    about: p.summary,
+    results: rows(a.results).map((r) => ({ value: "", label: r.join(" ") })),
+    experience: p.experience.map((e) => ({ company: e.company, role: e.role, start: e.start, end: e.end, location: e.location, bullets: e.bullets })),
+    projects: (rows(a.projects).length
+      ? rows(a.projects).map(([name, description = "", link = ""]) => ({ name, role: "", description, outcome: "", tags: [], link, imageUrl: "" }))
+      : p.projects.map((x) => ({ name: x.name, role: "", description: x.description, outcome: "", tags: x.tags, link: x.link, imageUrl: "" }))),
+    skills: groupSkills(p.skills),
+    education: p.education,
+    certifications: p.certifications.map((c) => ({ ...c, link: "" })),
+    testimonials: rows(a.testimonials).map(([quote, name = "", r = ""]) => ({ quote, name, role: r })),
+  };
+}
+
+export function composePortfolio(profile: Profile | null, a: Record<string, string>): PortfolioContent {
+  return composePortfolioFromInput(profileToInput(profile, a));
+}
+
+const url = (u: string) => (u && !/^(https?:|mailto:|tel:)/.test(u) ? "https://" + u : u);
+
+// Builds the whole portfolio from the form. Sections only appear when there is something
+// to put in them, and their order follows the person's goal.
+export function composePortfolioFromInput(inp: PortfolioInput): PortfolioContent {
+  const role = inp.role.trim();
+  const fam = familyOf(role);
+  const goal = inp.goal || "Get hired full time";
+  const freelance = /freelance|both|client/i.test(goal);
+  const showcase = /show my work/i.test(goal);
+  const first = inp.name.split(" ")[0] || "";
+
   const stats: PortfolioContent["stats"] = [];
-  for (const line of [...results, ...bullets]) {
-    const s = statFrom(line);
-    if (s && stats.length < 3 && !stats.some((x) => x.label === s.label)) stats.push(s);
+  for (const r of inp.results.filter((x) => x.value || x.label)) {
+    const s = r.value ? statFrom(r.value + " " + r.label) : statFrom(r.label);
+    if (s && stats.length < 4) stats.push(r.value && r.label ? { ...s, label: cap(r.label) } : s);
   }
-  const yrs = yearsOfExperience(p);
-  if (yrs >= 2) stats.push({ value: yrs, suffix: "+", label: "Years of experience" });
+  for (const line of inp.experience.flatMap((e) => e.bullets)) {
+    if (stats.length >= 3) break;
+    const s = statFrom(line);
+    if (s && !stats.some((x) => x.label === s.label)) stats.push(s);
+  }
+  const years = inp.experience.map((e) => /\b(19|20)\d{2}\b/.exec(e.start)?.[0]).filter(Boolean).map(Number);
+  const yrs = years.length ? new Date().getFullYear() - Math.min(...years) : 0;
+  if (yrs >= 2 && stats.length < 4) stats.push({ value: yrs, suffix: "+", label: "Years of experience" });
 
   const tagline =
-    a.headline ||
-    (fam === "product" ? "I build products people actually use." : fam === "design" ? "I design things people enjoy using." : fam === "engineering" ? "I build software that works and lasts." : fam === "data" ? "I turn data into decisions." : fam === "marketing" ? "I help good products find their people." : role ? `${cap(role)} who gets things done.` : "Hello, I'm " + (p.name.split(" ")[0] || "here") + ".");
+    inp.tagline.trim() ||
+    (fam === "product" ? "I build products people actually use." : fam === "design" ? "I design things people enjoy using." : fam === "engineering" ? "I build software that works and lasts." : fam === "data" ? "I turn data into decisions." : fam === "marketing" ? "I help good products find their people." : role ? `${cap(role)} who gets things done.` : "Hello, I'm " + (first || "here") + ".");
 
-  const summarySentences = sentences(p.summary);
-  const linkedin = p.links.find((l) => /linkedin/i.test(l.url))?.url ?? "";
-  const github = p.links.find((l) => /github/i.test(l.url))?.url ?? "";
-  const website = p.links.find((l) => l.url !== linkedin && l.url !== github)?.url ?? "";
+  const linkOf = (re: RegExp) => inp.links.find((l) => re.test(l.url) || re.test(l.label))?.url ?? "";
+  const linkedin = linkOf(/linkedin/i);
+  const github = linkOf(/github/i);
+  const website = inp.links.find((l) => l.url && l.url !== linkedin && l.url !== github)?.url ?? "";
 
-  const projectRows = rows(a.projects);
-  const projects: PortfolioContent["projects"] = projectRows.length
-    ? projectRows.map(([name, summary = "", link = ""]) => ({ name, category: "", summary, impact: "", tags: [], link: link && !link.startsWith("http") ? "https://" + link : link }))
-    : p.projects.map((x) => ({ name: x.name, category: x.tags[0] ?? "", summary: x.description, impact: "", tags: x.tags, link: x.link }));
-  for (const pr of projects) {
-    const s = sentences(pr.summary);
-    const withNumber = s.findIndex((x) => /\d/.test(x));
-    if (withNumber > 0) {
-      pr.impact = s[withNumber];
-      pr.summary = s.filter((_, i) => i !== withNumber).join(" ");
-    }
-    if (!pr.category) pr.category = p.skills.find((sk) => new RegExp("\\b" + sk.replace(/[^\w ]/g, "") + "\\b", "i").test(pr.summary)) ?? "";
-  }
+  const allSkills = inp.skills.flatMap((g) => g.items);
+  const projects: PortfolioContent["projects"] = inp.projects
+    .filter((x) => x.name)
+    .map((x) => {
+      let summary = x.description;
+      let impact = x.outcome;
+      if (!impact) {
+        const s = sentences(summary);
+        const k = s.findIndex((t) => /\d/.test(t));
+        if (k > 0) {
+          impact = s[k];
+          summary = s.filter((_, i) => i !== k).join(" ");
+        }
+      }
+      const category = x.tags[0] || allSkills.find((sk) => sk.length > 2 && new RegExp("\\b" + sk.replace(/[^\w ]/g, "") + "\\b", "i").test(summary)) || "";
+      return { name: x.name, category, summary, impact, tags: x.tags, link: url(x.link), imageUrl: x.imageUrl, role: x.role };
+    });
 
-  const skillGroups = groupSkills(p.skills);
-  const experience: PortfolioContent["experience"] = p.experience.map((x) => ({
-    company: x.company,
-    role: x.role,
-    start: x.start,
-    end: x.end,
-    location: x.location,
-    summary: "",
-    highlights: x.bullets.slice(0, 4),
-    tags: p.skills.filter((s) => s.length > 2 && x.bullets.some((b) => b.toLowerCase().includes(s.toLowerCase()))).slice(0, 4),
-  }));
+  const experience: PortfolioContent["experience"] = inp.experience
+    .filter((x) => x.company || x.role)
+    .map((x) => ({
+      company: x.company,
+      role: x.role,
+      start: x.start,
+      end: x.end,
+      location: x.location,
+      summary: "",
+      highlights: x.bullets.filter(Boolean).slice(0, 5),
+      tags: allSkills.filter((s) => s.length > 2 && x.bullets.some((b) => b.toLowerCase().includes(s.toLowerCase()))).slice(0, 4),
+    }));
 
-  const testimonials = rows(a.testimonials).map(([quote, name = "", r = ""]) => ({ quote, name, role: r }));
-  const availability = /not looking/i.test(a.availability ?? "") ? "" : a.availability || "Open to new roles";
-
-  const aboutParas = summarySentences.length > 2 ? [summarySentences.slice(0, 2).join(" "), summarySentences.slice(2).join(" ")] : summarySentences.length ? [summarySentences.join(" ")] : [];
+  const ss = sentences(inp.about);
+  const aboutParas = ss.length > 2 ? [ss.slice(0, 2).join(" "), ss.slice(2).join(" ")] : ss.length ? [ss.join(" ")] : [];
   if (aboutParas.length < 2) {
     aboutParas.push(
       freelance
         ? "I take on a small number of projects at a time so each one gets my full attention."
-        : goal === "Show my work"
+        : showcase
           ? "Below is a selection of the work I'm proudest of and how I got there."
           : `I'm looking for a team where ${fam === "general" ? "good work" : fam + " work"} is taken seriously and shipped often.`,
     );
   }
+  const availability = /not looking/i.test(inp.availability) ? "" : inp.availability;
 
   const content: PortfolioContent = {
-    meta: { title: [p.name, role].filter(Boolean).join(" · "), description: firstSentence(p.summary || tagline, 28) },
+    meta: { title: [inp.name, role].filter(Boolean).join(" · "), description: firstSentence(inp.about || tagline, 28) },
     hero: {
-      name: p.name,
+      name: inp.name,
       role: cap(role),
-      rotatingRoles: skillGroups.flatMap((g) => g.items).slice(0, 3),
+      rotatingRoles: allSkills.slice(0, 3),
       tagline,
-      intro: firstSentence(p.summary, 22),
-      location: p.location,
+      intro: firstSentence(inp.about, 22),
+      location: inp.location,
       availability,
-      photoUrl: a.photoUrl ?? "",
-      resumeUrl: a.resumeUrl ?? "",
+      photoUrl: inp.photoUrl,
+      resumeUrl: url(inp.resumeUrl),
     },
     stats,
     about: { heading: fam === "general" ? "About me" : "How I think about " + (fam === "engineering" ? "building" : fam === "data" ? "data" : fam), paragraphs: aboutParas },
     process: PROCESS[fam],
     experience,
     projects,
-    skills: skillGroups,
-    education: p.education,
-    certifications: p.certifications.map((c) => ({ ...c, link: "" })),
-    testimonials,
+    skills: inp.skills.filter((g) => g.items.filter(Boolean).length).map((g) => ({ group: g.group || "Skills", items: g.items.filter(Boolean) })),
+    education: inp.education.filter((e) => e.school || e.degree),
+    certifications: inp.certifications.filter((c) => c.name).map((c) => ({ ...c, link: url(c.link) })),
+    testimonials: inp.testimonials.filter((t) => t.quote),
+    services: inp.services.filter((x) => x.name),
+    awards: inp.awards.filter((x) => x.name),
+    languages: inp.languages.filter((x) => x.name),
+    custom: inp.custom.filter((x) => x.title && x.items.some((i) => i.title || i.text)).map((x) => ({ title: x.title, items: x.items.filter((i) => i.title || i.text) })),
+    cta: freelance
+      ? { heading: "Have a project in mind?", text: "Tell me what you're building and when you need it. I reply within a day.", button: "Start a project" }
+      : showcase
+        ? { heading: "Like what you see?", text: "I'm always happy to talk about the work and what's next.", button: "Say hello" }
+        : { heading: first ? `Hiring? ${first} is ${availability ? availability.toLowerCase() : "worth a chat"}.` : "Hiring? Let's talk.", text: "The fastest way to reach me is email. I reply within a day.", button: inp.resumeUrl ? "Download my CV" : "Get in touch" },
     contact: {
-      heading: freelance ? "Have a project in mind?" : "Let's talk.",
-      blurb: freelance ? "Tell me what you're building and when you need it. I reply within a day." : "I'm happy to chat about roles, ideas or anything on this page. Email is the fastest way to reach me.",
-      email: p.email,
-      phone: p.phone,
+      heading: freelance ? "Let's build something." : "Let's talk.",
+      blurb: freelance ? "Share a short brief, a budget range and your timing." : "I'm happy to chat about roles, ideas or anything on this page.",
+      email: inp.email,
+      phone: inp.phone,
       linkedin,
       github,
       website,
     },
     sections: [],
   };
-  const order: SectionId[] = ["stats", "about", "process", "experience", "projects", "skills", "testimonials", "certifications", "education", "contact"];
+  // Order follows the goal (landing patterns from ui-ux-pro-max: Portfolio Grid puts work first,
+  // Trust & Authority puts proof first, Service pages lead with what's on offer).
+  const order: SectionId[] = freelance
+    ? ["stats", "services", "projects", "process", "testimonials", "about", "experience", "skills", "awards", "certifications", "languages", "custom", "cta", "contact"]
+    : showcase
+      ? ["projects", "about", "stats", "skills", "experience", "testimonials", "awards", "certifications", "education", "languages", "custom", "cta", "contact"]
+      : ["stats", "about", "experience", "projects", "skills", "testimonials", "awards", "certifications", "education", "languages", "custom", "cta", "contact"];
   content.sections = order.filter((s) => {
     const v = content[s as keyof PortfolioContent];
     return Array.isArray(v) ? v.length > 0 : true;
@@ -310,6 +382,10 @@ export function composeWebsite(categoryId: string, a: Record<string, string>): W
     pricing: rows(a.pricing).map(([n, price = "", period = "", features = ""], i, all) => ({ name: n, price, period, features: features.split(/\s*,\s*/).filter(Boolean), featured: all.length > 1 && i === Math.min(1, all.length - 1) })),
     testimonials: rows(a.testimonials).map(([quote, n = "", role = ""]) => ({ quote, name: n, role })),
     faq,
+    clients: (a.clients || "").split(/\s*[,\n]\s*/).map((x) => x.trim()).filter(Boolean).slice(0, 16),
+    team: rows(a.team).map(([n, r = "", bio = "", photoUrl = ""]) => ({ name: n, role: r, bio, photoUrl })),
+    custom: a.customTitle ? [{ title: a.customTitle, items: rows(a.customItems).map(([title, text = ""]) => ({ title, text })) }] : [],
+    cta: { heading: c.physical ? `Ready when you are, ${city || "neighbour"}.` : `Ready to get started with ${name}?`, text: wa ? "One message on WhatsApp is all it takes." : "Get in touch and we'll take it from there.", button: cta },
     visit: { address, hours, mapUrl: address ? "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address) : "" },
     contact: {
       heading: c.physical ? "Come and see us." : "Let's talk.",
@@ -323,8 +399,13 @@ export function composeWebsite(categoryId: string, a: Record<string, string>): W
     },
     sections: [],
   };
-  const order: WebsiteSectionId[] = ["highlights", "services", "about", "process", "gallery", "pricing", "testimonials", "faq", "visit", "contact"];
+  // Section order by business type, after landing patterns in ui-ux-pro-max: places people
+  // visit lead with the offer and photos; service firms lead with proof and process.
+  const order: WebsiteSectionId[] = c.physical
+    ? ["highlights", "services", "gallery", "about", "team", "testimonials", "pricing", "custom", "faq", "cta", "visit", "contact"]
+    : ["highlights", "clients", "services", "process", "about", "team", "gallery", "testimonials", "pricing", "custom", "faq", "cta", "visit", "contact"];
   content.sections = order.filter((s) => {
+    if (s === "cta") return true;
     if (s === "visit") return !!(address || hours.length);
     if (s === "gallery") return c.id === "photo" || c.id === "food" || c.id === "beauty" || c.id === "events" || c.id === "property" || c.id === "shop";
     const v = content[s as keyof WebsiteContent];

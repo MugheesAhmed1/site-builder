@@ -104,7 +104,7 @@ export function markChanged(p: Project, step: StepId): Project {
   const steps = { ...p.steps };
   if (steps[step] === "approved" || steps[step] === "todo") steps[step] = "draft";
   for (const later of ORDER.slice(ORDER.indexOf(step) + 1)) {
-    if (step === "design" && later !== "deploy") continue;
+    if ((step === "design" || step === "motion") && later !== "deploy") continue;
     if (steps[later] === "approved" || steps[later] === "draft") steps[later] = "stale";
   }
   return { ...p, steps };

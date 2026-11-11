@@ -2,13 +2,14 @@
 // questions are fixed lists, content is composed by rules, design systems are generated.
 
 export type SiteKind = "portfolio" | "website";
-export type StepId = "start" | "questions" | "design" | "build" | "deploy";
+export type StepId = "start" | "questions" | "design" | "motion" | "build" | "deploy";
 export type StepStatus = "todo" | "draft" | "approved" | "stale";
 
 export const STEPS: { id: StepId; title: string; hint: string }[] = [
   { id: "start", title: "Start", hint: "Say what you want to build" },
   { id: "questions", title: "Questions", hint: "The details that matter" },
   { id: "design", title: "Design system", hint: "Colour, type and shape" },
+  { id: "motion", title: "Animation", hint: "144 styles to pick from" },
   { id: "build", title: "Your site", hint: "Preview and edit" },
   { id: "deploy", title: "Deploy", hint: "Download and publish" },
 ];
@@ -41,11 +42,18 @@ export interface Design {
   radius: number;
   density: "compact" | "regular" | "airy";
   motion: "none" | "subtle" | "expressive";
-  heroStyle: "statement" | "portrait";
+  anim: string;
+  backdrop?: "none" | "aurora" | "grid"; // an id from template/src/motion.js, M-000 is "Still"
+  hover: "lift" | "glow" | "line" | "spotlight" | "none";
+  progress: boolean; // reading progress bar at the top
+  marquee: boolean; // skills, clients or services scroll past in a strip
+  heroStyle: "statement" | "portrait" | "split" | "centered";
   experienceStyle: "ledger" | "timeline" | "list";
+  projectStyle: "grid" | "case" | "index";
+  serviceStyle: "menu" | "bento" | "rows";
 }
 
-export type DesignPart = "colour" | "type" | "shape" | "layout";
+export type DesignPart = "colour" | "type" | "shape" | "layout" | "motion";
 
 export interface Question {
   id: string;
@@ -60,6 +68,11 @@ export interface Question {
 
 export type SectionId =
   | "stats"
+  | "services"
+  | "awards"
+  | "languages"
+  | "custom"
+  | "cta"
   | "about"
   | "process"
   | "experience"
@@ -87,16 +100,21 @@ export interface PortfolioContent {
   about: { heading: string; paragraphs: string[] };
   process: { title: string; description: string }[];
   experience: { company: string; role: string; start: string; end: string; location: string; summary: string; highlights: string[]; tags: string[] }[];
-  projects: { name: string; category: string; summary: string; impact: string; tags: string[]; link: string }[];
+  projects: { name: string; category: string; summary: string; impact: string; tags: string[]; link: string; imageUrl?: string; role?: string }[];
   skills: { group: string; items: string[] }[];
   education: { school: string; degree: string; year: string }[];
   certifications: { name: string; issuer: string; year: string; link: string }[];
   testimonials: { quote: string; name: string; role: string }[];
+  services: { name: string; description: string; price: string }[];
+  awards: { name: string; issuer: string; year: string }[];
+  languages: { name: string; level: string }[];
+  custom: { title: string; items: { title: string; text: string }[] }[];
+  cta: { heading: string; text: string; button: string };
   contact: { heading: string; blurb: string; email: string; phone: string; linkedin: string; github: string; website: string };
   sections: SectionId[];
 }
 
-export type WebsiteSectionId = "highlights" | "services" | "about" | "process" | "gallery" | "pricing" | "testimonials" | "faq" | "visit" | "contact";
+export type WebsiteSectionId = "highlights" | "clients" | "services" | "about" | "process" | "gallery" | "team" | "pricing" | "testimonials" | "faq" | "cta" | "visit" | "custom" | "contact";
 
 export interface WebsiteContent {
   meta: { title: string; description: string };
@@ -110,12 +128,44 @@ export interface WebsiteContent {
   pricing: { name: string; price: string; period: string; features: string[]; featured: boolean }[];
   testimonials: { quote: string; name: string; role: string }[];
   faq: { question: string; answer: string }[];
+  clients: string[];
+  team: { name: string; role: string; bio: string; photoUrl: string }[];
+  custom: { title: string; items: { title: string; text: string }[] }[];
+  cta: { heading: string; text: string; button: string };
   visit: { address: string; hours: { days: string; time: string }[]; mapUrl: string };
   contact: { heading: string; blurb: string; email: string; phone: string; whatsapp: string; instagram: string; facebook: string; linkedin: string };
   sections: WebsiteSectionId[];
 }
 
 export type SiteContent = PortfolioContent | WebsiteContent;
+
+// Everything the portfolio form collects. Résumé import fills it; the person edits it.
+export interface PortfolioInput {
+  name: string;
+  role: string;
+  tagline: string;
+  location: string;
+  email: string;
+  phone: string;
+  photoUrl: string;
+  resumeUrl: string;
+  availability: string;
+  goal: string;
+  tone: string;
+  links: { label: string; url: string }[];
+  about: string;
+  results: { value: string; label: string }[];
+  experience: { company: string; role: string; start: string; end: string; location: string; bullets: string[] }[];
+  projects: { name: string; role: string; description: string; outcome: string; tags: string[]; link: string; imageUrl: string }[];
+  skills: { group: string; items: string[] }[];
+  education: { school: string; degree: string; year: string }[];
+  certifications: { name: string; issuer: string; year: string; link: string }[];
+  awards: { name: string; issuer: string; year: string }[];
+  services: { name: string; description: string; price: string }[];
+  testimonials: { quote: string; name: string; role: string }[];
+  languages: { name: string; level: string }[];
+  custom: { title: string; items: { title: string; text: string }[] }[];
+}
 
 export interface Project {
   id: string;
@@ -130,6 +180,7 @@ export interface Project {
   resumeText: string;
   resumeFileName: string;
   profile: Profile | null;
+  input?: PortfolioInput;
   design: Design;
   locks: Partial<Record<DesignPart, boolean>>;
   content: SiteContent | null;
