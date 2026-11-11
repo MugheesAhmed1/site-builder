@@ -1,0 +1,1052 @@
+[
+ {
+  "id": "S-001",
+  "type": "swarm",
+  "group": "particles",
+  "palette": "brand",
+  "name": "Name in particles, your colours"
+ },
+ {
+  "id": "S-002",
+  "type": "swarm",
+  "group": "particles",
+  "palette": "forest",
+  "name": "Name in particles, forest"
+ },
+ {
+  "id": "S-003",
+  "type": "swarm",
+  "group": "particles",
+  "palette": "ocean",
+  "name": "Name in particles, ocean"
+ },
+ {
+  "id": "S-004",
+  "type": "swarm",
+  "group": "particles",
+  "palette": "sunset",
+  "name": "Name in particles, sunset"
+ },
+ {
+  "id": "S-005",
+  "type": "swarm",
+  "group": "particles",
+  "palette": "night",
+  "name": "Name in particles, night"
+ },
+ {
+  "id": "S-006",
+  "type": "swarm",
+  "group": "particles",
+  "palette": "mono",
+  "name": "Name in particles, mono"
+ },
+ {
+  "id": "S-007",
+  "type": "constellation",
+  "group": "particles",
+  "palette": "brand",
+  "name": "Constellation, your colours"
+ },
+ {
+  "id": "S-008",
+  "type": "constellation",
+  "group": "particles",
+  "palette": "forest",
+  "name": "Constellation, forest"
+ },
+ {
+  "id": "S-009",
+  "type": "constellation",
+  "group": "particles",
+  "palette": "ocean",
+  "name": "Constellation, ocean"
+ },
+ {
+  "id": "S-010",
+  "type": "constellation",
+  "group": "particles",
+  "palette": "sunset",
+  "name": "Constellation, sunset"
+ },
+ {
+  "id": "S-011",
+  "type": "constellation",
+  "group": "particles",
+  "palette": "night",
+  "name": "Constellation, night"
+ },
+ {
+  "id": "S-012",
+  "type": "constellation",
+  "group": "particles",
+  "palette": "mono",
+  "name": "Constellation, mono"
+ },
+ {
+  "id": "S-013",
+  "type": "vortex",
+  "group": "particles",
+  "palette": "brand",
+  "name": "Vortex, your colours"
+ },
+ {
+  "id": "S-014",
+  "type": "vortex",
+  "group": "particles",
+  "palette": "forest",
+  "name": "Vortex, forest"
+ },
+ {
+  "id": "S-015",
+  "type": "vortex",
+  "group": "particles",
+  "palette": "ocean",
+  "name": "Vortex, ocean"
+ },
+ {
+  "id": "S-016",
+  "type": "vortex",
+  "group": "particles",
+  "palette": "sunset",
+  "name": "Vortex, sunset"
+ },
+ {
+  "id": "S-017",
+  "type": "vortex",
+  "group": "particles",
+  "palette": "night",
+  "name": "Vortex, night"
+ },
+ {
+  "id": "S-018",
+  "type": "vortex",
+  "group": "particles",
+  "palette": "mono",
+  "name": "Vortex, mono"
+ },
+ {
+  "id": "S-019",
+  "type": "flow",
+  "group": "particles",
+  "palette": "brand",
+  "name": "Flow field, your colours"
+ },
+ {
+  "id": "S-020",
+  "type": "flow",
+  "group": "particles",
+  "palette": "forest",
+  "name": "Flow field, forest"
+ },
+ {
+  "id": "S-021",
+  "type": "flow",
+  "group": "particles",
+  "palette": "ocean",
+  "name": "Flow field, ocean"
+ },
+ {
+  "id": "S-022",
+  "type": "flow",
+  "group": "particles",
+  "palette": "sunset",
+  "name": "Flow field, sunset"
+ },
+ {
+  "id": "S-023",
+  "type": "flow",
+  "group": "particles",
+  "palette": "night",
+  "name": "Flow field, night"
+ },
+ {
+  "id": "S-024",
+  "type": "flow",
+  "group": "particles",
+  "palette": "mono",
+  "name": "Flow field, mono"
+ },
+ {
+  "id": "S-025",
+  "type": "globe",
+  "group": "particles",
+  "palette": "brand",
+  "name": "Dot globe, your colours"
+ },
+ {
+  "id": "S-026",
+  "type": "globe",
+  "group": "particles",
+  "palette": "forest",
+  "name": "Dot globe, forest"
+ },
+ {
+  "id": "S-027",
+  "type": "globe",
+  "group": "particles",
+  "palette": "ocean",
+  "name": "Dot globe, ocean"
+ },
+ {
+  "id": "S-028",
+  "type": "globe",
+  "group": "particles",
+  "palette": "sunset",
+  "name": "Dot globe, sunset"
+ },
+ {
+  "id": "S-029",
+  "type": "globe",
+  "group": "particles",
+  "palette": "night",
+  "name": "Dot globe, night"
+ },
+ {
+  "id": "S-030",
+  "type": "globe",
+  "group": "particles",
+  "palette": "mono",
+  "name": "Dot globe, mono"
+ },
+ {
+  "id": "S-031",
+  "type": "dotgrid",
+  "group": "particles",
+  "palette": "brand",
+  "name": "Magnetic dots, your colours"
+ },
+ {
+  "id": "S-032",
+  "type": "dotgrid",
+  "group": "particles",
+  "palette": "forest",
+  "name": "Magnetic dots, forest"
+ },
+ {
+  "id": "S-033",
+  "type": "dotgrid",
+  "group": "particles",
+  "palette": "ocean",
+  "name": "Magnetic dots, ocean"
+ },
+ {
+  "id": "S-034",
+  "type": "dotgrid",
+  "group": "particles",
+  "palette": "sunset",
+  "name": "Magnetic dots, sunset"
+ },
+ {
+  "id": "S-035",
+  "type": "dotgrid",
+  "group": "particles",
+  "palette": "night",
+  "name": "Magnetic dots, night"
+ },
+ {
+  "id": "S-036",
+  "type": "dotgrid",
+  "group": "particles",
+  "palette": "mono",
+  "name": "Magnetic dots, mono"
+ },
+ {
+  "id": "S-037",
+  "type": "fireflies",
+  "group": "nature",
+  "palette": "brand",
+  "name": "Fireflies, your colours"
+ },
+ {
+  "id": "S-038",
+  "type": "fireflies",
+  "group": "nature",
+  "palette": "forest",
+  "name": "Fireflies, forest"
+ },
+ {
+  "id": "S-039",
+  "type": "fireflies",
+  "group": "nature",
+  "palette": "ocean",
+  "name": "Fireflies, ocean"
+ },
+ {
+  "id": "S-040",
+  "type": "fireflies",
+  "group": "nature",
+  "palette": "sunset",
+  "name": "Fireflies, sunset"
+ },
+ {
+  "id": "S-041",
+  "type": "fireflies",
+  "group": "nature",
+  "palette": "night",
+  "name": "Fireflies, night"
+ },
+ {
+  "id": "S-042",
+  "type": "fireflies",
+  "group": "nature",
+  "palette": "mono",
+  "name": "Fireflies, mono"
+ },
+ {
+  "id": "S-043",
+  "type": "waves",
+  "group": "nature",
+  "palette": "brand",
+  "name": "Ocean waves, your colours"
+ },
+ {
+  "id": "S-044",
+  "type": "waves",
+  "group": "nature",
+  "palette": "forest",
+  "name": "Ocean waves, forest"
+ },
+ {
+  "id": "S-045",
+  "type": "waves",
+  "group": "nature",
+  "palette": "ocean",
+  "name": "Ocean waves, ocean"
+ },
+ {
+  "id": "S-046",
+  "type": "waves",
+  "group": "nature",
+  "palette": "sunset",
+  "name": "Ocean waves, sunset"
+ },
+ {
+  "id": "S-047",
+  "type": "waves",
+  "group": "nature",
+  "palette": "night",
+  "name": "Ocean waves, night"
+ },
+ {
+  "id": "S-048",
+  "type": "waves",
+  "group": "nature",
+  "palette": "mono",
+  "name": "Ocean waves, mono"
+ },
+ {
+  "id": "S-049",
+  "type": "petals",
+  "group": "nature",
+  "palette": "brand",
+  "name": "Falling petals, your colours"
+ },
+ {
+  "id": "S-050",
+  "type": "petals",
+  "group": "nature",
+  "palette": "forest",
+  "name": "Falling petals, forest"
+ },
+ {
+  "id": "S-051",
+  "type": "petals",
+  "group": "nature",
+  "palette": "ocean",
+  "name": "Falling petals, ocean"
+ },
+ {
+  "id": "S-052",
+  "type": "petals",
+  "group": "nature",
+  "palette": "sunset",
+  "name": "Falling petals, sunset"
+ },
+ {
+  "id": "S-053",
+  "type": "petals",
+  "group": "nature",
+  "palette": "night",
+  "name": "Falling petals, night"
+ },
+ {
+  "id": "S-054",
+  "type": "petals",
+  "group": "nature",
+  "palette": "mono",
+  "name": "Falling petals, mono"
+ },
+ {
+  "id": "S-055",
+  "type": "snow",
+  "group": "nature",
+  "palette": "brand",
+  "name": "Snowfall, your colours"
+ },
+ {
+  "id": "S-056",
+  "type": "snow",
+  "group": "nature",
+  "palette": "forest",
+  "name": "Snowfall, forest"
+ },
+ {
+  "id": "S-057",
+  "type": "snow",
+  "group": "nature",
+  "palette": "ocean",
+  "name": "Snowfall, ocean"
+ },
+ {
+  "id": "S-058",
+  "type": "snow",
+  "group": "nature",
+  "palette": "sunset",
+  "name": "Snowfall, sunset"
+ },
+ {
+  "id": "S-059",
+  "type": "snow",
+  "group": "nature",
+  "palette": "night",
+  "name": "Snowfall, night"
+ },
+ {
+  "id": "S-060",
+  "type": "snow",
+  "group": "nature",
+  "palette": "mono",
+  "name": "Snowfall, mono"
+ },
+ {
+  "id": "S-061",
+  "type": "meadow",
+  "group": "nature",
+  "palette": "brand",
+  "name": "Meadow, your colours"
+ },
+ {
+  "id": "S-062",
+  "type": "meadow",
+  "group": "nature",
+  "palette": "forest",
+  "name": "Meadow, forest"
+ },
+ {
+  "id": "S-063",
+  "type": "meadow",
+  "group": "nature",
+  "palette": "ocean",
+  "name": "Meadow, ocean"
+ },
+ {
+  "id": "S-064",
+  "type": "meadow",
+  "group": "nature",
+  "palette": "sunset",
+  "name": "Meadow, sunset"
+ },
+ {
+  "id": "S-065",
+  "type": "meadow",
+  "group": "nature",
+  "palette": "night",
+  "name": "Meadow, night"
+ },
+ {
+  "id": "S-066",
+  "type": "meadow",
+  "group": "nature",
+  "palette": "mono",
+  "name": "Meadow, mono"
+ },
+ {
+  "id": "S-067",
+  "type": "stars",
+  "group": "nature",
+  "palette": "brand",
+  "name": "Night sky, your colours"
+ },
+ {
+  "id": "S-068",
+  "type": "stars",
+  "group": "nature",
+  "palette": "forest",
+  "name": "Night sky, forest"
+ },
+ {
+  "id": "S-069",
+  "type": "stars",
+  "group": "nature",
+  "palette": "ocean",
+  "name": "Night sky, ocean"
+ },
+ {
+  "id": "S-070",
+  "type": "stars",
+  "group": "nature",
+  "palette": "sunset",
+  "name": "Night sky, sunset"
+ },
+ {
+  "id": "S-071",
+  "type": "stars",
+  "group": "nature",
+  "palette": "night",
+  "name": "Night sky, night"
+ },
+ {
+  "id": "S-072",
+  "type": "stars",
+  "group": "nature",
+  "palette": "mono",
+  "name": "Night sky, mono"
+ },
+ {
+  "id": "S-073",
+  "type": "rain",
+  "group": "nature",
+  "palette": "brand",
+  "name": "Rain, your colours"
+ },
+ {
+  "id": "S-074",
+  "type": "rain",
+  "group": "nature",
+  "palette": "forest",
+  "name": "Rain, forest"
+ },
+ {
+  "id": "S-075",
+  "type": "rain",
+  "group": "nature",
+  "palette": "ocean",
+  "name": "Rain, ocean"
+ },
+ {
+  "id": "S-076",
+  "type": "rain",
+  "group": "nature",
+  "palette": "sunset",
+  "name": "Rain, sunset"
+ },
+ {
+  "id": "S-077",
+  "type": "rain",
+  "group": "nature",
+  "palette": "night",
+  "name": "Rain, night"
+ },
+ {
+  "id": "S-078",
+  "type": "rain",
+  "group": "nature",
+  "palette": "mono",
+  "name": "Rain, mono"
+ },
+ {
+  "id": "S-079",
+  "type": "tree",
+  "group": "nature",
+  "palette": "brand",
+  "name": "Living tree, your colours"
+ },
+ {
+  "id": "S-080",
+  "type": "tree",
+  "group": "nature",
+  "palette": "forest",
+  "name": "Living tree, forest"
+ },
+ {
+  "id": "S-081",
+  "type": "tree",
+  "group": "nature",
+  "palette": "ocean",
+  "name": "Living tree, ocean"
+ },
+ {
+  "id": "S-082",
+  "type": "tree",
+  "group": "nature",
+  "palette": "sunset",
+  "name": "Living tree, sunset"
+ },
+ {
+  "id": "S-083",
+  "type": "tree",
+  "group": "nature",
+  "palette": "night",
+  "name": "Living tree, night"
+ },
+ {
+  "id": "S-084",
+  "type": "tree",
+  "group": "nature",
+  "palette": "mono",
+  "name": "Living tree, mono"
+ },
+ {
+  "id": "S-085",
+  "type": "aquarium",
+  "group": "nature",
+  "palette": "brand",
+  "name": "Aquarium, your colours"
+ },
+ {
+  "id": "S-086",
+  "type": "aquarium",
+  "group": "nature",
+  "palette": "forest",
+  "name": "Aquarium, forest"
+ },
+ {
+  "id": "S-087",
+  "type": "aquarium",
+  "group": "nature",
+  "palette": "ocean",
+  "name": "Aquarium, ocean"
+ },
+ {
+  "id": "S-088",
+  "type": "aquarium",
+  "group": "nature",
+  "palette": "sunset",
+  "name": "Aquarium, sunset"
+ },
+ {
+  "id": "S-089",
+  "type": "aquarium",
+  "group": "nature",
+  "palette": "night",
+  "name": "Aquarium, night"
+ },
+ {
+  "id": "S-090",
+  "type": "aquarium",
+  "group": "nature",
+  "palette": "mono",
+  "name": "Aquarium, mono"
+ },
+ {
+  "id": "S-091",
+  "type": "sky",
+  "group": "nature",
+  "palette": "brand",
+  "name": "Sky and sun, your colours"
+ },
+ {
+  "id": "S-092",
+  "type": "sky",
+  "group": "nature",
+  "palette": "forest",
+  "name": "Sky and sun, forest"
+ },
+ {
+  "id": "S-093",
+  "type": "sky",
+  "group": "nature",
+  "palette": "ocean",
+  "name": "Sky and sun, ocean"
+ },
+ {
+  "id": "S-094",
+  "type": "sky",
+  "group": "nature",
+  "palette": "sunset",
+  "name": "Sky and sun, sunset"
+ },
+ {
+  "id": "S-095",
+  "type": "sky",
+  "group": "nature",
+  "palette": "night",
+  "name": "Sky and sun, night"
+ },
+ {
+  "id": "S-096",
+  "type": "sky",
+  "group": "nature",
+  "palette": "mono",
+  "name": "Sky and sun, mono"
+ },
+ {
+  "id": "S-097",
+  "type": "tilt",
+  "group": "photo",
+  "palette": "brand",
+  "name": "Photo tilt, your colours"
+ },
+ {
+  "id": "S-098",
+  "type": "tilt",
+  "group": "photo",
+  "palette": "forest",
+  "name": "Photo tilt, forest"
+ },
+ {
+  "id": "S-099",
+  "type": "tilt",
+  "group": "photo",
+  "palette": "ocean",
+  "name": "Photo tilt, ocean"
+ },
+ {
+  "id": "S-100",
+  "type": "tilt",
+  "group": "photo",
+  "palette": "sunset",
+  "name": "Photo tilt, sunset"
+ },
+ {
+  "id": "S-101",
+  "type": "tilt",
+  "group": "photo",
+  "palette": "night",
+  "name": "Photo tilt, night"
+ },
+ {
+  "id": "S-102",
+  "type": "tilt",
+  "group": "photo",
+  "palette": "mono",
+  "name": "Photo tilt, mono"
+ },
+ {
+  "id": "S-103",
+  "type": "reveal",
+  "group": "photo",
+  "palette": "brand",
+  "name": "Colour spotlight, your colours"
+ },
+ {
+  "id": "S-104",
+  "type": "reveal",
+  "group": "photo",
+  "palette": "forest",
+  "name": "Colour spotlight, forest"
+ },
+ {
+  "id": "S-105",
+  "type": "reveal",
+  "group": "photo",
+  "palette": "ocean",
+  "name": "Colour spotlight, ocean"
+ },
+ {
+  "id": "S-106",
+  "type": "reveal",
+  "group": "photo",
+  "palette": "sunset",
+  "name": "Colour spotlight, sunset"
+ },
+ {
+  "id": "S-107",
+  "type": "reveal",
+  "group": "photo",
+  "palette": "night",
+  "name": "Colour spotlight, night"
+ },
+ {
+  "id": "S-108",
+  "type": "reveal",
+  "group": "photo",
+  "palette": "mono",
+  "name": "Colour spotlight, mono"
+ },
+ {
+  "id": "S-109",
+  "type": "pixels",
+  "group": "photo",
+  "palette": "brand",
+  "name": "Photo particles, your colours"
+ },
+ {
+  "id": "S-110",
+  "type": "pixels",
+  "group": "photo",
+  "palette": "forest",
+  "name": "Photo particles, forest"
+ },
+ {
+  "id": "S-111",
+  "type": "pixels",
+  "group": "photo",
+  "palette": "ocean",
+  "name": "Photo particles, ocean"
+ },
+ {
+  "id": "S-112",
+  "type": "pixels",
+  "group": "photo",
+  "palette": "sunset",
+  "name": "Photo particles, sunset"
+ },
+ {
+  "id": "S-113",
+  "type": "pixels",
+  "group": "photo",
+  "palette": "night",
+  "name": "Photo particles, night"
+ },
+ {
+  "id": "S-114",
+  "type": "pixels",
+  "group": "photo",
+  "palette": "mono",
+  "name": "Photo particles, mono"
+ },
+ {
+  "id": "S-115",
+  "type": "ripple",
+  "group": "photo",
+  "palette": "brand",
+  "name": "Water ripple, your colours"
+ },
+ {
+  "id": "S-116",
+  "type": "ripple",
+  "group": "photo",
+  "palette": "forest",
+  "name": "Water ripple, forest"
+ },
+ {
+  "id": "S-117",
+  "type": "ripple",
+  "group": "photo",
+  "palette": "ocean",
+  "name": "Water ripple, ocean"
+ },
+ {
+  "id": "S-118",
+  "type": "ripple",
+  "group": "photo",
+  "palette": "sunset",
+  "name": "Water ripple, sunset"
+ },
+ {
+  "id": "S-119",
+  "type": "ripple",
+  "group": "photo",
+  "palette": "night",
+  "name": "Water ripple, night"
+ },
+ {
+  "id": "S-120",
+  "type": "ripple",
+  "group": "photo",
+  "palette": "mono",
+  "name": "Water ripple, mono"
+ },
+ {
+  "id": "S-121",
+  "type": "slices",
+  "group": "photo",
+  "palette": "brand",
+  "name": "Photo slices, your colours"
+ },
+ {
+  "id": "S-122",
+  "type": "slices",
+  "group": "photo",
+  "palette": "forest",
+  "name": "Photo slices, forest"
+ },
+ {
+  "id": "S-123",
+  "type": "slices",
+  "group": "photo",
+  "palette": "ocean",
+  "name": "Photo slices, ocean"
+ },
+ {
+  "id": "S-124",
+  "type": "slices",
+  "group": "photo",
+  "palette": "sunset",
+  "name": "Photo slices, sunset"
+ },
+ {
+  "id": "S-125",
+  "type": "slices",
+  "group": "photo",
+  "palette": "night",
+  "name": "Photo slices, night"
+ },
+ {
+  "id": "S-126",
+  "type": "slices",
+  "group": "photo",
+  "palette": "mono",
+  "name": "Photo slices, mono"
+ },
+ {
+  "id": "S-127",
+  "type": "orbs",
+  "group": "depth",
+  "palette": "brand",
+  "name": "Glossy orbs, your colours"
+ },
+ {
+  "id": "S-128",
+  "type": "orbs",
+  "group": "depth",
+  "palette": "forest",
+  "name": "Glossy orbs, forest"
+ },
+ {
+  "id": "S-129",
+  "type": "orbs",
+  "group": "depth",
+  "palette": "ocean",
+  "name": "Glossy orbs, ocean"
+ },
+ {
+  "id": "S-130",
+  "type": "orbs",
+  "group": "depth",
+  "palette": "sunset",
+  "name": "Glossy orbs, sunset"
+ },
+ {
+  "id": "S-131",
+  "type": "orbs",
+  "group": "depth",
+  "palette": "night",
+  "name": "Glossy orbs, night"
+ },
+ {
+  "id": "S-132",
+  "type": "orbs",
+  "group": "depth",
+  "palette": "mono",
+  "name": "Glossy orbs, mono"
+ },
+ {
+  "id": "S-133",
+  "type": "bubbles",
+  "group": "depth",
+  "palette": "brand",
+  "name": "Word bubbles, your colours"
+ },
+ {
+  "id": "S-134",
+  "type": "bubbles",
+  "group": "depth",
+  "palette": "forest",
+  "name": "Word bubbles, forest"
+ },
+ {
+  "id": "S-135",
+  "type": "bubbles",
+  "group": "depth",
+  "palette": "ocean",
+  "name": "Word bubbles, ocean"
+ },
+ {
+  "id": "S-136",
+  "type": "bubbles",
+  "group": "depth",
+  "palette": "sunset",
+  "name": "Word bubbles, sunset"
+ },
+ {
+  "id": "S-137",
+  "type": "bubbles",
+  "group": "depth",
+  "palette": "night",
+  "name": "Word bubbles, night"
+ },
+ {
+  "id": "S-138",
+  "type": "bubbles",
+  "group": "depth",
+  "palette": "mono",
+  "name": "Word bubbles, mono"
+ },
+ {
+  "id": "S-139",
+  "type": "liquid",
+  "group": "depth",
+  "palette": "brand",
+  "name": "Liquid metal, your colours"
+ },
+ {
+  "id": "S-140",
+  "type": "liquid",
+  "group": "depth",
+  "palette": "forest",
+  "name": "Liquid metal, forest"
+ },
+ {
+  "id": "S-141",
+  "type": "liquid",
+  "group": "depth",
+  "palette": "ocean",
+  "name": "Liquid metal, ocean"
+ },
+ {
+  "id": "S-142",
+  "type": "liquid",
+  "group": "depth",
+  "palette": "sunset",
+  "name": "Liquid metal, sunset"
+ },
+ {
+  "id": "S-143",
+  "type": "liquid",
+  "group": "depth",
+  "palette": "night",
+  "name": "Liquid metal, night"
+ },
+ {
+  "id": "S-144",
+  "type": "liquid",
+  "group": "depth",
+  "palette": "mono",
+  "name": "Liquid metal, mono"
+ },
+ {
+  "id": "S-145",
+  "type": "glass",
+  "group": "depth",
+  "palette": "brand",
+  "name": "Glass shapes, your colours"
+ },
+ {
+  "id": "S-146",
+  "type": "glass",
+  "group": "depth",
+  "palette": "forest",
+  "name": "Glass shapes, forest"
+ },
+ {
+  "id": "S-147",
+  "type": "glass",
+  "group": "depth",
+  "palette": "ocean",
+  "name": "Glass shapes, ocean"
+ },
+ {
+  "id": "S-148",
+  "type": "glass",
+  "group": "depth",
+  "palette": "sunset",
+  "name": "Glass shapes, sunset"
+ },
+ {
+  "id": "S-149",
+  "type": "glass",
+  "group": "depth",
+  "palette": "night",
+  "name": "Glass shapes, night"
+ },
+ {
+  "id": "S-150",
+  "type": "glass",
+  "group": "depth",
+  "palette": "mono",
+  "name": "Glass shapes, mono"
+ }
+]

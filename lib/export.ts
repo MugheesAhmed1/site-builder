@@ -37,7 +37,17 @@ export async function downloadZip(p: Project) {
     if (path === "package.json") out = out.replace('"my-site"', JSON.stringify(base));
     folder.file(path, out);
   }
-  folder.file("src/site-data.json", JSON.stringify({ kind: p.kind, design: p.design, content: p.content }, null, 2));
+  // Pictures uploaded or pasted in the builder become real files in public/images.
+  let n = 0;
+  const content = JSON.parse(JSON.stringify(p.content), (_k, v) => {
+    if (typeof v !== "string") return v;
+    const m = v.match(/^data:image\/(png|jpe?g|webp|gif);base64,(.+)$/);
+    if (!m) return v;
+    const name = `images/picture-${++n}.${m[1] === "jpeg" ? "jpg" : m[1]}`;
+    folder.file("public/" + name, m[2], { base64: true });
+    return "/" + name;
+  });
+  folder.file("src/site-data.json", JSON.stringify({ kind: p.kind, design: p.design, content }, null, 2));
   const blob = await zip.generateAsync({ type: "blob" });
   saveBlob(blob, base + ".zip");
 }

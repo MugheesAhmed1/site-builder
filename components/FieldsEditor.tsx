@@ -1,6 +1,7 @@
 "use client";
 
 import Icon from "@/components/Icon";
+import ImageField from "@/components/ImageField";
 
 // A form that edits any JSON object: text becomes inputs, lists get add/remove/move
 // buttons. Used to edit the extracted résumé and every word of the portfolio.
@@ -48,6 +49,9 @@ function Value({ name, value, onChange, depth }: { name: string; value: Json; on
         <input type="number" step="any" value={value} onChange={(e) => onChange(Number(e.target.value))} />
       </div>
     );
+  }
+  if ((typeof value === "string" || value === null) && /imageUrl|photoUrl|^image$|^photo$/i.test(name)) {
+    return <ImageField label={label(name).replace(/ url$/i, "")} value={value ?? ""} onChange={onChange} />;
   }
   if (typeof value === "string" || value === null) {
     const long = LONG_KEYS.test(name) || (value?.length ?? 0) > 90;

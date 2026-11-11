@@ -190,6 +190,13 @@ export default function MotionPicker({ design, onChange, category = "general" }:
             <span className="small muted"> A soft ring follows the pointer and grows over links and widgets.</span>
           </span>
         </label>
+        <label className="toggle">
+          <input type="checkbox" checked={design.tilt !== false} onChange={(e) => onChange({ tilt: e.target.checked })} />
+          <span>
+            <b>3D tilt</b>
+            <span className="small muted"> Cards and widget tiles lean toward the pointer, like objects you can hold.</span>
+          </span>
+        </label>
       </div>
 
       <div className="panel fit-bar">

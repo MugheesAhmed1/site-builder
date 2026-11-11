@@ -9,7 +9,7 @@ export const STEPS: { id: StepId; title: string; hint: string }[] = [
   { id: "start", title: "Start", hint: "Say what you want to build" },
   { id: "questions", title: "Questions", hint: "The details that matter" },
   { id: "design", title: "Design system", hint: "Colour, type and shape" },
-  { id: "cast", title: "Characters", hint: "520 characters, 512 widgets" },
+  { id: "cast", title: "Characters", hint: "Characters, widgets, live scenes" },
   { id: "motion", title: "Animation", hint: "728 styles to pick from" },
   { id: "build", title: "Your site", hint: "Preview and edit" },
   { id: "deploy", title: "Deploy", hint: "Download and publish" },
@@ -57,6 +57,17 @@ export interface Design {
   intro?: boolean; // opening counter with a curtain wipe
   magnetic?: boolean; // buttons lean toward the pointer
   cursor?: boolean; // soft custom cursor
+  tilt?: boolean; // cards and tiles tilt toward the pointer in 3D
+  scene?: ScenePick | null; // a live interactive scene: particles, nature, photo or 3D
+  sceneMode?: "backdrop" | "visual"; // behind the opening words, or as the opening visual
+}
+
+export interface ScenePick {
+  id: string;
+  type: string;
+  group: string;
+  palette: string;
+  name: string;
 }
 
 export interface CastPick {

@@ -285,3 +285,94 @@
   .cw-line path { stroke-dashoffset: 0; }
   .cw-todo li span::after { scale: 1; }
 }
+
+/* ------------------------------------------------------------------ live scenes */
+.sc { position: relative; width: 100%; height: 100%; min-height: 0; --sc-a: var(--pf-accent); --sc-b: var(--pf-text); --sc-c: var(--pf-muted); }
+.sc-canvas, .sc-canvas canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.sc-globe canvas, .sc-orbs canvas, .sc-bubbles canvas { cursor: grab; }
+.sc-globe canvas:active, .sc-orbs canvas:active, .sc-bubbles canvas:active { cursor: grabbing; }
+
+/* As the opening visual, beside the words */
+.pf-scene-visual { position: relative; width: 100%; aspect-ratio: 1 / 1; max-height: 560px; border-radius: calc(var(--pf-radius) * 1.6); overflow: hidden; background: color-mix(in srgb, var(--pf-surface) 70%, transparent); border: 1px solid var(--pf-border); touch-action: pan-y; }
+.pf-scene-visual .sc-group-photo { background: none; }
+/* Behind the opening words: full bleed, quieter, with a veil so the words stay readable */
+.pf-scene-backdrop { position: absolute; inset: 0; z-index: -1; opacity: 0.85; }
+.pf-scene-backdrop::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, color-mix(in srgb, var(--pf-bg) 70%, transparent) 0%, color-mix(in srgb, var(--pf-bg) 35%, transparent) 40%, transparent 70%); }
+.pf-hero--centered .pf-scene-backdrop::after { background: radial-gradient(60% 55% at 50% 50%, color-mix(in srgb, var(--pf-bg) 80%, transparent), transparent 80%); }
+.pf-scene-backdrop.sc-group-photo { opacity: 0.32; }
+.pf-scene-backdrop .sc-photo-card { border-radius: 0; box-shadow: none; transform: none !important; }
+.pf-scene-backdrop .sc-ph { display: none; }
+
+/* Photo scenes */
+.sc-photo { position: absolute; inset: 0; display: grid; place-items: center; perspective: 900px; --px: 0.5; --py: 0.5; --mx: 50%; --my: 50%; }
+.sc-photo-card { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: inherit; }
+.sc-photo img { width: 100%; height: 100%; object-fit: cover; display: block; user-select: none; -webkit-user-drag: none; }
+.sc-tilt .sc-photo-card { width: 84%; height: 84%; border-radius: calc(var(--pf-radius) * 1.2); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.45); transform: rotateY(calc((var(--px) - 0.5) * 22deg)) rotateX(calc((0.5 - var(--py)) * 18deg)); transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1); }
+.sc-glare { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.45), transparent 45%); mix-blend-mode: soft-light; }
+.sc-reveal img { filter: grayscale(1) contrast(1.05); }
+.sc-reveal-color { position: absolute; inset: 0; background-size: cover; background-position: center; -webkit-mask-image: radial-gradient(circle at var(--mx) var(--my), #000 0, #000 18%, transparent 34%); mask-image: radial-gradient(circle at var(--mx) var(--my), #000 0, #000 18%, transparent 34%); }
+.sc-ripple-img { position: absolute; inset: -12px; }
+.sc-slices { display: flex; }
+.sc-slice { flex: 1; height: 100%; background-size: 800% 100%; background-position: calc(var(--i) * 100% / 7) center; transform: translateY(calc((var(--py) - 0.5) * (var(--i) - 3.5) * 9px)) scaleY(calc(1 - (0.5 - var(--px)) * (0.5 - var(--px)) * 0.2)); transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1); transition-delay: calc(var(--i) * 18ms); }
+.sc-ph { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; padding: 24px; color: var(--pf-muted); border: 1.5px dashed var(--pf-border); border-radius: inherit; font-weight: 600; }
+
+/* Glass shapes */
+.sc-glass { position: absolute; inset: 0; overflow: hidden; --px: 0.5; --py: 0.5; }
+.sc-g { position: absolute; border-radius: 30%; background: linear-gradient(135deg, color-mix(in srgb, var(--sc-a) 55%, transparent), color-mix(in srgb, var(--sc-c) 25%, transparent)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid color-mix(in srgb, #fff 45%, transparent); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 20px 40px -24px rgba(0, 0, 0, 0.35); transition: translate 0.6s cubic-bezier(0.23, 1, 0.32, 1); animation: sc-float 9s ease-in-out infinite alternate; }
+.sc-g1 { width: 42%; aspect-ratio: 1; left: 12%; top: 14%; translate: calc((var(--px) - 0.5) * -60px) calc((var(--py) - 0.5) * -60px); }
+.sc-g2 { width: 30%; aspect-ratio: 1; right: 10%; top: 30%; border-radius: 50%; translate: calc((var(--px) - 0.5) * 40px) calc((var(--py) - 0.5) * 40px); animation-delay: -3s; background: linear-gradient(135deg, color-mix(in srgb, var(--sc-b) 30%, transparent), color-mix(in srgb, var(--sc-a) 30%, transparent)); }
+.sc-g3 { width: 24%; aspect-ratio: 1; left: 34%; bottom: 10%; border-radius: 18%; rotate: 20deg; translate: calc((var(--px) - 0.5) * 90px) calc((var(--py) - 0.5) * 90px); animation-delay: -6s; }
+.sc-g4 { width: 14%; aspect-ratio: 1; right: 26%; top: 8%; border-radius: 50%; translate: calc((var(--px) - 0.5) * -120px) calc((var(--py) - 0.5) * -120px); }
+@keyframes sc-float { to { transform: translateY(-14px) rotate(6deg); } }
+
+/* Liquid metal */
+.sc-liquid { position: absolute; inset: 0; overflow: hidden; --mx: 50%; --my: 50%; }
+.sc-liquid-inner { position: absolute; inset: 0; }
+.sc-blob { position: absolute; width: 30%; aspect-ratio: 1; border-radius: 50%; background: var(--sc-a); left: 35%; top: 35%; animation: sc-blob 8s ease-in-out infinite alternate; }
+.sc-b2 { width: 22%; left: 20%; top: 50%; animation-duration: 6s; animation-delay: -2s; background: color-mix(in srgb, var(--sc-a) 75%, var(--sc-b)); }
+.sc-b3 { width: 18%; left: 60%; top: 26%; animation-duration: 7s; animation-delay: -4s; }
+.sc-b4 { width: 14%; left: 50%; top: 62%; animation-duration: 5s; animation-delay: -1s; }
+.sc-follow { width: 20%; left: var(--mx); top: var(--my); translate: -50% -50%; animation: none; transition: left 0.5s cubic-bezier(0.23, 1, 0.32, 1), top 0.5s cubic-bezier(0.23, 1, 0.32, 1); }
+@keyframes sc-blob { 0% { transform: translate(-20%, 10%) scale(1); } 50% { transform: translate(30%, -20%) scale(1.15); } 100% { transform: translate(-10%, -30%) scale(0.9); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-g, .sc-blob { animation: none; }
+  .sc-tilt .sc-photo-card, .sc-slice, .sc-g, .sc-follow { transition: none; }
+}
+
+/* ------------------------------------------------------------------ hands-on widgets */
+.cw-live { cursor: pointer; }
+.cw-live:focus-visible { outline: 2px solid var(--pf-accent); outline-offset: 3px; }
+.cs-drag { touch-action: none; cursor: grab; }
+.cs-drag:active { cursor: grabbing; }
+.cw-live { position: relative; -webkit-tap-highlight-color: transparent; transition: transform 0.16s cubic-bezier(0.23, 1, 0.32, 1); }
+.cw-live:active { transform: scale(0.97); }
+.cw-burst { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; box-shadow: 0 0 0 0 color-mix(in srgb, var(--cw-accent) 55%, transparent); animation: cw-burst 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+@keyframes cw-burst { to { box-shadow: 0 0 0 14px color-mix(in srgb, var(--cw-accent) 0%, transparent); } }
+/* Once someone uses a widget, its demo loop stops and it shows their choice. */
+.cw-live.is-user .cw-switch, .cw-live.is-user .cw-switch i, .cw-live.is-user .cw-track i, .cw-live.is-user .cw-stars span, .cw-live.is-user .cw-todo li, .cw-live.is-user .cw-todo li span::after { animation: none; }
+.cw-live.is-user .cw-switch { background: var(--cw-line); transition: background-color 0.2s ease; }
+.cw-live.is-user .cw-switch i { transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1); }
+.cw-live.is-user[data-on="1"] .cw-switch { background: var(--cw-accent); }
+.cw-live.is-user[data-on="1"] .cw-switch i { transform: translateX(16px); }
+.cw-live.is-user .cw-track i { width: calc(var(--lv) * 100%); transform: none; scale: 1; }
+.cw-k-slider.cw-live, .cw-k-upload.cw-live { touch-action: none; cursor: ew-resize; }
+.cw-live.is-user .cw-stars span { opacity: 0.25; scale: 1; transition: opacity 0.15s ease; }
+.cw-live.is-user .cw-stars span.is-lit { opacity: 1; }
+.cw-live.is-user .cw-todo li { opacity: 1; translate: 0 0; }
+.cw-live.is-user .cw-todo li span::after { scale: 0; transition: scale 0.2s cubic-bezier(0.23, 1, 0.32, 1); }
+.cw-live.is-user .cw-todo li.is-done span::after { scale: 1; }
+.cw-live .cw-todo li.is-done { text-decoration: line-through; opacity: 0.6; }
+.cw-live[data-on="1"] .cw-eq i { animation-play-state: paused; }
+.cw-live[data-on="1"].cw-k-followers .cw-art { background: var(--cw-accent); color: #fff; }
+@media (hover: hover) and (pointer: fine) { .cw-live:hover { transform: translateY(-2px); } .cw-live:active { transform: scale(0.97); } }
+.cc-hop { animation: cc-hop 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+@keyframes cc-hop { 0% { transform: translateY(0) scale(1, 1); } 20% { transform: translateY(0) scale(1.06, 0.92); } 50% { transform: translateY(-14%) scale(0.96, 1.05); } 80% { transform: translateY(0) scale(1.04, 0.96); } 100% { transform: translateY(0) scale(1, 1); } }
+.cc-sparkle { position: absolute; width: 10px; height: 10px; pointer-events: none; border-radius: 50%; background: var(--pf-accent); animation: cc-spark 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+@keyframes cc-spark { from { opacity: 1; transform: translate(0, 0) scale(1); } to { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.3); } }
+.pf-tilt { transform-style: preserve-3d; transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1); }
+@media (prefers-reduced-motion: reduce) { .cw-burst, .cc-hop, .cc-sparkle { animation: none; } .pf-tilt { transition: none; transform: none !important; } }
+.cs-poke { position: relative; display: grid; place-items: center; width: 100%; cursor: pointer; -webkit-tap-highlight-color: transparent; border-radius: 50%; }
+.cs-poke > div { display: grid; place-items: center; width: 100%; transform-origin: 50% 100%; }
+.cs-poke:focus-visible { outline: 2px solid var(--pf-accent); outline-offset: 4px; }
+.cs-story-char .cs-poke .cc { width: 100%; height: auto; }

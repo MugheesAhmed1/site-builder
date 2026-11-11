@@ -3,7 +3,7 @@
 import { LIBRARY, normalizeDesign } from "./designs";
 import type { Design, Project, SiteKind, StepId } from "./types";
 import { STEPS } from "./types";
-import { castFor } from "./fit";
+import { castFor, sceneFor } from "./fit";
 
 // Projects are saved in this browser's local storage. Nothing is sent to a server.
 // Use Export and Import on the home page to back up or move them.
@@ -40,6 +40,7 @@ function normalize(p: Project): Project {
   const category = p.category ?? "portfolio";
   const design = normalizeDesign(p.design);
   if (design.cast === undefined || (design.cast && !design.cast.character)) design.cast = castFor(category, seedOf(p.id));
+  if (design.scene === undefined) design.scene = sceneFor(category, seedOf(p.id));
   const steps = { ...p.steps };
   if (!steps.cast) steps.cast = steps.motion === "approved" ? "approved" : steps.design === "approved" ? "draft" : "todo";
   return { ...p, kind, category, answers: p.answers ?? {}, locks: p.locks ?? {}, design, steps };
@@ -89,7 +90,7 @@ export function newProject(query: string, kind: SiteKind, category: string, name
     resumeText: "",
     resumeFileName: "",
     profile: null,
-    design: { ...LIBRARY[0], cast: castFor(category, seedOf(id)) },
+    design: { ...LIBRARY[0], cast: castFor(category, seedOf(id)), scene: sceneFor(category, seedOf(id)) },
     locks: {},
     content: null,
     history: [],
@@ -126,7 +127,7 @@ export function markChanged(p: Project, step: StepId): Project {
 
 // Picking a new design system keeps the cast and the extra touches the person chose.
 export function keepCast(prev: Design, next: Design): Design {
-  const keep = { cast: prev.cast, castStory: prev.castStory, intro: prev.intro, magnetic: prev.magnetic, cursor: prev.cursor };
+  const keep = { cast: prev.cast, castStory: prev.castStory, intro: prev.intro, magnetic: prev.magnetic, cursor: prev.cursor, scene: prev.scene, sceneMode: prev.sceneMode };
   const out = { ...next } as Design;
   for (const [k, v] of Object.entries(keep)) if ((out as unknown as Record<string, unknown>)[k] === undefined && v !== undefined) (out as unknown as Record<string, unknown>)[k] = v;
   return out;

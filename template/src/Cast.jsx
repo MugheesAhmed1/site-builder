@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
 import { PALETTES } from "./cast.js";
 
-// Draws the cast from src/cast.js: 216 characters and 208 widgets, each with its own idle
+// Draws the cast from src/cast.js: 520 characters and 512 widgets, each with its own idle
 // animation. Loops are CSS (cheap, run off the main thread); eyes that follow the pointer
 // and the scroll story use Motion. Reduced motion stops the loops.
 
@@ -615,12 +615,92 @@ function Count() {
   return <strong className="cw-value pf-mono">{`${p(Math.floor(s / 3600))}:${p(Math.floor((s % 3600) / 60))}:${p(s % 60)}`}</strong>;
 }
 
-export function CastWidget({ def, ctx, className = "" }) {
+// On a live site every widget can be used: switches switch, sliders slide, stars can be
+// set, to-dos ticked, music paused, chats answered. Anything else gives a small pop.
+const REPLIES = ["Sure! What day suits you?", "Perfect, you're booked in.", "Thanks! Talk soon."];
+
+function useLiveWidget(live, k, t) {
+  const ref = useRef(null);
+  const [user, setUser] = useState(false);
+  const [on, setOn] = useState(false);
+  const [level, setLevel] = useState(k === "rating" ? 5 : 0.86);
+  const [done, setDone] = useState([]);
+  const [msg, setMsg] = useState(0);
+  const [bump, setBump] = useState(0);
+  const drag = useRef(false);
+  if (!live) return { props: {}, state: null };
+  const fromX = (e) => {
+    const tr = ref.current && ref.current.querySelector(".cw-track");
+    if (!tr) return;
+    const r = tr.getBoundingClientRect();
+    setLevel(Math.max(0.04, Math.min(1, (e.clientX - r.left) / r.width)));
+  };
+  const act = (e) => {
+    setUser(true);
+    setBump((n) => n + 1);
+    if (k === "toggle" || k === "music" || k === "followers") setOn((v) => !v);
+    else if (k === "rating") {
+      const star = e && e.target.closest && e.target.closest(".cw-stars span");
+      const i = star ? [...star.parentNode.children].indexOf(star) : -1;
+      if (i >= 0) setLevel(i + 1);
+    } else if (k === "todo") {
+      const li = e && e.target.closest && e.target.closest("li");
+      const i = li ? [...li.parentNode.children].indexOf(li) : done.length % Math.max(1, t.items.length);
+      setDone((d) => (d.includes(i) ? d.filter((x) => x !== i) : [...d, i]));
+    } else if (k === "chat") setMsg((m) => (m + 1) % (REPLIES.length + 1));
+  };
+  const props = {
+    ref,
+    role: k === "toggle" ? "switch" : "button",
+    tabIndex: 0,
+    "aria-checked": k === "toggle" ? on : undefined,
+    "aria-pressed": k === "music" || k === "followers" ? on : undefined,
+    "aria-label": k === "music" ? (on ? "Play" : "Pause") : undefined,
+    "data-on": on ? "1" : undefined,
+    style: { "--lv": level },
+    onClick: (e) => {
+      if (drag.current) return;
+      act(e);
+    },
+    onKeyDown: (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        act(null);
+      }
+      if ((k === "slider" || k === "upload") && (e.key === "ArrowRight" || e.key === "ArrowLeft")) {
+        setUser(true);
+        setLevel((v) => Math.max(0.04, Math.min(1, v + (e.key === "ArrowRight" ? 0.1 : -0.1))));
+      }
+    },
+    onPointerDown: (e) => {
+      if (k !== "slider" && k !== "upload") return;
+      e.stopPropagation();
+      drag.current = false;
+      setUser(true);
+      fromX(e);
+      e.currentTarget.setPointerCapture && e.currentTarget.setPointerCapture(e.pointerId);
+    },
+    onPointerMove: (e) => {
+      if ((k === "slider" || k === "upload") && e.buttons) {
+        drag.current = true;
+        fromX(e);
+      }
+    },
+    onPointerUp: () => setTimeout(() => (drag.current = false), 0),
+  };
+  return { props, state: { user, on, level, done, msg, bump } };
+}
+
+export function CastWidget({ def, ctx, className = "", live = false }) {
+  const k = def ? def.kind : "";
+  const t0 = def ? widgetText(k, ctx) : null;
+  const L = useLiveWidget(live && !!def, k, t0 || {});
   if (!def) return null;
-  const t = widgetText(def.kind, ctx);
-  const k = def.kind;
+  const st = L.state;
+  const t = st && k === "chat" && st.msg > 0 ? { ...t0, text: REPLIES[st.msg - 1] } : t0;
   return (
-    <div className={`cw cw-k-${k} cw-skin-${def.skin} ${className}`}>
+    <div {...L.props} className={`cw cw-k-${k} cw-skin-${def.skin} ${className}${live ? " cw-live" : ""}${st && st.user ? " is-user" : ""}`}>
+      {st && st.bump > 0 && <span key={st.bump} className="cw-burst" aria-hidden="true" />}
       {k === "stat" && (
         <>
           <span className="cw-title">{t.title}</span>
@@ -663,18 +743,18 @@ export function CastWidget({ def, ctx, className = "" }) {
             <i />
             <i />
           </span>
-          <span className="cw-chat-text">{t.text}</span>
+          <span className="cw-chat-text" key={st ? st.msg : 0}>{t.text}</span>
         </p>
       )}
       {k === "rating" && (
         <>
           <span className="cw-stars" aria-label={t.value + " stars"}>
             {[0, 1, 2, 3, 4].map((i) => (
-              <span key={i} style={{ animationDelay: i * 0.1 + "s" }}>★</span>
+              <span key={i} className={st && st.user && i < st.level ? "is-lit" : ""} style={{ animationDelay: i * 0.1 + "s" }}>★</span>
             ))}
           </span>
           <span className="cw-title">
-            {t.value} · {t.title}
+            {st && st.user ? st.level + ".0" : t.value} · {t.title}
           </span>
         </>
       )}
@@ -795,7 +875,7 @@ export function CastWidget({ def, ctx, className = "" }) {
       {k === "todo" && (
         <ul className="cw-todo">
           {t.items.map((x, i) => (
-            <li key={i} style={{ animationDelay: 0.4 + i * 0.5 + "s" }}>
+            <li key={i} className={st && st.done.includes(i) ? "is-done" : ""} style={{ animationDelay: 0.4 + i * 0.5 + "s" }}>
               <span />
               {x}
             </li>
@@ -890,7 +970,7 @@ export function CastWidget({ def, ctx, className = "" }) {
           </span>
           <div>
             <strong className="cw-value cw-tick">{t.value}</strong>
-            <span className="cw-title">{t.title}</span>
+            <span className="cw-title">{st && st.on ? "You followed" : t.title}</span>
           </div>
         </div>
       )}
@@ -988,6 +1068,40 @@ export function castContext(kind, c) {
   };
 }
 
+// Tap or click the character: it hops and throws a few sparkles.
+export function Poke({ children, className = "" }) {
+  const [hop, setHop] = useState(0);
+  const [sparks, setSparks] = useState([]);
+  const reduce = useReducedMotion();
+  const go = (e) => {
+    setHop((n) => n + 1);
+    if (reduce) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX ? e.clientX - r.left : r.width / 2;
+    const y = e.clientY ? e.clientY - r.top : r.height / 3;
+    const id = Date.now();
+    setSparks((s) => [...s.slice(-12), ...Array.from({ length: 7 }, (_, i) => ({ id: id + "-" + i, x, y, dx: Math.cos((i / 7) * Math.PI * 2) * (40 + Math.random() * 30), dy: Math.sin((i / 7) * Math.PI * 2) * (40 + Math.random() * 30) }))]);
+    setTimeout(() => setSparks((s) => s.filter((p) => !String(p.id).startsWith(id + "-"))), 800);
+  };
+  return (
+    <div
+      className={"cs-poke " + className}
+      role="button"
+      tabIndex={0}
+      aria-label="Say hello"
+      onClick={go}
+      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), go(e))}
+    >
+      <div key={hop} className={hop ? "cc-hop" : ""}>
+        {children}
+      </div>
+      {sparks.map((p) => (
+        <span key={p.id} className="cc-sparkle" style={{ left: p.x - 5, top: p.y - 5, "--dx": p.dx + "px", "--dy": p.dy + "px" }} />
+      ))}
+    </div>
+  );
+}
+
 const SPOTS = [
   { left: "-6%", top: "6%", depth: 18 },
   { right: "-8%", top: "20%", depth: -24 },
@@ -1019,12 +1133,18 @@ function Floating({ def, ctx, spot, i, p, still }) {
   return (
     <motion.div className={"cs-float cs-float-" + i} style={{ ...pos, x, y }}>
       <motion.div
+        className={still ? "" : "cs-drag"}
         initial={still ? false : { opacity: 0, scale: 0.85, y: 20, filter: "blur(6px)" }}
         animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
         transition={{ type: "spring", visualDuration: 0.6, bounce: 0.28, delay: 0.5 + i * 0.14 }}
+        drag={!still && def.kind !== "slider" && def.kind !== "upload"}
+        dragSnapToOrigin
+        dragElastic={0.5}
+        dragTransition={{ bounceStiffness: 300, bounceDamping: 18 }}
+        whileDrag={{ scale: 1.06, rotate: i % 2 ? 3 : -3, zIndex: 5 }}
       >
         <div className="cs-bob" style={{ animationDuration: 4.4 + i * 0.7 + "s", animationDelay: -i * 0.9 + "s" }}>
-          <CastWidget def={def} ctx={ctx} />
+          <CastWidget def={def} ctx={ctx} live={!still} />
         </div>
       </motion.div>
     </motion.div>
@@ -1046,7 +1166,9 @@ export function CastStage({ character, widgets, ctx, still }) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ type: "spring", visualDuration: 0.8, bounce: 0.3, delay: 0.15 }}
       >
-        <CastCharacter def={character} size={300} live={!reduce} />
+        <Poke>
+          <CastCharacter def={character} size={300} live={!reduce} />
+        </Poke>
       </motion.div>
       {widgets.slice(0, 4).map((w, i) => (
         <Floating key={w.id + i} def={w} ctx={ctx} spot={SPOTS[i]} i={i} p={p} still={reduce} />
@@ -1115,7 +1237,9 @@ export function CastStory({ character, widgets, ctx, steps, title }) {
           </div>
           <div className="cs-story-visual">
             <motion.div style={{ rotate, scale, x }} className="cs-story-char">
-              <CastCharacter def={character} size={320} live={!reduce} />
+              <Poke>
+                <CastCharacter def={character} size={320} live={!reduce} />
+              </Poke>
             </motion.div>
             {widgets.length > 0 && (
               <motion.div
@@ -1125,7 +1249,7 @@ export function CastStory({ character, widgets, ctx, steps, title }) {
                 animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
                 transition={{ type: "spring", visualDuration: 0.5, bounce: 0.3 }}
               >
-                <CastWidget def={widgets[active % widgets.length]} ctx={ctx} />
+                <CastWidget def={widgets[active % widgets.length]} ctx={ctx} live />
               </motion.div>
             )}
           </div>
@@ -1163,12 +1287,13 @@ export function WidgetWall({ widgets, ctx }) {
             <motion.div
               key={w.id + i}
               className="cs-wall-item"
+              data-tilt=""
               initial={{ opacity: 0, y: 26, scale: 0.96 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ type: "spring", visualDuration: 0.6, bounce: 0.2, delay: i * 0.07 }}
             >
-              <CastWidget def={w} ctx={ctx} />
+              <CastWidget def={w} ctx={ctx} live />
             </motion.div>
           ))}
         </div>

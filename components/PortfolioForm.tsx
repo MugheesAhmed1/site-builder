@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useId, useState } from "react";
 import Icon from "@/components/Icon";
+import ImageField from "@/components/ImageField";
 import type { PortfolioInput } from "@/lib/types";
 
 // The portfolio form: plain fields and repeatable groups for everything a professional
@@ -17,6 +18,12 @@ function TextInput({ f, value, onChange }: { f: Field; value: unknown; onChange:
   const id = useId();
   const text = Array.isArray(value) ? value.join(f.list === "commas" ? ", " : "\n") : String(value ?? "");
   const parse = (t: string) => (f.list === "commas" ? t.split(",").map((x) => x.trimStart()) : f.list === "lines" ? t.split("\n") : t);
+  if (/imageUrl|photoUrl/.test(f.key))
+    return (
+      <div className="pf-field">
+        <ImageField label={f.label.replace(" link", "")} value={text} onChange={onChange} />
+      </div>
+    );
   return (
     <div className={"pf-field" + (f.half ? " is-half" : "")}>
       <label className="lbl" htmlFor={id}>
@@ -165,7 +172,7 @@ export default function PortfolioForm({ value, onChange, group }: { value: Portf
               {field({ key: "location", label: "Where you're based", placeholder: "Lahore, Pakistan", half: true })}
               {field({ key: "email", label: "Email", placeholder: "you@example.com", half: true })}
               {field({ key: "phone", label: "Phone (optional)", placeholder: "+92 300 0000000", half: true })}
-              {field({ key: "photoUrl", label: "Photo link (optional)", placeholder: "https://...", half: true })}
+              {field({ key: "photoUrl", label: "Your photo (optional)", placeholder: "https://..." })}
               {field({ key: "resumeUrl", label: "CV file link (adds a Download CV button)", placeholder: "https://drive.google.com/..." })}
             </div>
             <h3 className="pf-form-sub">Profile links</h3>
@@ -249,7 +256,7 @@ export default function PortfolioForm({ value, onChange, group }: { value: Portf
               { key: "outcome", label: "The result", placeholder: "Cut drop off by 30% in one quarter" },
               { key: "tags", label: "Tags, separated by commas", list: "commas", placeholder: "Fintech, Mobile, Research" },
               { key: "link", label: "Link (optional)", placeholder: "https://...", half: true },
-              { key: "imageUrl", label: "Image link (optional)", placeholder: "https://...", half: true },
+              { key: "imageUrl", label: "Project picture (optional)", placeholder: "https://..." },
             ]}
             onChange={(projects) => set({ projects })}
           />

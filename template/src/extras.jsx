@@ -117,11 +117,47 @@ function useMagnetic(rootRef, on) {
   }, [rootRef, on]);
 }
 
+// Cards and widget tiles tilt toward the pointer in 3D, using the separate rotate property
+// so it never fights the entrance or hover transforms.
+function useTilt(rootRef, on) {
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root || !on) return;
+    let last = null;
+    const reset = (el) => {
+      el.style.rotate = "";
+      el.style.transition = "";
+    };
+    const move = (e) => {
+      const el = e.target.closest("[data-tilt], .pf-card, .cs-wall-item");
+      if (last && last !== el) reset(last);
+      last = el;
+      if (!el) return;
+      if (el.parentElement && !el.parentElement.style.perspective) el.parentElement.style.perspective = "1000px";
+      const r = el.getBoundingClientRect();
+      const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+      const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+      const ang = Math.min(1, Math.hypot(dx, dy) * 1.6) * 7;
+      el.style.transition = "rotate 0.15s cubic-bezier(0.23, 1, 0.32, 1)";
+      el.style.rotate = `${(-dy).toFixed(3)} ${dx.toFixed(3)} 0 ${ang.toFixed(2)}deg`;
+    };
+    const leave = () => last && reset(last);
+    root.addEventListener("pointermove", move, { passive: true });
+    root.addEventListener("pointerleave", leave);
+    return () => {
+      root.removeEventListener("pointermove", move);
+      root.removeEventListener("pointerleave", leave);
+      if (last) reset(last);
+    };
+  }, [rootRef, on]);
+}
+
 export function Extras({ rootRef, design, label, preview }) {
   const reduce = useReducedMotion();
   const [fine, setFine] = useState(false);
   useEffect(() => setFine(finePointer()), []);
   useMagnetic(rootRef, !!design.magnetic && fine && !reduce);
+  useTilt(rootRef, design.tilt !== false && fine && !reduce);
   return (
     <>
       {design.intro && <Intro label={label} preview={preview} />}

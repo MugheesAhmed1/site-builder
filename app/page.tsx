@@ -1,5 +1,6 @@
 "use client";
 
+import { SCENES } from "@/template/src/scenes.js";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
@@ -100,7 +101,7 @@ export default function Home() {
               ))}
             </h1>
             <motion.p className="lede" {...rise(3)}>
-              Describe it in one line or pick your category. Choose from {LIBRARY.length} design systems, {MOTIONS.length - 1} animation styles, {CHARACTERS.length} characters and {WIDGETS.length} widgets, then download a React site you can publish for free.
+              Describe it in one line or pick your category. Choose from {LIBRARY.length} design systems, {MOTIONS.length - 1} animation styles, {CHARACTERS.length} characters, {WIDGETS.length} widgets and {SCENES.length} live scenes you can touch, then download a React site you can publish for free.
             </motion.p>
           <motion.form
             className="ask"
@@ -175,7 +176,7 @@ export default function Home() {
         <section className="cat-section" aria-labelledby="cat-title">
           <div className="cat-head">
             <h2 id="cat-title">Start from your category</h2>
-            <p className="muted">Each one comes with characters, widgets and animations that suit it. You can still choose from everything later.</p>
+            <p className="muted">Each one comes with characters, widgets, live scenes and animations that suit it. You can still choose from everything later.</p>
           </div>
           <div className="cat-groups">
             {CATEGORY_GROUPS.map((g, gi) => (

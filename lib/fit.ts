@@ -1,6 +1,7 @@
 import { CATEGORIES } from "./categories";
 import { CHARACTERS, SKINS, WIDGETS, type CharacterDef, type WidgetDef } from "@/template/src/cast.js";
 import { MOTIONS, type MotionStyle } from "@/template/src/motion.js";
+import { SCENES } from "@/template/src/scenes.js";
 
 // Categories for both kinds of site: business types (restaurant, dentist, hospital, agency,
 // creator and so on) and portfolio roles (product manager, IT manager, CEO and so on).
@@ -151,4 +152,28 @@ export function iconFor(category: string) {
   let h = 0;
   for (const ch of category) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
   return castFor(category, h, true).character;
+}
+
+// Live scenes (particles, nature, photo, 3D) that suit each category, best first.
+const SCENE_FIT: Record<string, string> = {
+  food: "petals fireflies sky bubbles reveal", beauty: "petals liquid glass reveal fireflies", fitness: "orbs vortex dotgrid swarm", health: "meadow sky waves bubbles",
+  dentist: "bubbles sky glass waves", hospital: "constellation dotgrid sky bubbles", agency: "swarm liquid flow orbs glass", creator: "swarm vortex orbs stars pixels",
+  consulting: "constellation flow globe glass", law: "constellation stars glass flow", photo: "reveal tilt ripple slices pixels", property: "sky tree glass tilt",
+  product: "globe constellation dotgrid flow swarm", shop: "bubbles orbs petals glass", nonprofit: "tree meadow fireflies sky", events: "stars fireflies swarm vortex",
+  school: "tree bubbles stars meadow", hotel: "waves sky aquarium petals", trades: "dotgrid orbs sky rain", auto: "flow vortex dotgrid rain", pets: "aquarium meadow fireflies bubbles",
+  general: "constellation fireflies bubbles sky", portfolio: "swarm constellation fireflies tilt", "role-pm": "constellation bubbles flow", "role-it": "globe dotgrid constellation",
+  "role-ceo": "globe stars glass", "role-designer": "liquid swarm petals glass", "role-dev": "dotgrid flow constellation swarm", "role-marketer": "bubbles orbs vortex",
+  "role-data": "globe constellation flow", "role-engineer": "dotgrid globe flow", "role-sales": "orbs bubbles vortex", "role-hr": "bubbles meadow fireflies", "role-finance": "globe constellation glass",
+  "role-teacher": "tree stars bubbles", "role-doctor": "waves sky meadow", "role-writer": "rain petals snow stars", "role-photo": "reveal tilt ripple pixels", "role-creator": "swarm vortex stars orbs", "role-student": "stars bubbles tree",
+};
+export function scenesFor(category: string): string[] {
+  return (SCENE_FIT[category] ?? SCENE_FIT.general).split(" ");
+}
+
+// A starting scene for a category, stable per seed. Photo scenes wait for a photo, so the
+// starting pick skips them; people can choose one in the Characters step.
+export function sceneFor(category: string, seed: number) {
+  const types = scenesFor(category).filter((t) => !["tilt", "reveal", "pixels", "ripple", "slices"].includes(t));
+  const type = types[(seed >>> 4) % Math.min(2, types.length)] ?? "constellation";
+  return SCENES.find((s) => s.type === type && s.palette === "brand") ?? SCENES[0];
 }

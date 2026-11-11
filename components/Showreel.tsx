@@ -3,7 +3,8 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { CastStage } from "@/template/src/Cast.jsx";
-import { castFor, categoryLabel } from "@/lib/fit";
+import { Scene } from "@/template/src/Scenes.jsx";
+import { castFor, categoryLabel, sceneFor } from "@/lib/fit";
 
 // The home page centrepiece: a character with live widgets that changes every few seconds
 // to show a different kind of site (a restaurant, a dentist, a CEO, a creator...).
@@ -42,6 +43,7 @@ export default function Showreel() {
             exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 1.03, filter: "blur(8px)" }}
             transition={{ duration: 0.45, ease: [0.23, 1, 0.32, 1] }}
           >
+            <Scene def={sceneFor(item.cat, item.seed * 17)} className="reel-scene" text={item.ctx.tags[0]} words={item.ctx.tags} />
             <CastStage character={cast.character} widgets={cast.widgets} ctx={{ ...BASE, ...item.ctx }} still={false} />
           </motion.div>
         </AnimatePresence>

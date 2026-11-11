@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { palette, resolveScheme } from "./theme.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
 import { CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
+import { Scene } from "./Scenes.jsx";
 import { Extras } from "./extras.jsx";
 import { Avatar, Counter, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
@@ -22,11 +23,11 @@ function digits(s) {
   return (s || "").replace(/[^\d]/g, "");
 }
 
-function PhotoSlot({ label, preview }) {
+function PhotoSlot({ label, preview, path }) {
   return (
-    <div className="pf-photo-slot ws-slot">
+    <div className="pf-photo-slot ws-slot" data-img={path} data-img-empty="">
       <span>Photo: {label}</span>
-      {preview && <small>Add an image link for this slot in the editor.</small>}
+      {preview && <small>Click Edit on page, then click here to upload or paste a photo.</small>}
     </div>
   );
 }
@@ -191,6 +192,11 @@ export default function Website({ design, content, preview = false, scheme: forc
   const ctx = castContext("website", c);
   const storySteps = (arr("process").length >= 2 ? arr("process").map((x) => ({ title: x.title, text: x.description })) : arr("services").map((x) => ({ title: x.name, text: x.description }))).slice(0, 5);
 
+  const scene = d.scene && d.scene.type ? d.scene : null;
+  const sceneMode = d.sceneMode || "backdrop";
+  const sceneEl = (cls) => (
+    <Scene def={scene} className={cls} text={c.brand.name} words={arr("services").map((x) => x.name).slice(0, 8)} image={h.imageUrl} alt={c.brand.name} preview={preview} imgPath="hero.imageUrl" />
+  );
   const renderHero = () => {
     if (hero === "stage") {
       return (
@@ -201,7 +207,11 @@ export default function Website({ design, content, preview = false, scheme: forc
             {sub}
             {ctas}
           </div>
-          {cast ? <CastStage character={cast.character} widgets={cast.widgets} ctx={ctx} still={!animated} /> : <Stage name={c.brand.name} kind="blob" widgets={widgets} still={!animated} />}
+          {scene && sceneMode === "visual" ? (
+            <div className="pf-scene-visual pf-enter" style={{ "--i": 2 }}>
+              {sceneEl("")}
+            </div>
+          ) : cast ? <CastStage character={cast.character} widgets={cast.widgets} ctx={ctx} still={!animated} /> : <Stage name={c.brand.name} kind="blob" widgets={widgets} still={!animated} />}
         </div>
       );
     }
@@ -212,9 +222,9 @@ export default function Website({ design, content, preview = false, scheme: forc
           {headline}
           {sub}
           {ctas}
-          {h.imageUrl && (
+          {showImage && (
             <figure className="ws-hero-wide pf-enter" style={{ "--i": 4 }}>
-              <img src={h.imageUrl} alt={c.brand.name} />
+              {h.imageUrl ? <img src={h.imageUrl} alt={c.brand.name} data-img="hero.imageUrl" /> : <PhotoSlot label="wide opening photo" preview={preview} path="hero.imageUrl" />}
             </figure>
           )}
         </div>
@@ -271,7 +281,7 @@ export default function Website({ design, content, preview = false, scheme: forc
         </div>
         {showImage && hero === "portrait" && (
           <figure className="pf-portrait ws-hero-img pf-enter" style={{ "--i": 2 }}>
-            {h.imageUrl ? <img src={h.imageUrl} alt={c.brand.name} /> : <PhotoSlot label="main photo" preview={preview} />}
+            {h.imageUrl ? <img src={h.imageUrl} alt={c.brand.name} data-img="hero.imageUrl" /> : <PhotoSlot label="main photo" preview={preview} path="hero.imageUrl" />}
           </figure>
         )}
         {factList}
@@ -359,7 +369,7 @@ export default function Website({ design, content, preview = false, scheme: forc
             <div className="ws-gallery">
               {c.gallery.map((g, i) => (
                 <figure className={"ws-shot pf-reveal" + (i === 0 ? " is-lead" : "")} key={i} style={{ "--i": i }}>
-                  {g.imageUrl ? <img src={g.imageUrl} alt={g.caption} loading="lazy" /> : <PhotoSlot label={g.caption} preview={preview} />}
+                  {g.imageUrl ? <img src={g.imageUrl} alt={g.caption} loading="lazy" data-img={"gallery." + i + ".imageUrl"} /> : <PhotoSlot label={g.caption} preview={preview} path={"gallery." + i + ".imageUrl"} />}
                   {g.imageUrl && <figcaption className="pf-small">{g.caption}</figcaption>}
                 </figure>
               ))}
@@ -372,7 +382,7 @@ export default function Website({ design, content, preview = false, scheme: forc
             <div className="ws-team">
               {c.team.map((m, i) => (
                 <article className="ws-member pf-card pf-reveal" key={i} style={{ "--i": i }}>
-                  {m.photoUrl ? <img className="ws-member-photo" src={m.photoUrl} alt={m.name} loading="lazy" /> : <Avatar name={m.name} size={64} />}
+                  {m.photoUrl ? <img className="ws-member-photo" src={m.photoUrl} alt={m.name} loading="lazy" data-img={"team." + i + ".photoUrl"} /> : <span data-img={"team." + i + ".photoUrl"} data-img-empty=""><Avatar name={m.name} size={64} /></span>}
                   <h3 className="pf-h3">{m.name}</h3>
                   {m.role && <p className="pf-small pf-accent-text">{m.role}</p>}
                   {m.bio && <p className="pf-muted pf-small">{m.bio}</p>}
@@ -554,6 +564,7 @@ export default function Website({ design, content, preview = false, scheme: forc
 
       <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
         {animated && <Backdrop kind={d.backdrop} />}
+        {animated && scene && sceneMode === "backdrop" && sceneEl("pf-scene-backdrop")}
         {renderHero()}
       </section>
 

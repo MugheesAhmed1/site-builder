@@ -83,7 +83,7 @@ export function BuildStep({
     <>
       {head(
         "Your " + word,
-        "Check it on desktop and phone, in light and dark. Edit any text, show, hide or reorder sections. Nothing here is written by AI; it comes from your answers.",
+        "Check it on desktop and phone, in light and dark. Press Edit on page to click any words or picture and change it, or upload and paste your own photos. Nothing here is written by AI; it comes from your answers.",
         <button className="btn btn-primary" onClick={onApprove}>
           Approve {word}
           <Icon name="arrow" size={16} />
@@ -112,14 +112,14 @@ export function BuildStep({
           </button>
         ))}
       </div>
-      {tab === "preview" && <Preview kind={p.kind} design={p.design} content={c} />}
+      {tab === "preview" && <Preview kind={p.kind} design={p.design} content={c} onContentChange={onEdit} />}
       {tab === "content" && (
         <div className="design-grid" style={{ gridTemplateColumns: "minmax(0, 400px) minmax(0, 1fr)" }}>
           <div className="panel">
             <FieldsEditor value={c} onChange={onEdit} skip={["sections"]} />
           </div>
           <div className="sticky-preview">
-            <Preview kind={p.kind} design={p.design} content={c} />
+            <Preview kind={p.kind} design={p.design} content={c} onContentChange={onEdit} />
           </div>
         </div>
       )}
@@ -157,7 +157,7 @@ export function BuildStep({
             })}
           </div>
           <div className="sticky-preview">
-            <Preview kind={p.kind} design={p.design} content={c} />
+            <Preview kind={p.kind} design={p.design} content={c} onContentChange={onEdit} />
           </div>
         </div>
       )}

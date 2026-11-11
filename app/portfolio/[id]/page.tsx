@@ -350,17 +350,17 @@ export default function PortfolioStudio() {
               {step === "cast" && (
                 <>
                   {head(
-                    "Characters and widgets",
-                    "Pick a character and up to six widgets. Every one is already animated, and your site is built around them: the opening scene, a scroll story, a live widget wall and a wave near the end.",
+                    "Characters, widgets and live scenes",
+                    "Pick a character, up to six widgets and a live scene. Everything is already animated and reacts to the pointer, taps and drags: particles, nature, your own photo or 3D shapes you can throw around.",
                     <button className="btn btn-primary" onClick={() => approve("cast")}>
                       Use this cast
                       <Icon name="arrow" size={16} />
                     </button>
                   )}
                   <div className="design-grid">
-                    <CastPicker kind="portfolio" category={p.category} design={p.design} ctx={castContext("portfolio", p.content ?? draft)} onChange={(patch) => update((prev) => markChanged({ ...prev, design: { ...prev.design, ...patch } }, "cast"))} />
+                    <CastPicker photo={((p.content ?? draft) as { hero?: { photoUrl?: string } } | null)?.hero?.photoUrl} kind="portfolio" category={p.category} design={p.design} ctx={castContext("portfolio", p.content ?? draft)} onChange={(patch) => update((prev) => markChanged({ ...prev, design: { ...prev.design, ...patch } }, "cast"))} />
                     <div className="sticky-preview">
-                      <Preview kind={"portfolio"} design={p.design} content={p.content ?? draft} replayKey={(p.design.cast?.character.id ?? "none") + (p.design.cast?.widgets.map((w) => w.id).join("") ?? "")} />
+                      <Preview kind={"portfolio"} design={p.design} content={p.content ?? draft} replayKey={(p.design.cast?.character.id ?? "none") + (p.design.cast?.widgets.map((w) => w.id).join("") ?? "") + (p.design.scene?.id ?? "") + (p.design.sceneMode ?? "")} />
                     </div>
                   </div>
                 </>
@@ -379,7 +379,7 @@ export default function PortfolioStudio() {
                   <div className="design-grid">
                     <MotionPicker category={p.category} design={p.design} onChange={(patch) => update((prev) => markChanged({ ...prev, design: { ...prev.design, ...patch } }, "motion"))} />
                     <div className="sticky-preview">
-                      <Preview kind="portfolio" design={p.design} content={p.content ?? draft} replayKey={p.design.anim + p.design.hover + (p.design.intro ? "i" : "")} />
+                      <Preview kind="portfolio" design={p.design} content={p.content ?? draft} replayKey={p.design.anim + p.design.hover + (p.design.intro ? "i" : "") + (p.design.tilt === false ? "t" : "")} />
                     </div>
                   </div>
                 </>

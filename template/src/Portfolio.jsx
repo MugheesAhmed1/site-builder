@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import { palette, resolveScheme } from "./theme.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
 import { CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
+import { Scene } from "./Scenes.jsx";
 import { Extras } from "./extras.jsx";
 import { Avatar, Counter, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
@@ -130,10 +131,10 @@ function ProjectLink({ p, children, className = "" }) {
   );
 }
 
-function Media({ src, label, n }) {
-  if (src) return <img src={src} alt={label} loading="lazy" />;
+function Media({ src, label, n, path }) {
+  if (src) return <img src={src} alt={label} loading="lazy" data-img={path} />;
   return (
-    <div className="pf-media-fallback" aria-hidden="true">
+    <div className="pf-media-fallback" aria-hidden="true" data-img={path} data-img-empty="">
       <span>{String(n).padStart(2, "0")}</span>
     </div>
   );
@@ -160,7 +161,7 @@ function Projects({ items, style }) {
           {shown.map((p, i) => (
             <article className={"pf-case pf-card pf-reveal" + (i % 2 ? " is-flipped" : "")} key={p.name + i}>
               <div className="pf-case-media">
-                <Media src={p.imageUrl} label={p.name} n={i + 1} />
+                <Media src={p.imageUrl} label={p.name} n={i + 1} path={"projects." + items.indexOf(p) + ".imageUrl"} />
               </div>
               <div className="pf-case-body">
                 <p className="pf-small pf-muted">{[p.category, p.role].filter(Boolean).join(" · ")}</p>
@@ -207,7 +208,7 @@ function Projects({ items, style }) {
           <article className={"pf-project pf-card pf-reveal" + (i === 0 && shown.length > 2 ? " is-featured" : "")} key={p.name + i} style={{ "--i": i }}>
             {p.imageUrl && (
               <div className="pf-project-media">
-                <img src={p.imageUrl} alt={p.name} loading="lazy" />
+                <img src={p.imageUrl} alt={p.name} loading="lazy" data-img={"projects." + items.indexOf(p) + ".imageUrl"} />
               </div>
             )}
             <p className="pf-small pf-muted pf-project-head">{[p.category, p.role].filter(Boolean).join(" · ")}</p>
@@ -340,11 +341,11 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
   const portrait = (
     <figure className="pf-portrait pf-enter" style={{ "--i": 2 }}>
       {photo ? (
-        <img src={photo} alt={"Portrait of " + h.name} />
+        <img src={photo} alt={"Portrait of " + h.name} data-img="hero.photoUrl" />
       ) : (
-        <div className="pf-portrait-mono">
+        <div className="pf-portrait-mono" data-img="hero.photoUrl" data-img-empty="">
           <Avatar name={h.name} size={120} />
-          {preview && <small>Add a photo link in your details to replace this monogram.</small>}
+          {preview && <small>Click Edit on page, then click here to upload or paste your photo.</small>}
         </div>
       )}
     </figure>
@@ -358,6 +359,11 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
     skillsFlat.length > 0 && { type: "tags", items: skillsFlat },
   ].filter(Boolean);
 
+  const scene = d.scene && d.scene.type ? d.scene : null;
+  const sceneMode = d.sceneMode || "backdrop";
+  const sceneEl = (cls) => (
+    <Scene def={scene} className={cls} text={h.name} words={(skillsFlat.length ? skillsFlat : arr("services").map((x) => x.name)).slice(0, 8)} image={h.photoUrl} alt={h.name} preview={preview} imgPath="hero.photoUrl" />
+  );
   const renderHero = () => {
     if (hero === "stage") {
       return (
@@ -368,7 +374,11 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
             {intro}
             {ctas}
           </div>
-          {cast ? <CastStage character={cast.character} widgets={cast.widgets} ctx={ctx} still={!animated} /> : <Stage name={h.name} kind="person" widgets={widgets} still={!animated} />}
+          {scene && sceneMode === "visual" ? (
+            <div className="pf-scene-visual pf-enter" style={{ "--i": 2 }}>
+              {sceneEl("")}
+            </div>
+          ) : cast ? <CastStage character={cast.character} widgets={cast.widgets} ctx={ctx} still={!animated} /> : <Stage name={h.name} kind="person" widgets={widgets} still={!animated} />}
         </div>
       );
     }
@@ -376,7 +386,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
       return (
         <div className="pf-container pf-hero-centered">
           <div className="pf-enter" style={{ "--i": 0 }}>
-            {photo ? <img className="pf-hero-avatar" src={photo} alt={"Portrait of " + h.name} /> : <Avatar name={h.name} size={72} />}
+            {photo ? <img className="pf-hero-avatar" src={photo} alt={"Portrait of " + h.name} data-img="hero.photoUrl" /> : <span data-img="hero.photoUrl" data-img-empty=""><Avatar name={h.name} size={72} /></span>}
           </div>
           {kicker}
           {headline}
@@ -397,7 +407,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
           </div>
           <aside className="pf-hero-panel pf-enter" style={{ "--i": 3 }}>
             <div className="pf-row" style={{ gap: 14 }}>
-              {photo ? <img className="pf-hero-avatar" src={photo} alt={"Portrait of " + h.name} /> : <Avatar name={h.name} size={56} />}
+              {photo ? <img className="pf-hero-avatar" src={photo} alt={"Portrait of " + h.name} data-img="hero.photoUrl" /> : <span data-img="hero.photoUrl" data-img-empty=""><Avatar name={h.name} size={56} /></span>}
               <div>
                 <strong>{h.name}</strong>
                 <p className="pf-small pf-muted">{[h.role, h.location].filter(Boolean).join(", ")}</p>
@@ -674,6 +684,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
 
       <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
         {animated && <Backdrop kind={d.backdrop} />}
+        {animated && scene && sceneMode === "backdrop" && sceneEl("pf-scene-backdrop")}
         {renderHero()}
       </section>
 
