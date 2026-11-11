@@ -14,7 +14,7 @@ import { SCENES } from "@/template/src/scenes.js";
 import { categoryLabel, fitFor, fitsCharacter, fitsWidget } from "@/lib/fit";
 import type { Design } from "@/lib/types";
 
-// The Characters step: 520 characters and 512 widgets, all already animated. Pick one
+// The Characters step: 580 characters (520 drawn, 60 real-life) and 512 widgets, all already animated. Pick one
 // character and up to six widgets; the site is then built around them (the opening scene,
 // a pinned scroll story, a live widget wall and a character that peeks in near the end).
 

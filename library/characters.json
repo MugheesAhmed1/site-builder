@@ -5198,5 +5198,943 @@
   "expression": "smile",
   "idle": "wiggle",
   "variant": 25
+ },
+ {
+  "id": "C-521",
+  "family": "real-person",
+  "name": "Chef",
+  "src": "/real/people/chef.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "hotel"
+  ]
+ },
+ {
+  "id": "C-522",
+  "family": "real-person",
+  "name": "Barista",
+  "src": "/real/people/barista.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "shop"
+  ]
+ },
+ {
+  "id": "C-523",
+  "family": "real-person",
+  "name": "Baker",
+  "src": "/real/people/baker.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "shop"
+  ]
+ },
+ {
+  "id": "C-524",
+  "family": "real-person",
+  "name": "Fitness coach",
+  "src": "/real/people/coach.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "fitness",
+   "health"
+  ]
+ },
+ {
+  "id": "C-525",
+  "family": "real-person",
+  "name": "Yoga teacher",
+  "src": "/real/people/yoga.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "fitness",
+   "health",
+   "beauty"
+  ]
+ },
+ {
+  "id": "C-526",
+  "family": "real-person",
+  "name": "Dentist",
+  "src": "/real/people/dentist.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "dentist",
+   "health",
+   "role-doctor"
+  ]
+ },
+ {
+  "id": "C-527",
+  "family": "real-person",
+  "name": "Doctor",
+  "src": "/real/people/doctor.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "hospital",
+   "health",
+   "role-doctor"
+  ]
+ },
+ {
+  "id": "C-528",
+  "family": "real-person",
+  "name": "Nurse",
+  "src": "/real/people/nurse.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "hospital",
+   "health",
+   "role-doctor"
+  ]
+ },
+ {
+  "id": "C-529",
+  "family": "real-person",
+  "name": "Designer",
+  "src": "/real/people/designer.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "role-designer",
+   "agency",
+   "creator",
+   "portfolio"
+  ]
+ },
+ {
+  "id": "C-530",
+  "family": "real-person",
+  "name": "Developer",
+  "src": "/real/people/developer.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "role-dev",
+   "role-it",
+   "role-data",
+   "product",
+   "portfolio"
+  ]
+ },
+ {
+  "id": "C-531",
+  "family": "real-person",
+  "name": "Photographer",
+  "src": "/real/people/photographer.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "photo",
+   "role-photo",
+   "creator"
+  ]
+ },
+ {
+  "id": "C-532",
+  "family": "real-person",
+  "name": "Florist",
+  "src": "/real/people/florist.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "shop",
+   "events",
+   "beauty"
+  ]
+ },
+ {
+  "id": "C-533",
+  "family": "real-person",
+  "name": "Hair stylist",
+  "src": "/real/people/stylist.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "beauty"
+  ]
+ },
+ {
+  "id": "C-534",
+  "family": "real-person",
+  "name": "Property agent",
+  "src": "/real/people/agent.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "property",
+   "role-sales"
+  ]
+ },
+ {
+  "id": "C-535",
+  "family": "real-person",
+  "name": "Teacher",
+  "src": "/real/people/teacher.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "role-teacher"
+  ]
+ },
+ {
+  "id": "C-536",
+  "family": "real-person",
+  "name": "Student",
+  "src": "/real/people/student.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "role-student",
+   "school"
+  ]
+ },
+ {
+  "id": "C-537",
+  "family": "real-person",
+  "name": "Musician",
+  "src": "/real/people/musician.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "events",
+   "creator",
+   "role-creator"
+  ]
+ },
+ {
+  "id": "C-538",
+  "family": "real-person",
+  "name": "Gardener",
+  "src": "/real/people/gardener.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "nonprofit",
+   "trades",
+   "property"
+  ]
+ },
+ {
+  "id": "C-539",
+  "family": "real-person",
+  "name": "Architect",
+  "src": "/real/people/architect.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "role-engineer",
+   "property",
+   "trades"
+  ]
+ },
+ {
+  "id": "C-540",
+  "family": "real-person",
+  "name": "Founder",
+  "src": "/real/people/founder.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "role-ceo",
+   "role-pm",
+   "consulting",
+   "agency",
+   "product",
+   "portfolio"
+  ]
+ },
+ {
+  "id": "C-541",
+  "family": "real-person",
+  "name": "Mechanic",
+  "src": "/real/people/mechanic.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "auto",
+   "trades"
+  ]
+ },
+ {
+  "id": "C-542",
+  "family": "real-person",
+  "name": "Consultant",
+  "src": "/real/people/consultant.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "consulting",
+   "law",
+   "role-finance",
+   "role-hr",
+   "role-ceo",
+   "role-sales"
+  ]
+ },
+ {
+  "id": "C-543",
+  "family": "real-person",
+  "name": "Artist",
+  "src": "/real/people/artist.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "role-designer",
+   "creator",
+   "events"
+  ]
+ },
+ {
+  "id": "C-544",
+  "family": "real-person",
+  "name": "Traveller",
+  "src": "/real/people/traveller.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "hotel",
+   "events",
+   "general",
+   "role-writer"
+  ]
+ },
+ {
+  "id": "C-545",
+  "family": "real-animal",
+  "name": "Red fox",
+  "src": "/real/animals/fox.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "agency",
+   "creator",
+   "general"
+  ]
+ },
+ {
+  "id": "C-546",
+  "family": "real-animal",
+  "name": "Tabby cat",
+  "src": "/real/animals/cat.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "shop",
+   "role-writer"
+  ]
+ },
+ {
+  "id": "C-547",
+  "family": "real-animal",
+  "name": "Golden dog",
+  "src": "/real/animals/dog.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "general"
+  ]
+ },
+ {
+  "id": "C-548",
+  "family": "real-animal",
+  "name": "Corgi",
+  "src": "/real/animals/corgi.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "shop"
+  ]
+ },
+ {
+  "id": "C-549",
+  "family": "real-animal",
+  "name": "Rabbit",
+  "src": "/real/animals/rabbit.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "school"
+  ]
+ },
+ {
+  "id": "C-550",
+  "family": "real-animal",
+  "name": "Owl",
+  "src": "/real/animals/owl.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "law",
+   "consulting",
+   "role-teacher",
+   "role-writer"
+  ]
+ },
+ {
+  "id": "C-551",
+  "family": "real-animal",
+  "name": "Parrot",
+  "src": "/real/animals/parrot.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "events",
+   "role-marketer"
+  ]
+ },
+ {
+  "id": "C-552",
+  "family": "real-animal",
+  "name": "Penguin",
+  "src": "/real/animals/penguin.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "general",
+   "role-hr"
+  ]
+ },
+ {
+  "id": "C-553",
+  "family": "real-animal",
+  "name": "Panda",
+  "src": "/real/animals/panda.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "nonprofit",
+   "school"
+  ]
+ },
+ {
+  "id": "C-554",
+  "family": "real-animal",
+  "name": "Koala",
+  "src": "/real/animals/koala.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "nonprofit",
+   "hotel"
+  ]
+ },
+ {
+  "id": "C-555",
+  "family": "real-animal",
+  "name": "Lion",
+  "src": "/real/animals/lion.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "role-ceo",
+   "fitness",
+   "role-sales"
+  ]
+ },
+ {
+  "id": "C-556",
+  "family": "real-animal",
+  "name": "Deer",
+  "src": "/real/animals/deer.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "nonprofit",
+   "hotel"
+  ]
+ },
+ {
+  "id": "C-557",
+  "family": "real-animal",
+  "name": "Hedgehog",
+  "src": "/real/animals/hedgehog.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "shop",
+   "pets"
+  ]
+ },
+ {
+  "id": "C-558",
+  "family": "real-animal",
+  "name": "Otter",
+  "src": "/real/animals/otter.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "hotel"
+  ]
+ },
+ {
+  "id": "C-559",
+  "family": "real-animal",
+  "name": "Horse",
+  "src": "/real/animals/horse.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "fitness",
+   "property"
+  ]
+ },
+ {
+  "id": "C-560",
+  "family": "real-animal",
+  "name": "Bulldog",
+  "src": "/real/animals/bulldog.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "trades"
+  ]
+ },
+ {
+  "id": "C-561",
+  "family": "real-animal",
+  "name": "Hamster",
+  "src": "/real/animals/hamster.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets"
+  ]
+ },
+ {
+  "id": "C-562",
+  "family": "real-animal",
+  "name": "Frog",
+  "src": "/real/animals/frog.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "nonprofit",
+   "school"
+  ]
+ },
+ {
+  "id": "C-563",
+  "family": "real-animal",
+  "name": "Tortoise",
+  "src": "/real/animals/turtle.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "health",
+   "nonprofit",
+   "role-finance"
+  ]
+ },
+ {
+  "id": "C-564",
+  "family": "real-animal",
+  "name": "Butterfly",
+  "src": "/real/animals/butterfly.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "beauty",
+   "nonprofit",
+   "events"
+  ]
+ },
+ {
+  "id": "C-565",
+  "family": "real-animal",
+  "name": "Bee",
+  "src": "/real/animals/bee.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "nonprofit",
+   "food"
+  ]
+ },
+ {
+  "id": "C-566",
+  "family": "real-animal",
+  "name": "Duckling",
+  "src": "/real/animals/duck.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "pets",
+   "role-student"
+  ]
+ },
+ {
+  "id": "C-567",
+  "family": "real-animal",
+  "name": "Raccoon",
+  "src": "/real/animals/raccoon.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "role-dev",
+   "creator"
+  ]
+ },
+ {
+  "id": "C-568",
+  "family": "real-animal",
+  "name": "Sloth",
+  "src": "/real/animals/sloth.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "health",
+   "hotel"
+  ]
+ },
+ {
+  "id": "C-569",
+  "family": "real-mascot",
+  "name": "Plush bear",
+  "src": "/real/mascots/plush-bear.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "shop",
+   "school"
+  ]
+ },
+ {
+  "id": "C-570",
+  "family": "real-mascot",
+  "name": "Plush bunny",
+  "src": "/real/mascots/plush-bunny.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "shop",
+   "beauty"
+  ]
+ },
+ {
+  "id": "C-571",
+  "family": "real-mascot",
+  "name": "Plush dinosaur",
+  "src": "/real/mascots/plush-dino.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "creator"
+  ]
+ },
+ {
+  "id": "C-572",
+  "family": "real-mascot",
+  "name": "Plush octopus",
+  "src": "/real/mascots/plush-octopus.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "creator",
+   "agency"
+  ]
+ },
+ {
+  "id": "C-573",
+  "family": "real-mascot",
+  "name": "Clay robot",
+  "src": "/real/mascots/clay-robot.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "product",
+   "role-dev",
+   "role-it",
+   "role-data"
+  ]
+ },
+ {
+  "id": "C-574",
+  "family": "real-mascot",
+  "name": "Clay monster",
+  "src": "/real/mascots/clay-monster.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "creator",
+   "agency",
+   "role-marketer"
+  ]
+ },
+ {
+  "id": "C-575",
+  "family": "real-mascot",
+  "name": "Toy astronaut",
+  "src": "/real/mascots/toy-astronaut.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "product",
+   "role-engineer",
+   "role-data",
+   "role-pm"
+  ]
+ },
+ {
+  "id": "C-576",
+  "family": "real-mascot",
+  "name": "Wooden fox",
+  "src": "/real/mascots/wood-fox.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "shop"
+  ]
+ },
+ {
+  "id": "C-577",
+  "family": "real-mascot",
+  "name": "Ceramic cat",
+  "src": "/real/mascots/ceramic-cat.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "shop",
+   "food"
+  ]
+ },
+ {
+  "id": "C-578",
+  "family": "real-mascot",
+  "name": "Felt owl",
+  "src": "/real/mascots/felt-owl.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "role-teacher"
+  ]
+ },
+ {
+  "id": "C-579",
+  "family": "real-mascot",
+  "name": "Rubber duck",
+  "src": "/real/mascots/rubber-duck.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "role-dev",
+   "role-it"
+  ]
+ },
+ {
+  "id": "C-580",
+  "family": "real-mascot",
+  "name": "Cactus toy",
+  "src": "/real/mascots/cactus-toy.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "shop",
+   "property"
+  ]
  }
 ]

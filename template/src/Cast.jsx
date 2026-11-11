@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
 import { PALETTES } from "./cast.js";
 
-// Draws the cast from src/cast.js: 520 characters and 512 widgets, each with its own idle
+// Draws the cast from src/cast.js: 520 drawn characters, 60 real-life ones and 512 widgets, each with its own idle
 // animation. Loops are CSS (cheap, run off the main thread); eyes that follow the pointer
 // and the scroll story use Motion. Reduced motion stops the loops.
 

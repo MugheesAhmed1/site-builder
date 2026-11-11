@@ -1039,12 +1039,36 @@ export const REAL_FISH = [
   "id": "shrimp",
   "name": "Cleaner shrimp",
   "src": "/real/fish/shrimp.webp"
+ },
+ {
+  "id": "rainbowfish",
+  "name": "Rainbowfish",
+  "src": "/real/fish/rainbowfish.webp"
+ },
+ {
+  "id": "flame-angel",
+  "name": "Flame angelfish",
+  "src": "/real/fish/flame-angel.webp"
+ },
+ {
+  "id": "gourami",
+  "name": "Gourami",
+  "src": "/real/fish/gourami.webp"
+ },
+ {
+  "id": "platy",
+  "name": "Platy",
+  "src": "/real/fish/platy.webp"
+ },
+ {
+  "id": "firefish",
+  "name": "Firefish",
+  "src": "/real/fish/firefish.webp"
  }
 ];
 
 export const REAL_SPRITES = {
  "petal-pink": "/real/sprites/petal-pink.webp",
- "blossom": "/real/sprites/blossom.webp",
  "rose-petal": "/real/sprites/rose-petal.webp",
  "maple": "/real/sprites/maple.webp",
  "oak": "/real/sprites/oak.webp",
@@ -1052,10 +1076,7 @@ export const REAL_SPRITES = {
  "green-leaf": "/real/sprites/green-leaf.webp",
  "snowflake": "/real/sprites/snowflake.webp",
  "bubble": "/real/sprites/bubble.webp",
- "droplet": "/real/sprites/droplet.webp",
- "dandelion": "/real/sprites/dandelion.webp",
  "feather": "/real/sprites/feather.webp",
- "butterfly-orange": "/real/sprites/butterfly-orange.webp",
  "butterfly-blue": "/real/sprites/butterfly-blue.webp",
  "ladybug": "/real/sprites/ladybug.webp",
  "coffee-bean": "/real/sprites/coffee-bean.webp",
@@ -1065,8 +1086,7 @@ export const REAL_SPRITES = {
  "pinecone": "/real/sprites/pinecone.webp",
  "daisy-petal": "/real/sprites/daisy-petal.webp",
  "sunflower-petal": "/real/sprites/sunflower-petal.webp",
- "star-anise": "/real/sprites/star-anise.webp",
- "sakura-2": "/real/sprites/sakura-2.webp"
+ "star-anise": "/real/sprites/star-anise.webp"
 };
 
 // Larger cut-outs that scenes layer and animate: coral, clouds, birds, flowers, food.
@@ -1077,18 +1097,16 @@ export const REAL_PROPS = {
  "anemone": "/real/props/anemone.webp",
  "starfish": "/real/props/starfish.webp",
  "shell": "/real/props/shell.webp",
- "cloud-1": "/real/props/cloud-1.webp",
- "cloud-2": "/real/props/cloud-2.webp",
  "cloud-3": "/real/props/cloud-3.webp",
  "balloon": "/real/props/balloon.webp",
  "paper-plane": "/real/props/paper-plane.webp",
  "sparrow": "/real/props/sparrow.webp",
  "gull": "/real/props/gull.webp",
- "kite": "/real/props/kite.webp",
  "sunflower": "/real/props/sunflower.webp",
  "tulip": "/real/props/tulip.webp",
  "daisy": "/real/props/daisy.webp",
  "fern": "/real/props/fern.webp",
+ "palm-leaf": "/real/props/palm-leaf.webp",
  "monstera": "/real/props/monstera.webp",
  "croissant": "/real/props/croissant.webp",
  "strawberry": "/real/props/strawberry.webp",
@@ -1097,7 +1115,17 @@ export const REAL_PROPS = {
  "macaron": "/real/props/macaron.webp",
  "cherry": "/real/props/cherry.webp",
  "mint": "/real/props/mint.webp",
- "moon": "/real/props/moon.webp"
+ "chocolate": "/real/props/chocolate.webp",
+ "moon": "/real/props/moon.webp",
+ "planet": "/real/props/planet.webp",
+ "donut": "/real/props/donut.webp",
+ "blueberries": "/real/props/blueberries.webp",
+ "cupcake": "/real/props/cupcake.webp",
+ "watermelon": "/real/props/watermelon.webp",
+ "lotus": "/real/props/lotus.webp",
+ "orchid": "/real/props/orchid.webp",
+ "party-balloon": "/real/props/party-balloon.webp",
+ "dove": "/real/props/dove.webp"
 };
 
 // Full-screen background photos that sit behind a scene's moving layers.

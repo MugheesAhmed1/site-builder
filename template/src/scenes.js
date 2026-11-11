@@ -67,24 +67,26 @@ export const SCENE_TYPES = [
 // Which pictures each real-life scene uses. A downloaded site copies just these files.
 const S = (...ids) => ids.map((id) => REAL_SPRITES[id] || REAL_PROPS[id]).filter(Boolean);
 const FISH = REAL_FISH.map((f) => f.src);
+// A few real-animal characters double as sprites (the butterfly flutters in the garden).
+const REAL_CHARACTERS_SRC = (...ids) => ids.map((id) => `/real/animals/${id}.webp`);
 const LEAVES = ["maple", "oak", "ginkgo", "green-leaf"];
-const BIRDS = { mode: "drift", sprites: S("sparrow", "gull"), count: 3, size: [30, 52], speed: 2.4, flap: true, band: [0.08, 0.45] };
-const CLOUDS = { mode: "drift", sprites: S("cloud-1", "cloud-2", "cloud-3"), count: 6, size: [140, 300], speed: 0.45, band: [0.02, 0.55], alpha: 0.95 };
-const FLUTTER = { mode: "fly", sprites: S("butterfly-orange", "butterfly-blue"), count: 5, size: [30, 50] };
+const BIRDS = { mode: "drift", sprites: S("sparrow", "gull", "dove"), count: 3, size: [30, 52], speed: 2.4, flap: true, band: [0.08, 0.45] };
+const CLOUDS = { mode: "drift", sprites: S("cloud-3"), count: 6, size: [140, 300], speed: 0.45, band: [0.02, 0.55], alpha: 0.95 };
+const FLUTTER = { mode: "fly", sprites: [...S("butterfly-blue"), ...REAL_CHARACTERS_SRC("butterfly")], count: 5, size: [30, 50] };
 export const REAL_SCENES = {
   reef: { mode: "swim", sprites: FISH, count: 12, size: [54, 96] },
   leaves: { mode: "fall", sprites: S(...LEAVES), count: 30, size: [26, 50] },
-  blossoms: { mode: "fall", sprites: S("petal-pink", "blossom", "rose-petal", "petal-pink", "sakura-2", "daisy-petal", "lavender"), count: 42, size: [16, 32] },
-  butterflies: { mode: "fly", sprites: S("butterfly-orange", "butterfly-blue", "butterfly-orange", "butterfly-blue", "ladybug"), count: 10, size: [34, 58] },
+  blossoms: { mode: "fall", sprites: S("petal-pink", "rose-petal", "petal-pink", "daisy-petal", "lavender"), count: 42, size: [16, 32] },
+  butterflies: { mode: "fly", sprites: [...S("butterfly-blue", "ladybug"), ...REAL_CHARACTERS_SRC("butterfly")], count: 10, size: [34, 58] },
   flurry: { mode: "fall", sprites: S("snowflake"), count: 46, size: [12, 34], speed: 0.6 },
-  drift: { mode: "rise", sprites: S("dandelion", "feather", "bubble", "bubble", "droplet"), count: 26, size: [22, 46] },
+  drift: { mode: "rise", sprites: S("feather", "bubble", "bubble", "daisy-petal"), count: 26, size: [22, 46] },
   beans: { mode: "fall", sprites: S("coffee-bean", "coffee-bean", "star-anise"), count: 26, size: [16, 28], speed: 1.3 },
   gold: { mode: "fall", sprites: S("confetti-gold"), count: 40, size: [10, 26], speed: 0.5, shimmer: true },
   seafloor: { plate: REAL_PLATES.reef, veil: 0.18, layers: [{ mode: "swim", sprites: FISH, count: 10, size: [50, 90] }, { mode: "sway", sprites: S("seaweed", "coral-pink", "anemone", "coral-orange", "seaweed", "starfish"), count: 7, size: [70, 150] }] },
-  clouds: { plate: REAL_PLATES.sky, veil: 0.2, layers: [CLOUDS, BIRDS, { mode: "drift", sprites: S("balloon", "kite"), count: 2, size: [50, 90], speed: 0.4, bob: 3, band: [0.15, 0.7] }] },
+  clouds: { plate: REAL_PLATES.sky, veil: 0.2, layers: [CLOUDS, BIRDS, { mode: "drift", sprites: S("balloon", "party-balloon"), count: 2, size: [50, 90], speed: 0.4, bob: 3, band: [0.15, 0.7] }] },
   moonlit: { plate: REAL_PLATES.night, veil: 0.12, layers: [{ mode: "float", sprites: S("moon", "planet"), count: 2, size: [80, 130] }] },
-  garden: { plate: REAL_PLATES.blossom, veil: 0.32, layers: [{ mode: "sway", sprites: S("sunflower", "tulip", "daisy", "fern", "tulip"), count: 9, size: [120, 220] }, FLUTTER] },
-  cafe: { plate: REAL_PLATES.cafe, veil: 0.3, layers: [{ mode: "float", sprites: S("croissant", "coffee-cup", "macaron", "strawberry", "cherry", "chocolate", "lemon", "mint"), count: 9, size: [80, 140] }, { mode: "fall", sprites: S("coffee-bean"), count: 12, size: [14, 24], speed: 1.2 }] },
+  garden: { plate: REAL_PLATES.blossom, veil: 0.32, layers: [{ mode: "sway", sprites: S("sunflower", "tulip", "daisy", "fern", "lotus", "orchid"), count: 9, size: [120, 220] }, FLUTTER] },
+  cafe: { plate: REAL_PLATES.cafe, veil: 0.3, layers: [{ mode: "float", sprites: S("croissant", "coffee-cup", "macaron", "strawberry", "cherry", "chocolate", "lemon", "mint"), count: 8, size: [50, 95] }, { mode: "fall", sprites: S("coffee-bean"), count: 12, size: [14, 24], speed: 1.2 }] },
   woodland: { plate: REAL_PLATES.forest, veil: 0.22, layers: [{ mode: "fall", sprites: S(...LEAVES), count: 18, size: [24, 46] }] },
   winter: { plate: REAL_PLATES.snow, veil: 0.2, layers: [{ mode: "fall", sprites: S("snowflake"), count: 40, size: [10, 30], speed: 0.6 }] },
   shore: { plate: REAL_PLATES.ocean, veil: 0.18, layers: [{ ...BIRDS, count: 4, size: [34, 62] }, { ...CLOUDS, count: 3, alpha: 0.7 }] },
@@ -93,7 +95,7 @@ export const REAL_SCENES = {
   autumn: { plate: REAL_PLATES.autumn, veil: 0.22, layers: [{ mode: "fall", sprites: S("maple", "oak", "chestnut", "maple", "pinecone"), count: 20, size: [20, 44] }] },
   citylights: { plate: REAL_PLATES.city, veil: 0.15, layers: [{ mode: "fall", sprites: S("confetti-gold"), count: 30, size: [10, 24], speed: 0.45, shimmer: true }] },
   tropics: { layers: [{ mode: "sway", sprites: S("palm-leaf", "monstera", "fern", "monstera"), count: 8, size: [110, 210] }, FLUTTER] },
-  treats: { layers: [{ mode: "float", sprites: S("croissant", "macaron", "strawberry", "cherry", "lemon", "chocolate", "mint", "coffee-cup"), count: 11, size: [70, 130] }] },
+  treats: { layers: [{ mode: "float", sprites: S("croissant", "macaron", "strawberry", "cherry", "lemon", "chocolate", "donut", "cupcake", "blueberries", "watermelon", "coffee-cup"), count: 10, size: [50, 95] }] },
 };
 
 // The picture files a scene needs, so a download can include them.

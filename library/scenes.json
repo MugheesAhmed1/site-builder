@@ -1090,5 +1090,159 @@
   "group": "depth",
   "palette": "mono",
   "name": "Hanging charms, mono"
+ },
+ {
+  "id": "S-157",
+  "type": "reef",
+  "group": "real",
+  "palette": "brand",
+  "name": "Real aquarium"
+ },
+ {
+  "id": "S-158",
+  "type": "leaves",
+  "group": "real",
+  "palette": "brand",
+  "name": "Autumn leaves"
+ },
+ {
+  "id": "S-159",
+  "type": "blossoms",
+  "group": "real",
+  "palette": "brand",
+  "name": "Blossom petals"
+ },
+ {
+  "id": "S-160",
+  "type": "butterflies",
+  "group": "real",
+  "palette": "brand",
+  "name": "Butterflies"
+ },
+ {
+  "id": "S-161",
+  "type": "flurry",
+  "group": "real",
+  "palette": "brand",
+  "name": "Snowflakes"
+ },
+ {
+  "id": "S-162",
+  "type": "drift",
+  "group": "real",
+  "palette": "brand",
+  "name": "Floating seeds"
+ },
+ {
+  "id": "S-163",
+  "type": "beans",
+  "group": "real",
+  "palette": "brand",
+  "name": "Coffee beans"
+ },
+ {
+  "id": "S-164",
+  "type": "gold",
+  "group": "real",
+  "palette": "brand",
+  "name": "Gold flakes"
+ },
+ {
+  "id": "S-165",
+  "type": "seafloor",
+  "group": "real",
+  "palette": "brand",
+  "name": "Under the sea"
+ },
+ {
+  "id": "S-166",
+  "type": "clouds",
+  "group": "real",
+  "palette": "brand",
+  "name": "Drifting clouds"
+ },
+ {
+  "id": "S-167",
+  "type": "moonlit",
+  "group": "real",
+  "palette": "brand",
+  "name": "Moonlit night"
+ },
+ {
+  "id": "S-168",
+  "type": "garden",
+  "group": "real",
+  "palette": "brand",
+  "name": "Flower garden"
+ },
+ {
+  "id": "S-169",
+  "type": "cafe",
+  "group": "real",
+  "palette": "brand",
+  "name": "Café table"
+ },
+ {
+  "id": "S-170",
+  "type": "woodland",
+  "group": "real",
+  "palette": "brand",
+  "name": "Forest light"
+ },
+ {
+  "id": "S-171",
+  "type": "winter",
+  "group": "real",
+  "palette": "brand",
+  "name": "Snowy forest"
+ },
+ {
+  "id": "S-172",
+  "type": "shore",
+  "group": "real",
+  "palette": "brand",
+  "name": "Ocean breeze"
+ },
+ {
+  "id": "S-173",
+  "type": "peaks",
+  "group": "real",
+  "palette": "brand",
+  "name": "Misty peaks"
+ },
+ {
+  "id": "S-174",
+  "type": "dunes",
+  "group": "real",
+  "palette": "brand",
+  "name": "Desert dunes"
+ },
+ {
+  "id": "S-175",
+  "type": "autumn",
+  "group": "real",
+  "palette": "brand",
+  "name": "Autumn walk"
+ },
+ {
+  "id": "S-176",
+  "type": "citylights",
+  "group": "real",
+  "palette": "brand",
+  "name": "City lights"
+ },
+ {
+  "id": "S-177",
+  "type": "tropics",
+  "group": "real",
+  "palette": "brand",
+  "name": "Tropical leaves"
+ },
+ {
+  "id": "S-178",
+  "type": "treats",
+  "group": "real",
+  "palette": "brand",
+  "name": "Floating treats"
  }
 ]
