@@ -26,7 +26,7 @@
   --radius: 10px;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", "Bricolage Fallback", "Bricolage Fallback 2", ui-sans-serif, system-ui, sans-serif;
   --font-ui: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   color-scheme: light;
@@ -596,3 +596,26 @@ html, body { overflow-x: clip; }
 .dev-details summary { cursor: pointer; font-weight: 600; font-size: 14px; color: var(--muted); list-style-position: inside; }
 .dev-details summary:hover { color: var(--text); }
 .dev-details[open] summary { margin-bottom: 4px; }
+
+/* Home hero entrance. Plain CSS so the words are in the first paint, before any script runs. */
+/* No fade on the words: they are readable from the very first frame and only settle into place. */
+@keyframes rise-in { from { transform: translateY(14px); } to { transform: none; } }
+@keyframes hl-up { from { transform: translateY(105%); } to { transform: none; } }
+@keyframes reel-in { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: none; } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.rise { animation: rise-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: calc(0.08s + var(--i, 0) * 0.07s); }
+.hl-up { animation: hl-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.rise-reel { animation: reel-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both; }
+@media (prefers-reduced-motion: reduce) {
+  .rise, .hl-up, .rise-reel { animation: fade-in 0.3s ease-out both; animation-delay: 0s !important; }
+}
+
+.storage-notice { position: sticky; top: 60px; z-index: 30; padding: 10px 20px; background: #fff3cd; color: #4a3500; border-bottom: 1px solid #e6c86a; font-size: 14px; }
+.preview-jump { display: none; }
+@media (max-width: 960px) {
+  .preview-jump { display: inline-flex; position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 40; min-height: 46px; border-radius: 999px; box-shadow: var(--shadow); }
+}
+
+/* Stand-ins sized to match the headline font, so lines do not re-wrap when it arrives. */
+@font-face { font-family: "Bricolage Fallback"; src: local("Arial Bold"), local("Arial-BoldMT"), local("Arial"); size-adjust: 90%; font-weight: 500 700; }
+@font-face { font-family: "Bricolage Fallback 2"; src: local("Roboto Bold"), local("Roboto-Bold"), local("Roboto"), local("Liberation Sans Bold"), local("Liberation Sans"); size-adjust: 90%; font-weight: 500 700; }
