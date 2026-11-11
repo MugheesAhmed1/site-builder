@@ -2,7 +2,9 @@
 // 20 character families x 26 variants = 520 characters; 32 widget kinds x 16 skins = 512
 // widgets. The first 216 characters and 208 widgets keep their original ids. Each one is plain data, so the builder can load more from the library on GitHub
 // and a downloaded site carries the exact ones it uses inside site-data.json.
-// All artwork is original, drawn in SVG by src/Cast.jsx.
+// All artwork is original, drawn in SVG by src/Cast.jsx. The real-life pack (C-521 on) adds
+// photoreal people, animals and mascots as pictures in public/real.
+import { REAL_CHARACTERS } from "./real.js";
 
 export const FAMILIES = [
   { id: "person", name: "Person" },
@@ -25,7 +27,12 @@ export const FAMILIES = [
   { id: "book", name: "Book" },
   { id: "house", name: "House" },
   { id: "car", name: "Car" },
+  // The real-life pack: photoreal pictures instead of drawings (see real.js).
+  { id: "real-person", name: "Real people" },
+  { id: "real-animal", name: "Real animals" },
+  { id: "real-mascot", name: "Real mascots" },
 ];
+const DRAWN_FAMILIES = 20;
 const FIRST_FAMILIES = 12;
 
 export const PALETTES = [
@@ -74,7 +81,7 @@ function buildCharacters() {
   FAMILIES.slice(0, FIRST_FAMILIES).forEach((f, fi) => {
     for (let v = 18; v < 26; v++) add(f, fi, v, ACCESSORIES);
   });
-  FAMILIES.slice(FIRST_FAMILIES).forEach((f, k) => {
+  FAMILIES.slice(FIRST_FAMILIES, DRAWN_FAMILIES).forEach((f, k) => {
     for (let v = 0; v < 26; v++) add(f, FIRST_FAMILIES + k, v, ACCESSORIES);
   });
   return out;
@@ -147,7 +154,7 @@ function buildWidgets() {
   return out;
 }
 
-export const CHARACTERS = buildCharacters();
+export const CHARACTERS = [...buildCharacters(), ...REAL_CHARACTERS];
 export const WIDGETS = buildWidgets();
 
 export function characterById(id, list = CHARACTERS) {

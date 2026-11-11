@@ -79,7 +79,7 @@ export interface ScenePick {
 }
 
 export interface CastPick {
-  character: { id: string; family: string; name: string; palette: string; accessory: string; expression: string; idle: string; variant: number };
+  character: { id: string; family: string; name: string; palette: string; accessory: string; expression: string; idle: string; variant: number; src?: string; fits?: string[] };
   widgets: { id: string; kind: string; skin: string; name: string }[];
 }
 

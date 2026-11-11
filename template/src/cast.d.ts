@@ -1,4 +1,4 @@
-export interface CharacterDef { id: string; family: string; name: string; palette: string; accessory: string; expression: string; idle: string; variant: number }
+export interface CharacterDef { id: string; family: string; name: string; palette: string; accessory: string; expression: string; idle: string; variant: number; src?: string; fits?: string[] }
 export interface WidgetDef { id: string; kind: string; skin: string; name: string }
 export const FAMILIES: { id: string; name: string }[];
 export const PALETTES: { id: string; name: string; body: string; trim: string }[];

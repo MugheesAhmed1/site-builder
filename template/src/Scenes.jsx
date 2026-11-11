@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { SCENE_PALETTES, sceneType } from "./scenes.js";
+import { REAL_SCENES, SCENE_PALETTES, sceneType } from "./scenes.js";
 
 // Draws the live scenes from scenes.js. Canvas scenes share one loop: it sizes the canvas
 // for sharp pixels, tracks the pointer (even when text sits on top), pauses when the
@@ -1360,6 +1360,263 @@ function charmsImpl(env) {
 IMPL.charms = charmsImpl;
 
 
+// ------------------------------------------------------------------ Real-life sprites
+
+// One engine for every real-life scene. A scene is an optional background photo (it shifts
+// a little with the pointer for depth) plus layers of cut-out pictures. Each layer moves in
+// one way: fall, rise, fly, swim, drift (across the screen), float (bob in place) or sway
+// (rooted at the bottom). Every layer pushes away from the pointer and reacts to taps.
+function loadImg(src, env) {
+  const im = new Image();
+  im.decoding = "async";
+  im.onload = () => env.redraw && env.redraw();
+  im.src = src;
+  return im;
+}
+
+function spriteLayer(env, cfg, shared) {
+  const imgs = cfg.sprites.map((src) => loadImg(src, env));
+  const ps = [];
+  const sp = cfg.speed || 1;
+  const mode = cfg.mode;
+  const make = (anywhere, i = 0) => {
+    const z = rnd(0.55, 1.15);
+    // Sizes are set for a wide hero; small previews and phones scale them down.
+    const size = rnd(cfg.size[0], cfg.size[1]) * z * clamp(Math.min(env.w / 1100, env.h / 560), 0.42, 1.15);
+    const p = { k: Math.floor(Math.random() * imgs.length), z, size, x: rnd(0, env.w), y: anywhere ? rnd(0, env.h) : 0, vx: 0, vy: 0, r: rnd(0, TAU), vr: rnd(-0.03, 0.03), ph: rnd(0, TAU), a: rnd(0, TAU), s: rnd(0.7, 1.3), dir: Math.random() < 0.5 ? -1 : 1 };
+    if (mode === "rise" && !anywhere) p.y = env.h + size;
+    else if (mode === "fall" && !anywhere) p.y = -size;
+    else if (mode === "drift") {
+      p.dir = cfg.dir || 1;
+      p.y = rnd(env.h * (cfg.band ? cfg.band[0] : 0.05), env.h * (cfg.band ? cfg.band[1] : 0.6));
+      if (!anywhere) p.x = p.dir > 0 ? -size : env.w + size;
+      p.r = 0;
+    } else if (mode === "sway") {
+      const n = Math.max(1, cfg.count);
+      p.x = ((i + 0.5) / n) * env.w + rnd(-env.w / n / 3, env.w / n / 3);
+      p.y = env.h + 2;
+      p.r = 0;
+    } else if (mode === "float") {
+      p.y = rnd(env.h * 0.1, env.h * 0.9);
+      p.hx = p.x;
+      p.hy = p.y;
+      p.r = rnd(-0.3, 0.3);
+    }
+    return p;
+  };
+  const push = (p, dt, ptr, radius, force) => {
+    if (!ptr.in) return;
+    const dx = p.x - ptr.x;
+    const dy = p.y - ptr.y;
+    const d = Math.hypot(dx, dy);
+    if (d < radius && d > 0.1) {
+      const f = ((radius - d) / radius) * force * dt;
+      p.vx += (dx / d) * f;
+      p.vy += (dy / d) * f;
+    }
+  };
+  return {
+    resize() {
+      ps.length = 0;
+      const n = mode === "sway" ? cfg.count : Math.max(1, Math.round(cfg.count * clamp((env.w * env.h) / (1100 * 640), 0.45, 1.3)));
+      for (let i = 0; i < n; i++) ps.push(make(true, i));
+      ps.sort((a, b) => a.z - b.z);
+    },
+    step(dt, ptr) {
+      const wind = shared.wind;
+      for (const p of ps) {
+        if (mode === "fall" || mode === "rise") {
+          const dir = mode === "rise" ? -1 : 1;
+          push(p, dt, ptr, 120, 0.35);
+          p.vx *= 0.94;
+          p.vy *= 0.94;
+          p.x += (wind * p.z + Math.sin(env.t * 0.0012 * p.s + p.ph) * 0.7 + p.vx) * dt;
+          p.y += (dir * (0.45 + p.z * 0.75) * sp * p.s + p.vy) * dt;
+          p.r += (p.vr + p.vx * 0.01) * dt;
+          if (dir > 0 ? p.y > env.h + p.size : p.y < -p.size) Object.assign(p, make(false), { k: p.k, z: p.z, size: p.size });
+          if (p.x > env.w + p.size) p.x = -p.size;
+          if (p.x < -p.size) p.x = env.w + p.size;
+        } else if (mode === "drift") {
+          push(p, dt, ptr, 140, 0.25);
+          p.vx *= 0.95;
+          p.vy *= 0.95;
+          p.x += (p.dir * 0.35 * sp * p.s * p.z + wind * 0.3 * p.z + p.vx) * dt;
+          p.y += (Math.sin(env.t * 0.0011 * p.s + p.ph) * 0.25 * (cfg.bob || 1) + p.vy) * dt;
+          if (p.dir > 0 ? p.x > env.w + p.size : p.x < -p.size) Object.assign(p, make(false), { k: p.k, z: p.z, size: p.size });
+        } else if (mode === "float") {
+          push(p, dt, ptr, 150, 0.6);
+          p.vx += (p.hx - p.x) * 0.002 * dt;
+          p.vy += (p.hy - p.y) * 0.002 * dt;
+          p.vx *= 0.94;
+          p.vy *= 0.94;
+          p.x += p.vx * dt;
+          p.y += (p.vy + Math.sin(env.t * 0.0014 * p.s + p.ph) * 0.3) * dt;
+          p.r += (p.vr * 0.2 + p.vx * 0.004) * dt;
+          p.r *= 0.995;
+        } else if (mode === "sway") {
+          let lean = Math.sin(env.t * 0.0011 * p.s + p.ph) * 0.06 + wind * 0.02;
+          if (ptr.in && Math.abs(ptr.x - p.x) < 120 && ptr.y > env.h - p.size * 1.6) lean += clamp(ptr.vx, -8, 8) * 0.02 * ((120 - Math.abs(ptr.x - p.x)) / 120);
+          p.vr += (lean - p.r) * 0.06 * dt;
+          p.vr *= 0.88;
+          p.r += p.vr * dt;
+        } else if (mode === "fly") {
+          const tx = ptr.in ? ptr.x + Math.cos(p.ph + env.t * 0.0007) * 90 : env.w * (0.5 + 0.4 * Math.cos(p.ph + env.t * 0.00013 * p.s));
+          const ty = ptr.in ? ptr.y + Math.sin(p.ph * 1.7 + env.t * 0.0009) * 70 : env.h * (0.5 + 0.38 * Math.sin(p.ph * 2 + env.t * 0.00017 * p.s));
+          const want = Math.atan2(ty - p.y, tx - p.x) + Math.sin(env.t * 0.003 * p.s + p.ph) * 0.9;
+          let da = want - p.a;
+          while (da > Math.PI) da -= TAU;
+          while (da < -Math.PI) da += TAU;
+          p.a += clamp(da, -0.05, 0.05) * dt;
+          p.vx *= 0.95;
+          p.vy *= 0.95;
+          p.x += (Math.cos(p.a) * 1.3 * p.s * p.z + p.vx) * dt;
+          p.y += (Math.sin(p.a) * 1.3 * p.s * p.z + p.vy + Math.sin(env.t * 0.01 * p.s + p.ph) * 0.4) * dt;
+          p.x = clamp(p.x, -40, env.w + 40);
+          p.y = clamp(p.y, -40, env.h + 40);
+        } else {
+          // swim
+          const food = shared.food;
+          let tx = p.x + Math.cos(p.a) * 60;
+          let ty = p.y + Math.sin(p.a) * 20;
+          const near = food.length ? food.reduce((b, q) => (Math.hypot(q.x - p.x, q.y - p.y) < Math.hypot(b.x - p.x, b.y - p.y) ? q : b)) : null;
+          if (near) [tx, ty] = [near.x, near.y];
+          else if (ptr.in && p.k % 2 === 0) [tx, ty] = [ptr.x + Math.cos(p.ph) * 80, ptr.y + Math.sin(p.ph) * 50];
+          const want = Math.atan2(ty - p.y, tx - p.x);
+          let da = want - p.a;
+          while (da > Math.PI) da -= TAU;
+          while (da < -Math.PI) da += TAU;
+          p.a += clamp(da, -0.035, 0.035) * dt + rnd(-0.015, 0.015);
+          const v = (near ? 1.6 : 0.8) * p.s * p.z * sp;
+          p.x += Math.cos(p.a) * v * dt;
+          p.y += Math.sin(p.a) * v * 0.6 * dt;
+          const m = p.size * 0.5;
+          if (p.x < m || p.x > env.w - m) p.a = Math.PI - p.a;
+          if (p.y < m || p.y > env.h * 0.88 - m) p.a = -p.a;
+          p.x = clamp(p.x, m, env.w - m);
+          p.y = clamp(p.y, m, env.h * 0.88 - m);
+          if (near && Math.hypot(near.x - p.x, near.y - p.y) < p.size * 0.4) food.splice(food.indexOf(near), 1);
+        }
+      }
+    },
+    draw(g) {
+      for (const p of ps) {
+        const im = imgs[p.k];
+        if (!im || !im.complete || !im.naturalWidth) continue;
+        const w = p.size;
+        const h = (w * im.naturalHeight) / im.naturalWidth;
+        g.save();
+        g.translate(p.x, p.y);
+        g.globalAlpha = (mode === "sway" || mode === "float" ? 1 : clamp(0.45 + p.z * 0.5, 0, 1)) * (cfg.shimmer ? 0.65 + 0.35 * Math.sin(env.t * 0.006 + p.ph) : 1) * (cfg.alpha || 1);
+        if (mode === "swim") {
+          const left = Math.cos(p.a) < 0;
+          g.rotate(clamp(Math.sin(p.a) * (left ? -1 : 1), -0.5, 0.5) * 0.6);
+          g.scale((left ? -1 : 1) * (1 + Math.sin(env.t * 0.01 * p.s + p.ph) * 0.03), 1);
+        } else if (mode === "fly") {
+          g.rotate(p.a + Math.PI / 2);
+          g.scale(0.35 + 0.65 * Math.abs(Math.sin(env.t * 0.02 * p.s + p.ph)), 1);
+        } else if (mode === "drift") {
+          if (cfg.flap) g.scale(p.dir, 0.82 + 0.18 * Math.abs(Math.sin(env.t * 0.012 * p.s + p.ph)));
+          else if (cfg.facing) g.scale(p.dir * cfg.facing, 1);
+          g.rotate(Math.sin(env.t * 0.0009 + p.ph) * 0.05);
+        } else if (mode === "sway") {
+          g.rotate(p.r);
+          g.drawImage(im, -w / 2, -h, w, h);
+          g.restore();
+          continue;
+        } else if (mode === "float") {
+          g.rotate(p.r);
+        } else {
+          g.rotate(p.r);
+          g.scale(1, 0.45 + 0.55 * Math.abs(Math.cos(p.r * 1.4 + p.ph)));
+        }
+        g.drawImage(im, -w / 2, -h / 2, w, h);
+        g.restore();
+      }
+    },
+    down(x, y) {
+      if (mode === "swim" || mode === "sway") return;
+      for (const p of ps) {
+        const dx = p.x - x;
+        const dy = p.y - y;
+        const d = Math.max(20, Math.hypot(dx, dy));
+        const f = Math.min(9, 2600 / (d * d) + 1.2) * (mode === "fly" ? 2.4 : 1);
+        p.vx += (dx / d) * f;
+        p.vy += (dy / d) * f - (mode === "fall" && p.y > y - 60 && Math.abs(dx) < 140 ? 3 : 0);
+        p.vr += rnd(-0.08, 0.08);
+      }
+    },
+  };
+}
+
+function realImpl(env, type) {
+  const cfg = REAL_SCENES[type];
+  const shared = { wind: 0, food: [] };
+  const layers = (cfg.layers || [cfg]).map((l) => spriteLayer(env, l, shared));
+  const plate = cfg.plate ? loadImg(cfg.plate, env) : null;
+  const swims = (cfg.layers || [cfg]).some((l) => l.mode === "swim");
+  const bubbles = [];
+  let px = 0;
+  let py = 0;
+  return {
+    resize() {
+      for (const l of layers) l.resize();
+    },
+    step(dt, ptr) {
+      shared.wind += ((ptr.in ? ptr.vx * 0.25 : 0) + Math.sin(env.t * 0.0004) * 0.5 - shared.wind) * 0.04 * dt;
+      px += ((ptr.in ? ptr.x / env.w - 0.5 : 0) - px) * 0.04 * dt;
+      py += ((ptr.in ? ptr.y / env.h - 0.5 : 0) - py) * 0.04 * dt;
+      for (const l of layers) l.step(dt, ptr);
+      if (swims) {
+        for (const q of shared.food) q.y = Math.min(env.h - 4, q.y + 0.35 * dt);
+        if (Math.random() < 0.04 * dt) bubbles.push({ x: rnd(0, env.w), y: env.h + 6, r: rnd(2, 6) });
+        for (const b of bubbles) b.y -= (0.6 + b.r * 0.12) * dt;
+        while (bubbles.length && bubbles[0].y < -12) bubbles.shift();
+      }
+    },
+    draw(g) {
+      if (plate && plate.complete && plate.naturalWidth) {
+        // Cover the scene, a little larger than needed so the pointer can shift it.
+        const s = Math.max(env.w / plate.naturalWidth, env.h / plate.naturalHeight) * 1.08;
+        const w = plate.naturalWidth * s;
+        const h = plate.naturalHeight * s;
+        g.drawImage(plate, (env.w - w) / 2 - px * (w - env.w) * 0.8, (env.h - h) / 2 - py * (h - env.h) * 0.8, w, h);
+        // A soft veil in the page colour keeps the words on top readable.
+        g.fillStyle = env.bg;
+        g.globalAlpha = cfg.veil ?? 0.28;
+        g.fillRect(0, 0, env.w, env.h);
+        g.globalAlpha = 1;
+      } else if (swims) {
+        const water = g.createLinearGradient(0, 0, 0, env.h);
+        water.addColorStop(0, "rgba(64,170,210,0.10)");
+        water.addColorStop(1, "rgba(12,70,120,0.26)");
+        g.fillStyle = water;
+        g.fillRect(0, 0, env.w, env.h);
+      }
+      if (swims) {
+        g.lineWidth = 1;
+        g.strokeStyle = "rgba(255,255,255,0.55)";
+        for (const b of bubbles) {
+          g.beginPath();
+          g.arc(b.x + Math.sin(b.y * 0.05) * 3, b.y, b.r, 0, TAU);
+          g.stroke();
+        }
+        g.fillStyle = "#c98a4b";
+        for (const q of shared.food) {
+          g.beginPath();
+          g.arc(q.x, q.y, 2.5, 0, TAU);
+          g.fill();
+        }
+      }
+      for (const l of layers) l.draw(g);
+    },
+    down(x, y) {
+      if (swims) for (let i = 0; i < 7; i++) shared.food.push({ x: x + rnd(-16, 16), y: y + rnd(-6, 6) });
+      shared.wind += rnd(-4, 4);
+      for (const l of layers) l.down(x, y);
+    },
+  };
+}
+
 function CanvasScene({ type, palette, text, words, image }) {
   const wrap = useRef(null);
   const cv = useRef(null);
@@ -1387,7 +1644,7 @@ function CanvasScene({ type, palette, text, words, image }) {
       g,
       img: null,
     };
-    const scene = (IMPL[type] || IMPL.constellation)(env);
+    const scene = REAL_SCENES[type] ? realImpl(env, type) : (IMPL[type] || IMPL.constellation)(env);
     const p = { x: 0, y: 0, in: false, down: false, vx: 0, burst: 0 };
     let raf = 0;
     let visible = true;
@@ -1471,6 +1728,7 @@ function CanvasScene({ type, palette, text, words, image }) {
       };
       im.src = image;
     }
+    env.redraw = () => reduce && start();
     start();
     return () => {
       cancelAnimationFrame(raf);
