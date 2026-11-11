@@ -1,6 +1,6 @@
 // The cast: pre-animated characters and widgets a site is built around.
-// 12 character families x 18 variants = 216 characters; 26 widget kinds x 8 skins = 208
-// widgets. Each one is plain data, so the builder can load more from the library on GitHub
+// 20 character families x 26 variants = 520 characters; 32 widget kinds x 16 skins = 512
+// widgets. The first 216 characters and 208 widgets keep their original ids. Each one is plain data, so the builder can load more from the library on GitHub
 // and a downloaded site carries the exact ones it uses inside site-data.json.
 // All artwork is original, drawn in SVG by src/Cast.jsx.
 
@@ -17,7 +17,16 @@ export const FAMILIES = [
   { id: "cup", name: "Coffee cup" },
   { id: "rocket", name: "Rocket" },
   { id: "orb", name: "Planet" },
+  { id: "dog", name: "Dog" },
+  { id: "tooth", name: "Tooth" },
+  { id: "heart", name: "Heart" },
+  { id: "camera", name: "Camera" },
+  { id: "laptop", name: "Laptop" },
+  { id: "book", name: "Book" },
+  { id: "house", name: "House" },
+  { id: "car", name: "Car" },
 ];
+const FIRST_FAMILIES = 12;
 
 export const PALETTES = [
   { id: "brand", name: "Brand", body: "var(--pf-accent)", trim: "var(--pf-on-accent)" },
@@ -32,31 +41,41 @@ export const PALETTES = [
 ];
 
 export const EXPRESSIONS = ["smile", "grin", "wink", "wow"];
-export const ACCESSORIES = ["none", "glasses", "hat", "headphones", "scarf", "crown"];
+export const ACCESSORIES = ["none", "glasses", "hat", "headphones", "scarf", "crown", "chef", "cap", "bow"];
+const FIRST_ACCESSORIES = 6;
 export const IDLES = ["bob", "sway", "bounce", "float", "wiggle"];
 
-const ACC_NAME = { none: "", glasses: "with glasses", hat: "in a hat", headphones: "with headphones", scarf: "in a scarf", crown: "with a crown" };
+const ACC_NAME = { none: "", glasses: "with glasses", hat: "in a hat", headphones: "with headphones", scarf: "in a scarf", crown: "with a crown", chef: "in a chef's hat", cap: "in a cap", bow: "with a bow tie" };
 
 function buildCharacters() {
   const out = [];
   let n = 1;
-  FAMILIES.forEach((f, fi) => {
-    for (let v = 0; v < 18; v++) {
-      const palette = PALETTES[(v * 7 + fi * 3) % PALETTES.length];
-      const accessory = ACCESSORIES[(v * 5 + fi) % ACCESSORIES.length];
-      const expression = EXPRESSIONS[(v + fi) % EXPRESSIONS.length];
-      const idle = IDLES[(v * 3 + fi) % IDLES.length];
-      out.push({
-        id: "C-" + String(n++).padStart(3, "0"),
-        family: f.id,
-        name: [palette.name, f.name.toLowerCase(), ACC_NAME[accessory]].filter(Boolean).join(" "),
-        palette: palette.id,
-        accessory,
-        expression,
-        idle,
-        variant: v,
-      });
-    }
+  const add = (f, fi, v, accs) => {
+    const palette = PALETTES[(v * 7 + fi * 3) % PALETTES.length];
+    const accessory = accs[(v * 5 + fi) % accs.length];
+    const expression = EXPRESSIONS[(v + fi) % EXPRESSIONS.length];
+    const idle = IDLES[(v * 3 + fi) % IDLES.length];
+    out.push({
+      id: "C-" + String(n++).padStart(3, "0"),
+      family: f.id,
+      name: [palette.name, f.name.toLowerCase(), ACC_NAME[accessory]].filter(Boolean).join(" "),
+      palette: palette.id,
+      accessory,
+      expression,
+      idle,
+      variant: v,
+    });
+  };
+  // The original 216, unchanged.
+  FAMILIES.slice(0, FIRST_FAMILIES).forEach((f, fi) => {
+    for (let v = 0; v < 18; v++) add(f, fi, v, ACCESSORIES.slice(0, FIRST_ACCESSORIES));
+  });
+  // More looks for the first families, then the new families.
+  FAMILIES.slice(0, FIRST_FAMILIES).forEach((f, fi) => {
+    for (let v = 18; v < 26; v++) add(f, fi, v, ACCESSORIES);
+  });
+  FAMILIES.slice(FIRST_FAMILIES).forEach((f, k) => {
+    for (let v = 0; v < 26; v++) add(f, FIRST_FAMILIES + k, v, ACCESSORIES);
   });
   return out;
 }
@@ -88,7 +107,14 @@ export const WIDGET_KINDS = [
   { id: "quote", name: "Quote card" },
   { id: "countdown", name: "Countdown" },
   { id: "badge", name: "Award badge" },
+  { id: "appointment", name: "Next appointment" },
+  { id: "menu", name: "Dish of the day" },
+  { id: "pulse", name: "Heartbeat" },
+  { id: "followers", name: "Follower count" },
+  { id: "uptime", name: "Uptime" },
+  { id: "growth", name: "Growth" },
 ];
+const FIRST_KINDS = 26;
 
 export const SKINS = [
   { id: "glass", name: "Glass" },
@@ -99,13 +125,25 @@ export const SKINS = [
   { id: "gradient", name: "Gradient" },
   { id: "dark", name: "Midnight" },
   { id: "pastel", name: "Pastel" },
+  { id: "frost", name: "Frost" },
+  { id: "clay", name: "Clay" },
+  { id: "mono", name: "Mono" },
+  { id: "terminal", name: "Terminal" },
+  { id: "brand", name: "Brand" },
+  { id: "sand", name: "Sand" },
+  { id: "blueprint", name: "Blueprint" },
+  { id: "sunrise", name: "Sunrise" },
 ];
+const FIRST_SKINS = 8;
 
 function buildWidgets() {
   const out = [];
   let n = 1;
-  for (const k of WIDGET_KINDS)
-    for (const s of SKINS) out.push({ id: "W-" + String(n++).padStart(3, "0"), kind: k.id, skin: s.id, name: `${s.name} ${k.name.toLowerCase()}` });
+  const add = (k, s) => out.push({ id: "W-" + String(n++).padStart(3, "0"), kind: k.id, skin: s.id, name: `${s.name} ${k.name.toLowerCase()}` });
+  // The original 208, unchanged; then new styles for them; then the new kinds in every style.
+  for (const k of WIDGET_KINDS.slice(0, FIRST_KINDS)) for (const s of SKINS.slice(0, FIRST_SKINS)) add(k, s);
+  for (const k of WIDGET_KINDS.slice(0, FIRST_KINDS)) for (const s of SKINS.slice(FIRST_SKINS)) add(k, s);
+  for (const k of WIDGET_KINDS.slice(FIRST_KINDS)) for (const s of SKINS) add(k, s);
   return out;
 }
 

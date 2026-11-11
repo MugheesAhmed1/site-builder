@@ -2158,5 +2158,3045 @@
   "expression": "smile",
   "idle": "bounce",
   "variant": 17
+ },
+ {
+  "id": "C-217",
+  "family": "person",
+  "name": "Brand person",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "wink",
+  "idle": "wiggle",
+  "variant": 18
+ },
+ {
+  "id": "C-218",
+  "family": "person",
+  "name": "Slate person with a crown",
+  "palette": "slate",
+  "accessory": "crown",
+  "expression": "wow",
+  "idle": "bounce",
+  "variant": 19
+ },
+ {
+  "id": "C-219",
+  "family": "person",
+  "name": "Lemon person with glasses",
+  "palette": "lemon",
+  "accessory": "glasses",
+  "expression": "smile",
+  "idle": "bob",
+  "variant": 20
+ },
+ {
+  "id": "C-220",
+  "family": "person",
+  "name": "Lilac person in a chef's hat",
+  "palette": "lilac",
+  "accessory": "chef",
+  "expression": "grin",
+  "idle": "float",
+  "variant": 21
+ },
+ {
+  "id": "C-221",
+  "family": "person",
+  "name": "Mint person in a hat",
+  "palette": "mint",
+  "accessory": "hat",
+  "expression": "wink",
+  "idle": "sway",
+  "variant": 22
+ },
+ {
+  "id": "C-222",
+  "family": "person",
+  "name": "Ink person in a cap",
+  "palette": "ink",
+  "accessory": "cap",
+  "expression": "wow",
+  "idle": "wiggle",
+  "variant": 23
+ },
+ {
+  "id": "C-223",
+  "family": "person",
+  "name": "Coral person with headphones",
+  "palette": "coral",
+  "accessory": "headphones",
+  "expression": "smile",
+  "idle": "bounce",
+  "variant": 24
+ },
+ {
+  "id": "C-224",
+  "family": "person",
+  "name": "Sky person with a bow tie",
+  "palette": "sky",
+  "accessory": "bow",
+  "expression": "grin",
+  "idle": "bob",
+  "variant": 25
+ },
+ {
+  "id": "C-225",
+  "family": "blob",
+  "name": "Lilac blob with glasses",
+  "palette": "lilac",
+  "accessory": "glasses",
+  "expression": "wow",
+  "idle": "bob",
+  "variant": 18
+ },
+ {
+  "id": "C-226",
+  "family": "blob",
+  "name": "Mint blob in a chef's hat",
+  "palette": "mint",
+  "accessory": "chef",
+  "expression": "smile",
+  "idle": "float",
+  "variant": 19
+ },
+ {
+  "id": "C-227",
+  "family": "blob",
+  "name": "Ink blob in a hat",
+  "palette": "ink",
+  "accessory": "hat",
+  "expression": "grin",
+  "idle": "sway",
+  "variant": 20
+ },
+ {
+  "id": "C-228",
+  "family": "blob",
+  "name": "Coral blob in a cap",
+  "palette": "coral",
+  "accessory": "cap",
+  "expression": "wink",
+  "idle": "wiggle",
+  "variant": 21
+ },
+ {
+  "id": "C-229",
+  "family": "blob",
+  "name": "Sky blob with headphones",
+  "palette": "sky",
+  "accessory": "headphones",
+  "expression": "wow",
+  "idle": "bounce",
+  "variant": 22
+ },
+ {
+  "id": "C-230",
+  "family": "blob",
+  "name": "Peach blob with a bow tie",
+  "palette": "peach",
+  "accessory": "bow",
+  "expression": "smile",
+  "idle": "bob",
+  "variant": 23
+ },
+ {
+  "id": "C-231",
+  "family": "blob",
+  "name": "Brand blob in a scarf",
+  "palette": "brand",
+  "accessory": "scarf",
+  "expression": "grin",
+  "idle": "float",
+  "variant": 24
+ },
+ {
+  "id": "C-232",
+  "family": "blob",
+  "name": "Slate blob",
+  "palette": "slate",
+  "accessory": "none",
+  "expression": "wink",
+  "idle": "sway",
+  "variant": 25
+ },
+ {
+  "id": "C-233",
+  "family": "robot",
+  "name": "Coral robot in a hat",
+  "palette": "coral",
+  "accessory": "hat",
+  "expression": "smile",
+  "idle": "sway",
+  "variant": 18
+ },
+ {
+  "id": "C-234",
+  "family": "robot",
+  "name": "Sky robot in a cap",
+  "palette": "sky",
+  "accessory": "cap",
+  "expression": "grin",
+  "idle": "wiggle",
+  "variant": 19
+ },
+ {
+  "id": "C-235",
+  "family": "robot",
+  "name": "Peach robot with headphones",
+  "palette": "peach",
+  "accessory": "headphones",
+  "expression": "wink",
+  "idle": "bounce",
+  "variant": 20
+ },
+ {
+  "id": "C-236",
+  "family": "robot",
+  "name": "Brand robot with a bow tie",
+  "palette": "brand",
+  "accessory": "bow",
+  "expression": "wow",
+  "idle": "bob",
+  "variant": 21
+ },
+ {
+  "id": "C-237",
+  "family": "robot",
+  "name": "Slate robot in a scarf",
+  "palette": "slate",
+  "accessory": "scarf",
+  "expression": "smile",
+  "idle": "float",
+  "variant": 22
+ },
+ {
+  "id": "C-238",
+  "family": "robot",
+  "name": "Lemon robot",
+  "palette": "lemon",
+  "accessory": "none",
+  "expression": "grin",
+  "idle": "sway",
+  "variant": 23
+ },
+ {
+  "id": "C-239",
+  "family": "robot",
+  "name": "Lilac robot with a crown",
+  "palette": "lilac",
+  "accessory": "crown",
+  "expression": "wink",
+  "idle": "wiggle",
+  "variant": 24
+ },
+ {
+  "id": "C-240",
+  "family": "robot",
+  "name": "Mint robot with glasses",
+  "palette": "mint",
+  "accessory": "glasses",
+  "expression": "wow",
+  "idle": "bounce",
+  "variant": 25
+ },
+ {
+  "id": "C-241",
+  "family": "cat",
+  "name": "Brand cat with headphones",
+  "palette": "brand",
+  "accessory": "headphones",
+  "expression": "grin",
+  "idle": "bounce",
+  "variant": 18
+ },
+ {
+  "id": "C-242",
+  "family": "cat",
+  "name": "Slate cat with a bow tie",
+  "palette": "slate",
+  "accessory": "bow",
+  "expression": "wink",
+  "idle": "bob",
+  "variant": 19
+ },
+ {
+  "id": "C-243",
+  "family": "cat",
+  "name": "Lemon cat in a scarf",
+  "palette": "lemon",
+  "accessory": "scarf",
+  "expression": "wow",
+  "idle": "float",
+  "variant": 20
+ },
+ {
+  "id": "C-244",
+  "family": "cat",
+  "name": "Lilac cat",
+  "palette": "lilac",
+  "accessory": "none",
+  "expression": "smile",
+  "idle": "sway",
+  "variant": 21
+ },
+ {
+  "id": "C-245",
+  "family": "cat",
+  "name": "Mint cat with a crown",
+  "palette": "mint",
+  "accessory": "crown",
+  "expression": "grin",
+  "idle": "wiggle",
+  "variant": 22
+ },
+ {
+  "id": "C-246",
+  "family": "cat",
+  "name": "Ink cat with glasses",
+  "palette": "ink",
+  "accessory": "glasses",
+  "expression": "wink",
+  "idle": "bounce",
+  "variant": 23
+ },
+ {
+  "id": "C-247",
+  "family": "cat",
+  "name": "Coral cat in a chef's hat",
+  "palette": "coral",
+  "accessory": "chef",
+  "expression": "wow",
+  "idle": "bob",
+  "variant": 24
+ },
+ {
+  "id": "C-248",
+  "family": "cat",
+  "name": "Sky cat in a hat",
+  "palette": "sky",
+  "accessory": "hat",
+  "expression": "smile",
+  "idle": "float",
+  "variant": 25
+ },
+ {
+  "id": "C-249",
+  "family": "bear",
+  "name": "Lilac bear in a scarf",
+  "palette": "lilac",
+  "accessory": "scarf",
+  "expression": "wink",
+  "idle": "float",
+  "variant": 18
+ },
+ {
+  "id": "C-250",
+  "family": "bear",
+  "name": "Mint bear",
+  "palette": "mint",
+  "accessory": "none",
+  "expression": "wow",
+  "idle": "sway",
+  "variant": 19
+ },
+ {
+  "id": "C-251",
+  "family": "bear",
+  "name": "Ink bear with a crown",
+  "palette": "ink",
+  "accessory": "crown",
+  "expression": "smile",
+  "idle": "wiggle",
+  "variant": 20
+ },
+ {
+  "id": "C-252",
+  "family": "bear",
+  "name": "Coral bear with glasses",
+  "palette": "coral",
+  "accessory": "glasses",
+  "expression": "grin",
+  "idle": "bounce",
+  "variant": 21
+ },
+ {
+  "id": "C-253",
+  "family": "bear",
+  "name": "Sky bear in a chef's hat",
+  "palette": "sky",
+  "accessory": "chef",
+  "expression": "wink",
+  "idle": "bob",
+  "variant": 22
+ },
+ {
+  "id": "C-254",
+  "family": "bear",
+  "name": "Peach bear in a hat",
+  "palette": "peach",
+  "accessory": "hat",
+  "expression": "wow",
+  "idle": "float",
+  "variant": 23
+ },
+ {
+  "id": "C-255",
+  "family": "bear",
+  "name": "Brand bear in a cap",
+  "palette": "brand",
+  "accessory": "cap",
+  "expression": "smile",
+  "idle": "sway",
+  "variant": 24
+ },
+ {
+  "id": "C-256",
+  "family": "bear",
+  "name": "Slate bear with headphones",
+  "palette": "slate",
+  "accessory": "headphones",
+  "expression": "grin",
+  "idle": "wiggle",
+  "variant": 25
+ },
+ {
+  "id": "C-257",
+  "family": "bird",
+  "name": "Coral bird with a crown",
+  "palette": "coral",
+  "accessory": "crown",
+  "expression": "wow",
+  "idle": "wiggle",
+  "variant": 18
+ },
+ {
+  "id": "C-258",
+  "family": "bird",
+  "name": "Sky bird with glasses",
+  "palette": "sky",
+  "accessory": "glasses",
+  "expression": "smile",
+  "idle": "bounce",
+  "variant": 19
+ },
+ {
+  "id": "C-259",
+  "family": "bird",
+  "name": "Peach bird in a chef's hat",
+  "palette": "peach",
+  "accessory": "chef",
+  "expression": "grin",
+  "idle": "bob",
+  "variant": 20
+ },
+ {
+  "id": "C-260",
+  "family": "bird",
+  "name": "Brand bird in a hat",
+  "palette": "brand",
+  "accessory": "hat",
+  "expression": "wink",
+  "idle": "float",
+  "variant": 21
+ },
+ {
+  "id": "C-261",
+  "family": "bird",
+  "name": "Slate bird in a cap",
+  "palette": "slate",
+  "accessory": "cap",
+  "expression": "wow",
+  "idle": "sway",
+  "variant": 22
+ },
+ {
+  "id": "C-262",
+  "family": "bird",
+  "name": "Lemon bird with headphones",
+  "palette": "lemon",
+  "accessory": "headphones",
+  "expression": "smile",
+  "idle": "wiggle",
+  "variant": 23
+ },
+ {
+  "id": "C-263",
+  "family": "bird",
+  "name": "Lilac bird with a bow tie",
+  "palette": "lilac",
+  "accessory": "bow",
+  "expression": "grin",
+  "idle": "bounce",
+  "variant": 24
+ },
+ {
+  "id": "C-264",
+  "family": "bird",
+  "name": "Mint bird in a scarf",
+  "palette": "mint",
+  "accessory": "scarf",
+  "expression": "wink",
+  "idle": "bob",
+  "variant": 25
+ },
+ {
+  "id": "C-265",
+  "family": "ghost",
+  "name": "Brand ghost in a chef's hat",
+  "palette": "brand",
+  "accessory": "chef",
+  "expression": "smile",
+  "idle": "bob",
+  "variant": 18
+ },
+ {
+  "id": "C-266",
+  "family": "ghost",
+  "name": "Slate ghost in a hat",
+  "palette": "slate",
+  "accessory": "hat",
+  "expression": "grin",
+  "idle": "float",
+  "variant": 19
+ },
+ {
+  "id": "C-267",
+  "family": "ghost",
+  "name": "Lemon ghost in a cap",
+  "palette": "lemon",
+  "accessory": "cap",
+  "expression": "wink",
+  "idle": "sway",
+  "variant": 20
+ },
+ {
+  "id": "C-268",
+  "family": "ghost",
+  "name": "Lilac ghost with headphones",
+  "palette": "lilac",
+  "accessory": "headphones",
+  "expression": "wow",
+  "idle": "wiggle",
+  "variant": 21
+ },
+ {
+  "id": "C-269",
+  "family": "ghost",
+  "name": "Mint ghost with a bow tie",
+  "palette": "mint",
+  "accessory": "bow",
+  "expression": "smile",
+  "idle": "bounce",
+  "variant": 22
+ },
+ {
+  "id": "C-270",
+  "family": "ghost",
+  "name": "Ink ghost in a scarf",
+  "palette": "ink",
+  "accessory": "scarf",
+  "expression": "grin",
+  "idle": "bob",
+  "variant": 23
+ },
+ {
+  "id": "C-271",
+  "family": "ghost",
+  "name": "Coral ghost",
+  "palette": "coral",
+  "accessory": "none",
+  "expression": "wink",
+  "idle": "float",
+  "variant": 24
+ },
+ {
+  "id": "C-272",
+  "family": "ghost",
+  "name": "Sky ghost with a crown",
+  "palette": "sky",
+  "accessory": "crown",
+  "expression": "wow",
+  "idle": "sway",
+  "variant": 25
+ },
+ {
+  "id": "C-273",
+  "family": "alien",
+  "name": "Lilac alien in a cap",
+  "palette": "lilac",
+  "accessory": "cap",
+  "expression": "grin",
+  "idle": "sway",
+  "variant": 18
+ },
+ {
+  "id": "C-274",
+  "family": "alien",
+  "name": "Mint alien with headphones",
+  "palette": "mint",
+  "accessory": "headphones",
+  "expression": "wink",
+  "idle": "wiggle",
+  "variant": 19
+ },
+ {
+  "id": "C-275",
+  "family": "alien",
+  "name": "Ink alien with a bow tie",
+  "palette": "ink",
+  "accessory": "bow",
+  "expression": "wow",
+  "idle": "bounce",
+  "variant": 20
+ },
+ {
+  "id": "C-276",
+  "family": "alien",
+  "name": "Coral alien in a scarf",
+  "palette": "coral",
+  "accessory": "scarf",
+  "expression": "smile",
+  "idle": "bob",
+  "variant": 21
+ },
+ {
+  "id": "C-277",
+  "family": "alien",
+  "name": "Sky alien",
+  "palette": "sky",
+  "accessory": "none",
+  "expression": "grin",
+  "idle": "float",
+  "variant": 22
+ },
+ {
+  "id": "C-278",
+  "family": "alien",
+  "name": "Peach alien with a crown",
+  "palette": "peach",
+  "accessory": "crown",
+  "expression": "wink",
+  "idle": "sway",
+  "variant": 23
+ },
+ {
+  "id": "C-279",
+  "family": "alien",
+  "name": "Brand alien with glasses",
+  "palette": "brand",
+  "accessory": "glasses",
+  "expression": "wow",
+  "idle": "wiggle",
+  "variant": 24
+ },
+ {
+  "id": "C-280",
+  "family": "alien",
+  "name": "Slate alien in a chef's hat",
+  "palette": "slate",
+  "accessory": "chef",
+  "expression": "smile",
+  "idle": "bounce",
+  "variant": 25
+ },
+ {
+  "id": "C-281",
+  "family": "plant",
+  "name": "Coral plant with a bow tie",
+  "palette": "coral",
+  "accessory": "bow",
+  "expression": "wink",
+  "idle": "bounce",
+  "variant": 18
+ },
+ {
+  "id": "C-282",
+  "family": "plant",
+  "name": "Sky plant in a scarf",
+  "palette": "sky",
+  "accessory": "scarf",
+  "expression": "wow",
+  "idle": "bob",
+  "variant": 19
+ },
+ {
+  "id": "C-283",
+  "family": "plant",
+  "name": "Peach plant",
+  "palette": "peach",
+  "accessory": "none",
+  "expression": "smile",
+  "idle": "float",
+  "variant": 20
+ },
+ {
+  "id": "C-284",
+  "family": "plant",
+  "name": "Brand plant with a crown",
+  "palette": "brand",
+  "accessory": "crown",
+  "expression": "grin",
+  "idle": "sway",
+  "variant": 21
+ },
+ {
+  "id": "C-285",
+  "family": "plant",
+  "name": "Slate plant with glasses",
+  "palette": "slate",
+  "accessory": "glasses",
+  "expression": "wink",
+  "idle": "wiggle",
+  "variant": 22
+ },
+ {
+  "id": "C-286",
+  "family": "plant",
+  "name": "Lemon plant in a chef's hat",
+  "palette": "lemon",
+  "accessory": "chef",
+  "expression": "wow",
+  "idle": "bounce",
+  "variant": 23
+ },
+ {
+  "id": "C-287",
+  "family": "plant",
+  "name": "Lilac plant in a hat",
+  "palette": "lilac",
+  "accessory": "hat",
+  "expression": "smile",
+  "idle": "bob",
+  "variant": 24
+ },
+ {
+  "id": "C-288",
+  "family": "plant",
+  "name": "Mint plant in a cap",
+  "palette": "mint",
+  "accessory": "cap",
+  "expression": "grin",
+  "idle": "float",
+  "variant": 25
+ },
+ {
+  "id": "C-289",
+  "family": "cup",
+  "name": "Brand coffee cup",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "wow",
+  "idle": "float",
+  "variant": 18
+ },
+ {
+  "id": "C-290",
+  "family": "cup",
+  "name": "Slate coffee cup with a crown",
+  "palette": "slate",
+  "accessory": "crown",
+  "expression": "smile",
+  "idle": "sway",
+  "variant": 19
+ },
+ {
+  "id": "C-291",
+  "family": "cup",
+  "name": "Lemon coffee cup with glasses",
+  "palette": "lemon",
+  "accessory": "glasses",
+  "expression": "grin",
+  "idle": "wiggle",
+  "variant": 20
+ },
+ {
+  "id": "C-292",
+  "family": "cup",
+  "name": "Lilac coffee cup in a chef's hat",
+  "palette": "lilac",
+  "accessory": "chef",
+  "expression": "wink",
+  "idle": "bounce",
+  "variant": 21
+ },
+ {
+  "id": "C-293",
+  "family": "cup",
+  "name": "Mint coffee cup in a hat",
+  "palette": "mint",
+  "accessory": "hat",
+  "expression": "wow",
+  "idle": "bob",
+  "variant": 22
+ },
+ {
+  "id": "C-294",
+  "family": "cup",
+  "name": "Ink coffee cup in a cap",
+  "palette": "ink",
+  "accessory": "cap",
+  "expression": "smile",
+  "idle": "float",
+  "variant": 23
+ },
+ {
+  "id": "C-295",
+  "family": "cup",
+  "name": "Coral coffee cup with headphones",
+  "palette": "coral",
+  "accessory": "headphones",
+  "expression": "grin",
+  "idle": "sway",
+  "variant": 24
+ },
+ {
+  "id": "C-296",
+  "family": "cup",
+  "name": "Sky coffee cup with a bow tie",
+  "palette": "sky",
+  "accessory": "bow",
+  "expression": "wink",
+  "idle": "wiggle",
+  "variant": 25
+ },
+ {
+  "id": "C-297",
+  "family": "rocket",
+  "name": "Lilac rocket with glasses",
+  "palette": "lilac",
+  "accessory": "glasses",
+  "expression": "smile",
+  "idle": "wiggle",
+  "variant": 18
+ },
+ {
+  "id": "C-298",
+  "family": "rocket",
+  "name": "Mint rocket in a chef's hat",
+  "palette": "mint",
+  "accessory": "chef",
+  "expression": "grin",
+  "idle": "bounce",
+  "variant": 19
+ },
+ {
+  "id": "C-299",
+  "family": "rocket",
+  "name": "Ink rocket in a hat",
+  "palette": "ink",
+  "accessory": "hat",
+  "expression": "wink",
+  "idle": "bob",
+  "variant": 20
+ },
+ {
+  "id": "C-300",
+  "family": "rocket",
+  "name": "Coral rocket in a cap",
+  "palette": "coral",
+  "accessory": "cap",
+  "expression": "wow",
+  "idle": "float",
+  "variant": 21
+ },
+ {
+  "id": "C-301",
+  "family": "rocket",
+  "name": "Sky rocket with headphones",
+  "palette": "sky",
+  "accessory": "headphones",
+  "expression": "smile",
+  "idle": "sway",
+  "variant": 22
+ },
+ {
+  "id": "C-302",
+  "family": "rocket",
+  "name": "Peach rocket with a bow tie",
+  "palette": "peach",
+  "accessory": "bow",
+  "expression": "grin",
+  "idle": "wiggle",
+  "variant": 23
+ },
+ {
+  "id": "C-303",
+  "family": "rocket",
+  "name": "Brand rocket in a scarf",
+  "palette": "brand",
+  "accessory": "scarf",
+  "expression": "wink",
+  "idle": "bounce",
+  "variant": 24
+ },
+ {
+  "id": "C-304",
+  "family": "rocket",
+  "name": "Slate rocket",
+  "palette": "slate",
+  "accessory": "none",
+  "expression": "wow",
+  "idle": "bob",
+  "variant": 25
+ },
+ {
+  "id": "C-305",
+  "family": "orb",
+  "name": "Coral planet in a hat",
+  "palette": "coral",
+  "accessory": "hat",
+  "expression": "grin",
+  "idle": "bob",
+  "variant": 18
+ },
+ {
+  "id": "C-306",
+  "family": "orb",
+  "name": "Sky planet in a cap",
+  "palette": "sky",
+  "accessory": "cap",
+  "expression": "wink",
+  "idle": "float",
+  "variant": 19
+ },
+ {
+  "id": "C-307",
+  "family": "orb",
+  "name": "Peach planet with headphones",
+  "palette": "peach",
+  "accessory": "headphones",
+  "expression": "wow",
+  "idle": "sway",
+  "variant": 20
+ },
+ {
+  "id": "C-308",
+  "family": "orb",
+  "name": "Brand planet with a bow tie",
+  "palette": "brand",
+  "accessory": "bow",
+  "expression": "smile",
+  "idle": "wiggle",
+  "variant": 21
+ },
+ {
+  "id": "C-309",
+  "family": "orb",
+  "name": "Slate planet in a scarf",
+  "palette": "slate",
+  "accessory": "scarf",
+  "expression": "grin",
+  "idle": "bounce",
+  "variant": 22
+ },
+ {
+  "id": "C-310",
+  "family": "orb",
+  "name": "Lemon planet",
+  "palette": "lemon",
+  "accessory": "none",
+  "expression": "wink",
+  "idle": "bob",
+  "variant": 23
+ },
+ {
+  "id": "C-311",
+  "family": "orb",
+  "name": "Lilac planet with a crown",
+  "palette": "lilac",
+  "accessory": "crown",
+  "expression": "wow",
+  "idle": "float",
+  "variant": 24
+ },
+ {
+  "id": "C-312",
+  "family": "orb",
+  "name": "Mint planet with glasses",
+  "palette": "mint",
+  "accessory": "glasses",
+  "expression": "smile",
+  "idle": "sway",
+  "variant": 25
+ },
+ {
+  "id": "C-313",
+  "family": "dog",
+  "name": "Brand dog with headphones",
+  "palette": "brand",
+  "accessory": "headphones",
+  "expression": "smile",
+  "idle": "bounce",
+  "variant": 0
+ },
+ {
+  "id": "C-314",
+  "family": "dog",
+  "name": "Slate dog with a bow tie",
+  "palette": "slate",
+  "accessory": "bow",
+  "expression": "grin",
+  "idle": "bob",
+  "variant": 1
+ },
+ {
+  "id": "C-315",
+  "family": "dog",
+  "name": "Lemon dog in a scarf",
+  "palette": "lemon",
+  "accessory": "scarf",
+  "expression": "wink",
+  "idle": "float",
+  "variant": 2
+ },
+ {
+  "id": "C-316",
+  "family": "dog",
+  "name": "Lilac dog",
+  "palette": "lilac",
+  "accessory": "none",
+  "expression": "wow",
+  "idle": "sway",
+  "variant": 3
+ },
+ {
+  "id": "C-317",
+  "family": "dog",
+  "name": "Mint dog with a crown",
+  "palette": "mint",
+  "accessory": "crown",
+  "expression": "smile",
+  "idle": "wiggle",
+  "variant": 4
+ },
+ {
+  "id": "C-318",
+  "family": "dog",
+  "name": "Ink dog with glasses",
+  "palette": "ink",
+  "accessory": "glasses",
+  "expression": "grin",
+  "idle": "bounce",
+  "variant": 5
+ },
+ {
+  "id": "C-319",
+  "family": "dog",
+  "name": "Coral dog in a chef's hat",
+  "palette": "coral",
+  "accessory": "chef",
+  "expression": "wink",
+  "idle": "bob",
+  "variant": 6
+ },
+ {
+  "id": "C-320",
+  "family": "dog",
+  "name": "Sky dog in a hat",
+  "palette": "sky",
+  "accessory": "hat",
+  "expression": "wow",
+  "idle": "float",
+  "variant": 7
+ },
+ {
+  "id": "C-321",
+  "family": "dog",
+  "name": "Peach dog in a cap",
+  "palette": "peach",
+  "accessory": "cap",
+  "expression": "smile",
+  "idle": "sway",
+  "variant": 8
+ },
+ {
+  "id": "C-322",
+  "family": "dog",
+  "name": "Brand dog with headphones",
+  "palette": "brand",
+  "accessory": "headphones",
+  "expression": "grin",
+  "idle": "wiggle",
+  "variant": 9
+ },
+ {
+  "id": "C-323",
+  "family": "dog",
+  "name": "Slate dog with a bow tie",
+  "palette": "slate",
+  "accessory": "bow",
+  "expression": "wink",
+  "idle": "bounce",
+  "variant": 10
+ },
+ {
+  "id": "C-324",
+  "family": "dog",
+  "name": "Lemon dog in a scarf",
+  "palette": "lemon",
+  "accessory": "scarf",
+  "expression": "wow",
+  "idle": "bob",
+  "variant": 11
+ },
+ {
+  "id": "C-325",
+  "family": "dog",
+  "name": "Lilac dog",
+  "palette": "lilac",
+  "accessory": "none",
+  "expression": "smile",
+  "idle": "float",
+  "variant": 12
+ },
+ {
+  "id": "C-326",
+  "family": "dog",
+  "name": "Mint dog with a crown",
+  "palette": "mint",
+  "accessory": "crown",
+  "expression": "grin",
+  "idle": "sway",
+  "variant": 13
+ },
+ {
+  "id": "C-327",
+  "family": "dog",
+  "name": "Ink dog with glasses",
+  "palette": "ink",
+  "accessory": "glasses",
+  "expression": "wink",
+  "idle": "wiggle",
+  "variant": 14
+ },
+ {
+  "id": "C-328",
+  "family": "dog",
+  "name": "Coral dog in a chef's hat",
+  "palette": "coral",
+  "accessory": "chef",
+  "expression": "wow",
+  "idle": "bounce",
+  "variant": 15
+ },
+ {
+  "id": "C-329",
+  "family": "dog",
+  "name": "Sky dog in a hat",
+  "palette": "sky",
+  "accessory": "hat",
+  "expression": "smile",
+  "idle": "bob",
+  "variant": 16
+ },
+ {
+  "id": "C-330",
+  "family": "dog",
+  "name": "Peach dog in a cap",
+  "palette": "peach",
+  "accessory": "cap",
+  "expression": "grin",
+  "idle": "float",
+  "variant": 17
+ },
+ {
+  "id": "C-331",
+  "family": "dog",
+  "name": "Brand dog with headphones",
+  "palette": "brand",
+  "accessory": "headphones",
+  "expression": "wink",
+  "idle": "sway",
+  "variant": 18
+ },
+ {
+  "id": "C-332",
+  "family": "dog",
+  "name": "Slate dog with a bow tie",
+  "palette": "slate",
+  "accessory": "bow",
+  "expression": "wow",
+  "idle": "wiggle",
+  "variant": 19
+ },
+ {
+  "id": "C-333",
+  "family": "dog",
+  "name": "Lemon dog in a scarf",
+  "palette": "lemon",
+  "accessory": "scarf",
+  "expression": "smile",
+  "idle": "bounce",
+  "variant": 20
+ },
+ {
+  "id": "C-334",
+  "family": "dog",
+  "name": "Lilac dog",
+  "palette": "lilac",
+  "accessory": "none",
+  "expression": "grin",
+  "idle": "bob",
+  "variant": 21
+ },
+ {
+  "id": "C-335",
+  "family": "dog",
+  "name": "Mint dog with a crown",
+  "palette": "mint",
+  "accessory": "crown",
+  "expression": "wink",
+  "idle": "float",
+  "variant": 22
+ },
+ {
+  "id": "C-336",
+  "family": "dog",
+  "name": "Ink dog with glasses",
+  "palette": "ink",
+  "accessory": "glasses",
+  "expression": "wow",
+  "idle": "sway",
+  "variant": 23
+ },
+ {
+  "id": "C-337",
+  "family": "dog",
+  "name": "Coral dog in a chef's hat",
+  "palette": "coral",
+  "accessory": "chef",
+  "expression": "smile",
+  "idle": "wiggle",
+  "variant": 24
+ },
+ {
+  "id": "C-338",
+  "family": "dog",
+  "name": "Sky dog in a hat",
+  "palette": "sky",
+  "accessory": "hat",
+  "expression": "grin",
+  "idle": "bounce",
+  "variant": 25
+ },
+ {
+  "id": "C-339",
+  "family": "tooth",
+  "name": "Lilac tooth in a scarf",
+  "palette": "lilac",
+  "accessory": "scarf",
+  "expression": "grin",
+  "idle": "float",
+  "variant": 0
+ },
+ {
+  "id": "C-340",
+  "family": "tooth",
+  "name": "Mint tooth",
+  "palette": "mint",
+  "accessory": "none",
+  "expression": "wink",
+  "idle": "sway",
+  "variant": 1
+ },
+ {
+  "id": "C-341",
+  "family": "tooth",
+  "name": "Ink tooth with a crown",
+  "palette": "ink",
+  "accessory": "crown",
+  "expression": "wow",
+  "idle": "wiggle",
+  "variant": 2
+ },
+ {
+  "id": "C-342",
+  "family": "tooth",
+  "name": "Coral tooth with glasses",
+  "palette": "coral",
+  "accessory": "glasses",
+  "expression": "smile",
+  "idle": "bounce",
+  "variant": 3
+ },
+ {
+  "id": "C-343",
+  "family": "tooth",
+  "name": "Sky tooth in a chef's hat",
+  "palette": "sky",
+  "accessory": "chef",
+  "expression": "grin",
+  "idle": "bob",
+  "variant": 4
+ },
+ {
+  "id": "C-344",
+  "family": "tooth",
+  "name": "Peach tooth in a hat",
+  "palette": "peach",
+  "accessory": "hat",
+  "expression": "wink",
+  "idle": "float",
+  "variant": 5
+ },
+ {
+  "id": "C-345",
+  "family": "tooth",
+  "name": "Brand tooth in a cap",
+  "palette": "brand",
+  "accessory": "cap",
+  "expression": "wow",
+  "idle": "sway",
+  "variant": 6
+ },
+ {
+  "id": "C-346",
+  "family": "tooth",
+  "name": "Slate tooth with headphones",
+  "palette": "slate",
+  "accessory": "headphones",
+  "expression": "smile",
+  "idle": "wiggle",
+  "variant": 7
+ },
+ {
+  "id": "C-347",
+  "family": "tooth",
+  "name": "Lemon tooth with a bow tie",
+  "palette": "lemon",
+  "accessory": "bow",
+  "expression": "grin",
+  "idle": "bounce",
+  "variant": 8
+ },
+ {
+  "id": "C-348",
+  "family": "tooth",
+  "name": "Lilac tooth in a scarf",
+  "palette": "lilac",
+  "accessory": "scarf",
+  "expression": "wink",
+  "idle": "bob",
+  "variant": 9
+ },
+ {
+  "id": "C-349",
+  "family": "tooth",
+  "name": "Mint tooth",
+  "palette": "mint",
+  "accessory": "none",
+  "expression": "wow",
+  "idle": "float",
+  "variant": 10
+ },
+ {
+  "id": "C-350",
+  "family": "tooth",
+  "name": "Ink tooth with a crown",
+  "palette": "ink",
+  "accessory": "crown",
+  "expression": "smile",
+  "idle": "sway",
+  "variant": 11
+ },
+ {
+  "id": "C-351",
+  "family": "tooth",
+  "name": "Coral tooth with glasses",
+  "palette": "coral",
+  "accessory": "glasses",
+  "expression": "grin",
+  "idle": "wiggle",
+  "variant": 12
+ },
+ {
+  "id": "C-352",
+  "family": "tooth",
+  "name": "Sky tooth in a chef's hat",
+  "palette": "sky",
+  "accessory": "chef",
+  "expression": "wink",
+  "idle": "bounce",
+  "variant": 13
+ },
+ {
+  "id": "C-353",
+  "family": "tooth",
+  "name": "Peach tooth in a hat",
+  "palette": "peach",
+  "accessory": "hat",
+  "expression": "wow",
+  "idle": "bob",
+  "variant": 14
+ },
+ {
+  "id": "C-354",
+  "family": "tooth",
+  "name": "Brand tooth in a cap",
+  "palette": "brand",
+  "accessory": "cap",
+  "expression": "smile",
+  "idle": "float",
+  "variant": 15
+ },
+ {
+  "id": "C-355",
+  "family": "tooth",
+  "name": "Slate tooth with headphones",
+  "palette": "slate",
+  "accessory": "headphones",
+  "expression": "grin",
+  "idle": "sway",
+  "variant": 16
+ },
+ {
+  "id": "C-356",
+  "family": "tooth",
+  "name": "Lemon tooth with a bow tie",
+  "palette": "lemon",
+  "accessory": "bow",
+  "expression": "wink",
+  "idle": "wiggle",
+  "variant": 17
+ },
+ {
+  "id": "C-357",
+  "family": "tooth",
+  "name": "Lilac tooth in a scarf",
+  "palette": "lilac",
+  "accessory": "scarf",
+  "expression": "wow",
+  "idle": "bounce",
+  "variant": 18
+ },
+ {
+  "id": "C-358",
+  "family": "tooth",
+  "name": "Mint tooth",
+  "palette": "mint",
+  "accessory": "none",
+  "expression": "smile",
+  "idle": "bob",
+  "variant": 19
+ },
+ {
+  "id": "C-359",
+  "family": "tooth",
+  "name": "Ink tooth with a crown",
+  "palette": "ink",
+  "accessory": "crown",
+  "expression": "grin",
+  "idle": "float",
+  "variant": 20
+ },
+ {
+  "id": "C-360",
+  "family": "tooth",
+  "name": "Coral tooth with glasses",
+  "palette": "coral",
+  "accessory": "glasses",
+  "expression": "wink",
+  "idle": "sway",
+  "variant": 21
+ },
+ {
+  "id": "C-361",
+  "family": "tooth",
+  "name": "Sky tooth in a chef's hat",
+  "palette": "sky",
+  "accessory": "chef",
+  "expression": "wow",
+  "idle": "wiggle",
+  "variant": 22
+ },
+ {
+  "id": "C-362",
+  "family": "tooth",
+  "name": "Peach tooth in a hat",
+  "palette": "peach",
+  "accessory": "hat",
+  "expression": "smile",
+  "idle": "bounce",
+  "variant": 23
+ },
+ {
+  "id": "C-363",
+  "family": "tooth",
+  "name": "Brand tooth in a cap",
+  "palette": "brand",
+  "accessory": "cap",
+  "expression": "grin",
+  "idle": "bob",
+  "variant": 24
+ },
+ {
+  "id": "C-364",
+  "family": "tooth",
+  "name": "Slate tooth with headphones",
+  "palette": "slate",
+  "accessory": "headphones",
+  "expression": "wink",
+  "idle": "float",
+  "variant": 25
+ },
+ {
+  "id": "C-365",
+  "family": "heart",
+  "name": "Coral heart with a crown",
+  "palette": "coral",
+  "accessory": "crown",
+  "expression": "wink",
+  "idle": "wiggle",
+  "variant": 0
+ },
+ {
+  "id": "C-366",
+  "family": "heart",
+  "name": "Sky heart with glasses",
+  "palette": "sky",
+  "accessory": "glasses",
+  "expression": "wow",
+  "idle": "bounce",
+  "variant": 1
+ },
+ {
+  "id": "C-367",
+  "family": "heart",
+  "name": "Peach heart in a chef's hat",
+  "palette": "peach",
+  "accessory": "chef",
+  "expression": "smile",
+  "idle": "bob",
+  "variant": 2
+ },
+ {
+  "id": "C-368",
+  "family": "heart",
+  "name": "Brand heart in a hat",
+  "palette": "brand",
+  "accessory": "hat",
+  "expression": "grin",
+  "idle": "float",
+  "variant": 3
+ },
+ {
+  "id": "C-369",
+  "family": "heart",
+  "name": "Slate heart in a cap",
+  "palette": "slate",
+  "accessory": "cap",
+  "expression": "wink",
+  "idle": "sway",
+  "variant": 4
+ },
+ {
+  "id": "C-370",
+  "family": "heart",
+  "name": "Lemon heart with headphones",
+  "palette": "lemon",
+  "accessory": "headphones",
+  "expression": "wow",
+  "idle": "wiggle",
+  "variant": 5
+ },
+ {
+  "id": "C-371",
+  "family": "heart",
+  "name": "Lilac heart with a bow tie",
+  "palette": "lilac",
+  "accessory": "bow",
+  "expression": "smile",
+  "idle": "bounce",
+  "variant": 6
+ },
+ {
+  "id": "C-372",
+  "family": "heart",
+  "name": "Mint heart in a scarf",
+  "palette": "mint",
+  "accessory": "scarf",
+  "expression": "grin",
+  "idle": "bob",
+  "variant": 7
+ },
+ {
+  "id": "C-373",
+  "family": "heart",
+  "name": "Ink heart",
+  "palette": "ink",
+  "accessory": "none",
+  "expression": "wink",
+  "idle": "float",
+  "variant": 8
+ },
+ {
+  "id": "C-374",
+  "family": "heart",
+  "name": "Coral heart with a crown",
+  "palette": "coral",
+  "accessory": "crown",
+  "expression": "wow",
+  "idle": "sway",
+  "variant": 9
+ },
+ {
+  "id": "C-375",
+  "family": "heart",
+  "name": "Sky heart with glasses",
+  "palette": "sky",
+  "accessory": "glasses",
+  "expression": "smile",
+  "idle": "wiggle",
+  "variant": 10
+ },
+ {
+  "id": "C-376",
+  "family": "heart",
+  "name": "Peach heart in a chef's hat",
+  "palette": "peach",
+  "accessory": "chef",
+  "expression": "grin",
+  "idle": "bounce",
+  "variant": 11
+ },
+ {
+  "id": "C-377",
+  "family": "heart",
+  "name": "Brand heart in a hat",
+  "palette": "brand",
+  "accessory": "hat",
+  "expression": "wink",
+  "idle": "bob",
+  "variant": 12
+ },
+ {
+  "id": "C-378",
+  "family": "heart",
+  "name": "Slate heart in a cap",
+  "palette": "slate",
+  "accessory": "cap",
+  "expression": "wow",
+  "idle": "float",
+  "variant": 13
+ },
+ {
+  "id": "C-379",
+  "family": "heart",
+  "name": "Lemon heart with headphones",
+  "palette": "lemon",
+  "accessory": "headphones",
+  "expression": "smile",
+  "idle": "sway",
+  "variant": 14
+ },
+ {
+  "id": "C-380",
+  "family": "heart",
+  "name": "Lilac heart with a bow tie",
+  "palette": "lilac",
+  "accessory": "bow",
+  "expression": "grin",
+  "idle": "wiggle",
+  "variant": 15
+ },
+ {
+  "id": "C-381",
+  "family": "heart",
+  "name": "Mint heart in a scarf",
+  "palette": "mint",
+  "accessory": "scarf",
+  "expression": "wink",
+  "idle": "bounce",
+  "variant": 16
+ },
+ {
+  "id": "C-382",
+  "family": "heart",
+  "name": "Ink heart",
+  "palette": "ink",
+  "accessory": "none",
+  "expression": "wow",
+  "idle": "bob",
+  "variant": 17
+ },
+ {
+  "id": "C-383",
+  "family": "heart",
+  "name": "Coral heart with a crown",
+  "palette": "coral",
+  "accessory": "crown",
+  "expression": "smile",
+  "idle": "float",
+  "variant": 18
+ },
+ {
+  "id": "C-384",
+  "family": "heart",
+  "name": "Sky heart with glasses",
+  "palette": "sky",
+  "accessory": "glasses",
+  "expression": "grin",
+  "idle": "sway",
+  "variant": 19
+ },
+ {
+  "id": "C-385",
+  "family": "heart",
+  "name": "Peach heart in a chef's hat",
+  "palette": "peach",
+  "accessory": "chef",
+  "expression": "wink",
+  "idle": "wiggle",
+  "variant": 20
+ },
+ {
+  "id": "C-386",
+  "family": "heart",
+  "name": "Brand heart in a hat",
+  "palette": "brand",
+  "accessory": "hat",
+  "expression": "wow",
+  "idle": "bounce",
+  "variant": 21
+ },
+ {
+  "id": "C-387",
+  "family": "heart",
+  "name": "Slate heart in a cap",
+  "palette": "slate",
+  "accessory": "cap",
+  "expression": "smile",
+  "idle": "bob",
+  "variant": 22
+ },
+ {
+  "id": "C-388",
+  "family": "heart",
+  "name": "Lemon heart with headphones",
+  "palette": "lemon",
+  "accessory": "headphones",
+  "expression": "grin",
+  "idle": "float",
+  "variant": 23
+ },
+ {
+  "id": "C-389",
+  "family": "heart",
+  "name": "Lilac heart with a bow tie",
+  "palette": "lilac",
+  "accessory": "bow",
+  "expression": "wink",
+  "idle": "sway",
+  "variant": 24
+ },
+ {
+  "id": "C-390",
+  "family": "heart",
+  "name": "Mint heart in a scarf",
+  "palette": "mint",
+  "accessory": "scarf",
+  "expression": "wow",
+  "idle": "wiggle",
+  "variant": 25
+ },
+ {
+  "id": "C-391",
+  "family": "camera",
+  "name": "Brand camera in a chef's hat",
+  "palette": "brand",
+  "accessory": "chef",
+  "expression": "wow",
+  "idle": "bob",
+  "variant": 0
+ },
+ {
+  "id": "C-392",
+  "family": "camera",
+  "name": "Slate camera in a hat",
+  "palette": "slate",
+  "accessory": "hat",
+  "expression": "smile",
+  "idle": "float",
+  "variant": 1
+ },
+ {
+  "id": "C-393",
+  "family": "camera",
+  "name": "Lemon camera in a cap",
+  "palette": "lemon",
+  "accessory": "cap",
+  "expression": "grin",
+  "idle": "sway",
+  "variant": 2
+ },
+ {
+  "id": "C-394",
+  "family": "camera",
+  "name": "Lilac camera with headphones",
+  "palette": "lilac",
+  "accessory": "headphones",
+  "expression": "wink",
+  "idle": "wiggle",
+  "variant": 3
+ },
+ {
+  "id": "C-395",
+  "family": "camera",
+  "name": "Mint camera with a bow tie",
+  "palette": "mint",
+  "accessory": "bow",
+  "expression": "wow",
+  "idle": "bounce",
+  "variant": 4
+ },
+ {
+  "id": "C-396",
+  "family": "camera",
+  "name": "Ink camera in a scarf",
+  "palette": "ink",
+  "accessory": "scarf",
+  "expression": "smile",
+  "idle": "bob",
+  "variant": 5
+ },
+ {
+  "id": "C-397",
+  "family": "camera",
+  "name": "Coral camera",
+  "palette": "coral",
+  "accessory": "none",
+  "expression": "grin",
+  "idle": "float",
+  "variant": 6
+ },
+ {
+  "id": "C-398",
+  "family": "camera",
+  "name": "Sky camera with a crown",
+  "palette": "sky",
+  "accessory": "crown",
+  "expression": "wink",
+  "idle": "sway",
+  "variant": 7
+ },
+ {
+  "id": "C-399",
+  "family": "camera",
+  "name": "Peach camera with glasses",
+  "palette": "peach",
+  "accessory": "glasses",
+  "expression": "wow",
+  "idle": "wiggle",
+  "variant": 8
+ },
+ {
+  "id": "C-400",
+  "family": "camera",
+  "name": "Brand camera in a chef's hat",
+  "palette": "brand",
+  "accessory": "chef",
+  "expression": "smile",
+  "idle": "bounce",
+  "variant": 9
+ },
+ {
+  "id": "C-401",
+  "family": "camera",
+  "name": "Slate camera in a hat",
+  "palette": "slate",
+  "accessory": "hat",
+  "expression": "grin",
+  "idle": "bob",
+  "variant": 10
+ },
+ {
+  "id": "C-402",
+  "family": "camera",
+  "name": "Lemon camera in a cap",
+  "palette": "lemon",
+  "accessory": "cap",
+  "expression": "wink",
+  "idle": "float",
+  "variant": 11
+ },
+ {
+  "id": "C-403",
+  "family": "camera",
+  "name": "Lilac camera with headphones",
+  "palette": "lilac",
+  "accessory": "headphones",
+  "expression": "wow",
+  "idle": "sway",
+  "variant": 12
+ },
+ {
+  "id": "C-404",
+  "family": "camera",
+  "name": "Mint camera with a bow tie",
+  "palette": "mint",
+  "accessory": "bow",
+  "expression": "smile",
+  "idle": "wiggle",
+  "variant": 13
+ },
+ {
+  "id": "C-405",
+  "family": "camera",
+  "name": "Ink camera in a scarf",
+  "palette": "ink",
+  "accessory": "scarf",
+  "expression": "grin",
+  "idle": "bounce",
+  "variant": 14
+ },
+ {
+  "id": "C-406",
+  "family": "camera",
+  "name": "Coral camera",
+  "palette": "coral",
+  "accessory": "none",
+  "expression": "wink",
+  "idle": "bob",
+  "variant": 15
+ },
+ {
+  "id": "C-407",
+  "family": "camera",
+  "name": "Sky camera with a crown",
+  "palette": "sky",
+  "accessory": "crown",
+  "expression": "wow",
+  "idle": "float",
+  "variant": 16
+ },
+ {
+  "id": "C-408",
+  "family": "camera",
+  "name": "Peach camera with glasses",
+  "palette": "peach",
+  "accessory": "glasses",
+  "expression": "smile",
+  "idle": "sway",
+  "variant": 17
+ },
+ {
+  "id": "C-409",
+  "family": "camera",
+  "name": "Brand camera in a chef's hat",
+  "palette": "brand",
+  "accessory": "chef",
+  "expression": "grin",
+  "idle": "wiggle",
+  "variant": 18
+ },
+ {
+  "id": "C-410",
+  "family": "camera",
+  "name": "Slate camera in a hat",
+  "palette": "slate",
+  "accessory": "hat",
+  "expression": "wink",
+  "idle": "bounce",
+  "variant": 19
+ },
+ {
+  "id": "C-411",
+  "family": "camera",
+  "name": "Lemon camera in a cap",
+  "palette": "lemon",
+  "accessory": "cap",
+  "expression": "wow",
+  "idle": "bob",
+  "variant": 20
+ },
+ {
+  "id": "C-412",
+  "family": "camera",
+  "name": "Lilac camera with headphones",
+  "palette": "lilac",
+  "accessory": "headphones",
+  "expression": "smile",
+  "idle": "float",
+  "variant": 21
+ },
+ {
+  "id": "C-413",
+  "family": "camera",
+  "name": "Mint camera with a bow tie",
+  "palette": "mint",
+  "accessory": "bow",
+  "expression": "grin",
+  "idle": "sway",
+  "variant": 22
+ },
+ {
+  "id": "C-414",
+  "family": "camera",
+  "name": "Ink camera in a scarf",
+  "palette": "ink",
+  "accessory": "scarf",
+  "expression": "wink",
+  "idle": "wiggle",
+  "variant": 23
+ },
+ {
+  "id": "C-415",
+  "family": "camera",
+  "name": "Coral camera",
+  "palette": "coral",
+  "accessory": "none",
+  "expression": "wow",
+  "idle": "bounce",
+  "variant": 24
+ },
+ {
+  "id": "C-416",
+  "family": "camera",
+  "name": "Sky camera with a crown",
+  "palette": "sky",
+  "accessory": "crown",
+  "expression": "smile",
+  "idle": "bob",
+  "variant": 25
+ },
+ {
+  "id": "C-417",
+  "family": "laptop",
+  "name": "Lilac laptop in a cap",
+  "palette": "lilac",
+  "accessory": "cap",
+  "expression": "smile",
+  "idle": "sway",
+  "variant": 0
+ },
+ {
+  "id": "C-418",
+  "family": "laptop",
+  "name": "Mint laptop with headphones",
+  "palette": "mint",
+  "accessory": "headphones",
+  "expression": "grin",
+  "idle": "wiggle",
+  "variant": 1
+ },
+ {
+  "id": "C-419",
+  "family": "laptop",
+  "name": "Ink laptop with a bow tie",
+  "palette": "ink",
+  "accessory": "bow",
+  "expression": "wink",
+  "idle": "bounce",
+  "variant": 2
+ },
+ {
+  "id": "C-420",
+  "family": "laptop",
+  "name": "Coral laptop in a scarf",
+  "palette": "coral",
+  "accessory": "scarf",
+  "expression": "wow",
+  "idle": "bob",
+  "variant": 3
+ },
+ {
+  "id": "C-421",
+  "family": "laptop",
+  "name": "Sky laptop",
+  "palette": "sky",
+  "accessory": "none",
+  "expression": "smile",
+  "idle": "float",
+  "variant": 4
+ },
+ {
+  "id": "C-422",
+  "family": "laptop",
+  "name": "Peach laptop with a crown",
+  "palette": "peach",
+  "accessory": "crown",
+  "expression": "grin",
+  "idle": "sway",
+  "variant": 5
+ },
+ {
+  "id": "C-423",
+  "family": "laptop",
+  "name": "Brand laptop with glasses",
+  "palette": "brand",
+  "accessory": "glasses",
+  "expression": "wink",
+  "idle": "wiggle",
+  "variant": 6
+ },
+ {
+  "id": "C-424",
+  "family": "laptop",
+  "name": "Slate laptop in a chef's hat",
+  "palette": "slate",
+  "accessory": "chef",
+  "expression": "wow",
+  "idle": "bounce",
+  "variant": 7
+ },
+ {
+  "id": "C-425",
+  "family": "laptop",
+  "name": "Lemon laptop in a hat",
+  "palette": "lemon",
+  "accessory": "hat",
+  "expression": "smile",
+  "idle": "bob",
+  "variant": 8
+ },
+ {
+  "id": "C-426",
+  "family": "laptop",
+  "name": "Lilac laptop in a cap",
+  "palette": "lilac",
+  "accessory": "cap",
+  "expression": "grin",
+  "idle": "float",
+  "variant": 9
+ },
+ {
+  "id": "C-427",
+  "family": "laptop",
+  "name": "Mint laptop with headphones",
+  "palette": "mint",
+  "accessory": "headphones",
+  "expression": "wink",
+  "idle": "sway",
+  "variant": 10
+ },
+ {
+  "id": "C-428",
+  "family": "laptop",
+  "name": "Ink laptop with a bow tie",
+  "palette": "ink",
+  "accessory": "bow",
+  "expression": "wow",
+  "idle": "wiggle",
+  "variant": 11
+ },
+ {
+  "id": "C-429",
+  "family": "laptop",
+  "name": "Coral laptop in a scarf",
+  "palette": "coral",
+  "accessory": "scarf",
+  "expression": "smile",
+  "idle": "bounce",
+  "variant": 12
+ },
+ {
+  "id": "C-430",
+  "family": "laptop",
+  "name": "Sky laptop",
+  "palette": "sky",
+  "accessory": "none",
+  "expression": "grin",
+  "idle": "bob",
+  "variant": 13
+ },
+ {
+  "id": "C-431",
+  "family": "laptop",
+  "name": "Peach laptop with a crown",
+  "palette": "peach",
+  "accessory": "crown",
+  "expression": "wink",
+  "idle": "float",
+  "variant": 14
+ },
+ {
+  "id": "C-432",
+  "family": "laptop",
+  "name": "Brand laptop with glasses",
+  "palette": "brand",
+  "accessory": "glasses",
+  "expression": "wow",
+  "idle": "sway",
+  "variant": 15
+ },
+ {
+  "id": "C-433",
+  "family": "laptop",
+  "name": "Slate laptop in a chef's hat",
+  "palette": "slate",
+  "accessory": "chef",
+  "expression": "smile",
+  "idle": "wiggle",
+  "variant": 16
+ },
+ {
+  "id": "C-434",
+  "family": "laptop",
+  "name": "Lemon laptop in a hat",
+  "palette": "lemon",
+  "accessory": "hat",
+  "expression": "grin",
+  "idle": "bounce",
+  "variant": 17
+ },
+ {
+  "id": "C-435",
+  "family": "laptop",
+  "name": "Lilac laptop in a cap",
+  "palette": "lilac",
+  "accessory": "cap",
+  "expression": "wink",
+  "idle": "bob",
+  "variant": 18
+ },
+ {
+  "id": "C-436",
+  "family": "laptop",
+  "name": "Mint laptop with headphones",
+  "palette": "mint",
+  "accessory": "headphones",
+  "expression": "wow",
+  "idle": "float",
+  "variant": 19
+ },
+ {
+  "id": "C-437",
+  "family": "laptop",
+  "name": "Ink laptop with a bow tie",
+  "palette": "ink",
+  "accessory": "bow",
+  "expression": "smile",
+  "idle": "sway",
+  "variant": 20
+ },
+ {
+  "id": "C-438",
+  "family": "laptop",
+  "name": "Coral laptop in a scarf",
+  "palette": "coral",
+  "accessory": "scarf",
+  "expression": "grin",
+  "idle": "wiggle",
+  "variant": 21
+ },
+ {
+  "id": "C-439",
+  "family": "laptop",
+  "name": "Sky laptop",
+  "palette": "sky",
+  "accessory": "none",
+  "expression": "wink",
+  "idle": "bounce",
+  "variant": 22
+ },
+ {
+  "id": "C-440",
+  "family": "laptop",
+  "name": "Peach laptop with a crown",
+  "palette": "peach",
+  "accessory": "crown",
+  "expression": "wow",
+  "idle": "bob",
+  "variant": 23
+ },
+ {
+  "id": "C-441",
+  "family": "laptop",
+  "name": "Brand laptop with glasses",
+  "palette": "brand",
+  "accessory": "glasses",
+  "expression": "smile",
+  "idle": "float",
+  "variant": 24
+ },
+ {
+  "id": "C-442",
+  "family": "laptop",
+  "name": "Slate laptop in a chef's hat",
+  "palette": "slate",
+  "accessory": "chef",
+  "expression": "grin",
+  "idle": "sway",
+  "variant": 25
+ },
+ {
+  "id": "C-443",
+  "family": "book",
+  "name": "Coral book with a bow tie",
+  "palette": "coral",
+  "accessory": "bow",
+  "expression": "grin",
+  "idle": "bounce",
+  "variant": 0
+ },
+ {
+  "id": "C-444",
+  "family": "book",
+  "name": "Sky book in a scarf",
+  "palette": "sky",
+  "accessory": "scarf",
+  "expression": "wink",
+  "idle": "bob",
+  "variant": 1
+ },
+ {
+  "id": "C-445",
+  "family": "book",
+  "name": "Peach book",
+  "palette": "peach",
+  "accessory": "none",
+  "expression": "wow",
+  "idle": "float",
+  "variant": 2
+ },
+ {
+  "id": "C-446",
+  "family": "book",
+  "name": "Brand book with a crown",
+  "palette": "brand",
+  "accessory": "crown",
+  "expression": "smile",
+  "idle": "sway",
+  "variant": 3
+ },
+ {
+  "id": "C-447",
+  "family": "book",
+  "name": "Slate book with glasses",
+  "palette": "slate",
+  "accessory": "glasses",
+  "expression": "grin",
+  "idle": "wiggle",
+  "variant": 4
+ },
+ {
+  "id": "C-448",
+  "family": "book",
+  "name": "Lemon book in a chef's hat",
+  "palette": "lemon",
+  "accessory": "chef",
+  "expression": "wink",
+  "idle": "bounce",
+  "variant": 5
+ },
+ {
+  "id": "C-449",
+  "family": "book",
+  "name": "Lilac book in a hat",
+  "palette": "lilac",
+  "accessory": "hat",
+  "expression": "wow",
+  "idle": "bob",
+  "variant": 6
+ },
+ {
+  "id": "C-450",
+  "family": "book",
+  "name": "Mint book in a cap",
+  "palette": "mint",
+  "accessory": "cap",
+  "expression": "smile",
+  "idle": "float",
+  "variant": 7
+ },
+ {
+  "id": "C-451",
+  "family": "book",
+  "name": "Ink book with headphones",
+  "palette": "ink",
+  "accessory": "headphones",
+  "expression": "grin",
+  "idle": "sway",
+  "variant": 8
+ },
+ {
+  "id": "C-452",
+  "family": "book",
+  "name": "Coral book with a bow tie",
+  "palette": "coral",
+  "accessory": "bow",
+  "expression": "wink",
+  "idle": "wiggle",
+  "variant": 9
+ },
+ {
+  "id": "C-453",
+  "family": "book",
+  "name": "Sky book in a scarf",
+  "palette": "sky",
+  "accessory": "scarf",
+  "expression": "wow",
+  "idle": "bounce",
+  "variant": 10
+ },
+ {
+  "id": "C-454",
+  "family": "book",
+  "name": "Peach book",
+  "palette": "peach",
+  "accessory": "none",
+  "expression": "smile",
+  "idle": "bob",
+  "variant": 11
+ },
+ {
+  "id": "C-455",
+  "family": "book",
+  "name": "Brand book with a crown",
+  "palette": "brand",
+  "accessory": "crown",
+  "expression": "grin",
+  "idle": "float",
+  "variant": 12
+ },
+ {
+  "id": "C-456",
+  "family": "book",
+  "name": "Slate book with glasses",
+  "palette": "slate",
+  "accessory": "glasses",
+  "expression": "wink",
+  "idle": "sway",
+  "variant": 13
+ },
+ {
+  "id": "C-457",
+  "family": "book",
+  "name": "Lemon book in a chef's hat",
+  "palette": "lemon",
+  "accessory": "chef",
+  "expression": "wow",
+  "idle": "wiggle",
+  "variant": 14
+ },
+ {
+  "id": "C-458",
+  "family": "book",
+  "name": "Lilac book in a hat",
+  "palette": "lilac",
+  "accessory": "hat",
+  "expression": "smile",
+  "idle": "bounce",
+  "variant": 15
+ },
+ {
+  "id": "C-459",
+  "family": "book",
+  "name": "Mint book in a cap",
+  "palette": "mint",
+  "accessory": "cap",
+  "expression": "grin",
+  "idle": "bob",
+  "variant": 16
+ },
+ {
+  "id": "C-460",
+  "family": "book",
+  "name": "Ink book with headphones",
+  "palette": "ink",
+  "accessory": "headphones",
+  "expression": "wink",
+  "idle": "float",
+  "variant": 17
+ },
+ {
+  "id": "C-461",
+  "family": "book",
+  "name": "Coral book with a bow tie",
+  "palette": "coral",
+  "accessory": "bow",
+  "expression": "wow",
+  "idle": "sway",
+  "variant": 18
+ },
+ {
+  "id": "C-462",
+  "family": "book",
+  "name": "Sky book in a scarf",
+  "palette": "sky",
+  "accessory": "scarf",
+  "expression": "smile",
+  "idle": "wiggle",
+  "variant": 19
+ },
+ {
+  "id": "C-463",
+  "family": "book",
+  "name": "Peach book",
+  "palette": "peach",
+  "accessory": "none",
+  "expression": "grin",
+  "idle": "bounce",
+  "variant": 20
+ },
+ {
+  "id": "C-464",
+  "family": "book",
+  "name": "Brand book with a crown",
+  "palette": "brand",
+  "accessory": "crown",
+  "expression": "wink",
+  "idle": "bob",
+  "variant": 21
+ },
+ {
+  "id": "C-465",
+  "family": "book",
+  "name": "Slate book with glasses",
+  "palette": "slate",
+  "accessory": "glasses",
+  "expression": "wow",
+  "idle": "float",
+  "variant": 22
+ },
+ {
+  "id": "C-466",
+  "family": "book",
+  "name": "Lemon book in a chef's hat",
+  "palette": "lemon",
+  "accessory": "chef",
+  "expression": "smile",
+  "idle": "sway",
+  "variant": 23
+ },
+ {
+  "id": "C-467",
+  "family": "book",
+  "name": "Lilac book in a hat",
+  "palette": "lilac",
+  "accessory": "hat",
+  "expression": "grin",
+  "idle": "wiggle",
+  "variant": 24
+ },
+ {
+  "id": "C-468",
+  "family": "book",
+  "name": "Mint book in a cap",
+  "palette": "mint",
+  "accessory": "cap",
+  "expression": "wink",
+  "idle": "bounce",
+  "variant": 25
+ },
+ {
+  "id": "C-469",
+  "family": "house",
+  "name": "Brand house",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "wink",
+  "idle": "float",
+  "variant": 0
+ },
+ {
+  "id": "C-470",
+  "family": "house",
+  "name": "Slate house with a crown",
+  "palette": "slate",
+  "accessory": "crown",
+  "expression": "wow",
+  "idle": "sway",
+  "variant": 1
+ },
+ {
+  "id": "C-471",
+  "family": "house",
+  "name": "Lemon house with glasses",
+  "palette": "lemon",
+  "accessory": "glasses",
+  "expression": "smile",
+  "idle": "wiggle",
+  "variant": 2
+ },
+ {
+  "id": "C-472",
+  "family": "house",
+  "name": "Lilac house in a chef's hat",
+  "palette": "lilac",
+  "accessory": "chef",
+  "expression": "grin",
+  "idle": "bounce",
+  "variant": 3
+ },
+ {
+  "id": "C-473",
+  "family": "house",
+  "name": "Mint house in a hat",
+  "palette": "mint",
+  "accessory": "hat",
+  "expression": "wink",
+  "idle": "bob",
+  "variant": 4
+ },
+ {
+  "id": "C-474",
+  "family": "house",
+  "name": "Ink house in a cap",
+  "palette": "ink",
+  "accessory": "cap",
+  "expression": "wow",
+  "idle": "float",
+  "variant": 5
+ },
+ {
+  "id": "C-475",
+  "family": "house",
+  "name": "Coral house with headphones",
+  "palette": "coral",
+  "accessory": "headphones",
+  "expression": "smile",
+  "idle": "sway",
+  "variant": 6
+ },
+ {
+  "id": "C-476",
+  "family": "house",
+  "name": "Sky house with a bow tie",
+  "palette": "sky",
+  "accessory": "bow",
+  "expression": "grin",
+  "idle": "wiggle",
+  "variant": 7
+ },
+ {
+  "id": "C-477",
+  "family": "house",
+  "name": "Peach house in a scarf",
+  "palette": "peach",
+  "accessory": "scarf",
+  "expression": "wink",
+  "idle": "bounce",
+  "variant": 8
+ },
+ {
+  "id": "C-478",
+  "family": "house",
+  "name": "Brand house",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "wow",
+  "idle": "bob",
+  "variant": 9
+ },
+ {
+  "id": "C-479",
+  "family": "house",
+  "name": "Slate house with a crown",
+  "palette": "slate",
+  "accessory": "crown",
+  "expression": "smile",
+  "idle": "float",
+  "variant": 10
+ },
+ {
+  "id": "C-480",
+  "family": "house",
+  "name": "Lemon house with glasses",
+  "palette": "lemon",
+  "accessory": "glasses",
+  "expression": "grin",
+  "idle": "sway",
+  "variant": 11
+ },
+ {
+  "id": "C-481",
+  "family": "house",
+  "name": "Lilac house in a chef's hat",
+  "palette": "lilac",
+  "accessory": "chef",
+  "expression": "wink",
+  "idle": "wiggle",
+  "variant": 12
+ },
+ {
+  "id": "C-482",
+  "family": "house",
+  "name": "Mint house in a hat",
+  "palette": "mint",
+  "accessory": "hat",
+  "expression": "wow",
+  "idle": "bounce",
+  "variant": 13
+ },
+ {
+  "id": "C-483",
+  "family": "house",
+  "name": "Ink house in a cap",
+  "palette": "ink",
+  "accessory": "cap",
+  "expression": "smile",
+  "idle": "bob",
+  "variant": 14
+ },
+ {
+  "id": "C-484",
+  "family": "house",
+  "name": "Coral house with headphones",
+  "palette": "coral",
+  "accessory": "headphones",
+  "expression": "grin",
+  "idle": "float",
+  "variant": 15
+ },
+ {
+  "id": "C-485",
+  "family": "house",
+  "name": "Sky house with a bow tie",
+  "palette": "sky",
+  "accessory": "bow",
+  "expression": "wink",
+  "idle": "sway",
+  "variant": 16
+ },
+ {
+  "id": "C-486",
+  "family": "house",
+  "name": "Peach house in a scarf",
+  "palette": "peach",
+  "accessory": "scarf",
+  "expression": "wow",
+  "idle": "wiggle",
+  "variant": 17
+ },
+ {
+  "id": "C-487",
+  "family": "house",
+  "name": "Brand house",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "idle": "bounce",
+  "variant": 18
+ },
+ {
+  "id": "C-488",
+  "family": "house",
+  "name": "Slate house with a crown",
+  "palette": "slate",
+  "accessory": "crown",
+  "expression": "grin",
+  "idle": "bob",
+  "variant": 19
+ },
+ {
+  "id": "C-489",
+  "family": "house",
+  "name": "Lemon house with glasses",
+  "palette": "lemon",
+  "accessory": "glasses",
+  "expression": "wink",
+  "idle": "float",
+  "variant": 20
+ },
+ {
+  "id": "C-490",
+  "family": "house",
+  "name": "Lilac house in a chef's hat",
+  "palette": "lilac",
+  "accessory": "chef",
+  "expression": "wow",
+  "idle": "sway",
+  "variant": 21
+ },
+ {
+  "id": "C-491",
+  "family": "house",
+  "name": "Mint house in a hat",
+  "palette": "mint",
+  "accessory": "hat",
+  "expression": "smile",
+  "idle": "wiggle",
+  "variant": 22
+ },
+ {
+  "id": "C-492",
+  "family": "house",
+  "name": "Ink house in a cap",
+  "palette": "ink",
+  "accessory": "cap",
+  "expression": "grin",
+  "idle": "bounce",
+  "variant": 23
+ },
+ {
+  "id": "C-493",
+  "family": "house",
+  "name": "Coral house with headphones",
+  "palette": "coral",
+  "accessory": "headphones",
+  "expression": "wink",
+  "idle": "bob",
+  "variant": 24
+ },
+ {
+  "id": "C-494",
+  "family": "house",
+  "name": "Sky house with a bow tie",
+  "palette": "sky",
+  "accessory": "bow",
+  "expression": "wow",
+  "idle": "float",
+  "variant": 25
+ },
+ {
+  "id": "C-495",
+  "family": "car",
+  "name": "Lilac car with glasses",
+  "palette": "lilac",
+  "accessory": "glasses",
+  "expression": "wow",
+  "idle": "wiggle",
+  "variant": 0
+ },
+ {
+  "id": "C-496",
+  "family": "car",
+  "name": "Mint car in a chef's hat",
+  "palette": "mint",
+  "accessory": "chef",
+  "expression": "smile",
+  "idle": "bounce",
+  "variant": 1
+ },
+ {
+  "id": "C-497",
+  "family": "car",
+  "name": "Ink car in a hat",
+  "palette": "ink",
+  "accessory": "hat",
+  "expression": "grin",
+  "idle": "bob",
+  "variant": 2
+ },
+ {
+  "id": "C-498",
+  "family": "car",
+  "name": "Coral car in a cap",
+  "palette": "coral",
+  "accessory": "cap",
+  "expression": "wink",
+  "idle": "float",
+  "variant": 3
+ },
+ {
+  "id": "C-499",
+  "family": "car",
+  "name": "Sky car with headphones",
+  "palette": "sky",
+  "accessory": "headphones",
+  "expression": "wow",
+  "idle": "sway",
+  "variant": 4
+ },
+ {
+  "id": "C-500",
+  "family": "car",
+  "name": "Peach car with a bow tie",
+  "palette": "peach",
+  "accessory": "bow",
+  "expression": "smile",
+  "idle": "wiggle",
+  "variant": 5
+ },
+ {
+  "id": "C-501",
+  "family": "car",
+  "name": "Brand car in a scarf",
+  "palette": "brand",
+  "accessory": "scarf",
+  "expression": "grin",
+  "idle": "bounce",
+  "variant": 6
+ },
+ {
+  "id": "C-502",
+  "family": "car",
+  "name": "Slate car",
+  "palette": "slate",
+  "accessory": "none",
+  "expression": "wink",
+  "idle": "bob",
+  "variant": 7
+ },
+ {
+  "id": "C-503",
+  "family": "car",
+  "name": "Lemon car with a crown",
+  "palette": "lemon",
+  "accessory": "crown",
+  "expression": "wow",
+  "idle": "float",
+  "variant": 8
+ },
+ {
+  "id": "C-504",
+  "family": "car",
+  "name": "Lilac car with glasses",
+  "palette": "lilac",
+  "accessory": "glasses",
+  "expression": "smile",
+  "idle": "sway",
+  "variant": 9
+ },
+ {
+  "id": "C-505",
+  "family": "car",
+  "name": "Mint car in a chef's hat",
+  "palette": "mint",
+  "accessory": "chef",
+  "expression": "grin",
+  "idle": "wiggle",
+  "variant": 10
+ },
+ {
+  "id": "C-506",
+  "family": "car",
+  "name": "Ink car in a hat",
+  "palette": "ink",
+  "accessory": "hat",
+  "expression": "wink",
+  "idle": "bounce",
+  "variant": 11
+ },
+ {
+  "id": "C-507",
+  "family": "car",
+  "name": "Coral car in a cap",
+  "palette": "coral",
+  "accessory": "cap",
+  "expression": "wow",
+  "idle": "bob",
+  "variant": 12
+ },
+ {
+  "id": "C-508",
+  "family": "car",
+  "name": "Sky car with headphones",
+  "palette": "sky",
+  "accessory": "headphones",
+  "expression": "smile",
+  "idle": "float",
+  "variant": 13
+ },
+ {
+  "id": "C-509",
+  "family": "car",
+  "name": "Peach car with a bow tie",
+  "palette": "peach",
+  "accessory": "bow",
+  "expression": "grin",
+  "idle": "sway",
+  "variant": 14
+ },
+ {
+  "id": "C-510",
+  "family": "car",
+  "name": "Brand car in a scarf",
+  "palette": "brand",
+  "accessory": "scarf",
+  "expression": "wink",
+  "idle": "wiggle",
+  "variant": 15
+ },
+ {
+  "id": "C-511",
+  "family": "car",
+  "name": "Slate car",
+  "palette": "slate",
+  "accessory": "none",
+  "expression": "wow",
+  "idle": "bounce",
+  "variant": 16
+ },
+ {
+  "id": "C-512",
+  "family": "car",
+  "name": "Lemon car with a crown",
+  "palette": "lemon",
+  "accessory": "crown",
+  "expression": "smile",
+  "idle": "bob",
+  "variant": 17
+ },
+ {
+  "id": "C-513",
+  "family": "car",
+  "name": "Lilac car with glasses",
+  "palette": "lilac",
+  "accessory": "glasses",
+  "expression": "grin",
+  "idle": "float",
+  "variant": 18
+ },
+ {
+  "id": "C-514",
+  "family": "car",
+  "name": "Mint car in a chef's hat",
+  "palette": "mint",
+  "accessory": "chef",
+  "expression": "wink",
+  "idle": "sway",
+  "variant": 19
+ },
+ {
+  "id": "C-515",
+  "family": "car",
+  "name": "Ink car in a hat",
+  "palette": "ink",
+  "accessory": "hat",
+  "expression": "wow",
+  "idle": "wiggle",
+  "variant": 20
+ },
+ {
+  "id": "C-516",
+  "family": "car",
+  "name": "Coral car in a cap",
+  "palette": "coral",
+  "accessory": "cap",
+  "expression": "smile",
+  "idle": "bounce",
+  "variant": 21
+ },
+ {
+  "id": "C-517",
+  "family": "car",
+  "name": "Sky car with headphones",
+  "palette": "sky",
+  "accessory": "headphones",
+  "expression": "grin",
+  "idle": "bob",
+  "variant": 22
+ },
+ {
+  "id": "C-518",
+  "family": "car",
+  "name": "Peach car with a bow tie",
+  "palette": "peach",
+  "accessory": "bow",
+  "expression": "wink",
+  "idle": "float",
+  "variant": 23
+ },
+ {
+  "id": "C-519",
+  "family": "car",
+  "name": "Brand car in a scarf",
+  "palette": "brand",
+  "accessory": "scarf",
+  "expression": "wow",
+  "idle": "sway",
+  "variant": 24
+ },
+ {
+  "id": "C-520",
+  "family": "car",
+  "name": "Slate car",
+  "palette": "slate",
+  "accessory": "none",
+  "expression": "smile",
+  "idle": "wiggle",
+  "variant": 25
  }
 ]

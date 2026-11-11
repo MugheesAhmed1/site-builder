@@ -28,9 +28,9 @@ const ease = [0.23, 1, 0.32, 1] as const;
 
 const FLOW: { id: StepId; title: string; hint: string }[] = [
   { id: "questions", title: "Your details", hint: "Fill the form or import a résumé" },
-  { id: "design", title: "Look", hint: "240 design systems to remix" },
-  { id: "cast", title: "Characters", hint: "216 characters, 208 widgets" },
-  { id: "motion", title: "Animation", hint: "144 styles played by Motion" },
+  { id: "design", title: "Look", hint: "500 design systems to remix" },
+  { id: "cast", title: "Characters", hint: "520 characters, 512 widgets" },
+  { id: "motion", title: "Animation", hint: "728 styles played by Motion" },
   { id: "build", title: "Check and edit", hint: "Every word, every section" },
   { id: "deploy", title: "Publish", hint: "Download and put it online" },
 ];
@@ -145,7 +145,7 @@ export default function PortfolioStudio() {
 
   const input = p ? inputOf(p) : null;
   const draft = useMemo(() => (input ? composePortfolioFromInput(input) : null), [p?.input]); // eslint-disable-line react-hooks/exhaustive-deps
-  const personal = useMemo(() => (p && input ? personalDesign(input.name || p.query, p.query, TONE_MOOD[input.tone] ?? undefined) : null), [input?.name, input?.tone, p?.query]); // eslint-disable-line react-hooks/exhaustive-deps
+  const personal = useMemo(() => (p && input ? personalDesign(input.name || p.query, p.query, TONE_MOOD[input.tone] ?? undefined, p.category) : null), [input?.name, input?.tone, p?.query]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!loaded) return null;
   if (!p || !input || !draft || !personal) {
@@ -267,7 +267,7 @@ export default function PortfolioStudio() {
                       onClick={() =>
                         approve("questions", (prev) => {
                           let next = prev;
-                          if (prev.steps.design === "todo") next = { ...next, design: keepCast(prev.design, personalDesign(input.name || prev.query, prev.query, TONE_MOOD[input.tone] ?? undefined)) };
+                          if (prev.steps.design === "todo") next = { ...next, design: keepCast(prev.design, personalDesign(input.name || prev.query, prev.query, TONE_MOOD[input.tone] ?? undefined, prev.category)) };
                           if (prev.content) next = { ...next, steps: { ...next.steps, build: "stale" } };
                           return next;
                         })
@@ -332,7 +332,7 @@ export default function PortfolioStudio() {
                 <>
                   {head(
                     "Your look",
-                    "This design system was made for you. Shuffle, remix one part, lock what you like, or pick from the library of 240.",
+                    "This design system was made for you. Shuffle, remix one part, lock what you like, or pick from the library of 500.",
                     <button className="btn btn-primary" onClick={() => approve("design")}>
                       Next: characters
                       <Icon name="arrow" size={16} />
@@ -358,7 +358,7 @@ export default function PortfolioStudio() {
                     </button>
                   )}
                   <div className="design-grid">
-                    <CastPicker design={p.design} ctx={castContext("portfolio", p.content ?? draft)} onChange={(patch) => update((prev) => markChanged({ ...prev, design: { ...prev.design, ...patch } }, "cast"))} />
+                    <CastPicker kind="portfolio" category={p.category} design={p.design} ctx={castContext("portfolio", p.content ?? draft)} onChange={(patch) => update((prev) => markChanged({ ...prev, design: { ...prev.design, ...patch } }, "cast"))} />
                     <div className="sticky-preview">
                       <Preview kind={"portfolio"} design={p.design} content={p.content ?? draft} replayKey={(p.design.cast?.character.id ?? "none") + (p.design.cast?.widgets.map((w) => w.id).join("") ?? "")} />
                     </div>
@@ -370,14 +370,14 @@ export default function PortfolioStudio() {
                 <>
                   {head(
                     "Animation",
-                    "Pick how your portfolio moves. All 144 styles are played by Motion, the library behind Framer Motion, in the site you download too.",
+                    "Pick how your portfolio moves. All 728 styles are played by Motion, the library behind Framer Motion, in the site you download too.",
                     <button className="btn btn-primary" onClick={() => approve("motion", (prev) => (prev.content && prev.steps.build !== "stale" ? prev : rebuild(prev)))}>
                       Use this animation
                       <Icon name="arrow" size={16} />
                     </button>
                   )}
                   <div className="design-grid">
-                    <MotionPicker design={p.design} onChange={(patch) => update((prev) => markChanged({ ...prev, design: { ...prev.design, ...patch } }, "motion"))} />
+                    <MotionPicker category={p.category} design={p.design} onChange={(patch) => update((prev) => markChanged({ ...prev, design: { ...prev.design, ...patch } }, "motion"))} />
                     <div className="sticky-preview">
                       <Preview kind="portfolio" design={p.design} content={p.content ?? draft} replayKey={p.design.anim + p.design.hover + (p.design.intro ? "i" : "")} />
                     </div>

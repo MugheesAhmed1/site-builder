@@ -14,6 +14,10 @@ import { deleteProject, importProjects, keepCast, listProjects, newProject, save
 import type { Project, SiteKind } from "@/lib/types";
 import { STEPS } from "@/lib/types";
 import { MOTIONS } from "@/template/src/motion.js";
+import { CHARACTERS, WIDGETS } from "@/template/src/cast.js";
+import { CastCharacter } from "@/template/src/Cast.jsx";
+import Showreel from "@/components/Showreel";
+import { CATEGORY_GROUPS, ROLES, classifyRole, iconFor } from "@/lib/fit";
 
 const EXAMPLES = [
   "Portfolio for me, I'm a product manager",
@@ -30,26 +34,28 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [kindOverride, setKindOverride] = useState<SiteKind | null>(null);
   const [catOverride, setCatOverride] = useState<string | null>(null);
+  const [roleOverride, setRoleOverride] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   useEffect(() => setProjects(listProjects()), []);
 
   const detected = useMemo(() => classify(query), [query]);
   const kind = kindOverride ?? detected.kind;
-  const category = kind === "portfolio" ? "portfolio" : (catOverride ?? (detected.kind === "website" ? detected.category : "general"));
+  const category = kind === "portfolio" ? (roleOverride ?? classifyRole(query)) : (catOverride ?? (detected.kind === "website" ? detected.category : "general"));
   const hints = useMemo(() => extractHints(query), [query]);
 
   const start = () => {
     const q = query.trim() || (kind === "portfolio" ? "A personal portfolio" : "A website for my business");
     const p = newProject(q, kind, category, hints.name);
     p.answers = defaultAnswers(kind, category, hints);
-    p.design = keepCast(p.design, personalDesign(hints.name || q, q));
+    p.design = keepCast(p.design, personalDesign(hints.name || q, q, undefined, category));
     saveProject(p);
     router.push(kind === "portfolio" ? `/portfolio/${p.id}` : `/build/${p.id}`);
   };
-  const startKind = (k: SiteKind) => {
-    const p = newProject(k === "portfolio" ? "A personal portfolio" : "A website for my business", k, k === "portfolio" ? "portfolio" : "general", "");
+  const startKind = (k: SiteKind, cat?: string, label?: string) => {
+    const q = label ? (k === "portfolio" ? "Portfolio for a " + label.toLowerCase() : "Website for a " + label.toLowerCase()) : k === "portfolio" ? "A personal portfolio" : "A website for my business";
+    const p = newProject(q, k, cat ?? (k === "portfolio" ? "portfolio" : "general"), "");
     p.answers = defaultAnswers(k, p.category, { name: "", city: "" });
-    p.design = keepCast(p.design, personalDesign(p.query + Date.now(), p.query));
+    p.design = keepCast(p.design, personalDesign(p.query + Date.now(), p.query, undefined, p.category));
     saveProject(p);
     router.push(k === "portfolio" ? `/portfolio/${p.id}` : `/build/${p.id}`);
   };
@@ -65,7 +71,7 @@ export default function Home() {
       <Topbar />
       <main className="page">
         <section className="home-hero">
-          <div>
+          <div className="home-hero-text">
             <motion.p className="home-kicker" {...rise(0)}>
               <span className="avatar-stack" aria-hidden="true">
                 {["SM", "AK", "HR", "ZN"].map((x, i) => (
@@ -94,9 +100,8 @@ export default function Home() {
               ))}
             </h1>
             <motion.p className="lede" {...rise(3)}>
-              Pick a builder below or describe it in one line. Choose from {LIBRARY.length} design systems and {MOTIONS.length - 1} animation styles, then download a React site you can publish for free.
+              Describe it in one line or pick your category. Choose from {LIBRARY.length} design systems, {MOTIONS.length - 1} animation styles, {CHARACTERS.length} characters and {WIDGETS.length} widgets, then download a React site you can publish for free.
             </motion.p>
-          </div>
           <motion.form
             className="ask"
             {...rise(4)}
@@ -125,6 +130,7 @@ export default function Home() {
                     setQuery(x);
                     setKindOverride(null);
                     setCatOverride(null);
+                    setRoleOverride(null);
                   }}
                 >
                   {x}
@@ -140,6 +146,15 @@ export default function Home() {
                   </button>
                 ))}
               </div>
+              {kind === "portfolio" && (
+                <select aria-label="Your role" value={category} onChange={(e) => setRoleOverride(e.target.value)}>
+                  {[...ROLES, { id: "portfolio", label: "Any role" }].map((r) => (
+                    <option key={r.id} value={r.id}>
+                      {r.label}
+                    </option>
+                  ))}
+                </select>
+              )}
               {kind === "website" && (
                 <select aria-label="Type of business" value={category} onChange={(e) => setCatOverride(e.target.value)}>
                   {CATEGORIES.map((c) => (
@@ -151,6 +166,47 @@ export default function Home() {
               )}
             </div>
           </motion.form>
+          </div>
+          <motion.div className="home-reel" initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}>
+            <Showreel />
+          </motion.div>
+        </section>
+
+        <section className="cat-section" aria-labelledby="cat-title">
+          <div className="cat-head">
+            <h2 id="cat-title">Start from your category</h2>
+            <p className="muted">Each one comes with characters, widgets and animations that suit it. You can still choose from everything later.</p>
+          </div>
+          <div className="cat-groups">
+            {CATEGORY_GROUPS.map((g, gi) => (
+              <div key={g.title} className="cat-group">
+                <h3 className="cat-group-title">
+                  {g.title}
+                  <span className="mono muted"> {g.items.length}</span>
+                </h3>
+                <div className="cat-grid">
+                  {g.items.map((c, i) => (
+                    <motion.button
+                      key={c.id}
+                      type="button"
+                      className="cat-chip"
+                      onClick={() => startKind(g.kind, c.id, c.id === "portfolio" ? undefined : c.label)}
+                      initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.2 }}
+                      transition={{ duration: 0.45, ease: [0.23, 1, 0.32, 1], delay: Math.min(i * 0.03, 0.4) + gi * 0.05 }}
+                      whileTap={{ scale: 0.97 }}
+                    >
+                      <span className="cat-chip-art" aria-hidden="true">
+                        <CastCharacter def={iconFor(c.id)} size={48} />
+                      </span>
+                      <span className="cat-chip-label">{c.label}</span>
+                    </motion.button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
         <section className="entry-grid" aria-label="Choose a builder">
@@ -160,13 +216,13 @@ export default function Home() {
                 k: "portfolio" as const,
                 title: "Portfolio Studio",
                 text: "A full form for your experience, projects, results, skills, services, testimonials, awards and your own sections. Import a résumé to fill it in seconds.",
-                points: ["Résumé import", "13 kinds of section", "Case studies or card grid"],
+                points: ["Résumé import", "17 roles", "Case studies or card grid"],
               },
               {
                 k: "website" as const,
                 title: "Website Builder",
                 text: "For a shop, clinic, studio, café or any business. Plain questions with suggested answers, set by the kind of business you run.",
-                points: ["12 business types", "Menu, prices, team, hours", "WhatsApp and maps"],
+                points: ["22 business types", "Menu, prices, team, hours", "WhatsApp and maps"],
               },
             ]
           ).map((c, i) => (
@@ -242,6 +298,20 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="char-marquee" aria-label="Some of the characters">
+          <div className="char-track">
+            {[0, 1].map((r) => (
+              <ul key={r} aria-hidden={r === 1 || undefined}>
+                {CHARACTERS.filter((_, i) => i % 19 === 0).map((c) => (
+                  <li key={c.id}>
+                    <CastCharacter def={c} size={64} />
+                  </li>
+                ))}
+              </ul>
+            ))}
+          </div>
+        </section>
+
         <div className="row wrap" style={{ marginTop: 18 }}>
           <button className="btn btn-ghost btn-sm" onClick={() => fileRef.current?.click()}>
             Import a backup
@@ -291,7 +361,7 @@ export default function Home() {
                             <span key={s.id} className={i < done ? "on" : ""} />
                           ))}
                         </span>
-                        {p.kind === "portfolio" ? "Portfolio" : categoryById(p.category).label} · {p.design.preset} · edited {new Date(p.updatedAt).toLocaleDateString()}
+                        {p.kind === "portfolio" ? "Portfolio" + (ROLES.find((r) => r.id === p.category) ? ", " + ROLES.find((r) => r.id === p.category)!.label.toLowerCase() : "") : categoryById(p.category).label} · {p.design.preset} · edited {new Date(p.updatedAt).toLocaleDateString()}
                       </p>
                       </div>
                     </div>

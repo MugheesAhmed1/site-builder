@@ -9,8 +9,8 @@ export const STEPS: { id: StepId; title: string; hint: string }[] = [
   { id: "start", title: "Start", hint: "Say what you want to build" },
   { id: "questions", title: "Questions", hint: "The details that matter" },
   { id: "design", title: "Design system", hint: "Colour, type and shape" },
-  { id: "cast", title: "Characters", hint: "216 characters, 208 widgets" },
-  { id: "motion", title: "Animation", hint: "144 styles to pick from" },
+  { id: "cast", title: "Characters", hint: "520 characters, 512 widgets" },
+  { id: "motion", title: "Animation", hint: "728 styles to pick from" },
   { id: "build", title: "Your site", hint: "Preview and edit" },
   { id: "deploy", title: "Deploy", hint: "Download and publish" },
 ];

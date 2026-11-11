@@ -213,6 +213,125 @@ function body(def, P) {
           </>
         ),
       };
+    case "dog":
+      return {
+        face: { cx: 100, cy: 104, gap: 17, r: 5, mouthY: 136, snout: true },
+        top: 58,
+        neck: 150,
+        draw: (
+          <>
+            <path className="cc-tail" d="M146 170c22-4 30-22 24-38" stroke={P.body} strokeWidth="11" strokeLinecap="round" fill="none" />
+            <ellipse cx="100" cy="172" rx="42" ry="24" fill={P.body} />
+            <ellipse cx="100" cy="104" rx="46" ry="42" fill={P.body} />
+            <ellipse className="cc-ear" cx="58" cy="100" rx="13" ry="30" fill={P.trim} opacity="0.75" />
+            <ellipse className="cc-ear cc-ear-r" cx="142" cy="100" rx="13" ry="30" fill={P.trim} opacity="0.75" />
+            <path className="cc-tongue" d="M95 137h10v7a5 5 0 0 1-10 0z" fill="#F08A7E" />
+          </>
+        ),
+      };
+    case "tooth":
+      return {
+        face: { cx: 100, cy: 100, gap: 17, r: 5, mouthY: 122 },
+        top: 46,
+        neck: 150,
+        draw: (
+          <>
+            <path d="M58 70c0-22 18-30 30-24 8 4 16 4 24 0 12-6 30 2 30 24 0 26-8 40-10 66-2 26-8 46-18 46-12 0-10-36-14-36s-2 36-14 36c-10 0-16-20-18-46-2-26-10-40-10-66z" fill="#FBFAF7" stroke={P.body} strokeWidth="5" strokeLinejoin="round" />
+            <path className="cc-sparkle" d="M146 52l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill={P.body} />
+          </>
+        ),
+      };
+    case "heart":
+      return {
+        face: { cx: 100, cy: 102, gap: 18, r: 5.5, mouthY: 124 },
+        top: 54,
+        neck: 160,
+        draw: <path className="cc-beat" d="M100 178C58 150 34 124 34 94c0-22 16-38 36-38 14 0 24 8 30 18 6-10 16-18 30-18 20 0 36 16 36 38 0 30-24 56-66 84z" fill={P.body} />,
+      };
+    case "camera":
+      return {
+        face: { cx: 100, cy: 120, gap: 34, r: 5, mouthY: 160, lens: true },
+        top: 62,
+        neck: 176,
+        draw: (
+          <>
+            <rect x="78" y="58" width="44" height="18" rx="6" fill={P.trim} />
+            <rect className="cc-flash" x="132" y="64" width="16" height="10" rx="3" fill="#FFE27A" />
+            <rect x="34" y="72" width="132" height="100" rx="22" fill={P.body} />
+            <circle cx="100" cy="120" r="30" fill={P.trim} />
+            <circle className="cc-lens" cx="100" cy="120" r="19" fill="#1d1a19" />
+            <circle cx="93" cy="113" r="6" fill="#fff" opacity="0.6" />
+          </>
+        ),
+      };
+    case "laptop":
+      return {
+        face: { cx: 100, cy: 96, gap: 20, r: 5.5, mouthY: 118, screen: true },
+        top: 50,
+        neck: 160,
+        draw: (
+          <>
+            <rect x="44" y="50" width="112" height="90" rx="12" fill={P.trim} />
+            <rect x="52" y="58" width="96" height="74" rx="6" fill={P.body} />
+            <path d="M28 146h144l-10 18H38z" fill={P.trim} />
+            <rect x="84" y="148" width="32" height="5" rx="2.5" fill={P.body} opacity="0.6" />
+            <rect className="cc-cursor" x="128" y="118" width="3" height="10" fill={P.trim} />
+          </>
+        ),
+      };
+    case "book":
+      return {
+        face: { cx: 100, cy: 104, gap: 18, r: 5, mouthY: 126 },
+        top: 46,
+        neck: 172,
+        draw: (
+          <>
+            <rect x="46" y="44" width="108" height="128" rx="10" fill={P.body} />
+            <rect x="46" y="44" width="16" height="128" rx="6" fill={P.trim} opacity="0.45" />
+            <rect x="148" y="52" width="10" height="114" rx="3" fill="#FBFAF7" />
+            <path className="cc-bookmark" d="M126 44v34l8-7 8 7V44z" fill="#E5484D" />
+          </>
+        ),
+      };
+    case "house":
+      return {
+        face: { cx: 100, cy: 124, gap: 18, r: 5, mouthY: 146 },
+        top: 40,
+        neck: 186,
+        draw: (
+          <>
+            <rect x="126" y="44" width="16" height="34" fill={P.trim} />
+            <g className="cc-smoke" fill="#9AA6B8" opacity="0.5">
+              <circle cx="134" cy="34" r="6" />
+              <circle cx="140" cy="22" r="5" />
+            </g>
+            <path d="M100 40 34 96h132z" fill={P.trim} />
+            <rect x="46" y="94" width="108" height="88" rx="6" fill={P.body} />
+            <rect x="122" y="140" width="20" height="42" rx="4" fill={P.trim} opacity="0.7" />
+            <rect className="cc-window" x="58" y="148" width="20" height="18" rx="3" fill="#FFE27A" />
+          </>
+        ),
+      };
+    case "car":
+      return {
+        face: { cx: 100, cy: 122, gap: 26, r: 5, mouthY: 142, carEyes: true },
+        top: 64,
+        neck: 176,
+        draw: (
+          <>
+            <path d="M58 104l14-30c4-8 10-12 18-12h20c8 0 14 4 18 12l14 30z" fill={P.body} />
+            <path d="M74 102l10-24c2-4 5-6 9-6h14c4 0 7 2 9 6l10 24z" fill="#DCEBFF" opacity="0.9" />
+            <rect x="30" y="100" width="140" height="58" rx="20" fill={P.body} />
+            <g className="cc-wheels">
+              <circle cx="62" cy="160" r="17" fill="#1d1a19" />
+              <circle cx="138" cy="160" r="17" fill="#1d1a19" />
+              <path d="M62 150v20M52 160h20M138 150v20M128 160h20" stroke="#9AA6B8" strokeWidth="3" />
+            </g>
+            <rect x="34" y="114" width="14" height="10" rx="4" fill="#FFE27A" />
+            <rect x="152" y="114" width="14" height="10" rx="4" fill="#FFE27A" />
+          </>
+        ),
+      };
     case "orb":
     default:
       return {
@@ -311,6 +430,28 @@ function Accessory({ kind, f, top, neck, P }) {
         <path d={`M${cx + 16} ${neck + 4}l6 26 12-4-6-24z`} fill="#E5484D" />
       </g>
     );
+  if (kind === "chef")
+    return (
+      <g className="cc-hat">
+        <path d={`M${cx - 26} ${top - 2}c-14 0-18-22-4-26 2-14 20-18 30-8 10-10 28-6 30 8 14 4 10 26-4 26z`} fill="#fff" stroke="#E2DED8" strokeWidth="2" />
+        <rect x={cx - 26} y={top - 8} width="52" height="12" rx="3" fill="#fff" stroke="#E2DED8" strokeWidth="2" />
+      </g>
+    );
+  if (kind === "cap")
+    return (
+      <g className="cc-hat">
+        <path d={`M${cx - 32} ${top + 6}c0-22 14-34 32-34s32 12 32 34z`} fill="#E5484D" />
+        <path d={`M${cx + 20} ${top + 2}h30c4 0 4 8 0 8H${cx + 20}z`} fill="#B8333A" />
+        <circle cx={cx} cy={top - 26} r="4" fill="#B8333A" />
+      </g>
+    );
+  if (kind === "bow")
+    return (
+      <g className="cc-scarf">
+        <path d={`M${cx} ${neck}l-18-10v20zM${cx} ${neck}l18-10v20z`} fill="#E5484D" />
+        <circle cx={cx} cy={neck} r="5" fill="#B8333A" />
+      </g>
+    );
   if (kind === "crown")
     return (
       <path className="cc-crown" d={`M${cx - 22} ${top + 2}l-2-22 12 10 12-16 12 16 12-10-2 22z`} fill="#F5B301" stroke="#B07D00" strokeWidth="2" strokeLinejoin="round" />
@@ -369,6 +510,10 @@ const ICONS = {
   sun: "M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5",
   play: "M8 5v14l11-7z",
   up: "M12 19V5M6 11l6-6 6 6",
+  cal: "M5 5h14v15H5zM5 10h14M9 3v4M15 3v4",
+  dish: "M3 15h18M5 15a7 7 0 0 1 14 0M12 6v2M2 19h20",
+  users: "M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21v-1a7 7 0 0 1 14 0v1M16 3.5a4 4 0 0 1 0 7M18 14a6 6 0 0 1 4 6v1",
+  trend: "M3 17l6-6 4 4 8-8M15 7h6v6",
   award: "M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM8.5 14 7 22l5-3 5 3-1.5-8",
 };
 
@@ -376,6 +521,7 @@ const ICONS = {
 export function widgetText(kind, ctx) {
   const s0 = ctx.stats[0] || { value: "24", label: "Projects shipped" };
   const s1 = ctx.stats[1] || s0;
+  const find = (re) => ctx.stats.find((x) => re.test(String(x.label) + " " + String(x.value)));
   switch (kind) {
     case "stat":
       return { title: s0.label, value: s0.value };
@@ -426,6 +572,24 @@ export function widgetText(kind, ctx) {
       return { text: ctx.quote || ctx.greeting, title: ctx.quoteBy || ctx.name };
     case "countdown":
       return { title: ctx.countdown || "Next opening" };
+    case "appointment":
+      return { title: ctx.calendar ? "Next " + String(ctx.calendar).toLowerCase() : "Next free slot", value: "Tue, 10:30" };
+    case "menu":
+      return { title: ctx.priceLabel || "Today's special", value: ctx.price || ctx.tags[0] || "Chef's choice" };
+    case "pulse":
+      return { title: s0.label, value: s0.value };
+    case "followers": {
+      const f = find(/follow|subscri|audience|reader|view/);
+      return { title: f ? f.label : "New followers", value: f ? f.value : "+1,240" };
+    }
+    case "uptime": {
+      const f = find(/%|uptime/);
+      return { title: f ? f.label : "Uptime", value: f ? f.value : "99.9%" };
+    }
+    case "growth": {
+      const f = find(/\+|growth|revenue|increase|up /);
+      return { title: f ? f.label : s1.label, value: f ? f.value : s1.value };
+    }
     case "badge":
     default:
       return { title: ctx.award || "Top rated", value: ctx.awardYear || String(new Date().getFullYear()) };
@@ -683,6 +847,76 @@ export function CastWidget({ def, ctx, className = "" }) {
           <span className="cw-title">{t.title}</span>
           <Count />
         </>
+      )}
+      {k === "appointment" && (
+        <div className="cw-row">
+          <span className="cw-art">
+            <Icon d={ICONS.cal} />
+          </span>
+          <div className="cw-grow">
+            <span className="cw-title">{t.title}</span>
+            <strong className="cw-strong">{t.value}</strong>
+          </div>
+          <span className="cw-pulse" />
+        </div>
+      )}
+      {k === "menu" && (
+        <div className="cw-row">
+          <span className="cw-art cw-steam">
+            <Icon d={ICONS.dish} />
+          </span>
+          <div className="cw-grow">
+            <span className="cw-title">{t.title}</span>
+            <strong className="cw-value cw-pop">{t.value}</strong>
+          </div>
+        </div>
+      )}
+      {k === "pulse" && (
+        <>
+          <div className="cw-row cw-between">
+            <span className="cw-title">{t.title}</span>
+            <span className="cw-heart">♥</span>
+          </div>
+          <strong className="cw-value">{t.value}</strong>
+          <svg className="cw-ecg" viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0 15h30l6-10 8 22 6-18 4 6h66" pathLength="1" />
+          </svg>
+        </>
+      )}
+      {k === "followers" && (
+        <div className="cw-row">
+          <span className="cw-art">
+            <Icon d={ICONS.users} />
+          </span>
+          <div>
+            <strong className="cw-value cw-tick">{t.value}</strong>
+            <span className="cw-title">{t.title}</span>
+          </div>
+        </div>
+      )}
+      {k === "uptime" && (
+        <>
+          <div className="cw-row cw-between">
+            <span className="cw-title">{t.title}</span>
+            <strong className="cw-strong">{t.value}</strong>
+          </div>
+          <span className="cw-uptime">
+            {Array.from({ length: 24 }, (_, i) => (
+              <i key={i} className={i === 17 ? "is-warn" : ""} style={{ animationDelay: i * 0.06 + "s" }} />
+            ))}
+          </span>
+        </>
+      )}
+      {k === "growth" && (
+        <div className="cw-row">
+          <div className="cw-grow">
+            <span className="cw-title">{t.title}</span>
+            <strong className="cw-value">{t.value}</strong>
+          </div>
+          <span className="cw-art cw-trend">
+            <Icon d={ICONS.trend} />
+          </span>
+        </div>
       )}
       {k === "badge" && (
         <div className="cw-row">

@@ -3,7 +3,7 @@
 import { LIBRARY, normalizeDesign } from "./designs";
 import type { Design, Project, SiteKind, StepId } from "./types";
 import { STEPS } from "./types";
-import { defaultCast } from "@/template/src/cast.js";
+import { castFor } from "./fit";
 
 // Projects are saved in this browser's local storage. Nothing is sent to a server.
 // Use Export and Import on the home page to back up or move them.
@@ -39,7 +39,7 @@ function normalize(p: Project): Project {
   const kind = p.kind ?? "portfolio";
   const category = p.category ?? "portfolio";
   const design = normalizeDesign(p.design);
-  if (design.cast === undefined || (design.cast && !design.cast.character)) design.cast = defaultCast(kind, category, seedOf(p.id));
+  if (design.cast === undefined || (design.cast && !design.cast.character)) design.cast = castFor(category, seedOf(p.id));
   const steps = { ...p.steps };
   if (!steps.cast) steps.cast = steps.motion === "approved" ? "approved" : steps.design === "approved" ? "draft" : "todo";
   return { ...p, kind, category, answers: p.answers ?? {}, locks: p.locks ?? {}, design, steps };
@@ -89,7 +89,7 @@ export function newProject(query: string, kind: SiteKind, category: string, name
     resumeText: "",
     resumeFileName: "",
     profile: null,
-    design: { ...LIBRARY[0], cast: defaultCast(kind, category, seedOf(id)) },
+    design: { ...LIBRARY[0], cast: castFor(category, seedOf(id)) },
     locks: {},
     content: null,
     history: [],

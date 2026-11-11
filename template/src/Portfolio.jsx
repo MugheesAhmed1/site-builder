@@ -6,7 +6,7 @@ import { Extras } from "./extras.jsx";
 import { Avatar, Counter, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
 // The whole portfolio, driven by two objects:
-//   design: colours, fonts, shape, layout choices and one of 144 animation styles
+//   design: colours, fonts, shape, layout choices and one of 728 animation styles
 //   content: every word on the page, plus which sections show and in what order
 // Edit src/site-data.json to change the site without touching this file.
 //

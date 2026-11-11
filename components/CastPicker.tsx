@@ -8,9 +8,11 @@ import { CastCharacter, CastWidget } from "@/template/src/Cast.jsx";
 import { palette } from "@/template/src/theme.js";
 import { themeStyle } from "@/template/src/shared.jsx";
 import { useCastLibrary } from "@/lib/library";
+import CategorySelect from "@/components/CategorySelect";
+import { categoryLabel, fitFor, fitsCharacter, fitsWidget } from "@/lib/fit";
 import type { Design } from "@/lib/types";
 
-// The Characters step: 216 characters and 208 widgets, all already animated. Pick one
+// The Characters step: 520 characters and 512 widgets, all already animated. Pick one
 // character and up to six widgets; the site is then built around them (the opening scene,
 // a pinned scroll story, a live widget wall and a character that peeks in near the end).
 
@@ -40,11 +42,15 @@ const SAMPLE = {
 
 type Ctx = typeof SAMPLE;
 
-export default function CastPicker({ design, onChange, ctx }: { design: Design; onChange: (patch: Partial<Design>) => void; ctx?: Partial<Ctx> }) {
+export default function CastPicker({ design, onChange, ctx, kind, category }: { design: Design; onChange: (patch: Partial<Design>) => void; ctx?: Partial<Ctx>; kind: string; category: string }) {
   const lib = useCastLibrary();
+  const [suit, setSuit] = useState(category);
+  const [scope, setScope] = useState<"fit" | "all">("fit");
+  const fit = fitFor(suit);
+  const suitKind = suit === "portfolio" || suit.startsWith("role-") ? "portfolio" : "website";
   const [tab, setTab] = useState<"characters" | "widgets">("characters");
   const [family, setFamily] = useState("all");
-  const [kind, setKind] = useState("all");
+  const [wkind, setKind] = useState("all");
   const [skin, setSkin] = useState("all");
   const [shown, setShown] = useState(PAGE);
   const cast = design.cast;
@@ -53,8 +59,15 @@ export default function CastPicker({ design, onChange, ctx }: { design: Design; 
   const pal = palette(design, design.mode === "dark" ? "dark" : "light");
   const vars = themeStyle(design, pal, design.mode === "dark" ? "dark" : "light") as React.CSSProperties;
 
-  const chars = useMemo(() => lib.characters.filter((c) => family === "all" || c.family === family), [lib.characters, family]);
-  const widgets = useMemo(() => lib.widgets.filter((w) => (kind === "all" || w.kind === kind) && (skin === "all" || w.skin === skin)), [lib.widgets, kind, skin]);
+  const chars = useMemo(() => {
+    const list = lib.characters.filter((c) => (family === "all" || c.family === family) && (scope === "all" || family !== "all" || fitsCharacter(c, fit)));
+    // Best fitting families first, in the order the category lists them.
+    return scope === "fit" ? [...list].sort((a, b) => fit.families.indexOf(a.family) - fit.families.indexOf(b.family)) : list;
+  }, [lib.characters, family, scope, fit]);
+  const widgets = useMemo(() => {
+    const list = lib.widgets.filter((w) => (wkind === "all" || w.kind === wkind) && (skin === "all" || w.skin === skin) && (scope === "all" || wkind !== "all" || fitsWidget(w, fit)));
+    return scope === "fit" ? [...list].sort((a, b) => fit.widgets.indexOf(a.kind) - fit.widgets.indexOf(b.kind)) : list;
+  }, [lib.widgets, wkind, skin, scope, fit]);
   const list = tab === "characters" ? chars : widgets;
 
   const setCharacter = (c: CharacterDef) => onChange({ cast: { character: c, widgets: chosenWidgets }, heroStyle: "stage" });
@@ -65,9 +78,10 @@ export default function CastPicker({ design, onChange, ctx }: { design: Design; 
     onChange({ cast: { ...cast, widgets: next }, heroStyle: "stage" });
   };
   const surprise = () => {
-    const c = lib.characters[Math.floor(Math.random() * lib.characters.length)];
+    const pool = chars.length ? chars : lib.characters;
+    const c = pool[Math.floor(Math.random() * pool.length)];
     const s = SKINS[Math.floor(Math.random() * SKINS.length)].id;
-    const kinds = [...WIDGET_KINDS].sort(() => Math.random() - 0.5).slice(0, MAX_WIDGETS);
+    const kinds = (scope === "fit" ? fit.widgets.map((id) => ({ id })) : [...WIDGET_KINDS]).sort(() => Math.random() - 0.5).slice(0, MAX_WIDGETS);
     const ws = kinds.map((k) => lib.widgets.find((w) => w.kind === k.id && w.skin === s)).filter(Boolean) as WidgetDef[];
     onChange({ cast: { character: c, widgets: ws }, heroStyle: "stage" });
   };
@@ -127,6 +141,18 @@ export default function CastPicker({ design, onChange, ctx }: { design: Design; 
         </label>
       </div>
 
+      <div className="panel fit-bar">
+        <CategorySelect value={suit} onChange={(v) => (setSuit(v), resetPage())} />
+        <div className="seg" role="group" aria-label="Show">
+          <button aria-pressed={scope === "fit"} className={scope === "fit" ? "is-on" : ""} onClick={() => (setScope("fit"), resetPage())}>
+            Best for this
+          </button>
+          <button aria-pressed={scope === "all"} className={scope === "all" ? "is-on" : ""} onClick={() => (setScope("all"), resetPage())}>
+            Everything
+          </button>
+        </div>
+      </div>
+
       <div className="cast-tabs">
         <div className="seg" role="tablist" aria-label="Choose from">
           <button role="tab" aria-selected={tab === "characters"} className={tab === "characters" ? "is-on" : ""} onClick={() => (setTab("characters"), resetPage())}>
@@ -138,7 +164,7 @@ export default function CastPicker({ design, onChange, ctx }: { design: Design; 
         </div>
         {tab === "characters" ? (
           <div className="chips-scroll" role="group" aria-label="Family">
-            {[{ id: "all", name: "Every family" }, ...FAMILIES].map((f) => (
+            {[{ id: "all", name: scope === "fit" ? "Best families" : "Every family" }, ...(scope === "fit" ? FAMILIES.filter((f) => fit.families.includes(f.id)).sort((a, b) => fit.families.indexOf(a.id) - fit.families.indexOf(b.id)) : FAMILIES)].map((f) => (
               <button key={f.id} className={"chip chip-sm" + (family === f.id ? " is-on" : "")} aria-pressed={family === f.id} onClick={() => (setFamily(f.id), resetPage())}>
                 {f.name}
               </button>
@@ -147,8 +173,8 @@ export default function CastPicker({ design, onChange, ctx }: { design: Design; 
         ) : (
           <>
             <div className="chips-scroll" role="group" aria-label="Widget type">
-              {[{ id: "all", name: "Every type" }, ...WIDGET_KINDS].map((k) => (
-                <button key={k.id} className={"chip chip-sm" + (kind === k.id ? " is-on" : "")} aria-pressed={kind === k.id} onClick={() => (setKind(k.id), resetPage())}>
+              {[{ id: "all", name: scope === "fit" ? "Best types" : "Every type" }, ...(scope === "fit" ? WIDGET_KINDS.filter((k) => fit.widgets.includes(k.id)).sort((a, b) => fit.widgets.indexOf(a.id) - fit.widgets.indexOf(b.id)) : WIDGET_KINDS)].map((k) => (
+                <button key={k.id} className={"chip chip-sm" + (wkind === k.id ? " is-on" : "")} aria-pressed={wkind === k.id} onClick={() => (setKind(k.id), resetPage())}>
                   {k.name}
                 </button>
               ))}
@@ -163,7 +189,7 @@ export default function CastPicker({ design, onChange, ctx }: { design: Design; 
           </>
         )}
         <p className="hint">
-          {list.length} {tab} shown{lib.source === "github" ? ", including the latest from your GitHub library" : ""}. {tab === "widgets" ? (cast ? `Choose up to ${MAX_WIDGETS}; they fill with your own words and numbers.` : "Pick a character first.") : "Each one is already animated; the preview shows it on your site."}
+          {list.length} {tab} shown{scope === "fit" ? ` that suit ${categoryLabel(suitKind, suit).toLowerCase()}` : ""}{lib.source === "github" ? ", including the latest from your GitHub library" : ""}. {tab === "widgets" ? (cast ? `Choose up to ${MAX_WIDGETS}; they fill with your own words and numbers.` : "Pick a character first.") : "Each one is already animated; the preview shows it on your site."}
         </p>
       </div>
 

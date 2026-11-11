@@ -1246,5 +1246,1829 @@
   "kind": "badge",
   "skin": "pastel",
   "name": "Pastel award badge"
+ },
+ {
+  "id": "W-209",
+  "kind": "stat",
+  "skin": "frost",
+  "name": "Frost big number"
+ },
+ {
+  "id": "W-210",
+  "kind": "stat",
+  "skin": "clay",
+  "name": "Clay big number"
+ },
+ {
+  "id": "W-211",
+  "kind": "stat",
+  "skin": "mono",
+  "name": "Mono big number"
+ },
+ {
+  "id": "W-212",
+  "kind": "stat",
+  "skin": "terminal",
+  "name": "Terminal big number"
+ },
+ {
+  "id": "W-213",
+  "kind": "stat",
+  "skin": "brand",
+  "name": "Brand big number"
+ },
+ {
+  "id": "W-214",
+  "kind": "stat",
+  "skin": "sand",
+  "name": "Sand big number"
+ },
+ {
+  "id": "W-215",
+  "kind": "stat",
+  "skin": "blueprint",
+  "name": "Blueprint big number"
+ },
+ {
+  "id": "W-216",
+  "kind": "stat",
+  "skin": "sunrise",
+  "name": "Sunrise big number"
+ },
+ {
+  "id": "W-217",
+  "kind": "line",
+  "skin": "frost",
+  "name": "Frost line chart"
+ },
+ {
+  "id": "W-218",
+  "kind": "line",
+  "skin": "clay",
+  "name": "Clay line chart"
+ },
+ {
+  "id": "W-219",
+  "kind": "line",
+  "skin": "mono",
+  "name": "Mono line chart"
+ },
+ {
+  "id": "W-220",
+  "kind": "line",
+  "skin": "terminal",
+  "name": "Terminal line chart"
+ },
+ {
+  "id": "W-221",
+  "kind": "line",
+  "skin": "brand",
+  "name": "Brand line chart"
+ },
+ {
+  "id": "W-222",
+  "kind": "line",
+  "skin": "sand",
+  "name": "Sand line chart"
+ },
+ {
+  "id": "W-223",
+  "kind": "line",
+  "skin": "blueprint",
+  "name": "Blueprint line chart"
+ },
+ {
+  "id": "W-224",
+  "kind": "line",
+  "skin": "sunrise",
+  "name": "Sunrise line chart"
+ },
+ {
+  "id": "W-225",
+  "kind": "bars",
+  "skin": "frost",
+  "name": "Frost bar chart"
+ },
+ {
+  "id": "W-226",
+  "kind": "bars",
+  "skin": "clay",
+  "name": "Clay bar chart"
+ },
+ {
+  "id": "W-227",
+  "kind": "bars",
+  "skin": "mono",
+  "name": "Mono bar chart"
+ },
+ {
+  "id": "W-228",
+  "kind": "bars",
+  "skin": "terminal",
+  "name": "Terminal bar chart"
+ },
+ {
+  "id": "W-229",
+  "kind": "bars",
+  "skin": "brand",
+  "name": "Brand bar chart"
+ },
+ {
+  "id": "W-230",
+  "kind": "bars",
+  "skin": "sand",
+  "name": "Sand bar chart"
+ },
+ {
+  "id": "W-231",
+  "kind": "bars",
+  "skin": "blueprint",
+  "name": "Blueprint bar chart"
+ },
+ {
+  "id": "W-232",
+  "kind": "bars",
+  "skin": "sunrise",
+  "name": "Sunrise bar chart"
+ },
+ {
+  "id": "W-233",
+  "kind": "ring",
+  "skin": "frost",
+  "name": "Frost progress ring"
+ },
+ {
+  "id": "W-234",
+  "kind": "ring",
+  "skin": "clay",
+  "name": "Clay progress ring"
+ },
+ {
+  "id": "W-235",
+  "kind": "ring",
+  "skin": "mono",
+  "name": "Mono progress ring"
+ },
+ {
+  "id": "W-236",
+  "kind": "ring",
+  "skin": "terminal",
+  "name": "Terminal progress ring"
+ },
+ {
+  "id": "W-237",
+  "kind": "ring",
+  "skin": "brand",
+  "name": "Brand progress ring"
+ },
+ {
+  "id": "W-238",
+  "kind": "ring",
+  "skin": "sand",
+  "name": "Sand progress ring"
+ },
+ {
+  "id": "W-239",
+  "kind": "ring",
+  "skin": "blueprint",
+  "name": "Blueprint progress ring"
+ },
+ {
+  "id": "W-240",
+  "kind": "ring",
+  "skin": "sunrise",
+  "name": "Sunrise progress ring"
+ },
+ {
+  "id": "W-241",
+  "kind": "chat",
+  "skin": "frost",
+  "name": "Frost chat bubble"
+ },
+ {
+  "id": "W-242",
+  "kind": "chat",
+  "skin": "clay",
+  "name": "Clay chat bubble"
+ },
+ {
+  "id": "W-243",
+  "kind": "chat",
+  "skin": "mono",
+  "name": "Mono chat bubble"
+ },
+ {
+  "id": "W-244",
+  "kind": "chat",
+  "skin": "terminal",
+  "name": "Terminal chat bubble"
+ },
+ {
+  "id": "W-245",
+  "kind": "chat",
+  "skin": "brand",
+  "name": "Brand chat bubble"
+ },
+ {
+  "id": "W-246",
+  "kind": "chat",
+  "skin": "sand",
+  "name": "Sand chat bubble"
+ },
+ {
+  "id": "W-247",
+  "kind": "chat",
+  "skin": "blueprint",
+  "name": "Blueprint chat bubble"
+ },
+ {
+  "id": "W-248",
+  "kind": "chat",
+  "skin": "sunrise",
+  "name": "Sunrise chat bubble"
+ },
+ {
+  "id": "W-249",
+  "kind": "rating",
+  "skin": "frost",
+  "name": "Frost star rating"
+ },
+ {
+  "id": "W-250",
+  "kind": "rating",
+  "skin": "clay",
+  "name": "Clay star rating"
+ },
+ {
+  "id": "W-251",
+  "kind": "rating",
+  "skin": "mono",
+  "name": "Mono star rating"
+ },
+ {
+  "id": "W-252",
+  "kind": "rating",
+  "skin": "terminal",
+  "name": "Terminal star rating"
+ },
+ {
+  "id": "W-253",
+  "kind": "rating",
+  "skin": "brand",
+  "name": "Brand star rating"
+ },
+ {
+  "id": "W-254",
+  "kind": "rating",
+  "skin": "sand",
+  "name": "Sand star rating"
+ },
+ {
+  "id": "W-255",
+  "kind": "rating",
+  "skin": "blueprint",
+  "name": "Blueprint star rating"
+ },
+ {
+  "id": "W-256",
+  "kind": "rating",
+  "skin": "sunrise",
+  "name": "Sunrise star rating"
+ },
+ {
+  "id": "W-257",
+  "kind": "status",
+  "skin": "frost",
+  "name": "Frost live status"
+ },
+ {
+  "id": "W-258",
+  "kind": "status",
+  "skin": "clay",
+  "name": "Clay live status"
+ },
+ {
+  "id": "W-259",
+  "kind": "status",
+  "skin": "mono",
+  "name": "Mono live status"
+ },
+ {
+  "id": "W-260",
+  "kind": "status",
+  "skin": "terminal",
+  "name": "Terminal live status"
+ },
+ {
+  "id": "W-261",
+  "kind": "status",
+  "skin": "brand",
+  "name": "Brand live status"
+ },
+ {
+  "id": "W-262",
+  "kind": "status",
+  "skin": "sand",
+  "name": "Sand live status"
+ },
+ {
+  "id": "W-263",
+  "kind": "status",
+  "skin": "blueprint",
+  "name": "Blueprint live status"
+ },
+ {
+  "id": "W-264",
+  "kind": "status",
+  "skin": "sunrise",
+  "name": "Sunrise live status"
+ },
+ {
+  "id": "W-265",
+  "kind": "tags",
+  "skin": "frost",
+  "name": "Frost skill tags"
+ },
+ {
+  "id": "W-266",
+  "kind": "tags",
+  "skin": "clay",
+  "name": "Clay skill tags"
+ },
+ {
+  "id": "W-267",
+  "kind": "tags",
+  "skin": "mono",
+  "name": "Mono skill tags"
+ },
+ {
+  "id": "W-268",
+  "kind": "tags",
+  "skin": "terminal",
+  "name": "Terminal skill tags"
+ },
+ {
+  "id": "W-269",
+  "kind": "tags",
+  "skin": "brand",
+  "name": "Brand skill tags"
+ },
+ {
+  "id": "W-270",
+  "kind": "tags",
+  "skin": "sand",
+  "name": "Sand skill tags"
+ },
+ {
+  "id": "W-271",
+  "kind": "tags",
+  "skin": "blueprint",
+  "name": "Blueprint skill tags"
+ },
+ {
+  "id": "W-272",
+  "kind": "tags",
+  "skin": "sunrise",
+  "name": "Sunrise skill tags"
+ },
+ {
+  "id": "W-273",
+  "kind": "calendar",
+  "skin": "frost",
+  "name": "Frost calendar"
+ },
+ {
+  "id": "W-274",
+  "kind": "calendar",
+  "skin": "clay",
+  "name": "Clay calendar"
+ },
+ {
+  "id": "W-275",
+  "kind": "calendar",
+  "skin": "mono",
+  "name": "Mono calendar"
+ },
+ {
+  "id": "W-276",
+  "kind": "calendar",
+  "skin": "terminal",
+  "name": "Terminal calendar"
+ },
+ {
+  "id": "W-277",
+  "kind": "calendar",
+  "skin": "brand",
+  "name": "Brand calendar"
+ },
+ {
+  "id": "W-278",
+  "kind": "calendar",
+  "skin": "sand",
+  "name": "Sand calendar"
+ },
+ {
+  "id": "W-279",
+  "kind": "calendar",
+  "skin": "blueprint",
+  "name": "Blueprint calendar"
+ },
+ {
+  "id": "W-280",
+  "kind": "calendar",
+  "skin": "sunrise",
+  "name": "Sunrise calendar"
+ },
+ {
+  "id": "W-281",
+  "kind": "music",
+  "skin": "frost",
+  "name": "Frost now playing"
+ },
+ {
+  "id": "W-282",
+  "kind": "music",
+  "skin": "clay",
+  "name": "Clay now playing"
+ },
+ {
+  "id": "W-283",
+  "kind": "music",
+  "skin": "mono",
+  "name": "Mono now playing"
+ },
+ {
+  "id": "W-284",
+  "kind": "music",
+  "skin": "terminal",
+  "name": "Terminal now playing"
+ },
+ {
+  "id": "W-285",
+  "kind": "music",
+  "skin": "brand",
+  "name": "Brand now playing"
+ },
+ {
+  "id": "W-286",
+  "kind": "music",
+  "skin": "sand",
+  "name": "Sand now playing"
+ },
+ {
+  "id": "W-287",
+  "kind": "music",
+  "skin": "blueprint",
+  "name": "Blueprint now playing"
+ },
+ {
+  "id": "W-288",
+  "kind": "music",
+  "skin": "sunrise",
+  "name": "Sunrise now playing"
+ },
+ {
+  "id": "W-289",
+  "kind": "weather",
+  "skin": "frost",
+  "name": "Frost weather"
+ },
+ {
+  "id": "W-290",
+  "kind": "weather",
+  "skin": "clay",
+  "name": "Clay weather"
+ },
+ {
+  "id": "W-291",
+  "kind": "weather",
+  "skin": "mono",
+  "name": "Mono weather"
+ },
+ {
+  "id": "W-292",
+  "kind": "weather",
+  "skin": "terminal",
+  "name": "Terminal weather"
+ },
+ {
+  "id": "W-293",
+  "kind": "weather",
+  "skin": "brand",
+  "name": "Brand weather"
+ },
+ {
+  "id": "W-294",
+  "kind": "weather",
+  "skin": "sand",
+  "name": "Sand weather"
+ },
+ {
+  "id": "W-295",
+  "kind": "weather",
+  "skin": "blueprint",
+  "name": "Blueprint weather"
+ },
+ {
+  "id": "W-296",
+  "kind": "weather",
+  "skin": "sunrise",
+  "name": "Sunrise weather"
+ },
+ {
+  "id": "W-297",
+  "kind": "notify",
+  "skin": "frost",
+  "name": "Frost notification"
+ },
+ {
+  "id": "W-298",
+  "kind": "notify",
+  "skin": "clay",
+  "name": "Clay notification"
+ },
+ {
+  "id": "W-299",
+  "kind": "notify",
+  "skin": "mono",
+  "name": "Mono notification"
+ },
+ {
+  "id": "W-300",
+  "kind": "notify",
+  "skin": "terminal",
+  "name": "Terminal notification"
+ },
+ {
+  "id": "W-301",
+  "kind": "notify",
+  "skin": "brand",
+  "name": "Brand notification"
+ },
+ {
+  "id": "W-302",
+  "kind": "notify",
+  "skin": "sand",
+  "name": "Sand notification"
+ },
+ {
+  "id": "W-303",
+  "kind": "notify",
+  "skin": "blueprint",
+  "name": "Blueprint notification"
+ },
+ {
+  "id": "W-304",
+  "kind": "notify",
+  "skin": "sunrise",
+  "name": "Sunrise notification"
+ },
+ {
+  "id": "W-305",
+  "kind": "toggle",
+  "skin": "frost",
+  "name": "Frost toggle"
+ },
+ {
+  "id": "W-306",
+  "kind": "toggle",
+  "skin": "clay",
+  "name": "Clay toggle"
+ },
+ {
+  "id": "W-307",
+  "kind": "toggle",
+  "skin": "mono",
+  "name": "Mono toggle"
+ },
+ {
+  "id": "W-308",
+  "kind": "toggle",
+  "skin": "terminal",
+  "name": "Terminal toggle"
+ },
+ {
+  "id": "W-309",
+  "kind": "toggle",
+  "skin": "brand",
+  "name": "Brand toggle"
+ },
+ {
+  "id": "W-310",
+  "kind": "toggle",
+  "skin": "sand",
+  "name": "Sand toggle"
+ },
+ {
+  "id": "W-311",
+  "kind": "toggle",
+  "skin": "blueprint",
+  "name": "Blueprint toggle"
+ },
+ {
+  "id": "W-312",
+  "kind": "toggle",
+  "skin": "sunrise",
+  "name": "Sunrise toggle"
+ },
+ {
+  "id": "W-313",
+  "kind": "slider",
+  "skin": "frost",
+  "name": "Frost slider"
+ },
+ {
+  "id": "W-314",
+  "kind": "slider",
+  "skin": "clay",
+  "name": "Clay slider"
+ },
+ {
+  "id": "W-315",
+  "kind": "slider",
+  "skin": "mono",
+  "name": "Mono slider"
+ },
+ {
+  "id": "W-316",
+  "kind": "slider",
+  "skin": "terminal",
+  "name": "Terminal slider"
+ },
+ {
+  "id": "W-317",
+  "kind": "slider",
+  "skin": "brand",
+  "name": "Brand slider"
+ },
+ {
+  "id": "W-318",
+  "kind": "slider",
+  "skin": "sand",
+  "name": "Sand slider"
+ },
+ {
+  "id": "W-319",
+  "kind": "slider",
+  "skin": "blueprint",
+  "name": "Blueprint slider"
+ },
+ {
+  "id": "W-320",
+  "kind": "slider",
+  "skin": "sunrise",
+  "name": "Sunrise slider"
+ },
+ {
+  "id": "W-321",
+  "kind": "avatars",
+  "skin": "frost",
+  "name": "Frost team faces"
+ },
+ {
+  "id": "W-322",
+  "kind": "avatars",
+  "skin": "clay",
+  "name": "Clay team faces"
+ },
+ {
+  "id": "W-323",
+  "kind": "avatars",
+  "skin": "mono",
+  "name": "Mono team faces"
+ },
+ {
+  "id": "W-324",
+  "kind": "avatars",
+  "skin": "terminal",
+  "name": "Terminal team faces"
+ },
+ {
+  "id": "W-325",
+  "kind": "avatars",
+  "skin": "brand",
+  "name": "Brand team faces"
+ },
+ {
+  "id": "W-326",
+  "kind": "avatars",
+  "skin": "sand",
+  "name": "Sand team faces"
+ },
+ {
+  "id": "W-327",
+  "kind": "avatars",
+  "skin": "blueprint",
+  "name": "Blueprint team faces"
+ },
+ {
+  "id": "W-328",
+  "kind": "avatars",
+  "skin": "sunrise",
+  "name": "Sunrise team faces"
+ },
+ {
+  "id": "W-329",
+  "kind": "code",
+  "skin": "frost",
+  "name": "Frost code snippet"
+ },
+ {
+  "id": "W-330",
+  "kind": "code",
+  "skin": "clay",
+  "name": "Clay code snippet"
+ },
+ {
+  "id": "W-331",
+  "kind": "code",
+  "skin": "mono",
+  "name": "Mono code snippet"
+ },
+ {
+  "id": "W-332",
+  "kind": "code",
+  "skin": "terminal",
+  "name": "Terminal code snippet"
+ },
+ {
+  "id": "W-333",
+  "kind": "code",
+  "skin": "brand",
+  "name": "Brand code snippet"
+ },
+ {
+  "id": "W-334",
+  "kind": "code",
+  "skin": "sand",
+  "name": "Sand code snippet"
+ },
+ {
+  "id": "W-335",
+  "kind": "code",
+  "skin": "blueprint",
+  "name": "Blueprint code snippet"
+ },
+ {
+  "id": "W-336",
+  "kind": "code",
+  "skin": "sunrise",
+  "name": "Sunrise code snippet"
+ },
+ {
+  "id": "W-337",
+  "kind": "pin",
+  "skin": "frost",
+  "name": "Frost map pin"
+ },
+ {
+  "id": "W-338",
+  "kind": "pin",
+  "skin": "clay",
+  "name": "Clay map pin"
+ },
+ {
+  "id": "W-339",
+  "kind": "pin",
+  "skin": "mono",
+  "name": "Mono map pin"
+ },
+ {
+  "id": "W-340",
+  "kind": "pin",
+  "skin": "terminal",
+  "name": "Terminal map pin"
+ },
+ {
+  "id": "W-341",
+  "kind": "pin",
+  "skin": "brand",
+  "name": "Brand map pin"
+ },
+ {
+  "id": "W-342",
+  "kind": "pin",
+  "skin": "sand",
+  "name": "Sand map pin"
+ },
+ {
+  "id": "W-343",
+  "kind": "pin",
+  "skin": "blueprint",
+  "name": "Blueprint map pin"
+ },
+ {
+  "id": "W-344",
+  "kind": "pin",
+  "skin": "sunrise",
+  "name": "Sunrise map pin"
+ },
+ {
+  "id": "W-345",
+  "kind": "clock",
+  "skin": "frost",
+  "name": "Frost clock"
+ },
+ {
+  "id": "W-346",
+  "kind": "clock",
+  "skin": "clay",
+  "name": "Clay clock"
+ },
+ {
+  "id": "W-347",
+  "kind": "clock",
+  "skin": "mono",
+  "name": "Mono clock"
+ },
+ {
+  "id": "W-348",
+  "kind": "clock",
+  "skin": "terminal",
+  "name": "Terminal clock"
+ },
+ {
+  "id": "W-349",
+  "kind": "clock",
+  "skin": "brand",
+  "name": "Brand clock"
+ },
+ {
+  "id": "W-350",
+  "kind": "clock",
+  "skin": "sand",
+  "name": "Sand clock"
+ },
+ {
+  "id": "W-351",
+  "kind": "clock",
+  "skin": "blueprint",
+  "name": "Blueprint clock"
+ },
+ {
+  "id": "W-352",
+  "kind": "clock",
+  "skin": "sunrise",
+  "name": "Sunrise clock"
+ },
+ {
+  "id": "W-353",
+  "kind": "todo",
+  "skin": "frost",
+  "name": "Frost checklist"
+ },
+ {
+  "id": "W-354",
+  "kind": "todo",
+  "skin": "clay",
+  "name": "Clay checklist"
+ },
+ {
+  "id": "W-355",
+  "kind": "todo",
+  "skin": "mono",
+  "name": "Mono checklist"
+ },
+ {
+  "id": "W-356",
+  "kind": "todo",
+  "skin": "terminal",
+  "name": "Terminal checklist"
+ },
+ {
+  "id": "W-357",
+  "kind": "todo",
+  "skin": "brand",
+  "name": "Brand checklist"
+ },
+ {
+  "id": "W-358",
+  "kind": "todo",
+  "skin": "sand",
+  "name": "Sand checklist"
+ },
+ {
+  "id": "W-359",
+  "kind": "todo",
+  "skin": "blueprint",
+  "name": "Blueprint checklist"
+ },
+ {
+  "id": "W-360",
+  "kind": "todo",
+  "skin": "sunrise",
+  "name": "Sunrise checklist"
+ },
+ {
+  "id": "W-361",
+  "kind": "cursor",
+  "skin": "frost",
+  "name": "Frost live cursor"
+ },
+ {
+  "id": "W-362",
+  "kind": "cursor",
+  "skin": "clay",
+  "name": "Clay live cursor"
+ },
+ {
+  "id": "W-363",
+  "kind": "cursor",
+  "skin": "mono",
+  "name": "Mono live cursor"
+ },
+ {
+  "id": "W-364",
+  "kind": "cursor",
+  "skin": "terminal",
+  "name": "Terminal live cursor"
+ },
+ {
+  "id": "W-365",
+  "kind": "cursor",
+  "skin": "brand",
+  "name": "Brand live cursor"
+ },
+ {
+  "id": "W-366",
+  "kind": "cursor",
+  "skin": "sand",
+  "name": "Sand live cursor"
+ },
+ {
+  "id": "W-367",
+  "kind": "cursor",
+  "skin": "blueprint",
+  "name": "Blueprint live cursor"
+ },
+ {
+  "id": "W-368",
+  "kind": "cursor",
+  "skin": "sunrise",
+  "name": "Sunrise live cursor"
+ },
+ {
+  "id": "W-369",
+  "kind": "upload",
+  "skin": "frost",
+  "name": "Frost upload progress"
+ },
+ {
+  "id": "W-370",
+  "kind": "upload",
+  "skin": "clay",
+  "name": "Clay upload progress"
+ },
+ {
+  "id": "W-371",
+  "kind": "upload",
+  "skin": "mono",
+  "name": "Mono upload progress"
+ },
+ {
+  "id": "W-372",
+  "kind": "upload",
+  "skin": "terminal",
+  "name": "Terminal upload progress"
+ },
+ {
+  "id": "W-373",
+  "kind": "upload",
+  "skin": "brand",
+  "name": "Brand upload progress"
+ },
+ {
+  "id": "W-374",
+  "kind": "upload",
+  "skin": "sand",
+  "name": "Sand upload progress"
+ },
+ {
+  "id": "W-375",
+  "kind": "upload",
+  "skin": "blueprint",
+  "name": "Blueprint upload progress"
+ },
+ {
+  "id": "W-376",
+  "kind": "upload",
+  "skin": "sunrise",
+  "name": "Sunrise upload progress"
+ },
+ {
+  "id": "W-377",
+  "kind": "search",
+  "skin": "frost",
+  "name": "Frost search bar"
+ },
+ {
+  "id": "W-378",
+  "kind": "search",
+  "skin": "clay",
+  "name": "Clay search bar"
+ },
+ {
+  "id": "W-379",
+  "kind": "search",
+  "skin": "mono",
+  "name": "Mono search bar"
+ },
+ {
+  "id": "W-380",
+  "kind": "search",
+  "skin": "terminal",
+  "name": "Terminal search bar"
+ },
+ {
+  "id": "W-381",
+  "kind": "search",
+  "skin": "brand",
+  "name": "Brand search bar"
+ },
+ {
+  "id": "W-382",
+  "kind": "search",
+  "skin": "sand",
+  "name": "Sand search bar"
+ },
+ {
+  "id": "W-383",
+  "kind": "search",
+  "skin": "blueprint",
+  "name": "Blueprint search bar"
+ },
+ {
+  "id": "W-384",
+  "kind": "search",
+  "skin": "sunrise",
+  "name": "Sunrise search bar"
+ },
+ {
+  "id": "W-385",
+  "kind": "price",
+  "skin": "frost",
+  "name": "Frost price tag"
+ },
+ {
+  "id": "W-386",
+  "kind": "price",
+  "skin": "clay",
+  "name": "Clay price tag"
+ },
+ {
+  "id": "W-387",
+  "kind": "price",
+  "skin": "mono",
+  "name": "Mono price tag"
+ },
+ {
+  "id": "W-388",
+  "kind": "price",
+  "skin": "terminal",
+  "name": "Terminal price tag"
+ },
+ {
+  "id": "W-389",
+  "kind": "price",
+  "skin": "brand",
+  "name": "Brand price tag"
+ },
+ {
+  "id": "W-390",
+  "kind": "price",
+  "skin": "sand",
+  "name": "Sand price tag"
+ },
+ {
+  "id": "W-391",
+  "kind": "price",
+  "skin": "blueprint",
+  "name": "Blueprint price tag"
+ },
+ {
+  "id": "W-392",
+  "kind": "price",
+  "skin": "sunrise",
+  "name": "Sunrise price tag"
+ },
+ {
+  "id": "W-393",
+  "kind": "quote",
+  "skin": "frost",
+  "name": "Frost quote card"
+ },
+ {
+  "id": "W-394",
+  "kind": "quote",
+  "skin": "clay",
+  "name": "Clay quote card"
+ },
+ {
+  "id": "W-395",
+  "kind": "quote",
+  "skin": "mono",
+  "name": "Mono quote card"
+ },
+ {
+  "id": "W-396",
+  "kind": "quote",
+  "skin": "terminal",
+  "name": "Terminal quote card"
+ },
+ {
+  "id": "W-397",
+  "kind": "quote",
+  "skin": "brand",
+  "name": "Brand quote card"
+ },
+ {
+  "id": "W-398",
+  "kind": "quote",
+  "skin": "sand",
+  "name": "Sand quote card"
+ },
+ {
+  "id": "W-399",
+  "kind": "quote",
+  "skin": "blueprint",
+  "name": "Blueprint quote card"
+ },
+ {
+  "id": "W-400",
+  "kind": "quote",
+  "skin": "sunrise",
+  "name": "Sunrise quote card"
+ },
+ {
+  "id": "W-401",
+  "kind": "countdown",
+  "skin": "frost",
+  "name": "Frost countdown"
+ },
+ {
+  "id": "W-402",
+  "kind": "countdown",
+  "skin": "clay",
+  "name": "Clay countdown"
+ },
+ {
+  "id": "W-403",
+  "kind": "countdown",
+  "skin": "mono",
+  "name": "Mono countdown"
+ },
+ {
+  "id": "W-404",
+  "kind": "countdown",
+  "skin": "terminal",
+  "name": "Terminal countdown"
+ },
+ {
+  "id": "W-405",
+  "kind": "countdown",
+  "skin": "brand",
+  "name": "Brand countdown"
+ },
+ {
+  "id": "W-406",
+  "kind": "countdown",
+  "skin": "sand",
+  "name": "Sand countdown"
+ },
+ {
+  "id": "W-407",
+  "kind": "countdown",
+  "skin": "blueprint",
+  "name": "Blueprint countdown"
+ },
+ {
+  "id": "W-408",
+  "kind": "countdown",
+  "skin": "sunrise",
+  "name": "Sunrise countdown"
+ },
+ {
+  "id": "W-409",
+  "kind": "badge",
+  "skin": "frost",
+  "name": "Frost award badge"
+ },
+ {
+  "id": "W-410",
+  "kind": "badge",
+  "skin": "clay",
+  "name": "Clay award badge"
+ },
+ {
+  "id": "W-411",
+  "kind": "badge",
+  "skin": "mono",
+  "name": "Mono award badge"
+ },
+ {
+  "id": "W-412",
+  "kind": "badge",
+  "skin": "terminal",
+  "name": "Terminal award badge"
+ },
+ {
+  "id": "W-413",
+  "kind": "badge",
+  "skin": "brand",
+  "name": "Brand award badge"
+ },
+ {
+  "id": "W-414",
+  "kind": "badge",
+  "skin": "sand",
+  "name": "Sand award badge"
+ },
+ {
+  "id": "W-415",
+  "kind": "badge",
+  "skin": "blueprint",
+  "name": "Blueprint award badge"
+ },
+ {
+  "id": "W-416",
+  "kind": "badge",
+  "skin": "sunrise",
+  "name": "Sunrise award badge"
+ },
+ {
+  "id": "W-417",
+  "kind": "appointment",
+  "skin": "glass",
+  "name": "Glass next appointment"
+ },
+ {
+  "id": "W-418",
+  "kind": "appointment",
+  "skin": "solid",
+  "name": "Solid next appointment"
+ },
+ {
+  "id": "W-419",
+  "kind": "appointment",
+  "skin": "outline",
+  "name": "Outline next appointment"
+ },
+ {
+  "id": "W-420",
+  "kind": "appointment",
+  "skin": "neon",
+  "name": "Neon next appointment"
+ },
+ {
+  "id": "W-421",
+  "kind": "appointment",
+  "skin": "paper",
+  "name": "Paper next appointment"
+ },
+ {
+  "id": "W-422",
+  "kind": "appointment",
+  "skin": "gradient",
+  "name": "Gradient next appointment"
+ },
+ {
+  "id": "W-423",
+  "kind": "appointment",
+  "skin": "dark",
+  "name": "Midnight next appointment"
+ },
+ {
+  "id": "W-424",
+  "kind": "appointment",
+  "skin": "pastel",
+  "name": "Pastel next appointment"
+ },
+ {
+  "id": "W-425",
+  "kind": "appointment",
+  "skin": "frost",
+  "name": "Frost next appointment"
+ },
+ {
+  "id": "W-426",
+  "kind": "appointment",
+  "skin": "clay",
+  "name": "Clay next appointment"
+ },
+ {
+  "id": "W-427",
+  "kind": "appointment",
+  "skin": "mono",
+  "name": "Mono next appointment"
+ },
+ {
+  "id": "W-428",
+  "kind": "appointment",
+  "skin": "terminal",
+  "name": "Terminal next appointment"
+ },
+ {
+  "id": "W-429",
+  "kind": "appointment",
+  "skin": "brand",
+  "name": "Brand next appointment"
+ },
+ {
+  "id": "W-430",
+  "kind": "appointment",
+  "skin": "sand",
+  "name": "Sand next appointment"
+ },
+ {
+  "id": "W-431",
+  "kind": "appointment",
+  "skin": "blueprint",
+  "name": "Blueprint next appointment"
+ },
+ {
+  "id": "W-432",
+  "kind": "appointment",
+  "skin": "sunrise",
+  "name": "Sunrise next appointment"
+ },
+ {
+  "id": "W-433",
+  "kind": "menu",
+  "skin": "glass",
+  "name": "Glass dish of the day"
+ },
+ {
+  "id": "W-434",
+  "kind": "menu",
+  "skin": "solid",
+  "name": "Solid dish of the day"
+ },
+ {
+  "id": "W-435",
+  "kind": "menu",
+  "skin": "outline",
+  "name": "Outline dish of the day"
+ },
+ {
+  "id": "W-436",
+  "kind": "menu",
+  "skin": "neon",
+  "name": "Neon dish of the day"
+ },
+ {
+  "id": "W-437",
+  "kind": "menu",
+  "skin": "paper",
+  "name": "Paper dish of the day"
+ },
+ {
+  "id": "W-438",
+  "kind": "menu",
+  "skin": "gradient",
+  "name": "Gradient dish of the day"
+ },
+ {
+  "id": "W-439",
+  "kind": "menu",
+  "skin": "dark",
+  "name": "Midnight dish of the day"
+ },
+ {
+  "id": "W-440",
+  "kind": "menu",
+  "skin": "pastel",
+  "name": "Pastel dish of the day"
+ },
+ {
+  "id": "W-441",
+  "kind": "menu",
+  "skin": "frost",
+  "name": "Frost dish of the day"
+ },
+ {
+  "id": "W-442",
+  "kind": "menu",
+  "skin": "clay",
+  "name": "Clay dish of the day"
+ },
+ {
+  "id": "W-443",
+  "kind": "menu",
+  "skin": "mono",
+  "name": "Mono dish of the day"
+ },
+ {
+  "id": "W-444",
+  "kind": "menu",
+  "skin": "terminal",
+  "name": "Terminal dish of the day"
+ },
+ {
+  "id": "W-445",
+  "kind": "menu",
+  "skin": "brand",
+  "name": "Brand dish of the day"
+ },
+ {
+  "id": "W-446",
+  "kind": "menu",
+  "skin": "sand",
+  "name": "Sand dish of the day"
+ },
+ {
+  "id": "W-447",
+  "kind": "menu",
+  "skin": "blueprint",
+  "name": "Blueprint dish of the day"
+ },
+ {
+  "id": "W-448",
+  "kind": "menu",
+  "skin": "sunrise",
+  "name": "Sunrise dish of the day"
+ },
+ {
+  "id": "W-449",
+  "kind": "pulse",
+  "skin": "glass",
+  "name": "Glass heartbeat"
+ },
+ {
+  "id": "W-450",
+  "kind": "pulse",
+  "skin": "solid",
+  "name": "Solid heartbeat"
+ },
+ {
+  "id": "W-451",
+  "kind": "pulse",
+  "skin": "outline",
+  "name": "Outline heartbeat"
+ },
+ {
+  "id": "W-452",
+  "kind": "pulse",
+  "skin": "neon",
+  "name": "Neon heartbeat"
+ },
+ {
+  "id": "W-453",
+  "kind": "pulse",
+  "skin": "paper",
+  "name": "Paper heartbeat"
+ },
+ {
+  "id": "W-454",
+  "kind": "pulse",
+  "skin": "gradient",
+  "name": "Gradient heartbeat"
+ },
+ {
+  "id": "W-455",
+  "kind": "pulse",
+  "skin": "dark",
+  "name": "Midnight heartbeat"
+ },
+ {
+  "id": "W-456",
+  "kind": "pulse",
+  "skin": "pastel",
+  "name": "Pastel heartbeat"
+ },
+ {
+  "id": "W-457",
+  "kind": "pulse",
+  "skin": "frost",
+  "name": "Frost heartbeat"
+ },
+ {
+  "id": "W-458",
+  "kind": "pulse",
+  "skin": "clay",
+  "name": "Clay heartbeat"
+ },
+ {
+  "id": "W-459",
+  "kind": "pulse",
+  "skin": "mono",
+  "name": "Mono heartbeat"
+ },
+ {
+  "id": "W-460",
+  "kind": "pulse",
+  "skin": "terminal",
+  "name": "Terminal heartbeat"
+ },
+ {
+  "id": "W-461",
+  "kind": "pulse",
+  "skin": "brand",
+  "name": "Brand heartbeat"
+ },
+ {
+  "id": "W-462",
+  "kind": "pulse",
+  "skin": "sand",
+  "name": "Sand heartbeat"
+ },
+ {
+  "id": "W-463",
+  "kind": "pulse",
+  "skin": "blueprint",
+  "name": "Blueprint heartbeat"
+ },
+ {
+  "id": "W-464",
+  "kind": "pulse",
+  "skin": "sunrise",
+  "name": "Sunrise heartbeat"
+ },
+ {
+  "id": "W-465",
+  "kind": "followers",
+  "skin": "glass",
+  "name": "Glass follower count"
+ },
+ {
+  "id": "W-466",
+  "kind": "followers",
+  "skin": "solid",
+  "name": "Solid follower count"
+ },
+ {
+  "id": "W-467",
+  "kind": "followers",
+  "skin": "outline",
+  "name": "Outline follower count"
+ },
+ {
+  "id": "W-468",
+  "kind": "followers",
+  "skin": "neon",
+  "name": "Neon follower count"
+ },
+ {
+  "id": "W-469",
+  "kind": "followers",
+  "skin": "paper",
+  "name": "Paper follower count"
+ },
+ {
+  "id": "W-470",
+  "kind": "followers",
+  "skin": "gradient",
+  "name": "Gradient follower count"
+ },
+ {
+  "id": "W-471",
+  "kind": "followers",
+  "skin": "dark",
+  "name": "Midnight follower count"
+ },
+ {
+  "id": "W-472",
+  "kind": "followers",
+  "skin": "pastel",
+  "name": "Pastel follower count"
+ },
+ {
+  "id": "W-473",
+  "kind": "followers",
+  "skin": "frost",
+  "name": "Frost follower count"
+ },
+ {
+  "id": "W-474",
+  "kind": "followers",
+  "skin": "clay",
+  "name": "Clay follower count"
+ },
+ {
+  "id": "W-475",
+  "kind": "followers",
+  "skin": "mono",
+  "name": "Mono follower count"
+ },
+ {
+  "id": "W-476",
+  "kind": "followers",
+  "skin": "terminal",
+  "name": "Terminal follower count"
+ },
+ {
+  "id": "W-477",
+  "kind": "followers",
+  "skin": "brand",
+  "name": "Brand follower count"
+ },
+ {
+  "id": "W-478",
+  "kind": "followers",
+  "skin": "sand",
+  "name": "Sand follower count"
+ },
+ {
+  "id": "W-479",
+  "kind": "followers",
+  "skin": "blueprint",
+  "name": "Blueprint follower count"
+ },
+ {
+  "id": "W-480",
+  "kind": "followers",
+  "skin": "sunrise",
+  "name": "Sunrise follower count"
+ },
+ {
+  "id": "W-481",
+  "kind": "uptime",
+  "skin": "glass",
+  "name": "Glass uptime"
+ },
+ {
+  "id": "W-482",
+  "kind": "uptime",
+  "skin": "solid",
+  "name": "Solid uptime"
+ },
+ {
+  "id": "W-483",
+  "kind": "uptime",
+  "skin": "outline",
+  "name": "Outline uptime"
+ },
+ {
+  "id": "W-484",
+  "kind": "uptime",
+  "skin": "neon",
+  "name": "Neon uptime"
+ },
+ {
+  "id": "W-485",
+  "kind": "uptime",
+  "skin": "paper",
+  "name": "Paper uptime"
+ },
+ {
+  "id": "W-486",
+  "kind": "uptime",
+  "skin": "gradient",
+  "name": "Gradient uptime"
+ },
+ {
+  "id": "W-487",
+  "kind": "uptime",
+  "skin": "dark",
+  "name": "Midnight uptime"
+ },
+ {
+  "id": "W-488",
+  "kind": "uptime",
+  "skin": "pastel",
+  "name": "Pastel uptime"
+ },
+ {
+  "id": "W-489",
+  "kind": "uptime",
+  "skin": "frost",
+  "name": "Frost uptime"
+ },
+ {
+  "id": "W-490",
+  "kind": "uptime",
+  "skin": "clay",
+  "name": "Clay uptime"
+ },
+ {
+  "id": "W-491",
+  "kind": "uptime",
+  "skin": "mono",
+  "name": "Mono uptime"
+ },
+ {
+  "id": "W-492",
+  "kind": "uptime",
+  "skin": "terminal",
+  "name": "Terminal uptime"
+ },
+ {
+  "id": "W-493",
+  "kind": "uptime",
+  "skin": "brand",
+  "name": "Brand uptime"
+ },
+ {
+  "id": "W-494",
+  "kind": "uptime",
+  "skin": "sand",
+  "name": "Sand uptime"
+ },
+ {
+  "id": "W-495",
+  "kind": "uptime",
+  "skin": "blueprint",
+  "name": "Blueprint uptime"
+ },
+ {
+  "id": "W-496",
+  "kind": "uptime",
+  "skin": "sunrise",
+  "name": "Sunrise uptime"
+ },
+ {
+  "id": "W-497",
+  "kind": "growth",
+  "skin": "glass",
+  "name": "Glass growth"
+ },
+ {
+  "id": "W-498",
+  "kind": "growth",
+  "skin": "solid",
+  "name": "Solid growth"
+ },
+ {
+  "id": "W-499",
+  "kind": "growth",
+  "skin": "outline",
+  "name": "Outline growth"
+ },
+ {
+  "id": "W-500",
+  "kind": "growth",
+  "skin": "neon",
+  "name": "Neon growth"
+ },
+ {
+  "id": "W-501",
+  "kind": "growth",
+  "skin": "paper",
+  "name": "Paper growth"
+ },
+ {
+  "id": "W-502",
+  "kind": "growth",
+  "skin": "gradient",
+  "name": "Gradient growth"
+ },
+ {
+  "id": "W-503",
+  "kind": "growth",
+  "skin": "dark",
+  "name": "Midnight growth"
+ },
+ {
+  "id": "W-504",
+  "kind": "growth",
+  "skin": "pastel",
+  "name": "Pastel growth"
+ },
+ {
+  "id": "W-505",
+  "kind": "growth",
+  "skin": "frost",
+  "name": "Frost growth"
+ },
+ {
+  "id": "W-506",
+  "kind": "growth",
+  "skin": "clay",
+  "name": "Clay growth"
+ },
+ {
+  "id": "W-507",
+  "kind": "growth",
+  "skin": "mono",
+  "name": "Mono growth"
+ },
+ {
+  "id": "W-508",
+  "kind": "growth",
+  "skin": "terminal",
+  "name": "Terminal growth"
+ },
+ {
+  "id": "W-509",
+  "kind": "growth",
+  "skin": "brand",
+  "name": "Brand growth"
+ },
+ {
+  "id": "W-510",
+  "kind": "growth",
+  "skin": "sand",
+  "name": "Sand growth"
+ },
+ {
+  "id": "W-511",
+  "kind": "growth",
+  "skin": "blueprint",
+  "name": "Blueprint growth"
+ },
+ {
+  "id": "W-512",
+  "kind": "growth",
+  "skin": "sunrise",
+  "name": "Sunrise growth"
  }
 ]

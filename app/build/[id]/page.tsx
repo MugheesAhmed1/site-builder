@@ -72,7 +72,7 @@ export default function BuildPage() {
     if (i < STEPS.length - 1) go(STEPS[i + 1].id);
   };
 
-  const personal = useMemo(() => (p ? personalDesign(p.answers.name || p.name || p.query, p.query, TONE_MOOD[p.answers.tone ?? ""]) : null), [p?.answers.name, p?.answers.tone, p?.query, p?.name]);
+  const personal = useMemo(() => (p ? personalDesign(p.answers.name || p.name || p.query, p.query, TONE_MOOD[p.answers.tone ?? ""], p.category) : null), [p?.answers.name, p?.answers.tone, p?.query, p?.name]);
   const draft = useMemo(() => (p ? compose(p) : null), [p?.answers, p?.profile, p?.kind, p?.category]);
 
   if (!loaded) return null;
@@ -198,7 +198,7 @@ export default function BuildPage() {
                   approve("questions", (prev) => {
                     let next: Project = { ...prev, name: prev.answers.name || prev.name };
                     // The first time through, the design system is made for this person and their tone.
-                    if (prev.steps.design === "todo") next.design = keepCast(prev.design, personalDesign(next.answers.name || next.name || next.query, next.query, TONE_MOOD[next.answers.tone ?? ""]));
+                    if (prev.steps.design === "todo") next.design = keepCast(prev.design, personalDesign(next.answers.name || next.name || next.query, next.query, TONE_MOOD[next.answers.tone ?? ""], next.category));
                     if (prev.content) next = { ...next, steps: { ...next.steps, build: "stale" } };
                     return next;
                   })
@@ -243,7 +243,7 @@ export default function BuildPage() {
                   </button>
                 )}
                 <div className="design-grid">
-                  <CastPicker design={p.design} ctx={castContext(p.kind === "portfolio" ? "portfolio" : "website", p.content ?? draft)} onChange={(patch) => update((prev) => markChanged({ ...prev, design: { ...prev.design, ...patch } }, "cast"))} />
+                  <CastPicker kind={p.kind} category={p.category} design={p.design} ctx={castContext(p.kind === "portfolio" ? "portfolio" : "website", p.content ?? draft)} onChange={(patch) => update((prev) => markChanged({ ...prev, design: { ...prev.design, ...patch } }, "cast"))} />
                   <div className="sticky-preview">
                     <Preview kind={p.kind} design={p.design} content={p.content ?? draft} replayKey={(p.design.cast?.character.id ?? "none") + (p.design.cast?.widgets.map((w) => w.id).join("") ?? "")} />
                   </div>
@@ -262,7 +262,7 @@ export default function BuildPage() {
                   </button>
                 )}
                 <div className="design-grid">
-                  <MotionPicker design={p.design} onChange={(patch) => update((prev) => markChanged({ ...prev, design: { ...prev.design, ...patch } }, "motion"))} />
+                  <MotionPicker category={p.category} design={p.design} onChange={(patch) => update((prev) => markChanged({ ...prev, design: { ...prev.design, ...patch } }, "motion"))} />
                   <div className="sticky-preview">
                     <Preview kind={p.kind} design={p.design} content={p.content ?? draft} replayKey={p.design.anim + p.design.hover + (p.design.intro ? "i" : "")} />
                   </div>

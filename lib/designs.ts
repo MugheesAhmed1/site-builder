@@ -1,12 +1,13 @@
 import type { Design, DesignPart } from "./types";
 import { hexToOklch, oklchToHex, palette, contrast } from "@/template/src/theme.js";
 import { MOTIONS } from "@/template/src/motion.js";
+import { motionFor } from "./fit";
 
 // Rule-based design-system generator. No AI: every system is built from curated parts
 // (type pairings, accent colours, neutral tints, shape and layout settings) combined with
 // a seeded random generator, so the same seed always gives the same system.
 //
-// LIBRARY holds 4 hand-made presets plus 236 generated ones (240 in total). Users can also
+// LIBRARY holds 4 hand-made presets plus 496 generated ones (500 in total). Users can also
 // shuffle a brand-new one, remix a single part (colour, type, shape or layout), lock the
 // parts they like, and save their own. Colour readability is enforced in theme.js.
 
@@ -209,7 +210,7 @@ export function shuffle(d: Design, locks: Partial<Record<DesignPart, boolean>>, 
 
 // A system unique to this person, seeded from their name and what they asked for.
 // When a mood is given (from the tone question), it keeps rolling until the type fits it.
-export function personalDesign(name: string, query: string, mood?: Mood): Design {
+export function personalDesign(name: string, query: string, mood?: Mood, category?: string): Design {
   const base = hashString((name + "|" + query).toLowerCase().trim());
   let seed = base;
   let d = generateDesign(seed);
@@ -217,7 +218,10 @@ export function personalDesign(name: string, query: string, mood?: Mood): Design
     seed = (base + i * 2654435761) >>> 0;
     d = generateDesign(seed);
   }
-  return { ...d, id: "YOU-" + (seed % 10000).toString().padStart(4, "0"), preset: "Yours: " + nameFor(seed) };
+  const out = { ...d, id: "YOU-" + (seed % 10000).toString().padStart(4, "0"), preset: "Yours: " + nameFor(seed) };
+  // Pick an animation that suits the kind of business or role.
+  if (category && out.motion !== "none") out.anim = motionFor(category, seed);
+  return out;
 }
 
 export function moodFor(d: Design): Mood {
@@ -362,7 +366,7 @@ function buildLibrary(total: number): Design[] {
   return out;
 }
 
-export const LIBRARY: Design[] = buildLibrary(240);
+export const LIBRARY: Design[] = buildLibrary(500);
 
 export function styleOf(d: Design) {
   return TYPE_PAIRINGS.find((p) => p.display === d.fonts.display)?.style ?? "grotesk";
