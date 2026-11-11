@@ -3,6 +3,7 @@
 import { useAnimate, useReducedMotion } from "motion/react";
 import { stagger } from "motion";
 import { useMemo, useState } from "react";
+import VideoField from "@/components/VideoField";
 import Icon from "@/components/Icon";
 import { FEELS, MOTIONS, REST, REVEAL_NAMES, TEMPO_NAMES, motionById, type MotionStyle } from "@/template/src/motion.js";
 import CategorySelect from "@/components/CategorySelect";
@@ -82,7 +83,19 @@ function Tile({ m, active, onPick }: { m: MotionStyle; active: boolean; onPick: 
 
 const PAGE = 48;
 
-export default function MotionPicker({ design, onChange, category = "general" }: { design: Design; onChange: (patch: Partial<Design>) => void; category?: string }) {
+export default function MotionPicker({
+  design,
+  onChange,
+  category = "general",
+  video,
+  onVideo,
+}: {
+  design: Design;
+  onChange: (patch: Partial<Design>) => void;
+  category?: string;
+  video?: string;
+  onVideo?: (v: string) => void;
+}) {
   const [reveal, setReveal] = useState("all");
   const [tempo, setTempo] = useState("all");
   const [feel, setFeel] = useState("all");
@@ -197,6 +210,67 @@ export default function MotionPicker({ design, onChange, category = "general" }:
             <span className="small muted"> Cards and widget tiles lean toward the pointer, like objects you can hold.</span>
           </span>
         </label>
+      </div>
+
+      <div className="panel studio-panel">
+        <h3 className="h3" style={{ margin: 0 }}>Studio effects</h3>
+        <p className="small muted" style={{ margin: "4px 0 12px" }}>The scroll tricks you see on award sites. Each one is built in and works on phones too.</p>
+        <div className="studio-grid">
+          <div className="studio-video">
+            <label className="toggle">
+              <input type="checkbox" checked={video || design.video ? design.film !== false : !!design.film} onChange={(e) => onChange({ film: e.target.checked })} />
+              <span>
+                <b>Scroll film</b>
+                <span className="small muted"> Your video plays forward and back as people scroll, with your steps pinned beside it and glowing hotspots at the end.</span>
+              </span>
+            </label>
+            <VideoField label="Film video" value={video || design.video || ""} onChange={(v) => (onVideo && video && onVideo(""), onChange(v && design.film === false ? { video: v, film: true } : { video: v }))} />
+          </div>
+          <div className="studio-toggles">
+            <label className="toggle">
+              <input type="checkbox" checked={design.smooth !== false} onChange={(e) => onChange({ smooth: e.target.checked })} />
+              <span>
+                <b>Smooth scroll</b>
+                <span className="small muted"> The page glides with a little weight instead of jumping.</span>
+              </span>
+            </label>
+            <label className="toggle">
+              <input type="checkbox" checked={design.loader === "line"} onChange={(e) => onChange({ loader: e.target.checked ? "line" : "none" })} />
+              <span>
+                <b>Line loader</b>
+                <span className="small muted"> One line of text slides up through a mask, then the page wipes open.</span>
+              </span>
+            </label>
+            <label className="toggle">
+              <input type="checkbox" checked={design.flight !== false} onChange={(e) => onChange({ flight: e.target.checked })} />
+              <span>
+                <b>Flying tiles</b>
+                <span className="small muted"> Your pictures or services fly out of a tray into gaps in a sentence as you scroll.</span>
+              </span>
+            </label>
+            <label className="toggle">
+              <input type="checkbox" checked={design.scrollWords !== false} onChange={(e) => onChange({ scrollWords: e.target.checked })} />
+              <span>
+                <b>Word by word</b>
+                <span className="small muted"> Your opening about text sharpens one word at a time as it scrolls past.</span>
+              </span>
+            </label>
+            <label className="toggle">
+              <input type="checkbox" checked={!!design.carousel} onChange={(e) => onChange({ carousel: e.target.checked })} />
+              <span>
+                <b>Drag carousel</b>
+                <span className="small muted"> The gallery drifts by itself and people can drag it with a finger or mouse.</span>
+              </span>
+            </label>
+            <label className="toggle">
+              <input type="checkbox" checked={!!design.grain} onChange={(e) => onChange({ grain: e.target.checked })} />
+              <span>
+                <b>Film grain</b>
+                <span className="small muted"> A fine moving grain and soft dark corners, like a cinema print.</span>
+              </span>
+            </label>
+          </div>
+        </div>
       </div>
 
       <div className="panel fit-bar">

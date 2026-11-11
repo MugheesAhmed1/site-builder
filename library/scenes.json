@@ -1048,5 +1048,47 @@
   "group": "depth",
   "palette": "mono",
   "name": "Glass shapes, mono"
+ },
+ {
+  "id": "S-151",
+  "type": "charms",
+  "group": "depth",
+  "palette": "brand",
+  "name": "Hanging charms, your colours"
+ },
+ {
+  "id": "S-152",
+  "type": "charms",
+  "group": "depth",
+  "palette": "forest",
+  "name": "Hanging charms, forest"
+ },
+ {
+  "id": "S-153",
+  "type": "charms",
+  "group": "depth",
+  "palette": "ocean",
+  "name": "Hanging charms, ocean"
+ },
+ {
+  "id": "S-154",
+  "type": "charms",
+  "group": "depth",
+  "palette": "sunset",
+  "name": "Hanging charms, sunset"
+ },
+ {
+  "id": "S-155",
+  "type": "charms",
+  "group": "depth",
+  "palette": "night",
+  "name": "Hanging charms, night"
+ },
+ {
+  "id": "S-156",
+  "type": "charms",
+  "group": "depth",
+  "palette": "mono",
+  "name": "Hanging charms, mono"
  }
 ]

@@ -583,3 +583,9 @@ html, body { overflow-x: clip; }
 .scene-now .seg { flex-wrap: wrap; justify-self: start; }
 .reel-frame { position: relative; }
 .reel-scene { position: absolute !important; inset: 6%; width: auto !important; height: auto !important; border-radius: 50%; overflow: hidden; opacity: 0.7; -webkit-mask-image: radial-gradient(closest-side, #000 60%, transparent); mask-image: radial-gradient(closest-side, #000 60%, transparent); }
+.img-drop video { max-width: 100%; max-height: 180px; border-radius: 8px; display: block; object-fit: cover; }
+.studio-panel { margin-top: 12px; }
+.studio-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.studio-grid > * { min-width: 0; }
+.studio-video .img-field { margin-top: 10px; }
+.studio-toggles { display: grid; gap: 4px; }

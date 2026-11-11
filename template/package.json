@@ -11,7 +11,8 @@
   "dependencies": {
     "motion": "14.7.1",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "lenis": "1.1.13"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.4.1",

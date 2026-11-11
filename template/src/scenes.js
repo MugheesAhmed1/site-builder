@@ -36,6 +36,7 @@ export const SCENE_TYPES = [
   { id: "bubbles", group: "depth", name: "Word bubbles", hint: "Your services or skills as bubbles you can throw around." },
   { id: "liquid", group: "depth", name: "Liquid metal", hint: "Molten blobs that stretch toward the pointer." },
   { id: "glass", group: "depth", name: "Glass shapes", hint: "Frosted glass shapes that tilt and float." },
+  { id: "charms", group: "depth", name: "Hanging charms", hint: "Charms on real chains. The pointer pushes them; grab one and let it swing." },
 ];
 
 export const SCENE_PALETTES = [

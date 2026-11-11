@@ -157,12 +157,12 @@ export function iconFor(category: string) {
 // Live scenes (particles, nature, photo, 3D) that suit each category, best first.
 const SCENE_FIT: Record<string, string> = {
   food: "petals fireflies sky bubbles reveal", beauty: "petals liquid glass reveal fireflies", fitness: "orbs vortex dotgrid swarm", health: "meadow sky waves bubbles",
-  dentist: "bubbles sky glass waves", hospital: "constellation dotgrid sky bubbles", agency: "swarm liquid flow orbs glass", creator: "swarm vortex orbs stars pixels",
+  dentist: "bubbles sky glass waves", hospital: "constellation dotgrid sky bubbles", agency: "swarm charms liquid flow orbs glass", creator: "swarm charms vortex orbs stars pixels",
   consulting: "constellation flow globe glass", law: "constellation stars glass flow", photo: "reveal tilt ripple slices pixels", property: "sky tree glass tilt",
-  product: "globe constellation dotgrid flow swarm", shop: "bubbles orbs petals glass", nonprofit: "tree meadow fireflies sky", events: "stars fireflies swarm vortex",
+  product: "globe charms constellation dotgrid flow swarm", shop: "charms bubbles orbs petals glass", nonprofit: "tree meadow fireflies sky", events: "stars fireflies swarm vortex",
   school: "tree bubbles stars meadow", hotel: "waves sky aquarium petals", trades: "dotgrid orbs sky rain", auto: "flow vortex dotgrid rain", pets: "aquarium meadow fireflies bubbles",
   general: "constellation fireflies bubbles sky", portfolio: "swarm constellation fireflies tilt", "role-pm": "constellation bubbles flow", "role-it": "globe dotgrid constellation",
-  "role-ceo": "globe stars glass", "role-designer": "liquid swarm petals glass", "role-dev": "dotgrid flow constellation swarm", "role-marketer": "bubbles orbs vortex",
+  "role-ceo": "globe stars glass", "role-designer": "liquid charms swarm petals glass", "role-dev": "dotgrid flow constellation swarm", "role-marketer": "bubbles orbs vortex",
   "role-data": "globe constellation flow", "role-engineer": "dotgrid globe flow", "role-sales": "orbs bubbles vortex", "role-hr": "bubbles meadow fireflies", "role-finance": "globe constellation glass",
   "role-teacher": "tree stars bubbles", "role-doctor": "waves sky meadow", "role-writer": "rain petals snow stars", "role-photo": "reveal tilt ripple pixels", "role-creator": "swarm vortex stars orbs", "role-student": "stars bubbles tree",
 };

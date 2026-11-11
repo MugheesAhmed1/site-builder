@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Icon from "@/components/Icon";
 import ImageField from "@/components/ImageField";
+import VideoField from "@/components/VideoField";
+import { cachedMediaUrl, mediaRefs, mediaUrl, swapMedia } from "@/lib/media";
 // The exact same components that ship in the downloaded project.
 import Portfolio from "@/template/src/Portfolio.jsx";
 import Website from "@/template/src/Website.jsx";
@@ -12,7 +14,7 @@ import type { Design, SiteContent, SiteKind } from "@/lib/types";
 // Edit on page: click any words to change them, click any picture or empty photo slot to
 // upload, drop or paste a new one. Works like a page builder, on the real site.
 
-type Pop = { kind: "text" | "image"; path: Path; x: number; y: number; label: string } | null;
+type Pop = { kind: "text" | "image" | "video"; path: Path; x: number; y: number; label: string } | null;
 
 const TEXT_TAGS = "h1, h2, h3, h4, h5, p, li, dt, dd, blockquote, figcaption, small, strong, b, em, a, button, span, label";
 
@@ -56,15 +58,32 @@ export default function Preview({
   }, [design.mode]);
   const Site = (kind === "website" ? Website : Portfolio) as React.ComponentType<{ design: Design; content: SiteContent; preview: boolean; scheme: string }>;
 
+  // Uploaded videos live in the browser's own storage; swap their references for playable links.
+  const [, setLoaded] = useState(0);
+  const refs = [...mediaRefs([content, design.video])];
+  useEffect(() => {
+    let on = true;
+    const missing = refs.filter((r) => !cachedMediaUrl(r));
+    if (missing.length) Promise.all(missing.map(mediaUrl)).then(() => on && setLoaded((n) => n + 1));
+    return () => {
+      on = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refs.join("|")]);
+  const shown = refs.length ? swapMedia(content, (r) => cachedMediaUrl(r) || "") : content;
+  const shownDesign = design.video?.startsWith("media:") ? { ...design, video: cachedMediaUrl(design.video) || "" } : design;
+
   const setValue = (path: Path, v: unknown) => onContentChange && onContentChange(setAt(live.current, path, v));
 
   // Hover outline, click to edit and paste a picture straight onto a slot.
   useEffect(() => {
     const vp = viewport.current;
     if (!vp || !editing) return;
-    const pick = (t: EventTarget | null): { el: HTMLElement; img?: string } | null => {
+    const pick = (t: EventTarget | null): { el: HTMLElement; img?: string; video?: string } | null => {
       const n = t as HTMLElement | null;
       if (!n || !n.closest || !n.closest(".pf")) return null;
+      const vid = n.closest("[data-video]") as HTMLElement | null;
+      if (vid && vid.dataset.video) return { el: vid, img: vid.dataset.video, video: vid.dataset.video };
       const img = n.closest("[data-img]") as HTMLElement | null;
       if (img && img.dataset.img) return { el: img, img: img.dataset.img };
       const el = n.closest(TEXT_TAGS) as HTMLElement | null;
@@ -91,6 +110,10 @@ export default function Preview({
       const box = shell.current!.getBoundingClientRect();
       const x = Math.min(Math.max(12, e.clientX - box.left - 20), box.width - 352);
       const y = Math.max(60, Math.min(e.clientY - box.top + 14, box.height - (p.img ? 470 : 230)));
+      if (p.video) {
+        setPop({ kind: "video", path: parsePath(p.video), x, y, label: "film video" });
+        return;
+      }
       if (p.img) {
         setPop({ kind: "image", path: parsePath(p.img), x, y, label: pretty(parsePath(p.img)) });
         return;
@@ -115,7 +138,7 @@ export default function Preview({
     };
     const paste = async (e: ClipboardEvent) => {
       const el = hoverEl.current;
-      const path = el?.dataset.img;
+      const path = el?.dataset.video ? "" : el?.dataset.img;
       if (!path || (document.activeElement && /INPUT|TEXTAREA/.test(document.activeElement.tagName))) return;
       const f = imageFromClipboard(e);
       if (!f) return;
@@ -196,7 +219,7 @@ export default function Preview({
       <div ref={viewport} data-scroll-root="" className={"preview-viewport" + (device === "mobile" ? " is-mobile" : "") + (editing ? " is-editing" : "")}>
         <div className="preview-device">
           {/* A new key remounts the site so every entrance animation plays again. */}
-          <Site key={`${run}-${device}-${replayKey ?? ""}`} design={design} content={content} preview scheme={scheme} />
+          <Site key={`${run}-${device}-${replayKey ?? ""}`} design={shownDesign} content={shown} preview scheme={scheme} />
         </div>
       </div>
       {note && (
@@ -212,7 +235,9 @@ export default function Preview({
               <Icon name="x" size={15} />
             </button>
           </div>
-          {pop.kind === "image" ? (
+          {pop.kind === "video" ? (
+            <VideoField value={String(value ?? "")} onChange={(v) => setValue(pop.path, v)} autoFocus />
+          ) : pop.kind === "image" ? (
             <ImageField value={String(value ?? "")} onChange={(v) => setValue(pop.path, v)} autoFocus />
           ) : (
             <textarea
@@ -226,7 +251,7 @@ export default function Preview({
             />
           )}
           <p className="small muted" style={{ marginTop: 8 }}>
-            {pop.kind === "image" ? "Changes show on the page straight away." : "Changes show as you type. Press Esc when done."}
+            {pop.kind !== "text" ? "Changes show on the page straight away." : "Changes show as you type. Press Esc when done."}
           </p>
         </div>
       )}

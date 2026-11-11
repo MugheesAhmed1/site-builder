@@ -262,9 +262,15 @@ export default function BuildPage() {
                   </button>
                 )}
                 <div className="design-grid">
-                  <MotionPicker category={p.category} design={p.design} onChange={(patch) => update((prev) => markChanged({ ...prev, design: { ...prev.design, ...patch } }, "motion"))} />
+                  <MotionPicker
+                    category={p.category}
+                    design={p.design}
+                    onChange={(patch) => update((prev) => markChanged({ ...prev, design: { ...prev.design, ...patch } }, "motion"))}
+                    video={(p.content as { hero?: { videoUrl?: string } } | null)?.hero?.videoUrl}
+                    onVideo={p.content ? (v) => update((prev) => (prev.content ? ({ ...prev, content: { ...prev.content, hero: { ...prev.content.hero, videoUrl: v } } } as typeof prev) : prev)) : undefined}
+                  />
                   <div className="sticky-preview">
-                    <Preview kind={p.kind} design={p.design} content={p.content ?? draft} replayKey={p.design.anim + p.design.hover + (p.design.intro ? "i" : "") + (p.design.tilt === false ? "t" : "")} />
+                    <Preview kind={p.kind} design={p.design} content={p.content ?? draft} replayKey={p.design.anim + p.design.hover + (p.design.intro ? "i" : "") + (p.design.tilt === false ? "t" : "") + (p.design.loader || "")} />
                   </div>
                 </div>
               </>

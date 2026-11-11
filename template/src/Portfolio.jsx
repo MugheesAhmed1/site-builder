@@ -3,6 +3,7 @@ import { palette, resolveScheme } from "./theme.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
 import { CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
 import { Scene } from "./Scenes.jsx";
+import { Carousel, Film, Flight, Grain, LineLoader, ScrollWords, SmoothScroll } from "./studio.jsx";
 import { Extras } from "./extras.jsx";
 import { Avatar, Counter, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
@@ -364,6 +365,12 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
   const sceneEl = (cls) => (
     <Scene def={scene} className={cls} text={h.name} words={(skillsFlat.length ? skillsFlat : arr("services").map((x) => x.name)).slice(0, 8)} image={h.photoUrl} alt={h.name} preview={preview} imgPath="hero.photoUrl" />
   );
+  const filmSrc = h.videoUrl || d.video || "";
+  const filmOn = animated && (filmSrc ? d.film !== false : preview && d.film === true);
+  const flySentence = String(h.intro || (c.about && (c.about.paragraphs || []).find(Boolean)) || "").split(/(?<=[.!?])\s/)[0].slice(0, 160);
+  const flyTiles = (arr("projects").filter((p) => p.imageUrl).length >= 3
+    ? arr("projects").map((p) => ({ label: p.name, image: p.imageUrl }))
+    : [arr("projects").map((p) => ({ label: p.name })), arr("services").map((x) => ({ label: x.name })), arr("skills").flatMap((g) => g.items || []).map((x) => ({ label: x }))].find((l) => l.length >= 3) || []).filter((t) => t.label || t.image);
   const renderHero = () => {
     if (hero === "stage") {
       return (
@@ -476,11 +483,15 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
         return (
           <Section id="about" title={c.about.heading || "About"} key={s}>
             <div className="pf-prose pf-reveal">
-              {c.about.paragraphs.filter(Boolean).map((p, i) => (
-                <p key={i} className={i === 0 ? "pf-lead" : undefined}>
-                  {p}
-                </p>
-              ))}
+              {c.about.paragraphs.filter(Boolean).map((p, i) =>
+                i === 0 && animated && d.scrollWords !== false ? (
+                  <ScrollWords key={i} text={p} className="pf-lead" />
+                ) : (
+                  <p key={i} className={i === 0 ? "pf-lead" : undefined}>
+                    {p}
+                  </p>
+                )
+              )}
             </div>
           </Section>
         );
@@ -656,6 +667,9 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
     <div ref={rootRef} className={"pf pf-scheme-" + scheme + (preview ? " pf-is-preview" : "")} {...motionAttrs(d)} style={themeStyle(d, pal, scheme)}>
       <link rel="stylesheet" href={fontsHref(d.fonts)} />
       <Progress on={animated && d.progress} />
+      <SmoothScroll on={animated && d.smooth !== false} preview={preview} />
+      {animated && d.grain && <Grain />}
+      {animated && d.loader === "line" && <LineLoader text={h.kicker || h.role || (c.meta && c.meta.title) || ""} preview={preview} />}
       {animated && <Extras rootRef={rootRef} design={d} label={h.name} preview={preview} />}
       <header className="pf-nav">
         <div className="pf-container pf-nav-inner">
@@ -690,9 +704,13 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
 
       {d.marquee && animated && skillsFlat.length > 3 && <Marquee items={skillsFlat} label="Skills" />}
 
-      {cast && animated && d.castStory !== false && storySteps.length >= 2 && <CastStory character={cast.character} widgets={cast.widgets} ctx={ctx} steps={storySteps} title={arr("process").length >= 2 ? "How I work" : arr("services").length >= 2 ? "What I do" : "Selected work"} />}
+      {filmOn && <Film src={filmSrc} steps={storySteps} title={"Selected work"} highlights={arr("stats").map((x) => ({ label: x.label, value: (x.value ?? "") + (x.suffix || "") }))} preview={preview} path="hero.videoUrl" kicker={h.name} />}
+
+      {!(filmSrc && filmOn) && cast && animated && d.castStory !== false && storySteps.length >= 2 && <CastStory character={cast.character} widgets={cast.widgets} ctx={ctx} steps={storySteps} title={arr("process").length >= 2 ? "How I work" : arr("services").length >= 2 ? "What I do" : "Selected work"} />}
 
       {visible.map(render)}
+
+      {animated && d.flight !== false && flyTiles.length >= 3 && flySentence.split(" ").length >= 8 && <Flight sentence={flySentence} tiles={flyTiles} title={flySentence} />}
 
       <footer className="pf-footer">
         <div className="pf-container pf-row pf-between pf-wrap">

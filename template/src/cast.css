@@ -289,7 +289,7 @@
 /* ------------------------------------------------------------------ live scenes */
 .sc { position: relative; width: 100%; height: 100%; min-height: 0; --sc-a: var(--pf-accent); --sc-b: var(--pf-text); --sc-c: var(--pf-muted); }
 .sc-canvas, .sc-canvas canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.sc-globe canvas, .sc-orbs canvas, .sc-bubbles canvas { cursor: grab; }
+.sc-globe canvas, .sc-orbs canvas, .sc-bubbles canvas, .sc-charms canvas { cursor: grab; }
 .sc-globe canvas:active, .sc-orbs canvas:active, .sc-bubbles canvas:active { cursor: grabbing; }
 
 /* As the opening visual, beside the words */

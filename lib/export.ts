@@ -1,5 +1,6 @@
 "use client";
 
+import { getMedia, mediaRefs, swapMedia } from "@/lib/media";
 import JSZip from "jszip";
 import { TEMPLATE_FILES } from "./template-files";
 import { palette, resolveScheme } from "@/template/src/theme.js";
@@ -37,9 +38,20 @@ export async function downloadZip(p: Project) {
     if (path === "package.json") out = out.replace('"my-site"', JSON.stringify(base));
     folder.file(path, out);
   }
+  // Videos uploaded in the builder are copied out of the browser's storage into public/media.
+  let vn = 0;
+  const vids = new Map<string, string>();
+  for (const ref of mediaRefs([p.content, p.design.video])) {
+    const b = await getMedia(ref);
+    if (!b) continue;
+    const ext = /webm/.test(b.type) ? "webm" : /quicktime/.test(b.type) ? "mov" : "mp4";
+    const name = `media/video-${++vn}.${ext}`;
+    folder.file("public/" + name, b);
+    vids.set(ref, "/" + name);
+  }
   // Pictures uploaded or pasted in the builder become real files in public/images.
   let n = 0;
-  const content = JSON.parse(JSON.stringify(p.content), (_k, v) => {
+  const content = JSON.parse(JSON.stringify(swapMedia(p.content, (r) => vids.get(r) || "")), (_k, v) => {
     if (typeof v !== "string") return v;
     const m = v.match(/^data:image\/(png|jpe?g|webp|gif);base64,(.+)$/);
     if (!m) return v;
@@ -47,7 +59,7 @@ export async function downloadZip(p: Project) {
     folder.file("public/" + name, m[2], { base64: true });
     return "/" + name;
   });
-  folder.file("src/site-data.json", JSON.stringify({ kind: p.kind, design: p.design, content }, null, 2));
+  folder.file("src/site-data.json", JSON.stringify({ kind: p.kind, design: swapMedia(p.design, (r) => vids.get(r) || ""), content }, null, 2));
   const blob = await zip.generateAsync({ type: "blob" });
   saveBlob(blob, base + ".zip");
 }

@@ -60,6 +60,14 @@ export interface Design {
   tilt?: boolean; // cards and tiles tilt toward the pointer in 3D
   scene?: ScenePick | null; // a live interactive scene: particles, nature, photo or 3D
   sceneMode?: "backdrop" | "visual"; // behind the opening words, or as the opening visual
+  smooth?: boolean; // eased, weighted page scrolling
+  grain?: boolean; // film grain and a soft vignette over the page
+  loader?: "none" | "line"; // a masked line of text, then a wipe opens the site
+  film?: boolean; // the scroll-scrubbed video with pinned story panels
+  video?: string; // the film clip: a "media:" reference to a browser-stored upload, or a link
+  flight?: boolean; // tiles fly from a tray into a sentence as you scroll
+  carousel?: boolean; // the gallery becomes a drag carousel that drifts on its own
+  scrollWords?: boolean; // the first about paragraph sharpens word by word
 }
 
 export interface ScenePick {
@@ -118,6 +126,7 @@ export interface PortfolioContent {
     availability: string;
     photoUrl: string;
     resumeUrl: string;
+    videoUrl?: string;
   };
   stats: { value: number; suffix: string; label: string }[];
   about: { heading: string; paragraphs: string[] };
@@ -142,7 +151,7 @@ export type WebsiteSectionId = "tiles" | "highlights" | "clients" | "services" |
 export interface WebsiteContent {
   meta: { title: string; description: string };
   brand: { name: string; category: string };
-  hero: { kicker: string; headline: string; sub: string; primaryCta: string; primaryHref: string; secondaryCta: string; imageUrl: string };
+  hero: { kicker: string; headline: string; sub: string; primaryCta: string; primaryHref: string; secondaryCta: string; imageUrl: string; videoUrl?: string };
   highlights: { value: string; label: string }[];
   services: { name: string; description: string; price: string }[];
   about: { heading: string; paragraphs: string[] };

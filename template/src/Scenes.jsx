@@ -1100,6 +1100,266 @@ IMPL.swarm.prototypeStep = (pts, dt, p) => {
 };
 IMPL.pixels = pixelsImpl;
 
+// Charms on chains, simulated with verlet rope physics: still at rest, pushed by the
+// pointer, and they can be grabbed. They float up on arrival, then drop and swing.
+function charmsImpl(env) {
+  const chains = [];
+  let held = null;
+  let born = 0;
+  const KINDS = ["letter", "beads", "ring", "star", "key"];
+  const steel = (g, x, y, r) => {
+    const gr = g.createLinearGradient(x - r, y - r, x + r, y + r);
+    gr.addColorStop(0, "#f4f6f9");
+    gr.addColorStop(0.5, "#9aa1ad");
+    gr.addColorStop(1, "#dfe3e8");
+    return gr;
+  };
+  const build = () => {
+    chains.length = 0;
+    const cx = env.w / 2;
+    const top = Math.max(-8, env.h * 0.02);
+    const R = Math.min(env.w, env.h) * 0.07;
+    const S = Math.min(env.w, env.h);
+    const angles = [-50, -18, 14, 40, 84];
+    KINDS.forEach((kind, ci) => {
+      const a = ((angles[ci] - 90) * Math.PI) / 180;
+      const ax = cx + Math.cos(a) * R;
+      const ay = top + R + Math.sin(a) * R;
+      const n = kind === "beads" ? 11 : 8 + (ci % 3);
+      const len = (S * (0.34 + (ci % 2) * 0.06)) / n;
+      const pts = [];
+      for (let i = 0; i <= n; i++) pts.push({ x: ax, y: ay + i * len, px: ax, py: ay + i * len });
+      const fan = ((angles[ci] - 14) / 90) * 0.06;
+      chains.push({ kind, ax, ay, pts, len, size: S * (kind === "beads" ? 0.035 : kind === "key" ? 0.11 : 0.085), fan, c: ci % 3 });
+    });
+    born = env.t;
+  };
+  return {
+    resize: build,
+    step(dt, p) {
+      const life = (env.t - born) / 1000;
+      const grav = life < 0.7 ? -0.12 : 0.55;
+      if (p.down && p.in && !held) {
+        let best = null;
+        let bd = 1e9;
+        for (const ch of chains) {
+          const e = ch.pts[ch.pts.length - 1];
+          const d = Math.hypot(e.x - p.x, e.y - p.y);
+          if (d < ch.size * 1.1 && d < bd) (best = ch), (bd = d);
+        }
+        held = best;
+      }
+      if (!p.down) held = null;
+      const R = Math.min(env.w, env.h) * 0.28;
+      for (const ch of chains) {
+        ch.pts.forEach((q, i) => {
+          if (i === 0) return;
+          let vx = (q.x - q.px) * 0.965;
+          let vy = (q.y - q.py) * 0.965;
+          q.px = q.x;
+          q.py = q.y;
+          vx += ch.fan * dt * (i / ch.pts.length);
+          vy += grav * dt * 0.6;
+          if (p.in && !p.down) {
+            const dx = q.x - p.x;
+            const dy = q.y - p.y;
+            const d = Math.hypot(dx, dy) || 1;
+            if (d < R) {
+              const f = (1 - d / R) ** 2 * 2.6 * dt * (i / ch.pts.length + 0.3);
+              vx += (dx / d) * f + p.vx * 0.02 * (1 - d / R);
+              vy += (dy / d) * f;
+            }
+          }
+          q.x += vx;
+          q.y += vy;
+        });
+        if (ch === held) {
+          const e = ch.pts[ch.pts.length - 1];
+          e.x += (p.x - e.x) * 0.5;
+          e.y += (p.y - e.y) * 0.5;
+        }
+        for (let it = 0; it < 8; it++) {
+          ch.pts[0].x = ch.ax;
+          ch.pts[0].y = ch.ay;
+          for (let i = 1; i < ch.pts.length; i++) {
+            const a = ch.pts[i - 1];
+            const b = ch.pts[i];
+            const dx = b.x - a.x;
+            const dy = b.y - a.y;
+            const d = Math.hypot(dx, dy) || 1;
+            const diff = (d - ch.len) / d;
+            if (i === 1) {
+              b.x -= dx * diff;
+              b.y -= dy * diff;
+            } else {
+              a.x += dx * diff * 0.5;
+              a.y += dy * diff * 0.5;
+              b.x -= dx * diff * 0.5;
+              b.y -= dy * diff * 0.5;
+            }
+          }
+        }
+        // Charms bump each other instead of overlapping.
+      }
+      for (let i = 0; i < chains.length; i++)
+        for (let j = i + 1; j < chains.length; j++) {
+          const A = chains[i].pts[chains[i].pts.length - 1];
+          const B = chains[j].pts[chains[j].pts.length - 1];
+          const min = (chains[i].size + chains[j].size) * 0.5;
+          const dx = B.x - A.x;
+          const dy = B.y - A.y;
+          const d = Math.hypot(dx, dy) || 1;
+          if (d < min) {
+            const o = ((min - d) / d) * 0.5;
+            A.x -= dx * o;
+            A.y -= dy * o;
+            B.x += dx * o;
+            B.y += dy * o;
+          }
+        }
+    },
+    draw(g) {
+      // Key ring
+      const cx = env.w / 2;
+      const R = Math.min(env.w, env.h) * 0.07;
+      const top = Math.max(-8, env.h * 0.02);
+      g.lineWidth = Math.max(3, R * 0.14);
+      g.strokeStyle = steel(g, cx, top + R, R);
+      g.beginPath();
+      g.arc(cx, top + R, R, 0, TAU);
+      g.stroke();
+      for (const ch of chains) {
+        const P = ch.pts;
+        // Links
+        for (let i = 1; i < P.length; i++) {
+          const a = P[i - 1];
+          const b = P[i];
+          const mx = (a.x + b.x) / 2;
+          const my = (a.y + b.y) / 2;
+          const ang = Math.atan2(b.y - a.y, b.x - a.x);
+          g.save();
+          g.translate(mx, my);
+          g.rotate(ang);
+          if (ch.kind === "beads") {
+            const r = ch.len * 0.48;
+            const gr = g.createRadialGradient(-r * 0.3, -r * 0.4, r * 0.1, 0, 0, r);
+            gr.addColorStop(0, "#fff");
+            gr.addColorStop(0.3, rgba(env.rgb[0], 1));
+            gr.addColorStop(1, rgba(env.rgb[0].map((v) => v * 0.45), 1));
+            g.fillStyle = gr;
+            g.beginPath();
+            g.arc(0, 0, r, 0, TAU);
+            g.fill();
+          } else {
+            g.strokeStyle = steel(g, 0, 0, ch.len);
+            g.lineWidth = Math.max(1.4, ch.len * 0.16);
+            g.beginPath();
+            if (i % 2) g.ellipse(0, 0, ch.len * 0.62, ch.len * 0.26, 0, 0, TAU);
+            else {
+              g.moveTo(-ch.len * 0.62, 0);
+              g.lineTo(ch.len * 0.62, 0);
+            }
+            g.stroke();
+          }
+          g.restore();
+        }
+        // Charm
+        const e = P[P.length - 1];
+        const pe = P[P.length - 2];
+        const ang = Math.atan2(e.y - pe.y, e.x - pe.x) - Math.PI / 2;
+        const s = ch.size;
+        g.save();
+        g.translate(e.x, e.y);
+        g.rotate(ang);
+        g.translate(0, s * 0.55);
+        g.shadowColor = "rgba(0,0,0,0.22)";
+        g.shadowBlur = s * 0.35;
+        g.shadowOffsetY = s * 0.12;
+        if (ch.kind === "letter") {
+          const ch0 = (env.text || "A").trim().charAt(0).toUpperCase() || "A";
+          g.font = `800 ${s * 1.25}px ${env.font}`;
+          g.textAlign = "center";
+          g.textBaseline = "middle";
+          const gr = g.createLinearGradient(-s / 2, -s / 2, s / 2, s / 2);
+          gr.addColorStop(0, rgba(env.rgb[1], 1));
+          gr.addColorStop(0.45, rgba(env.rgb[0], 1));
+          gr.addColorStop(1, rgba(env.rgb[0].map((v) => v * 0.55), 1));
+          g.fillStyle = gr;
+          g.fillText(ch0, 0, 0);
+          g.shadowColor = "transparent";
+          g.strokeStyle = "rgba(255,255,255,0.55)";
+          g.lineWidth = Math.max(1, s * 0.025);
+          g.strokeText(ch0, -s * 0.02, -s * 0.03);
+        } else if (ch.kind === "beads") {
+          const gr = g.createRadialGradient(-s * 0.3, -s * 0.4, s * 0.1, 0, 0, s);
+          gr.addColorStop(0, "#fff");
+          gr.addColorStop(0.3, rgba(env.rgb[0], 1));
+          gr.addColorStop(1, rgba(env.rgb[0].map((v) => v * 0.4), 1));
+          g.fillStyle = gr;
+          g.beginPath();
+          g.arc(0, 0, s, 0, TAU);
+          g.fill();
+        } else if (ch.kind === "ring") {
+          const gr = g.createRadialGradient(-s * 0.3, -s * 0.3, s * 0.1, 0, 0, s * 0.8);
+          gr.addColorStop(0, "#fffdfa");
+          gr.addColorStop(0.6, "#efe6ea");
+          gr.addColorStop(1, "#cbbfc6");
+          g.strokeStyle = gr;
+          g.lineWidth = s * 0.3;
+          g.beginPath();
+          g.arc(0, 0, s * 0.42, 0, TAU);
+          g.stroke();
+          g.shadowColor = "transparent";
+          g.strokeStyle = "rgba(255,255,255,0.8)";
+          g.lineWidth = s * 0.06;
+          g.beginPath();
+          g.arc(0, 0, s * 0.42, Math.PI * 1.1, Math.PI * 1.5);
+          g.stroke();
+        } else if (ch.kind === "star") {
+          const gr = g.createLinearGradient(-s / 2, -s / 2, s / 2, s / 2);
+          gr.addColorStop(0, rgba(env.rgb[1], 1));
+          gr.addColorStop(1, rgba(env.rgb[0], 1));
+          g.fillStyle = gr;
+          g.beginPath();
+          for (let k = 0; k < 10; k++) {
+            const r = k % 2 ? s * 0.24 : s * 0.55;
+            const a = (k / 10) * TAU - Math.PI / 2;
+            g.lineTo(Math.cos(a) * r, Math.sin(a) * r);
+          }
+          g.closePath();
+          g.fill();
+        } else {
+          g.fillStyle = steel(g, 0, 0, s * 0.5);
+          g.beginPath();
+          g.arc(0, -s * 0.28, s * 0.2, 0, TAU);
+          g.rect(-s * 0.05, -s * 0.12, s * 0.1, s * 0.6);
+          g.rect(0.04 * s, s * 0.22, s * 0.1, s * 0.05);
+          g.rect(0.04 * s, s * 0.34, s * 0.07, s * 0.05);
+          g.fill();
+          g.shadowColor = "transparent";
+          g.fillStyle = env.bg;
+          g.beginPath();
+          g.arc(0, -s * 0.31, s * 0.06, 0, TAU);
+          g.fill();
+        }
+        g.restore();
+      }
+    },
+    down(x, y) {
+      for (const ch of chains)
+        for (const q of ch.pts) {
+          const d = Math.hypot(q.x - x, q.y - y);
+          if (d < 160 && d > 1) {
+            q.px -= ((q.x - x) / d) * 6;
+            q.py -= ((q.y - y) / d) * 6;
+          }
+        }
+    },
+  };
+}
+IMPL.charms = charmsImpl;
+
+
 function CanvasScene({ type, palette, text, words, image }) {
   const wrap = useRef(null);
   const cv = useRef(null);
@@ -1119,6 +1379,7 @@ function CanvasScene({ type, palette, text, words, image }) {
       c: rgb.map((x) => rgba(x, 1)),
       rgb,
       onAccent: cssVar(el, "--pf-on-accent", "#fff"),
+      bg: cssVar(el, "--pf-bg", "#fff"),
       trunk: toRgb(el, (SCENE_PALETTES.find((x) => x.id === palette) || {}).colors ? "#5b4636" : cssVar(el, "--pf-text", "#333")),
       font: cssVar(el, "--pf-font-display", "system-ui, sans-serif"),
       text,

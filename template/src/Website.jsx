@@ -3,6 +3,7 @@ import { palette, resolveScheme } from "./theme.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
 import { CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
 import { Scene } from "./Scenes.jsx";
+import { Carousel, Film, Flight, Grain, LineLoader, ScrollWords, SmoothScroll } from "./studio.jsx";
 import { Extras } from "./extras.jsx";
 import { Avatar, Counter, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
@@ -197,6 +198,10 @@ export default function Website({ design, content, preview = false, scheme: forc
   const sceneEl = (cls) => (
     <Scene def={scene} className={cls} text={c.brand.name} words={arr("services").map((x) => x.name).slice(0, 8)} image={h.imageUrl} alt={c.brand.name} preview={preview} imgPath="hero.imageUrl" />
   );
+  const filmSrc = h.videoUrl || d.video || "";
+  const filmOn = animated && (filmSrc ? d.film !== false : preview && d.film === true);
+  const flySentence = String((c.about && (c.about.paragraphs || []).find(Boolean)) || h.sub || "").split(/(?<=[.!?])\s/)[0].slice(0, 160);
+  const flyTiles = (arr("gallery").some((g) => g.imageUrl) ? arr("gallery").map((g) => ({ label: g.caption, image: g.imageUrl })) : arr("services").map((x) => ({ label: x.name }))).filter((t) => t.label || t.image);
   const renderHero = () => {
     if (hero === "stage") {
       return (
@@ -341,11 +346,15 @@ export default function Website({ design, content, preview = false, scheme: forc
         return (
           <Section id="about" title={c.about.heading || "About"} key={s}>
             <div className="pf-prose pf-reveal">
-              {c.about.paragraphs.filter(Boolean).map((p, i) => (
-                <p key={i} className={i === 0 ? "pf-lead" : undefined}>
-                  {p}
-                </p>
-              ))}
+              {c.about.paragraphs.filter(Boolean).map((p, i) =>
+                i === 0 && animated && d.scrollWords !== false ? (
+                  <ScrollWords key={i} text={p} className="pf-lead" />
+                ) : (
+                  <p key={i} className={i === 0 ? "pf-lead" : undefined}>
+                    {p}
+                  </p>
+                )
+              )}
             </div>
           </Section>
         );
@@ -366,6 +375,9 @@ export default function Website({ design, content, preview = false, scheme: forc
       case "gallery":
         return (
           <Wide id="gallery" title="Gallery" key={s}>
+            {d.carousel && animated ? (
+              <Carousel items={c.gallery.map((g) => ({ title: g.caption, image: g.imageUrl }))} label="Gallery" preview={preview} pathOf={(i) => "gallery." + i + ".imageUrl"} />
+            ) : (
             <div className="ws-gallery">
               {c.gallery.map((g, i) => (
                 <figure className={"ws-shot pf-reveal" + (i === 0 ? " is-lead" : "")} key={i} style={{ "--i": i }}>
@@ -374,6 +386,7 @@ export default function Website({ design, content, preview = false, scheme: forc
                 </figure>
               ))}
             </div>
+            )}
           </Wide>
         );
       case "team":
@@ -536,6 +549,9 @@ export default function Website({ design, content, preview = false, scheme: forc
     <div ref={rootRef} className={"pf ws pf-scheme-" + scheme + (preview ? " pf-is-preview" : "")} {...motionAttrs(d)} style={themeStyle(d, pal, scheme)}>
       <link rel="stylesheet" href={fontsHref(d.fonts)} />
       <Progress on={animated && d.progress} />
+      <SmoothScroll on={animated && d.smooth !== false} preview={preview} />
+      {animated && d.grain && <Grain />}
+      {animated && d.loader === "line" && <LineLoader text={h.kicker || h.role || (c.meta && c.meta.title) || ""} preview={preview} />}
       {animated && <Extras rootRef={rootRef} design={d} label={c.brand.name} preview={preview} />}
       <header className="pf-nav">
         <div className="pf-container pf-nav-inner">
@@ -568,9 +584,13 @@ export default function Website({ design, content, preview = false, scheme: forc
         {renderHero()}
       </section>
 
-      {cast && animated && d.castStory !== false && storySteps.length >= 2 && <CastStory character={cast.character} widgets={cast.widgets} ctx={ctx} steps={storySteps} title={arr("process").length >= 2 ? "How it works" : "What we do"} />}
+      {filmOn && <Film src={filmSrc} steps={storySteps} title={arr("process").length >= 2 ? "How it works" : "What we do"} highlights={arr("highlights").map((x) => ({ label: x.label, value: x.value }))} preview={preview} path="hero.videoUrl" kicker={c.brand.name} />}
+
+      {!(filmSrc && filmOn) && cast && animated && d.castStory !== false && storySteps.length >= 2 && <CastStory character={cast.character} widgets={cast.widgets} ctx={ctx} steps={storySteps} title={arr("process").length >= 2 ? "How it works" : "What we do"} />}
 
       {visible.map(render)}
+
+      {animated && d.flight !== false && flyTiles.length >= 3 && flySentence.split(" ").length >= 8 && <Flight sentence={flySentence} tiles={flyTiles} title={flySentence} />}
 
       <footer className="pf-footer">
         <div className="pf-container pf-row pf-between pf-wrap">

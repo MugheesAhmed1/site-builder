@@ -211,9 +211,61 @@ export function Headline({ text, mode, className }) {
   );
 }
 
-// A strip of words that scrolls past slowly. Pauses on hover; still when motion is reduced.
+// A strip of words that drifts past and whips faster while the page scrolls, then eases
+// back. Pauses on hover; still when motion is reduced.
 export function Marquee({ items, label }) {
   const list = items.filter(Boolean);
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const track = el.firstChild;
+    el.classList.add("is-js");
+    const sc = el.closest("[data-scroll-root]");
+    const target = sc || window;
+    const read = () => (sc ? sc.scrollTop : window.scrollY);
+    let lastY = read();
+    let boost = 0;
+    let x = 0;
+    let raf = 0;
+    let last = performance.now();
+    let hover = false;
+    let seen = true;
+    const onScroll = () => {
+      const y = read();
+      boost = Math.min(900, boost + Math.abs(y - lastY) * 2.2);
+      lastY = y;
+    };
+    const loop = (now) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      if (seen && !hover) {
+        x -= (60 + boost) * dt;
+        const w = track.firstChild.offsetWidth;
+        if (w && -x >= w) x += w;
+        track.style.transform = `translate3d(${x.toFixed(2)}px,0,0)`;
+      }
+      boost *= Math.pow(0.04, dt);
+      raf = requestAnimationFrame(loop);
+    };
+    const io = new IntersectionObserver(([e]) => (seen = e.isIntersecting));
+    io.observe(el);
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const enter = () => (hover = fine);
+    const leave = () => (hover = false);
+    el.addEventListener("pointerenter", enter);
+    el.addEventListener("pointerleave", leave);
+    target.addEventListener("scroll", onScroll, { passive: true });
+    raf = requestAnimationFrame(loop);
+    return () => {
+      cancelAnimationFrame(raf);
+      io.disconnect();
+      el.removeEventListener("pointerenter", enter);
+      el.removeEventListener("pointerleave", leave);
+      target.removeEventListener("scroll", onScroll);
+      el.classList.remove("is-js");
+    };
+  }, [list.join("|")]);
   if (!list.length) return null;
   const row = (hidden) => (
     <ul className="pf-marquee-row" aria-hidden={hidden || undefined}>
@@ -226,7 +278,7 @@ export function Marquee({ items, label }) {
     </ul>
   );
   return (
-    <div className="pf-marquee" aria-label={label} style={{ "--pf-mq-dur": Math.max(18, list.length * 3.2) + "s" }}>
+    <div ref={ref} className="pf-marquee" aria-label={label} style={{ "--pf-mq-dur": Math.max(18, list.length * 3.2) + "s" }}>
       <div className="pf-marquee-track">
         {row(false)}
         {row(true)}

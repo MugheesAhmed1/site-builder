@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "@/template/src/portfolio.css";
 import "@/template/src/cast.css";
+import "@/template/src/studio.css";
 
 export const metadata: Metadata = {
   title: "Portfolio Builder",
