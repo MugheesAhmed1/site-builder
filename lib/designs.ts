@@ -134,7 +134,7 @@ function rollShape(r: () => number, mood: Mood): Pick<Design, "radius" | "densit
 
 function rollLayout(r: () => number, mood: Mood): Pick<Design, "heroStyle" | "experienceStyle" | "projectStyle" | "serviceStyle"> {
   return {
-    heroStyle: r() < 0.4 ? "stage" : mood === "editorial" ? pick(r, ["portrait", "split", "statement"] as const) : mood === "bold" ? pick(r, ["statement", "centered", "split"] as const) : pick(r, ["statement", "portrait", "split", "centered"] as const),
+    heroStyle: r() < 0.7 ? "stage" : mood === "editorial" ? pick(r, ["portrait", "split", "statement"] as const) : mood === "bold" ? pick(r, ["statement", "centered", "split"] as const) : pick(r, ["statement", "portrait", "split", "centered"] as const),
     experienceStyle: mood === "tech" ? (r() < 0.7 ? "ledger" : "timeline") : mood === "editorial" ? (r() < 0.7 ? "list" : "timeline") : pick(r, ["ledger", "timeline", "list"] as const),
     projectStyle: mood === "editorial" ? pick(r, ["case", "index"] as const) : pick(r, ["grid", "case", "index"] as const),
     serviceStyle: pick(r, ["menu", "bento", "rows"] as const),
@@ -378,7 +378,7 @@ export function fontsHref(families: string[], weights = "500;600") {
 // Projects saved by earlier versions used other design shapes. Map them over.
 export function normalizeDesign(d: unknown): Design {
   const x = (d ?? {}) as Partial<Design> & Record<string, unknown>;
-  const defaults: Partial<Design> = { density: "regular", anim: "M-002", hover: "lift", progress: false, marquee: false, projectStyle: "grid", serviceStyle: "menu", motion: "expressive" };
+  const defaults: Partial<Design> = { magnetic: true, density: "regular", anim: "M-002", hover: "lift", progress: false, marquee: false, projectStyle: "grid", serviceStyle: "menu", motion: "expressive" };
   if (typeof x.hue === "number" && x.fonts && "display" in (x.fonts as object)) {
     const out = { ...LIBRARY[0], ...defaults, ...x, id: x.id ?? "custom" } as Design;
     if (out.motion === "none" && !x.anim) out.anim = "M-000";

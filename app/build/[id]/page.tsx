@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import MotionPicker from "@/components/MotionPicker";
+import CastPicker from "@/components/CastPicker";
+import { castContext } from "@/template/src/Cast.jsx";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import DesignEditor from "@/components/DesignEditor";
 import FieldsEditor from "@/components/FieldsEditor";
@@ -18,7 +20,7 @@ import { downloadZip, saveBlob, siteName } from "@/lib/export";
 import { TONE_MOOD, defaultAnswers, questionsFor } from "@/lib/questions";
 import { fileToText, parseResume } from "@/lib/resume";
 import { SAMPLE_RESUME } from "@/lib/sample";
-import { getProject, markChanged, saveProject } from "@/lib/store";
+import { getProject, keepCast, markChanged, saveProject } from "@/lib/store";
 import type { PortfolioContent, Project, Question, SiteContent, SiteKind, StepId, WebsiteContent } from "@/lib/types";
 import { STEPS } from "@/lib/types";
 
@@ -196,7 +198,7 @@ export default function BuildPage() {
                   approve("questions", (prev) => {
                     let next: Project = { ...prev, name: prev.answers.name || prev.name };
                     // The first time through, the design system is made for this person and their tone.
-                    if (prev.steps.design === "todo") next.design = personalDesign(next.answers.name || next.name || next.query, next.query, TONE_MOOD[next.answers.tone ?? ""]);
+                    if (prev.steps.design === "todo") next.design = keepCast(prev.design, personalDesign(next.answers.name || next.name || next.query, next.query, TONE_MOOD[next.answers.tone ?? ""]));
                     if (prev.content) next = { ...next, steps: { ...next.steps, build: "stale" } };
                     return next;
                   })
@@ -220,11 +222,30 @@ export default function BuildPage() {
                     design={p.design}
                     locks={p.locks}
                     personal={personal}
-                    onChange={(design) => update((prev) => markChanged({ ...prev, design }, "design"))}
+                    onChange={(design) => update((prev) => markChanged({ ...prev, design: keepCast(prev.design, design) }, "design"))}
                     onLocks={(locks) => update((prev) => ({ ...prev, locks }))}
                   />
                   <div className="sticky-preview">
                     <Preview kind={p.kind} design={p.design} content={p.content ?? draft} />
+                  </div>
+                </div>
+              </>
+            )}
+
+            {step === "cast" && (
+              <>
+                {head(
+                  "Characters and widgets",
+                  "Pick a character and up to six widgets. Every one is already animated, and your site is built around them: the opening scene, a scroll story, a live widget wall and a wave near the end.",
+                  <button className="btn btn-primary" onClick={() => approve("cast")}>
+                    Use this cast
+                    <Icon name="arrow" size={16} />
+                  </button>
+                )}
+                <div className="design-grid">
+                  <CastPicker design={p.design} ctx={castContext(p.kind === "portfolio" ? "portfolio" : "website", p.content ?? draft)} onChange={(patch) => update((prev) => markChanged({ ...prev, design: { ...prev.design, ...patch } }, "cast"))} />
+                  <div className="sticky-preview">
+                    <Preview kind={p.kind} design={p.design} content={p.content ?? draft} replayKey={(p.design.cast?.character.id ?? "none") + (p.design.cast?.widgets.map((w) => w.id).join("") ?? "")} />
                   </div>
                 </div>
               </>
@@ -243,7 +264,7 @@ export default function BuildPage() {
                 <div className="design-grid">
                   <MotionPicker design={p.design} onChange={(patch) => update((prev) => markChanged({ ...prev, design: { ...prev.design, ...patch } }, "motion"))} />
                   <div className="sticky-preview">
-                    <Preview kind={p.kind} design={p.design} content={p.content ?? draft} replayKey={p.design.anim + p.design.hover} />
+                    <Preview kind={p.kind} design={p.design} content={p.content ?? draft} replayKey={p.design.anim + p.design.hover + (p.design.intro ? "i" : "")} />
                   </div>
                 </div>
               </>

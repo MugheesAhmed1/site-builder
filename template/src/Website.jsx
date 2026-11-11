@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import { palette, resolveScheme } from "./theme.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
+import { CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
+import { Extras } from "./extras.jsx";
 import { Avatar, Counter, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
 // A one-page business website, driven by the same design system and animation styles
@@ -185,6 +187,10 @@ export default function Website({ design, content, preview = false, scheme: forc
     arr("services").length > 0 && { type: "tags", items: arr("services").map((x) => x.name) },
   ].filter(Boolean);
 
+  const cast = d.cast && d.cast.character ? d.cast : null;
+  const ctx = castContext("website", c);
+  const storySteps = (arr("process").length >= 2 ? arr("process").map((x) => ({ title: x.title, text: x.description })) : arr("services").map((x) => ({ title: x.name, text: x.description }))).slice(0, 5);
+
   const renderHero = () => {
     if (hero === "stage") {
       return (
@@ -195,7 +201,7 @@ export default function Website({ design, content, preview = false, scheme: forc
             {sub}
             {ctas}
           </div>
-          <Stage name={c.brand.name} kind="blob" widgets={widgets} still={!animated} />
+          {cast ? <CastStage character={cast.character} widgets={cast.widgets} ctx={ctx} still={!animated} /> : <Stage name={c.brand.name} kind="blob" widgets={widgets} still={!animated} />}
         </div>
       );
     }
@@ -276,6 +282,7 @@ export default function Website({ design, content, preview = false, scheme: forc
   const render = (s) => {
     switch (s) {
       case "tiles":
+        if (cast && cast.widgets.length) return <WidgetWall key={s} widgets={cast.widgets} ctx={ctx} />;
         return <LiveTiles key={s} stats={hl} words={arr("services").map((x) => x.name).slice(0, 6)} place={c.visit && c.visit.address ? c.visit.address.split(",").slice(-1)[0].trim() : ""} status={openNow ? "Open " + openNow.days : ""} />;
       case "highlights":
         if (hero === "split") return null;
@@ -420,6 +427,7 @@ export default function Website({ design, content, preview = false, scheme: forc
       case "cta":
         return (
           <section id="pf-cta" className="pf-band" key={s}>
+            {cast && animated && <Peek character={cast.character} />}
             <div className="pf-container pf-band-inner pf-reveal">
               <div>
                 <h2 className="pf-band-title">{c.cta.heading}</h2>
@@ -487,6 +495,7 @@ export default function Website({ design, content, preview = false, scheme: forc
         ].filter(Boolean);
         return (
           <section id="pf-contact" className="pf-section pf-contact" key={s}>
+            {cast && animated && <Peek character={cast.character} />}
             <div className="pf-container">
               <h2 className="pf-h2 pf-reveal">{ct.heading}</h2>
               {ct.blurb && <p className="pf-muted pf-contact-blurb pf-reveal">{ct.blurb}</p>}
@@ -517,6 +526,7 @@ export default function Website({ design, content, preview = false, scheme: forc
     <div ref={rootRef} className={"pf ws pf-scheme-" + scheme + (preview ? " pf-is-preview" : "")} {...motionAttrs(d)} style={themeStyle(d, pal, scheme)}>
       <link rel="stylesheet" href={fontsHref(d.fonts)} />
       <Progress on={animated && d.progress} />
+      {animated && <Extras rootRef={rootRef} design={d} label={c.brand.name} preview={preview} />}
       <header className="pf-nav">
         <div className="pf-container pf-nav-inner">
           <a href="#pf-top" className="pf-brand">
@@ -546,6 +556,8 @@ export default function Website({ design, content, preview = false, scheme: forc
         {animated && <Backdrop kind={d.backdrop} />}
         {renderHero()}
       </section>
+
+      {cast && animated && d.castStory !== false && storySteps.length >= 2 && <CastStory character={cast.character} widgets={cast.widgets} ctx={ctx} steps={storySteps} title={arr("process").length >= 2 ? "How it works" : "What we do"} />}
 
       {visible.map(render)}
 

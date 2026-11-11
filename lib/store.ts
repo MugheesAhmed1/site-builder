@@ -3,6 +3,7 @@
 import { LIBRARY, normalizeDesign } from "./designs";
 import type { Design, Project, SiteKind, StepId } from "./types";
 import { STEPS } from "./types";
+import { defaultCast } from "@/template/src/cast.js";
 
 // Projects are saved in this browser's local storage. Nothing is sent to a server.
 // Use Export and Import on the home page to back up or move them.
@@ -28,8 +29,20 @@ function write(key: string, value: unknown) {
   }
 }
 
+export function seedOf(id: string) {
+  let h = 7;
+  for (const ch of id) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return h;
+}
+
 function normalize(p: Project): Project {
-  return { ...p, kind: p.kind ?? "portfolio", category: p.category ?? "portfolio", answers: p.answers ?? {}, locks: p.locks ?? {}, design: normalizeDesign(p.design) };
+  const kind = p.kind ?? "portfolio";
+  const category = p.category ?? "portfolio";
+  const design = normalizeDesign(p.design);
+  if (design.cast === undefined || (design.cast && !design.cast.character)) design.cast = defaultCast(kind, category, seedOf(p.id));
+  const steps = { ...p.steps };
+  if (!steps.cast) steps.cast = steps.motion === "approved" ? "approved" : steps.design === "approved" ? "draft" : "todo";
+  return { ...p, kind, category, answers: p.answers ?? {}, locks: p.locks ?? {}, design, steps };
 }
 
 export function listProjects(): Project[] {
@@ -62,8 +75,9 @@ export function newProject(query: string, kind: SiteKind, category: string, name
   const now = new Date().toISOString();
   const steps = Object.fromEntries(STEPS.map((s) => [s.id, "todo"])) as Record<StepId, "todo">;
   steps.start = "approved" as never;
+  const id = Math.random().toString(36).slice(2, 10);
   return {
-    id: Math.random().toString(36).slice(2, 10),
+    id,
     kind,
     category,
     query,
@@ -75,7 +89,7 @@ export function newProject(query: string, kind: SiteKind, category: string, name
     resumeText: "",
     resumeFileName: "",
     profile: null,
-    design: LIBRARY[0],
+    design: { ...LIBRARY[0], cast: defaultCast(kind, category, seedOf(id)) },
     locks: {},
     content: null,
     history: [],
@@ -104,8 +118,16 @@ export function markChanged(p: Project, step: StepId): Project {
   const steps = { ...p.steps };
   if (steps[step] === "approved" || steps[step] === "todo") steps[step] = "draft";
   for (const later of ORDER.slice(ORDER.indexOf(step) + 1)) {
-    if ((step === "design" || step === "motion") && later !== "deploy") continue;
+    if ((step === "design" || step === "cast" || step === "motion") && later !== "deploy") continue;
     if (steps[later] === "approved" || steps[later] === "draft") steps[later] = "stale";
   }
   return { ...p, steps };
+}
+
+// Picking a new design system keeps the cast and the extra touches the person chose.
+export function keepCast(prev: Design, next: Design): Design {
+  const keep = { cast: prev.cast, castStory: prev.castStory, intro: prev.intro, magnetic: prev.magnetic, cursor: prev.cursor };
+  const out = { ...next } as Design;
+  for (const [k, v] of Object.entries(keep)) if ((out as unknown as Record<string, unknown>)[k] === undefined && v !== undefined) (out as unknown as Record<string, unknown>)[k] = v;
+  return out;
 }

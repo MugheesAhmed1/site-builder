@@ -145,6 +145,34 @@ export default function MotionPicker({ design, onChange }: { design: Design; onC
         </label>
       </div>
 
+      <div className="panel stack" style={{ gap: 16 }}>
+        <div>
+          <span className="lbl">Studio touches</span>
+          <p className="small muted">Techniques seen on award winning studio sites, rebuilt from scratch. Touch screens and reduced motion settings skip them.</p>
+        </div>
+        <label className="toggle">
+          <input type="checkbox" checked={!!design.intro} onChange={(e) => onChange({ intro: e.target.checked })} />
+          <span>
+            <b>Opening counter</b>
+            <span className="small muted"> Your name and a count to 100, then a curtain lifts to show the site.</span>
+          </span>
+        </label>
+        <label className="toggle">
+          <input type="checkbox" checked={!!design.magnetic} onChange={(e) => onChange({ magnetic: e.target.checked })} />
+          <span>
+            <b>Magnetic buttons</b>
+            <span className="small muted"> Buttons lean toward the pointer as it comes close.</span>
+          </span>
+        </label>
+        <label className="toggle">
+          <input type="checkbox" checked={!!design.cursor} onChange={(e) => onChange({ cursor: e.target.checked })} />
+          <span>
+            <b>Custom cursor</b>
+            <span className="small muted"> A soft ring follows the pointer and grows over links and widgets.</span>
+          </span>
+        </label>
+      </div>
+
       <div className="motion-filters">
         <div className="seg" role="group" aria-label="Speed">
           {[{ id: "all", name: "Every speed" }, ...TEMPO_NAMES].map((t) => (

@@ -10,7 +10,7 @@ import { CATEGORIES, categoryById, classify, extractHints } from "@/lib/categori
 import { LIBRARY, personalDesign } from "@/lib/designs";
 import { saveBlob, siteName } from "@/lib/export";
 import { defaultAnswers } from "@/lib/questions";
-import { deleteProject, importProjects, listProjects, newProject, saveProject } from "@/lib/store";
+import { deleteProject, importProjects, keepCast, listProjects, newProject, saveProject } from "@/lib/store";
 import type { Project, SiteKind } from "@/lib/types";
 import { STEPS } from "@/lib/types";
 import { MOTIONS } from "@/template/src/motion.js";
@@ -42,14 +42,14 @@ export default function Home() {
     const q = query.trim() || (kind === "portfolio" ? "A personal portfolio" : "A website for my business");
     const p = newProject(q, kind, category, hints.name);
     p.answers = defaultAnswers(kind, category, hints);
-    p.design = personalDesign(hints.name || q, q);
+    p.design = keepCast(p.design, personalDesign(hints.name || q, q));
     saveProject(p);
     router.push(kind === "portfolio" ? `/portfolio/${p.id}` : `/build/${p.id}`);
   };
   const startKind = (k: SiteKind) => {
     const p = newProject(k === "portfolio" ? "A personal portfolio" : "A website for my business", k, k === "portfolio" ? "portfolio" : "general", "");
     p.answers = defaultAnswers(k, p.category, { name: "", city: "" });
-    p.design = personalDesign(p.query + Date.now(), p.query);
+    p.design = keepCast(p.design, personalDesign(p.query + Date.now(), p.query));
     saveProject(p);
     router.push(k === "portfolio" ? `/portfolio/${p.id}` : `/build/${p.id}`);
   };

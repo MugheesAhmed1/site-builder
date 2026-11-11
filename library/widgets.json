@@ -1,0 +1,1250 @@
+[
+ {
+  "id": "W-001",
+  "kind": "stat",
+  "skin": "glass",
+  "name": "Glass big number"
+ },
+ {
+  "id": "W-002",
+  "kind": "stat",
+  "skin": "solid",
+  "name": "Solid big number"
+ },
+ {
+  "id": "W-003",
+  "kind": "stat",
+  "skin": "outline",
+  "name": "Outline big number"
+ },
+ {
+  "id": "W-004",
+  "kind": "stat",
+  "skin": "neon",
+  "name": "Neon big number"
+ },
+ {
+  "id": "W-005",
+  "kind": "stat",
+  "skin": "paper",
+  "name": "Paper big number"
+ },
+ {
+  "id": "W-006",
+  "kind": "stat",
+  "skin": "gradient",
+  "name": "Gradient big number"
+ },
+ {
+  "id": "W-007",
+  "kind": "stat",
+  "skin": "dark",
+  "name": "Midnight big number"
+ },
+ {
+  "id": "W-008",
+  "kind": "stat",
+  "skin": "pastel",
+  "name": "Pastel big number"
+ },
+ {
+  "id": "W-009",
+  "kind": "line",
+  "skin": "glass",
+  "name": "Glass line chart"
+ },
+ {
+  "id": "W-010",
+  "kind": "line",
+  "skin": "solid",
+  "name": "Solid line chart"
+ },
+ {
+  "id": "W-011",
+  "kind": "line",
+  "skin": "outline",
+  "name": "Outline line chart"
+ },
+ {
+  "id": "W-012",
+  "kind": "line",
+  "skin": "neon",
+  "name": "Neon line chart"
+ },
+ {
+  "id": "W-013",
+  "kind": "line",
+  "skin": "paper",
+  "name": "Paper line chart"
+ },
+ {
+  "id": "W-014",
+  "kind": "line",
+  "skin": "gradient",
+  "name": "Gradient line chart"
+ },
+ {
+  "id": "W-015",
+  "kind": "line",
+  "skin": "dark",
+  "name": "Midnight line chart"
+ },
+ {
+  "id": "W-016",
+  "kind": "line",
+  "skin": "pastel",
+  "name": "Pastel line chart"
+ },
+ {
+  "id": "W-017",
+  "kind": "bars",
+  "skin": "glass",
+  "name": "Glass bar chart"
+ },
+ {
+  "id": "W-018",
+  "kind": "bars",
+  "skin": "solid",
+  "name": "Solid bar chart"
+ },
+ {
+  "id": "W-019",
+  "kind": "bars",
+  "skin": "outline",
+  "name": "Outline bar chart"
+ },
+ {
+  "id": "W-020",
+  "kind": "bars",
+  "skin": "neon",
+  "name": "Neon bar chart"
+ },
+ {
+  "id": "W-021",
+  "kind": "bars",
+  "skin": "paper",
+  "name": "Paper bar chart"
+ },
+ {
+  "id": "W-022",
+  "kind": "bars",
+  "skin": "gradient",
+  "name": "Gradient bar chart"
+ },
+ {
+  "id": "W-023",
+  "kind": "bars",
+  "skin": "dark",
+  "name": "Midnight bar chart"
+ },
+ {
+  "id": "W-024",
+  "kind": "bars",
+  "skin": "pastel",
+  "name": "Pastel bar chart"
+ },
+ {
+  "id": "W-025",
+  "kind": "ring",
+  "skin": "glass",
+  "name": "Glass progress ring"
+ },
+ {
+  "id": "W-026",
+  "kind": "ring",
+  "skin": "solid",
+  "name": "Solid progress ring"
+ },
+ {
+  "id": "W-027",
+  "kind": "ring",
+  "skin": "outline",
+  "name": "Outline progress ring"
+ },
+ {
+  "id": "W-028",
+  "kind": "ring",
+  "skin": "neon",
+  "name": "Neon progress ring"
+ },
+ {
+  "id": "W-029",
+  "kind": "ring",
+  "skin": "paper",
+  "name": "Paper progress ring"
+ },
+ {
+  "id": "W-030",
+  "kind": "ring",
+  "skin": "gradient",
+  "name": "Gradient progress ring"
+ },
+ {
+  "id": "W-031",
+  "kind": "ring",
+  "skin": "dark",
+  "name": "Midnight progress ring"
+ },
+ {
+  "id": "W-032",
+  "kind": "ring",
+  "skin": "pastel",
+  "name": "Pastel progress ring"
+ },
+ {
+  "id": "W-033",
+  "kind": "chat",
+  "skin": "glass",
+  "name": "Glass chat bubble"
+ },
+ {
+  "id": "W-034",
+  "kind": "chat",
+  "skin": "solid",
+  "name": "Solid chat bubble"
+ },
+ {
+  "id": "W-035",
+  "kind": "chat",
+  "skin": "outline",
+  "name": "Outline chat bubble"
+ },
+ {
+  "id": "W-036",
+  "kind": "chat",
+  "skin": "neon",
+  "name": "Neon chat bubble"
+ },
+ {
+  "id": "W-037",
+  "kind": "chat",
+  "skin": "paper",
+  "name": "Paper chat bubble"
+ },
+ {
+  "id": "W-038",
+  "kind": "chat",
+  "skin": "gradient",
+  "name": "Gradient chat bubble"
+ },
+ {
+  "id": "W-039",
+  "kind": "chat",
+  "skin": "dark",
+  "name": "Midnight chat bubble"
+ },
+ {
+  "id": "W-040",
+  "kind": "chat",
+  "skin": "pastel",
+  "name": "Pastel chat bubble"
+ },
+ {
+  "id": "W-041",
+  "kind": "rating",
+  "skin": "glass",
+  "name": "Glass star rating"
+ },
+ {
+  "id": "W-042",
+  "kind": "rating",
+  "skin": "solid",
+  "name": "Solid star rating"
+ },
+ {
+  "id": "W-043",
+  "kind": "rating",
+  "skin": "outline",
+  "name": "Outline star rating"
+ },
+ {
+  "id": "W-044",
+  "kind": "rating",
+  "skin": "neon",
+  "name": "Neon star rating"
+ },
+ {
+  "id": "W-045",
+  "kind": "rating",
+  "skin": "paper",
+  "name": "Paper star rating"
+ },
+ {
+  "id": "W-046",
+  "kind": "rating",
+  "skin": "gradient",
+  "name": "Gradient star rating"
+ },
+ {
+  "id": "W-047",
+  "kind": "rating",
+  "skin": "dark",
+  "name": "Midnight star rating"
+ },
+ {
+  "id": "W-048",
+  "kind": "rating",
+  "skin": "pastel",
+  "name": "Pastel star rating"
+ },
+ {
+  "id": "W-049",
+  "kind": "status",
+  "skin": "glass",
+  "name": "Glass live status"
+ },
+ {
+  "id": "W-050",
+  "kind": "status",
+  "skin": "solid",
+  "name": "Solid live status"
+ },
+ {
+  "id": "W-051",
+  "kind": "status",
+  "skin": "outline",
+  "name": "Outline live status"
+ },
+ {
+  "id": "W-052",
+  "kind": "status",
+  "skin": "neon",
+  "name": "Neon live status"
+ },
+ {
+  "id": "W-053",
+  "kind": "status",
+  "skin": "paper",
+  "name": "Paper live status"
+ },
+ {
+  "id": "W-054",
+  "kind": "status",
+  "skin": "gradient",
+  "name": "Gradient live status"
+ },
+ {
+  "id": "W-055",
+  "kind": "status",
+  "skin": "dark",
+  "name": "Midnight live status"
+ },
+ {
+  "id": "W-056",
+  "kind": "status",
+  "skin": "pastel",
+  "name": "Pastel live status"
+ },
+ {
+  "id": "W-057",
+  "kind": "tags",
+  "skin": "glass",
+  "name": "Glass skill tags"
+ },
+ {
+  "id": "W-058",
+  "kind": "tags",
+  "skin": "solid",
+  "name": "Solid skill tags"
+ },
+ {
+  "id": "W-059",
+  "kind": "tags",
+  "skin": "outline",
+  "name": "Outline skill tags"
+ },
+ {
+  "id": "W-060",
+  "kind": "tags",
+  "skin": "neon",
+  "name": "Neon skill tags"
+ },
+ {
+  "id": "W-061",
+  "kind": "tags",
+  "skin": "paper",
+  "name": "Paper skill tags"
+ },
+ {
+  "id": "W-062",
+  "kind": "tags",
+  "skin": "gradient",
+  "name": "Gradient skill tags"
+ },
+ {
+  "id": "W-063",
+  "kind": "tags",
+  "skin": "dark",
+  "name": "Midnight skill tags"
+ },
+ {
+  "id": "W-064",
+  "kind": "tags",
+  "skin": "pastel",
+  "name": "Pastel skill tags"
+ },
+ {
+  "id": "W-065",
+  "kind": "calendar",
+  "skin": "glass",
+  "name": "Glass calendar"
+ },
+ {
+  "id": "W-066",
+  "kind": "calendar",
+  "skin": "solid",
+  "name": "Solid calendar"
+ },
+ {
+  "id": "W-067",
+  "kind": "calendar",
+  "skin": "outline",
+  "name": "Outline calendar"
+ },
+ {
+  "id": "W-068",
+  "kind": "calendar",
+  "skin": "neon",
+  "name": "Neon calendar"
+ },
+ {
+  "id": "W-069",
+  "kind": "calendar",
+  "skin": "paper",
+  "name": "Paper calendar"
+ },
+ {
+  "id": "W-070",
+  "kind": "calendar",
+  "skin": "gradient",
+  "name": "Gradient calendar"
+ },
+ {
+  "id": "W-071",
+  "kind": "calendar",
+  "skin": "dark",
+  "name": "Midnight calendar"
+ },
+ {
+  "id": "W-072",
+  "kind": "calendar",
+  "skin": "pastel",
+  "name": "Pastel calendar"
+ },
+ {
+  "id": "W-073",
+  "kind": "music",
+  "skin": "glass",
+  "name": "Glass now playing"
+ },
+ {
+  "id": "W-074",
+  "kind": "music",
+  "skin": "solid",
+  "name": "Solid now playing"
+ },
+ {
+  "id": "W-075",
+  "kind": "music",
+  "skin": "outline",
+  "name": "Outline now playing"
+ },
+ {
+  "id": "W-076",
+  "kind": "music",
+  "skin": "neon",
+  "name": "Neon now playing"
+ },
+ {
+  "id": "W-077",
+  "kind": "music",
+  "skin": "paper",
+  "name": "Paper now playing"
+ },
+ {
+  "id": "W-078",
+  "kind": "music",
+  "skin": "gradient",
+  "name": "Gradient now playing"
+ },
+ {
+  "id": "W-079",
+  "kind": "music",
+  "skin": "dark",
+  "name": "Midnight now playing"
+ },
+ {
+  "id": "W-080",
+  "kind": "music",
+  "skin": "pastel",
+  "name": "Pastel now playing"
+ },
+ {
+  "id": "W-081",
+  "kind": "weather",
+  "skin": "glass",
+  "name": "Glass weather"
+ },
+ {
+  "id": "W-082",
+  "kind": "weather",
+  "skin": "solid",
+  "name": "Solid weather"
+ },
+ {
+  "id": "W-083",
+  "kind": "weather",
+  "skin": "outline",
+  "name": "Outline weather"
+ },
+ {
+  "id": "W-084",
+  "kind": "weather",
+  "skin": "neon",
+  "name": "Neon weather"
+ },
+ {
+  "id": "W-085",
+  "kind": "weather",
+  "skin": "paper",
+  "name": "Paper weather"
+ },
+ {
+  "id": "W-086",
+  "kind": "weather",
+  "skin": "gradient",
+  "name": "Gradient weather"
+ },
+ {
+  "id": "W-087",
+  "kind": "weather",
+  "skin": "dark",
+  "name": "Midnight weather"
+ },
+ {
+  "id": "W-088",
+  "kind": "weather",
+  "skin": "pastel",
+  "name": "Pastel weather"
+ },
+ {
+  "id": "W-089",
+  "kind": "notify",
+  "skin": "glass",
+  "name": "Glass notification"
+ },
+ {
+  "id": "W-090",
+  "kind": "notify",
+  "skin": "solid",
+  "name": "Solid notification"
+ },
+ {
+  "id": "W-091",
+  "kind": "notify",
+  "skin": "outline",
+  "name": "Outline notification"
+ },
+ {
+  "id": "W-092",
+  "kind": "notify",
+  "skin": "neon",
+  "name": "Neon notification"
+ },
+ {
+  "id": "W-093",
+  "kind": "notify",
+  "skin": "paper",
+  "name": "Paper notification"
+ },
+ {
+  "id": "W-094",
+  "kind": "notify",
+  "skin": "gradient",
+  "name": "Gradient notification"
+ },
+ {
+  "id": "W-095",
+  "kind": "notify",
+  "skin": "dark",
+  "name": "Midnight notification"
+ },
+ {
+  "id": "W-096",
+  "kind": "notify",
+  "skin": "pastel",
+  "name": "Pastel notification"
+ },
+ {
+  "id": "W-097",
+  "kind": "toggle",
+  "skin": "glass",
+  "name": "Glass toggle"
+ },
+ {
+  "id": "W-098",
+  "kind": "toggle",
+  "skin": "solid",
+  "name": "Solid toggle"
+ },
+ {
+  "id": "W-099",
+  "kind": "toggle",
+  "skin": "outline",
+  "name": "Outline toggle"
+ },
+ {
+  "id": "W-100",
+  "kind": "toggle",
+  "skin": "neon",
+  "name": "Neon toggle"
+ },
+ {
+  "id": "W-101",
+  "kind": "toggle",
+  "skin": "paper",
+  "name": "Paper toggle"
+ },
+ {
+  "id": "W-102",
+  "kind": "toggle",
+  "skin": "gradient",
+  "name": "Gradient toggle"
+ },
+ {
+  "id": "W-103",
+  "kind": "toggle",
+  "skin": "dark",
+  "name": "Midnight toggle"
+ },
+ {
+  "id": "W-104",
+  "kind": "toggle",
+  "skin": "pastel",
+  "name": "Pastel toggle"
+ },
+ {
+  "id": "W-105",
+  "kind": "slider",
+  "skin": "glass",
+  "name": "Glass slider"
+ },
+ {
+  "id": "W-106",
+  "kind": "slider",
+  "skin": "solid",
+  "name": "Solid slider"
+ },
+ {
+  "id": "W-107",
+  "kind": "slider",
+  "skin": "outline",
+  "name": "Outline slider"
+ },
+ {
+  "id": "W-108",
+  "kind": "slider",
+  "skin": "neon",
+  "name": "Neon slider"
+ },
+ {
+  "id": "W-109",
+  "kind": "slider",
+  "skin": "paper",
+  "name": "Paper slider"
+ },
+ {
+  "id": "W-110",
+  "kind": "slider",
+  "skin": "gradient",
+  "name": "Gradient slider"
+ },
+ {
+  "id": "W-111",
+  "kind": "slider",
+  "skin": "dark",
+  "name": "Midnight slider"
+ },
+ {
+  "id": "W-112",
+  "kind": "slider",
+  "skin": "pastel",
+  "name": "Pastel slider"
+ },
+ {
+  "id": "W-113",
+  "kind": "avatars",
+  "skin": "glass",
+  "name": "Glass team faces"
+ },
+ {
+  "id": "W-114",
+  "kind": "avatars",
+  "skin": "solid",
+  "name": "Solid team faces"
+ },
+ {
+  "id": "W-115",
+  "kind": "avatars",
+  "skin": "outline",
+  "name": "Outline team faces"
+ },
+ {
+  "id": "W-116",
+  "kind": "avatars",
+  "skin": "neon",
+  "name": "Neon team faces"
+ },
+ {
+  "id": "W-117",
+  "kind": "avatars",
+  "skin": "paper",
+  "name": "Paper team faces"
+ },
+ {
+  "id": "W-118",
+  "kind": "avatars",
+  "skin": "gradient",
+  "name": "Gradient team faces"
+ },
+ {
+  "id": "W-119",
+  "kind": "avatars",
+  "skin": "dark",
+  "name": "Midnight team faces"
+ },
+ {
+  "id": "W-120",
+  "kind": "avatars",
+  "skin": "pastel",
+  "name": "Pastel team faces"
+ },
+ {
+  "id": "W-121",
+  "kind": "code",
+  "skin": "glass",
+  "name": "Glass code snippet"
+ },
+ {
+  "id": "W-122",
+  "kind": "code",
+  "skin": "solid",
+  "name": "Solid code snippet"
+ },
+ {
+  "id": "W-123",
+  "kind": "code",
+  "skin": "outline",
+  "name": "Outline code snippet"
+ },
+ {
+  "id": "W-124",
+  "kind": "code",
+  "skin": "neon",
+  "name": "Neon code snippet"
+ },
+ {
+  "id": "W-125",
+  "kind": "code",
+  "skin": "paper",
+  "name": "Paper code snippet"
+ },
+ {
+  "id": "W-126",
+  "kind": "code",
+  "skin": "gradient",
+  "name": "Gradient code snippet"
+ },
+ {
+  "id": "W-127",
+  "kind": "code",
+  "skin": "dark",
+  "name": "Midnight code snippet"
+ },
+ {
+  "id": "W-128",
+  "kind": "code",
+  "skin": "pastel",
+  "name": "Pastel code snippet"
+ },
+ {
+  "id": "W-129",
+  "kind": "pin",
+  "skin": "glass",
+  "name": "Glass map pin"
+ },
+ {
+  "id": "W-130",
+  "kind": "pin",
+  "skin": "solid",
+  "name": "Solid map pin"
+ },
+ {
+  "id": "W-131",
+  "kind": "pin",
+  "skin": "outline",
+  "name": "Outline map pin"
+ },
+ {
+  "id": "W-132",
+  "kind": "pin",
+  "skin": "neon",
+  "name": "Neon map pin"
+ },
+ {
+  "id": "W-133",
+  "kind": "pin",
+  "skin": "paper",
+  "name": "Paper map pin"
+ },
+ {
+  "id": "W-134",
+  "kind": "pin",
+  "skin": "gradient",
+  "name": "Gradient map pin"
+ },
+ {
+  "id": "W-135",
+  "kind": "pin",
+  "skin": "dark",
+  "name": "Midnight map pin"
+ },
+ {
+  "id": "W-136",
+  "kind": "pin",
+  "skin": "pastel",
+  "name": "Pastel map pin"
+ },
+ {
+  "id": "W-137",
+  "kind": "clock",
+  "skin": "glass",
+  "name": "Glass clock"
+ },
+ {
+  "id": "W-138",
+  "kind": "clock",
+  "skin": "solid",
+  "name": "Solid clock"
+ },
+ {
+  "id": "W-139",
+  "kind": "clock",
+  "skin": "outline",
+  "name": "Outline clock"
+ },
+ {
+  "id": "W-140",
+  "kind": "clock",
+  "skin": "neon",
+  "name": "Neon clock"
+ },
+ {
+  "id": "W-141",
+  "kind": "clock",
+  "skin": "paper",
+  "name": "Paper clock"
+ },
+ {
+  "id": "W-142",
+  "kind": "clock",
+  "skin": "gradient",
+  "name": "Gradient clock"
+ },
+ {
+  "id": "W-143",
+  "kind": "clock",
+  "skin": "dark",
+  "name": "Midnight clock"
+ },
+ {
+  "id": "W-144",
+  "kind": "clock",
+  "skin": "pastel",
+  "name": "Pastel clock"
+ },
+ {
+  "id": "W-145",
+  "kind": "todo",
+  "skin": "glass",
+  "name": "Glass checklist"
+ },
+ {
+  "id": "W-146",
+  "kind": "todo",
+  "skin": "solid",
+  "name": "Solid checklist"
+ },
+ {
+  "id": "W-147",
+  "kind": "todo",
+  "skin": "outline",
+  "name": "Outline checklist"
+ },
+ {
+  "id": "W-148",
+  "kind": "todo",
+  "skin": "neon",
+  "name": "Neon checklist"
+ },
+ {
+  "id": "W-149",
+  "kind": "todo",
+  "skin": "paper",
+  "name": "Paper checklist"
+ },
+ {
+  "id": "W-150",
+  "kind": "todo",
+  "skin": "gradient",
+  "name": "Gradient checklist"
+ },
+ {
+  "id": "W-151",
+  "kind": "todo",
+  "skin": "dark",
+  "name": "Midnight checklist"
+ },
+ {
+  "id": "W-152",
+  "kind": "todo",
+  "skin": "pastel",
+  "name": "Pastel checklist"
+ },
+ {
+  "id": "W-153",
+  "kind": "cursor",
+  "skin": "glass",
+  "name": "Glass live cursor"
+ },
+ {
+  "id": "W-154",
+  "kind": "cursor",
+  "skin": "solid",
+  "name": "Solid live cursor"
+ },
+ {
+  "id": "W-155",
+  "kind": "cursor",
+  "skin": "outline",
+  "name": "Outline live cursor"
+ },
+ {
+  "id": "W-156",
+  "kind": "cursor",
+  "skin": "neon",
+  "name": "Neon live cursor"
+ },
+ {
+  "id": "W-157",
+  "kind": "cursor",
+  "skin": "paper",
+  "name": "Paper live cursor"
+ },
+ {
+  "id": "W-158",
+  "kind": "cursor",
+  "skin": "gradient",
+  "name": "Gradient live cursor"
+ },
+ {
+  "id": "W-159",
+  "kind": "cursor",
+  "skin": "dark",
+  "name": "Midnight live cursor"
+ },
+ {
+  "id": "W-160",
+  "kind": "cursor",
+  "skin": "pastel",
+  "name": "Pastel live cursor"
+ },
+ {
+  "id": "W-161",
+  "kind": "upload",
+  "skin": "glass",
+  "name": "Glass upload progress"
+ },
+ {
+  "id": "W-162",
+  "kind": "upload",
+  "skin": "solid",
+  "name": "Solid upload progress"
+ },
+ {
+  "id": "W-163",
+  "kind": "upload",
+  "skin": "outline",
+  "name": "Outline upload progress"
+ },
+ {
+  "id": "W-164",
+  "kind": "upload",
+  "skin": "neon",
+  "name": "Neon upload progress"
+ },
+ {
+  "id": "W-165",
+  "kind": "upload",
+  "skin": "paper",
+  "name": "Paper upload progress"
+ },
+ {
+  "id": "W-166",
+  "kind": "upload",
+  "skin": "gradient",
+  "name": "Gradient upload progress"
+ },
+ {
+  "id": "W-167",
+  "kind": "upload",
+  "skin": "dark",
+  "name": "Midnight upload progress"
+ },
+ {
+  "id": "W-168",
+  "kind": "upload",
+  "skin": "pastel",
+  "name": "Pastel upload progress"
+ },
+ {
+  "id": "W-169",
+  "kind": "search",
+  "skin": "glass",
+  "name": "Glass search bar"
+ },
+ {
+  "id": "W-170",
+  "kind": "search",
+  "skin": "solid",
+  "name": "Solid search bar"
+ },
+ {
+  "id": "W-171",
+  "kind": "search",
+  "skin": "outline",
+  "name": "Outline search bar"
+ },
+ {
+  "id": "W-172",
+  "kind": "search",
+  "skin": "neon",
+  "name": "Neon search bar"
+ },
+ {
+  "id": "W-173",
+  "kind": "search",
+  "skin": "paper",
+  "name": "Paper search bar"
+ },
+ {
+  "id": "W-174",
+  "kind": "search",
+  "skin": "gradient",
+  "name": "Gradient search bar"
+ },
+ {
+  "id": "W-175",
+  "kind": "search",
+  "skin": "dark",
+  "name": "Midnight search bar"
+ },
+ {
+  "id": "W-176",
+  "kind": "search",
+  "skin": "pastel",
+  "name": "Pastel search bar"
+ },
+ {
+  "id": "W-177",
+  "kind": "price",
+  "skin": "glass",
+  "name": "Glass price tag"
+ },
+ {
+  "id": "W-178",
+  "kind": "price",
+  "skin": "solid",
+  "name": "Solid price tag"
+ },
+ {
+  "id": "W-179",
+  "kind": "price",
+  "skin": "outline",
+  "name": "Outline price tag"
+ },
+ {
+  "id": "W-180",
+  "kind": "price",
+  "skin": "neon",
+  "name": "Neon price tag"
+ },
+ {
+  "id": "W-181",
+  "kind": "price",
+  "skin": "paper",
+  "name": "Paper price tag"
+ },
+ {
+  "id": "W-182",
+  "kind": "price",
+  "skin": "gradient",
+  "name": "Gradient price tag"
+ },
+ {
+  "id": "W-183",
+  "kind": "price",
+  "skin": "dark",
+  "name": "Midnight price tag"
+ },
+ {
+  "id": "W-184",
+  "kind": "price",
+  "skin": "pastel",
+  "name": "Pastel price tag"
+ },
+ {
+  "id": "W-185",
+  "kind": "quote",
+  "skin": "glass",
+  "name": "Glass quote card"
+ },
+ {
+  "id": "W-186",
+  "kind": "quote",
+  "skin": "solid",
+  "name": "Solid quote card"
+ },
+ {
+  "id": "W-187",
+  "kind": "quote",
+  "skin": "outline",
+  "name": "Outline quote card"
+ },
+ {
+  "id": "W-188",
+  "kind": "quote",
+  "skin": "neon",
+  "name": "Neon quote card"
+ },
+ {
+  "id": "W-189",
+  "kind": "quote",
+  "skin": "paper",
+  "name": "Paper quote card"
+ },
+ {
+  "id": "W-190",
+  "kind": "quote",
+  "skin": "gradient",
+  "name": "Gradient quote card"
+ },
+ {
+  "id": "W-191",
+  "kind": "quote",
+  "skin": "dark",
+  "name": "Midnight quote card"
+ },
+ {
+  "id": "W-192",
+  "kind": "quote",
+  "skin": "pastel",
+  "name": "Pastel quote card"
+ },
+ {
+  "id": "W-193",
+  "kind": "countdown",
+  "skin": "glass",
+  "name": "Glass countdown"
+ },
+ {
+  "id": "W-194",
+  "kind": "countdown",
+  "skin": "solid",
+  "name": "Solid countdown"
+ },
+ {
+  "id": "W-195",
+  "kind": "countdown",
+  "skin": "outline",
+  "name": "Outline countdown"
+ },
+ {
+  "id": "W-196",
+  "kind": "countdown",
+  "skin": "neon",
+  "name": "Neon countdown"
+ },
+ {
+  "id": "W-197",
+  "kind": "countdown",
+  "skin": "paper",
+  "name": "Paper countdown"
+ },
+ {
+  "id": "W-198",
+  "kind": "countdown",
+  "skin": "gradient",
+  "name": "Gradient countdown"
+ },
+ {
+  "id": "W-199",
+  "kind": "countdown",
+  "skin": "dark",
+  "name": "Midnight countdown"
+ },
+ {
+  "id": "W-200",
+  "kind": "countdown",
+  "skin": "pastel",
+  "name": "Pastel countdown"
+ },
+ {
+  "id": "W-201",
+  "kind": "badge",
+  "skin": "glass",
+  "name": "Glass award badge"
+ },
+ {
+  "id": "W-202",
+  "kind": "badge",
+  "skin": "solid",
+  "name": "Solid award badge"
+ },
+ {
+  "id": "W-203",
+  "kind": "badge",
+  "skin": "outline",
+  "name": "Outline award badge"
+ },
+ {
+  "id": "W-204",
+  "kind": "badge",
+  "skin": "neon",
+  "name": "Neon award badge"
+ },
+ {
+  "id": "W-205",
+  "kind": "badge",
+  "skin": "paper",
+  "name": "Paper award badge"
+ },
+ {
+  "id": "W-206",
+  "kind": "badge",
+  "skin": "gradient",
+  "name": "Gradient award badge"
+ },
+ {
+  "id": "W-207",
+  "kind": "badge",
+  "skin": "dark",
+  "name": "Midnight award badge"
+ },
+ {
+  "id": "W-208",
+  "kind": "badge",
+  "skin": "pastel",
+  "name": "Pastel award badge"
+ }
+]

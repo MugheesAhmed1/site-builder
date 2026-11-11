@@ -1,6 +1,8 @@
 import { useMemo, useRef, useState } from "react";
 import { palette, resolveScheme } from "./theme.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
+import { CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
+import { Extras } from "./extras.jsx";
 import { Avatar, Counter, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
 // The whole portfolio, driven by two objects:
@@ -272,6 +274,14 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
   const hero = d.heroStyle || "statement";
   const skillsFlat = arr("skills").flatMap((g) => g.items || []);
   const ct = c.contact || {};
+  const cast = d.cast && d.cast.character ? d.cast : null;
+  const ctx = castContext("portfolio", c);
+  const storySteps = (arr("process").length >= 2
+    ? arr("process").map((x) => ({ title: x.title, text: x.description }))
+    : arr("services").length >= 2
+      ? arr("services").map((x) => ({ title: x.name, text: x.description }))
+      : arr("projects").map((x) => ({ title: x.name, text: x.impact || x.summary }))
+  ).slice(0, 5);
 
   const ctas = (
     <div className="pf-row pf-wrap pf-hero-ctas pf-enter" style={{ "--i": 3 }}>
@@ -358,7 +368,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
             {intro}
             {ctas}
           </div>
-          <Stage name={h.name} kind="person" widgets={widgets} still={!animated} />
+          {cast ? <CastStage character={cast.character} widgets={cast.widgets} ctx={ctx} still={!animated} /> : <Stage name={h.name} kind="person" widgets={widgets} still={!animated} />}
         </div>
       );
     }
@@ -432,6 +442,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
   const render = (s) => {
     switch (s) {
       case "tiles":
+        if (cast && cast.widgets.length) return <WidgetWall key={s} widgets={cast.widgets} ctx={ctx} />;
         return <LiveTiles key={s} stats={c.stats} words={skillsFlat.slice(0, 6)} place={h.location} status={h.availability} />;
       case "stats":
         if (hero === "split") return null;
@@ -584,6 +595,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
       case "cta":
         return (
           <section id="pf-cta" className="pf-band" key={s}>
+            {cast && animated && <Peek character={cast.character} />}
             <div className="pf-container pf-band-inner pf-reveal">
               <div>
                 <h2 className="pf-band-title">{c.cta.heading}</h2>
@@ -603,6 +615,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
         ].filter(([, u]) => u);
         return (
           <section id="pf-contact" className="pf-section pf-contact" key={s}>
+            {cast && animated && <Peek character={cast.character} />}
             <div className="pf-container">
               <h2 className="pf-h2 pf-reveal">{ct.heading}</h2>
               {ct.blurb && <p className="pf-muted pf-contact-blurb pf-reveal">{ct.blurb}</p>}
@@ -633,6 +646,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
     <div ref={rootRef} className={"pf pf-scheme-" + scheme + (preview ? " pf-is-preview" : "")} {...motionAttrs(d)} style={themeStyle(d, pal, scheme)}>
       <link rel="stylesheet" href={fontsHref(d.fonts)} />
       <Progress on={animated && d.progress} />
+      {animated && <Extras rootRef={rootRef} design={d} label={h.name} preview={preview} />}
       <header className="pf-nav">
         <div className="pf-container pf-nav-inner">
           <a href="#pf-top" className="pf-brand">
@@ -664,6 +678,8 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
       </section>
 
       {d.marquee && animated && skillsFlat.length > 3 && <Marquee items={skillsFlat} label="Skills" />}
+
+      {cast && animated && d.castStory !== false && storySteps.length >= 2 && <CastStory character={cast.character} widgets={cast.widgets} ctx={ctx} steps={storySteps} title={arr("process").length >= 2 ? "How I work" : arr("services").length >= 2 ? "What I do" : "Selected work"} />}
 
       {visible.map(render)}
 

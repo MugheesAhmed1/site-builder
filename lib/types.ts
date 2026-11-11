@@ -2,13 +2,14 @@
 // questions are fixed lists, content is composed by rules, design systems are generated.
 
 export type SiteKind = "portfolio" | "website";
-export type StepId = "start" | "questions" | "design" | "motion" | "build" | "deploy";
+export type StepId = "start" | "questions" | "design" | "cast" | "motion" | "build" | "deploy";
 export type StepStatus = "todo" | "draft" | "approved" | "stale";
 
 export const STEPS: { id: StepId; title: string; hint: string }[] = [
   { id: "start", title: "Start", hint: "Say what you want to build" },
   { id: "questions", title: "Questions", hint: "The details that matter" },
   { id: "design", title: "Design system", hint: "Colour, type and shape" },
+  { id: "cast", title: "Characters", hint: "216 characters, 208 widgets" },
   { id: "motion", title: "Animation", hint: "144 styles to pick from" },
   { id: "build", title: "Your site", hint: "Preview and edit" },
   { id: "deploy", title: "Deploy", hint: "Download and publish" },
@@ -51,6 +52,16 @@ export interface Design {
   experienceStyle: "ledger" | "timeline" | "list";
   projectStyle: "grid" | "case" | "index";
   serviceStyle: "menu" | "bento" | "rows";
+  cast?: CastPick | null; // the character and widgets the site is built around
+  castStory?: boolean; // the pinned scroll scene with the character
+  intro?: boolean; // opening counter with a curtain wipe
+  magnetic?: boolean; // buttons lean toward the pointer
+  cursor?: boolean; // soft custom cursor
+}
+
+export interface CastPick {
+  character: { id: string; family: string; name: string; palette: string; accessory: string; expression: string; idle: string; variant: number };
+  widgets: { id: string; kind: string; skin: string; name: string }[];
 }
 
 export type DesignPart = "colour" | "type" | "shape" | "layout" | "motion";

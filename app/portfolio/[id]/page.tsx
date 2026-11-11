@@ -7,6 +7,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import DesignEditor from "@/components/DesignEditor";
 import Icon from "@/components/Icon";
 import MotionPicker from "@/components/MotionPicker";
+import CastPicker from "@/components/CastPicker";
+import { castContext } from "@/template/src/Cast.jsx";
 import PortfolioForm, { GROUPS, groupCount } from "@/components/PortfolioForm";
 import Preview from "@/components/Preview";
 import { BuildStep, DeployStep, StatusBadge } from "@/components/Steps";
@@ -16,7 +18,7 @@ import { personalDesign } from "@/lib/designs";
 import { TONE_MOOD } from "@/lib/questions";
 import { fileToText, parseResume } from "@/lib/resume";
 import { SAMPLE_RESUME } from "@/lib/sample";
-import { getProject, markChanged, saveProject } from "@/lib/store";
+import { getProject, keepCast, markChanged, saveProject } from "@/lib/store";
 import type { PortfolioInput, Project, StepId } from "@/lib/types";
 
 // Portfolio Studio: a separate flow for professional portfolios. A full form (with résumé
@@ -27,6 +29,7 @@ const ease = [0.23, 1, 0.32, 1] as const;
 const FLOW: { id: StepId; title: string; hint: string }[] = [
   { id: "questions", title: "Your details", hint: "Fill the form or import a résumé" },
   { id: "design", title: "Look", hint: "240 design systems to remix" },
+  { id: "cast", title: "Characters", hint: "216 characters, 208 widgets" },
   { id: "motion", title: "Animation", hint: "144 styles played by Motion" },
   { id: "build", title: "Check and edit", hint: "Every word, every section" },
   { id: "deploy", title: "Publish", hint: "Download and put it online" },
@@ -264,7 +267,7 @@ export default function PortfolioStudio() {
                       onClick={() =>
                         approve("questions", (prev) => {
                           let next = prev;
-                          if (prev.steps.design === "todo") next = { ...next, design: personalDesign(input.name || prev.query, prev.query, TONE_MOOD[input.tone] ?? undefined) };
+                          if (prev.steps.design === "todo") next = { ...next, design: keepCast(prev.design, personalDesign(input.name || prev.query, prev.query, TONE_MOOD[input.tone] ?? undefined)) };
                           if (prev.content) next = { ...next, steps: { ...next.steps, build: "stale" } };
                           return next;
                         })
@@ -331,14 +334,33 @@ export default function PortfolioStudio() {
                     "Your look",
                     "This design system was made for you. Shuffle, remix one part, lock what you like, or pick from the library of 240.",
                     <button className="btn btn-primary" onClick={() => approve("design")}>
-                      Next: animation
+                      Next: characters
                       <Icon name="arrow" size={16} />
                     </button>
                   )}
                   <div className="design-grid">
-                    <DesignEditor kind="portfolio" design={p.design} locks={p.locks} personal={personal} onChange={(design) => update((prev) => markChanged({ ...prev, design }, "design"))} onLocks={(locks) => update((prev) => ({ ...prev, locks }))} />
+                    <DesignEditor kind="portfolio" design={p.design} locks={p.locks} personal={personal} onChange={(design) => update((prev) => markChanged({ ...prev, design: keepCast(prev.design, design) }, "design"))} onLocks={(locks) => update((prev) => ({ ...prev, locks }))} />
                     <div className="sticky-preview">
                       <Preview kind="portfolio" design={p.design} content={p.content ?? draft} />
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {step === "cast" && (
+                <>
+                  {head(
+                    "Characters and widgets",
+                    "Pick a character and up to six widgets. Every one is already animated, and your site is built around them: the opening scene, a scroll story, a live widget wall and a wave near the end.",
+                    <button className="btn btn-primary" onClick={() => approve("cast")}>
+                      Use this cast
+                      <Icon name="arrow" size={16} />
+                    </button>
+                  )}
+                  <div className="design-grid">
+                    <CastPicker design={p.design} ctx={castContext("portfolio", p.content ?? draft)} onChange={(patch) => update((prev) => markChanged({ ...prev, design: { ...prev.design, ...patch } }, "cast"))} />
+                    <div className="sticky-preview">
+                      <Preview kind={"portfolio"} design={p.design} content={p.content ?? draft} replayKey={(p.design.cast?.character.id ?? "none") + (p.design.cast?.widgets.map((w) => w.id).join("") ?? "")} />
                     </div>
                   </div>
                 </>
@@ -357,7 +379,7 @@ export default function PortfolioStudio() {
                   <div className="design-grid">
                     <MotionPicker design={p.design} onChange={(patch) => update((prev) => markChanged({ ...prev, design: { ...prev.design, ...patch } }, "motion"))} />
                     <div className="sticky-preview">
-                      <Preview kind="portfolio" design={p.design} content={p.content ?? draft} replayKey={p.design.anim + p.design.hover} />
+                      <Preview kind="portfolio" design={p.design} content={p.content ?? draft} replayKey={p.design.anim + p.design.hover + (p.design.intro ? "i" : "")} />
                     </div>
                   </div>
                 </>

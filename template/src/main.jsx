@@ -5,6 +5,7 @@ import Website from "./Website.jsx";
 import data from "./site-data.json";
 import { palette, resolveScheme } from "./theme.js";
 import "./portfolio.css";
+import "./cast.css";
 
 // site-data.json holds the design system and every word on the page.
 // kind is "portfolio" (a personal site) or "website" (a business site).
