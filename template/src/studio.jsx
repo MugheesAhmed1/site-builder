@@ -125,7 +125,7 @@ export function ScrollWords({ text, className = "", as: Tag = "p" }) {
       const top = topIn(el, sc);
       // Starts writing when the paragraph is 85% down the screen, done by 40%.
       const p = clamp((vh * 0.85 - top) / (vh * 0.45 + el.offsetHeight * 0.4));
-      const spans = el.children;
+      const spans = el.querySelectorAll("span[aria-hidden]");
       const n = spans.length;
       for (let i = 0; i < n; i++) {
         const kk = clamp((p * 1.5 - i / n) * 4);
@@ -136,7 +136,9 @@ export function ScrollWords({ text, className = "", as: Tag = "p" }) {
     [words.join(" ")]
   );
   return (
-    <Tag ref={ref} className={"st-words " + className} aria-label={text}>
+    <Tag ref={ref} className={"st-words " + className}>
+      {/* Screen readers get the sentence once; the animated words are decoration. */}
+      <span className="pf-sr">{text}</span>
       {words.map((w, i) => (
         <span key={i} aria-hidden="true">
           {w}{" "}

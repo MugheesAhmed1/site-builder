@@ -82,7 +82,7 @@
 .cw-skin-outline { --cw-bg: transparent; --cw-line: color-mix(in srgb, var(--cw-fg) 40%, transparent); box-shadow: none; border-width: 1.5px; }
 .cw-skin-neon { --cw-bg: #0d0f1a; --cw-fg: #eef1ff; --cw-muted: #9aa3c7; --cw-accent: #5cf2c8; --cw-line: rgb(92 242 200 / 0.4); box-shadow: 0 0 0 1px rgb(92 242 200 / 0.15), 0 0 28px -6px rgb(92 242 200 / 0.45); }
 .cw-skin-paper { --cw-bg: #fbf7ef; --cw-fg: #2a241d; --cw-muted: #7a6f60; --cw-line: #e5dccb; box-shadow: 3px 4px 0 #2a241d; border-color: #2a241d; border-radius: 6px; }
-.cw-skin-gradient { --cw-bg: linear-gradient(150deg, color-mix(in oklch, var(--pf-accent, #e5484d) 82%, white), var(--pf-accent, #e5484d) 45%, color-mix(in oklch, var(--pf-accent, #e5484d) 72%, black)); --cw-fg: var(--pf-on-accent, #fff); --cw-muted: color-mix(in srgb, var(--pf-on-accent, #fff) 78%, transparent); --cw-accent: var(--pf-on-accent, #fff); --cw-line: transparent; }
+.cw-skin-gradient { --cw-bg: linear-gradient(150deg, color-mix(in oklch, var(--pf-accent, #e5484d) 82%, white), var(--pf-accent, #e5484d) 45%, color-mix(in oklch, var(--pf-accent, #e5484d) 72%, black)); --cw-fg: var(--pf-on-accent, #fff); --cw-muted: color-mix(in srgb, var(--pf-on-accent, #fff) 94%, transparent); --cw-accent: var(--pf-on-accent, #fff); --cw-line: transparent; }
 .cw-skin-dark { --cw-bg: #15161b; --cw-fg: #f3f2f0; --cw-muted: #a3a09b; --cw-line: #2a2b31; }
 .cw-skin-pastel { --cw-bg: #f1ecff; --cw-fg: #2f2752; --cw-muted: #6d6496; --cw-accent: #7b61ff; --cw-line: #ddd3ff; }
 .cw-skin-gradient { background: var(--cw-bg); }

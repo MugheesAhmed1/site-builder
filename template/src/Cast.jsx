@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
 import { PALETTES } from "./cast.js";
+import { asset } from "./real.js";
 
 // Draws the cast from src/cast.js: 520 drawn characters, 60 real-life ones and 512 widgets, each with its own idle
 // animation. Loops are CSS (cheap, run off the main thread); eyes that follow the pointer
@@ -469,7 +470,7 @@ function RealCharacter({ def, size, live, className, label }) {
   return (
     <span className={`cc cc-real cc-idle-${def.idle} cc-fam-${def.family} ${className}`} style={{ "--cc-size": size + "px" }} role="img" aria-label={label || def.name}>
       <span className="cc-real-shadow" aria-hidden="true" />
-      <motion.img className="cc-body" src={def.src} alt="" draggable={false} loading="lazy" decoding="async" style={live ? { rotateY, rotateX } : undefined} />
+      <motion.img className="cc-body" src={asset(def.src)} alt="" draggable={false} loading={live ? "eager" : "lazy"} fetchPriority={live ? "high" : undefined} decoding="async" style={live ? { rotateY, rotateX } : undefined} />
     </span>
   );
 }
@@ -1236,7 +1237,7 @@ export function CastStory({ character, widgets, ctx, steps, title }) {
       <div className="cs-story-pin">
         <div className="pf-container cs-story-grid">
           <div className="cs-story-text">
-            <p className="pf-kicker">{title}</p>
+            <h2 className="pf-kicker" style={{ margin: 0 }}>{title}</h2>
             <div className="cs-story-steps">
               {steps.map((s, i) => (
                 <motion.div

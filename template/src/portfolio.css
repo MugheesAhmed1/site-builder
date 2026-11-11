@@ -37,7 +37,8 @@
 .pf-between { justify-content: space-between; }
 .pf-baseline { align-items: baseline; }
 .pf-muted { color: var(--pf-muted); }
-.pf-quiet { color: var(--pf-muted); opacity: 0.8; }
+.pf-quiet { color: var(--pf-muted); }
+.pf-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 .pf-small { font-size: 14px; }
 .pf-mono { font-family: var(--pf-font-mono); font-size: 13px; letter-spacing: 0.01em; font-variant-numeric: tabular-nums; }
 .pf-accent-text { color: var(--pf-accent); }

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import FieldsEditor from "@/components/FieldsEditor";
 import Icon from "@/components/Icon";
 import Preview from "@/components/Preview";
-import { downloadZip, saveBlob, siteName } from "@/lib/export";
+import { downloadZip, saveBlob, siteName, slug as slugOf } from "@/lib/export";
 import type { PortfolioContent, Project, SiteContent, WebsiteContent } from "@/lib/types";
 
 // Steps shared by the Website Builder and the Portfolio Studio.
@@ -187,14 +187,30 @@ export function missingImages(p: Project): string[] {
 }
 
 export function DeployStep({ p, head, onDone }: { p: Project; head: Head; onDone: () => void }) {
+  const [busy, setBusy] = useState<"" | "ready" | "source">("");
+  const [error, setError] = useState("");
+  const [got, setGot] = useState(false);
   if (!p.content) return null;
   const images = missingImages(p);
   const repo = p.kind === "portfolio" ? "portfolio" : "my-site";
+  const download = async (kind: "ready" | "source") => {
+    if (busy) return;
+    setBusy(kind);
+    setError("");
+    try {
+      await downloadZip(p, kind);
+      if (kind === "ready") setGot(true);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "The download could not be made. Please try again.");
+    } finally {
+      setBusy("");
+    }
+  };
   return (
     <>
       {head(
         "Put it online",
-        "Download your site as a React project, then publish it on Vercel for free. No coding needed.",
+        "Download your finished site and drop it onto a free host. No account is needed to try it, and there is no code to touch.",
         <button className="btn btn-primary" onClick={onDone}>
           <Icon name="check" size={16} />
           Mark as published
@@ -204,73 +220,100 @@ export function DeployStep({ p, head, onDone }: { p: Project; head: Head; onDone
         <section>
           <h2>1. Download your site</h2>
           <p className="muted" style={{ margin: "8px 0 18px" }}>
-            A ready React (Vite) project for <b>{siteName(p)}</b>. Every word, colour and setting lives in <code>src/site-data.json</code>.
+            The finished site for <b>{siteName(p)}</b>, ready to host: one folder with the page, its pictures, a browser icon and a share picture for when the link is posted.
           </p>
           <div className="row wrap">
-            <button className="btn btn-primary" onClick={() => downloadZip(p)}>
+            <button className="btn btn-primary" onClick={() => download("ready")} disabled={!!busy} aria-busy={busy === "ready"}>
               <Icon name="download" size={16} />
-              Download site (.zip)
+              {busy === "ready" ? "Packing your site…" : "Download site (.zip)"}
             </button>
             <button className="btn" onClick={() => saveBlob(new Blob([JSON.stringify(p, null, 2)], { type: "application/json" }), `${p.id}-site-builder.json`)}>
               Save a backup
             </button>
           </div>
+          <p className="small muted" role="status" aria-live="polite" style={{ marginTop: 10, minHeight: 20 }}>
+            {error ? <span className="err-text">{error}</span> : got ? "Downloaded. Unzip it, then follow the steps on the right." : ""}
+          </p>
           {images.length > 0 && (
             <>
-              <h2 style={{ marginTop: 40 }}>Photos you still need</h2>
+              <h2 style={{ marginTop: 28 }}>Photos you still need</h2>
               <ul className="plain-list">
                 {images.map((x) => (
                   <li key={x}>{x}</li>
                 ))}
               </ul>
               <p className="muted" style={{ marginTop: 8 }}>
-                Paste a link to an image that&apos;s already online in <b>Your site, Edit text</b>, or upload images to a <code>public</code> folder in your GitHub repository and use a link like <code>/photo.jpg</code>.
+                Add them in <b>Your site</b> with <b>Edit on page</b>: click a picture slot and upload from your device. They are saved inside the download.
               </p>
             </>
           )}
+          <details className="dev-details">
+            <summary>For developers: get the React source instead</summary>
+            <p className="muted" style={{ margin: "10px 0 14px" }}>
+              The same site as an editable React (Vite) project. Every word, colour and setting lives in <code>src/site-data.json</code>. It needs a build, so publish it through GitHub.
+            </p>
+            <button className="btn" onClick={() => download("source")} disabled={!!busy} aria-busy={busy === "source"}>
+              <Icon name="download" size={16} />
+              {busy === "source" ? "Packing the project…" : "Download React project (.zip)"}
+            </button>
+            <ol className="howto" style={{ marginTop: 14 }}>
+              <li>
+                <span>
+                  Unzip it, then create a repository called <code>{repo}</code> on{" "}
+                  <a href="https://github.com/new" target="_blank" rel="noreferrer">
+                    GitHub
+                  </a>{" "}
+                  and upload everything inside the folder, including <code>src</code>.
+                </span>
+              </li>
+              <li>
+                <span>
+                  Open{" "}
+                  <a href="https://vercel.com/new" target="_blank" rel="noreferrer">
+                    vercel.com/new
+                  </a>
+                  , continue with GitHub and choose <b>Import</b> next to <code>{repo}</code>. Vercel recognises Vite; choose <b>Deploy</b>.
+                </span>
+              </li>
+              <li>
+                <span>
+                  Each time you change a file on GitHub, Vercel republishes the site. To run it yourself: <code>npm install</code>, then <code>npm run dev</code>.
+                </span>
+              </li>
+            </ol>
+          </details>
         </section>
         <section>
-          <h2>2. Publish on Vercel</h2>
+          <h2>2. Publish it for free</h2>
           <ol className="howto" style={{ marginTop: 14 }}>
             <li>
               <span>
-                Unzip the download. You&apos;ll get a folder with <code>package.json</code> and a <code>src</code> folder inside.
-              </span>
-            </li>
-            <li>
-              <span>
-                Sign in to{" "}
-                <a href="https://github.com/new" target="_blank" rel="noreferrer">
-                  GitHub
-                </a>{" "}
-                (free) and create a repository called <code>{repo}</code>. Keep it public.
-              </span>
-            </li>
-            <li>
-              <span>
-                On the new repository page, choose <b>uploading an existing file</b>. Drag in everything inside the unzipped folder, including <code>src</code>, then choose <b>Commit changes</b>.
+                Unzip the download. You get one folder with <code>index.html</code> inside. Double-click <code>index.html</code> if you want to look at the site first.
               </span>
             </li>
             <li>
               <span>
                 Open{" "}
-                <a href="https://vercel.com/new" target="_blank" rel="noreferrer">
-                  vercel.com/new
-                </a>
-                , continue with GitHub, and choose <b>Import</b> next to <code>{repo}</code>.
+                <a href="https://app.netlify.com/drop" target="_blank" rel="noreferrer">
+                  Netlify Drop
+                </a>{" "}
+                and drag the whole folder onto the page. Your site is live in a few seconds, on a link you can share.
               </span>
             </li>
             <li>
               <span>
-                Leave the settings as they are (Vercel recognises Vite) and choose <b>Deploy</b>. About a minute later you get a link like <code>{repo}-yourname.vercel.app</code>.
+                Sign up for free on that page to keep the site and give it a name, such as <code>{slugOf(siteName(p))}.netlify.app</code>. Your own domain goes under <b>Domain management</b>.
               </span>
             </li>
             <li>
               <span>
-                To update it, edit here, download again and upload the changed files to GitHub. Vercel republishes on its own. Add your own domain under <b>Settings, Domains</b>.
+                To update it, change things here, download again and drag the new folder onto your site&apos;s <b>Deploys</b> page.
               </span>
             </li>
           </ol>
+          <p className="small muted" style={{ marginTop: 14 }}>
+            Any host works the same way: Cloudflare Pages (<b>Upload assets</b>), GitHub Pages, or your own hosting. Upload what is inside the folder.
+          </p>
         </section>
       </div>
     </>

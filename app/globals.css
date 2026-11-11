@@ -589,3 +589,10 @@ html, body { overflow-x: clip; }
 .studio-grid > * { min-width: 0; }
 .studio-video .img-field { margin-top: 10px; }
 .studio-toggles { display: grid; gap: 4px; }
+
+/* Deploy step */
+.err-text { color: var(--danger, #b3261e); }
+.dev-details { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 16px; }
+.dev-details summary { cursor: pointer; font-weight: 600; font-size: 14px; color: var(--muted); list-style-position: inside; }
+.dev-details summary:hover { color: var(--text); }
+.dev-details[open] summary { margin-bottom: 4px; }
