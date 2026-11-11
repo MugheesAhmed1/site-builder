@@ -594,7 +594,9 @@ export function widgetText(kind, ctx) {
     case "countdown":
       return { title: ctx.countdown || "Next opening" };
     case "appointment":
-      return { title: ctx.calendar ? "Next " + String(ctx.calendar).toLowerCase() : "Next free slot", value: "Tue, 10:30" };
+      // ctx.calendar is a thing ("Check-up"). A call to action ("Book a visit") would read
+      // as "Next book a visit", so anything that long or starting with a verb is left out.
+      return { title: ctx.calendar && !/^(book|get|call|request|schedule|order|contact|visit|start|reserve|make|see|try|buy|join|send)\b/i.test(ctx.calendar) && String(ctx.calendar).split(/\s+/).length <= 2 ? "Next " + String(ctx.calendar).toLowerCase() : "Next free slot", value: "Tue, 10:30" };
     case "menu":
       return { title: ctx.priceLabel || "Today's special", value: ctx.price || ctx.tags[0] || "Chef's choice" };
     case "pulse":
@@ -676,7 +678,6 @@ function useLiveWidget(live, k, t) {
     tabIndex: 0,
     "aria-checked": k === "toggle" ? on : undefined,
     "aria-pressed": k === "music" || k === "followers" ? on : undefined,
-    "aria-label": k === "music" ? (on ? "Play" : "Pause") : undefined,
     "data-on": on ? "1" : undefined,
     style: { "--lv": level },
     onClick: (e) => {

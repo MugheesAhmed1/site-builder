@@ -1,8 +1,6 @@
 "use client";
 
 import { getMedia, mediaRefs, swapMedia } from "@/lib/media";
-import JSZip from "jszip";
-import { TEMPLATE_FILES } from "./template-files";
 import { palette, resolveScheme } from "@/template/src/theme.js";
 import { sceneAssets } from "@/template/src/scenes.js";
 import type { PortfolioContent, Project, WebsiteContent } from "./types";
@@ -232,6 +230,34 @@ function firstPicture(data: { design: any; content: any }): string {
   return typeof ch === "string" && /^\.\/real\//.test(ch) ? ch : "";
 }
 
+// What the page shows before its script has arrived: the right background straight away and,
+// on a slow connection, the name and headline in plain HTML. It only fades in after a short
+// wait, so on a fast connection the real page simply appears with its own entrance. The
+// script replaces it when it starts. Sites with an opening loader skip the words, because
+// the loader is their first view.
+function firstView(p: Project): { css: string; html: string } {
+  const light = palette(p.design, resolveScheme(p.design, false));
+  const dark = palette(p.design, resolveScheme(p.design, true));
+  const differs = light.bg !== dark.bg;
+  const h = p.content!.hero as { headline?: string; sub?: string; name?: string; tagline?: string; role?: string };
+  const headline = h.headline || h.name || siteName(p);
+  const sub = h.sub || h.tagline || h.role || "";
+  const f = p.design.fonts;
+  const stack = (name?: string) => (name ? `'${name.replace(/['"\\<>]/g, "")}',` : "") + "ui-sans-serif,system-ui,sans-serif";
+  const css = [
+    `html,body{margin:0;background:${light.bg}}`,
+    `.first-view{min-height:100vh;min-height:100svh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:18px;padding:96px clamp(20px,6vw,88px);color:${light.text};font-family:${stack(f?.body)};opacity:0;animation:first-view .4s ease-out .7s forwards}`,
+    `.first-view b{font-size:15px;font-weight:600;color:${light.accent}}`,
+    `.first-view h1{margin:0;max-width:18ch;font-family:${stack(f?.display)};font-size:clamp(36px,7vw,76px);line-height:1.04;letter-spacing:-.02em;font-weight:600;text-wrap:balance}`,
+    `.first-view p{margin:0;max-width:46ch;font-size:clamp(16px,2vw,19px);line-height:1.5;color:${light.muted}}`,
+    `@keyframes first-view{to{opacity:1}}`,
+    differs ? `@media (prefers-color-scheme:dark){html,body{background:${dark.bg}}.first-view{color:${dark.text}}.first-view b{color:${dark.accent}}.first-view p{color:${dark.muted}}}` : "",
+  ].join("");
+  const quiet = p.design.loader === "line" || p.design.intro;
+  const html = quiet ? "" : `<div class="first-view"><b>${esc(siteName(p))}</b><h1>${esc(headline)}</h1>${sub && sub !== siteName(p) ? `<p>${esc(sub)}</p>` : ""}</div>`;
+  return { css, html };
+}
+
 async function kitFile(name: string) {
   const r = await fetch("/site-kit/" + name, { cache: "no-cache" });
   if (!r.ok) throw new Error("The ready-to-host files could not be loaded (" + name + "). Check your connection and try again.");
@@ -274,6 +300,9 @@ WHAT IS IN HERE
 
 export async function buildZip(p: Project, kind: DownloadKind = "ready"): Promise<{ blob: Blob; name: string }> {
   if (!p.content) throw new Error("Finish the site step first.");
+  // The zip library and the template source are only needed at this moment, so they load
+  // here instead of with every page.
+  const { default: JSZip } = await import("jszip");
   const zip = new JSZip();
   const base = slug(siteName(p)) + (p.kind === "website" ? "-site" : "-portfolio");
   const folder = zip.folder(base)!;
@@ -285,6 +314,7 @@ export async function buildZip(p: Project, kind: DownloadKind = "ready"): Promis
   const fg = esc(palette(p.design, resolveScheme(p.design, false)).text);
 
   if (kind === "source") {
+    const { TEMPLATE_FILES } = await import("./template-files");
     for (const [path, text] of Object.entries(TEMPLATE_FILES)) {
       let out = text;
       if (path === "index.html") {
@@ -302,6 +332,7 @@ export async function buildZip(p: Project, kind: DownloadKind = "ready"): Promis
     const [js, css] = await Promise.all([kitFile("site.js"), kitFile("site.css")]);
     const data = await gather(p, (path, d, b64) => folder.file(path, d, b64 ? { base64: true } : undefined), "./");
     const first = firstPicture(data);
+    const shell = firstView(p);
     folder.file("site.js", js);
     folder.file("site.css", css);
     folder.file("site-data.js", "// Your site's words, colours, fonts and motion settings. Edit and reload.\nwindow.__ASSET_BASE__ = \".\";\nwindow.__SITE_DATA__ = " + JSON.stringify(data, null, 2).replace(/<\/script/gi, "<\\/script") + ";\n");
@@ -323,10 +354,10 @@ export async function buildZip(p: Project, kind: DownloadKind = "ready"): Promis
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     ${headTags(p, ".")}
     <link rel="stylesheet" href="./site.css" />${first ? `\n    <link rel="preload" as="image" href="${esc(first)}" fetchpriority="high" />` : ""}
-    <style>html,body{margin:0;background:${theme}}</style>
+    <style>${shell.css}</style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">${shell.html}</div>
     <noscript><main style="max-width:40rem;margin:15vh auto;padding:0 24px;font-family:system-ui,sans-serif;color:${fg}"><h1>${esc(h.headline || h.name || siteName(p))}</h1><p>${esc(h.sub || h.tagline || p.content.meta.description)}</p><p>Turn on JavaScript to see the full site.</p></main></noscript>
     <script src="./site-data.js" defer></script>
     <script src="./site.js" defer></script>

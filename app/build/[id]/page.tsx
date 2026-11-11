@@ -12,6 +12,7 @@ import FieldsEditor from "@/components/FieldsEditor";
 import { BuildStep, DeployStep, StatusBadge, type Head } from "@/components/Steps";
 import Icon from "@/components/Icon";
 import Preview from "@/components/Preview";
+import PreviewJump from "@/components/PreviewJump";
 import Topbar from "@/components/Topbar";
 import { CATEGORIES } from "@/lib/categories";
 import { composePortfolio, composeWebsite } from "@/lib/compose";
@@ -296,6 +297,7 @@ export default function BuildPage() {
           </motion.div>
           </AnimatePresence>
         </main>
+        <PreviewJump step={step} />
       </div>
     </>
   );

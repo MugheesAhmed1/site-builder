@@ -20,13 +20,34 @@ function read<T>(key: string, fallback: T): T {
   }
 }
 
-function write(key: string, value: unknown) {
+// Saving can fail when the browser's storage is full or blocked (private windows, strict
+// settings). The page keeps working with what it has in memory and shows one notice, so a
+// failed save never crashes the editor or interrupts typing.
+export const STORAGE_EVENT = "sb:storage";
+let storageOk = true;
+
+function write(key: string, value: unknown): boolean {
   try {
     localStorage.setItem(key, JSON.stringify(value));
-  } catch (e) {
-    alert("Couldn't save to this browser's storage. It may be full or blocked. Export your project to keep a copy.");
-    throw e;
+    if (!storageOk) {
+      storageOk = true;
+      window.dispatchEvent(new CustomEvent(STORAGE_EVENT, { detail: { ok: true } }));
+    }
+    return true;
+  } catch {
+    if (storageOk) {
+      storageOk = false;
+      window.dispatchEvent(new CustomEvent(STORAGE_EVENT, { detail: { ok: false } }));
+    }
+    return false;
   }
+}
+
+// A backup file can come from anywhere, so only things shaped like a project are let in.
+export function looksLikeProject(x: unknown): x is Project {
+  if (!x || typeof x !== "object") return false;
+  const p = x as Record<string, unknown>;
+  return typeof p.id === "string" && /^[\w-]{1,40}$/.test(p.id) && !!p.steps && typeof p.steps === "object" && !!p.design && typeof p.design === "object" && typeof (p.updatedAt ?? "") === "string";
 }
 
 export function seedOf(id: string) {
@@ -47,7 +68,9 @@ function normalize(p: Project): Project {
 }
 
 export function listProjects(): Project[] {
-  return read<Project[]>(KEY, [])
+  const raw = read<unknown>(KEY, []);
+  return (Array.isArray(raw) ? raw : [])
+    .filter(looksLikeProject)
     .map(normalize)
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 }
@@ -66,10 +89,13 @@ export function deleteProject(id: string) {
   write(KEY, read<Project[]>(KEY, []).filter((x) => x.id !== id));
 }
 
-export function importProjects(items: Project[]) {
+// Returns how many projects were brought in. Anything that is not a project is skipped.
+export function importProjects(input: unknown[]): number {
+  const items = input.filter(looksLikeProject).map((p) => normalize({ ...p, updatedAt: p.updatedAt || new Date().toISOString(), name: String(p.name ?? "My site"), query: String(p.query ?? "") }));
+  if (!items.length) return 0;
   const all = read<Project[]>(KEY, []);
   const ids = new Set(items.map((i) => i.id));
-  write(KEY, [...all.filter((x) => !ids.has(x.id)), ...items.map(normalize)]);
+  return write(KEY, [...all.filter((x) => !ids.has(x.id)), ...items]) ? items.length : 0;
 }
 
 export function newProject(query: string, kind: SiteKind, category: string, name: string): Project {

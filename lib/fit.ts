@@ -130,13 +130,18 @@ export function fitsMotion(m: MotionStyle, fit: Fit) {
   return m.id === "M-000" || (fit.feels.includes(m.feel ?? "") && fit.tempos.includes(m.tempo));
 }
 
+const FOOD_LIKE = new Set(["food", "hotel", "events"]);
+
 // A starting cast for a category, stable per project.
 export function castFor(category: string, seed: number, strict = false): { character: CharacterDef; widgets: WidgetDef[] } {
   const fit = fitFor(category);
   const family = strict ? fit.families[0] : fit.families[(seed >>> 0) % Math.min(3, fit.families.length)];
   const all = CHARACTERS.filter((c) => c.family === family);
   // The darkest palettes hide the face on a dark page, so the showcase skips them.
-  const pool = strict ? all.filter((c) => c.palette !== "ink" && c.palette !== "slate") : all;
+  const bright = strict ? all.filter((c) => c.palette !== "ink" && c.palette !== "slate") : all;
+  // A chef's hat only makes sense where food is made, so other categories never start with one.
+  const suited = FOOD_LIKE.has(category) ? bright : bright.filter((c) => c.accessory !== "chef");
+  const pool = suited.length ? suited : bright.length ? bright : all;
   const character = pool[(seed >>> 3) % pool.length];
   const skin = SKINS[(seed >>> 5) % SKINS.length].id;
   const widgets = fit.widgets.slice(0, 6).map((k) => WIDGETS.find((w) => w.kind === k && w.skin === skin) ?? WIDGETS.find((w) => w.kind === k)!);

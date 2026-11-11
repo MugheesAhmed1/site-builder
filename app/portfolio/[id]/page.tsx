@@ -11,6 +11,7 @@ import CastPicker from "@/components/CastPicker";
 import { castContext } from "@/template/src/Cast.jsx";
 import PortfolioForm, { GROUPS, groupCount } from "@/components/PortfolioForm";
 import Preview from "@/components/Preview";
+import PreviewJump from "@/components/PreviewJump";
 import { BuildStep, DeployStep, StatusBadge } from "@/components/Steps";
 import Topbar from "@/components/Topbar";
 import { composePortfolioFromInput, emptyInput, profileToInput } from "@/lib/compose";
@@ -411,6 +412,7 @@ export default function PortfolioStudio() {
             </motion.div>
           </AnimatePresence>
         </main>
+        <PreviewJump step={step} />
       </div>
     </>
   );

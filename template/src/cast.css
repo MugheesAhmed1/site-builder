@@ -87,12 +87,12 @@
 .cw-skin-pastel { --cw-bg: #f1ecff; --cw-fg: #2f2752; --cw-muted: #6d6496; --cw-accent: #7b61ff; --cw-line: #ddd3ff; }
 .cw-skin-gradient { background: var(--cw-bg); }
 .cw-skin-frost { --cw-bg: rgb(240 247 255 / 0.62); --cw-fg: #14233a; --cw-muted: #52637d; --cw-line: rgb(255 255 255 / 0.8); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), 0 18px 40px -20px rgb(20 35 58 / 0.4); }
-.cw-skin-clay { --cw-bg: #efe9e3; --cw-fg: #3a2f28; --cw-muted: #85776c; --cw-line: transparent; border-radius: 22px; box-shadow: 8px 8px 18px #d3cbc3, -8px -8px 18px #fffaf4, inset 0 0 0 1px rgb(255 255 255 / 0.4); }
+.cw-skin-clay { --cw-bg: #efe9e3; --cw-fg: #3a2f28; --cw-muted: #6b5e53; --cw-line: transparent; border-radius: 22px; box-shadow: 8px 8px 18px #d3cbc3, -8px -8px 18px #fffaf4, inset 0 0 0 1px rgb(255 255 255 / 0.4); }
 .cw-skin-mono { --cw-bg: #ffffff; --cw-fg: #111; --cw-muted: #666; --cw-line: #111; --cw-accent: #111; border-width: 1.5px; border-radius: 4px; box-shadow: none; }
 .cw-skin-terminal { --cw-bg: #0b0f0c; --cw-fg: #b6f5c9; --cw-muted: #5f8f6d; --cw-line: #1d2b21; --cw-accent: #3ddc84; font-family: var(--pf-font-mono, ui-monospace, monospace); border-radius: 8px; }
 .cw-skin-terminal .cw-value { font-family: inherit; }
 .cw-skin-brand { --cw-bg: var(--pf-accent, #2f5bea); --cw-fg: var(--pf-on-accent, #fff); --cw-muted: color-mix(in srgb, var(--pf-on-accent, #fff) 76%, transparent); --cw-accent: var(--pf-on-accent, #fff); --cw-line: transparent; }
-.cw-skin-sand { --cw-bg: #f4ead9; --cw-fg: #3b2d1c; --cw-muted: #8a7458; --cw-line: #e4d4b8; --cw-accent: #c2702c; }
+.cw-skin-sand { --cw-bg: #f4ead9; --cw-fg: #3b2d1c; --cw-muted: #6f5a40; --cw-line: #e4d4b8; --cw-accent: #c2702c; }
 .cw-skin-blueprint { --cw-bg: #123a73; --cw-fg: #e6f0ff; --cw-muted: #9db8e0; --cw-line: rgb(157 184 224 / 0.45); --cw-accent: #7fd1ff; background-image: linear-gradient(rgb(157 184 224 / 0.12) 1px, transparent 1px), linear-gradient(90deg, rgb(157 184 224 / 0.12) 1px, transparent 1px); background-size: 12px 12px; background-color: #123a73; border-style: dashed; }
 .cw-skin-sunrise { --cw-bg: linear-gradient(160deg, #ffd27a, #ff9a62); --cw-fg: #3a1a08; --cw-muted: #7a4320; --cw-line: transparent; --cw-accent: #3a1a08; background: var(--cw-bg); }
 .cw-skin-brand .cw-cal b, .cw-skin-sunrise .cw-cal b { color: var(--pf-accent, #2f5bea); }

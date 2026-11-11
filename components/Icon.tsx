@@ -2,6 +2,12 @@
 const PATHS: Record<string, React.ReactNode> = {
   upload: <path d="M12 16V4m0 0-4 4m4-4 4 4M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3" />,
   check: <path d="m5 12.5 4.5 4.5L19 7.5" />,
+  eye: (
+    <>
+      <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" />
+      <circle cx="12" cy="12" r="2.8" />
+    </>
+  ),
   edit: <path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4" />,
   arrow: <path d="M5 12h14m-5-5 5 5-5 5" />,
   up: <path d="m6 15 6-6 6 6" />,
