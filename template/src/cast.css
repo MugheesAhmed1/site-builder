@@ -385,3 +385,9 @@
 .cs-poke > div { display: grid; place-items: center; width: 100%; transform-origin: 50% 100%; }
 .cs-poke:focus-visible { outline: 2px solid var(--pf-accent); outline-offset: 4px; }
 .cs-story-char .cs-poke .cc { width: 100%; height: auto; }
+
+/* Scene concepts are full pictures with their own veil, so they stay at full strength. */
+.pf-scene-backdrop.sc-group-concept { opacity: 1; }
+@media (max-width: 720px) {
+  .pf-scene-backdrop.sc-group-concept { opacity: 0.8; }
+}

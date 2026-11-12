@@ -30,7 +30,7 @@ const ease = [0.23, 1, 0.32, 1] as const;
 const FLOW: { id: StepId; title: string; hint: string }[] = [
   { id: "questions", title: "Your details", hint: "Fill the form or import a résumé" },
   { id: "design", title: "Look", hint: "500 design systems to remix" },
-  { id: "cast", title: "Characters", hint: "580 characters, 512 widgets" },
+  { id: "cast", title: "Scenes and characters", hint: "Scene concepts, characters, widgets" },
   { id: "motion", title: "Animation", hint: "728 styles played by Motion" },
   { id: "build", title: "Check and edit", hint: "Every word, every section" },
   { id: "deploy", title: "Publish", hint: "Download and put it online" },
@@ -351,8 +351,8 @@ export default function PortfolioStudio() {
               {step === "cast" && (
                 <>
                   {head(
-                    "Characters, widgets and live scenes",
-                    "Pick a character, up to six widgets and a live scene. Everything is already animated and reacts to the pointer, taps and drags: particles, nature, your own photo or 3D shapes you can throw around.",
+                    "Scene concepts, characters and widgets",
+                    "Start with a scene concept for your opening: a parrot that flies in, a whale swimming past, a walk through the jungle and many more, in real-life, particle, nature or cartoon style. Then pick a character and up to six widgets. Everything is animated and reacts to the pointer, taps and drags.",
                     <button className="btn btn-primary" onClick={() => approve("cast")}>
                       Use this cast
                       <Icon name="arrow" size={16} />

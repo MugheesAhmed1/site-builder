@@ -181,3 +181,9 @@
   .cn-curtain, .cn-curtain.is-open { transition: none; }
   .cn-curtain.is-open .cn-curtain-links a { animation: none; }
 }
+
+/* A live scene or scene concept in place of the film photo. */
+.cn-plate--scene .cn-scene { position: absolute; inset: 0; }
+.cn-plate--scene canvas { pointer-events: none; }
+.cn-overlay { position: absolute; inset: 0; z-index: -2; opacity: 0.75; }
+.cn-overlay canvas { pointer-events: none; }

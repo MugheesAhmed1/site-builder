@@ -7,13 +7,16 @@ import { CATEGORY_GROUPS, iconFor } from "@/lib/fit";
 import type { SiteKind } from "@/lib/types";
 import { CHARACTERS } from "@/template/src/cast.js";
 import { CastCharacter } from "@/template/src/Cast.jsx";
+import ConceptShowcase from "@/components/ConceptShowcase";
 
 // The home page below the first screen: categories, the two builders and the marquees.
 // It is its own chunk so the headline and the form become usable first.
-export default function HomeBelow({ startKind }: { startKind: (k: SiteKind, cat?: string, label?: string) => void }) {
+export default function HomeBelow({ startKind }: { startKind: (k: SiteKind, cat?: string, label?: string, sceneId?: string) => void }) {
   const reduce = useReducedMotion();
   return (
     <>
+        <ConceptShowcase startKind={startKind} />
+
         <section className="cat-section" aria-labelledby="cat-title">
           <div className="cat-head">
             <h2 id="cat-title">Start from your category</h2>

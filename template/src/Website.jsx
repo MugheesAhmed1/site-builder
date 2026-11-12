@@ -227,7 +227,7 @@ export default function Website({ design, content, preview = false, scheme: forc
   const renderHero = () => {
     if (hero === "cinema") {
       return (
-        <CinemaHero plate={h.imageUrl || plate} video={/^(https?:|\/|\.\/)/.test(h.videoUrl || "") && !filmOn ? h.videoUrl : ""} still={!animated} stats={heroStats} path="hero.imageUrl">
+        <CinemaHero plate={h.imageUrl || plate} video={/^(https?:|\/|\.\/)/.test(h.videoUrl || "") && !filmOn ? h.videoUrl : ""} still={!animated} stats={heroStats} path="hero.imageUrl" backdrop={animated && scene && sceneMode === "backdrop" && scene.group === "concept" ? sceneEl("cn-scene") : null} overlay={animated && scene && sceneMode === "backdrop" && scene.group !== "concept" && scene.group !== "photo" ? sceneEl("cn-scene") : null}>
           <Badge text={badgeText} people={people} />
           {headline}
           {sub}
@@ -641,7 +641,7 @@ export default function Website({ design, content, preview = false, scheme: forc
 
       <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
         {animated && <Backdrop kind={d.backdrop} />}
-        {animated && scene && sceneMode === "backdrop" && sceneEl("pf-scene-backdrop")}
+        {animated && scene && sceneMode === "backdrop" && !(hero === "cinema" && scene.group !== "photo") && sceneEl("pf-scene-backdrop")}
         {renderHero()}
       </section>
 

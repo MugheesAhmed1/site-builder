@@ -177,14 +177,15 @@ function StatsRow({ stats }) {
  * The film-like opening. `children` are the words (badge, headline, sub line, buttons).
  * `plate` is the scene picture; a `video` link plays instead when given.
  */
-export function CinemaHero({ plate, video, still, stats, path, children }) {
+export function CinemaHero({ plate, video, still, stats, path, backdrop, overlay, children }) {
   const ref = useRef(null);
   useDepth(ref, !still);
   return (
     <div ref={ref} className={"cn-hero" + (still ? " is-still" : "")}>
-      <div className="cn-plate" aria-hidden={video ? "true" : undefined}>
-        {video ? <video src={video} poster={plate} autoPlay muted loop playsInline /> : <img src={plate} alt="" data-img={path} fetchPriority="high" />}
+      <div className={"cn-plate" + (backdrop ? " cn-plate--scene" : "")} aria-hidden={video || backdrop ? "true" : undefined}>
+        {backdrop ? backdrop : video ? <video src={video} poster={plate} autoPlay muted loop playsInline /> : <img src={plate} alt="" data-img={path} fetchPriority="high" />}
       </div>
+      {overlay ? <div className="cn-overlay">{overlay}</div> : null}
       {!still && <Motes />}
       <div className="cn-veil" aria-hidden="true" />
       <div className="pf-container cn-copy">{children}</div>
