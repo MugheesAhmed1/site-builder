@@ -1,0 +1,1505 @@
+[
+ {
+  "file": "/real/library/fluent/parrot.webp",
+  "name": "Parrot",
+  "set": "fluent",
+  "source_emoji": "parrot",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/peacock.webp",
+  "name": "Peacock",
+  "set": "fluent",
+  "source_emoji": "peacock",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/flamingo.webp",
+  "name": "Flamingo",
+  "set": "fluent",
+  "source_emoji": "flamingo",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/swan.webp",
+  "name": "Swan",
+  "set": "fluent",
+  "source_emoji": "swan",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/owl.webp",
+  "name": "Owl",
+  "set": "fluent",
+  "source_emoji": "owl",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/eagle.webp",
+  "name": "Eagle",
+  "set": "fluent",
+  "source_emoji": "eagle",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/dove.webp",
+  "name": "Dove",
+  "set": "fluent",
+  "source_emoji": "dove",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/bird.webp",
+  "name": "Blue bird",
+  "set": "fluent",
+  "source_emoji": "bird",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/penguin.webp",
+  "name": "Penguin",
+  "set": "fluent",
+  "source_emoji": "penguin",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/duck.webp",
+  "name": "Duck",
+  "set": "fluent",
+  "source_emoji": "duck",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/rooster.webp",
+  "name": "Rooster",
+  "set": "fluent",
+  "source_emoji": "rooster",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/chick.webp",
+  "name": "Baby chick",
+  "set": "fluent",
+  "source_emoji": "front-facing-baby-chick",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/dodo.webp",
+  "name": "Dodo",
+  "set": "fluent",
+  "source_emoji": "dodo",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/phoenix.webp",
+  "name": "Phoenix",
+  "set": "fluent",
+  "source_emoji": "phoenix-bird",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/spouting-whale.webp",
+  "name": "Happy whale",
+  "set": "fluent",
+  "source_emoji": "spouting-whale",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/whale.webp",
+  "name": "Whale",
+  "set": "fluent",
+  "source_emoji": "whale",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/dolphin.webp",
+  "name": "Dolphin",
+  "set": "fluent",
+  "source_emoji": "dolphin",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/shark.webp",
+  "name": "Shark",
+  "set": "fluent",
+  "source_emoji": "shark",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/octopus.webp",
+  "name": "Octopus",
+  "set": "fluent",
+  "source_emoji": "octopus",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/squid.webp",
+  "name": "Squid",
+  "set": "fluent",
+  "source_emoji": "squid",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/crab.webp",
+  "name": "Crab",
+  "set": "fluent",
+  "source_emoji": "crab",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/lobster.webp",
+  "name": "Lobster",
+  "set": "fluent",
+  "source_emoji": "lobster",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/shrimp.webp",
+  "name": "Shrimp",
+  "set": "fluent",
+  "source_emoji": "shrimp",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/tropical-fish.webp",
+  "name": "Tropical fish",
+  "set": "fluent",
+  "source_emoji": "tropical-fish",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/fish.webp",
+  "name": "Fish",
+  "set": "fluent",
+  "source_emoji": "fish",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/blowfish.webp",
+  "name": "Blowfish",
+  "set": "fluent",
+  "source_emoji": "blowfish",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/jellyfish.webp",
+  "name": "Jellyfish",
+  "set": "fluent",
+  "source_emoji": "jellyfish",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/coral.webp",
+  "name": "Coral",
+  "set": "fluent",
+  "source_emoji": "coral",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/seal.webp",
+  "name": "Seal",
+  "set": "fluent",
+  "source_emoji": "seal",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/otter.webp",
+  "name": "Otter",
+  "set": "fluent",
+  "source_emoji": "otter",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/turtle.webp",
+  "name": "Turtle",
+  "set": "fluent",
+  "source_emoji": "turtle",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/snail.webp",
+  "name": "Snail",
+  "set": "fluent",
+  "source_emoji": "snail",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/butterfly.webp",
+  "name": "Butterfly",
+  "set": "fluent",
+  "source_emoji": "butterfly",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/honeybee.webp",
+  "name": "Honeybee",
+  "set": "fluent",
+  "source_emoji": "honeybee",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/ladybug.webp",
+  "name": "Ladybug",
+  "set": "fluent",
+  "source_emoji": "lady-beetle",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/frog.webp",
+  "name": "Frog",
+  "set": "fluent",
+  "source_emoji": "frog",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/lizard.webp",
+  "name": "Lizard",
+  "set": "fluent",
+  "source_emoji": "lizard",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/dragon.webp",
+  "name": "Dragon",
+  "set": "fluent",
+  "source_emoji": "dragon",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/sauropod.webp",
+  "name": "Long-neck dinosaur",
+  "set": "fluent",
+  "source_emoji": "sauropod",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/t-rex.webp",
+  "name": "T-rex",
+  "set": "fluent",
+  "source_emoji": "t-rex",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/unicorn.webp",
+  "name": "Unicorn",
+  "set": "fluent",
+  "source_emoji": "unicorn",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/monkey.webp",
+  "name": "Monkey",
+  "set": "fluent",
+  "source_emoji": "monkey",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/gorilla.webp",
+  "name": "Gorilla",
+  "set": "fluent",
+  "source_emoji": "gorilla",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/orangutan.webp",
+  "name": "Orangutan",
+  "set": "fluent",
+  "source_emoji": "orangutan",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/lion.webp",
+  "name": "Lion",
+  "set": "fluent",
+  "source_emoji": "lion",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/tiger.webp",
+  "name": "Tiger",
+  "set": "fluent",
+  "source_emoji": "tiger",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/leopard.webp",
+  "name": "Leopard",
+  "set": "fluent",
+  "source_emoji": "leopard",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/zebra.webp",
+  "name": "Zebra",
+  "set": "fluent",
+  "source_emoji": "zebra",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/giraffe.webp",
+  "name": "Giraffe",
+  "set": "fluent",
+  "source_emoji": "giraffe",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/elephant.webp",
+  "name": "Elephant",
+  "set": "fluent",
+  "source_emoji": "elephant",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/mammoth.webp",
+  "name": "Mammoth",
+  "set": "fluent",
+  "source_emoji": "mammoth",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/rhino.webp",
+  "name": "Rhino",
+  "set": "fluent",
+  "source_emoji": "rhinoceros",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/hippo.webp",
+  "name": "Hippo",
+  "set": "fluent",
+  "source_emoji": "hippopotamus",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/camel.webp",
+  "name": "Camel",
+  "set": "fluent",
+  "source_emoji": "camel",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/llama.webp",
+  "name": "Llama",
+  "set": "fluent",
+  "source_emoji": "llama",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/kangaroo.webp",
+  "name": "Kangaroo",
+  "set": "fluent",
+  "source_emoji": "kangaroo",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/koala.webp",
+  "name": "Koala",
+  "set": "fluent",
+  "source_emoji": "koala",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/panda.webp",
+  "name": "Panda",
+  "set": "fluent",
+  "source_emoji": "panda",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/polar-bear.webp",
+  "name": "Polar bear",
+  "set": "fluent",
+  "source_emoji": "polar-bear",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/bear.webp",
+  "name": "Bear",
+  "set": "fluent",
+  "source_emoji": "bear",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/teddy.webp",
+  "name": "Teddy bear",
+  "set": "fluent",
+  "source_emoji": "teddy-bear",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/sloth.webp",
+  "name": "Sloth",
+  "set": "fluent",
+  "source_emoji": "sloth",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/hedgehog.webp",
+  "name": "Hedgehog",
+  "set": "fluent",
+  "source_emoji": "hedgehog",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/fox.webp",
+  "name": "Fox",
+  "set": "fluent",
+  "source_emoji": "fox",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/wolf.webp",
+  "name": "Wolf",
+  "set": "fluent",
+  "source_emoji": "wolf",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/raccoon.webp",
+  "name": "Raccoon",
+  "set": "fluent",
+  "source_emoji": "raccoon",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/deer.webp",
+  "name": "Deer",
+  "set": "fluent",
+  "source_emoji": "deer",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/horse.webp",
+  "name": "Horse",
+  "set": "fluent",
+  "source_emoji": "horse",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/bison.webp",
+  "name": "Bison",
+  "set": "fluent",
+  "source_emoji": "bison",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/cow.webp",
+  "name": "Cow",
+  "set": "fluent",
+  "source_emoji": "cow",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/pig.webp",
+  "name": "Pig",
+  "set": "fluent",
+  "source_emoji": "pig",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/ewe.webp",
+  "name": "Sheep",
+  "set": "fluent",
+  "source_emoji": "ewe",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/goat.webp",
+  "name": "Goat",
+  "set": "fluent",
+  "source_emoji": "goat",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/rabbit.webp",
+  "name": "Rabbit",
+  "set": "fluent",
+  "source_emoji": "rabbit",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/mouse.webp",
+  "name": "Mouse",
+  "set": "fluent",
+  "source_emoji": "mouse",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/hamster.webp",
+  "name": "Hamster",
+  "set": "fluent",
+  "source_emoji": "hamster",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/cat.webp",
+  "name": "Cat",
+  "set": "fluent",
+  "source_emoji": "cat",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/black-cat.webp",
+  "name": "Black cat",
+  "set": "fluent",
+  "source_emoji": "black-cat",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/dog.webp",
+  "name": "Dog",
+  "set": "fluent",
+  "source_emoji": "dog",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/poodle.webp",
+  "name": "Poodle",
+  "set": "fluent",
+  "source_emoji": "poodle",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/bat.webp",
+  "name": "Bat",
+  "set": "fluent",
+  "source_emoji": "bat",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/beaver.webp",
+  "name": "Beaver",
+  "set": "fluent",
+  "source_emoji": "beaver",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/badger.webp",
+  "name": "Badger",
+  "set": "fluent",
+  "source_emoji": "badger",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/skunk.webp",
+  "name": "Skunk",
+  "set": "fluent",
+  "source_emoji": "skunk",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/rocket.webp",
+  "name": "Rocket",
+  "set": "fluent",
+  "source_emoji": "rocket",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/saucer.webp",
+  "name": "Flying saucer",
+  "set": "fluent",
+  "source_emoji": "flying-saucer",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/kite.webp",
+  "name": "Kite",
+  "set": "fluent",
+  "source_emoji": "kite",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/sailboat.webp",
+  "name": "Sailboat",
+  "set": "fluent",
+  "source_emoji": "sailboat",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/helicopter.webp",
+  "name": "Helicopter",
+  "set": "fluent",
+  "source_emoji": "helicopter",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/plane.webp",
+  "name": "Small plane",
+  "set": "fluent",
+  "source_emoji": "small-airplane",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/balloon.webp",
+  "name": "Balloon",
+  "set": "fluent",
+  "source_emoji": "balloon",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/lantern.webp",
+  "name": "Paper lantern",
+  "set": "fluent",
+  "source_emoji": "red-paper-lantern",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/robot.webp",
+  "name": "Robot",
+  "set": "fluent",
+  "source_emoji": "robot",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/alien.webp",
+  "name": "Space invader",
+  "set": "fluent",
+  "source_emoji": "alien-monster",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/ghost.webp",
+  "name": "Ghost",
+  "set": "fluent",
+  "source_emoji": "ghost",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/parachute.webp",
+  "name": "Parachute",
+  "set": "fluent",
+  "source_emoji": "parachute",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/palm.webp",
+  "name": "Palm tree",
+  "set": "fluent",
+  "source_emoji": "palm-tree",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/chef-w.webp",
+  "name": "Chef",
+  "set": "fluent",
+  "source_emoji": "woman-cook-medium-dark",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/chef-m.webp",
+  "name": "Cook",
+  "set": "fluent",
+  "source_emoji": "man-cook-light",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/teacher-w.webp",
+  "name": "Teacher",
+  "set": "fluent",
+  "source_emoji": "woman-teacher-medium",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/teacher-m.webp",
+  "name": "Teacher",
+  "set": "fluent",
+  "source_emoji": "man-teacher-dark",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/student-w.webp",
+  "name": "Student",
+  "set": "fluent",
+  "source_emoji": "woman-student-medium-light",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/student-m.webp",
+  "name": "Student",
+  "set": "fluent",
+  "source_emoji": "man-student-medium-dark",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/dev-w.webp",
+  "name": "Developer",
+  "set": "fluent",
+  "source_emoji": "woman-technologist-dark",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/dev-m.webp",
+  "name": "Developer",
+  "set": "fluent",
+  "source_emoji": "man-technologist-medium-light",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/scientist-w.webp",
+  "name": "Scientist",
+  "set": "fluent",
+  "source_emoji": "woman-scientist-medium",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/artist-w.webp",
+  "name": "Artist",
+  "set": "fluent",
+  "source_emoji": "woman-artist-light",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/artist-m.webp",
+  "name": "Artist",
+  "set": "fluent",
+  "source_emoji": "man-artist-medium-dark",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/singer-w.webp",
+  "name": "Singer",
+  "set": "fluent",
+  "source_emoji": "woman-singer-medium-dark",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/doctor-w.webp",
+  "name": "Doctor",
+  "set": "fluent",
+  "source_emoji": "woman-health-worker-medium",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/doctor-m.webp",
+  "name": "Doctor",
+  "set": "fluent",
+  "source_emoji": "man-health-worker-dark",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/farmer-w.webp",
+  "name": "Farmer",
+  "set": "fluent",
+  "source_emoji": "woman-farmer-medium-light",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/mechanic-m.webp",
+  "name": "Mechanic",
+  "set": "fluent",
+  "source_emoji": "man-mechanic-medium",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/mechanic-w.webp",
+  "name": "Mechanic",
+  "set": "fluent",
+  "source_emoji": "woman-mechanic-dark",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/office-w.webp",
+  "name": "Office worker",
+  "set": "fluent",
+  "source_emoji": "woman-office-worker-medium-dark",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/office-m.webp",
+  "name": "Office worker",
+  "set": "fluent",
+  "source_emoji": "man-office-worker-light",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/judge-w.webp",
+  "name": "Judge",
+  "set": "fluent",
+  "source_emoji": "woman-judge-medium",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/pilot-m.webp",
+  "name": "Pilot",
+  "set": "fluent",
+  "source_emoji": "man-pilot-medium-dark",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/firefighter-w.webp",
+  "name": "Firefighter",
+  "set": "fluent",
+  "source_emoji": "woman-firefighter-medium-light",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/builder-m.webp",
+  "name": "Builder",
+  "set": "fluent",
+  "source_emoji": "man-construction-worker-medium",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/detective-w.webp",
+  "name": "Detective",
+  "set": "fluent",
+  "source_emoji": "woman-detective-dark",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/astronaut.webp",
+  "name": "Astronaut",
+  "set": "fluent",
+  "source_emoji": "woman-astronaut-medium",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/superhero.webp",
+  "name": "Superhero",
+  "set": "fluent",
+  "source_emoji": "woman-superhero-medium-dark",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/mage.webp",
+  "name": "Wizard",
+  "set": "fluent",
+  "source_emoji": "man-mage-medium-light",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/fairy.webp",
+  "name": "Fairy",
+  "set": "fluent",
+  "source_emoji": "woman-fairy-medium",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/yoga.webp",
+  "name": "Yoga",
+  "set": "fluent",
+  "source_emoji": "woman-in-lotus-position-medium-light",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/lifter.webp",
+  "name": "Weight lifter",
+  "set": "fluent",
+  "source_emoji": "man-lifting-weights-dark",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/surfer.webp",
+  "name": "Surfer",
+  "set": "fluent",
+  "source_emoji": "woman-surfing-medium",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/dancer.webp",
+  "name": "Dancer",
+  "set": "fluent",
+  "source_emoji": "woman-dancing-medium-dark",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/runner.webp",
+  "name": "Runner",
+  "set": "fluent",
+  "source_emoji": "person-running-facing-right-medium",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/headscarf.webp",
+  "name": "Woman in headscarf",
+  "set": "fluent",
+  "source_emoji": "woman-with-headscarf-medium",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/turban.webp",
+  "name": "Man in turban",
+  "set": "fluent",
+  "source_emoji": "man-wearing-turban-medium-dark",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/fluent/ninja.webp",
+  "name": "Ninja",
+  "set": "fluent",
+  "source_emoji": "ninja-medium",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped"
+ },
+ {
+  "file": "/real/library/noto/whale.webp",
+  "name": "Humpback whale",
+  "set": "noto",
+  "source_emoji": "whale",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/spouting-whale.webp",
+  "name": "Spouting whale",
+  "set": "noto",
+  "source_emoji": "spouting-whale",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/dolphin.webp",
+  "name": "Dolphin",
+  "set": "noto",
+  "source_emoji": "dolphin",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/shark.webp",
+  "name": "Shark",
+  "set": "noto",
+  "source_emoji": "shark",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/tropical-fish.webp",
+  "name": "Tropical fish",
+  "set": "noto",
+  "source_emoji": "tropical-fish",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/fish.webp",
+  "name": "Blue fish",
+  "set": "noto",
+  "source_emoji": "fish",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/blowfish.webp",
+  "name": "Blowfish",
+  "set": "noto",
+  "source_emoji": "blowfish",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/octopus.webp",
+  "name": "Octopus",
+  "set": "noto",
+  "source_emoji": "octopus",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/turtle.webp",
+  "name": "Turtle",
+  "set": "noto",
+  "source_emoji": "turtle",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/crab.webp",
+  "name": "Crab",
+  "set": "noto",
+  "source_emoji": "crab",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/seal.webp",
+  "name": "Seal",
+  "set": "noto",
+  "source_emoji": "seal",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/jellyfish.webp",
+  "name": "Jellyfish",
+  "set": "noto",
+  "source_emoji": "jellyfish",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/parrot.webp",
+  "name": "Parrot",
+  "set": "noto",
+  "source_emoji": "parrot",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/flamingo.webp",
+  "name": "Flamingo",
+  "set": "noto",
+  "source_emoji": "flamingo",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/eagle.webp",
+  "name": "Eagle",
+  "set": "noto",
+  "source_emoji": "eagle",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/dove.webp",
+  "name": "Dove",
+  "set": "noto",
+  "source_emoji": "dove",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/owl.webp",
+  "name": "Owl",
+  "set": "noto",
+  "source_emoji": "owl",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/swan.webp",
+  "name": "Swan",
+  "set": "noto",
+  "source_emoji": "swan",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/penguin.webp",
+  "name": "Penguin",
+  "set": "noto",
+  "source_emoji": "penguin",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/butterfly.webp",
+  "name": "Butterfly",
+  "set": "noto",
+  "source_emoji": "butterfly",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/honeybee.webp",
+  "name": "Bee",
+  "set": "noto",
+  "source_emoji": "honeybee",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/elephant.webp",
+  "name": "Elephant",
+  "set": "noto",
+  "source_emoji": "elephant",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/giraffe.webp",
+  "name": "Giraffe",
+  "set": "noto",
+  "source_emoji": "giraffe",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/tiger.webp",
+  "name": "Tiger",
+  "set": "noto",
+  "source_emoji": "tiger",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/horse.webp",
+  "name": "Horse",
+  "set": "noto",
+  "source_emoji": "horse",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/fox.webp",
+  "name": "Fox",
+  "set": "noto",
+  "source_emoji": "fox",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/dragon.webp",
+  "name": "Dragon",
+  "set": "noto",
+  "source_emoji": "dragon",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/t-rex.webp",
+  "name": "T-rex",
+  "set": "noto",
+  "source_emoji": "t-rex",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/unicorn.webp",
+  "name": "Unicorn",
+  "set": "noto",
+  "source_emoji": "unicorn",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/monkey.webp",
+  "name": "Monkey",
+  "set": "noto",
+  "source_emoji": "monkey",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/rocket.webp",
+  "name": "Rocket",
+  "set": "noto",
+  "source_emoji": "rocket",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/saucer.webp",
+  "name": "Flying saucer",
+  "set": "noto",
+  "source_emoji": "flying-saucer",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/noto/kite.webp",
+  "name": "Kite",
+  "set": "noto",
+  "source_emoji": "kite",
+  "licence": "Apache-2.0",
+  "source": "https://github.com/googlefonts/noto-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ },
+ {
+  "file": "/real/library/fluent/rocket-up.webp",
+  "name": "Rocket lift-off",
+  "set": "fluent",
+  "source_emoji": "rocket",
+  "licence": "MIT",
+  "source": "https://github.com/microsoft/fluentui-emoji",
+  "changes": "rendered from SVG to WebP, cropped, may be mirrored"
+ }
+]

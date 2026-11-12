@@ -6136,5 +6136,2871 @@
    "shop",
    "property"
   ]
+ },
+ {
+  "id": "C-581",
+  "family": "art-animal",
+  "name": "Parrot",
+  "src": "/real/library/fluent/parrot.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "school",
+   "events",
+   "creator",
+   "shop",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-582",
+  "family": "art-animal",
+  "name": "Peacock",
+  "src": "/real/library/fluent/peacock.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "beauty",
+   "events",
+   "hotel",
+   "creator",
+   "role-designer",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-583",
+  "family": "art-animal",
+  "name": "Flamingo",
+  "src": "/real/library/fluent/flamingo.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "beauty",
+   "hotel",
+   "events",
+   "shop",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-584",
+  "family": "art-animal",
+  "name": "Swan",
+  "src": "/real/library/fluent/swan.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "beauty",
+   "hotel",
+   "events",
+   "law",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-585",
+  "family": "art-animal",
+  "name": "Owl",
+  "src": "/real/library/fluent/owl.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "law",
+   "consulting",
+   "role-writer",
+   "role-teacher",
+   "role-data",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-586",
+  "family": "art-animal",
+  "name": "Eagle",
+  "src": "/real/library/fluent/eagle.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "consulting",
+   "law",
+   "role-ceo",
+   "role-finance",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-587",
+  "family": "art-animal",
+  "name": "Dove",
+  "src": "/real/library/fluent/dove.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "nonprofit",
+   "health",
+   "hospital",
+   "events",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-588",
+  "family": "art-animal",
+  "name": "Blue bird",
+  "src": "/real/library/fluent/bird.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "nonprofit",
+   "shop",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-589",
+  "family": "art-animal",
+  "name": "Penguin",
+  "src": "/real/library/fluent/penguin.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "pets",
+   "events",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-590",
+  "family": "art-animal",
+  "name": "Duck",
+  "src": "/real/library/fluent/duck.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "school",
+   "food",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-591",
+  "family": "art-animal",
+  "name": "Rooster",
+  "src": "/real/library/fluent/rooster.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "trades",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-592",
+  "family": "art-animal",
+  "name": "Baby chick",
+  "src": "/real/library/fluent/chick.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "pets",
+   "food",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-593",
+  "family": "art-animal",
+  "name": "Dodo",
+  "src": "/real/library/fluent/dodo.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "creator",
+   "school",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-594",
+  "family": "art-animal",
+  "name": "Phoenix",
+  "src": "/real/library/fluent/phoenix.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "creator",
+   "fitness",
+   "events",
+   "role-ceo",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-595",
+  "family": "art-sea",
+  "name": "Happy whale",
+  "src": "/real/library/fluent/spouting-whale.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "school",
+   "nonprofit",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-596",
+  "family": "art-sea",
+  "name": "Whale",
+  "src": "/real/library/fluent/whale.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "consulting",
+   "nonprofit",
+   "role-data",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-597",
+  "family": "art-sea",
+  "name": "Dolphin",
+  "src": "/real/library/fluent/dolphin.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "hotel",
+   "health",
+   "school",
+   "events",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-598",
+  "family": "art-sea",
+  "name": "Shark",
+  "src": "/real/library/fluent/shark.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "agency",
+   "role-sales",
+   "product",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-599",
+  "family": "art-sea",
+  "name": "Octopus",
+  "src": "/real/library/fluent/octopus.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "dentist",
+   "pets",
+   "creator",
+   "role-dev",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-600",
+  "family": "art-sea",
+  "name": "Squid",
+  "src": "/real/library/fluent/squid.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "creator",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-601",
+  "family": "art-sea",
+  "name": "Crab",
+  "src": "/real/library/fluent/crab.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "hotel",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-602",
+  "family": "art-sea",
+  "name": "Lobster",
+  "src": "/real/library/fluent/lobster.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "hotel",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-603",
+  "family": "art-sea",
+  "name": "Shrimp",
+  "src": "/real/library/fluent/shrimp.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-604",
+  "family": "art-sea",
+  "name": "Tropical fish",
+  "src": "/real/library/fluent/tropical-fish.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "hotel",
+   "dentist",
+   "school",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-605",
+  "family": "art-sea",
+  "name": "Fish",
+  "src": "/real/library/fluent/fish.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "pets",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-606",
+  "family": "art-sea",
+  "name": "Blowfish",
+  "src": "/real/library/fluent/blowfish.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "school",
+   "dentist",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-607",
+  "family": "art-sea",
+  "name": "Jellyfish",
+  "src": "/real/library/fluent/jellyfish.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "beauty",
+   "creator",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-608",
+  "family": "art-sea",
+  "name": "Coral",
+  "src": "/real/library/fluent/coral.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "hotel",
+   "nonprofit",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-609",
+  "family": "art-sea",
+  "name": "Seal",
+  "src": "/real/library/fluent/seal.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "school",
+   "hotel",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-610",
+  "family": "art-sea",
+  "name": "Otter",
+  "src": "/real/library/fluent/otter.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "nonprofit",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-611",
+  "family": "art-sea",
+  "name": "Turtle",
+  "src": "/real/library/fluent/turtle.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "health",
+   "nonprofit",
+   "law",
+   "school",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-612",
+  "family": "art-animal",
+  "name": "Snail",
+  "src": "/real/library/fluent/snail.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "beauty",
+   "health",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-613",
+  "family": "art-animal",
+  "name": "Butterfly",
+  "src": "/real/library/fluent/butterfly.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "beauty",
+   "health",
+   "nonprofit",
+   "role-hr",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-614",
+  "family": "art-animal",
+  "name": "Honeybee",
+  "src": "/real/library/fluent/honeybee.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "shop",
+   "nonprofit",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-615",
+  "family": "art-animal",
+  "name": "Ladybug",
+  "src": "/real/library/fluent/ladybug.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "shop",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-616",
+  "family": "art-animal",
+  "name": "Frog",
+  "src": "/real/library/fluent/frog.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "pets",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-617",
+  "family": "art-animal",
+  "name": "Lizard",
+  "src": "/real/library/fluent/lizard.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-618",
+  "family": "art-animal",
+  "name": "Dragon",
+  "src": "/real/library/fluent/dragon.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "creator",
+   "events",
+   "role-creator",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-619",
+  "family": "art-animal",
+  "name": "Long-neck dinosaur",
+  "src": "/real/library/fluent/sauropod.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "creator",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-620",
+  "family": "art-animal",
+  "name": "T-rex",
+  "src": "/real/library/fluent/t-rex.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "fitness",
+   "creator",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-621",
+  "family": "art-animal",
+  "name": "Unicorn",
+  "src": "/real/library/fluent/unicorn.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "creator",
+   "beauty",
+   "events",
+   "product",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-622",
+  "family": "art-animal",
+  "name": "Monkey",
+  "src": "/real/library/fluent/monkey.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "events",
+   "pets",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-623",
+  "family": "art-animal",
+  "name": "Gorilla",
+  "src": "/real/library/fluent/gorilla.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "fitness",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-624",
+  "family": "art-animal",
+  "name": "Orangutan",
+  "src": "/real/library/fluent/orangutan.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "nonprofit",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-625",
+  "family": "art-animal",
+  "name": "Lion",
+  "src": "/real/library/fluent/lion.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "fitness",
+   "law",
+   "role-ceo",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-626",
+  "family": "art-animal",
+  "name": "Tiger",
+  "src": "/real/library/fluent/tiger.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "fitness",
+   "agency",
+   "role-sales",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-627",
+  "family": "art-animal",
+  "name": "Leopard",
+  "src": "/real/library/fluent/leopard.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "fitness",
+   "auto",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-628",
+  "family": "art-animal",
+  "name": "Zebra",
+  "src": "/real/library/fluent/zebra.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "creator",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-629",
+  "family": "art-animal",
+  "name": "Giraffe",
+  "src": "/real/library/fluent/giraffe.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "nonprofit",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-630",
+  "family": "art-animal",
+  "name": "Elephant",
+  "src": "/real/library/fluent/elephant.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "nonprofit",
+   "consulting",
+   "role-pm",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-631",
+  "family": "art-animal",
+  "name": "Mammoth",
+  "src": "/real/library/fluent/mammoth.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-632",
+  "family": "art-animal",
+  "name": "Rhino",
+  "src": "/real/library/fluent/rhino.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "trades",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-633",
+  "family": "art-animal",
+  "name": "Hippo",
+  "src": "/real/library/fluent/hippo.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "health",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-634",
+  "family": "art-animal",
+  "name": "Camel",
+  "src": "/real/library/fluent/camel.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "hotel",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-635",
+  "family": "art-animal",
+  "name": "Llama",
+  "src": "/real/library/fluent/llama.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "shop",
+   "creator",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-636",
+  "family": "art-animal",
+  "name": "Kangaroo",
+  "src": "/real/library/fluent/kangaroo.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "fitness",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-637",
+  "family": "art-animal",
+  "name": "Koala",
+  "src": "/real/library/fluent/koala.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "health",
+   "pets",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-638",
+  "family": "art-animal",
+  "name": "Panda",
+  "src": "/real/library/fluent/panda.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "pets",
+   "food",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-639",
+  "family": "art-animal",
+  "name": "Polar bear",
+  "src": "/real/library/fluent/polar-bear.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "nonprofit",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-640",
+  "family": "art-animal",
+  "name": "Bear",
+  "src": "/real/library/fluent/bear.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "fitness",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-641",
+  "family": "art-animal",
+  "name": "Teddy bear",
+  "src": "/real/library/fluent/teddy.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "shop",
+   "school",
+   "events",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-642",
+  "family": "art-animal",
+  "name": "Sloth",
+  "src": "/real/library/fluent/sloth.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "health",
+   "hotel",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-643",
+  "family": "art-animal",
+  "name": "Hedgehog",
+  "src": "/real/library/fluent/hedgehog.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "shop",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-644",
+  "family": "art-animal",
+  "name": "Fox",
+  "src": "/real/library/fluent/fox.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "agency",
+   "creator",
+   "role-writer",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-645",
+  "family": "art-animal",
+  "name": "Wolf",
+  "src": "/real/library/fluent/wolf.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "role-it",
+   "role-engineer",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-646",
+  "family": "art-animal",
+  "name": "Raccoon",
+  "src": "/real/library/fluent/raccoon.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "creator",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-647",
+  "family": "art-animal",
+  "name": "Deer",
+  "src": "/real/library/fluent/deer.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "nonprofit",
+   "beauty",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-648",
+  "family": "art-animal",
+  "name": "Horse",
+  "src": "/real/library/fluent/horse.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "fitness",
+   "auto",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-649",
+  "family": "art-animal",
+  "name": "Bison",
+  "src": "/real/library/fluent/bison.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "trades",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-650",
+  "family": "art-animal",
+  "name": "Cow",
+  "src": "/real/library/fluent/cow.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-651",
+  "family": "art-animal",
+  "name": "Pig",
+  "src": "/real/library/fluent/pig.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-652",
+  "family": "art-animal",
+  "name": "Sheep",
+  "src": "/real/library/fluent/ewe.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "shop",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-653",
+  "family": "art-animal",
+  "name": "Goat",
+  "src": "/real/library/fluent/goat.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-654",
+  "family": "art-animal",
+  "name": "Rabbit",
+  "src": "/real/library/fluent/rabbit.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "school",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-655",
+  "family": "art-animal",
+  "name": "Mouse",
+  "src": "/real/library/fluent/mouse.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-656",
+  "family": "art-animal",
+  "name": "Hamster",
+  "src": "/real/library/fluent/hamster.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-657",
+  "family": "art-animal",
+  "name": "Cat",
+  "src": "/real/library/fluent/cat.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "shop",
+   "creator",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-658",
+  "family": "art-animal",
+  "name": "Black cat",
+  "src": "/real/library/fluent/black-cat.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "creator",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-659",
+  "family": "art-animal",
+  "name": "Dog",
+  "src": "/real/library/fluent/dog.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-660",
+  "family": "art-animal",
+  "name": "Poodle",
+  "src": "/real/library/fluent/poodle.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "beauty",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-661",
+  "family": "art-animal",
+  "name": "Bat",
+  "src": "/real/library/fluent/bat.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "events",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-662",
+  "family": "art-animal",
+  "name": "Beaver",
+  "src": "/real/library/fluent/beaver.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "trades",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-663",
+  "family": "art-animal",
+  "name": "Badger",
+  "src": "/real/library/fluent/badger.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "trades",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-664",
+  "family": "art-animal",
+  "name": "Skunk",
+  "src": "/real/library/fluent/skunk.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "creator",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-665",
+  "family": "art-toy",
+  "name": "Rocket",
+  "src": "/real/library/fluent/rocket.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "product",
+   "agency",
+   "role-dev",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-666",
+  "family": "art-toy",
+  "name": "Flying saucer",
+  "src": "/real/library/fluent/saucer.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "product",
+   "creator",
+   "role-it",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-667",
+  "family": "art-toy",
+  "name": "Kite",
+  "src": "/real/library/fluent/kite.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "events",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-668",
+  "family": "art-toy",
+  "name": "Sailboat",
+  "src": "/real/library/fluent/sailboat.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "hotel",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-669",
+  "family": "art-toy",
+  "name": "Helicopter",
+  "src": "/real/library/fluent/helicopter.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "auto",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-670",
+  "family": "art-toy",
+  "name": "Small plane",
+  "src": "/real/library/fluent/plane.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "hotel",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-671",
+  "family": "art-toy",
+  "name": "Balloon",
+  "src": "/real/library/fluent/balloon.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "events",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-672",
+  "family": "art-toy",
+  "name": "Paper lantern",
+  "src": "/real/library/fluent/lantern.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "events",
+   "food",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-673",
+  "family": "art-toy",
+  "name": "Robot",
+  "src": "/real/library/fluent/robot.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "product",
+   "role-dev",
+   "role-it",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-674",
+  "family": "art-toy",
+  "name": "Space invader",
+  "src": "/real/library/fluent/alien.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "product",
+   "creator",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-675",
+  "family": "art-toy",
+  "name": "Ghost",
+  "src": "/real/library/fluent/ghost.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "events",
+   "creator",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-676",
+  "family": "art-toy",
+  "name": "Parachute",
+  "src": "/real/library/fluent/parachute.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "events",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-677",
+  "family": "art-toy",
+  "name": "Palm tree",
+  "src": "/real/library/fluent/palm.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "hotel",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-678",
+  "family": "art-people",
+  "name": "Chef",
+  "src": "/real/library/fluent/chef-w.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "hotel",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-679",
+  "family": "art-people",
+  "name": "Cook",
+  "src": "/real/library/fluent/chef-m.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-680",
+  "family": "art-people",
+  "name": "Teacher",
+  "src": "/real/library/fluent/teacher-w.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "role-teacher",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-681",
+  "family": "art-people",
+  "name": "Teacher",
+  "src": "/real/library/fluent/teacher-m.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "role-teacher",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-682",
+  "family": "art-people",
+  "name": "Student",
+  "src": "/real/library/fluent/student-w.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "role-student",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-683",
+  "family": "art-people",
+  "name": "Student",
+  "src": "/real/library/fluent/student-m.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "role-student",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-684",
+  "family": "art-people",
+  "name": "Developer",
+  "src": "/real/library/fluent/dev-w.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "product",
+   "agency",
+   "role-dev",
+   "role-it",
+   "role-data",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-685",
+  "family": "art-people",
+  "name": "Developer",
+  "src": "/real/library/fluent/dev-m.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "product",
+   "role-dev",
+   "role-it",
+   "role-engineer",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-686",
+  "family": "art-people",
+  "name": "Scientist",
+  "src": "/real/library/fluent/scientist-w.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "health",
+   "hospital",
+   "role-data",
+   "role-engineer",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-687",
+  "family": "art-people",
+  "name": "Artist",
+  "src": "/real/library/fluent/artist-w.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "creator",
+   "photo",
+   "role-designer",
+   "role-creator",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-688",
+  "family": "art-people",
+  "name": "Artist",
+  "src": "/real/library/fluent/artist-m.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "creator",
+   "role-designer",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-689",
+  "family": "art-people",
+  "name": "Singer",
+  "src": "/real/library/fluent/singer-w.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "events",
+   "creator",
+   "role-creator",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-690",
+  "family": "art-people",
+  "name": "Doctor",
+  "src": "/real/library/fluent/doctor-w.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "health",
+   "hospital",
+   "dentist",
+   "role-doctor",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-691",
+  "family": "art-people",
+  "name": "Doctor",
+  "src": "/real/library/fluent/doctor-m.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "health",
+   "hospital",
+   "dentist",
+   "role-doctor",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-692",
+  "family": "art-people",
+  "name": "Farmer",
+  "src": "/real/library/fluent/farmer-w.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "shop",
+   "nonprofit",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-693",
+  "family": "art-people",
+  "name": "Mechanic",
+  "src": "/real/library/fluent/mechanic-m.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "auto",
+   "trades",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-694",
+  "family": "art-people",
+  "name": "Mechanic",
+  "src": "/real/library/fluent/mechanic-w.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "auto",
+   "trades",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-695",
+  "family": "art-people",
+  "name": "Office worker",
+  "src": "/real/library/fluent/office-w.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "consulting",
+   "law",
+   "property",
+   "role-pm",
+   "role-hr",
+   "role-finance",
+   "role-ceo",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-696",
+  "family": "art-people",
+  "name": "Office worker",
+  "src": "/real/library/fluent/office-m.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "consulting",
+   "finance",
+   "role-finance",
+   "role-sales",
+   "role-ceo",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-697",
+  "family": "art-people",
+  "name": "Judge",
+  "src": "/real/library/fluent/judge-w.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "law",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-698",
+  "family": "art-people",
+  "name": "Pilot",
+  "src": "/real/library/fluent/pilot-m.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "hotel",
+   "auto",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-699",
+  "family": "art-people",
+  "name": "Firefighter",
+  "src": "/real/library/fluent/firefighter-w.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "trades",
+   "nonprofit",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-700",
+  "family": "art-people",
+  "name": "Builder",
+  "src": "/real/library/fluent/builder-m.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "trades",
+   "property",
+   "role-engineer",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-701",
+  "family": "art-people",
+  "name": "Detective",
+  "src": "/real/library/fluent/detective-w.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "law",
+   "consulting",
+   "role-data",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-702",
+  "family": "art-people",
+  "name": "Astronaut",
+  "src": "/real/library/fluent/astronaut.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "product",
+   "school",
+   "role-engineer",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-703",
+  "family": "art-people",
+  "name": "Superhero",
+  "src": "/real/library/fluent/superhero.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "fitness",
+   "creator",
+   "role-marketer",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-704",
+  "family": "art-people",
+  "name": "Wizard",
+  "src": "/real/library/fluent/mage.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "creator",
+   "events",
+   "role-writer",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-705",
+  "family": "art-people",
+  "name": "Fairy",
+  "src": "/real/library/fluent/fairy.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "beauty",
+   "events",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-706",
+  "family": "art-people",
+  "name": "Yoga",
+  "src": "/real/library/fluent/yoga.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "health",
+   "beauty",
+   "fitness",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-707",
+  "family": "art-people",
+  "name": "Weight lifter",
+  "src": "/real/library/fluent/lifter.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "fitness",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-708",
+  "family": "art-people",
+  "name": "Surfer",
+  "src": "/real/library/fluent/surfer.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "hotel",
+   "fitness",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-709",
+  "family": "art-people",
+  "name": "Dancer",
+  "src": "/real/library/fluent/dancer.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "events",
+   "fitness",
+   "beauty",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-710",
+  "family": "art-people",
+  "name": "Runner",
+  "src": "/real/library/fluent/runner.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "fitness",
+   "role-sales",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-711",
+  "family": "art-people",
+  "name": "Woman in headscarf",
+  "src": "/real/library/fluent/headscarf.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "consulting",
+   "school",
+   "role-pm",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-712",
+  "family": "art-people",
+  "name": "Man in turban",
+  "src": "/real/library/fluent/turban.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "consulting",
+   "role-ceo",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-713",
+  "family": "art-people",
+  "name": "Ninja",
+  "src": "/real/library/fluent/ninja.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "fitness",
+   "role-it",
+   "general"
+  ],
+  "art": "fluent"
+ },
+ {
+  "id": "C-714",
+  "family": "flat-animal",
+  "name": "Humpback whale",
+  "src": "/real/library/noto/whale.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "consulting",
+   "nonprofit",
+   "hotel",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-715",
+  "family": "flat-animal",
+  "name": "Spouting whale",
+  "src": "/real/library/noto/spouting-whale.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "pets",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-716",
+  "family": "flat-animal",
+  "name": "Dolphin",
+  "src": "/real/library/noto/dolphin.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "hotel",
+   "school",
+   "events",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-717",
+  "family": "flat-animal",
+  "name": "Shark",
+  "src": "/real/library/noto/shark.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "agency",
+   "product",
+   "role-sales",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-718",
+  "family": "flat-animal",
+  "name": "Tropical fish",
+  "src": "/real/library/noto/tropical-fish.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "hotel",
+   "dentist",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-719",
+  "family": "flat-animal",
+  "name": "Blue fish",
+  "src": "/real/library/noto/fish.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "pets",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-720",
+  "family": "flat-animal",
+  "name": "Blowfish",
+  "src": "/real/library/noto/blowfish.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "dentist",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-721",
+  "family": "flat-animal",
+  "name": "Octopus",
+  "src": "/real/library/noto/octopus.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "creator",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-722",
+  "family": "flat-animal",
+  "name": "Turtle",
+  "src": "/real/library/noto/turtle.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "health",
+   "nonprofit",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-723",
+  "family": "flat-animal",
+  "name": "Crab",
+  "src": "/real/library/noto/crab.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "hotel",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-724",
+  "family": "flat-animal",
+  "name": "Seal",
+  "src": "/real/library/noto/seal.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-725",
+  "family": "flat-animal",
+  "name": "Jellyfish",
+  "src": "/real/library/noto/jellyfish.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "beauty",
+   "creator",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-726",
+  "family": "flat-animal",
+  "name": "Parrot",
+  "src": "/real/library/noto/parrot.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "pets",
+   "school",
+   "shop",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-727",
+  "family": "flat-animal",
+  "name": "Flamingo",
+  "src": "/real/library/noto/flamingo.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "beauty",
+   "events",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-728",
+  "family": "flat-animal",
+  "name": "Eagle",
+  "src": "/real/library/noto/eagle.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "consulting",
+   "role-ceo",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-729",
+  "family": "flat-animal",
+  "name": "Dove",
+  "src": "/real/library/noto/dove.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "nonprofit",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-730",
+  "family": "flat-animal",
+  "name": "Owl",
+  "src": "/real/library/noto/owl.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-731",
+  "family": "flat-animal",
+  "name": "Swan",
+  "src": "/real/library/noto/swan.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "beauty",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-732",
+  "family": "flat-animal",
+  "name": "Penguin",
+  "src": "/real/library/noto/penguin.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-733",
+  "family": "flat-animal",
+  "name": "Butterfly",
+  "src": "/real/library/noto/butterfly.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "beauty",
+   "health",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-734",
+  "family": "flat-animal",
+  "name": "Bee",
+  "src": "/real/library/noto/honeybee.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "food",
+   "shop",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-735",
+  "family": "flat-animal",
+  "name": "Elephant",
+  "src": "/real/library/noto/elephant.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "nonprofit",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-736",
+  "family": "flat-animal",
+  "name": "Giraffe",
+  "src": "/real/library/noto/giraffe.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-737",
+  "family": "flat-animal",
+  "name": "Tiger",
+  "src": "/real/library/noto/tiger.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "fitness",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-738",
+  "family": "flat-animal",
+  "name": "Horse",
+  "src": "/real/library/noto/horse.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "fitness",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-739",
+  "family": "flat-animal",
+  "name": "Fox",
+  "src": "/real/library/noto/fox.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "creator",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-740",
+  "family": "flat-animal",
+  "name": "Dragon",
+  "src": "/real/library/noto/dragon.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "creator",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-741",
+  "family": "flat-animal",
+  "name": "T-rex",
+  "src": "/real/library/noto/t-rex.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-742",
+  "family": "flat-animal",
+  "name": "Unicorn",
+  "src": "/real/library/noto/unicorn.webp",
+  "idle": "sway",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "creator",
+   "beauty",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-743",
+  "family": "flat-animal",
+  "name": "Monkey",
+  "src": "/real/library/noto/monkey.webp",
+  "idle": "bounce",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-744",
+  "family": "flat-animal",
+  "name": "Rocket",
+  "src": "/real/library/noto/rocket.webp",
+  "idle": "float",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "product",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-745",
+  "family": "flat-animal",
+  "name": "Flying saucer",
+  "src": "/real/library/noto/saucer.webp",
+  "idle": "wiggle",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "product",
+   "general"
+  ],
+  "art": "noto"
+ },
+ {
+  "id": "C-746",
+  "family": "flat-animal",
+  "name": "Kite",
+  "src": "/real/library/noto/kite.webp",
+  "idle": "bob",
+  "palette": "brand",
+  "accessory": "none",
+  "expression": "smile",
+  "variant": 0,
+  "fits": [
+   "school",
+   "general"
+  ],
+  "art": "noto"
  }
 ]

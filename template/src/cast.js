@@ -3,8 +3,10 @@
 // widgets. The first 216 characters and 208 widgets keep their original ids. Each one is plain data, so the builder can load more from the library on GitHub
 // and a downloaded site carries the exact ones it uses inside site-data.json.
 // All artwork is original, drawn in SVG by src/Cast.jsx. The real-life pack (C-521 on) adds
-// photoreal people, animals and mascots as pictures in public/real.
+// photoreal people, animals and mascots as pictures in public/real, and the free public art
+// library (C-581 on) adds open-source emoji illustrations from Microsoft and Google.
 import { REAL_CHARACTERS } from "./real.js";
+import { ART_CHARACTERS } from "./library-art.js";
 
 export const FAMILIES = [
   { id: "person", name: "Person" },
@@ -31,6 +33,12 @@ export const FAMILIES = [
   { id: "real-person", name: "Real people" },
   { id: "real-animal", name: "Real animals" },
   { id: "real-mascot", name: "Real mascots" },
+  // The free public art library: open-source emoji illustrations (see library-art.js).
+  { id: "art-animal", name: "3D animals" },
+  { id: "art-sea", name: "3D sea life" },
+  { id: "art-people", name: "3D people" },
+  { id: "art-toy", name: "3D toys and craft" },
+  { id: "flat-animal", name: "Flat cartoon art" },
 ];
 const DRAWN_FAMILIES = 20;
 const FIRST_FAMILIES = 12;
@@ -154,7 +162,7 @@ function buildWidgets() {
   return out;
 }
 
-export const CHARACTERS = [...buildCharacters(), ...REAL_CHARACTERS];
+export const CHARACTERS = [...buildCharacters(), ...REAL_CHARACTERS, ...ART_CHARACTERS];
 export const WIDGETS = buildWidgets();
 
 export function characterById(id, list = CHARACTERS) {

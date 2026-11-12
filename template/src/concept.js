@@ -427,7 +427,7 @@ export function conceptImpl(env, type, H) {
         if (secs() > a.t0) startRise(a, false);
         else return;
       }
-      a.y -= a.v * (a.cfg.launch ? 1 + (env.h - a.y) / env.h * 6 : 1) * dt * (env.h / 560);
+      a.y -= a.v * (a.cfg.launch ? 1 + Math.max(0, (env.h - a.y) / env.h) * 6 : 1) * dt * (env.h / 560);
       a.x += Math.sin(t * 0.0012 + a.ph) * (a.cfg.launch ? 0.1 : 0.35) * dt;
       if (a.cfg.pulse) {
         const p = Math.sin(t * 0.004 + a.ph);

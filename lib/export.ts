@@ -6,6 +6,7 @@ import { getMedia, mediaRefs, swapMedia } from "@/lib/media";
 import { palette, resolveScheme } from "@/template/src/theme.js";
 import { sceneAssets } from "@/template/src/scenes.js";
 import type { PortfolioContent, Project, WebsiteContent } from "./types";
+import { ART_LICENCE_FILE } from "@/template/src/library-art.js";
 
 // Two downloads are built here from the same project:
 // - "ready": a finished site (index.html, site.js, site.css, site-data.js and its pictures).
@@ -193,6 +194,8 @@ export function realAssets(p: Project): string[] {
     if (typeof v === "string" && /^\/real\/[\w/-]+\.webp$/.test(v)) out.add(v);
     return v;
   });
+  // Pictures from the free public art library carry their open-source licence notice.
+  if ([...out].some((f) => f.startsWith("/real/library/"))) out.add(ART_LICENCE_FILE);
   return [...out];
 }
 
