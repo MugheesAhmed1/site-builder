@@ -625,3 +625,10 @@ html, body { overflow-x: clip; }
 .pack:active { transform: scale(0.98); }
 .pack.is-on { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); }
 @media (hover: hover) and (pointer: fine) { .pack:hover { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); } }
+
+/* Scene picker for cinema openings */
+.plate-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; margin-top: 8px; }
+.plate-pick { position: relative; aspect-ratio: 16 / 9; padding: 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--line, rgb(0 0 0 / 0.12)); background: var(--panel, transparent); cursor: pointer; display: grid; place-items: center; font: inherit; font-size: 12px; transition: transform 0.16s ease, box-shadow 0.16s ease; }
+.plate-pick img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.plate-pick:active { transform: scale(0.97); }
+.plate-pick.is-on { box-shadow: 0 0 0 2px var(--accent, #4f46e5); }

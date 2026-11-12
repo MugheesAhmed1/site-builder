@@ -6,6 +6,9 @@ import { Scene } from "./Scenes.jsx";
 import { Carousel, Film, Flight, Grain, LineLoader, ScrollWords, SmoothScroll } from "./studio.jsx";
 import { Arc, Sphere, Track, propsFor, useFogSwitch, useScramble } from "./showpiece.jsx";
 import { Extras } from "./extras.jsx";
+import { Badge, CinemaHero, CinemaStrip, CurtainMenu, GlassCta, ScatterHero, WordmarkFooter } from "./cinema.jsx";
+import { plateFor } from "./plates.js";
+import { propsFor as cutoutsFor } from "./props.js";
 import { Avatar, Counter, cleanContent, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
 // A one-page business website, driven by the same design system and animation styles
@@ -153,7 +156,9 @@ export default function Website({ design, content, preview = false, scheme: forc
       <span>{h.kicker}</span>
     </p>
   );
-  const headline = <Headline text={h.headline} mode={animated ? motionAttrs(d)["data-headline"] : "none"} className={"pf-display" + ((h.headline || "").length > 34 ? " is-long" : "")} />;
+  const accentFace = d.accentFace || "none";
+  const cinematic = hero === "cinema" || hero === "scatter";
+  const headline = <Headline text={h.headline} accent={accentFace} mode={animated ? motionAttrs(d)["data-headline"] : "none"} className={"pf-display" + (cinematic ? " cn-on-photo" : "") + ((h.headline || "").length > 34 ? " is-long" : "")} />;
   const sub = h.sub && (
     <p className="pf-hero-sub pf-enter" style={{ "--i": 2 }}>
       {h.sub}
@@ -215,7 +220,30 @@ export default function Website({ design, content, preview = false, scheme: forc
     arr("process").length ? { kind: "list", head: "How it works", lines: arr("process").slice(0, 5).map((x, i) => String(i + 1).padStart(2, "0") + "  " + x.title) } : null,
     c.contact && (c.contact.phone || c.contact.email) ? { kind: "list", head: "Say hello", lines: [c.contact.phone, c.contact.email, c.visit && c.visit.address].filter(Boolean) } : null,
   ].filter(Boolean) : [];
+  const plate = plateFor(d, c.brand && c.brand.category);
+  const heroStats = arr("highlights").map((x) => ({ value: x.value, label: x.label }));
+  const badgeText = h.kicker;
+  const people = arr("testimonials").map((t) => ({ name: t.name })).concat(arr("team").map((m) => ({ name: m.name, photo: m.photoUrl })));
   const renderHero = () => {
+    if (hero === "cinema") {
+      return (
+        <CinemaHero plate={h.imageUrl || plate} video={/^(https?:|\/|\.\/)/.test(h.videoUrl || "") && !filmOn ? h.videoUrl : ""} still={!animated} stats={heroStats} path="hero.imageUrl">
+          <Badge text={badgeText} people={people} />
+          {headline}
+          {sub}
+          {ctas}
+        </CinemaHero>
+      );
+    }
+    if (hero === "scatter") {
+      const subject = cast && cast.character && cast.character.src ? cast.character.src : "";
+      return (
+        <ScatterHero text={h.headline} subject={subject} plate={h.imageUrl || plate} props={animated ? cutoutsFor(c.brand && c.brand.category) : []} stats={heroStats} still={!animated}>
+          {sub}
+          {ctas}
+        </ScatterHero>
+      );
+    }
     if (hero === "stage") {
       return (
         <div className="pf-container pf-hero-stage">
@@ -461,6 +489,9 @@ export default function Website({ design, content, preview = false, scheme: forc
           </Section>
         );
       case "cta":
+        if (d.ctaStyle === "glass") {
+          return <GlassCta key={s} plate={plate} heading={c.cta.heading} text={c.cta.text} button={c.cta.button || h.primaryCta} href={h.primaryHref || "#pf-contact"} newTab={/^https?:/.test(h.primaryHref)} />;
+        }
         return (
           <section id="pf-cta" className="pf-band" key={s}>
             {cast && animated && <Peek character={cast.character} />}
@@ -557,22 +588,31 @@ export default function Website({ design, content, preview = false, scheme: forc
   };
 
   const nav = visible.filter((s) => NAV[s]).slice(0, 6);
+  const curtain = d.menu === "curtain";
+  const navLinks = nav.map((s) => ({ href: "#pf-" + s, label: NAV[s] }));
+  const contactLinks = [
+    ct.email && { href: "mailto:" + ct.email, label: ct.email },
+    ct.phone && { href: "tel:" + ct.phone.replace(/\s/g, ""), label: ct.phone },
+    ct.whatsapp && { href: "https://wa.me/" + digits(ct.whatsapp), label: "WhatsApp" },
+    ct.instagram && { href: ct.instagram, label: "Instagram" },
+    ct.linkedin && { href: ct.linkedin, label: "LinkedIn" },
+  ].filter(Boolean).slice(0, 4);
 
   return (
     <div ref={rootRef} className={"pf ws pf-scheme-" + scheme + (preview ? " pf-is-preview" : "")} {...motionAttrs(d)} style={themeStyle(d, pal, scheme)}>
-      <link rel="stylesheet" href={fontsHref(d.fonts)} />
+      <link rel="stylesheet" href={fontsHref(d.fonts, d.accentFace)} />
       <Progress on={animated && d.progress} />
       <SmoothScroll on={animated && d.smooth !== false} preview={preview} />
       {fog.layer}
       {animated && d.grain && <Grain />}
       {animated && d.loader === "line" && <LineLoader text={h.kicker || h.role || (c.meta && c.meta.title) || ""} preview={preview} />}
       {animated && <Extras rootRef={rootRef} design={d} label={c.brand.name} preview={preview} />}
-      <header className="pf-nav">
+      <header className={"pf-nav" + (d.chrome === "pill" ? " pf-nav--pill" : "")}>
         <div className="pf-container pf-nav-inner">
           <a href="#pf-top" className="pf-brand">
             {c.brand.name}
           </a>
-          <nav className={"pf-nav-links" + (menuOpen ? " is-open" : "")} aria-label="Sections">
+          <nav className={"pf-nav-links" + (menuOpen && !curtain ? " is-open" : "")} aria-label="Sections">
             {nav.map((s) => (
               <a key={s} href={"#pf-" + s} aria-current={activeId === s ? "true" : undefined} onClick={() => setMenuOpen(false)}>
                 {NAV[s]}
@@ -585,18 +625,27 @@ export default function Website({ design, content, preview = false, scheme: forc
                 <Icon name={scheme === "dark" ? "sun" : "moon"} />
               </button>
             )}
-            <button className="pf-icon-btn pf-menu-btn" aria-label="Open menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>
+            {d.chrome === "pill" && h.primaryCta && (
+              <a className="pf-btn pf-nav-cta" href={h.primaryHref || "#pf-contact"} target={/^https?:/.test(h.primaryHref) ? "_blank" : undefined} rel="noreferrer">
+                {h.primaryCta}
+              </a>
+            )}
+            <button className={"pf-icon-btn pf-menu-btn" + (curtain ? " is-curtain" : "")} aria-label="Open menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>
               <Icon name="menu" />
             </button>
           </div>
         </div>
       </header>
 
+      {curtain && <CurtainMenu open={menuOpen} onClose={() => setMenuOpen(false)} links={navLinks} brand={c.brand.name} cta={h.primaryCta ? { href: h.primaryHref || "#pf-contact", label: h.primaryCta } : null} />}
+
       <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
         {animated && <Backdrop kind={d.backdrop} />}
         {animated && scene && sceneMode === "backdrop" && sceneEl("pf-scene-backdrop")}
         {renderHero()}
       </section>
+
+      {hero === "cinema" && <CinemaStrip label={c.brand.category ? "What we do" : ""} items={arr("services").map((x) => x.name).concat(arr("clients") || [])} />}
 
       {filmOn && <Film src={filmSrc} steps={storySteps} title={arr("process").length >= 2 ? "How it works" : "What we do"} highlights={arr("highlights").map((x) => ({ label: x.label, value: x.value }))} preview={preview} path="hero.videoUrl" kicker={c.brand.name} />}
 
@@ -610,16 +659,20 @@ export default function Website({ design, content, preview = false, scheme: forc
 
       {animated && d.flight !== false && flyTiles.length >= 3 && flySentence.split(" ").length >= 8 && <Flight sentence={flySentence} tiles={flyTiles} title={flySentence} />}
 
-      <footer className="pf-footer">
-        <div className="pf-container pf-row pf-between pf-wrap">
-          <span className="pf-small pf-muted">
-            © {new Date().getFullYear()} {c.brand.name}
-          </span>
-          <a href="#pf-top" className="pf-small pf-muted pf-inline-link">
-            Back to top
-          </a>
-        </div>
-      </footer>
+      {d.footer === "wordmark" ? (
+        <WordmarkFooter brand={c.brand.name} blurb={h.sub} links={navLinks} contact={contactLinks} />
+      ) : (
+        <footer className="pf-footer">
+          <div className="pf-container pf-row pf-between pf-wrap">
+            <span className="pf-small pf-muted">
+              © {new Date().getFullYear()} {c.brand.name}
+            </span>
+            <a href="#pf-top" className="pf-small pf-muted pf-inline-link">
+              Back to top
+            </a>
+          </div>
+        </footer>
+      )}
     </div>
   );
 }
