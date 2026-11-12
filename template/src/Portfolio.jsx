@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import { palette, resolveScheme } from "./theme.js";
+import { useEdits } from "./edits.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
 import { CastCharacter, CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
 import { Scene } from "./Scenes.jsx";
@@ -248,7 +249,7 @@ function CopyEmail({ email }) {
   );
 }
 
-export default function Portfolio({ design, content, preview = false, scheme: forcedScheme }) {
+export default function Portfolio({ design, content, preview = false, scheme: forcedScheme, editing = false }) {
   const rootRef = useRef(null);
   const c = useMemo(() => cleanContent(content), [content]);
   const d = design;
@@ -269,7 +270,9 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
     return arr(s).length > 0;
   };
   const visible = (c.sections || []).filter(hasData);
-  useReveal(rootRef, JSON.stringify(c) + JSON.stringify(d), d);
+  useReveal(rootRef, JSON.stringify(c) + JSON.stringify({ ...d, edits: 0, colors: 0 }), d);
+  // Whatever the person changed by clicking it in the builder: colours, backgrounds, icons, labels.
+  useEdits(rootRef, d.edits, editing);
   useScramble(rootRef, d.motion !== "none" && d.anim !== "M-000" && !!d.scramble, JSON.stringify(c) + (d.scramble ? 1 : 0));
   const fog = useFogSwitch();
   useSpotlight(rootRef, animated && d.hover === "spotlight");
@@ -714,7 +717,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
   ].filter(Boolean).slice(0, 4);
 
   return (
-    <div ref={rootRef} className={"pf pf-scheme-" + scheme + (preview ? " pf-is-preview" : "")} {...motionAttrs(d)} style={themeStyle(d, pal, scheme)}>
+    <div ref={rootRef} className={"pf pf-scheme-" + scheme + (preview ? " pf-is-preview" : "") + (editing ? " pf-is-editing" : "")} {...motionAttrs(d)} style={themeStyle(d, pal, scheme)}>
       <link rel="stylesheet" href={fontsHref(d.fonts, d.accentFace)} />
       <Progress on={animated && d.progress} />
       <SmoothScroll on={animated && d.smooth !== false} preview={preview} />

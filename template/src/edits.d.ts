@@ -1,0 +1,14 @@
+export const EDIT_ICONS: Record<string, string>;
+export const EDIT_ICON_IDS: string[];
+export function iconSvg(id: string, size?: number): string;
+export function editKey(el: Element | null, root: Element | null): string;
+export function editFind(root: Element | null, key: string): HTMLElement | null;
+export function cleanCss(v: unknown): string;
+export function cleanSrc(v: unknown): string;
+export function cleanHref(v: unknown): string;
+export function editCss(e: Record<string, unknown> | undefined, kind?: "media" | "box" | "text"): string;
+export function isEmptyEdit(e: Record<string, unknown> | undefined | null): boolean;
+export function patchEdits<T extends Record<string, unknown>>(edits: Record<string, T> | undefined, key: string, patch: Partial<T> | Record<string, unknown>): Record<string, T>;
+export function ownWords(el: Element): string;
+export function createEdits(root: Element): { apply: (edits: Record<string, unknown>) => void; destroy: () => void };
+export function useEdits(rootRef: { current: Element | null }, edits: unknown, editing?: boolean): void;
