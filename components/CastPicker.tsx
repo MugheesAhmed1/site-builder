@@ -16,7 +16,8 @@ const CONCEPT_COUNT = SCENES.filter((s) => s.group === "concept").length;
 import { categoryLabel, fitFor, fitsCharacter, fitsWidget } from "@/lib/fit";
 import type { Design } from "@/lib/types";
 
-// The Characters step: 580 characters (520 drawn, 60 real-life) and 512 widgets, all already animated. Pick one
+// The Characters step: 520 drawn characters, 60 real-life ones, the free public art library
+// (open-source emoji illustrations) and 512 widgets, all already animated. Pick one
 // character and up to six widgets; the site is then built around them (the opening scene,
 // a pinned scroll story, a live widget wall and a character that peeks in near the end).
 
@@ -203,7 +204,7 @@ export default function CastPicker({ design, onChange, ctx, kind, category, phot
           </>
         )}
         {tab !== "scenes" && tab !== "concepts" && <p className="hint">
-          {list.length} {tab} shown{scope === "fit" ? ` that suit ${categoryLabel(suitKind, suit).toLowerCase()}` : ""}{lib.source === "github" ? ", including the latest from your GitHub library" : ""}. {tab === "widgets" ? (cast ? `Choose up to ${MAX_WIDGETS}; they fill with your own words and numbers.` : "Pick a character first.") : "Each one is already animated; the preview shows it on your site."}{tab === "characters" && family.startsWith("real-") ? " Real-life pictures were made for this library with Pollinations.ai and are saved with your site, so nothing is generated while it runs." : ""}
+          {list.length} {tab} shown{scope === "fit" ? ` that suit ${categoryLabel(suitKind, suit).toLowerCase()}` : ""}{lib.source === "github" ? ", including the latest from your GitHub library" : ""}. {tab === "widgets" ? (cast ? `Choose up to ${MAX_WIDGETS}; they fill with your own words and numbers.` : "Pick a character first.") : "Each one is already animated; the preview shows it on your site."}{tab === "characters" && family.startsWith("real-") ? " Real-life pictures were made for this library with Pollinations.ai and are saved with your site, so nothing is generated while it runs." : ""}{tab === "characters" && /^(art|flat)-/.test(family) ? " These illustrations come from the free, open-source Fluent Emoji (Microsoft, MIT licence) and Noto Emoji (Google, Apache 2.0) sets; the licence notice is saved with your site." : ""}
         </p>}
       </div>
 

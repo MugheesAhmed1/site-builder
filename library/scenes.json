@@ -1244,5 +1244,709 @@
   "group": "real",
   "palette": "brand",
   "name": "Floating treats"
+ },
+ {
+  "id": "SC-01",
+  "type": "parrot",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Parrot flies in"
+ },
+ {
+  "id": "SC-02",
+  "type": "jungle",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Jungle walk"
+ },
+ {
+  "id": "SC-03",
+  "type": "whale",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Whale swims past"
+ },
+ {
+  "id": "SC-04",
+  "type": "shark",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Whale shark glide"
+ },
+ {
+  "id": "SC-05",
+  "type": "manta",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Manta ray flight"
+ },
+ {
+  "id": "SC-06",
+  "type": "dolphins",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Dolphin leaps"
+ },
+ {
+  "id": "SC-07",
+  "type": "jelly",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Jellyfish glow"
+ },
+ {
+  "id": "SC-08",
+  "type": "orca",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Orca in the kelp"
+ },
+ {
+  "id": "SC-09",
+  "type": "bigfish",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Giant reef fish"
+ },
+ {
+  "id": "SC-10",
+  "type": "safari",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Safari sunset"
+ },
+ {
+  "id": "SC-11",
+  "type": "tiger",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Tiger in the grass"
+ },
+ {
+  "id": "SC-12",
+  "type": "monkey",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Monkey on a vine"
+ },
+ {
+  "id": "SC-13",
+  "type": "hummingbird",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Hummingbird visit"
+ },
+ {
+  "id": "SC-14",
+  "type": "eagle",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Eagle over the peaks"
+ },
+ {
+  "id": "SC-15",
+  "type": "owl",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Night owl"
+ },
+ {
+  "id": "SC-16",
+  "type": "flamingos",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Flamingo flight"
+ },
+ {
+  "id": "SC-17",
+  "type": "horses",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Wild horses"
+ },
+ {
+  "id": "SC-18",
+  "type": "wolf",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Wolf by the lake"
+ },
+ {
+  "id": "SC-19",
+  "type": "fox",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Fox in the snow"
+ },
+ {
+  "id": "SC-20",
+  "type": "monarchs",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Butterfly migration"
+ },
+ {
+  "id": "SC-21",
+  "type": "lanterns",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Lantern night"
+ },
+ {
+  "id": "SC-22",
+  "type": "sail",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Sail away"
+ },
+ {
+  "id": "SC-23",
+  "type": "biplane",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Biplane over the clouds"
+ },
+ {
+  "id": "SC-24",
+  "type": "launch",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Rocket launch"
+ },
+ {
+  "id": "SC-25",
+  "type": "lagoon",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Waterfall lagoon"
+ },
+ {
+  "id": "SC-26",
+  "type": "bamboo",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Bamboo trail"
+ },
+ {
+  "id": "SC-27",
+  "type": "turtle",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Sea turtle glide"
+ },
+ {
+  "id": "SC-28",
+  "type": "plane",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Paper plane journey"
+ },
+ {
+  "id": "SC-29",
+  "type": "balloons",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Balloon sunrise"
+ },
+ {
+  "id": "SC-30",
+  "type": "lavender",
+  "group": "concept",
+  "style": "real",
+  "palette": "brand",
+  "name": "Lavender breeze"
+ },
+ {
+  "id": "SC-31",
+  "type": "p-parrot",
+  "group": "concept",
+  "style": "particle",
+  "palette": "brand",
+  "name": "Particle parrot"
+ },
+ {
+  "id": "SC-32",
+  "type": "p-whale",
+  "group": "concept",
+  "style": "particle",
+  "palette": "brand",
+  "name": "Particle whale"
+ },
+ {
+  "id": "SC-33",
+  "type": "p-eagle",
+  "group": "concept",
+  "style": "particle",
+  "palette": "brand",
+  "name": "Particle eagle"
+ },
+ {
+  "id": "SC-34",
+  "type": "p-elephant",
+  "group": "concept",
+  "style": "particle",
+  "palette": "brand",
+  "name": "Particle elephant"
+ },
+ {
+  "id": "SC-35",
+  "type": "p-jelly",
+  "group": "concept",
+  "style": "particle",
+  "palette": "brand",
+  "name": "Particle jellyfish"
+ },
+ {
+  "id": "SC-36",
+  "type": "p-fish",
+  "group": "concept",
+  "style": "particle",
+  "palette": "brand",
+  "name": "Particle koi"
+ },
+ {
+  "id": "SC-37",
+  "type": "p-horse",
+  "group": "concept",
+  "style": "particle",
+  "palette": "brand",
+  "name": "Particle horse"
+ },
+ {
+  "id": "SC-38",
+  "type": "p-butterfly",
+  "group": "concept",
+  "style": "particle",
+  "palette": "brand",
+  "name": "Particle butterfly"
+ },
+ {
+  "id": "SC-39",
+  "type": "p-turtle",
+  "group": "concept",
+  "style": "particle",
+  "palette": "brand",
+  "name": "Particle turtle"
+ },
+ {
+  "id": "SC-40",
+  "type": "p-plane",
+  "group": "concept",
+  "style": "particle",
+  "palette": "brand",
+  "name": "Particle paper plane"
+ },
+ {
+  "id": "SC-41",
+  "type": "n-hills",
+  "group": "concept",
+  "style": "nature",
+  "palette": "brand",
+  "name": "Birds over the hills"
+ },
+ {
+  "id": "SC-42",
+  "type": "n-moonwhale",
+  "group": "concept",
+  "style": "nature",
+  "palette": "brand",
+  "name": "Whale under the moon"
+ },
+ {
+  "id": "SC-43",
+  "type": "n-savanna",
+  "group": "concept",
+  "style": "nature",
+  "palette": "brand",
+  "name": "Savanna silhouettes"
+ },
+ {
+  "id": "SC-44",
+  "type": "n-jungle",
+  "group": "concept",
+  "style": "nature",
+  "palette": "brand",
+  "name": "Jungle shadows"
+ },
+ {
+  "id": "SC-45",
+  "type": "n-ridge",
+  "group": "concept",
+  "style": "nature",
+  "palette": "brand",
+  "name": "Eagle ridge"
+ },
+ {
+  "id": "SC-46",
+  "type": "n-fox",
+  "group": "concept",
+  "style": "nature",
+  "palette": "brand",
+  "name": "Fox at dusk"
+ },
+ {
+  "id": "SC-47",
+  "type": "n-flamingo",
+  "group": "concept",
+  "style": "nature",
+  "palette": "brand",
+  "name": "Flamingo dawn"
+ },
+ {
+  "id": "SC-48",
+  "type": "n-parrot",
+  "group": "concept",
+  "style": "nature",
+  "palette": "brand",
+  "name": "Parrot shadow"
+ },
+ {
+  "id": "SC-49",
+  "type": "n-turtle",
+  "group": "concept",
+  "style": "nature",
+  "palette": "brand",
+  "name": "Turtle by moonlight"
+ },
+ {
+  "id": "SC-50",
+  "type": "n-butterflies",
+  "group": "concept",
+  "style": "nature",
+  "palette": "brand",
+  "name": "Dusk butterflies"
+ },
+ {
+  "id": "SC-51",
+  "type": "n-gulls",
+  "group": "concept",
+  "style": "nature",
+  "palette": "brand",
+  "name": "Gulls at dawn"
+ },
+ {
+  "id": "SC-52",
+  "type": "c-parrot",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Cartoon parrot"
+ },
+ {
+  "id": "SC-53",
+  "type": "c-whale",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Cartoon whale"
+ },
+ {
+  "id": "SC-54",
+  "type": "c-spout",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Happy whale"
+ },
+ {
+  "id": "SC-55",
+  "type": "c-fish",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Big cartoon fish"
+ },
+ {
+  "id": "SC-56",
+  "type": "c-dolphins",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Cartoon dolphins"
+ },
+ {
+  "id": "SC-57",
+  "type": "c-shark",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Cartoon shark"
+ },
+ {
+  "id": "SC-58",
+  "type": "c-turtle",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Cartoon turtle"
+ },
+ {
+  "id": "SC-59",
+  "type": "c-jelly",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Jelly bloom"
+ },
+ {
+  "id": "SC-60",
+  "type": "c-octopus",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Waving octopus"
+ },
+ {
+  "id": "SC-61",
+  "type": "c-crab",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Crab walk"
+ },
+ {
+  "id": "SC-62",
+  "type": "c-rocket",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Rocket ride"
+ },
+ {
+  "id": "SC-63",
+  "type": "c-ufo",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Flying saucer"
+ },
+ {
+  "id": "SC-64",
+  "type": "c-astronaut",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Floating astronaut"
+ },
+ {
+  "id": "SC-65",
+  "type": "c-bee",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Busy bee"
+ },
+ {
+  "id": "SC-66",
+  "type": "c-butterflies",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Butterfly garden"
+ },
+ {
+  "id": "SC-67",
+  "type": "c-monkey",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Jungle swing"
+ },
+ {
+  "id": "SC-68",
+  "type": "c-dino",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Dino walk"
+ },
+ {
+  "id": "SC-69",
+  "type": "c-tiger",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Cartoon tiger"
+ },
+ {
+  "id": "SC-70",
+  "type": "c-elephant",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Elephant parade"
+ },
+ {
+  "id": "SC-71",
+  "type": "c-horse",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Cartoon pony"
+ },
+ {
+  "id": "SC-72",
+  "type": "c-dragon",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Little dragon"
+ },
+ {
+  "id": "SC-73",
+  "type": "c-eagle",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Cartoon eagle"
+ },
+ {
+  "id": "SC-74",
+  "type": "c-doves",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Dove flight"
+ },
+ {
+  "id": "SC-75",
+  "type": "c-kite",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Kite day"
+ },
+ {
+  "id": "SC-76",
+  "type": "c-balloons",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Party balloons"
+ },
+ {
+  "id": "SC-77",
+  "type": "c-lanterns",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Paper lanterns"
+ },
+ {
+  "id": "SC-78",
+  "type": "c-plane",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Banner helicopter"
+ },
+ {
+  "id": "SC-79",
+  "type": "c-sail",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Cartoon sailboat"
+ },
+ {
+  "id": "SC-80",
+  "type": "c-duck",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Rubber duck sea"
+ },
+ {
+  "id": "SC-81",
+  "type": "c-robot",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Robot stroll"
+ },
+ {
+  "id": "SC-82",
+  "type": "c-plushocto",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Plush octopus"
+ },
+ {
+  "id": "SC-83",
+  "type": "c-birds",
+  "group": "concept",
+  "style": "cartoon",
+  "palette": "brand",
+  "name": "Blue birds"
+ },
+ {
+  "id": "SC-84",
+  "type": "p-dolphin",
+  "group": "concept",
+  "style": "particle",
+  "palette": "brand",
+  "name": "Particle dolphins"
+ },
+ {
+  "id": "SC-85",
+  "type": "p-dragon",
+  "group": "concept",
+  "style": "particle",
+  "palette": "brand",
+  "name": "Particle dragon"
+ },
+ {
+  "id": "SC-86",
+  "type": "n-dolphins",
+  "group": "concept",
+  "style": "nature",
+  "palette": "brand",
+  "name": "Dolphins at dusk"
+ },
+ {
+  "id": "SC-87",
+  "type": "n-dino",
+  "group": "concept",
+  "style": "nature",
+  "palette": "brand",
+  "name": "Dinosaur dusk"
+ },
+ {
+  "id": "SC-88",
+  "type": "n-kite",
+  "group": "concept",
+  "style": "nature",
+  "palette": "brand",
+  "name": "Kite at dawn"
  }
 ]
