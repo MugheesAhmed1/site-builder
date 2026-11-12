@@ -656,3 +656,82 @@ html, body { overflow-x: clip; }
   .concept-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .concept-bar select { flex: 1 1 100%; }
 }
+
+/* ------------------------------------------------------------------ pe-: edit on page inspector (owned by the editing work; keep from here down) */
+.preview-work { position: relative; display: flex; align-items: stretch; gap: 0; min-width: 0; }
+.preview-work > .preview-viewport { flex: 1 1 auto; min-width: 0; }
+.preview-viewport.is-editing { position: relative; }
+.preview-viewport.is-editing .pf { cursor: default; }
+.preview-viewport.is-editing .pf * { cursor: pointer; }
+.pe-boxes { position: absolute; inset: 0 auto auto 0; width: 0; height: 0; pointer-events: none; z-index: 2147483000; }
+.pe-box { position: absolute; display: none; box-sizing: border-box; pointer-events: none; border-radius: 3px; }
+.pe-box-hover { outline: 1.5px dashed #2563eb; outline-offset: 1px; background: rgb(37 99 235 / 0.06); }
+.pe-box-pick { outline: 2px solid #2563eb; outline-offset: 1px; }
+.pe-box::before { content: attr(data-name); position: absolute; left: -2px; bottom: 100%; margin-bottom: 3px; padding: 2px 7px; border-radius: 4px; background: #2563eb; color: #fff; font: 600 11px/1.5 ui-sans-serif, system-ui, sans-serif; white-space: nowrap; max-width: 260px; overflow: hidden; text-overflow: ellipsis; }
+.pe-box[data-name=""]::before, .pe-box:not([data-name])::before { display: none; }
+.pe-box-hover::before { background: #1e293b; }
+
+.pe-panel { flex: 0 0 328px; width: 328px; display: flex; flex-direction: column; max-height: calc(100dvh - 200px); border: 1px solid var(--line); border-left: 0; border-radius: 0 14px 14px 0; background: var(--panel); color: var(--text); overflow: hidden; animation: pe-slide 0.2s cubic-bezier(0.23, 1, 0.32, 1); }
+@keyframes pe-slide { from { opacity: 0; transform: translateX(8px); } }
+.preview.is-inspecting .preview-viewport { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.pe-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; padding: 14px 14px 10px; border-bottom: 1px solid var(--line); }
+.pe-kicker { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.pe-title { font-size: 16px; font-weight: 700; line-height: 1.25; margin: 2px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-transform: none; }
+.pe-title::first-letter { text-transform: uppercase; }
+.pe-crumbs { display: grid; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--sunk); }
+.pe-crumbs > div { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+.pe-crumb-lbl { font-size: 12px; font-weight: 600; color: var(--muted); margin-right: 2px; }
+.pe-body { flex: 1 1 auto; overflow-y: auto; padding: 12px 14px 16px; overscroll-behavior: contain; }
+.pe-foot { padding: 10px 14px; border-top: 1px solid var(--line); }
+.pe-group { border-bottom: 1px solid var(--line); padding: 2px 0; }
+.pe-group:last-child { border-bottom: 0; }
+.pe-group > summary { display: flex; align-items: center; justify-content: space-between; cursor: pointer; list-style: none; padding: 10px 0; font-size: 14px; font-weight: 700; user-select: none; }
+.pe-group > summary::-webkit-details-marker { display: none; }
+.pe-group > summary::after { content: ""; width: 7px; height: 7px; border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted); transform: rotate(-45deg); transition: transform 0.15s ease; margin-right: 4px; }
+.pe-group[open] > summary::after { transform: rotate(45deg); }
+.pe-group-body { display: grid; gap: 12px; padding: 0 0 14px; min-width: 0; }
+.pe-group-body textarea, .pe-group-body input[type="text"], .pe-group-body input[type="search"], .pe-group-body input[type="url"], .pe-group-body select { width: 100%; font-size: 14px; min-height: 38px; }
+.pe-field { display: grid; gap: 7px; min-width: 0; }
+.pe-field-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.pe-lbl { font-size: 13px; font-weight: 600; color: var(--muted); }
+.pe-val { display: inline-flex; align-items: baseline; gap: 8px; font-size: 12px; font-variant-numeric: tabular-nums; color: var(--muted); }
+.pe-link { border: 0; background: none; padding: 0; font: inherit; font-size: 12px; font-weight: 600; color: var(--accent-text, var(--accent)); cursor: pointer; text-align: left; }
+.pe-link:disabled { color: var(--muted); cursor: default; }
+@media (hover: hover) and (pointer: fine) { .pe-link:not(:disabled):hover { text-decoration: underline; } }
+.pe-color { display: flex; gap: 8px; align-items: center; }
+.pe-well { position: relative; flex: none; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 9px; border: 1px solid var(--line-strong); cursor: pointer; overflow: hidden; color: var(--muted); font-weight: 700; background-image: linear-gradient(45deg, #0001 25%, transparent 25%, transparent 75%, #0001 75%), linear-gradient(45deg, #0001 25%, transparent 25%, transparent 75%, #0001 75%); background-size: 10px 10px; background-position: 0 0, 5px 5px; }
+.pe-well input { position: absolute; inset: -6px; width: calc(100% + 12px); height: calc(100% + 12px); min-height: 0; padding: 0; border: 0; opacity: 0; cursor: pointer; }
+.pe-well:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pe-well-sm { width: 28px; height: 28px; border-radius: 7px; }
+.pe-hex { flex: 1; min-width: 0; font-family: ui-monospace, monospace; font-size: 13px !important; text-transform: uppercase; }
+.pe-swatches { display: flex; flex-wrap: wrap; gap: 5px; }
+.pe-swatch { width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgb(0 0 0 / 0.18); cursor: pointer; padding: 0; transition: transform 0.12s ease; }
+.pe-swatch.is-on { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pe-swatch:active { transform: scale(0.9); }
+.pe-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.pe-chip { border: 1px solid var(--line-strong); background: var(--panel); color: var(--text); font: inherit; font-size: 13px; font-weight: 600; min-height: 30px; padding: 3px 10px; border-radius: 999px; cursor: pointer; text-align: left; transition: background-color 0.15s ease, border-color 0.15s ease; }
+.pe-chip::first-letter { text-transform: uppercase; }
+.pe-chip.is-on { background: var(--accent-soft, var(--sunk)); border-color: var(--accent); color: var(--accent-text, var(--text)); }
+.pe-seg { width: 100%; }
+.pe-seg button { flex: 1; padding: 0 6px; font-size: 13px; }
+.pe-icons { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; max-height: 190px; overflow-y: auto; padding: 2px; }
+.pe-icon-btn { display: grid; place-items: center; aspect-ratio: 1; border: 1px solid transparent; border-radius: 8px; background: var(--sunk); color: var(--text); cursor: pointer; padding: 0; }
+.pe-icon-btn.is-on { border-color: var(--accent); background: var(--accent-soft, var(--sunk)); color: var(--accent-text, var(--text)); }
+@media (hover: hover) and (pointer: fine) { .pe-icon-btn:hover { border-color: var(--line-strong); } }
+.pe-row { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.pe-row-name { flex: 1; min-width: 0; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pe-code { font-size: 11px; color: var(--muted); }
+.btn.is-on { border-color: var(--accent); color: var(--accent-text, var(--text)); }
+/* Narrow builders and phones: the inspector becomes a sheet under the page. */
+@container preview (max-width: 760px) {
+  .preview-work { flex-direction: column; }
+  .pe-panel { flex: none; width: auto; max-height: 46vh; border-left: 1px solid var(--line); border-top: 0; border-radius: 0 0 14px 14px; }
+  .preview.is-inspecting .preview-viewport { border-radius: 14px 14px 0 0; max-height: 48vh; }
+}
+.preview { container: preview / inline-size; }
+@media (max-width: 760px) {
+  .preview-work { flex-direction: column; }
+  .pe-panel { flex: none; width: auto; max-height: 46vh; border-left: 1px solid var(--line); border-top: 0; border-radius: 0 0 14px 14px; }
+  .preview.is-inspecting .preview-viewport { max-height: 48vh; }
+}
+@media (prefers-reduced-motion: reduce) { .pe-panel { animation: none; } }

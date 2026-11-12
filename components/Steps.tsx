@@ -5,7 +5,7 @@ import FieldsEditor from "@/components/FieldsEditor";
 import Icon from "@/components/Icon";
 import Preview from "@/components/Preview";
 import { downloadZip, saveBlob, siteName, slug as slugOf } from "@/lib/export";
-import type { PortfolioContent, Project, SiteContent, WebsiteContent } from "@/lib/types";
+import type { Design, PortfolioContent, Project, SiteContent, WebsiteContent } from "@/lib/types";
 
 // Steps shared by the Website Builder and the Portfolio Studio.
 
@@ -58,6 +58,7 @@ export function BuildStep({
   word,
   onRebuild,
   onEdit,
+  onDesign,
   onUndo,
   onApprove,
 }: {
@@ -66,6 +67,7 @@ export function BuildStep({
   word: string;
   onRebuild: () => void;
   onEdit: (c: SiteContent) => void;
+  onDesign?: (patch: Partial<Design>) => void;
   onUndo: (i: number) => void;
   onApprove: () => void;
 }) {
@@ -83,7 +85,7 @@ export function BuildStep({
     <>
       {head(
         "Your " + word,
-        "Check it on desktop and phone, in light and dark. Press Edit on page to click any words or picture and change it, or upload and paste your own photos. Nothing here is written by AI; it comes from your answers.",
+        "Check it on desktop and phone, in light and dark. Press Edit on page, then click anything to change it: words, pictures, icons, buttons, colours, backgrounds, widgets and the live scene. Nothing here is written by AI; it comes from your answers.",
         <button className="btn btn-primary" onClick={onApprove}>
           Approve {word}
           <Icon name="arrow" size={16} />
@@ -112,14 +114,14 @@ export function BuildStep({
           </button>
         ))}
       </div>
-      {tab === "preview" && <Preview kind={p.kind} design={p.design} content={c} onContentChange={onEdit} />}
+      {tab === "preview" && <Preview kind={p.kind} design={p.design} content={c} onContentChange={onEdit} onDesignChange={onDesign} />}
       {tab === "content" && (
         <div className="design-grid" style={{ gridTemplateColumns: "minmax(0, 400px) minmax(0, 1fr)" }}>
           <div className="panel">
             <FieldsEditor value={c} onChange={onEdit} skip={["sections"]} />
           </div>
           <div className="sticky-preview">
-            <Preview kind={p.kind} design={p.design} content={c} onContentChange={onEdit} />
+            <Preview kind={p.kind} design={p.design} content={c} onContentChange={onEdit} onDesignChange={onDesign} />
           </div>
         </div>
       )}
@@ -157,7 +159,7 @@ export function BuildStep({
             })}
           </div>
           <div className="sticky-preview">
-            <Preview kind={p.kind} design={p.design} content={c} onContentChange={onEdit} />
+            <Preview kind={p.kind} design={p.design} content={c} onContentChange={onEdit} onDesignChange={onDesign} />
           </div>
         </div>
       )}
