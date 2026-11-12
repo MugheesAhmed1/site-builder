@@ -305,6 +305,11 @@
 .pf-scene-backdrop.sc-group-photo { opacity: 0.32; }
 .pf-scene-backdrop .sc-photo-card { border-radius: 0; box-shadow: none; transform: none !important; }
 .pf-scene-backdrop .sc-ph { display: none; }
+/* On phones the words run full width over the scene, so a side fade cannot protect them: quieten the scene and veil it evenly. */
+@media (max-width: 720px) {
+  .pf-scene-backdrop { opacity: 0.4; }
+  .pf-scene-backdrop::after, .pf-hero--centered .pf-scene-backdrop::after { background: color-mix(in srgb, var(--pf-bg) 55%, transparent); }
+}
 
 /* Photo scenes */
 .sc-photo { position: absolute; inset: 0; display: grid; place-items: center; perspective: 900px; --px: 0.5; --py: 0.5; --mx: 50%; --my: 50%; }

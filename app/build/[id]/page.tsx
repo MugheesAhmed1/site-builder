@@ -411,7 +411,7 @@ function QuestionsStep({
       )}
       {tried && missing.length > 0 && (
         <div className="notice notice-warn" role="alert" style={{ marginBottom: 20, maxWidth: 760 }}>
-          Please answer: {missing.map((q) => q.label.toLowerCase()).join(", ")}.
+          Please answer: {missing.map((q) => q.label.toLowerCase().replace(/[?.!]+$/, "")).join(", ")}.
         </div>
       )}
       {p.kind === "portfolio" && <ResumeBox p={p} onResume={onResume} onProfile={onProfile} />}
