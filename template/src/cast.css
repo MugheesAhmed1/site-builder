@@ -329,13 +329,14 @@
 @keyframes sc-float { to { transform: translateY(-14px) rotate(6deg); } }
 
 /* Liquid metal */
-.sc-liquid { position: absolute; inset: 0; overflow: hidden; --mx: 50%; --my: 50%; }
-.sc-liquid-inner { position: absolute; inset: 0; }
+.sc-liquid { position: absolute; inset: 0; overflow: hidden; --mx: 50%; --my: 50%; --px: 0.5; --py: 0.5; /* sampled by src/spring.js */ --sc-spring-follow: 0.525s linear(0, 0.0177, 0.0627, 0.125, 0.1974, 0.2742, 0.3516, 0.4268, 0.4979, 0.5639, 0.6241, 0.6783, 0.7265, 0.769, 0.8062, 0.8383, 0.866, 0.8896, 0.9096, 0.9265, 0.9406, 0.9524, 0.9621, 0.9701, 0.9766, 0.9819, 0.9862, 0.9896, 0.9923, 0.9945, 0.9961, 0.9974, 0.9984, 1); }
+.sc-liquid-inner { position: absolute; inset: 0; container-type: size; }
 .sc-blob { position: absolute; width: 30%; aspect-ratio: 1; border-radius: 50%; background: var(--sc-a); left: 35%; top: 35%; animation: sc-blob 8s ease-in-out infinite alternate; }
 .sc-b2 { width: 22%; left: 20%; top: 50%; animation-duration: 6s; animation-delay: -2s; background: color-mix(in srgb, var(--sc-a) 75%, var(--sc-b)); }
 .sc-b3 { width: 18%; left: 60%; top: 26%; animation-duration: 7s; animation-delay: -4s; }
 .sc-b4 { width: 14%; left: 50%; top: 62%; animation-duration: 5s; animation-delay: -1s; }
-.sc-follow { width: 20%; left: var(--mx); top: var(--my); translate: -50% -50%; animation: none; transition: left 0.5s cubic-bezier(0.23, 1, 0.32, 1), top 0.5s cubic-bezier(0.23, 1, 0.32, 1); }
+/* Follows the pointer with translate (no layout work per move), sprung so it settles softly. */
+.sc-follow { width: 20%; left: 0; top: 0; translate: calc(var(--px) * 100cqw - 50%) calc(var(--py) * 100cqh - 50%); animation: none; transition: translate var(--sc-spring-follow); }
 @keyframes sc-blob { 0% { transform: translate(-20%, 10%) scale(1); } 50% { transform: translate(30%, -20%) scale(1.15); } 100% { transform: translate(-10%, -30%) scale(0.9); } }
 
 @media (prefers-reduced-motion: reduce) {
