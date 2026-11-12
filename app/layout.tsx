@@ -3,6 +3,7 @@ import "./globals.css";
 import "@/template/src/portfolio.css";
 import "@/template/src/cast.css";
 import "@/template/src/studio.css";
+import "@/template/src/showpiece.css";
 
 const FONTS = "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap";
 

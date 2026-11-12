@@ -68,6 +68,10 @@ export interface Design {
   flight?: boolean; // tiles fly from a tray into a sentence as you scroll
   carousel?: boolean; // the gallery becomes a drag carousel that drifts on its own
   scrollWords?: boolean; // the first about paragraph sharpens word by word
+  showpiece?: "none" | "sphere" | "arc" | "track"; // one big interactive set piece
+  scramble?: boolean; // section titles resolve out of random symbols
+  fogSwitch?: boolean; // a fog bank hides the light and dark theme switch
+  pack?: string; // the animation pack last applied, if any
 }
 
 export interface ScenePick {

@@ -4,6 +4,7 @@ import { useAnimate, useReducedMotion } from "motion/react";
 import { stagger } from "motion";
 import { useMemo, useState } from "react";
 import VideoField from "@/components/VideoField";
+import { PACKS, matchPack } from "@/lib/packs";
 import Icon from "@/components/Icon";
 import { FEELS, MOTIONS, REST, REVEAL_NAMES, TEMPO_NAMES, motionById, type MotionStyle } from "@/template/src/motion.js";
 import CategorySelect from "@/components/CategorySelect";
@@ -117,6 +118,7 @@ export default function MotionPicker({
   const reset = () => setShown(PAGE);
   const pick = (m: MotionStyle) => onChange({ anim: m.id, motion: m.id === "M-000" ? "none" : "expressive", hover: m.id === "M-000" ? "none" : design.hover === "none" ? m.hover : design.hover });
   const chosen = motionById(current);
+  const packNow = matchPack(design);
 
   return (
     <div className="motion-picker">
@@ -138,6 +140,19 @@ export default function MotionPicker({
           <Icon name="shuffle" size={15} />
           Surprise me
         </button>
+      </div>
+
+      <div className="panel packs">
+        <span className="lbl">Animation packs</span>
+        <p className="small muted">Tested combinations. One click sets every switch below; you can still change any of them.</p>
+        <div className="pack-grid">
+          {PACKS.map((p) => (
+            <button key={p.id} className={"pack" + (packNow === p.id ? " is-on" : "")} aria-pressed={packNow === p.id} onClick={() => onChange({ ...p.set, pack: p.id })}>
+              <b>{p.name}</b>
+              <span className="small muted">{p.blurb}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="panel stack" style={{ gap: 16 }}>
@@ -177,99 +192,50 @@ export default function MotionPicker({
         </label>
       </div>
 
-      <div className="panel stack" style={{ gap: 16 }}>
+      <div className="panel stack layers" style={{ gap: 18 }}>
         <div>
-          <span className="lbl">Studio touches</span>
-          <p className="small muted">Techniques seen on award winning studio sites, rebuilt from scratch. Touch screens and reduced motion settings skip them.</p>
+          <span className="lbl">Showpiece</span>
+          <p className="small muted">One big interactive moment, placed right after your opening. Pick one or none.</p>
+          <div className="seg" role="group" aria-label="Showpiece" style={{ marginTop: 8 }}>
+            {SHOWPIECE_OPTS.map(([v, name]) => (
+              <button key={v} aria-pressed={(design.showpiece || "none") === v} className={(design.showpiece || "none") === v ? "is-on" : ""} onClick={() => onChange({ showpiece: v })}>
+                {name}
+              </button>
+            ))}
+          </div>
+          <p className="small muted" style={{ marginTop: 8 }}>{SHOWPIECE_OPTS.find(([v]) => v === (design.showpiece || "none"))![2]}</p>
         </div>
-        <label className="toggle">
-          <input type="checkbox" checked={!!design.intro} onChange={(e) => onChange({ intro: e.target.checked })} />
-          <span>
-            <b>Opening counter</b>
-            <span className="small muted"> Your name and a count to 100, then a curtain lifts to show the site.</span>
-          </span>
-        </label>
-        <label className="toggle">
-          <input type="checkbox" checked={!!design.magnetic} onChange={(e) => onChange({ magnetic: e.target.checked })} />
-          <span>
-            <b>Magnetic buttons</b>
-            <span className="small muted"> Buttons lean toward the pointer as it comes close.</span>
-          </span>
-        </label>
-        <label className="toggle">
-          <input type="checkbox" checked={!!design.cursor} onChange={(e) => onChange({ cursor: e.target.checked })} />
-          <span>
-            <b>Custom cursor</b>
-            <span className="small muted"> A soft ring follows the pointer and grows over links and widgets.</span>
-          </span>
-        </label>
-        <label className="toggle">
-          <input type="checkbox" checked={design.tilt !== false} onChange={(e) => onChange({ tilt: e.target.checked })} />
-          <span>
-            <b>3D tilt</b>
-            <span className="small muted"> Cards and widget tiles lean toward the pointer, like objects you can hold.</span>
-          </span>
-        </label>
-      </div>
 
-      <div className="panel studio-panel">
-        <h3 className="h3" style={{ margin: 0 }}>Studio effects</h3>
-        <p className="small muted" style={{ margin: "4px 0 12px" }}>The scroll tricks you see on award sites. Each one is built in and works on phones too.</p>
-        <div className="studio-grid">
-          <div className="studio-video">
-            <label className="toggle">
-              <input type="checkbox" checked={video || design.video ? design.film !== false : !!design.film} onChange={(e) => onChange({ film: e.target.checked })} />
-              <span>
-                <b>Scroll film</b>
-                <span className="small muted"> Your video plays forward and back as people scroll, with your steps pinned beside it and glowing hotspots at the end.</span>
-              </span>
-            </label>
+        <div className="layer">
+          <span className="lbl">Opening</span>
+          <Toggle on={design.loader === "line"} set={(v) => onChange({ loader: v ? "line" : "none" })} name="Line loader" text="One line of text slides up through a mask, then the page wipes open." />
+          <Toggle on={!!design.intro} set={(v) => onChange({ intro: v })} name="Opening counter" text="Your name and a count to 100, then a curtain lifts to show the site." />
+        </div>
+
+        <div className="layer">
+          <span className="lbl">Scrolling</span>
+          <Toggle on={design.smooth !== false} set={(v) => onChange({ smooth: v })} name="Smooth scroll" text="The page glides with a little weight instead of jumping." />
+          <Toggle on={video || design.video ? design.film !== false : !!design.film} set={(v) => onChange({ film: v })} name="Scroll film" text="Your video plays forward and back as people scroll, with your steps pinned beside it." />
+          {(video || design.video || design.film) && (
             <VideoField label="Film video" value={video || design.video || ""} onChange={(v) => (onVideo && video && onVideo(""), onChange(v && design.film === false ? { video: v, film: true } : { video: v }))} />
-          </div>
-          <div className="studio-toggles">
-            <label className="toggle">
-              <input type="checkbox" checked={design.smooth !== false} onChange={(e) => onChange({ smooth: e.target.checked })} />
-              <span>
-                <b>Smooth scroll</b>
-                <span className="small muted"> The page glides with a little weight instead of jumping.</span>
-              </span>
-            </label>
-            <label className="toggle">
-              <input type="checkbox" checked={design.loader === "line"} onChange={(e) => onChange({ loader: e.target.checked ? "line" : "none" })} />
-              <span>
-                <b>Line loader</b>
-                <span className="small muted"> One line of text slides up through a mask, then the page wipes open.</span>
-              </span>
-            </label>
-            <label className="toggle">
-              <input type="checkbox" checked={design.flight !== false} onChange={(e) => onChange({ flight: e.target.checked })} />
-              <span>
-                <b>Flying tiles</b>
-                <span className="small muted"> Your pictures or services fly out of a tray into gaps in a sentence as you scroll.</span>
-              </span>
-            </label>
-            <label className="toggle">
-              <input type="checkbox" checked={design.scrollWords !== false} onChange={(e) => onChange({ scrollWords: e.target.checked })} />
-              <span>
-                <b>Word by word</b>
-                <span className="small muted"> Your opening about text sharpens one word at a time as it scrolls past.</span>
-              </span>
-            </label>
-            <label className="toggle">
-              <input type="checkbox" checked={!!design.carousel} onChange={(e) => onChange({ carousel: e.target.checked })} />
-              <span>
-                <b>Drag carousel</b>
-                <span className="small muted"> The gallery drifts by itself and people can drag it with a finger or mouse.</span>
-              </span>
-            </label>
-            <label className="toggle">
-              <input type="checkbox" checked={!!design.grain} onChange={(e) => onChange({ grain: e.target.checked })} />
-              <span>
-                <b>Film grain</b>
-                <span className="small muted"> A fine moving grain and soft dark corners, like a cinema print.</span>
-              </span>
-            </label>
-          </div>
+          )}
+          <Toggle on={design.flight !== false} set={(v) => onChange({ flight: v })} name="Flying tiles" text="Your pictures or services fly out of a tray into gaps in a sentence." />
+          <Toggle on={design.scrollWords !== false} set={(v) => onChange({ scrollWords: v })} name="Word by word" text="Your opening about text sharpens one word at a time as it scrolls past." />
+        </div>
+
+        <div className="layer">
+          <span className="lbl">Atmosphere and transitions</span>
+          <Toggle on={!!design.grain} set={(v) => onChange({ grain: v })} name="Film grain" text="A fine moving grain and soft dark corners, like a cinema print." />
+          <Toggle on={design.fogSwitch !== false} set={(v) => onChange({ fogSwitch: v })} name="Fog theme switch" text="Switching light and dark sends a fog bank up the screen that hides the change." />
+          <Toggle on={!!design.scramble} set={(v) => onChange({ scramble: v })} name="Scrambled titles" text="Section titles resolve out of random symbols the first time they appear." />
+          <Toggle on={!!design.carousel} set={(v) => onChange({ carousel: v })} name="Drag carousel" text="The gallery drifts by itself and people can drag it with a finger or mouse." />
+        </div>
+
+        <div className="layer">
+          <span className="lbl">Pointer</span>
+          <Toggle on={!!design.magnetic} set={(v) => onChange({ magnetic: v })} name="Magnetic buttons" text="Buttons lean toward the pointer as it comes close." />
+          <Toggle on={!!design.cursor} set={(v) => onChange({ cursor: v })} name="Custom cursor" text="A soft ring follows the pointer and grows over links and widgets." />
+          <Toggle on={design.tilt !== false} set={(v) => onChange({ tilt: v })} name="3D tilt" text="Cards and widget tiles lean toward the pointer, like objects you can hold." />
         </div>
       </div>
 
@@ -325,5 +291,24 @@ export default function MotionPicker({
         </div>
       )}
     </div>
+  );
+}
+
+const SHOWPIECE_OPTS: [NonNullable<Design["showpiece"]>, string, string][] = [
+  ["none", "None", "No showpiece. Your sections follow the opening straight away."],
+  ["sphere", "Work sphere", "A globe of your pictures and services that people spin by dragging. It opens with a count, a spinning ring and a burst. Tap a tile to open it."],
+  ["arc", "Card arc", "Cards curve around a stage. Drag, swipe or use the arrows; whichever lands in front is scanned into place with a glowing line."],
+  ["track", "Story track", "Your story slides sideways as people scroll, and your character pushes each line of text out of its way."],
+];
+
+function Toggle({ on, set, name, text }: { on: boolean; set: (v: boolean) => void; name: string; text: string }) {
+  return (
+    <label className="toggle">
+      <input type="checkbox" checked={on} onChange={(e) => set(e.target.checked)} />
+      <span>
+        <b>{name}</b>
+        <span className="small muted"> {text}</span>
+      </span>
+    </label>
   );
 }

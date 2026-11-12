@@ -1,9 +1,10 @@
 import { useMemo, useRef, useState } from "react";
 import { palette, resolveScheme } from "./theme.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
-import { CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
+import { CastCharacter, CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
 import { Scene } from "./Scenes.jsx";
 import { Carousel, Film, Flight, Grain, LineLoader, ScrollWords, SmoothScroll } from "./studio.jsx";
+import { Arc, Sphere, Track, propsFor, useFogSwitch, useScramble } from "./showpiece.jsx";
 import { Extras } from "./extras.jsx";
 import { Avatar, Counter, cleanContent, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
@@ -126,6 +127,8 @@ export default function Website({ design, content, preview = false, scheme: forc
   };
   const visible = (c.sections || []).filter(has);
   useReveal(rootRef, JSON.stringify(c) + JSON.stringify(d), d);
+  useScramble(rootRef, d.motion !== "none" && d.anim !== "M-000" && !!d.scramble, JSON.stringify(c) + (d.scramble ? 1 : 0));
+  const fog = useFogSwitch();
   useSpotlight(rootRef, animated && d.hover === "spotlight");
   useActiveSection(rootRef, visible.join(","), setActiveId);
 
@@ -202,6 +205,16 @@ export default function Website({ design, content, preview = false, scheme: forc
   const filmOn = animated && (filmSrc ? d.film !== false : preview && d.film === true);
   const flySentence = String((c.about && (c.about.paragraphs || []).find(Boolean)) || h.sub || "").split(/(?<=[.!?])\s/)[0].slice(0, 160);
   const flyTiles = (arr("gallery").some((g) => g.imageUrl) ? arr("gallery").map((g) => ({ label: g.caption, image: g.imageUrl })) : arr("services").map((x) => ({ label: x.name }))).filter((t) => t.label || t.image);
+  const showpiece = animated ? d.showpiece || "none" : "none";
+  const spItems = [...arr("gallery").filter((g) => g.imageUrl).map((g) => ({ title: g.caption, image: g.imageUrl })), ...arr("services").map((x) => ({ title: x.name, note: x.price || x.description })), ...arr("team").map((m) => ({ title: m.name, note: m.role, image: m.photoUrl }))];
+  const trackBlocks = showpiece === "track" ? [
+    c.about && (c.about.paragraphs || []).find(Boolean) ? { kind: "text", head: c.about.heading || "About", text: (c.about.paragraphs || []).find(Boolean) } : null,
+    arr("services").length ? { kind: "list", head: "What we do", lines: arr("services").slice(0, 6).map((x) => x.name) } : null,
+    arr("testimonials").length ? { kind: "quote", head: arr("testimonials")[0].name, text: arr("testimonials")[0].quote } : null,
+    arr("highlights").length ? { kind: "stats", head: "In numbers", lines: arr("highlights").map((x) => x.value + "  " + x.label) } : null,
+    arr("process").length ? { kind: "list", head: "How it works", lines: arr("process").slice(0, 5).map((x, i) => String(i + 1).padStart(2, "0") + "  " + x.title) } : null,
+    c.contact && (c.contact.phone || c.contact.email) ? { kind: "list", head: "Say hello", lines: [c.contact.phone, c.contact.email, c.visit && c.visit.address].filter(Boolean) } : null,
+  ].filter(Boolean) : [];
   const renderHero = () => {
     if (hero === "stage") {
       return (
@@ -550,6 +563,7 @@ export default function Website({ design, content, preview = false, scheme: forc
       <link rel="stylesheet" href={fontsHref(d.fonts)} />
       <Progress on={animated && d.progress} />
       <SmoothScroll on={animated && d.smooth !== false} preview={preview} />
+      {fog.layer}
       {animated && d.grain && <Grain />}
       {animated && d.loader === "line" && <LineLoader text={h.kicker || h.role || (c.meta && c.meta.title) || ""} preview={preview} />}
       {animated && <Extras rootRef={rootRef} design={d} label={c.brand.name} preview={preview} />}
@@ -567,7 +581,7 @@ export default function Website({ design, content, preview = false, scheme: forc
           </nav>
           <div className="pf-row pf-nav-tools">
             {!forcedScheme && (
-              <button className="pf-icon-btn" aria-label={scheme === "dark" ? "Switch to light theme" : "Switch to dark theme"} onClick={() => setOverride(scheme === "dark" ? "light" : "dark")}>
+              <button className="pf-icon-btn" aria-label={scheme === "dark" ? "Switch to light theme" : "Switch to dark theme"} onClick={() => (d.fogSwitch !== false && d.motion !== "none" ? fog.run(() => setOverride(scheme === "dark" ? "light" : "dark"), scheme !== "dark") : setOverride(scheme === "dark" ? "light" : "dark"))}>
                 <Icon name={scheme === "dark" ? "sun" : "moon"} />
               </button>
             )}
@@ -586,7 +600,11 @@ export default function Website({ design, content, preview = false, scheme: forc
 
       {filmOn && <Film src={filmSrc} steps={storySteps} title={arr("process").length >= 2 ? "How it works" : "What we do"} highlights={arr("highlights").map((x) => ({ label: x.label, value: x.value }))} preview={preview} path="hero.videoUrl" kicker={c.brand.name} />}
 
-      {!(filmSrc && filmOn) && cast && animated && d.castStory !== false && storySteps.length >= 2 && <CastStory character={cast.character} widgets={cast.widgets} ctx={ctx} steps={storySteps} title={arr("process").length >= 2 ? "How it works" : "What we do"} />}
+      {!(filmSrc && filmOn) && showpiece !== "track" && cast && animated && d.castStory !== false && storySteps.length >= 2 && <CastStory character={cast.character} widgets={cast.widgets} ctx={ctx} steps={storySteps} title={arr("process").length >= 2 ? "How it works" : "What we do"} />}
+
+      {showpiece === "sphere" && <Sphere props={propsFor(c.brand && c.brand.category)} items={spItems} title={"Explore"} />}
+      {showpiece === "arc" && <Arc props={propsFor(c.brand && c.brand.category)} items={spItems} title={"Explore"} />}
+      {showpiece === "track" && <Track blocks={trackBlocks} title={c.brand.name} mascot={cast ? <CastCharacter def={cast.character} size={180} /> : null} />}
 
       {visible.map(render)}
 

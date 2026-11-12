@@ -7,6 +7,7 @@ import { palette, resolveScheme } from "./theme.js";
 import "./portfolio.css";
 import "./cast.css";
 import "./studio.css";
+import "./showpiece.css";
 
 // site-data.json holds the design system and every word on the page.
 // kind is "portfolio" (a personal site) or "website" (a business site).

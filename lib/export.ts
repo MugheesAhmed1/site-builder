@@ -1,5 +1,6 @@
 "use client";
 
+import { propPaths } from "@/template/src/props.js";
 import { getMedia, mediaRefs, swapMedia } from "@/lib/media";
 import { palette, resolveScheme } from "@/template/src/theme.js";
 import { sceneAssets } from "@/template/src/scenes.js";
@@ -175,6 +176,11 @@ const ROBOTS = "User-agent: *\nAllow: /\n";
 
 export function realAssets(p: Project): string[] {
   const out = new Set<string>(sceneAssets(p.design.scene));
+  // The sphere and arc showpieces give picture-less tiles a cut-out from the real-life pack.
+  if (p.design.showpiece === "sphere" || p.design.showpiece === "arc") {
+    const cat = p.kind === "portfolio" ? "portfolio" : (p.content as WebsiteContent | null)?.brand?.category || p.category;
+    for (const path of propPaths(cat)) out.add(path);
+  }
   JSON.stringify([p.design, p.content], (_k, v) => {
     if (typeof v === "string" && /^\/real\/[\w/-]+\.webp$/.test(v)) out.add(v);
     return v;

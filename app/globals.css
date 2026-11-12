@@ -619,3 +619,9 @@ html, body { overflow-x: clip; }
 /* Stand-ins sized to match the headline font, so lines do not re-wrap when it arrives. */
 @font-face { font-family: "Bricolage Fallback"; src: local("Arial Bold"), local("Arial-BoldMT"), local("Arial"); size-adjust: 90%; font-weight: 500 700; }
 @font-face { font-family: "Bricolage Fallback 2"; src: local("Roboto Bold"), local("Roboto-Bold"), local("Roboto"), local("Liberation Sans Bold"), local("Liberation Sans"); size-adjust: 90%; font-weight: 500 700; }
+.layers .layer { display: grid; gap: 4px; padding-top: 14px; border-top: 1px solid var(--line); }
+.pack-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); gap: 8px; margin-top: 10px; }
+.pack { display: grid; gap: 4px; text-align: left; padding: 12px 14px; min-height: 44px; border-radius: 12px; border: 1px solid var(--line); background: transparent; color: inherit; font: inherit; cursor: pointer; transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.12s ease; }
+.pack:active { transform: scale(0.98); }
+.pack.is-on { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); }
+@media (hover: hover) and (pointer: fine) { .pack:hover { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); } }

@@ -1,9 +1,10 @@
 import { useMemo, useRef, useState } from "react";
 import { palette, resolveScheme } from "./theme.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
-import { CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
+import { CastCharacter, CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
 import { Scene } from "./Scenes.jsx";
 import { Carousel, Film, Flight, Grain, LineLoader, ScrollWords, SmoothScroll } from "./studio.jsx";
+import { Arc, Sphere, Track, propsFor, useFogSwitch, useScramble } from "./showpiece.jsx";
 import { Extras } from "./extras.jsx";
 import { Avatar, Counter, cleanContent, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
@@ -267,6 +268,8 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
   };
   const visible = (c.sections || []).filter(hasData);
   useReveal(rootRef, JSON.stringify(c) + JSON.stringify(d), d);
+  useScramble(rootRef, d.motion !== "none" && d.anim !== "M-000" && !!d.scramble, JSON.stringify(c) + (d.scramble ? 1 : 0));
+  const fog = useFogSwitch();
   useSpotlight(rootRef, animated && d.hover === "spotlight");
   useActiveSection(rootRef, visible.join(","), setActiveId);
 
@@ -371,6 +374,16 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
   const flyTiles = (arr("projects").filter((p) => p.imageUrl).length >= 3
     ? arr("projects").map((p) => ({ label: p.name, image: p.imageUrl }))
     : [arr("projects").map((p) => ({ label: p.name })), arr("services").map((x) => ({ label: x.name })), arr("skills").flatMap((g) => g.items || []).map((x) => ({ label: x }))].find((l) => l.length >= 3) || []).filter((t) => t.label || t.image);
+  const showpiece = animated ? d.showpiece || "none" : "none";
+  const spItems = [...arr("projects").map((p) => ({ title: p.name, note: p.category || p.role || p.impact, image: p.imageUrl, href: p.link })), ...arr("services").map((x) => ({ title: x.name, note: x.price || x.description })), ...arr("skills").flatMap((g) => (g.items || []).slice(0, 4)).map((x) => ({ title: x }))];
+  const trackBlocks = showpiece === "track" ? [
+    c.about && (c.about.paragraphs || []).find(Boolean) ? { kind: "text", head: "About", text: (c.about.paragraphs || []).find(Boolean) } : null,
+    arr("skills").length ? { kind: "list", head: arr("skills")[0].group || "Skills", lines: (arr("skills")[0].items || []).slice(0, 6) } : null,
+    arr("testimonials").length ? { kind: "quote", head: arr("testimonials")[0].name, text: arr("testimonials")[0].quote } : null,
+    arr("stats").length ? { kind: "stats", head: "In numbers", lines: arr("stats").map((x) => (x.value ?? "") + (x.suffix || "") + "  " + x.label) } : null,
+    arr("experience").length ? { kind: "list", head: "Where I've worked", lines: arr("experience").slice(0, 5).map((x) => x.company) } : null,
+    c.contact && c.contact.email ? { kind: "list", head: "Contact", lines: [c.contact.email, h.location].filter(Boolean) } : null,
+  ].filter(Boolean) : [];
   const renderHero = () => {
     if (hero === "stage") {
       return (
@@ -668,6 +681,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
       <link rel="stylesheet" href={fontsHref(d.fonts)} />
       <Progress on={animated && d.progress} />
       <SmoothScroll on={animated && d.smooth !== false} preview={preview} />
+      {fog.layer}
       {animated && d.grain && <Grain />}
       {animated && d.loader === "line" && <LineLoader text={h.kicker || h.role || (c.meta && c.meta.title) || ""} preview={preview} />}
       {animated && <Extras rootRef={rootRef} design={d} label={h.name} preview={preview} />}
@@ -685,7 +699,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
           </nav>
           <div className="pf-row pf-nav-tools">
             {!forcedScheme && (
-              <button className="pf-icon-btn" aria-label={scheme === "dark" ? "Switch to light theme" : "Switch to dark theme"} onClick={() => setOverride(scheme === "dark" ? "light" : "dark")}>
+              <button className="pf-icon-btn" aria-label={scheme === "dark" ? "Switch to light theme" : "Switch to dark theme"} onClick={() => (d.fogSwitch !== false && d.motion !== "none" ? fog.run(() => setOverride(scheme === "dark" ? "light" : "dark"), scheme !== "dark") : setOverride(scheme === "dark" ? "light" : "dark"))}>
                 <Icon name={scheme === "dark" ? "sun" : "moon"} />
               </button>
             )}
@@ -706,7 +720,11 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
 
       {filmOn && <Film src={filmSrc} steps={storySteps} title={"Selected work"} highlights={arr("stats").map((x) => ({ label: x.label, value: (x.value ?? "") + (x.suffix || "") }))} preview={preview} path="hero.videoUrl" kicker={h.name} />}
 
-      {!(filmSrc && filmOn) && cast && animated && d.castStory !== false && storySteps.length >= 2 && <CastStory character={cast.character} widgets={cast.widgets} ctx={ctx} steps={storySteps} title={arr("process").length >= 2 ? "How I work" : arr("services").length >= 2 ? "What I do" : "Selected work"} />}
+      {!(filmSrc && filmOn) && showpiece !== "track" && cast && animated && d.castStory !== false && storySteps.length >= 2 && <CastStory character={cast.character} widgets={cast.widgets} ctx={ctx} steps={storySteps} title={arr("process").length >= 2 ? "How I work" : arr("services").length >= 2 ? "What I do" : "Selected work"} />}
+
+      {showpiece === "sphere" && <Sphere props={propsFor("portfolio")} items={spItems} title={"Explore the work"} />}
+      {showpiece === "arc" && <Arc props={propsFor("portfolio")} items={spItems} title={"Explore the work"} />}
+      {showpiece === "track" && <Track blocks={trackBlocks} title={h.name} mascot={cast ? <CastCharacter def={cast.character} size={180} /> : null} />}
 
       {visible.map(render)}
 
