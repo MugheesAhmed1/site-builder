@@ -1,6 +1,7 @@
 "use client";
 
 import { propPaths } from "@/template/src/props.js";
+import { platePath } from "@/template/src/plates.js";
 import { getMedia, mediaRefs, swapMedia } from "@/lib/media";
 import { palette, resolveScheme } from "@/template/src/theme.js";
 import { sceneAssets } from "@/template/src/scenes.js";
@@ -180,6 +181,13 @@ export function realAssets(p: Project): string[] {
   if (p.design.showpiece === "sphere" || p.design.showpiece === "arc") {
     const cat = p.kind === "portfolio" ? "portfolio" : (p.content as WebsiteContent | null)?.brand?.category || p.category;
     for (const path of propPaths(cat)) out.add(path);
+  }
+  // Cinema openings and the glass call to action show a scene from public/real/cinema.
+  const d = p.design;
+  if (d.heroStyle === "cinema" || d.heroStyle === "scatter" || d.ctaStyle === "glass") {
+    const role = p.kind === "portfolio" ? (p.content as PortfolioContent | null)?.hero?.role : undefined;
+    const cat = p.kind === "portfolio" ? "portfolio" : (p.content as WebsiteContent | null)?.brand?.category || p.category;
+    out.add(d.plate ? platePath(d.plate) : platePath(cat, role));
   }
   JSON.stringify([p.design, p.content], (_k, v) => {
     if (typeof v === "string" && /^\/real\/[\w/-]+\.webp$/.test(v)) out.add(v);

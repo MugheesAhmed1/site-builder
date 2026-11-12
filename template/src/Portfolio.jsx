@@ -6,6 +6,8 @@ import { Scene } from "./Scenes.jsx";
 import { Carousel, Film, Flight, Grain, LineLoader, ScrollWords, SmoothScroll } from "./studio.jsx";
 import { Arc, Sphere, Track, propsFor, useFogSwitch, useScramble } from "./showpiece.jsx";
 import { Extras } from "./extras.jsx";
+import { Badge, CinemaHero, CinemaStrip, CurtainMenu, GlassCta, ScatterHero, WordmarkFooter } from "./cinema.jsx";
+import { plateFor } from "./plates.js";
 import { Avatar, Counter, cleanContent, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
 // The whole portfolio, driven by two objects:
@@ -314,7 +316,9 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
       </span>
     </p>
   );
-  const headline = <Headline text={h.tagline} mode={animated ? motionAttrs(d)["data-headline"] : "none"} className={"pf-display" + ((h.tagline || "").length > 34 ? " is-long" : "")} />;
+  const accentFace = d.accentFace || "none";
+  const cinematic = hero === "cinema" || hero === "scatter";
+  const headline = <Headline text={h.tagline} accent={accentFace} mode={animated ? motionAttrs(d)["data-headline"] : "none"} className={"pf-display" + (cinematic ? " cn-on-photo" : "") + ((h.tagline || "").length > 34 ? " is-long" : "")} />;
   const intro = h.intro && (
     <p className="pf-hero-sub pf-enter" style={{ "--i": 2 }}>
       {h.intro}
@@ -384,7 +388,30 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
     arr("experience").length ? { kind: "list", head: "Where I've worked", lines: arr("experience").slice(0, 5).map((x) => x.company) } : null,
     c.contact && c.contact.email ? { kind: "list", head: "Contact", lines: [c.contact.email, h.location].filter(Boolean) } : null,
   ].filter(Boolean) : [];
+  const plate = plateFor(d, "portfolio", h.role);
+  const heroStats = arr("stats").map((x) => ({ value: (x.value ?? "") + (x.suffix || ""), label: x.label }));
+  const people = arr("testimonials").map((t) => ({ name: t.name }));
   const renderHero = () => {
+    if (hero === "cinema") {
+      return (
+        <CinemaHero plate={photo && d.plate === "photo" ? photo : plate} still={!animated} stats={heroStats}>
+          <Badge text={[h.name, h.role].filter(Boolean).join(", ") + (h.availability ? " · " + h.availability : "")} people={people} />
+          {headline}
+          {intro}
+          {ctas}
+        </CinemaHero>
+      );
+    }
+    if (hero === "scatter") {
+      const subject = cast && cast.character && cast.character.src ? cast.character.src : "";
+      return (
+        <ScatterHero text={h.tagline} subject={subject} plate={photo || plate} props={[]} stats={heroStats} still={!animated}>
+          {kicker}
+          {intro}
+          {ctas}
+        </ScatterHero>
+      );
+    }
     if (hero === "stage") {
       return (
         <div className="pf-container pf-hero-stage">
@@ -627,6 +654,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
           </div>
         );
       case "cta":
+        if (d.ctaStyle === "glass") return <GlassCta key={s} plate={plate} heading={c.cta.heading} text={c.cta.text} button={c.cta.button || "Get in touch"} href="#pf-contact" />;
         return (
           <section id="pf-cta" className="pf-band" key={s}>
             {cast && animated && <Peek character={cast.character} />}
@@ -676,21 +704,30 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
     }
   };
 
+  const curtain = d.menu === "curtain";
+  const navLinks = nav.map((s) => ({ href: "#pf-" + s, label: NAV_LABELS[s] }));
+  const contactLinks = [
+    ct.email && { href: "mailto:" + ct.email, label: ct.email },
+    ct.linkedin && { href: ct.linkedin, label: "LinkedIn" },
+    ct.github && { href: ct.github, label: "GitHub" },
+    ct.website && { href: ct.website, label: "Website" },
+  ].filter(Boolean).slice(0, 4);
+
   return (
     <div ref={rootRef} className={"pf pf-scheme-" + scheme + (preview ? " pf-is-preview" : "")} {...motionAttrs(d)} style={themeStyle(d, pal, scheme)}>
-      <link rel="stylesheet" href={fontsHref(d.fonts)} />
+      <link rel="stylesheet" href={fontsHref(d.fonts, d.accentFace)} />
       <Progress on={animated && d.progress} />
       <SmoothScroll on={animated && d.smooth !== false} preview={preview} />
       {fog.layer}
       {animated && d.grain && <Grain />}
       {animated && d.loader === "line" && <LineLoader text={h.kicker || h.role || (c.meta && c.meta.title) || ""} preview={preview} />}
       {animated && <Extras rootRef={rootRef} design={d} label={h.name} preview={preview} />}
-      <header className="pf-nav">
+      <header className={"pf-nav" + (d.chrome === "pill" ? " pf-nav--pill" : "")}>
         <div className="pf-container pf-nav-inner">
           <a href="#pf-top" className="pf-brand">
             {h.name}
           </a>
-          <nav className={"pf-nav-links" + (menuOpen ? " is-open" : "")} aria-label="Sections">
+          <nav className={"pf-nav-links" + (menuOpen && !curtain ? " is-open" : "")} aria-label="Sections">
             {nav.map((s) => (
               <a key={s} href={"#pf-" + s} aria-current={activeId === s ? "true" : undefined} onClick={() => setMenuOpen(false)}>
                 {NAV_LABELS[s]}
@@ -703,12 +740,19 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
                 <Icon name={scheme === "dark" ? "sun" : "moon"} />
               </button>
             )}
-            <button className="pf-icon-btn pf-menu-btn" aria-label="Open menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>
+            {d.chrome === "pill" && (
+              <a className="pf-btn pf-nav-cta" href="#pf-contact">
+                Get in touch
+              </a>
+            )}
+            <button className={"pf-icon-btn pf-menu-btn" + (curtain ? " is-curtain" : "")} aria-label="Open menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>
               <Icon name="menu" />
             </button>
           </div>
         </div>
       </header>
+
+      {curtain && <CurtainMenu open={menuOpen} onClose={() => setMenuOpen(false)} links={navLinks} brand={h.name} cta={{ href: "#pf-contact", label: "Get in touch" }} />}
 
       <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
         {animated && <Backdrop kind={d.backdrop} />}
@@ -716,7 +760,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
         {renderHero()}
       </section>
 
-      {d.marquee && animated && skillsFlat.length > 3 && <Marquee items={skillsFlat} label="Skills" />}
+      {hero === "cinema" ? <CinemaStrip label="Tools and skills" items={skillsFlat.slice(0, 14)} /> : d.marquee && animated && skillsFlat.length > 3 && <Marquee items={skillsFlat} label="Skills" />}
 
       {filmOn && <Film src={filmSrc} steps={storySteps} title={"Selected work"} highlights={arr("stats").map((x) => ({ label: x.label, value: (x.value ?? "") + (x.suffix || "") }))} preview={preview} path="hero.videoUrl" kicker={h.name} />}
 
@@ -730,16 +774,20 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
 
       {animated && d.flight !== false && flyTiles.length >= 3 && flySentence.split(" ").length >= 8 && <Flight sentence={flySentence} tiles={flyTiles} title={flySentence} />}
 
-      <footer className="pf-footer">
-        <div className="pf-container pf-row pf-between pf-wrap">
-          <span className="pf-small pf-muted">
-            © {new Date().getFullYear()} {h.name}
-          </span>
-          <a href="#pf-top" className="pf-small pf-muted pf-inline-link">
-            Back to top
-          </a>
-        </div>
-      </footer>
+      {d.footer === "wordmark" ? (
+        <WordmarkFooter brand={h.name} blurb={h.intro} links={navLinks} contact={contactLinks} />
+      ) : (
+        <footer className="pf-footer">
+          <div className="pf-container pf-row pf-between pf-wrap">
+            <span className="pf-small pf-muted">
+              © {new Date().getFullYear()} {h.name}
+            </span>
+            <a href="#pf-top" className="pf-small pf-muted pf-inline-link">
+              Back to top
+            </a>
+          </div>
+        </footer>
+      )}
     </div>
   );
 }

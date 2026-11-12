@@ -99,6 +99,10 @@ export function importProjects(input: unknown[]): number {
   return write(KEY, [...all.filter((x) => !ids.has(x.id)), ...items]) ? items.length : 0;
 }
 
+// New projects open like a film: a scene behind the words, a glass pill menu, a glass call
+// to action and the name set huge in the footer. Every piece can be switched off later.
+const CINEMA_START: Partial<Design> = { heroStyle: "cinema", accentFace: "serif", chrome: "pill", menu: "curtain", footer: "wordmark", ctaStyle: "glass" };
+
 // New projects start on the animation pack that suits their kind of site.
 function packFor(category: string) {
   const id = category === "portfolio" || category.startsWith("role-") || category === "creator" || category === "agency" || category === "photo" ? "studio" : ["food", "shop", "product", "hotel", "beauty", "fitness"].includes(category) ? "launch" : "editorial";
@@ -124,7 +128,7 @@ export function newProject(query: string, kind: SiteKind, category: string, name
     resumeText: "",
     resumeFileName: "",
     profile: null,
-    design: { ...LIBRARY[0], cast: castFor(category, seedOf(id)), scene: sceneFor(category, seedOf(id)), ...packFor(category) },
+    design: { ...LIBRARY[0], cast: castFor(category, seedOf(id)), scene: sceneFor(category, seedOf(id)), ...packFor(category), ...CINEMA_START, ...(kind === "website" ? { plate: category } : {}) },
     locks: {},
     content: null,
     history: [],
@@ -163,7 +167,7 @@ export function markChanged(p: Project, step: StepId): Project {
 export function keepCast(prev: Design, next: Design): Design {
   // Characters, scenes and every motion layer belong to the person, not the design system,
   // so switching design keeps them.
-  const keys = ["cast", "castStory", "intro", "magnetic", "cursor", "scene", "sceneMode", "tilt", "smooth", "grain", "loader", "film", "video", "flight", "carousel", "scrollWords", "showpiece", "scramble", "fogSwitch", "pack"] as const;
+  const keys = ["cast", "castStory", "intro", "magnetic", "cursor", "scene", "sceneMode", "tilt", "smooth", "grain", "loader", "film", "video", "flight", "carousel", "scrollWords", "showpiece", "scramble", "fogSwitch", "pack", "plate", "accentFace", "chrome", "menu", "footer", "ctaStyle"] as const;
   const keep = Object.fromEntries(keys.map((k) => [k, prev[k]]));
   const out = { ...next } as Design;
   for (const [k, v] of Object.entries(keep)) if ((out as unknown as Record<string, unknown>)[k] === undefined && v !== undefined) (out as unknown as Record<string, unknown>)[k] = v;

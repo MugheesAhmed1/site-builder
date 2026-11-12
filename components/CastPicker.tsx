@@ -44,6 +44,10 @@ const SAMPLE = {
 
 type Ctx = typeof SAMPLE;
 
+// Picking a character shows it in the opening, unless the opening is a film scene or the
+// scattered words, which keep their look (the scattered words stand around the character).
+const keepHero = (h: Design["heroStyle"]): Design["heroStyle"] => (h === "cinema" || h === "scatter" ? h : "stage");
+
 export default function CastPicker({ design, onChange, ctx, kind, category, photo }: { design: Design; onChange: (patch: Partial<Design>) => void; ctx?: Partial<Ctx>; kind: string; category: string; photo?: string }) {
   const lib = useCastLibrary();
   const [suit, setSuit] = useState(category);
@@ -72,12 +76,12 @@ export default function CastPicker({ design, onChange, ctx, kind, category, phot
   }, [lib.widgets, wkind, skin, scope, fit]);
   const list = tab === "characters" ? chars : tab === "widgets" ? widgets : [];
 
-  const setCharacter = (c: CharacterDef) => onChange({ cast: { character: c, widgets: chosenWidgets }, heroStyle: "stage" });
+  const setCharacter = (c: CharacterDef) => onChange({ cast: { character: c, widgets: chosenWidgets }, heroStyle: keepHero(design.heroStyle) });
   const toggleWidget = (w: WidgetDef) => {
     if (!cast) return;
     const has = chosenWidgets.some((x) => x.id === w.id);
     const next = has ? chosenWidgets.filter((x) => x.id !== w.id) : [...chosenWidgets, w].slice(-MAX_WIDGETS);
-    onChange({ cast: { ...cast, widgets: next }, heroStyle: "stage" });
+    onChange({ cast: { ...cast, widgets: next }, heroStyle: keepHero(design.heroStyle) });
   };
   const surprise = () => {
     const pool = chars.length ? chars : lib.characters;
@@ -85,7 +89,7 @@ export default function CastPicker({ design, onChange, ctx, kind, category, phot
     const s = SKINS[Math.floor(Math.random() * SKINS.length)].id;
     const kinds = (scope === "fit" ? fit.widgets.map((id) => ({ id })) : [...WIDGET_KINDS]).sort(() => Math.random() - 0.5).slice(0, MAX_WIDGETS);
     const ws = kinds.map((k) => lib.widgets.find((w) => w.kind === k.id && w.skin === s)).filter(Boolean) as WidgetDef[];
-    onChange({ cast: { character: c, widgets: ws }, heroStyle: "stage" });
+    onChange({ cast: { character: c, widgets: ws }, heroStyle: keepHero(design.heroStyle) });
   };
   const resetPage = () => setShown(PAGE);
 
