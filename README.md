@@ -66,5 +66,7 @@ Things the builder does on purpose:
 - `template/src/Portfolio.jsx` and `Website.jsx`: the two site templates, also used for the live preview.
 - `template/src/cinema.jsx` and `cinema.css`: film-scene and scattered-word openings, Silk light, glass call to action, curtain menu, wordmark footer. `template/src/plates.js` picks the scene for each kind of site.
 - `template/src/theme.js`: OKLCH palettes for light and dark, with contrast fitting.
+- `template/src/motion.js`: the animation styles. `template/src/spring.js` turns a spring (duration and bounce) into a CSS `linear()` easing for hover moves and pointer-following shapes.
+- `.claude/skills/motion/` and `.mcp.json`: the free Motion AI Kit (installed with `npx motion-ai`, MIT licence) so coding agents working on this repo get Motion's animation guidance and docs search. Only the free Motion server is set up; Motion+ is paid and left out.
 - `library/`: the shared library, see `library/README.md`.
 - `tests/`: unit tests.
