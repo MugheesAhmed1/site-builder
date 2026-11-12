@@ -14,6 +14,7 @@ Type one line, such as "website for my bakery in Lahore" or "portfolio for me, I
   - **Remix** re-rolls one part: colour, type, shape or layout.
   - **Lock** keeps a part fixed while you shuffle.
   - **Save** keeps your own systems for later.
+- **Film-scene openings.** New sites open like a film: a scene photo fills the first screen, the headline sits in the open sky with one word in italic serif (or glowing), a pill with faces sits above it and the numbers run along the foot. The scene pushes in and blurs away as you scroll and follows the pointer. There is also a "Scattered words" opening, a floating glass pill menu, a full-screen curtain menu, a glass call to action, a footer with the name set huge, and a Silk light backdrop. All of it is switchable under Design system, Layout, or in one go with the Cinematic animation pack. The 26 scene photos in `public/real/cinema` were made free with Pollinations.
 - **Colour optimizer.** There are seven harmony options: matched, analogous, complementary, split, triadic, calm and vivid. You can also build around a brand colour. Contrast ratios are shown for light and dark, and accents are adjusted automatically to pass WCAG AA (4.5 to 1).
 
 ## What you download
@@ -63,6 +64,9 @@ Things the builder does on purpose:
 - `components/Steps.tsx`: the review and download steps. `lib/export.ts` builds both zips.
 - `lib/store.ts`: saving in the browser. `lib/fit.ts`: which characters, widgets, scenes and animations suit each kind of site.
 - `template/src/Portfolio.jsx` and `Website.jsx`: the two site templates, also used for the live preview.
+- `template/src/cinema.jsx` and `cinema.css`: film-scene and scattered-word openings, Silk light, glass call to action, curtain menu, wordmark footer. `template/src/plates.js` picks the scene for each kind of site.
 - `template/src/theme.js`: OKLCH palettes for light and dark, with contrast fitting.
+- `template/src/motion.js`: the animation styles. `template/src/spring.js` turns a spring (duration and bounce) into a CSS `linear()` easing for hover moves and pointer-following shapes.
+- `.claude/skills/motion/` and `.mcp.json`: the free Motion AI Kit (installed with `npx motion-ai`, MIT licence) so coding agents working on this repo get Motion's animation guidance and docs search. Only the free Motion server is set up; Motion+ is paid and left out.
 - `library/`: the shared library, see `library/README.md`.
 - `tests/`: unit tests.

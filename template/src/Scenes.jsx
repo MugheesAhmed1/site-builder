@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { REAL_SCENES, SCENE_PALETTES, sceneType } from "./scenes.js";
 import { asset } from "./real.js";
+import { isConcept } from "./concepts.js";
+import { conceptImpl } from "./concept.js";
 
 // Draws the live scenes from scenes.js. Canvas scenes share one loop: it sizes the canvas
 // for sharp pixels, tracks the pointer (even when text sits on top), pauses when the
@@ -1645,7 +1647,7 @@ function CanvasScene({ type, palette, text, words, image }) {
       g,
       img: null,
     };
-    const scene = REAL_SCENES[type] ? realImpl(env, type) : (IMPL[type] || IMPL.constellation)(env);
+    const scene = isConcept(type) ? conceptImpl(env, type, { loadImg, spriteLayer }) : REAL_SCENES[type] ? realImpl(env, type) : (IMPL[type] || IMPL.constellation)(env);
     const p = { x: 0, y: 0, in: false, down: false, vx: 0, burst: 0 };
     let raf = 0;
     let visible = true;

@@ -150,6 +150,27 @@ function rollMotion(r: () => number, mood: Mood): Pick<Design, "motion" | "anim"
   return { motion: "expressive", anim: m.id, hover: r() < 0.25 ? "spotlight" : m.hover, progress: r() < 0.5, marquee: r() < 0.6, backdrop };
 }
 
+// The cinema pieces: a film-like opening over a scene, an accent face for the headline, a
+// floating pill navigation, a curtain menu, a glass call to action and a wordmark footer.
+// Rolled from their own stream so older seeds keep every other choice they had.
+export const CINEMA_OFF: Pick<Design, "accentFace" | "chrome" | "menu" | "footer" | "ctaStyle"> = { accentFace: "none", chrome: "bar", menu: "drop", footer: "simple", ctaStyle: "band" };
+
+function rollCinema(r: () => number, mood: Mood, heroStyle: Design["heroStyle"]): Pick<Design, "heroStyle" | "accentFace" | "chrome" | "menu" | "footer" | "ctaStyle"> & { backdrop?: Design["backdrop"] } {
+  const cinematic = r() < 0.6;
+  const hero: Design["heroStyle"] = cinematic ? (r() < 0.78 ? "cinema" : "scatter") : heroStyle;
+  const accentFace: Design["accentFace"] = cinematic ? (mood === "tech" || mood === "bold" ? (r() < 0.5 ? "glow" : "serif") : r() < 0.8 ? "serif" : "glow") : r() < 0.35 ? pick(r, ["serif", "glow"] as const) : "none";
+  const out: ReturnType<typeof rollCinema> = {
+    heroStyle: hero,
+    accentFace,
+    chrome: cinematic || r() < 0.4 ? "pill" : "bar",
+    menu: r() < 0.5 ? "curtain" : "drop",
+    footer: r() < 0.6 ? "wordmark" : "simple",
+    ctaStyle: r() < 0.55 ? "glass" : "band",
+  };
+  if (!cinematic && (mood === "bold" || mood === "tech") && r() < 0.35) out.backdrop = "silk";
+  return out;
+}
+
 function hexHue(hex: string): number {
   const n = parseInt(hex.slice(1), 16);
   const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => v / 255);
@@ -172,7 +193,7 @@ export function generateDesign(seed: number, id?: string): Design {
   const r = mulberry32(seed);
   const type = rollType(r);
   const mood = TYPE_PAIRINGS.find((p) => p.display === type.fonts.display && p.body === type.fonts.body)!.mood;
-  return {
+  const base: Design = {
     id: id ?? `S-${(seed % 100000).toString().padStart(5, "0")}`,
     preset: nameFor(seed),
     ...rollColour(r, mood),
@@ -181,6 +202,7 @@ export function generateDesign(seed: number, id?: string): Design {
     ...rollLayout(r, mood),
     ...rollMotion(r, mood),
   };
+  return { ...base, ...rollCinema(mulberry32(seed ^ 0x51ed27), mood, base.heroStyle) };
 }
 
 // Re-rolls one part, keeping everything else (and every locked part) as it is.
@@ -191,7 +213,11 @@ export function remix(d: Design, part: DesignPart, seed = Math.floor(Math.random
   if (part === "colour") Object.assign(next, rollColour(r, mood));
   if (part === "type") Object.assign(next, rollType(r));
   if (part === "shape") Object.assign(next, rollShape(r, mood));
-  if (part === "layout") Object.assign(next, rollLayout(r, mood));
+  if (part === "layout") {
+    Object.assign(next, rollLayout(r, mood));
+    Object.assign(next, rollCinema(r, mood, next.heroStyle));
+    if (next.backdrop === "silk" && d.backdrop !== "silk") next.backdrop = d.backdrop;
+  }
   if (part === "motion") Object.assign(next, rollMotion(r, mood));
   return next;
 }
@@ -203,7 +229,7 @@ export function shuffle(d: Design, locks: Partial<Record<DesignPart, boolean>>, 
   if (locks.colour) Object.assign(keep, { accent: d.accent, hue: d.hue, tint: d.tint, mode: d.mode });
   if (locks.type) Object.assign(keep, { fonts: d.fonts });
   if (locks.shape) Object.assign(keep, { radius: d.radius, density: d.density });
-  if (locks.layout) Object.assign(keep, { heroStyle: d.heroStyle, experienceStyle: d.experienceStyle, projectStyle: d.projectStyle, serviceStyle: d.serviceStyle });
+  if (locks.layout) Object.assign(keep, { heroStyle: d.heroStyle, experienceStyle: d.experienceStyle, projectStyle: d.projectStyle, serviceStyle: d.serviceStyle, accentFace: d.accentFace, chrome: d.chrome, menu: d.menu, footer: d.footer, ctaStyle: d.ctaStyle, plate: d.plate });
   if (locks.motion) Object.assign(keep, { motion: d.motion, anim: d.anim, hover: d.hover, progress: d.progress, marquee: d.marquee });
   return { ...fresh, ...keep };
 }

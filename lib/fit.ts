@@ -2,6 +2,7 @@ import { CATEGORIES } from "./categories";
 import { CHARACTERS, SKINS, WIDGETS, type CharacterDef, type WidgetDef } from "@/template/src/cast.js";
 import { MOTIONS, type MotionStyle } from "@/template/src/motion.js";
 import { SCENES } from "@/template/src/scenes.js";
+import { conceptsFor } from "@/template/src/concepts.js";
 
 // Categories for both kinds of site: business types (restaurant, dentist, hospital, agency,
 // creator and so on) and portfolio roles (product manager, IT manager, CEO and so on).
@@ -178,9 +179,16 @@ export function scenesFor(category: string): string[] {
   return (SCENE_FIT[category] ?? SCENE_FIT.general).split(" ");
 }
 
-// A starting scene for a category, stable per seed. Photo scenes wait for a photo, so the
-// starting pick skips them; people can choose one in the Characters step.
+// A starting scene for a category, stable per seed: one of the real-life scene concepts that
+// suit it (a parrot flying in, a whale swimming past...), so every new site opens with a
+// set piece. People can change it or pick a live scene in the Scenes and characters step.
 export function sceneFor(category: string, seed: number) {
+  const real = conceptsFor(category).filter((id) => SCENES.some((s) => s.type === id && s.style === "real"));
+  if (real.length) {
+    const id = real[(seed >>> 4) % Math.min(3, real.length)];
+    const hit = SCENES.find((s) => s.type === id);
+    if (hit) return hit;
+  }
   const types = scenesFor(category).filter((t) => !["tilt", "reveal", "pixels", "ripple", "slices"].includes(t));
   const type = types[(seed >>> 4) % Math.min(2, types.length)] ?? "constellation";
   return SCENES.find((s) => s.type === type && s.palette === "brand") ?? SCENES[0];

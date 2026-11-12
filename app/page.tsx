@@ -56,11 +56,13 @@ export default function Home() {
     saveProject(p);
     router.push(kind === "portfolio" ? `/portfolio/${p.id}` : `/build/${p.id}`);
   };
-  const startKind = (k: SiteKind, cat?: string, label?: string) => {
+  const startKind = (k: SiteKind, cat?: string, label?: string, sceneId?: string) => {
     const q = label ? (k === "portfolio" ? "Portfolio for a " + label.toLowerCase() : "Website for a " + label.toLowerCase()) : k === "portfolio" ? "A personal portfolio" : "A website for my business";
     const p = newProject(q, k, cat ?? (k === "portfolio" ? "portfolio" : "general"), "");
     p.answers = defaultAnswers(k, p.category, { name: "", city: "" });
     p.design = keepCast(p.design, personalDesign(p.query + Date.now(), p.query, undefined, p.category));
+    const picked = sceneId ? SCENES.find((s) => s.id === sceneId) : undefined;
+    if (picked) p.design = { ...p.design, scene: picked, sceneMode: "backdrop" };
     saveProject(p);
     router.push(k === "portfolio" ? `/portfolio/${p.id}` : `/build/${p.id}`);
   };
@@ -99,7 +101,7 @@ export default function Home() {
               ))}
             </h1>
             <p className="lede rise" style={{ ["--i" as string]: 3 }}>
-              Describe it in one line or pick your category. Choose from {LIBRARY.length} design systems, {MOTIONS.length - 1} animation styles, {CHARACTERS.length} characters, {WIDGETS.length} widgets and {SCENES.length} live scenes you can touch, then download a finished site you can put online for free.
+              Describe it in one line or pick your category. Choose from {LIBRARY.length} design systems, {MOTIONS.length - 1} animation styles, {SCENES.filter((s) => s.group === "concept").length} scene concepts (a parrot that flies in, a whale swimming past, a jungle walk), {CHARACTERS.length} characters, {WIDGETS.length} widgets and {SCENES.filter((s) => s.group !== "concept").length} live scenes you can touch, then download a finished site you can put online for free.
             </p>
           <form
             className="ask rise"

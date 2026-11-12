@@ -4,10 +4,12 @@ import { REST, motionById } from "./motion.js";
 
 // Pieces shared by Portfolio.jsx and Website.jsx.
 
-export function fontsHref(fonts) {
+export function fontsHref(fonts, accent) {
   const fams = Array.from(new Set([fonts.display, fonts.body, fonts.mono])).filter(Boolean);
   const q = fams.map((f) => "family=" + encodeURIComponent(f).replace(/%20/g, "+") + ":wght@400;500;600;700").join("&");
-  return "https://fonts.googleapis.com/css2?" + q + "&display=swap";
+  // The accent face: an italic serif for the one or two words a headline leans on.
+  const serif = accent === "serif" && !fams.includes("Instrument Serif") ? "&family=Instrument+Serif:ital@0;1" : "";
+  return "https://fonts.googleapis.com/css2?" + q + serif + "&display=swap";
 }
 
 // Words and links come from a form (or a backup file), so a link is only kept when it is
@@ -197,9 +199,53 @@ export function Counter({ value, suffix, animate: on }) {
 }
 
 // The big headline, split so each word or letter can enter on its own.
-export function Headline({ text, mode, className }) {
-  const t = String(text || "");
+// Which words of a headline get the accent face. Words wrapped in *stars* win; otherwise the
+// last word does (with the one before it when the last is very short), like "close *deals*".
+export function accentWords(text) {
+  const raw = String(text || "").split(/\s+/).filter(Boolean);
+  const marked = new Set();
+  let inside = false;
+  const words = raw.map((w, i) => {
+    let t = w;
+    if (/^\*/.test(t)) {
+      inside = true;
+      t = t.slice(1);
+    }
+    if (inside) marked.add(i);
+    if (/\*[.,!?:;]?$/.test(t)) {
+      inside = false;
+      t = t.replace(/\*([.,!?:;]?)$/, "$1");
+    }
+    return t;
+  });
+  if (!marked.size && words.length >= 3) {
+    const last = words.length - 1;
+    marked.add(last);
+    if (words[last].replace(/[^\p{L}\p{N}]/gu, "").length <= 3) marked.add(last - 1);
+  }
+  return { words, marked };
+}
+
+export function Headline({ text, mode, className, accent }) {
+  const useAccent = accent && accent !== "none";
+  const { words, marked } = accentWords(text);
+  const t = words.join(" ");
+  const cls = className + (useAccent ? " pf-has-accent pf-accent-" + accent : "");
   if (!mode || mode === "none" || mode === "block") {
+    if (useAccent) {
+      return (
+        <h1 className={cls + " pf-hl pf-hl-block"}>
+          <span className="pf-hl-part" style={{ "--w": 0 }}>
+            {words.map((w, i) => (
+              <span key={i}>
+                {marked.has(i) ? <em className="pf-accent">{w}</em> : w}
+                {i < words.length - 1 ? " " : ""}
+              </span>
+            ))}
+          </span>
+        </h1>
+      );
+    }
     return (
       <h1 className={className + " pf-hl pf-hl-block"}>
         <span className="pf-hl-part" style={{ "--w": 0 }}>
@@ -208,12 +254,11 @@ export function Headline({ text, mode, className }) {
       </h1>
     );
   }
-  const words = t.split(/\s+/).filter(Boolean);
   let n = 0;
   return (
-    <h1 className={className + " pf-hl pf-hl-" + mode} aria-label={t}>
+    <h1 className={cls + " pf-hl pf-hl-" + mode} aria-label={t}>
       {words.map((w, i) => (
-        <span className="pf-hl-word" key={i} aria-hidden="true">
+        <span className={"pf-hl-word" + (useAccent && marked.has(i) ? " pf-accent" : "")} key={i} aria-hidden="true">
           {mode === "letters" ? (
             Array.from(w).map((ch, j) => (
               <span className="pf-hl-part" key={j} style={{ "--w": n++ }}>

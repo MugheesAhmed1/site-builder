@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Silk } from "./cinema.jsx";
 import { animate, motion, useInView, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
 
 // Rich motion pieces for the opening section and the "At a glance" tiles: an animated
@@ -585,6 +586,7 @@ export function Mesh() {
 }
 
 export function Backdrop({ kind }) {
+  if (kind === "silk") return <Silk />;
   if (kind === "particles") return <Particles />;
   if (kind === "mesh") return <Mesh />;
   return null;

@@ -1,12 +1,14 @@
 /* Portfolio styles. Colours, fonts and corners come from the --pf-* variables that
    Portfolio.jsx derives from the design system, so you rarely need to edit this file.
    Animation is played by Motion (motion.dev) from src/shared.jsx; this file only sets
-   the hidden starting state. Motion: ease-out curves, short durations, transform and opacity only, hover effects
+   the hidden starting state. Motion: ease-out curves (soft springs for hover moves), short durations, transform and opacity only, hover effects
    only on devices with a real pointer, reduced motion honoured. */
 
 .pf {
   --pf-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --pf-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  /* A soft spring for hover moves, sampled for CSS by src/spring.js. */
+  --pf-spring-hover: 0.387s linear(0, 0.05, 0.1649, 0.3061, 0.4493, 0.5805, 0.6929, 0.7845, 0.856, 0.9095, 0.948, 0.9745, 0.9919, 1.0024, 1.0081, 1.0106, 1.0111, 1.0103, 1.0089, 1.0073, 1.0058, 1.0044, 1.0032, 1.0022, 1.0015, 1);
   --pf-gutter: clamp(20px, 5cqi, 48px);
   --pf-section-gap: clamp(72px, 11cqi, 140px);
   container-type: inline-size;
@@ -166,7 +168,7 @@
 .pf-project-head { min-height: 22px; margin-bottom: 8px; }
 .pf-project-title { margin-bottom: 8px; }
 .pf-project-link { display: inline-flex; align-items: center; gap: 6px; }
-.pf-project-link svg { transition: transform 200ms var(--pf-ease-out); }
+.pf-project-link svg { transition: transform var(--pf-spring-hover); }
 .pf-project .pf-tags { margin-top: auto; padding-top: 16px; }
 .pf-impact { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 240ms var(--pf-ease-out), opacity 200ms ease; }
 .pf-impact > div { overflow: hidden; }
@@ -281,7 +283,7 @@
 .pf-portrait-mono { display: grid; place-items: center; height: 100%; background: color-mix(in srgb, var(--pf-accent) 10%, var(--pf-surface)); }
 
 /* Cards and their hover styles (data-hover: lift, glow, line). Hover only on real pointers. */
-.pf-card { position: relative; background: var(--pf-surface); border-radius: var(--pf-radius); transition: transform 220ms var(--pf-ease-out), box-shadow 220ms ease, border-color 200ms ease; }
+.pf-card { position: relative; background: var(--pf-surface); border-radius: var(--pf-radius); transition: transform var(--pf-spring-hover), box-shadow 220ms ease, border-color 200ms ease; }
 .pf-card::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; border-radius: 2px; background: var(--pf-accent); transform: scaleX(0); transform-origin: left; transition: transform 260ms var(--pf-ease-out); pointer-events: none; }
 @media (hover: hover) and (pointer: fine) {
   .pf[data-hover="lift"] .pf-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -24px color-mix(in srgb, var(--pf-text) 45%, transparent); }

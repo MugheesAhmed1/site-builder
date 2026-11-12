@@ -11,6 +11,8 @@ import { useCastLibrary } from "@/lib/library";
 import CategorySelect from "@/components/CategorySelect";
 import ScenePicker from "@/components/ScenePicker";
 import { SCENES } from "@/template/src/scenes.js";
+
+const CONCEPT_COUNT = SCENES.filter((s) => s.group === "concept").length;
 import { categoryLabel, fitFor, fitsCharacter, fitsWidget } from "@/lib/fit";
 import type { Design } from "@/lib/types";
 
@@ -44,13 +46,17 @@ const SAMPLE = {
 
 type Ctx = typeof SAMPLE;
 
+// Picking a character shows it in the opening, unless the opening is a film scene or the
+// scattered words, which keep their look (the scattered words stand around the character).
+const keepHero = (h: Design["heroStyle"]): Design["heroStyle"] => (h === "cinema" || h === "scatter" ? h : "stage");
+
 export default function CastPicker({ design, onChange, ctx, kind, category, photo }: { design: Design; onChange: (patch: Partial<Design>) => void; ctx?: Partial<Ctx>; kind: string; category: string; photo?: string }) {
   const lib = useCastLibrary();
   const [suit, setSuit] = useState(category);
   const [scope, setScope] = useState<"fit" | "all">("fit");
   const fit = fitFor(suit);
   const suitKind = suit === "portfolio" || suit.startsWith("role-") ? "portfolio" : "website";
-  const [tab, setTab] = useState<"characters" | "widgets" | "scenes">("characters");
+  const [tab, setTab] = useState<"concepts" | "characters" | "widgets" | "scenes">("concepts");
   const [family, setFamily] = useState("all");
   const [wkind, setKind] = useState("all");
   const [skin, setSkin] = useState("all");
@@ -72,12 +78,12 @@ export default function CastPicker({ design, onChange, ctx, kind, category, phot
   }, [lib.widgets, wkind, skin, scope, fit]);
   const list = tab === "characters" ? chars : tab === "widgets" ? widgets : [];
 
-  const setCharacter = (c: CharacterDef) => onChange({ cast: { character: c, widgets: chosenWidgets }, heroStyle: "stage" });
+  const setCharacter = (c: CharacterDef) => onChange({ cast: { character: c, widgets: chosenWidgets }, heroStyle: keepHero(design.heroStyle) });
   const toggleWidget = (w: WidgetDef) => {
     if (!cast) return;
     const has = chosenWidgets.some((x) => x.id === w.id);
     const next = has ? chosenWidgets.filter((x) => x.id !== w.id) : [...chosenWidgets, w].slice(-MAX_WIDGETS);
-    onChange({ cast: { ...cast, widgets: next }, heroStyle: "stage" });
+    onChange({ cast: { ...cast, widgets: next }, heroStyle: keepHero(design.heroStyle) });
   };
   const surprise = () => {
     const pool = chars.length ? chars : lib.characters;
@@ -85,7 +91,7 @@ export default function CastPicker({ design, onChange, ctx, kind, category, phot
     const s = SKINS[Math.floor(Math.random() * SKINS.length)].id;
     const kinds = (scope === "fit" ? fit.widgets.map((id) => ({ id })) : [...WIDGET_KINDS]).sort(() => Math.random() - 0.5).slice(0, MAX_WIDGETS);
     const ws = kinds.map((k) => lib.widgets.find((w) => w.kind === k.id && w.skin === s)).filter(Boolean) as WidgetDef[];
-    onChange({ cast: { character: c, widgets: ws }, heroStyle: "stage" });
+    onChange({ cast: { character: c, widgets: ws }, heroStyle: keepHero(design.heroStyle) });
   };
   const resetPage = () => setShown(PAGE);
 
@@ -157,6 +163,9 @@ export default function CastPicker({ design, onChange, ctx, kind, category, phot
 
       <div className="cast-tabs">
         <div className="seg" role="tablist" aria-label="Choose from">
+          <button role="tab" aria-selected={tab === "concepts"} className={"tab-concepts" + (tab === "concepts" ? " is-on" : "")} onClick={() => (setTab("concepts"), resetPage())}>
+            Scene concepts ({CONCEPT_COUNT})
+          </button>
           <button role="tab" aria-selected={tab === "characters"} className={tab === "characters" ? "is-on" : ""} onClick={() => (setTab("characters"), resetPage())}>
             Characters ({lib.characters.length})
           </button>
@@ -164,10 +173,10 @@ export default function CastPicker({ design, onChange, ctx, kind, category, phot
             Widgets ({lib.widgets.length})
           </button>
           <button role="tab" aria-selected={tab === "scenes"} className={tab === "scenes" ? "is-on" : ""} onClick={() => (setTab("scenes"), resetPage())}>
-            Live scenes ({SCENES.length})
+            Live scenes ({SCENES.length - CONCEPT_COUNT})
           </button>
         </div>
-        {tab === "scenes" ? null : tab === "characters" ? (
+        {tab === "scenes" || tab === "concepts" ? null : tab === "characters" ? (
           <div className="chips-scroll" role="group" aria-label="Family">
             {[{ id: "all", name: scope === "fit" ? "Best families" : "Every family" }, ...(scope === "fit" ? FAMILIES.filter((f) => fit.families.includes(f.id) || lib.characters.some((c) => c.family === f.id && c.fits && fitsCharacter(c, fit))).sort((a, b) => fit.families.indexOf(a.id) - fit.families.indexOf(b.id)) : FAMILIES)].map((f) => (
               <button key={f.id} className={"chip chip-sm" + (family === f.id ? " is-on" : "")} aria-pressed={family === f.id} onClick={() => (setFamily(f.id), resetPage())}>
@@ -193,14 +202,15 @@ export default function CastPicker({ design, onChange, ctx, kind, category, phot
             </div>
           </>
         )}
-        {tab !== "scenes" && <p className="hint">
+        {tab !== "scenes" && tab !== "concepts" && <p className="hint">
           {list.length} {tab} shown{scope === "fit" ? ` that suit ${categoryLabel(suitKind, suit).toLowerCase()}` : ""}{lib.source === "github" ? ", including the latest from your GitHub library" : ""}. {tab === "widgets" ? (cast ? `Choose up to ${MAX_WIDGETS}; they fill with your own words and numbers.` : "Pick a character first.") : "Each one is already animated; the preview shows it on your site."}{tab === "characters" && family.startsWith("real-") ? " Real-life pictures were made for this library with Pollinations.ai and are saved with your site, so nothing is generated while it runs." : ""}
         </p>}
       </div>
 
+      {tab === "concepts" && <ScenePicker only="concepts" scope={scope} design={design} onChange={onChange} category={suit} name={data.name} words={data.tags} photo={photo} />}
       {tab === "scenes" && <ScenePicker design={design} onChange={onChange} category={suit} name={data.name} words={data.tags} photo={photo} />}
 
-      {tab === "scenes" ? null : tab === "characters" ? (
+      {tab === "scenes" || tab === "concepts" ? null : tab === "characters" ? (
         <div className="cast-grid">
           {(list as CharacterDef[]).slice(0, shown).map((c) => {
             const on = cast?.character.id === c.id;

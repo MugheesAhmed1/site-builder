@@ -3,8 +3,12 @@
 // own photo with a spotlight or a ripple, glossy orbs you can throw. Every scene reacts to
 // the pointer, to clicks or taps, and most to scroll. Plain data here; drawn by Scenes.jsx.
 import { REAL_FISH, REAL_PLATES, REAL_PROPS, REAL_SPRITES } from "./real.js";
+import { CONCEPT_STYLES, CONCEPT_TYPES, conceptAssets, isConcept } from "./concepts.js";
+
+export { CONCEPT_STYLES };
 
 export const SCENE_GROUPS = [
+  { id: "concept", name: "Scene concepts" },
   { id: "particles", name: "Particles" },
   { id: "nature", name: "Nature" },
   { id: "photo", name: "Your photo" },
@@ -62,6 +66,9 @@ export const SCENE_TYPES = [
   { id: "citylights", group: "real", name: "City lights", hint: "Gold flakes shimmer over a city at dusk." },
   { id: "tropics", group: "real", name: "Tropical leaves", hint: "Palm and monstera leaves sway as the pointer passes. Butterflies included." },
   { id: "treats", group: "real", name: "Floating treats", hint: "Croissants, berries and macarons float and dodge the pointer." },
+  // Scene concepts: animated set pieces with a star (a parrot flies in, a whale swims past,
+  // a walk through the jungle). Defined in concepts.js.
+  ...CONCEPT_TYPES,
 ];
 
 // Which pictures each real-life scene uses. A downloaded site copies just these files.
@@ -100,6 +107,7 @@ export const REAL_SCENES = {
 
 // The picture files a scene needs, so a download can include them.
 export function sceneAssets(def) {
+  if (def && isConcept(def.type)) return conceptAssets(def.type);
   const r = def && REAL_SCENES[def.type];
   if (!r) return [];
   return [...new Set([r.plate, ...(r.layers || [r]).flatMap((l) => l.sprites)].filter(Boolean))];
@@ -117,11 +125,18 @@ export const SCENE_PALETTES = [
 function build() {
   const out = [];
   let n = 1;
-  for (const t of SCENE_TYPES)
+  // Concepts get their own numbers (SC-01...) so the older scene ids stay the same.
+  let k = 1;
+  for (const t of SCENE_TYPES) {
+    if (t.group === "concept") {
+      out.push({ id: "SC-" + String(k++).padStart(2, "0"), type: t.id, group: t.group, style: t.style, palette: "brand", name: t.name });
+      continue;
+    }
     // Real-life scenes are photographs, so they come in one version instead of six palettes.
     for (const p of t.group === "real" ? SCENE_PALETTES.slice(0, 1) : SCENE_PALETTES)
       if (t.group === "real") out.push({ id: "S-" + String(n++).padStart(3, "0"), type: t.id, group: t.group, palette: p.id, name: t.name });
       else out.push({ id: "S-" + String(n++).padStart(3, "0"), type: t.id, group: t.group, palette: p.id, name: `${t.name}, ${p.name.toLowerCase()}` });
+  }
   return out;
 }
 

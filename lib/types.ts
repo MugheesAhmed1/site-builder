@@ -9,7 +9,7 @@ export const STEPS: { id: StepId; title: string; hint: string }[] = [
   { id: "start", title: "Start", hint: "Say what you want to build" },
   { id: "questions", title: "Questions", hint: "The details that matter" },
   { id: "design", title: "Design system", hint: "Colour, type and shape" },
-  { id: "cast", title: "Characters", hint: "Characters, widgets, live scenes" },
+  { id: "cast", title: "Scenes and characters", hint: "Scene concepts, characters, widgets" },
   { id: "motion", title: "Animation", hint: "728 styles to pick from" },
   { id: "build", title: "Your site", hint: "Preview and edit" },
   { id: "deploy", title: "Deploy", hint: "Download and publish" },
@@ -44,11 +44,11 @@ export interface Design {
   density: "compact" | "regular" | "airy";
   motion: "none" | "subtle" | "expressive";
   anim: string;
-  backdrop?: "none" | "aurora" | "grid" | "mesh" | "particles"; // an id from template/src/motion.js, M-000 is "Still"
+  backdrop?: "none" | "aurora" | "grid" | "mesh" | "particles" | "silk"; // an id from template/src/motion.js, M-000 is "Still"
   hover: "lift" | "glow" | "line" | "spotlight" | "none";
   progress: boolean; // reading progress bar at the top
   marquee: boolean; // skills, clients or services scroll past in a strip
-  heroStyle: "statement" | "portrait" | "split" | "centered" | "stage";
+  heroStyle: "statement" | "portrait" | "split" | "centered" | "stage" | "cinema" | "scatter";
   experienceStyle: "ledger" | "timeline" | "list";
   projectStyle: "grid" | "case" | "index";
   serviceStyle: "menu" | "bento" | "rows";
@@ -72,6 +72,13 @@ export interface Design {
   scramble?: boolean; // section titles resolve out of random symbols
   fogSwitch?: boolean; // a fog bank hides the light and dark theme switch
   pack?: string; // the animation pack last applied, if any
+  // Cinema pieces (studied from award-style landing pages, original code)
+  plate?: string; // the scene behind a cinema or scatter opening and the glass call to action: a plate id or /real/cinema path
+  accentFace?: "none" | "serif" | "glow"; // one or two headline words in an italic serif, or glowing
+  chrome?: "bar" | "pill"; // the navigation: a full-width bar or a floating glass pill
+  menu?: "drop" | "curtain"; // the menu: a drop-down on phones, or a full-screen curtain that opens as a circle
+  footer?: "simple" | "wordmark"; // the footer: one line, or a card with the name set huge underneath
+  ctaStyle?: "band" | "glass"; // the call to action: a colour band, or a glass card over a scene
 }
 
 export interface ScenePick {

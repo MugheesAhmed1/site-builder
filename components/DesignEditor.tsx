@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { PLATE_IDS, platePath } from "@/template/src/plates.js";
 import Icon from "@/components/Icon";
 import { useLibrary } from "@/lib/library";
 import { ALL_FONTS, HUES, TYPE_PAIRINGS, colourOptions, contrastReport, fontsHref, fromBrandColour, moodFor, remix, shuffle, styleOf } from "@/lib/designs";
@@ -308,10 +309,47 @@ export default function DesignEditor({
               <Seg
                 label="Opening"
                 value={design.heroStyle}
-                options={["stage", "statement", "portrait", "split", "centered"]}
-                labels={{ stage: "Character and widgets", statement: "Big statement", portrait: "With photo", split: "With side panel", centered: "Centred" }}
+                options={["cinema", "scatter", "stage", "statement", "portrait", "split", "centered"]}
+                labels={{ cinema: "Film scene", scatter: "Scattered words", stage: "Character and widgets", statement: "Big statement", portrait: "With photo", split: "With side panel", centered: "Centred" }}
                 onChange={(heroStyle) => set({ heroStyle })}
               />
+            </div>
+            {(design.heroStyle === "cinema" || design.heroStyle === "scatter" || design.ctaStyle === "glass") && (
+              <div>
+                <label className="lbl">Scene</label>
+                <p className="hint">The picture behind the opening and the glass call to action. Your own opening photo wins when you add one.</p>
+                <div className="plate-grid" role="group" aria-label="Scene">
+                  <button className={"plate-pick" + (!design.plate ? " is-on" : "")} aria-pressed={!design.plate} onClick={() => set({ plate: undefined })}>
+                    <span>Match my site</span>
+                  </button>
+                  {PLATE_IDS.map((id) => (
+                    <button key={id} className={"plate-pick" + (design.plate === id ? " is-on" : "")} aria-pressed={design.plate === id} onClick={() => set({ plate: id })} title={id}>
+                      <img src={platePath(id)} alt={id} loading="lazy" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div>
+              <label className="lbl">Headline accent</label>
+              <Seg label="Headline accent" value={design.accentFace ?? "none"} options={["none", "serif", "glow"]} labels={{ none: "Plain", serif: "Italic serif word", glow: "Glowing word" }} onChange={(accentFace) => set({ accentFace })} />
+              <p className="hint">Put *stars* around the words to accent in your headline, or the last word is used.</p>
+            </div>
+            <div>
+              <label className="lbl">Navigation</label>
+              <Seg label="Navigation" value={design.chrome ?? "bar"} options={["bar", "pill"]} labels={{ bar: "Full bar", pill: "Floating glass pill" }} onChange={(chrome) => set({ chrome })} />
+            </div>
+            <div>
+              <label className="lbl">Menu</label>
+              <Seg label="Menu" value={design.menu ?? "drop"} options={["drop", "curtain"]} labels={{ drop: "Drop down on phones", curtain: "Full-screen curtain" }} onChange={(menu) => set({ menu })} />
+            </div>
+            <div>
+              <label className="lbl">Call to action</label>
+              <Seg label="Call to action" value={design.ctaStyle ?? "band"} options={["band", "glass"]} labels={{ band: "Colour band", glass: "Glass card on a scene" }} onChange={(ctaStyle) => set({ ctaStyle })} />
+            </div>
+            <div>
+              <label className="lbl">Footer</label>
+              <Seg label="Footer" value={design.footer ?? "simple"} options={["simple", "wordmark"]} labels={{ simple: "One line", wordmark: "Card and giant name" }} onChange={(footer) => set({ footer })} />
             </div>
             {kind === "portfolio" && (
               <>

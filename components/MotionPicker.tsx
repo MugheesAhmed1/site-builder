@@ -169,9 +169,9 @@ export default function MotionPicker({
         <div>
           <label className="lbl">Behind the opening</label>
           <div className="seg" role="group" aria-label="Opening backdrop">
-            {(["none", "aurora", "mesh", "particles", "grid"] as const).map((b) => (
+            {(["none", "silk", "aurora", "mesh", "particles", "grid"] as const).map((b) => (
               <button key={b} aria-pressed={(design.backdrop ?? "none") === b} className={(design.backdrop ?? "none") === b ? "is-on" : ""} onClick={() => onChange({ backdrop: b })}>
-                {b === "none" ? "Plain" : b === "aurora" ? "Moving glow" : b === "mesh" ? "Colour blobs" : b === "particles" ? "Particles" : "Fine grid"}
+                {b === "none" ? "Plain" : b === "silk" ? "Silk light" : b === "aurora" ? "Moving glow" : b === "mesh" ? "Colour blobs" : b === "particles" ? "Particles" : "Fine grid"}
               </button>
             ))}
           </div>

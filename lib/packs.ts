@@ -14,7 +14,7 @@ import type { Design } from "./types";
 // Packs are tested combinations across the layers. Picking one sets every switch at once;
 // any switch can still be changed afterwards.
 
-export type PackId = "editorial" | "studio" | "launch" | "story" | "playful" | "calm";
+export type PackId = "cinema" | "editorial" | "studio" | "launch" | "story" | "playful" | "calm";
 
 export interface Pack {
   id: PackId;
@@ -42,6 +42,12 @@ const OFF: Partial<Design> = {
 };
 
 export const PACKS: Pack[] = [
+  {
+    id: "cinema",
+    name: "Cinematic",
+    blurb: "A film-like scene behind your words that pushes in as you scroll, a glass pill menu, a glass call to action and your name set huge at the foot.",
+    set: { ...OFF, smooth: true, loader: "line", scrollWords: true, fogSwitch: true, magnetic: true, grain: true, heroStyle: "cinema", accentFace: "serif", chrome: "pill", menu: "curtain", footer: "wordmark", ctaStyle: "glass" },
+  },
   {
     id: "studio",
     name: "Studio reel",
@@ -91,6 +97,7 @@ export function matchPack(d: Design): PackId | undefined {
     if (k === "smooth" || k === "scrollWords" || k === "flight" || k === "tilt" || k === "fogSwitch" || k === "castStory") return (cur !== false) === (v !== false);
     if (k === "loader") return (cur || "none") === v;
     if (k === "showpiece") return (cur || "none") === v;
+    if (k === "heroStyle" || k === "accentFace" || k === "chrome" || k === "menu" || k === "footer" || k === "ctaStyle") return cur === v;
     return !!cur === !!v;
   };
   return PACKS.find((p) => (Object.keys(p.set) as (keyof Design)[]).every((k) => norm(k, p.set[k])))?.id;
