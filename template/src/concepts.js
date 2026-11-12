@@ -39,14 +39,14 @@ const PETALS = { mode: "fall", sprites: S("petal-pink", "lavender", "daisy-petal
 // Walks: items slide past in depth layers (front ones faster and larger), like a camera
 // moving through the place. depth > 1 sits in front of the actors.
 const JUNGLE_WALK = [
-  { mode: "pass", sprites: [A("trunk"), A("bamboo")], depth: 0.45, size: [0.5, 0.75], anchor: "bottom", gap: [0.35, 0.6], alpha: 0.75 },
-  { mode: "pass", sprites: [A("jungle-bush"), S("monstera")[0], S("fern")[0]], depth: 0.8, size: [0.28, 0.42], anchor: "bottom", gap: [0.25, 0.45] },
+  { mode: "pass", sprites: [A("jungle-bush"), S("fern")[0]], depth: 0.45, size: [0.3, 0.45], anchor: "bottom", gap: [0.3, 0.5], alpha: 0.8 },
+  { mode: "pass", sprites: [S("monstera")[0], S("fern")[0], A("jungle-bush")], depth: 0.8, size: [0.28, 0.42], anchor: "bottom", gap: [0.25, 0.45] },
   { mode: "pass", sprites: [A("vines")], depth: 1.25, size: [0.55, 0.85], anchor: "top", gap: [0.5, 0.9], front: true },
   { mode: "pass", sprites: [A("banana-leaf"), S("palm-leaf")[0], S("monstera")[0]], depth: 1.9, size: [0.4, 0.6], anchor: "bottom", gap: [0.7, 1.2], front: true, blur: 3 },
 ];
 const BAMBOO_WALK = [
-  { mode: "pass", sprites: [A("bamboo")], depth: 0.5, size: [0.7, 0.95], anchor: "bottom", gap: [0.18, 0.35], alpha: 0.7 },
-  { mode: "pass", sprites: [A("bamboo")], depth: 1.6, size: [1.0, 1.25], anchor: "bottom", gap: [0.6, 1.0], front: true, blur: 3 },
+  { mode: "pass", sprites: [S("fern")[0], A("jungle-bush")], depth: 0.6, size: [0.25, 0.38], anchor: "bottom", gap: [0.3, 0.5], alpha: 0.85 },
+  { mode: "pass", sprites: [A("banana-leaf"), S("palm-leaf")[0]], depth: 1.6, size: [0.45, 0.65], anchor: "bottom", gap: [0.8, 1.3], front: true, blur: 3 },
 ];
 const GRASS_WALK = [
   { mode: "pass", sprites: S("fern", "daisy", "sunflower"), depth: 1.7, size: [0.22, 0.34], anchor: "bottom", gap: [0.3, 0.6], front: true, blur: 2 },
@@ -78,7 +78,6 @@ const CONCEPT_LIST = [
   { id: "fox", style: "real", name: "Fox in the snow", hint: "A red fox trots through falling snow in a quiet forest.", bg: { plate: REAL_PLATES.snow, veil: 0.14 }, actors: [{ src: A("fox-run"), how: "walk", size: 0.26, y: 0.92, speed: 1.2, delay: 3 }], layers: [SNOW], fits: "shop creator writer pets role-writer role-creator general" },
   { id: "monarchs", style: "real", name: "Butterfly migration", hint: "Hundreds of monarch butterflies drift over a wildflower meadow and chase the pointer.", bg: { plate: P("meadow"), veil: 0.15 }, layers: [{ ...MONARCHS, count: 18, size: [22, 42] }], fits: "nonprofit health school beauty role-hr role-teacher general" },
   { id: "lanterns", style: "real", name: "Lantern night", hint: "Paper lanterns rise over a lake at night. Tap to release more.", bg: { plate: P("lake"), veil: 0.35, dark: true }, actors: [{ src: A("lantern"), how: "rise", size: 0.06, count: 9 }], fits: "events food hotel nonprofit beauty general" },
-  { id: "kite", style: "real", name: "Kite day", hint: "A bright kite dances in the beach wind. Point to steer it.", bg: { plate: P("beach"), veil: 0.12 }, actors: [{ src: A("kite"), how: "hover", size: 0.16, kite: true }], layers: [BIRDS, CLOUDS], fits: "school events pets shop role-student general" },
   { id: "sail", style: "real", name: "Sail away", hint: "A sailboat crosses the bay on gentle swells.", bg: { plate: P("beach"), veil: 0.1 }, actors: [{ src: A("sailboat"), how: "cross", size: 0.22, y: 0.62, speed: 0.4, bob: true, delay: 2 }], layers: [BIRDS], fits: "hotel property consulting law role-ceo role-finance general" },
   { id: "biplane", style: "real", name: "Biplane over the clouds", hint: "A vintage biplane loops through the clouds and pulls a banner of your words behind it.", bg: { plate: REAL_PLATES.sky, veil: 0.1 }, actors: [{ src: A("biplane"), how: "cross", size: 0.2, y: 0.3, speed: 1.5, banner: true, delay: 3 }], layers: [CLOUDS], fits: "agency events auto product shop role-marketer role-sales general" },
   { id: "launch", style: "real", name: "Rocket launch", hint: "A rocket lifts off into a starry nebula, trailing sparks. Tap to launch another.", bg: { plate: P("space"), veil: 0.08, dark: true }, actors: [{ src: A("rocket"), how: "rise", size: 0.1, count: 1, trail: true, launch: true }], fits: "product agency role-dev role-it role-data role-pm creator general portfolio" },
@@ -118,9 +117,8 @@ const CONCEPT_LIST = [
 
   // ---------------- Cartoon
   { id: "c-parrot", style: "cartoon", name: "Cartoon parrot", hint: "A cheerful cartoon parrot flies in and lands next to your words.", bg: { paint: "toonsky" }, actors: [{ src: T("c-parrot"), how: "flyin", size: 0.2, perch: [0.85, 0.6] }], fits: "school food pets shop events role-student role-teacher general" },
-  { id: "c-whale", style: "cartoon", name: "Happy whale", hint: "A friendly cartoon whale swims past and blows bubbles. Tap for more.", bg: { paint: "toonsea" }, actors: [{ src: T("c-whale"), how: "cross", size: 0.46, y: 0.55, speed: 0.7, swim: true, delay: 1 }], fits: "school pets dentist health shop events general" },
   { id: "c-fish", style: "cartoon", name: "Big cartoon fish", hint: "A big round fish swims across a cartoon sea with bubbles everywhere.", bg: { paint: "toonsea" }, actors: [{ src: T("c-fish"), how: "cross", size: 0.32, y: 0.5, speed: 0.9, swim: true, delay: 1 }], fits: "food pets dentist school shop general" },
-  { id: "c-rocket", style: "cartoon", name: "Rocket ride", hint: "A cartoon rocket blasts off past planets. Tap to launch it again.", bg: { paint: "toonspace" }, actors: [{ src: T("c-rocket"), how: "rise", size: 0.14, count: 1, trail: true, launch: true }], fits: "product school agency role-dev role-student creator general" },
+  { id: "c-rocket", style: "cartoon", name: "Rocket ride", hint: "A cartoon rocket blasts off past planets. Tap to launch it again.", bg: { paint: "toonspace" }, actors: [{ src: A("rocket"), how: "rise", size: 0.14, count: 1, trail: true, launch: true }], fits: "product school agency role-dev role-student creator general" },
   { id: "c-bee", style: "cartoon", name: "Busy bee", hint: "A round little bee buzzes around the pointer over a cartoon meadow.", bg: { paint: "toonmeadow" }, actors: [{ src: T("c-bee"), how: "hover", size: 0.1 }], fits: "food shop school nonprofit health general" },
   { id: "c-monkey", style: "cartoon", name: "Jungle swing", hint: "A cartoon monkey swings across a bright jungle. Tap to push.", bg: { paint: "toonjungle" }, actors: [{ src: T("c-monkey"), how: "swing", size: 0.16, anchor: 0.7 }], fits: "school events pets creator role-student general" },
   { id: "c-dragon", style: "cartoon", name: "Little dragon", hint: "A friendly dragon flaps across the sky and loops around.", bg: { paint: "toonsky" }, actors: [{ src: T("c-dragon"), how: "soar", size: 0.2, y: 0.4 }], fits: "creator events school shop role-creator general" },
