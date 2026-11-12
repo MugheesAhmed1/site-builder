@@ -6,6 +6,7 @@
 // cartoon. Every picture comes from the free AI pack in public/real, made once with
 // Pollinations, so nothing is generated while a site runs.
 import { REAL_FISH, REAL_PLATES, REAL_PROPS, REAL_SPRITES } from "./real.js";
+import { READY_FILES } from "./concepts-ready.js";
 
 export const CONCEPT_STYLES = [
   { id: "real", name: "Real life" },
@@ -133,11 +134,16 @@ const CONCEPT_LIST = [
   { id: "c-birds", style: "cartoon", name: "Blue birds", hint: "Little cartoon birds fly across a sunny sky with puffy clouds.", bg: { paint: "toonsky" }, actors: [{ src: T("c-bird"), how: "cross", size: 0.09, y: 0.35, speed: 1.6, flap: true, count: 3, delay: 2 }], fits: "school nonprofit health shop role-teacher general" },
 ];
 
-export const CONCEPTS = Object.fromEntries(CONCEPT_LIST.map((c) => [c.id, c]));
-export const CONCEPT_IDS = CONCEPT_LIST.map((c) => c.id);
+// Only concepts whose new pictures have all been made are offered (see concepts-ready.js).
+const READY = new Set(READY_FILES);
+const filesOf = (c) => [c.bg && c.bg.plate, ...(c.actors || []).map((a) => a.src), ...(c.layers || []).flatMap((l) => l.sprites)].filter(Boolean);
+const LIVE = CONCEPT_LIST.filter((c) => filesOf(c).every((f) => !f.startsWith("/real/concepts/") || READY.has(f)));
+
+export const CONCEPTS = Object.fromEntries(LIVE.map((c) => [c.id, c]));
+export const CONCEPT_IDS = LIVE.map((c) => c.id);
 
 // Scene types for the picker (scenes.js adds these to its list).
-export const CONCEPT_TYPES = CONCEPT_LIST.map((c) => ({ id: c.id, group: "concept", style: c.style, name: c.name, hint: c.hint, fits: c.fits.split(" ") }));
+export const CONCEPT_TYPES = LIVE.map((c) => ({ id: c.id, group: "concept", style: c.style, name: c.name, hint: c.hint, fits: c.fits.split(" ") }));
 
 export function isConcept(type) {
   return Object.prototype.hasOwnProperty.call(CONCEPTS, type);
@@ -147,7 +153,7 @@ export function isConcept(type) {
 export function conceptAssets(type) {
   const c = CONCEPTS[type];
   if (!c) return [];
-  return [...new Set([c.bg && c.bg.plate, ...(c.actors || []).map((a) => a.src), ...(c.layers || []).flatMap((l) => l.sprites)].filter(Boolean))];
+  return [...new Set(filesOf(c))];
 }
 
 // Concepts that suit a category, best first (fits lists are written best first).

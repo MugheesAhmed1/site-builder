@@ -31,3 +31,10 @@ describe("scene concepts", () => {
     for (const cat of ["food", "dentist", "role-pm", "portfolio", "general"]) expect(sceneFor(cat, 12345).group).toBe("concept");
   });
 });
+
+describe("concept picture list", () => {
+  it("matches the pictures on disk", async () => {
+    const { READY_FILES } = await import("../template/src/concepts-ready.js");
+    for (const f of READY_FILES) expect(existsSync(join(process.cwd(), "public", f)), f).toBe(true);
+  });
+});
