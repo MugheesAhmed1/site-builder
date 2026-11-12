@@ -10,8 +10,52 @@ type Json = string | number | boolean | null | Json[] | { [k: string]: Json };
 
 const LONG_KEYS = /summary|description|intro|blurb|quote|impact|tagline|paragraph|bullets|highlights/i;
 
+// Plain names for the content keys, so the editor never shows "cta", "meta" or "Add proces".
+const NAMES: Record<string, [string, string]> = {
+  meta: ["Page title and sharing", ""],
+  brand: ["Name", ""],
+  hero: ["Opening", ""],
+  cta: ["Call to action band", ""],
+  faq: ["Questions", "question"],
+  visit: ["Address and hours", ""],
+  hours: ["Opening hours", "day"],
+  process: ["How it works", "step"],
+  custom: ["Your own section", "point"],
+  gallery: ["Gallery", "photo"],
+  highlights: ["Numbers", "number"],
+  stats: ["Numbers", "number"],
+  services: ["Services", "service"],
+  testimonials: ["Reviews", "review"],
+  team: ["Team", "person"],
+  pricing: ["Prices", "plan"],
+  clients: ["Trusted by", "name"],
+  experience: ["Experience", "role"],
+  education: ["Education", "school"],
+  certifications: ["Certifications", "certificate"],
+  awards: ["Awards", "award"],
+  languages: ["Languages", "language"],
+  projects: ["Work", "project"],
+  skills: ["Skills", "skill group"],
+  items: ["Items", "item"],
+  links: ["Links", "link"],
+  bullets: ["Points", "point"],
+  paragraphs: ["Paragraphs", "paragraph"],
+  features: ["Features", "feature"],
+  tags: ["Tags", "tag"],
+};
+
 function label(key: string) {
-  return key.replace(/([a-z])([A-Z])/g, "$1 $2").replace(/_/g, " ");
+  if (NAMES[key]) return NAMES[key][0];
+  const words = key.replace(/([a-z])([A-Z])/g, "$1 $2").replace(/_/g, " ");
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
+export function oneOf(key: string) {
+  if (NAMES[key]?.[1]) return NAMES[key][1];
+  const words = label(key).toLowerCase();
+  if (/ies$/.test(words)) return words.replace(/ies$/, "y");
+  if (/(ss|us|is)$/.test(words)) return words;
+  return words.replace(/s$/, "");
 }
 
 function emptyLike(v: Json): Json {
@@ -122,7 +166,7 @@ function Value({ name, value, onChange, depth }: { name: string; value: Json; on
             style={{ justifySelf: "start" }}
             onClick={() => onChange([...value, value.length ? emptyLike(value[0]) : ""])}
           >
-            <Icon name="plus" size={14} /> Add {label(name).replace(/ies$/, "y").replace(/s$/, "")}
+            <Icon name="plus" size={14} /> Add {oneOf(name)}
           </button>
         </div>
       </details>

@@ -182,7 +182,9 @@ export function missingImages(p: Project): string[] {
   const wc = c as WebsiteContent;
   const out: string[] = [];
   if (!wc.hero.imageUrl) out.push("A main photo for the opening section (optional, hidden until added)");
-  if (wc.sections.includes("gallery")) for (const g of wc.gallery) if (!g.imageUrl) out.push(`Gallery photo: ${g.caption} (shows a labelled slot until added)`);
+  const ct = wc.contact ?? {};
+  if (!(ct.email || ct.phone || ct.whatsapp || ct.instagram || ct.facebook || ct.linkedin || wc.visit?.address)) out.push("A phone, WhatsApp, email or address in Questions, so visitors can reach you (the contact block is hidden until you add one)");
+  if (wc.sections.includes("gallery")) for (const g of wc.gallery) if (!g.imageUrl) out.push(`Gallery photo: ${g.caption} (the gallery hides it until added)`);
   return out;
 }
 
@@ -236,14 +238,14 @@ export function DeployStep({ p, head, onDone }: { p: Project; head: Head; onDone
           </p>
           {images.length > 0 && (
             <>
-              <h2 style={{ marginTop: 28 }}>Photos you still need</h2>
+              <h2 style={{ marginTop: 28 }}>Still missing</h2>
               <ul className="plain-list">
                 {images.map((x) => (
                   <li key={x}>{x}</li>
                 ))}
               </ul>
               <p className="muted" style={{ marginTop: 8 }}>
-                Add them in <b>Your site</b> with <b>Edit on page</b>: click a picture slot and upload from your device. They are saved inside the download.
+                Add photos in <b>Your site</b> with <b>Edit on page</b>: click a picture slot and upload from your device. They are saved inside the download.
               </p>
             </>
           )}
