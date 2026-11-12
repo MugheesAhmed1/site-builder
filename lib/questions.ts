@@ -100,6 +100,16 @@ const examples: Record<string, string> = {
   shop: "Handmade leather bags",
   nonprofit: "Free tutoring",
   events: "Wedding planning",
+  dentist: "Family dentistry and braces",
+  hospital: "Round-the-clock family care",
+  creator: "Cooking videos and recipes",
+  law: "Family and property law",
+  school: "O and A level tutoring",
+  hotel: "Boutique rooms by the sea",
+  trades: "Home repairs and renovation",
+  auto: "Car servicing and repairs",
+  pets: "Vet care and grooming",
+  general: "Help with everyday jobs",
 };
 
 const audiences: Record<string, string> = {
@@ -115,6 +125,16 @@ const audiences: Record<string, string> = {
   shop: "people who like things made well",
   nonprofit: "children in our city",
   events: "couples and companies",
+  dentist: "families and children",
+  hospital: "patients and their families",
+  creator: "people who love good food",
+  law: "families and small businesses",
+  school: "students and parents",
+  hotel: "couples and families on holiday",
+  trades: "homeowners and landlords",
+  auto: "busy drivers",
+  pets: "pet owners",
+  general: "families and small businesses",
 };
 
 const toneFor: Record<string, string> = {
@@ -130,6 +150,15 @@ const toneFor: Record<string, string> = {
   shop: "Classic and editorial",
   nonprofit: "Warm and friendly",
   events: "Classic and editorial",
+  dentist: "Calm and minimal",
+  hospital: "Calm and minimal",
+  creator: "Bold and loud",
+  law: "Classic and editorial",
+  school: "Warm and friendly",
+  hotel: "Classic and editorial",
+  trades: "Warm and friendly",
+  auto: "Bold and loud",
+  pets: "Warm and friendly",
 };
 
 // "a | b | c" lines into arrays of trimmed parts.

@@ -540,8 +540,18 @@ const ICONS = {
 
 // Fills a widget with the site's own words and numbers.
 export function widgetText(kind, ctx) {
-  const s0 = ctx.stats[0] || { value: "24", label: "Projects shipped" };
-  const s1 = ctx.stats[1] || s0;
+  // Real numbers first, then plain facts from the page (steps, skills or services, place), so
+  // several number widgets on one site each say something different.
+  const pool = [
+    ...ctx.stats,
+    ...(ctx.steps || []).slice(0, 3).map((x, i) => ({ value: x, label: "Step " + (i + 1) })),
+    ...(ctx.tags || []).slice(0, 3).map((x) => ({ value: x, label: ctx.kind === "website" ? "We offer" : "Skill" })),
+    ctx.place && { value: ctx.place, label: ctx.kind === "website" ? "Find us in" : "Based in" },
+  ].filter(Boolean);
+  const s0 = pool[0] || { value: "New", label: "Just launched" };
+  const s1 = pool[1] || s0;
+  const s2 = pool[2] || s1;
+  const s3 = pool[3] || s2;
   const find = (re) => ctx.stats.find((x) => re.test(String(x.label) + " " + String(x.value)));
   switch (kind) {
     case "stat":
@@ -550,7 +560,11 @@ export function widgetText(kind, ctx) {
     case "bars":
       return { title: s1.label, value: s1.value };
     case "ring":
-      return { title: ctx.stats[2] ? ctx.stats[2].label : "Happy clients", value: "92%" };
+    {
+      // Only a real percentage from the person's numbers; otherwise their third figure.
+      const pct = find(/%/);
+      return pct ? { title: pct.label, value: pct.value } : { title: s2.label, value: s2.value };
+    }
     case "chat":
       return { text: ctx.greeting };
     case "rating":
@@ -600,7 +614,7 @@ export function widgetText(kind, ctx) {
     case "menu":
       return { title: ctx.priceLabel || "Today's special", value: ctx.price || ctx.tags[0] || "Chef's choice" };
     case "pulse":
-      return { title: s0.label, value: s0.value };
+      return { title: s2.label, value: s2.value };
     case "followers": {
       const f = find(/follow|subscri|audience|reader|view/);
       return { title: f ? f.label : "New followers", value: f ? f.value : "+1,240" };
@@ -611,7 +625,7 @@ export function widgetText(kind, ctx) {
     }
     case "growth": {
       const f = find(/\+|growth|revenue|increase|up /);
-      return { title: f ? f.label : s1.label, value: f ? f.value : s1.value };
+      return { title: f ? f.label : s3.label, value: f ? f.value : s3.value };
     }
     case "badge":
     default:
@@ -1037,6 +1051,18 @@ export function CastWidget({ def, ctx, className = "", live = false }) {
 
 // ---------------------------------------------------------------- Site pieces built around the cast
 
+// Number widgets need a few figures. When the person gave fewer than three, true counts from
+// their own content (projects, services, steps...) fill in, so widgets never repeat one number
+// or show a made-up one.
+function withCounts(stats, counts) {
+  const out = stats.filter((x) => x && x.label && String(x.value ?? "") !== "");
+  for (const [n, label] of counts) {
+    if (out.length >= 3) break;
+    if (n > 0 && !out.some((x) => x.label === label)) out.push({ value: String(n), label });
+  }
+  return out;
+}
+
 // Collects what the widgets say from the site's content.
 export function castContext(kind, c) {
   if (kind === "portfolio") {
@@ -1044,12 +1070,22 @@ export function castContext(kind, c) {
     const first = (h.name || "").split(" ")[0];
     const tags = (c.skills || []).flatMap((g) => g.items || []);
     return {
+      kind: "portfolio",
       name: h.name || "",
       first,
       place: h.location || "",
       status: h.availability || "",
       greeting: first ? `Hi, I'm ${first}. ${h.role ? h.role + "." : ""}` : "Hi there!",
-      stats: (c.stats || []).map((s) => ({ value: (s.value ?? "") + (s.suffix || ""), label: s.label })),
+      stats: withCounts(
+        (c.stats || []).map((s) => ({ value: (s.value ?? "") + (s.suffix || ""), label: s.label })),
+        [
+          [(c.projects || []).length, "Projects featured"],
+          [(c.experience || []).length, "Roles held"],
+          [tags.length, "Skills"],
+          [(c.process || []).length, "Steps in how I work"],
+          [(c.testimonials || []).length, "Kind words"],
+        ],
+      ),
       tags,
       steps: (c.process || []).map((x) => x.title),
       quote: c.testimonials && c.testimonials[0] ? c.testimonials[0].quote : "",
@@ -1069,12 +1105,22 @@ export function castContext(kind, c) {
   const open = c.visit && c.visit.hours && c.visit.hours[0];
   const place = c.visit && c.visit.address ? c.visit.address.split(",").slice(-1)[0].trim() : "";
   return {
+    kind: "website",
     name: c.brand ? c.brand.name : "",
     first: c.brand ? c.brand.name : "",
     place,
     status: open ? `Open ${open.days}` : "Open today",
     greeting: `Hi! ${c.hero && c.hero.primaryCta ? c.hero.primaryCta + " in one tap." : "Message us any time."}`,
-    stats: hl.filter((x) => x !== rating).map((x) => ({ value: x.value, label: x.label })),
+    stats: withCounts(
+      hl.filter((x) => x !== rating).map((x) => ({ value: x.value, label: x.label })),
+      [
+        [(c.services || []).length, c.services && c.services.some((x) => x.price) ? "Things on offer" : "Services"],
+        [(c.team || []).length, "People on the team"],
+        [(c.testimonials || []).length, "Customer reviews"],
+        [(c.process || []).length, "Simple steps"],
+        [(c.faq || []).length, "Questions answered"],
+      ],
+    ),
     rating: rating ? rating.value : "",
     ratingLabel: rating ? rating.label : "",
     tags: (c.services || []).map((x) => x.name),

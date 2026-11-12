@@ -120,10 +120,15 @@ export default function Website({ design, content, preview = false, scheme: forc
   const [activeId, setActiveId] = useState("");
   const arr = (k) => (Array.isArray(c[k]) ? c[k] : []);
 
+  const ct0 = c.contact || {};
+  const reachable = !!(ct0.email || ct0.phone || ct0.whatsapp || ct0.instagram || ct0.facebook || ct0.linkedin || (c.visit && c.visit.address));
   const has = (s) => {
     if (s === "about") return c.about && (c.about.paragraphs || []).filter(Boolean).length > 0;
     if (s === "visit") return c.visit && (c.visit.address || (c.visit.hours || []).length);
-    if (s === "contact") return true;
+    // A published site never shows an empty contact block or grey photo slots. The preview keeps
+    // them so people can see what is missing and fill it in with Edit on page.
+    if (s === "contact") return preview || reachable;
+    if (s === "gallery") return arr("gallery").some((g) => g && (g.imageUrl || preview));
     if (s === "cta") return !!(c.cta && c.cta.heading);
     if (s === "tiles") return arr("highlights").length > 0 || arr("services").length > 0;
     return arr(s).length > 0;
@@ -136,10 +141,12 @@ export default function Website({ design, content, preview = false, scheme: forc
   useActiveSection(rootRef, visible.join(","), setActiveId);
 
   const h = c.hero;
-  const ct = c.contact || {};
+  const ct = ct0;
+  // Where "get in touch" buttons point: the contact block, or the address and hours, or the top.
+  const toContact = visible.includes("contact") ? "#pf-contact" : visible.includes("visit") ? "#pf-visit" : "#pf-top";
   const hero = d.heroStyle || "statement";
   const external = /^https?:|^tel:|^mailto:/.test(h.primaryHref || "");
-  const secondaryHref = visible.includes("visit") && h.secondaryCta === "Find us" ? "#pf-visit" : visible.includes("services") ? "#pf-services" : "#pf-contact";
+  const secondaryHref = visible.includes("visit") && h.secondaryCta === "Find us" ? "#pf-visit" : visible.includes("services") ? "#pf-services" : toContact;
   const showImage = h.imageUrl || preview;
   const facts = [
     c.visit && c.visit.address && ["Find us", c.visit.address.split(",").slice(-2).join(",").trim()],
@@ -166,7 +173,7 @@ export default function Website({ design, content, preview = false, scheme: forc
   );
   const ctas = (
     <div className="pf-row pf-wrap pf-hero-ctas pf-enter" style={{ "--i": 3 }}>
-      <a className="pf-btn pf-btn-primary" href={h.primaryHref || "#pf-contact"} target={/^https?:/.test(h.primaryHref) ? "_blank" : undefined} rel="noreferrer">
+      <a className="pf-btn pf-btn-primary" href={h.primaryHref || toContact} target={/^https?:/.test(h.primaryHref) ? "_blank" : undefined} rel="noreferrer">
         {h.primaryCta}
       </a>
       {h.secondaryCta && (
@@ -417,11 +424,11 @@ export default function Website({ design, content, preview = false, scheme: forc
         return (
           <Wide id="gallery" title="Gallery" key={s}>
             {d.carousel && animated ? (
-              <Carousel items={c.gallery.map((g) => ({ title: g.caption, image: g.imageUrl }))} label="Gallery" preview={preview} pathOf={(i) => "gallery." + i + ".imageUrl"} />
+              <Carousel items={c.gallery.filter((g) => preview || g.imageUrl).map((g) => ({ title: g.caption, image: g.imageUrl }))} label="Gallery" preview={preview} pathOf={(i) => "gallery." + i + ".imageUrl"} />
             ) : (
             <div className="ws-gallery">
-              {c.gallery.map((g, i) => (
-                <figure className={"ws-shot pf-reveal" + (i === 0 ? " is-lead" : "")} key={i} style={{ "--i": i }}>
+              {c.gallery.map((g, i) => (preview || g.imageUrl) && (
+                <figure className={"ws-shot pf-reveal" + (i === c.gallery.findIndex((x) => preview || x.imageUrl) ? " is-lead" : "")} key={i} style={{ "--i": i }}>
                   {g.imageUrl ? <img src={g.imageUrl} alt={g.caption} loading="lazy" data-img={"gallery." + i + ".imageUrl"} /> : <PhotoSlot label={g.caption} preview={preview} path={"gallery." + i + ".imageUrl"} />}
                   {g.imageUrl && <figcaption className="pf-small">{g.caption}</figcaption>}
                 </figure>
@@ -466,7 +473,7 @@ export default function Website({ design, content, preview = false, scheme: forc
                       ))}
                     </ul>
                   )}
-                  <a className={"pf-btn " + (p.featured ? "pf-btn-primary" : "pf-btn-quiet") + " ws-plan-cta"} href={external ? h.primaryHref : "#pf-contact"}>
+                  <a className={"pf-btn " + (p.featured ? "pf-btn-primary" : "pf-btn-quiet") + " ws-plan-cta"} href={external ? h.primaryHref : toContact}>
                     Choose {p.name}
                   </a>
                 </article>
@@ -490,7 +497,7 @@ export default function Website({ design, content, preview = false, scheme: forc
         );
       case "cta":
         if (d.ctaStyle === "glass") {
-          return <GlassCta key={s} plate={plate} heading={c.cta.heading} text={c.cta.text} button={c.cta.button || h.primaryCta} href={h.primaryHref || "#pf-contact"} newTab={/^https?:/.test(h.primaryHref)} />;
+          return <GlassCta key={s} plate={plate} heading={c.cta.heading} text={c.cta.text} button={c.cta.button || h.primaryCta} href={h.primaryHref || toContact} newTab={/^https?:/.test(h.primaryHref)} />;
         }
         return (
           <section id="pf-cta" className="pf-band" key={s}>
@@ -500,7 +507,7 @@ export default function Website({ design, content, preview = false, scheme: forc
                 <h2 className="pf-band-title">{c.cta.heading}</h2>
                 {c.cta.text && <p className="pf-band-text">{c.cta.text}</p>}
               </div>
-              <a className="pf-btn pf-btn-invert" href={h.primaryHref || "#pf-contact"} target={/^https?:/.test(h.primaryHref) ? "_blank" : undefined} rel="noreferrer">
+              <a className="pf-btn pf-btn-invert" href={h.primaryHref || toContact} target={/^https?:/.test(h.primaryHref) ? "_blank" : undefined} rel="noreferrer">
                 {c.cta.button || h.primaryCta}
               </a>
             </div>
@@ -560,6 +567,8 @@ export default function Website({ design, content, preview = false, scheme: forc
           ct.facebook && ["Facebook", ct.facebook],
           ct.linkedin && ["LinkedIn", ct.linkedin],
         ].filter(Boolean);
+        // No way to message: point people to the address so the block is never empty.
+        if (!actions.length && !ct.email && c.visit && c.visit.address) actions.push(["Get directions", "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(c.visit.address)]);
         return (
           <section id="pf-contact" className="pf-section pf-contact" key={s}>
             {cast && animated && <Peek character={cast.character} />}
@@ -626,7 +635,7 @@ export default function Website({ design, content, preview = false, scheme: forc
               </button>
             )}
             {d.chrome === "pill" && h.primaryCta && (
-              <a className="pf-btn pf-nav-cta" href={h.primaryHref || "#pf-contact"} target={/^https?:/.test(h.primaryHref) ? "_blank" : undefined} rel="noreferrer">
+              <a className="pf-btn pf-nav-cta" href={h.primaryHref || toContact} target={/^https?:/.test(h.primaryHref) ? "_blank" : undefined} rel="noreferrer">
                 {h.primaryCta}
               </a>
             )}
@@ -637,7 +646,7 @@ export default function Website({ design, content, preview = false, scheme: forc
         </div>
       </header>
 
-      {curtain && <CurtainMenu open={menuOpen} onClose={() => setMenuOpen(false)} links={navLinks} brand={c.brand.name} cta={h.primaryCta ? { href: h.primaryHref || "#pf-contact", label: h.primaryCta } : null} />}
+      {curtain && <CurtainMenu open={menuOpen} onClose={() => setMenuOpen(false)} links={navLinks} brand={c.brand.name} cta={h.primaryCta ? { href: h.primaryHref || toContact, label: h.primaryCta } : null} />}
 
       <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
         {animated && <Backdrop kind={d.backdrop} />}

@@ -45,15 +45,19 @@
 .cn-veil { position: absolute; inset: 0; z-index: -1; pointer-events: none; background:
   linear-gradient(180deg, rgb(4 6 12 / 0.55) 0%, rgb(4 6 12 / 0.18) 34%, rgb(4 6 12 / 0) 52%, rgb(4 6 12 / 0.12) 74%, var(--pf-bg) 100%); }
 .cn-copy { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; padding-top: clamp(130px, 17vh, 190px); padding-bottom: 40px; transform: translate3d(0, calc(var(--cp) * -70px), 0); opacity: calc(1 - var(--cp) * 1.7); filter: blur(calc(var(--cp) * 8px)); }
-.cn-copy .pf-display { color: #fff; max-width: 17ch; margin-inline: auto; font-weight: 500; letter-spacing: -0.045em; line-height: 0.98; font-size: clamp(44px, 7.4cqi, 104px); text-shadow: 0 2px 30px rgb(0 0 0 / 0.25); }
+/* A soft dark pool behind the words, so white type stays readable over bright skies, snow and
+   cartoon scenes as well as dark ones. */
+.cn-copy::before { content: ""; position: absolute; z-index: -1; inset: 10% -6% 0; pointer-events: none; background: radial-gradient(closest-side, rgb(4 6 12 / 0.34), rgb(4 6 12 / 0.16) 60%, transparent); }
+.cn-copy .pf-display { color: #fff; max-width: 17ch; margin-inline: auto; font-weight: 500; letter-spacing: -0.045em; line-height: 0.98; font-size: clamp(44px, 7.4cqi, 104px); text-shadow: 0 1px 3px rgb(0 0 0 / 0.22), 0 2px 30px rgb(0 0 0 / 0.3); }
 .cn-copy .pf-display.is-long { font-size: clamp(38px, 5.8cqi, 80px); max-width: 22ch; }
-.cn-copy .pf-hero-sub { color: rgb(255 255 255 / 0.84); max-width: 46ch; margin-inline: auto; text-shadow: 0 1px 14px rgb(0 0 0 / 0.35); }
+.cn-copy .pf-hero-sub { color: rgb(255 255 255 / 0.9); max-width: 46ch; margin-inline: auto; text-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 1px 14px rgb(0 0 0 / 0.4); }
 .cn-copy .pf-hero-ctas { justify-content: center; }
 .cn-copy .pf-btn-primary { border-radius: 999px; background: #fff; color: #0b0c10; box-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.5); }
-.cn-copy .pf-btn-quiet { border-radius: 999px; color: #fff; border-color: rgb(255 255 255 / 0.4); background: rgb(255 255 255 / 0.08); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+/* Dark glass, so the second button stays readable over bright scenes (blossom, snow, sky). */
+.cn-copy .pf-btn-quiet { border-radius: 999px; color: #fff; border-color: rgb(255 255 255 / 0.5); background: rgb(12 12 18 / 0.38); text-shadow: 0 1px 8px rgb(0 0 0 / 0.35); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 @media (hover: hover) and (pointer: fine) {
   .cn-copy .pf-btn-primary:hover { background: color-mix(in srgb, #fff 86%, var(--pf-accent)); }
-  .cn-copy .pf-btn-quiet:hover { border-color: #fff; background: rgb(255 255 255 / 0.16); }
+  .cn-copy .pf-btn-quiet:hover { border-color: #fff; background: rgb(12 12 18 / 0.52); }
 }
 .cn-foot { position: relative; padding-bottom: clamp(28px, 5vh, 52px); }
 
@@ -110,7 +114,7 @@
 .cn-scatter-copy .pf-hero-sub { color: rgb(255 255 255 / 0.82); font-size: 15px; margin: 0; }
 .cn-scatter-copy .pf-hero-ctas { margin: 0; }
 .cn-scatter-copy .pf-btn-primary { border-radius: 999px; background: #fff; color: #0b0c10; }
-.cn-scatter-copy .pf-btn-quiet { border-radius: 999px; color: #fff; border-color: rgb(255 255 255 / 0.4); }
+.cn-scatter-copy .pf-btn-quiet { border-radius: 999px; color: #fff; border-color: rgb(255 255 255 / 0.5); background: rgb(12 12 18 / 0.38); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 @media (max-width: 760px) {
   .cn-words { font-size: min(15vw, calc(90vw / (var(--len, 10) * 0.55))); }
   .cn-word-0 { top: 13%; left: 5%; }
