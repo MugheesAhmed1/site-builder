@@ -5,6 +5,7 @@ Type one line, such as "website for my bakery in Lahore" or "portfolio for me, I
 **No AI anywhere.** Everything runs in the browser:
 
 - **Reading the request.** Keyword rules in `lib/categories.ts` decide portfolio or website, and which of 12 business types it is. You can change the guess.
+- **Requirements document to website.** At `/document` you upload a PRD, a BRD or a plain brief (PDF, Word .docx, Markdown or text). `lib/requirements.ts` splits it by its headings, matches each heading to what it is about, and reads lists, tables and "Key: value" lines into the same answers the questions step asks for: name, offer, city, customers, headline, story, features or menu with prices, plans, steps, common questions, team, quotes, tone, brand colour, first action and contact details. You see what was read and where from, fix the basics, then build. Goals and targets are never shown as facts, sections such as timeline, risks and out of scope are skipped, and the author's own email is not used. `lib/docx.ts` reads Word files with JSZip. Nothing is uploaded.
 - **Questions.** These are fixed lists in `lib/questions.ts`. There is one list for portfolios and one for websites, tailored to the business type: it asks for hours and an address only where people visit, and for prices only where it fits. Most questions come with a suggested answer.
 - **Résumé.** PDFs are read on the device with pdf.js (`lib/resume.ts`), and the text is split by common headings and date ranges. Nothing is uploaded.
 - **Words.** Rules and templates in `lib/compose.ts` write every section. Numbers in results become counters, skills are grouped and steps are set per role or business. There are no em or en dashes.
@@ -69,4 +70,5 @@ Things the builder does on purpose:
 - `template/src/motion.js`: the animation styles. `template/src/spring.js` turns a spring (duration and bounce) into a CSS `linear()` easing for hover moves and pointer-following shapes.
 - `.claude/skills/motion/` and `.mcp.json`: the free Motion AI Kit (installed with `npx motion-ai`, MIT licence) so coding agents working on this repo get Motion's animation guidance and docs search. Only the free Motion server is set up; Motion+ is paid and left out.
 - `library/`: the shared library, see `library/README.md`.
+- `components/DocIntake.tsx`, `components/DocBand.tsx`, `app/document/`: the requirements document intake. `lib/requirements-sample.ts` has the sample document and the blank template.
 - `tests/`: unit tests.

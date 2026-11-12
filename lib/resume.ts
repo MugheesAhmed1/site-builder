@@ -4,34 +4,49 @@ import type { Profile } from "./types";
 // the text is then split into sections by recognising common headings and date ranges.
 // No file ever leaves the device.
 
-export async function fileToText(file: File): Promise<string> {
+// With headings on, lines set clearly larger than the body text come back as "## " lines,
+// which is how the requirements reader finds sections in a PDF.
+export async function fileToText(file: File, opts: { headings?: boolean } = {}): Promise<string> {
   if (/\.pdf$/i.test(file.name) || file.type === "application/pdf") {
     const pdfjs = await import("pdfjs-dist");
     pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
     const doc = await pdfjs.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
     const out: string[] = [];
+    const sizes: number[] = [];
     for (let i = 1; i <= doc.numPages; i++) {
       const page = await doc.getPage(i);
       const tc = await page.getTextContent();
       // Group text pieces into lines by their vertical position.
-      const lines = new Map<number, { x: number; s: string }[]>();
-      for (const it of tc.items as { str: string; transform: number[] }[]) {
+      const lines = new Map<number, { x: number; s: string; h: number }[]>();
+      for (const it of tc.items as { str: string; transform: number[]; height?: number }[]) {
         if (!("str" in it) || !it.str.trim()) continue;
         const y = Math.round(it.transform[5] / 3) * 3;
         const arr = lines.get(y) ?? [];
-        arr.push({ x: it.transform[4], s: it.str });
+        arr.push({ x: it.transform[4], s: it.str, h: it.height || Math.abs(it.transform[3]) || 0 });
         lines.set(y, arr);
       }
       const ys = [...lines.keys()].sort((a, b) => b - a);
       for (const y of ys) {
         const parts = lines.get(y)!.sort((a, b) => a.x - b.x);
         out.push(parts.map((p) => p.s).join(" ").replace(/\s+/g, " ").trim());
+        sizes.push(Math.max(...parts.map((p) => p.h)));
       }
+    }
+    if (opts.headings && out.length > 3) {
+      // The body size is the most common line height, weighted by how much text is set in it.
+      const weight = new Map<number, number>();
+      out.forEach((l, i) => weight.set(Math.round(sizes[i] * 2) / 2, (weight.get(Math.round(sizes[i] * 2) / 2) ?? 0) + l.length));
+      const body = [...weight.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? 0;
+      if (body > 0) return out.map((l, i) => (sizes[i] >= body * 1.15 && l.length <= 80 && !/^[#•●▪\-*]/.test(l) ? (sizes[i] >= body * 1.6 ? "# " : "## ") + l : l)).join("\n");
     }
     return out.join("\n");
   }
-  if (/\.docx$/i.test(file.name)) {
-    throw new Error("Word files can't be read here yet. Save it as PDF, or copy the text and paste it below.");
+  if (/\.docx$/i.test(file.name) || file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+    const { docxToText } = await import("./docx");
+    return docxToText(await file.arrayBuffer());
+  }
+  if (/\.(doc|pages|odt|rtf)$/i.test(file.name)) {
+    throw new Error("That file type can't be read here. Save it as .docx or PDF, or copy the text and paste it.");
   }
   return file.text();
 }
@@ -56,7 +71,7 @@ const URL_RE = /((?:https?:\/\/)?(?:www\.)?(?:linkedin\.com|github\.com|behance\
 const BULLET = /^[•●▪◦‣∙*·\-–—>]\s*/;
 
 function cleanHeading(line: string) {
-  return line.replace(/[:|]+$/, "").replace(/\s+/g, " ").trim();
+  return line.replace(/^#+\s*/, "").replace(/^\*\*(.+)\*\*$/, "$1").replace(/[:|]+$/, "").replace(/\s+/g, " ").trim();
 }
 
 function sectionOf(line: string): keyof typeof SECTION_KEYS | null {

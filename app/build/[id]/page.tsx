@@ -414,6 +414,11 @@ function QuestionsStep({
           Please answer: {missing.map((q) => q.label.toLowerCase().replace(/[?.!]+$/, "")).join(", ")}.
         </div>
       )}
+      {p.docName && (
+        <div className="notice" style={{ marginBottom: 20, maxWidth: 760 }}>
+          These answers were filled in from <b>{p.docName}</b>. Change anything that isn&apos;t right; the site is rebuilt from what is written here.
+        </div>
+      )}
       {p.kind === "portfolio" && <ResumeBox p={p} onResume={onResume} onProfile={onProfile} />}
       <ol className="q-list" style={{ listStyle: "none", padding: 0, margin: 0, maxWidth: 760 }}>
         {qs.map((q, i) => {
