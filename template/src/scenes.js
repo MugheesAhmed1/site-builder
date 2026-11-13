@@ -15,6 +15,7 @@ export const SCENE_GROUPS = [
   { id: "photo", name: "Your photo" },
   { id: "depth", name: "3D and physics" },
   { id: "real", name: "Real life" },
+  { id: "three", name: "Real 3D" },
 ];
 
 export const SCENE_TYPES = [
@@ -67,6 +68,15 @@ export const SCENE_TYPES = [
   { id: "citylights", group: "real", name: "City lights", hint: "Gold flakes shimmer over a city at dusk." },
   { id: "tropics", group: "real", name: "Tropical leaves", hint: "Palm and monstera leaves sway as the pointer passes. Butterflies included." },
   { id: "treats", group: "real", name: "Floating treats", hint: "Croissants, berries and macarons float and dodge the pointer." },
+  // Real 3D, drawn with three.js (react-three-fiber). Loaded only when one is on the page.
+  { id: "orb", group: "three", name: "Living orb", hint: "A 3D orb that breathes and leans toward the pointer. Tap to send a ripple across it." },
+  { id: "crystals", group: "three", name: "Floating crystals", hint: "Faceted 3D gems drift and slip away from the pointer. Tap to burst them apart." },
+  { id: "terrain", group: "three", name: "Flowing landscape", hint: "Glide over glowing 3D hills. They rise under the pointer; tap for a shockwave." },
+  { id: "galaxy", group: "three", name: "Spiral galaxy", hint: "Thousands of stars in 3D. Drag to turn it, tap for a burst, scroll to dive in." },
+  { id: "ribbons", group: "three", name: "Silk ribbons", hint: "Satin ribbons twist in 3D and bow toward the pointer. Tap to send a wave." },
+  { id: "knot", group: "three", name: "Pearl knot", hint: "A shimmering 3D sculpture. Drag to spin it, tap to tie a new knot." },
+  { id: "name3d", group: "three", name: "Name in 3D blocks", hint: "Your name built from 3D blocks. The pointer pushes them; tap to blow them apart." },
+  { id: "blocks", group: "three", name: "Block field", hint: "A 3D field of blocks that rise under the pointer. Tap to drop a ripple." },
   // Scene concepts: animated set pieces with a star (a parrot flies in, a whale swims past,
   // a walk through the jungle). Defined in concepts.js.
   ...CONCEPT_TYPES,
@@ -170,8 +180,17 @@ export const SCENE_OPTIONS = Object.fromEntries(
     return [t.id, looks.length > 1 ? [look, ...list] : list];
   }),
 );
+// The real 3D scenes (three.js) take a speed, a main colour and, for the single-object
+// ones, which side of the opening they sit on.
+const THREE_COMMON = [
+  { key: "speed", label: "Speed", kind: "range", min: 0.25, max: 2.5, step: 0.05, default: 1 },
+  { key: "tint", label: "Main colour", kind: "color", default: "" },
+];
+const THREE_SIDE = { key: "side", label: "Sits on the", kind: "select", default: "right", options: [{ value: "right", label: "Right" }, { value: "left", label: "Left" }, { value: "center", label: "Centre" }] };
+for (const t of SCENE_TYPES) if (t.group === "three") SCENE_OPTIONS[t.id] = t.id === "orb" || t.id === "knot" ? [...THREE_COMMON, THREE_SIDE] : THREE_COMMON;
+
 /** The settings a scene type offers ([] when it has none). */
 export function sceneOptions(type) {
   const info = conceptInfo(type);
-  return (info && SCENE_OPTIONS[info.id]) || [];
+  return (info && SCENE_OPTIONS[info.id]) || SCENE_OPTIONS[type] || [];
 }
