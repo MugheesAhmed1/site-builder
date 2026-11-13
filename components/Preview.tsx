@@ -31,7 +31,8 @@ function nameOf(el: Element): string {
   const cls = typeof el.className === "string" ? el.className : "";
   let what = "Box";
   if (el.classList.contains("pf")) return "Whole page";
-  if (tag === "canvas" || el.classList.contains("sc")) what = "Live scene";
+  if (el.classList.contains("sc") || (tag === "canvas" && el.closest(".sc"))) what = "Live scene";
+  else if (tag === "canvas") what = "Moving effect";
   else if (el.hasAttribute("data-video")) what = "Video";
   else if (tag === "img" || el.hasAttribute("data-img")) what = "Picture";
   else if (tag === "svg") what = "Icon or vector";
@@ -214,9 +215,10 @@ export default function Preview({
         const painted = /^(canvas|img|svg|video)$/.test(t) || cs.backgroundImage !== "none" || (cs.backgroundColor !== "rgba(0, 0, 0, 0)" && cs.backgroundColor !== "transparent");
         if (!painted) continue;
         const k = editKey(t === "path" ? u.closest("svg") : u, r);
-        if (!k || seen.has(k)) continue;
+        const label = nameOf(u);
+        if (!k || seen.has(k) || under.some((x) => x.label === label)) continue;
         seen.add(k);
-        under.push({ key: k, label: nameOf(u) });
+        under.push({ key: k, label });
         if (under.length >= 5) break;
       }
     }

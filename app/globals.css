@@ -734,4 +734,8 @@ html, body { overflow-x: clip; }
   .pe-panel { flex: none; width: auto; max-height: 46vh; border-left: 1px solid var(--line); border-top: 0; border-radius: 0 0 14px 14px; }
   .preview.is-inspecting .preview-viewport { max-height: 48vh; }
 }
+@media (max-width: 640px) {
+  .preview-bar { flex-wrap: wrap; }
+  .preview-bar > .preview-live { flex: 1 1 100%; }
+}
 @media (prefers-reduced-motion: reduce) { .pe-panel { animation: none; } }
