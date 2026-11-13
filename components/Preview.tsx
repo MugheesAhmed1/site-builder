@@ -200,7 +200,13 @@ export default function Preview({
     const under: Picked["under"] = [];
     if (at) {
       const seen = new Set(chain.map((c) => c.key));
-      for (const u of document.elementsFromPoint(at.x, at.y)) {
+      // Scenes and backdrops often let clicks pass through, so pictures are also found by where they sit.
+      const stacked: Element[] = [...document.elementsFromPoint(at.x, at.y)];
+      r.querySelectorAll("canvas, img, video").forEach((m) => {
+        const b = m.getBoundingClientRect();
+        if (b.width > 40 && b.height > 40 && at.x >= b.left && at.x <= b.right && at.y >= b.top && at.y <= b.bottom && !stacked.includes(m) && getComputedStyle(m).visibility !== "hidden") stacked.push(m);
+      });
+      for (const u of stacked) {
         if (!r.contains(u) || u === r || u.contains(el) || el.contains(u)) continue;
         const t = u.tagName.toLowerCase();
         // Only things worth reaching: scenes, pictures, vectors and areas with a background of their own.
@@ -231,13 +237,27 @@ export default function Preview({
     if (slot) return slot;
     const svg = n.closest("svg");
     if (svg) return svg;
-    // Climb out of split letters and words to the element that holds the whole line.
-    for (let i = 0; i < 4 && n && n !== r; i++) {
-      const tag = n.tagName.toLowerCase();
-      if (!INLINE.test(tag) || !n.parentElement || n.parentElement === r) break;
-      const mine = ((n as HTMLElement).innerText || "").trim();
-      if (mine && findText(live.current, mine)?.text.trim().toLowerCase() === mine.toLowerCase()) break;
-      n = n.parentElement;
+    // Climb out of split letters and words to the element that holds the person's whole line.
+    const same = (x: string, y: string) => x.replace(/\s+/g, " ").replace(/[“”"]/g, "").trim().toLowerCase() === y.replace(/\s+/g, " ").replace(/[“”"]/g, "").trim().toLowerCase();
+    const holds = (el: Element) => {
+      const t = ((el as HTMLElement).innerText || "").trim();
+      const f = t && t.length <= 600 ? findText(live.current, t) : null;
+      return !!f && same(f.text, t);
+    };
+    if (INLINE.test(n.tagName.toLowerCase()) && !holds(n)) {
+      for (let up = n.parentElement, i = 0; up && up !== r && i < 4; up = up.parentElement, i++) {
+        if (holds(up)) {
+          n = up;
+          break;
+        }
+        if (!INLINE.test(up.tagName.toLowerCase()) && ownWords(up)) break;
+      }
+    }
+    // A wrapper that holds nothing but one picture, vector or scene means that thing.
+    for (let d: Element | null = n, i = 0; d && i < 4; i++) {
+      if (/^(svg|img|canvas|video)$/.test(d.tagName.toLowerCase())) return d;
+      if (d.children.length !== 1 || ownWords(d)) break;
+      d = d.children[0];
     }
     return n;
   };
@@ -266,10 +286,19 @@ export default function Preview({
     const out = () => (hoverEl.current = null);
     const click = (e: MouseEvent) => {
       if ((e.target as Element).closest?.(".pe-boxes")) return;
-      const el = resolve(e.target);
+      let el = resolve(e.target);
       if (!el) return;
       e.preventDefault();
       e.stopPropagation();
+      // A click on the see-through corner of a vector or picture lands on the box around it.
+      // If exactly one picture, vector or scene inside that box sits under the pointer, it is meant.
+      if (!/^(svg|img|canvas|video)$/i.test(el.tagName) && !ownWords(el) && !(el as HTMLElement).dataset?.img) {
+        const hits = [...el.querySelectorAll("svg, img, canvas, video")].filter((m) => {
+          const b = m.getBoundingClientRect();
+          return !m.closest("[data-pe-own]") && e.clientX >= b.left && e.clientX <= b.right && e.clientY >= b.top && e.clientY <= b.bottom;
+        });
+        if (hits.length === 1) el = hits[0];
+      }
       select(el, { x: e.clientX, y: e.clientY });
     };
     const stop = (e: Event) => {

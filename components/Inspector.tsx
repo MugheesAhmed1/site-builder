@@ -362,7 +362,7 @@ export default function Inspector({
                   {x.missing ? " (not on the page now)" : ""}
                 </button>
                 <button type="button" className="pe-link" onClick={() => onEdit(x.key, null)}>
-                  Undo it
+                  Remove
                 </button>
               </div>
             ))}
