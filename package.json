@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/concept-ready.mjs && node scripts/bundle-template.mjs && node scripts/build-site-kit.mjs",
+    "predev": "node scripts/bundle-template.mjs && node scripts/build-site-kit.mjs",
     "dev": "next dev",
-    "prebuild": "node scripts/concept-ready.mjs && node scripts/bundle-template.mjs && node scripts/build-site-kit.mjs",
+    "prebuild": "node scripts/bundle-template.mjs && node scripts/build-site-kit.mjs",
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",

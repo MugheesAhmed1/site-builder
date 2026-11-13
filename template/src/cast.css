@@ -391,3 +391,12 @@
 @media (max-width: 720px) {
   .pf-scene-backdrop.sc-group-concept { opacity: 0.8; }
 }
+
+/* Living 3D scenes (./live). The still picture shows until WebGL starts. */
+.lv { position: absolute; inset: 0; overflow: hidden; }
+.lv > canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.lv-thumb > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.lv-thumb > .lv-over { z-index: 1; }
+.lv-thumb > img { animation: lv-in 0.4s ease-out both; }
+@keyframes lv-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .lv-thumb > img { animation: none; } }

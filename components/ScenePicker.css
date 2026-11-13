@@ -1,0 +1,5 @@
+/* Settings for the chosen living scene (look, speed, how many, side, colours). */
+.scene-opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px 14px; padding-top: 4px; }
+.scene-opt { display: grid; gap: 4px; min-width: 0; }
+.scene-opt select, .scene-opt input[type="range"] { width: 100%; }
+.scene-opt input[type="color"] { width: 36px; height: 28px; padding: 0; border: 1px solid var(--line, #ddd); border-radius: 8px; background: none; cursor: pointer; }

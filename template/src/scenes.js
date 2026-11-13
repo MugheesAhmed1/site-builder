@@ -3,7 +3,8 @@
 // own photo with a spotlight or a ripple, glossy orbs you can throw. Every scene reacts to
 // the pointer, to clicks or taps, and most to scroll. Plain data here; drawn by Scenes.jsx.
 import { REAL_FISH, REAL_PLATES, REAL_PROPS, REAL_SPRITES } from "./real.js";
-import { CONCEPT_STYLES, CONCEPT_TYPES, conceptAssets, isConcept } from "./concepts.js";
+import { CONCEPT_STYLES, CONCEPT_TYPES, conceptAssets, conceptInfo, isConcept } from "./concepts.js";
+import { LOOKS, LOOKS_FOR } from "./live/catalog.js";
 
 export { CONCEPT_STYLES };
 
@@ -147,4 +148,30 @@ export function sceneById(id, list = SCENES) {
 }
 export function sceneType(id) {
   return SCENE_TYPES.find((t) => t.id === id) || SCENE_TYPES[0];
+}
+
+// Settings people can change per scene, read from design.scene.opts. Each entry is
+// { key, label, kind: "color" | "range" | "select", min, max, step, default, options }.
+// Every setting is optional; an empty value means the scene's own default.
+const LIVE_COMMON = [
+  { key: "speed", label: "Speed", kind: "range", min: 0.25, max: 2.5, step: 0.05, default: 1 },
+  { key: "amount", label: "How many", kind: "range", min: 0.3, max: 2, step: 0.1, default: 1 },
+  { key: "side", label: "Star on the", kind: "select", default: "right", options: [{ value: "right", label: "Right" }, { value: "left", label: "Left" }] },
+  { key: "sky", label: "Background colour", kind: "color", default: "" },
+  { key: "tint", label: "Creature colour", kind: "color", default: "" },
+  { key: "accent", label: "Particle colour", kind: "color", default: "", looks: ["particle"] },
+];
+export const SCENE_OPTIONS = Object.fromEntries(
+  CONCEPT_TYPES.map((t) => {
+    const info = conceptInfo(t.id);
+    const looks = LOOKS_FOR[info.scene] || ["real"];
+    const look = { key: "look", label: "Look", kind: "select", default: info.look, options: LOOKS.filter((l) => looks.includes(l.id)).map((l) => ({ value: l.id, label: l.name })) };
+    const list = LIVE_COMMON.filter((o) => !o.looks || o.looks.some((l) => looks.includes(l)));
+    return [t.id, looks.length > 1 ? [look, ...list] : list];
+  }),
+);
+/** The settings a scene type offers ([] when it has none). */
+export function sceneOptions(type) {
+  const info = conceptInfo(type);
+  return (info && SCENE_OPTIONS[info.id]) || [];
 }

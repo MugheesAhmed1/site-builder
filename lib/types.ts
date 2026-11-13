@@ -127,12 +127,13 @@ export interface ElementEdit {
 }
 
 export interface ScenePick {
-  opts?: Record<string, string | number | boolean | string[]>; // settings the person tuned for this scene
+  opts?: Record<string, string | number | boolean | string[]>; // settings the person tuned for this scene (for living scenes: look, speed, amount, side, sky, tint, accent)
   id: string;
   type: string;
   group: string;
   palette: string;
   name: string;
+  style?: string;
 }
 
 export interface CastPick {
