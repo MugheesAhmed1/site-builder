@@ -15,8 +15,8 @@ type Update = (fn: (prev: Project) => Project) => void;
 function SectionRow({ id, label, empty, onOff, onMove, first, last }: { id: string; label: string; empty: boolean; onOff: () => void; onMove: (d: number) => void; first: boolean; last: boolean }) {
   const controls = useDragControls();
   return (
-    <Reorder.Item value={id} dragListener={false} dragControls={controls} className="sp-section" whileDrag={{ scale: 1.02, boxShadow: "0 14px 34px -14px rgb(0 0 0 / 0.45)" }}>
-      <button type="button" className="sp-grip" aria-label={`Drag ${label} to reorder`} onPointerDown={(e) => controls.start(e)}>
+    <Reorder.Item value={id} dragListener={false} dragControls={controls} className="pn-section" whileDrag={{ scale: 1.02, boxShadow: "0 14px 34px -14px rgb(0 0 0 / 0.45)" }}>
+      <button type="button" className="pn-grip" aria-label={`Drag ${label} to reorder`} onPointerDown={(e) => controls.start(e)}>
         <Icon name="drag" size={16} />
       </button>
       <span className="grow">
@@ -29,7 +29,7 @@ function SectionRow({ id, label, empty, onOff, onMove, first, last }: { id: stri
       <button type="button" className="btn btn-ghost btn-sm btn-icon" aria-label={`Move ${label} down`} disabled={last} onClick={() => onMove(1)}>
         <Icon name="down" size={15} />
       </button>
-      <button type="button" className="sp-switch is-on" role="switch" aria-checked="true" aria-label={`Hide ${label}`} onClick={onOff}>
+      <button type="button" className="pn-switch is-on" role="switch" aria-checked="true" aria-label={`Hide ${label}`} onClick={onOff}>
         <span />
       </button>
     </Reorder.Item>
@@ -59,8 +59,8 @@ export default function PagePanel({ p, update }: { p: Project; update: Update })
   const edited = hasHandEdits(p);
 
   return (
-    <div className="sp-stack">
-      <div className="seg sp-seg-fill" role="tablist" aria-label="Page tools">
+    <div className="pn-stack">
+      <div className="seg pn-seg-fill" role="tablist" aria-label="Page tools">
         {(["sections", "words", "versions"] as const).map((t) => (
           <button key={t} type="button" role="tab" aria-selected={tab === t} className={tab === t ? "is-on" : ""} onClick={() => setTab(t)}>
             {t === "sections" ? "Sections" : t === "words" ? "Words" : "Versions"}
@@ -70,32 +70,32 @@ export default function PagePanel({ p, update }: { p: Project; update: Update })
 
       {tab === "sections" && (
         <>
-          <section className="sp-card">
-            <div className="sp-card-head">
+          <section className="pn-card">
+            <div className="pn-card-head">
               <h3>On the page</h3>
               <p className="small muted">Drag to reorder. The opening always comes first.</p>
             </div>
-            <Reorder.Group axis="y" values={sections} onReorder={setSections} className="sp-sections">
+            <Reorder.Group axis="y" values={sections} onReorder={setSections} className="pn-sections">
               {sections.map((sid, i) => (
                 <SectionRow key={sid} id={sid} label={labels[sid] ?? sid} empty={isEmpty(sid)} first={i === 0} last={i === sections.length - 1} onMove={(d) => move(i, d)} onOff={() => setSections(sections.filter((x) => x !== sid))} />
               ))}
             </Reorder.Group>
           </section>
           {off.length > 0 && (
-            <section className="sp-card">
-              <div className="sp-card-head">
+            <section className="pn-card">
+              <div className="pn-card-head">
                 <h3>Switched off</h3>
               </div>
-              <ul className="sp-sections">
+              <ul className="pn-sections">
                 {off.map((sid) => (
-                  <li key={sid} className="sp-section is-off">
+                  <li key={sid} className="pn-section is-off">
                     <span className="grow">
                       {labels[sid] ?? sid}
                       {isEmpty(sid) && <span className="small muted"> · empty, add words first</span>}
                     </span>
                     <button
                       type="button"
-                      className="sp-switch"
+                      className="pn-switch"
                       role="switch"
                       aria-checked="false"
                       aria-label={`Show ${labels[sid] ?? sid}`}
@@ -112,8 +112,8 @@ export default function PagePanel({ p, update }: { p: Project; update: Update })
       )}
 
       {tab === "words" && (
-        <section className="sp-card">
-          <div className="sp-card-head">
+        <section className="pn-card">
+          <div className="pn-card-head">
             <h3>Every word</h3>
             <p className="small muted">Or press Edit on page above the preview and click what you want to change.</p>
           </div>
@@ -123,8 +123,8 @@ export default function PagePanel({ p, update }: { p: Project; update: Update })
 
       {tab === "versions" && (
         <>
-          <section className="sp-card">
-            <div className="sp-card-head">
+          <section className="pn-card">
+            <div className="pn-card-head">
               <h3>Write it again from your details</h3>
               <p className="small muted">{edited ? "Your page has words or pictures you changed by hand. Rewriting replaces them; this version is kept below." : "Your page matches your details. There is nothing to rewrite."}</p>
             </div>
@@ -133,14 +133,14 @@ export default function PagePanel({ p, update }: { p: Project; update: Update })
               Rewrite from details
             </button>
           </section>
-          <section className="sp-card">
-            <div className="sp-card-head">
+          <section className="pn-card">
+            <div className="pn-card-head">
               <h3>Earlier versions</h3>
             </div>
             {p.history.length === 0 ? (
               <p className="small muted">Nothing yet. A version is kept each time the page is rewritten or restored. For small slips, use Undo in the top bar.</p>
             ) : (
-              <ul className="sp-versions">
+              <ul className="pn-versions">
                 {p.history.map((h, i) => (
                   <li key={h.at + i}>
                     <span>

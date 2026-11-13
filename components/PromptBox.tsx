@@ -126,7 +126,7 @@ export default function PromptBox({ variant = "plain", id = "q" }: { variant?: "
                 ))
               : CATEGORIES.map((c) => (
                   <option key={c.id} value={c.id}>
-                    {lower(c.label)}
+                    {c.id === "general" ? "any kind of business" : lower(c.label)}
                   </option>
                 ))}
           </select>

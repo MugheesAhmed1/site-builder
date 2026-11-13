@@ -57,18 +57,25 @@ Things the builder does on purpose:
 - Fonts never block the first paint, in the builder or in downloaded sites.
 - Responses carry basic security headers (`next.config.mjs`). There is no Content-Security-Policy yet; it needs nonces for the inline bootstrap scripts first.
 
+## How the app is organised
+
+One model, one workspace.
+
+- **A site is always a finished page.** `createProject()` in `lib/project.ts` turns one line (or a category tile, or a scene concept) into a complete project: details, a design system made for the person, a scene, an animation pack and the written page. There is no empty state.
+- **Details flow into the page.** `applyDetails()` rewrites the page when an answer or the portfolio form changes, with a three-way merge: whatever the person edited by hand is kept, everything else follows the details. `rewriteFromDetails()` throws hand edits away on purpose and keeps the old page under Versions.
+- **One studio for every kind of site** (`/studio/[id]`, `components/studio/`). The live site is always on screen. Six panels (Details, Design system, Scenes and characters, Animation, Page, Publish) are open from the start, in any order. `lib/useProject.ts` autosaves after a short pause and keeps undo and redo (Ctrl+Z, Ctrl+Shift+Z). `lib/flow.ts` holds the panels and the launch check. On phones the panel and the site take turns, with tabs along the bottom.
+- **Your sites** (`/sites`): every site made in this browser, with duplicate, backup, import and delete.
+- **Home page** (`app/page.tsx`, `components/home/`): rendered on the server, always dark, with the hero scene, a prompt that shows what it understood, four live example sites built by the same code (`lib/samples.ts`), the three steps, the design system wall, the scene concepts and the kinds of site.
+- Old `/build/[id]` and `/portfolio/[id]` links redirect to the studio.
+
 ## Files
 
-- `app/page.tsx` and `components/HomeBelow.tsx`: the home page, where you type your request.
-- `app/build/[id]/page.tsx` and `app/portfolio/[id]/page.tsx`: the steps for a business website and for a portfolio.
-- `components/DesignEditor.tsx`, `CastPicker.tsx`, `ScenePicker.tsx`, `MotionPicker.tsx`: design, characters, live scenes and animation.
-- `components/Steps.tsx`: the review and download steps. `lib/export.ts` builds both zips.
-- `lib/store.ts`: saving in the browser. `lib/fit.ts`: which characters, widgets, scenes and animations suit each kind of site.
-- `template/src/Portfolio.jsx` and `Website.jsx`: the two site templates, also used for the live preview.
-- `template/src/cinema.jsx` and `cinema.css`: film-scene and scattered-word openings, Silk light, glass call to action, curtain menu, wordmark footer. `template/src/plates.js` picks the scene for each kind of site.
-- `template/src/theme.js`: OKLCH palettes for light and dark, with contrast fitting.
-- `template/src/motion.js`: the animation styles. `template/src/spring.js` turns a spring (duration and bounce) into a CSS `linear()` easing for hover moves and pointer-following shapes.
-- `.claude/skills/motion/` and `.mcp.json`: the free Motion AI Kit (installed with `npx motion-ai`, MIT licence) so coding agents working on this repo get Motion's animation guidance and docs search. Only the free Motion server is set up; Motion+ is paid and left out.
-- `library/`: the shared library, see `library/README.md`.
-- `components/DocIntake.tsx`, `components/DocBand.tsx`, `app/document/`: the requirements document intake. `lib/requirements-sample.ts` has the sample document and the blank template.
-- `tests/`: unit tests.
+- `app/page.tsx`, `app/sites/page.tsx`, `app/studio/[id]/page.tsx`, `app/document/page.tsx`: the pages. `app/shell.css` (studio, panels), `app/home.css` (home, Your sites) and `app/globals.css` (tokens and shared pieces) style them.
+- `lib/project.ts`: creating, changing and merging projects. `lib/flow.ts`: panels and launch check. `lib/useProject.ts`: the studio's state, saving and undo. `lib/store.ts`: saving in the browser. `lib/fit.ts`: which characters, widgets, scenes and animations suit each kind of site.
+- `components/studio/`: the studio and its Details, Page and Publish panels. `DesignEditor`, `CastPicker`, `ScenePicker` and `MotionPicker` are the Design, Scenes and Animation panels. `Preview.tsx` is the live site with Edit on page.
+- `components/PromptBox.tsx`: the one-line prompt, used on the home page and Your sites.
+- `components/DocIntake.tsx`: start from a requirements document.
+- `template/src/Portfolio.jsx` and `Website.jsx`: the two site templates, also used for the live preview. `cinema.jsx`, `showpiece.jsx`, `studio.jsx`, `Cast.jsx`, `Scenes.jsx` and `concept.js` hold the openings, set pieces, effects, characters and scenes.
+- `template/src/theme.js`: OKLCH palettes for light and dark, with contrast fitting. `motion.js`: the animation styles. `spring.js`: springs as CSS `linear()` easing.
+- `.claude/skills/motion/` and `.mcp.json`: the free Motion AI Kit (MIT) so coding agents get Motion's guidance. Motion+ is paid and left out. Keep `motion` pinned at 14.7.1.
+- `library/`: the shared library, see `library/README.md`. `tests/`: unit tests.

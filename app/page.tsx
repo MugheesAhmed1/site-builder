@@ -1,8 +1,7 @@
 import Link from "next/link";
 import Icon from "@/components/Icon";
 import DocBand from "@/components/DocBand";
-import Categories from "@/components/home/Categories";
-import ConceptSection from "@/components/home/ConceptSection";
+import { LazyCategories, LazyConcepts } from "@/components/home/LazySections";
 import DesignWall from "@/components/home/DesignWall";
 import Hero from "@/components/home/Hero";
 import HomeNav from "@/components/home/HomeNav";
@@ -127,7 +126,7 @@ export default function Home() {
         </section>
 
         <section className="hsec" id="scenes">
-          <ConceptSection />
+          <LazyConcepts />
         </section>
 
         <section className="hsec" id="designs" aria-labelledby="designs-title">
@@ -149,7 +148,7 @@ export default function Home() {
               {CATEGORIES.length} kinds of business and {ROLES.length} roles, each with its own questions, starting words, scenes, characters and animation. Pick yours and a site opens.
             </p>
           </header>
-          <Categories />
+          <LazyCategories />
         </section>
 
         <section className="hsec" aria-label="Start from a document">

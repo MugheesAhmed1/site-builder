@@ -34,8 +34,13 @@ export function portfolioInput(p: Project): PortfolioInput {
 }
 
 // The page as the details alone would write it.
+// A portfolio with no name yet reads "Your name" in the preview, so the opening is never a
+// sentence with a hole in it. The launch check still counts the name as missing.
+export const PLACEHOLDER_NAME = "Your name";
 export function composeProject(p: Project): SiteContent {
-  return p.kind === "portfolio" ? composePortfolioFromInput(portfolioInput(p)) : composeWebsite(p.category, p.answers);
+  if (p.kind !== "portfolio") return composeWebsite(p.category, p.answers);
+  const inp = portfolioInput(p);
+  return composePortfolioFromInput({ ...inp, name: inp.name.trim() || PLACEHOLDER_NAME });
 }
 
 function toneOf(p: Project) {

@@ -31,11 +31,11 @@ function mergeInput(cur: PortfolioInput, add: PortfolioInput): PortfolioInput {
 
 function TypeBox({ p, onChange }: { p: Project; onChange: (k: SiteKind, c: string) => void }) {
   return (
-    <section className="sp-card">
-      <div className="sp-card-head">
+    <section className="pn-card">
+      <div className="pn-card-head">
         <h3>Kind of site</h3>
       </div>
-      <div className="seg sp-seg-fill" role="group" aria-label="Kind of site">
+      <div className="seg pn-seg-fill" role="group" aria-label="Kind of site">
         {(["website", "portfolio"] as const).map((k) => (
           <button key={k} type="button" aria-pressed={p.kind === k} className={p.kind === k ? "is-on" : ""} onClick={() => onChange(k, k === "portfolio" ? "portfolio" : p.kind === "website" ? p.category : "general")}>
             {k === "portfolio" ? "Personal portfolio" : "Business website"}
@@ -43,7 +43,7 @@ function TypeBox({ p, onChange }: { p: Project; onChange: (k: SiteKind, c: strin
         ))}
       </div>
       {p.kind === "website" ? (
-        <label className="sp-field">
+        <label className="pn-field">
           <span className="lbl">Type of business</span>
           <select value={p.category} onChange={(e) => onChange("website", e.target.value)}>
             {CATEGORIES.map((c) => (
@@ -54,7 +54,7 @@ function TypeBox({ p, onChange }: { p: Project; onChange: (k: SiteKind, c: strin
           </select>
         </label>
       ) : (
-        <label className="sp-field">
+        <label className="pn-field">
           <span className="lbl">Your role</span>
           <select value={p.category} onChange={(e) => onChange("portfolio", e.target.value)}>
             {[...ROLES, { id: "portfolio", label: "Any role" }].map((r) => (
@@ -99,20 +99,20 @@ function Questions({ p, update }: { p: Project; update: Update }) {
   const set = (id: string, v: string) => update((prev) => applyDetails(prev, { answers: { ...prev.answers, [id]: v } }));
   return (
     <>
-      <ol className="sp-questions">
+      <ol className="pn-questions">
         {shown.map((q) => {
           const v = p.answers[q.id] ?? "";
           const missing = q.required && !v.trim();
           return (
             <li key={q.id} className={missing ? "is-missing" : ""}>
-              <label htmlFor={"q-" + q.id} id={"q-" + q.id + "-l"} className="sp-q-label">
+              <label htmlFor={"q-" + q.id} id={"q-" + q.id + "-l"} className="pn-q-label">
                 {q.label}
-                {missing && <span className="sp-q-need">needed</span>}
+                {missing && <span className="pn-q-need">needed</span>}
               </label>
-              {q.help && <p className="sp-q-help">{q.help}</p>}
+              {q.help && <p className="pn-q-help">{q.help}</p>}
               <QuestionField q={q} value={v} onChange={(val) => set(q.id, val)} />
               {q.suggest && v !== q.suggest && q.type !== "choice" && (
-                <button type="button" className="sp-link" onClick={() => set(q.id, q.suggest!)}>
+                <button type="button" className="pn-link" onClick={() => set(q.id, q.suggest!)}>
                   Use the suggestion
                 </button>
               )}
@@ -121,7 +121,7 @@ function Questions({ p, update }: { p: Project; update: Update }) {
         })}
       </ol>
       {qs.length > core.length && (
-        <button type="button" className="btn btn-sm sp-more" onClick={() => setAll((v) => !v)}>
+        <button type="button" className="btn btn-sm pn-more" onClick={() => setAll((v) => !v)}>
           <Icon name={all ? "up" : "plus"} size={15} />
           {all ? "Show fewer questions" : `${qs.length - core.length} more optional questions`}
         </button>
@@ -150,7 +150,7 @@ function ImportBox({ fileName, onImport }: { fileName: string; onImport: (text: 
     }
   };
   return (
-    <section className="sp-card">
+    <section className="pn-card">
       <div
         className={"dropzone is-slim" + (over ? " is-over" : "")}
         role="button"
@@ -185,7 +185,7 @@ function ImportBox({ fileName, onImport }: { fileName: string; onImport: (text: 
           </button>
         </details>
         {!fileName && (
-          <button type="button" className="sp-link" onClick={() => onImport(SAMPLE_RESUME, "sample-resume.txt")}>
+          <button type="button" className="pn-link" onClick={() => onImport(SAMPLE_RESUME, "sample-resume.txt")}>
             Try a sample résumé
           </button>
         )}
@@ -215,19 +215,19 @@ function PortfolioDetails({ p, update }: { p: Project; update: Update }) {
           })
         }
       />
-      <nav className="sp-groups" aria-label="Form sections">
+      <nav className="pn-groups" aria-label="Form sections">
         {GROUPS.map((g) => {
           const n = groupCount(input, g.id);
           return (
-            <button type="button" key={g.id} className={"sp-group" + (group === g.id ? " is-on" : "")} aria-current={group === g.id ? "true" : undefined} onClick={() => setGroup(g.id)}>
+            <button type="button" key={g.id} className={"pn-group" + (group === g.id ? " is-on" : "")} aria-current={group === g.id ? "true" : undefined} onClick={() => setGroup(g.id)}>
               {g.title}
-              {n > 0 && <span className="sp-group-n mono">{n}</span>}
+              {n > 0 && <span className="pn-group-n mono">{n}</span>}
             </button>
           );
         })}
       </nav>
-      <section className="sp-card">
-        <div className="sp-card-head">
+      <section className="pn-card">
+        <div className="pn-card-head">
           <h3>{current.title}</h3>
           <p className="small muted">{current.hint}</p>
         </div>
@@ -245,7 +245,7 @@ function PortfolioDetails({ p, update }: { p: Project; update: Update }) {
         </div>
       </section>
       {p.profile && (
-        <details className="disclosure sp-card">
+        <details className="disclosure pn-card">
           <summary>
             What we read from your résumé: {p.profile.experience.length} jobs, {p.profile.projects.length} projects, {p.profile.skills.length} skills
           </summary>
@@ -260,7 +260,7 @@ function PortfolioDetails({ p, update }: { p: Project; update: Update }) {
 
 export default function DetailsPanel({ p, update }: { p: Project; update: Update }) {
   return (
-    <div className="sp-stack">
+    <div className="pn-stack">
       {p.docName && (
         <div className="notice" role="note">
           Filled in from <b>{p.docName}</b>. Check the answers below; anything left blank is skipped or uses a suggestion.

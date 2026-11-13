@@ -3,6 +3,7 @@ import { applyDetails, createProject, portfolioInput } from "./project";
 import { parseResume } from "./resume";
 import { SAMPLE_RESUME } from "./sample";
 import type { Project } from "./types";
+import { SCENES } from "@/template/src/scenes.js";
 
 // Four finished example sites for the home page. They are made by the same code as any
 // other site: one line, then a few answers. Names and numbers are invented examples.
@@ -13,12 +14,14 @@ export interface Sample {
   query: string;
   answers?: Record<string, string>;
   resume?: boolean;
+  scene?: string; // a scene type that suits the site, when the default would not
 }
 
 export const SAMPLES: Sample[] = [
   {
     id: "bakery",
     tab: "Bakery",
+    scene: "petals",
     query: "Website for my bakery called Crumb House in Lahore",
     answers: {
       what: "Cakes and fresh bread",
@@ -34,6 +37,7 @@ export const SAMPLES: Sample[] = [
   {
     id: "dentist",
     tab: "Dentist",
+    scene: "bubbles",
     query: "Site for my dental clinic called Pearl Dental in Karachi",
     answers: {
       what: "Family dentistry and braces",
@@ -63,7 +67,8 @@ export const SAMPLES: Sample[] = [
 ];
 
 export function buildSample(s: Sample): Project {
-  let p = createProject({ query: s.query });
+  const scene = s.scene ? SCENES.find((x: { type: string; palette: string }) => x.type === s.scene && x.palette === "brand") ?? SCENES.find((x: { type: string }) => x.type === s.scene) : undefined;
+  let p = createProject({ query: s.query, sceneId: scene?.id });
   if (s.answers) p = applyDetails(p, { answers: { ...p.answers, ...s.answers } });
   if (s.resume) {
     const profile = parseResume(SAMPLE_RESUME);

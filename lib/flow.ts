@@ -50,8 +50,8 @@ export function launchChecks(p: Project): Check[] {
   if (p.kind === "portfolio") {
     const inp = p.input;
     const pc = c as PortfolioContent | null;
-    out.push({ id: "name", label: "Your name", done: !!(inp?.name || pc?.hero.name), panel: "details", must: true });
-    out.push({ id: "role", label: "What you do", done: !!(inp?.role || pc?.hero.role), panel: "details", must: true });
+    out.push({ id: "name", label: "Your name", done: !!inp?.name?.trim(), panel: "details", must: true });
+    out.push({ id: "role", label: "What you do", done: !!inp?.role?.trim(), panel: "details", must: true });
     out.push({ id: "reach", label: "A way to reach you", done: !!(inp?.email || inp?.phone || inp?.links?.length || pc?.contact.email), panel: "details", must: true });
     out.push({ id: "work", label: "Experience or projects", done: !!((inp?.experience?.length ?? 0) + (inp?.projects?.length ?? 0) || (pc?.experience.length ?? 0) + (pc?.projects.length ?? 0)), panel: "details", must: false });
     if (p.design.heroStyle === "portrait") out.push({ id: "photo", label: "A photo of you", done: !!pc?.hero.photoUrl, panel: "page", must: false });

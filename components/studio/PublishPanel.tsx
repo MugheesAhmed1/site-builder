@@ -33,23 +33,23 @@ export default function PublishPanel({ p, onDownloaded, go }: { p: Project; onDo
   };
 
   return (
-    <div className="sp-stack">
-      <section className="sp-card">
-        <div className="sp-card-head">
+    <div className="pn-stack">
+      <section className="pn-card">
+        <div className="pn-card-head">
           <h3>Launch check</h3>
           <p className="small muted">{open.length === 0 ? "Everything is in place." : ready ? "Good to go. These would make it better." : "A few things are still missing."}</p>
         </div>
-        <ul className="sp-checks">
+        <ul className="pn-checks">
           {checks
             .filter((c) => c.id !== "download")
             .map((c) => (
               <li key={c.id} className={c.done ? "is-done" : c.must ? "is-must" : ""}>
-                <span className="sp-check-dot" aria-hidden="true">
+                <span className="pn-check-dot" aria-hidden="true">
                   {c.done && <Icon name="check" size={12} />}
                 </span>
                 <span className="grow">{c.label}</span>
                 {!c.done && (
-                  <button type="button" className="sp-link" onClick={() => go(c.panel)}>
+                  <button type="button" className="pn-link" onClick={() => go(c.panel)}>
                     {c.must ? "Add it" : "Open"}
                   </button>
                 )}
@@ -58,8 +58,8 @@ export default function PublishPanel({ p, onDownloaded, go }: { p: Project; onDo
         </ul>
       </section>
 
-      <section className="sp-card sp-card-accent">
-        <div className="sp-card-head">
+      <section className="pn-card pn-card-accent">
+        <div className="pn-card-head">
           <h3>Download {siteName(p)}</h3>
           <p className="small muted">One folder: the page, its pictures, a browser icon and a share picture. Opens straight from the folder and runs on any host.</p>
         </div>
@@ -77,8 +77,8 @@ export default function PublishPanel({ p, onDownloaded, go }: { p: Project; onDo
         </p>
       </section>
 
-      <section className="sp-card">
-        <div className="sp-card-head">
+      <section className="pn-card">
+        <div className="pn-card-head">
           <h3>Put it online for free</h3>
         </div>
         <ol className="howto">
@@ -112,7 +112,7 @@ export default function PublishPanel({ p, onDownloaded, go }: { p: Project; onDo
         </p>
       </section>
 
-      <details className="sp-card disclosure">
+      <details className="pn-card disclosure">
         <summary>For developers: the React source</summary>
         <p className="small muted" style={{ margin: "10px 0 12px" }}>
           The same site as a Vite and React project. Every word, colour and setting lives in <code>src/site-data.json</code>.
