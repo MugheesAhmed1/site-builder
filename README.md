@@ -17,6 +17,23 @@ Type one line, such as "website for my bakery in Lahore" or "portfolio for me, I
 - **Film-scene openings.** New sites open like a film: a scene photo fills the first screen, the headline sits in the open sky with one word in italic serif (or glowing), a pill with faces sits above it and the numbers run along the foot. The scene pushes in and blurs away as you scroll and follows the pointer. There is also a "Scattered words" opening, a floating glass pill menu, a full-screen curtain menu, a glass call to action, a footer with the name set huge, and a Silk light backdrop. All of it is switchable under Design system, Layout, or in one go with the Cinematic animation pack. The 26 scene photos in `public/real/cinema` were made free with Pollinations.
 - **Colour optimizer.** There are seven harmony options: matched, analogous, complementary, split, triadic, calm and vivid. You can also build around a brand colour. Contrast ratios are shown for light and dark, and accents are adjusted automatically to pass WCAG AA (4.5 to 1).
 
+## Edit on page
+
+In **Your site**, press **Edit on page** and click anything. A panel beside the preview (a sheet under it on phones) shows what can change on that element:
+
+- **Words** of any element, including labels, badges and widget lines that are not part of your answers.
+- **Pictures**: upload, drop or paste into any photo slot, or replace any other picture on the page.
+- **Icons and vectors**: swap any icon, character or drawing for one of 70 built-in icons or your own upload, then recolour it.
+- **Colours and backgrounds**: text colour, a solid colour, a two-colour blend or a picture behind any element or whole section, with a darkening veil so words stay readable.
+- **Type**: size, bold, italic, underline, capitals, alignment and letter spacing.
+- **Live scenes, characters and widgets**: shift their colours, strength, brightness and blur, resize them, or hide them.
+- **Links**: where any button or link goes.
+- **Shape**: rounded corners, inner space, see-through, or hide it on the published site.
+
+**Page settings** sets the exact page colours for light and dark, the live scene, and lists every change with a one-click way back. Undo and redo (Ctrl or Cmd + Z) cover everything. "Inside" and "Behind it" chips reach the box, section or scene around or under what you clicked.
+
+Changes are stored as plain data in `design.edits` and `design.colors` (see `template/src/edits.js`). The same code applies them in the preview and in both downloads, and uploaded pictures become real files in `images/`.
+
 ## What you download
 
 The last step offers two downloads:

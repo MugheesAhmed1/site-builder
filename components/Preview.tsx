@@ -253,6 +253,12 @@ export default function Preview({
         if (!INLINE.test(up.tagName.toLowerCase()) && ownWords(up)) break;
       }
     }
+    // A line wrapped in one span (split headlines) means the heading itself.
+    for (let i = 0; i < 3 && n && INLINE.test(n.tagName.toLowerCase()) && n.parentElement && n.parentElement !== r; i++) {
+      const up: Element = n.parentElement;
+      if (((up as HTMLElement).innerText || "").trim() !== ((n as HTMLElement).innerText || "").trim()) break;
+      n = up;
+    }
     // A wrapper that holds nothing but one picture, vector or scene means that thing.
     for (let d: Element | null = n, i = 0; d && i < 4; i++) {
       if (/^(svg|img|canvas|video)$/.test(d.tagName.toLowerCase())) return d;
