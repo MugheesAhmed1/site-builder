@@ -222,6 +222,7 @@ export interface Project {
   answers: Record<string, string>;
   resumeText: string;
   resumeFileName: string;
+  docName?: string; // the requirements document the answers were read from, if any
   profile: Profile | null;
   input?: PortfolioInput;
   design: Design;

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Icon from "@/components/Icon";
+import DocBand from "@/components/DocBand";
 import Topbar from "@/components/Topbar";
 import { CATEGORIES, categoryById, classify, extractHints } from "@/lib/categories";
 import { LIBRARY, personalDesign } from "@/lib/designs";
@@ -172,6 +173,8 @@ export default function Home() {
             <Showreel />
           </div>
         </section>
+
+        <DocBand />
 
         <HomeBelow startKind={startKind} />
 
