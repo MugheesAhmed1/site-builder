@@ -333,6 +333,8 @@ export function composeWebsite(categoryId: string, a: Record<string, string>): W
   const filled = pool.map((t) => cap(fill(t, vars)));
   let headline = filled[hashString(name + what) % filled.length];
   if (headline.length > 40) headline = filled.reduce((a, b) => (b.length < a.length ? b : a));
+  // A headline of their own (typed, or read from a requirements document) wins.
+  if (a.headline?.trim()) headline = cap(a.headline.trim().replace(/[.\s]+$/, ""));
 
   const services = (rows(a.services).length ? rows(a.services) : c.services.map((s) => [s])).map(([n, price = "", description = ""]) => {
     // Allow "name | description" with no price.
@@ -359,7 +361,9 @@ export function composeWebsite(categoryId: string, a: Record<string, string>): W
   const aboutText = a.about?.trim() || `${name} offers ${vars.what}${city ? " in " + city : ""}${audience ? " for " + audience : ""}. We keep things simple: honest prices, friendly service and work we're proud of.`;
   const aboutS = sentences(aboutText);
 
-  const faq = c.faq.map((f) => ({ question: fill(f.question, { city: city || "the city" }), answer: fill(f.answer, { city: city || "the city" }) }));
+  const ownFaq = rows(a.faq).filter(([q, ans]) => q && ans).map(([question, ...ans]) => ({ question, answer: ans.join(", ") }));
+  const faq = ownFaq.length ? ownFaq : c.faq.map((f) => ({ question: fill(f.question, { city: city || "the city" }), answer: fill(f.answer, { city: city || "the city" }) }));
+  const ownProcess = rows(a.process).filter(([t]) => t).map(([title, ...d]) => ({ title, description: d.join(", ") }));
   if (hours.length) faq.push({ question: "When are you open?", answer: hours.map((h) => `${h.days}: ${h.time}`).join(". ") + "." });
   if (address) faq.push({ question: "Where can I find you?", answer: address + "." });
 
@@ -378,7 +382,7 @@ export function composeWebsite(categoryId: string, a: Record<string, string>): W
     highlights: rows(a.highlights).map(([value, label = ""]) => ({ value, label })),
     services,
     about: { heading: "About " + name, paragraphs: aboutS.length > 2 ? [aboutS.slice(0, 2).join(" "), aboutS.slice(2).join(" ")] : [aboutS.join(" ")] },
-    process: c.process,
+    process: ownProcess.length >= 2 ? ownProcess : c.process,
     gallery: services.slice(0, 3).map((s) => ({ caption: s.name, imageUrl: "" })),
     pricing: rows(a.pricing).map(([n, price = "", period = "", features = ""], i, all) => ({ name: n, price, period, features: features.split(/\s*,\s*/).filter(Boolean), featured: all.length > 1 && i === Math.min(1, all.length - 1) })),
     testimonials: rows(a.testimonials).map(([quote, n = "", role = ""]) => ({ quote, name: n, role })),

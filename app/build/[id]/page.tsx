@@ -284,6 +284,7 @@ export default function BuildPage() {
                 word={word}
                 onRebuild={() => update(rebuild)}
                 onEdit={(content) => update((prev) => markChanged({ ...prev, content }, "build"))}
+                onDesign={(patch) => update((prev) => ({ ...prev, design: { ...prev.design, ...patch } }))}
                 onUndo={(i) =>
                   update((prev) =>
                     markChanged({ ...prev, content: prev.history[i].content, history: [{ at: new Date().toISOString(), label: "Before undo", content: prev.content! }, ...prev.history.filter((_, j) => j !== i)].slice(0, 10) }, "build")
@@ -412,6 +413,11 @@ function QuestionsStep({
       {tried && missing.length > 0 && (
         <div className="notice notice-warn" role="alert" style={{ marginBottom: 20, maxWidth: 760 }}>
           Please answer: {missing.map((q) => q.label.toLowerCase().replace(/[?.!]+$/, "")).join(", ")}.
+        </div>
+      )}
+      {p.docName && (
+        <div className="notice" style={{ marginBottom: 20, maxWidth: 760 }}>
+          These answers were filled in from <b>{p.docName}</b>. Change anything that isn&apos;t right; the site is rebuilt from what is written here.
         </div>
       )}
       {p.kind === "portfolio" && <ResumeBox p={p} onResume={onResume} onProfile={onProfile} />}

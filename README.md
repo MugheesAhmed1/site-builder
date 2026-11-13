@@ -5,6 +5,7 @@ Type one line, such as "website for my bakery in Lahore" or "portfolio for me, I
 **No AI anywhere.** Everything runs in the browser:
 
 - **Reading the request.** Keyword rules in `lib/categories.ts` decide portfolio or website, and which of 12 business types it is. You can change the guess.
+- **Requirements document to website.** At `/document` you upload a PRD, a BRD or a plain brief (PDF, Word .docx, Markdown or text). `lib/requirements.ts` splits it by its headings, matches each heading to what it is about, and reads lists, tables and "Key: value" lines into the same answers the questions step asks for: name, offer, city, customers, headline, story, features or menu with prices, plans, steps, common questions, team, quotes, tone, brand colour, first action and contact details. You see what was read and where from, fix the basics, then build. Goals and targets are never shown as facts, sections such as timeline, risks and out of scope are skipped, and the author's own email is not used. `lib/docx.ts` reads Word files with JSZip. Nothing is uploaded.
 - **Questions.** These are fixed lists in `lib/questions.ts`. There is one list for portfolios and one for websites, tailored to the business type: it asks for hours and an address only where people visit, and for prices only where it fits. Most questions come with a suggested answer.
 - **Résumé.** PDFs are read on the device with pdf.js (`lib/resume.ts`), and the text is split by common headings and date ranges. Nothing is uploaded.
 - **Words.** Rules and templates in `lib/compose.ts` write every section. Numbers in results become counters, skills are grouped and steps are set per role or business. There are no em or en dashes.
@@ -17,6 +18,23 @@ Type one line, such as "website for my bakery in Lahore" or "portfolio for me, I
 - **Film-scene openings.** New sites open like a film: a scene photo fills the first screen, the headline sits in the open sky with one word in italic serif (or glowing), a pill with faces sits above it and the numbers run along the foot. The scene pushes in and blurs away as you scroll and follows the pointer. There is also a "Scattered words" opening, a floating glass pill menu, a full-screen curtain menu, a glass call to action, a footer with the name set huge, and a Silk light backdrop. All of it is switchable under Design system, Layout, or in one go with the Cinematic animation pack. The 26 scene photos in `public/real/cinema` were made free with Pollinations.
 - **Living 3D scenes.** 48 scene concepts run as real-time 3D in the page, drawn by a small WebGL engine in `template/src/live` (original code, no libraries, no picture files). Every creature is modelled in code from smooth surfaces and animated in the vertex shader: whales and dolphins swim with a travelling body wave, fish beat their tails, the manta's wings ripple, birds flap and fold, jellyfish pulse. The sea, sky, pond, jungle and garden are shaders with light shafts, caustics, clouds, stars, layered ridges and reflections. Scenes follow the pointer (the camera shifts for depth, creatures turn to look), react to taps (a roll, a take-off, rings on the water) and leave as the page scrolls. 18 scenes come in up to four looks: lifelike, particles in the site's own colours, silhouettes on a painted sky, and cartoon. People can change the look, speed, number of creatures, side and colours (`design.scene.opts`, listed per scene in `SCENE_OPTIONS` in `scenes.js`). Picker thumbnails share one renderer and come alive on hover; scenes pause off screen, lower their resolution on slow devices and show a still for reduced motion.
 - **Colour optimizer.** There are seven harmony options: matched, analogous, complementary, split, triadic, calm and vivid. You can also build around a brand colour. Contrast ratios are shown for light and dark, and accents are adjusted automatically to pass WCAG AA (4.5 to 1).
+
+## Edit on page
+
+In **Your site**, press **Edit on page** and click anything. A panel beside the preview (a sheet under it on phones) shows what can change on that element:
+
+- **Words** of any element, including labels, badges and widget lines that are not part of your answers.
+- **Pictures**: upload, drop or paste into any photo slot, or replace any other picture on the page.
+- **Icons and vectors**: swap any icon, character or drawing for one of 70 built-in icons or your own upload, then recolour it.
+- **Colours and backgrounds**: text colour, a solid colour, a two-colour blend or a picture behind any element or whole section, with a darkening veil so words stay readable.
+- **Type**: size, bold, italic, underline, capitals, alignment and letter spacing.
+- **Live scenes, characters and widgets**: shift their colours, strength, brightness and blur, resize them, or hide them.
+- **Links**: where any button or link goes.
+- **Shape**: rounded corners, inner space, see-through, or hide it on the published site.
+
+**Page settings** sets the exact page colours for light and dark, the live scene, and lists every change with a one-click way back. Undo and redo (Ctrl or Cmd + Z) cover everything. "Inside" and "Behind it" chips reach the box, section or scene around or under what you clicked.
+
+Changes are stored as plain data in `design.edits` and `design.colors` (see `template/src/edits.js`). The same code applies them in the preview and in both downloads, and uploaded pictures become real files in `images/`.
 
 ## What you download
 
@@ -70,4 +88,5 @@ Things the builder does on purpose:
 - `template/src/motion.js`: the animation styles. `template/src/spring.js` turns a spring (duration and bounce) into a CSS `linear()` easing for hover moves and pointer-following shapes.
 - `.claude/skills/motion/` and `.mcp.json`: the free Motion AI Kit (installed with `npx motion-ai`, MIT licence) so coding agents working on this repo get Motion's animation guidance and docs search. Only the free Motion server is set up; Motion+ is paid and left out.
 - `library/`: the shared library, see `library/README.md`.
+- `components/DocIntake.tsx`, `components/DocBand.tsx`, `app/document/`: the requirements document intake. `lib/requirements-sample.ts` has the sample document and the blank template.
 - `tests/`: unit tests.

@@ -34,13 +34,14 @@ export const PORTFOLIO_QUESTIONS: Question[] = [
   { id: "tone", label: "How should it feel?", type: "choice", options: TONES, suggest: "Modern and technical", help: "This picks the starting design system. You can change it next." },
 ];
 
-const CTA_OPTIONS = ["Call us", "Message on WhatsApp", "Book an appointment", "Book a call", "See the menu", "Get a quote", "Get started", "Shop now", "Get in touch"];
+const CTA_OPTIONS = ["Call us", "Message on WhatsApp", "Book an appointment", "Book a call", "See the menu", "Get a quote", "Get started", "Shop now", "Get in touch", "Book a demo", "Start a free trial"];
 
 export function websiteQuestions(categoryId: string): Question[] {
   const c = categoryById(categoryId);
   const qs: Question[] = [
     { id: "name", label: "Name of your business or project", type: "text", required: true, placeholder: c.id === "food" ? "Crumb & Co." : "Northside Studio" },
     { id: "what", label: "What do you offer, in a few words?", type: "text", required: true, placeholder: examples[c.id] ?? "Home cleaning", help: "Used in your headline, so keep it short." },
+    { id: "headline", label: "Your headline (optional)", type: "text", placeholder: "Fresh bread, baked every morning", help: "The big line at the top. Leave empty and we write one from your answers." },
     { id: "city", label: "Which city or area do you serve?", type: "text", placeholder: "Lahore" },
     { id: "audience", label: "Who are your customers?", type: "text", placeholder: audiences[c.id] ?? "families and small businesses" },
     { id: "about", label: "Your story", type: "textarea", placeholder: "How you started, what makes you different, and what customers can expect.", help: "Two or three sentences is plenty." },
@@ -60,6 +61,8 @@ export function websiteQuestions(categoryId: string): Question[] {
     { id: "testimonials", label: "What customers say", type: "list", placeholder: "Best cake in town. | Ayesha R.", help: "One per line: quote | name." },
     { id: "team", label: "The people behind it (optional)", type: "list", placeholder: "Hina Raza | Head chef | Trained in Istanbul, 12 years in kitchens", help: "One per line: name | role | one line about them | photo link. Adds a Team section." },
     { id: "clients", label: "Clients or partners you can name (optional)", type: "text", placeholder: "Daraz, Careem, LUMS", help: "Separate with commas. Adds a Trusted by strip." },
+    { id: "process", label: "How it works, step by step (optional)", type: "list", placeholder: "Order | Call, message or use the form\nWe make it | Prepared fresh on the day\nCollect | Pick up or get it delivered", help: "One per line: step | what happens. Leave empty to use the usual steps for your kind of business." },
+    { id: "faq", label: "Common questions (optional)", type: "list", placeholder: "Do you deliver? | Yes, anywhere in the city for a small fee.", help: "One per line: question | answer. Leave empty to use the usual questions for your kind of business." },
     { id: "customTitle", label: "Anything else to show? Give it a title (optional)", type: "text", placeholder: "Our promise", help: "Adds a section of your own." },
     { id: "customItems", label: "Points for that section", type: "list", placeholder: "Fresh daily | Everything is baked the morning you buy it", help: "One per line: title | text." },
     { id: "cta", label: "What should visitors do first?", type: "choice", options: Array.from(new Set([c.primaryCta, ...CTA_OPTIONS])), suggest: c.primaryCta },

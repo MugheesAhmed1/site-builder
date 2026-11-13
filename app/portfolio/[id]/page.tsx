@@ -399,6 +399,7 @@ export default function PortfolioStudio() {
                   word="portfolio"
                   onRebuild={() => update(rebuild)}
                   onEdit={(content) => update((prev) => markChanged({ ...prev, content }, "build"))}
+                  onDesign={(patch) => update((prev) => ({ ...prev, design: { ...prev.design, ...patch } }))}
                   onUndo={(i) =>
                     update((prev) =>
                       markChanged({ ...prev, content: prev.history[i].content, history: [{ at: new Date().toISOString(), label: "Before undo", content: prev.content! }, ...prev.history.filter((_, j) => j !== i)].slice(0, 10) }, "build")
