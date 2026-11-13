@@ -1,0 +1,13 @@
+/* ------------------------------------------------------------------ 3D scenes (three.js) */
+.sc3 { position: absolute; inset: 0; overflow: hidden; touch-action: pan-y; }
+.sc3-canvas, .sc3-canvas canvas, .sc3-poster { position: absolute !important; inset: 0; width: 100% !important; height: 100% !important; display: block; }
+.sc3-poster { object-fit: cover; user-select: none; -webkit-user-drag: none; }
+.sc3-galaxy, .sc3-knot { cursor: grab; }
+.sc3-galaxy:active, .sc3-knot:active { cursor: grabbing; }
+/* Shown while three.js loads, when WebGL is missing, and as a tile before its poster is ready. */
+.sc3-still { position: absolute; inset: 0; background:
+  radial-gradient(40% 50% at 68% 45%, color-mix(in srgb, var(--sc-a) 55%, transparent), transparent 70%),
+  radial-gradient(35% 40% at 40% 60%, color-mix(in srgb, var(--sc-b) 45%, transparent), transparent 70%),
+  radial-gradient(60% 60% at 50% 50%, color-mix(in srgb, var(--sc-c) 20%, transparent), transparent 80%); filter: blur(6px); animation: sc3-breathe 6s ease-in-out infinite alternate; }
+@keyframes sc3-breathe { to { transform: scale(1.06); opacity: 0.85; } }
+@media (prefers-reduced-motion: reduce) { .sc3-still { animation: none; } }

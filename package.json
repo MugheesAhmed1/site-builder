@@ -12,13 +12,16 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@react-three/fiber": "^9.8.2",
+    "@types/three": "^0.187.0",
     "jszip": "^3.10.2",
     "lenis": "1.1.13",
     "motion": "14.7.1",
     "next": "^15.5.27",
     "pdfjs-dist": "^4.10.38",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.0",
+    "three": "^0.187.0"
   },
   "devDependencies": {
     "@types/node": "^26.6.5",

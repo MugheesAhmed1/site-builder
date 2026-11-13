@@ -1,8 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { REAL_SCENES, SCENE_PALETTES, sceneType } from "./scenes.js";
 import { asset } from "./real.js";
 import { isConcept } from "./concepts.js";
 import { conceptImpl } from "./concept.js";
+import "./three/three.css";
+
+// The three.js scenes are a separate download, fetched only when one is shown.
+const ThreeScene = lazy(() => import("./three/index.jsx"));
 
 // Draws the live scenes from scenes.js. Canvas scenes share one loop: it sizes the canvas
 // for sharp pixels, tracks the pointer (even when text sits on top), pauses when the
@@ -1885,17 +1889,23 @@ function LiquidScene() {
 
 // ------------------------------------------------------------------ public
 
-/** @param {{ def: any, text?: string, words?: string[], image?: string, alt?: string, preview?: boolean, imgPath?: string, className?: string }} props */
-export function Scene({ def, text = "", words = [], image = "", alt = "", preview = false, imgPath = "", className = "" }) {
+/** @param {{ def: any, text?: string, words?: string[], image?: string, alt?: string, preview?: boolean, imgPath?: string, className?: string, thumb?: boolean }} props */
+export function Scene({ def, text = "", words = [], image = "", alt = "", preview = false, imgPath = "", className = "", thumb = false }) {
   if (!def) return null;
   const t = sceneType(def.type);
+  const pal = SCENE_PALETTES.find((p) => p.id === def.palette);
   let body;
-  if (t.group === "photo" && def.type !== "pixels") body = <PhotoScene type={def.type} image={image} alt={alt} preview={preview} imgPath={imgPath} />;
+  if (t.group === "three")
+    body = (
+      <Suspense fallback={<div className="sc3-still" aria-hidden="true" />}>
+        <ThreeScene type={def.type} palette={def.palette} colors={pal && pal.colors} text={text} words={words} thumb={thumb} />
+      </Suspense>
+    );
+  else if (t.group === "photo" && def.type !== "pixels") body = <PhotoScene type={def.type} image={image} alt={alt} preview={preview} imgPath={imgPath} />;
   else if (def.type === "glass") body = <GlassScene />;
   else if (def.type === "liquid") body = <LiquidScene />;
   else if (def.type === "pixels" && !image) body = <Placeholder preview={preview} label="" />;
   else body = <CanvasScene type={def.type} palette={def.palette} text={text} words={words} image={image} />;
-  const pal = SCENE_PALETTES.find((p) => p.id === def.palette);
   const style = pal && pal.colors ? { "--sc-a": pal.colors[0], "--sc-b": pal.colors[1], "--sc-c": pal.colors[2] } : undefined;
   return (
     <div className={`sc sc-group-${t.group} sc-pal-${def.palette} ${className}`} style={style} data-scene={def.type}>

@@ -49,7 +49,7 @@ export default function ScenePicker({ design, onChange, category, name, words, p
     return (
       <button key={s.id} type="button" className={"scene-tile" + (on ? " is-on" : "") + (s.group === "concept" ? " is-concept" : "")} aria-pressed={on} onClick={() => choose(s)}>
         <span className="scene-art">
-          <Scene def={s} text={name} words={words} image={img(s)} preview />
+          <Scene def={s} text={name} words={words} image={img(s)} preview thumb />
         </span>
         <span className="scene-meta">
           <span className="mono muted small">

@@ -165,15 +165,15 @@ export function iconFor(category: string) {
 
 // Live scenes (particles, nature, photo, 3D) that suit each category, best first.
 const SCENE_FIT: Record<string, string> = {
-  food: "petals fireflies sky bubbles reveal beans blossoms", beauty: "petals liquid glass reveal fireflies blossoms butterflies", fitness: "orbs vortex dotgrid swarm leaves", health: "meadow sky waves bubbles drift butterflies",
-  dentist: "bubbles sky glass waves drift", hospital: "constellation dotgrid sky bubbles drift", agency: "swarm charms liquid flow orbs glass gold", creator: "swarm charms vortex orbs stars pixels butterflies",
-  consulting: "constellation flow globe glass leaves", law: "constellation stars glass flow leaves", photo: "reveal tilt ripple slices pixels leaves", property: "sky tree glass tilt leaves",
-  product: "globe charms constellation dotgrid flow swarm drift", shop: "charms bubbles orbs petals glass gold blossoms", nonprofit: "tree meadow fireflies sky butterflies leaves", events: "stars fireflies swarm vortex gold butterflies",
-  school: "tree bubbles stars meadow butterflies", hotel: "waves sky aquarium petals reef blossoms", trades: "dotgrid orbs sky rain leaves", auto: "flow vortex dotgrid rain leaves", pets: "aquarium meadow fireflies bubbles reef butterflies",
-  general: "constellation fireflies bubbles sky butterflies", portfolio: "swarm constellation fireflies tilt drift", "role-pm": "constellation bubbles flow drift", "role-it": "globe dotgrid constellation drift",
-  "role-ceo": "globe stars glass gold", "role-designer": "liquid charms swarm petals glass butterflies blossoms", "role-dev": "dotgrid flow constellation swarm drift", "role-marketer": "bubbles orbs vortex gold",
-  "role-data": "globe constellation flow drift", "role-engineer": "dotgrid globe flow leaves", "role-sales": "orbs bubbles vortex gold", "role-hr": "bubbles meadow fireflies butterflies", "role-finance": "globe constellation glass gold",
-  "role-teacher": "tree stars bubbles leaves", "role-doctor": "waves sky meadow drift", "role-writer": "rain petals snow stars leaves flurry", "role-photo": "reveal tilt ripple pixels leaves", "role-creator": "swarm vortex stars orbs butterflies", "role-student": "stars bubbles tree leaves",
+  food: "petals fireflies sky bubbles reveal beans blossoms", beauty: "petals liquid glass reveal fireflies blossoms butterflies ribbons", fitness: "orbs vortex dotgrid swarm leaves orb", health: "meadow sky waves bubbles drift butterflies",
+  dentist: "bubbles sky glass waves drift", hospital: "constellation dotgrid sky bubbles drift", agency: "swarm knot charms liquid flow orbs glass gold ribbons", creator: "swarm name3d charms vortex orbs stars pixels butterflies galaxy",
+  consulting: "constellation flow globe glass leaves terrain", law: "constellation stars glass flow leaves crystals", photo: "reveal tilt ripple slices pixels leaves", property: "sky tree glass tilt leaves",
+  product: "globe orb charms constellation dotgrid flow swarm drift blocks", shop: "charms bubbles orbs petals glass gold blossoms crystals", nonprofit: "tree meadow fireflies sky butterflies leaves", events: "stars fireflies swarm vortex gold butterflies galaxy",
+  school: "tree bubbles stars meadow butterflies galaxy", hotel: "waves sky aquarium petals reef blossoms", trades: "dotgrid orbs sky rain leaves", auto: "flow vortex dotgrid rain leaves terrain", pets: "aquarium meadow fireflies bubbles reef butterflies",
+  general: "constellation fireflies bubbles sky butterflies orb", portfolio: "swarm name3d constellation fireflies tilt drift orb", "role-pm": "constellation bubbles flow drift", "role-it": "globe dotgrid constellation drift terrain",
+  "role-ceo": "globe stars glass gold crystals", "role-designer": "liquid ribbons charms swarm petals glass butterflies blossoms knot", "role-dev": "dotgrid blocks flow constellation swarm drift terrain", "role-marketer": "bubbles orbs vortex gold orb",
+  "role-data": "globe constellation flow drift galaxy blocks", "role-engineer": "dotgrid globe flow leaves blocks", "role-sales": "orbs bubbles vortex gold crystals", "role-hr": "bubbles meadow fireflies butterflies", "role-finance": "globe constellation glass gold crystals",
+  "role-teacher": "tree stars bubbles leaves", "role-doctor": "waves sky meadow drift", "role-writer": "rain petals snow stars leaves flurry", "role-photo": "reveal tilt ripple pixels leaves", "role-creator": "swarm vortex stars orbs butterflies galaxy name3d", "role-student": "stars bubbles tree leaves galaxy",
 };
 export function scenesFor(category: string): string[] {
   return (SCENE_FIT[category] ?? SCENE_FIT.general).split(" ");

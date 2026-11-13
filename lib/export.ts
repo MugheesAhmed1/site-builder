@@ -308,6 +308,7 @@ WHAT IS IN HERE
   index.html      the page, with its title, description and sharing details
   site.js         the site's code (already built)
   site.css        the site's styles
+  site-3d.js      the 3D scenes (three.js), loaded only when one is shown
   site-data.js    your words, colours, fonts and motion settings
   favicon.svg     the small icon in the browser tab
   share.png       the picture shown when the link is shared
@@ -346,12 +347,14 @@ export async function buildZip(p: Project, kind: DownloadKind = "ready"): Promis
     if (share) folder.file("public/share.png", share);
     folder.file("src/site-data.json", JSON.stringify(data, null, 2));
   } else {
-    const [js, css] = await Promise.all([kitFile("site.js"), kitFile("site.css")]);
+    const [js, css, js3d] = await Promise.all([kitFile("site.js"), kitFile("site.css"), kitFile("site-3d.js")]);
     const data = await gather(p, (path, d, b64) => folder.file(path, d, b64 ? { base64: true } : undefined), "./");
     const first = firstPicture(data);
     const shell = firstView(p);
     folder.file("site.js", js);
     folder.file("site.css", css);
+    // The 3D scenes (three.js), fetched by the page only when a 3D scene is shown.
+    folder.file("site-3d.js", js3d);
     folder.file("site-data.js", "// Your site's words, colours, fonts and motion settings. Edit and reload.\nwindow.__ASSET_BASE__ = \".\";\nwindow.__SITE_DATA__ = " + JSON.stringify(data, null, 2).replace(/<\/script/gi, "<\\/script") + ";\n");
     folder.file("favicon.svg", faviconSvg(p));
     folder.file("robots.txt", ROBOTS);
