@@ -6,6 +6,7 @@ import "@/template/src/studio.css";
 import "@/template/src/showpiece.css";
 import "@/template/src/cinema.css";
 import "./shell.css";
+import "./home.css";
 
 const FONTS = "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600&family=Hanken+Grotesk:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap";
 
