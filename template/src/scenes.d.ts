@@ -1,4 +1,4 @@
-export interface SceneDef { id: string; type: string; group: string; palette: string; name: string; style?: string; opts?: Record<string, string | number> }
+export interface SceneDef { id: string; type: string; group: string; palette: string; name: string; style?: string; opts?: Record<string, string | number | boolean | string[]> }
 export interface SceneOption { key: string; label: string; kind: "color" | "range" | "select"; min?: number; max?: number; step?: number; default: string | number; options?: { value: string; label: string }[]; looks?: string[] }
 export const SCENE_OPTIONS: Record<string, SceneOption[]>;
 export function sceneOptions(type: string): SceneOption[];
