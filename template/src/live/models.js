@@ -644,9 +644,9 @@ function branch() {
 }
 
 function lily() {
-  // A lily pad seen from above, with a notch, and a flower bud.
+  // A lily pad seen from above, with a notch.
   const B = new Builder();
-  const g1 = hex("#2f7d4f"), g2 = hex("#7fc46a");
+  const g1 = hex("#1f5a36"), g2 = hex("#4f9a52");
   B.plate(10, 40, (u, v) => {
     const a = 0.25 + v * (PI * 2 - 0.5);
     return [u * Math.cos(a), u * Math.sin(a), 0.01 * Math.sin(a * 5) * u];

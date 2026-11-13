@@ -102,7 +102,7 @@ export function mountLive(el, scene, { still = false, onFail } = {}) {
   const sparkData = new Float32Array(220 * 5);
   const sparkBuf = gl.createBuffer();
 
-  const layers = (scene.layers || []).map((l) => ({ l, tex: texture(gl, l.canvas) }));
+  const layers = (typeof scene.layers === "function" ? scene.layers() : scene.layers || []).map((l) => ({ l, tex: texture(gl, l.canvas) }));
 
   // ---------------------------------------------------------------- frame
   let scale = 1;

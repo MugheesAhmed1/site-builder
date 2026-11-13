@@ -354,7 +354,7 @@ vec3 sky(vec2 p, float asp){
   vec2 d = vec2((p.x - sp.x)*asp, p.y - sp.y);
   float r = length(d);
   col += uC2 * (exp(-r*5.5)*0.55 + exp(-r*1.6)*0.22);
-  col = mix(col, min(vec3(1.0), uC2*1.35 + 0.15), smoothstep(0.052, 0.046, r));
+  col += uC2 * 0.55 * smoothstep(0.052, 0.046, r);
   if (uP.z > 0.0) {
     vec2 g = vec2(p.x*asp, p.y) * 70.0; vec2 id = floor(g); vec2 f = fract(g) - 0.5;
     float hs = hash(id);
@@ -427,9 +427,9 @@ void main(){
   col = mix(col, uC0, smoothstep(0.3, 1.05, c.y + (fbm(vec2(c.x*asp*2.0 + uTime*0.01, c.y*2.0)) - 0.5)*0.4) * 0.9);
   float go = uGo*uTime;
   float t1 = trunks(vec2(c.x*asp + uPtr.x*0.012 + go*0.004, c.y), 5.0, 3.0, 0.11);
-  col = mix(col, mix(uC4, uC0, 0.62), t1*0.75);
+  col = mix(col, mix(uC4, uC0, 0.5), t1*0.45);
   float t2 = trunks(vec2(c.x*asp + uPtr.x*0.03 + go*0.01, c.y), 2.6, 11.0, 0.13);
-  col = mix(col, mix(uC4, uC1, 0.3), t2*0.9);
+  col = mix(col, mix(uC4, uC2, 0.35), t2*0.85);
   // Canopy shadow at the top, and light breaking through.
   float canopy = fbm(vec2(c.x*asp*3.0 + uPtr.x*0.04 + go*0.012, c.y*3.0 + 7.0));
   col = mix(col, uC2*1.1, smoothstep(0.42, 0.75, canopy + (c.y - 0.8)*1.1) * 0.85);
@@ -458,13 +458,15 @@ void main(){
   vec2 pq = p - vec2((uPtr.x*0.5 + 0.5)*asp, uPtr.y*0.5 + 0.5); float pr = length(pq);
   off += normalize(pq + 0.0001) * sin(pr*60.0 - uTime*5.0) * smoothstep(0.2, 0.0, pr) * 0.0035;
   vec2 w = p + off;
-  float bed = fbm(w*2.2 + 3.0);
-  vec3 col = mix(uC1, uC0, smoothstep(0.3, 0.75, bed));
+  float bed = fbm(w*1.6 + 3.0);
+  vec3 col = mix(uC1, uC0, smoothstep(0.25, 0.8, bed));
   // Pebbles and shadows on the bottom.
-  float st = fbm(w*9.0);
-  col = mix(col, uC2, smoothstep(0.55, 0.75, st)*0.35);
-  col = mix(col, uC2, smoothstep(0.25, 0.9, length(uv - 0.5)*1.2)*0.6);
-  col += uC3 * caustic(w*2.6, uTime*1.2) * 0.3 * uA;
+  float st = fbm(w*7.0);
+  col = mix(col, uC2, smoothstep(0.5, 0.8, st)*0.3);
+  col = mix(col, uC2, smoothstep(0.25, 0.95, length(uv - 0.5)*1.25)*0.65);
+  col += uC3 * caustic(w*1.7, uTime*0.8) * 0.16 * uA;
+  // Sun glare on the surface.
+  col += uC3 * 0.08 * smoothstep(0.8, 0.0, length(vec2((uv.x - 0.75)*asp, uv.y - 0.8)));
   col += uC3 * length(off) * 26.0;
   gl_FragColor = vec4(finish(col, uv), 1.0);
 }`,

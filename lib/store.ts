@@ -5,6 +5,8 @@ import { LIBRARY, normalizeDesign } from "./designs";
 import type { Design, Project, SiteKind, StepId } from "./types";
 import { STEPS } from "./types";
 import { castFor, sceneFor } from "./fit";
+import { conceptAlias } from "@/template/src/concepts.js";
+import { SCENES } from "@/template/src/scenes.js";
 
 // Projects are saved in this browser's local storage. Nothing is sent to a server.
 // Use Export and Import on the home page to back up or move them.
@@ -63,6 +65,12 @@ function normalize(p: Project): Project {
   const design = normalizeDesign(p.design);
   if (design.cast === undefined || (design.cast && !design.cast.character)) design.cast = castFor(category, seedOf(p.id));
   if (design.scene === undefined) design.scene = sceneFor(category, seedOf(p.id));
+  // Scene concepts from before the 3D engine move to the scene that replaced them.
+  else if (design.scene && design.scene.group === "concept") {
+    const to = conceptAlias(design.scene.type);
+    const hit = to ? SCENES.find((s) => s.type === to) : null;
+    design.scene = hit ? { ...hit, ...(design.scene.opts ? { opts: design.scene.opts } : {}) } : sceneFor(category, seedOf(p.id));
+  }
   const steps = { ...p.steps };
   if (!steps.cast) steps.cast = steps.motion === "approved" ? "approved" : steps.design === "approved" ? "draft" : "todo";
   return { ...p, kind, category, answers: p.answers ?? {}, locks: p.locks ?? {}, design, steps };

@@ -8,12 +8,12 @@ import { CONCEPT_STYLES, SCENES, sceneType, type SceneDef } from "@/template/src
 import { conceptsFor } from "@/template/src/concepts.js";
 import { Scene } from "@/template/src/Scenes.jsx";
 
-// The home page showcase of scene concepts: animated set pieces (a parrot flying in, a whale
+// The home page showcase of scene concepts: living 3D set pieces (a macaw that lands, a humpback whale
 // swimming past, a jungle walk) by style and by kind of site. "Use this concept" starts a
 // site with it already behind the opening words.
 const ALL = SCENES.filter((s) => s.group === "concept");
 // With every style shown, the first row mixes the four looks so each one is visible.
-const LEAD = ["parrot", "p-whale", "jungle", "c-whale", "whale", "n-moonwhale", "safari", "c-rocket", "monkey", "p-parrot", "dolphins", "n-savanna"];
+const LEAD = ["whale", "parrot", "p-whale", "koi", "n-eagle", "jelly", "c-turtle", "flamingos", "manta", "p-parrot", "lanterns", "jungle"];
 const leadRank = (t: string) => (LEAD.includes(t) ? LEAD.indexOf(t) : 100);
 const SHOW = 8;
 
@@ -42,7 +42,7 @@ export default function ConceptShowcase({ startKind }: { startKind: (k: SiteKind
       <div className="cat-head">
         <p className="concept-kicker mono">New · {ALL.length} scene concepts</p>
         <h2 id="concept-title">Open your site with a scene</h2>
-        <p className="muted">A parrot that flies in and lands beside your name, a whale gliding past, a walk through the jungle, rockets, dolphins, lanterns and more. Real-life photos, particles, painted nature or cartoon. Move your pointer over them, they react.</p>
+        <p className="muted">Living 3D scenes that run right in the page: a humpback whale that turns to look at you, a macaw that flies in and lands on a branch, koi that gather where you point. Lifelike, particles in your colours, silhouettes or cartoon. Move your pointer, tap and scroll, they react.</p>
       </div>
 
       <div className="concept-bar">

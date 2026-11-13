@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { REAL_SCENES, SCENE_PALETTES, sceneType } from "./scenes.js";
 import { asset } from "./real.js";
-import { isConcept } from "./concepts.js";
-import { conceptImpl } from "./concept.js";
+import { conceptInfo } from "./concepts.js";
+import { LiveScene, LiveThumb } from "./live/LiveScene.jsx";
 
 // Draws the live scenes from scenes.js. Canvas scenes share one loop: it sizes the canvas
 // for sharp pixels, tracks the pointer (even when text sits on top), pauses when the
@@ -1647,7 +1647,7 @@ function CanvasScene({ type, palette, text, words, image }) {
       g,
       img: null,
     };
-    const scene = isConcept(type) ? conceptImpl(env, type, { loadImg, spriteLayer }) : REAL_SCENES[type] ? realImpl(env, type) : (IMPL[type] || IMPL.constellation)(env);
+    const scene = REAL_SCENES[type] ? realImpl(env, type) : (IMPL[type] || IMPL.constellation)(env);
     const p = { x: 0, y: 0, in: false, down: false, vx: 0, burst: 0 };
     let raf = 0;
     let visible = true;
@@ -1888,6 +1888,19 @@ function LiquidScene() {
 /** @param {{ def: any, text?: string, words?: string[], image?: string, alt?: string, preview?: boolean, imgPath?: string, className?: string }} props */
 export function Scene({ def, text = "", words = [], image = "", alt = "", preview = false, imgPath = "", className = "" }) {
   if (!def) return null;
+  const live = conceptInfo(def.type);
+  if (live) {
+    // Scene concepts are living 3D scenes (see ./live). Settings come from def.opts; a
+    // look picked there overrides the one in the concept id.
+    const opts = def.opts || {};
+    const look = typeof opts.look === "string" && opts.look ? opts.look : live.look;
+    const Body = preview ? LiveThumb : LiveScene;
+    return (
+      <div className={`sc sc-group-concept sc-live${live.dark ? " sc-dark" : " sc-light"} ${className}`} data-scene={live.id}>
+        <Body scene={live.scene} look={look} opts={opts} />
+      </div>
+    );
+  }
   const t = sceneType(def.type);
   let body;
   if (t.group === "photo" && def.type !== "pixels") body = <PhotoScene type={def.type} image={image} alt={alt} preview={preview} imgPath={imgPath} />;

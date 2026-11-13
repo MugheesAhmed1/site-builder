@@ -87,6 +87,8 @@ export interface ScenePick {
   group: string;
   palette: string;
   name: string;
+  style?: string;
+  opts?: Record<string, string | number>; // settings for living scenes: look, speed, amount, side, sky, tint, accent
 }
 
 export interface CastPick {

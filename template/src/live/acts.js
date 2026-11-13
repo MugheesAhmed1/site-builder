@@ -537,4 +537,20 @@ function swarm(d, S, m) {
   };
 }
 
-export const ACTS = { cruise, drift, school, pond, still, perch, soar, swarm };
+/** Turntable for the model viewer. */
+function turn(d, S, m) {
+  const it = item(m);
+  return {
+    items: [it],
+    update() {
+      const [x, y] = spotOf(d, S);
+      if (!d.freeze) it.phase += S.dt * (m.tempo ?? 1);
+      else it.phase = +d.freeze;
+      it.fold = d.fold || 0;
+      const yaw = Number.isFinite(d.yaw) ? d.yaw : S.t * 0.5;
+      it.m = mat4.pose(x, y, 0, yaw, d.pitch || 0, 0, sized(d, S));
+    },
+  };
+}
+
+export const ACTS = { turn, cruise, drift, school, pond, still, perch, soar, swarm };
