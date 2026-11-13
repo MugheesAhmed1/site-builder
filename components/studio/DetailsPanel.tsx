@@ -261,6 +261,11 @@ function PortfolioDetails({ p, update }: { p: Project; update: Update }) {
 export default function DetailsPanel({ p, update }: { p: Project; update: Update }) {
   return (
     <div className="sp-stack">
+      {p.docName && (
+        <div className="notice" role="note">
+          Filled in from <b>{p.docName}</b>. Check the answers below; anything left blank is skipped or uses a suggestion.
+        </div>
+      )}
       <TypeBox
         p={p}
         onChange={(kind, category) => {

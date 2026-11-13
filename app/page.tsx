@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Icon from "@/components/Icon";
+import DocBand from "@/components/DocBand";
 import Categories from "@/components/home/Categories";
 import ConceptSection from "@/components/home/ConceptSection";
 import DesignWall from "@/components/home/DesignWall";
@@ -149,6 +150,10 @@ export default function Home() {
             </p>
           </header>
           <Categories />
+        </section>
+
+        <section className="hsec" aria-label="Start from a document">
+          <DocBand />
         </section>
 
         <section className="hsec" id="yours" aria-labelledby="yours-title">
