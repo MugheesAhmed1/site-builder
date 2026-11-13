@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import DocIntake from "@/components/DocIntake";
 import Topbar from "@/components/Topbar";
+import { studioPath } from "@/lib/project";
 import { saveProject } from "@/lib/store";
 
 // Requirements document to website: upload a PRD, BRD or brief, check what was read, build.
@@ -22,7 +23,7 @@ export default function DocumentPage() {
         <DocIntake
           onProject={(p) => {
             saveProject(p);
-            router.push(`/build/${p.id}`);
+            router.push(studioPath(p));
           }}
         />
         <ol className="doc-steps" style={{ marginTop: 40 }}>
