@@ -167,7 +167,7 @@ export function markChanged(p: Project, step: StepId): Project {
 export function keepCast(prev: Design, next: Design): Design {
   // Characters, scenes and every motion layer belong to the person, not the design system,
   // so switching design keeps them.
-  const keys = ["cast", "castStory", "intro", "magnetic", "cursor", "scene", "sceneMode", "tilt", "smooth", "grain", "loader", "film", "video", "flight", "carousel", "scrollWords", "showpiece", "scramble", "fogSwitch", "pack", "plate", "accentFace", "chrome", "menu", "footer", "ctaStyle"] as const;
+  const keys = ["cast", "castStory", "intro", "magnetic", "cursor", "scene", "sceneMode", "tilt", "smooth", "grain", "loader", "film", "video", "flight", "carousel", "scrollWords", "showpiece", "scramble", "fogSwitch", "pack", "plate", "accentFace", "chrome", "menu", "footer", "ctaStyle", "edits"] as const;
   const keep = Object.fromEntries(keys.map((k) => [k, prev[k]]));
   const out = { ...next } as Design;
   for (const [k, v] of Object.entries(keep)) if ((out as unknown as Record<string, unknown>)[k] === undefined && v !== undefined) (out as unknown as Record<string, unknown>)[k] = v;

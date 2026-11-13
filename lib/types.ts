@@ -79,9 +79,55 @@ export interface Design {
   menu?: "drop" | "curtain"; // the menu: a drop-down on phones, or a full-screen curtain that opens as a circle
   footer?: "simple" | "wordmark"; // the footer: one line, or a card with the name set huge underneath
   ctaStyle?: "band" | "glass"; // the call to action: a colour band, or a glass card over a scene
+  // Edit on page: what the person changed on single elements, keyed by where the element is
+  // (see template/src/edits.js), and exact page colours set by hand for light and dark.
+  edits?: Record<string, ElementEdit>;
+  colors?: { light?: Partial<PageColors>; dark?: Partial<PageColors> };
+}
+
+export interface PageColors {
+  bg: string;
+  surface: string;
+  text: string;
+  muted: string;
+  border: string;
+  accent: string;
+  onAccent: string;
+}
+
+// One element's changes. Every field is optional; an empty edit is removed.
+export interface ElementEdit {
+  text?: string; // words that are not part of the content (a label, a badge, a widget line)
+  href?: string; // where a link or button goes
+  color?: string;
+  bg?: string; // a colour or a gradient
+  bgImage?: string; // a picture behind the element
+  bgFit?: "cover" | "contain";
+  bgDim?: number; // darkens the picture so words stay readable, 0 to 0.9
+  border?: string;
+  size?: number; // 1 is the designed size
+  weight?: number;
+  italic?: boolean;
+  underline?: boolean;
+  caps?: boolean;
+  align?: "left" | "center" | "right";
+  spacing?: number;
+  radius?: number;
+  pad?: number;
+  opacity?: number;
+  hide?: boolean;
+  src?: string; // a different picture for an image that is not one of the content photos
+  fit?: "cover" | "contain";
+  icon?: string; // an icon from the built-in set, in place of an icon or vector
+  iconSrc?: string; // or an uploaded one
+  tint?: number; // hue shift in degrees, recolours pictures, vectors and live scenes
+  sat?: number;
+  bright?: number;
+  blur?: number;
 }
 
 export interface ScenePick {
+  opts?: Record<string, string | number | boolean | string[]>; // settings the person tuned for this scene
   id: string;
   type: string;
   group: string;
