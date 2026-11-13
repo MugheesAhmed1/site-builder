@@ -108,8 +108,8 @@ function Snap({ onShot }) {
   return null;
 }
 
-/** @param {{ type: string, palette?: string, colors?: string[], text?: string, words?: string[], thumb?: boolean }} props */
-export default function ThreeScene({ type, palette = "brand", colors, text = "", words = [], thumb = false }) {
+/** @param {{ type: string, palette?: string, colors?: string[], text?: string, words?: string[], thumb?: boolean, opts?: Record<string, any> }} props */
+export default function ThreeScene({ type, palette = "brand", colors, text = "", words = [], thumb = false, opts = {} }) {
   const wrap = useRef(null);
   const input = useInput(wrap);
   const [ready, setReady] = useState(false);
@@ -122,6 +122,10 @@ export default function ThreeScene({ type, palette = "brand", colors, text = "",
   const release = useRef(null);
   const def = THREE_SCENES[type] || THREE_SCENES.orb;
   const fixed = (colors || []).join(",");
+  // Settings from the scene panel (see SCENE_OPTIONS in scenes.js).
+  const tint = typeof opts.tint === "string" ? opts.tint : "";
+  const side = typeof opts.side === "string" ? opts.side : "right";
+  input.current.speed = Math.max(0.1, Math.min(3, Number(opts.speed) || 1));
 
   useEffect(() => {
     const el = wrap.current;
@@ -134,7 +138,7 @@ export default function ThreeScene({ type, palette = "brand", colors, text = "",
     // The page's colours change with the light or dark switch, so check now and then.
     let last = "";
     const read = () => {
-      const c = readColors(el, palette, fixed ? fixed.split(",") : null);
+      const c = readColors(el, palette, fixed ? fixed.split(",") : null, tint);
       if (c.key !== last) {
         last = c.key;
         setLook(c);
@@ -149,7 +153,7 @@ export default function ThreeScene({ type, palette = "brand", colors, text = "",
       io.disconnect();
       mq.removeEventListener?.("change", onMq);
     };
-  }, [palette, fixed]);
+  }, [palette, fixed, tint]);
 
   const key = look ? [type, look.key, text, (words || []).join("|")].join("/") : "";
   useEffect(() => {
@@ -206,7 +210,7 @@ export default function ThreeScene({ type, palette = "brand", colors, text = "",
             aria-hidden="true"
           >
             <Driver input={input} visible={visible || shooting} reduce={reduce && !shooting} />
-            <S input={input} look={look} text={text} words={words} thumb={thumb} reduce={reduce} />
+            <S input={input} look={look} text={text} words={words} thumb={thumb} reduce={reduce} side={side} />
             {shooting && <Snap onShot={shot} />}
           </Canvas>
         </Guard>

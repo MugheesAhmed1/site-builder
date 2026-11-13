@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Icon from "@/components/Icon";
-import { CONCEPT_STYLES, SCENES, SCENE_GROUPS, SCENE_PALETTES, sceneType, type SceneDef } from "@/template/src/scenes.js";
+import "./ScenePicker.css";
+import { CONCEPT_STYLES, SCENES, SCENE_GROUPS, SCENE_PALETTES, sceneOptions, sceneType, type SceneDef } from "@/template/src/scenes.js";
 import { conceptsFor } from "@/template/src/concepts.js";
 import { Scene } from "@/template/src/Scenes.jsx";
 import { scenesFor } from "@/lib/fit";
@@ -42,7 +43,65 @@ export default function ScenePicker({ design, onChange, category, name, words, p
     return [...l].sort((a, b) => rank(a) - rank(b));
   }, [style, scope, conceptFit]);
   const img = (s: SceneDef) => (s.group === "photo" ? photo || SAMPLE_PHOTO : undefined);
-  const choose = (s: SceneDef) => onChange(mode === "visual" ? { scene: s, sceneMode: mode, heroStyle: "stage" } : { scene: s, sceneMode: mode });
+  const choose = (s: SceneDef) => {
+    // Keep the person's settings when they switch between looks of the same kind of scene.
+    const keep = scene?.opts && scene.group === "concept" && s.group === "concept" ? { opts: { ...scene.opts, look: "" } } : {};
+    const next = { ...s, ...keep };
+    onChange(mode === "visual" ? { scene: next, sceneMode: mode, heroStyle: "stage" } : { scene: next, sceneMode: mode });
+  };
+  const options = scene ? sceneOptions(scene.type) : [];
+  const setOpt = (key: string, value: string | number) => {
+    if (!scene) return;
+    const opts = { ...(scene.opts ?? {}) };
+    if (value === "" || value === undefined) delete opts[key];
+    else opts[key] = value;
+    onChange({ scene: { ...scene, opts } });
+  };
+  const settings = options.length > 0 && scene && (
+    <div className="scene-opts" role="group" aria-label="Scene settings">
+      {options.map((o) => {
+        const v = scene.opts?.[o.key];
+        const id = "sc-opt-" + o.key;
+        if (o.kind === "select")
+          return (
+            <label key={o.key} className="scene-opt" htmlFor={id}>
+              <span className="small">{o.label}</span>
+              <select id={id} value={String(v || o.default)} onChange={(e) => setOpt(o.key, e.target.value === o.default ? "" : e.target.value)}>
+                {o.options?.map((x) => (
+                  <option key={x.value} value={x.value}>
+                    {x.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+          );
+        if (o.kind === "range")
+          return (
+            <label key={o.key} className="scene-opt" htmlFor={id}>
+              <span className="small">
+                {o.label} <span className="muted mono">{Number(v ?? o.default).toFixed(o.step && o.step < 0.1 ? 2 : 1)}×</span>
+              </span>
+              <input id={id} type="range" min={o.min} max={o.max} step={o.step} value={Number(v ?? o.default)} onChange={(e) => setOpt(o.key, Number(e.target.value))} />
+            </label>
+          );
+        return (
+          <label key={o.key} className="scene-opt scene-opt-color" htmlFor={id}>
+            <span className="small">{o.label}</span>
+            <span className="row" style={{ gap: 6, alignItems: "center" }}>
+              <input id={id} type="color" value={typeof v === "string" && v ? v : "#4f8cff"} onChange={(e) => setOpt(o.key, e.target.value)} />
+              {v ? (
+                <button type="button" className="btn btn-ghost btn-sm" onClick={() => setOpt(o.key, "")}>
+                  Reset
+                </button>
+              ) : (
+                <span className="muted small">Scene colours</span>
+              )}
+            </span>
+          </label>
+        );
+      })}
+    </div>
+  );
 
   const tile = (s: SceneDef, star = false) => {
     const on = scene?.id === s.id;
@@ -72,7 +131,7 @@ export default function ScenePicker({ design, onChange, category, name, words, p
       <div className="stack" style={{ gap: 10 }}>
         <span className="lbl" style={{ margin: 0 }}>{scene?.group === "concept" ? "Scene concept" : "Live scene"}</span>
         <b>{scene ? scene.name : "None"}</b>
-        <p className="small muted">{scene ? sceneType(scene.type).hint : only === "concepts" ? "Pick a concept below: a parrot that flies in, a whale swimming past, a walk through the jungle and more. It plays behind your opening words." : "Pick one below. Every scene moves with the pointer and reacts to taps."}</p>
+        <p className="small muted">{scene ? sceneType(scene.type).hint : only === "concepts" ? "Pick a concept below: a humpback whale, a macaw that lands beside your words, koi that come to the pointer and more. It plays behind your opening words." : "Pick one below. Every scene moves with the pointer and reacts to taps."}</p>
         <div className="seg" role="group" aria-label="Where the scene goes">
           <button aria-pressed={mode === "backdrop"} className={mode === "backdrop" ? "is-on" : ""} onClick={() => onChange({ sceneMode: "backdrop" })} disabled={!scene}>
             Behind the words
@@ -87,6 +146,7 @@ export default function ScenePicker({ design, onChange, category, name, words, p
             No scene
           </button>
         )}
+        {settings}
         {scene?.group === "photo" && !photo && <p className="small muted">Showing a sample picture. Add your own photo with Edit on page in the last step, or in your details.</p>}
       </div>
     </div>

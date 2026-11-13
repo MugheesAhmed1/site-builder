@@ -61,7 +61,7 @@ export function Terrain({ input, look, thumb }) {
   const taps = useRef(0);
   useFrame(({ camera }, dt) => {
     const s = input.current;
-    dt = Math.min(dt, 0.05);
+    dt = Math.min(dt, 0.05) * (s.speed || 1);
     const u = uniforms;
     u.uTime.value += dt * (0.5 + s.scroll * 1.4);
     // Pointer onto the ground: x across, nearer the camera lower down.

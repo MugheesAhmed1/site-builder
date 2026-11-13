@@ -69,12 +69,12 @@ export function NameBlocks({ input, look, text, thumb, reduce }) {
     if (m.instanceColor) m.instanceColor.needsUpdate = true;
   }, [shape, look]);
   const taps = useRef(0);
-  useFrame(({ clock }, dt) => {
+  useFrame((_, dt) => {
     const s = input.current;
     const m = mesh.current;
     if (!m || !n) return;
-    dt = Math.min(dt, 0.05);
-    const t = clock.elapsedTime;
+    dt = Math.min(dt, 0.05) * (s.speed || 1);
+    const t = s.time;
     const fit = Math.min((viewport.width * (thumb ? 0.86 : 0.8)) / shape.w, (viewport.height * 0.6) / shape.h);
     const px = (s.sx * viewport.width) / 2;
     const py = (s.sy * viewport.height) / 2;

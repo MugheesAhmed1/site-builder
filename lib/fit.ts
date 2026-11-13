@@ -180,7 +180,7 @@ export function scenesFor(category: string): string[] {
 }
 
 // A starting scene for a category, stable per seed: one of the real-life scene concepts that
-// suit it (a parrot flying in, a whale swimming past...), so every new site opens with a
+// suit it (a macaw that lands, a humpback whale...), so every new site opens with a
 // set piece. People can change it or pick a live scene in the Scenes and characters step.
 export function sceneFor(category: string, seed: number) {
   const real = conceptsFor(category).filter((id) => SCENES.some((s) => s.type === id && s.style === "real"));

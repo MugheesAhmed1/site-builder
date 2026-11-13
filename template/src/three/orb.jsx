@@ -50,7 +50,7 @@ void main(){
   #include <colorspace_fragment>
 }`;
 
-export function Orb({ input, look, thumb }) {
+export function Orb({ input, look, thumb, side = "right" }) {
   const mesh = useRef(null);
   const viewport = useThree((s) => s.viewport);
   const uniforms = useMemo(
@@ -72,7 +72,7 @@ export function Orb({ input, look, thumb }) {
     const s = input.current;
     const m = mesh.current;
     if (!m) return;
-    dt = Math.min(dt, 0.05);
+    dt = Math.min(dt, 0.05) * (s.speed || 1);
     const u = uniforms;
     u.uTime.value += dt;
     u.uAmp.value = damp(u.uAmp.value, 0.18 + s.scroll * 0.2 + (s.inside ? 0.06 : 0), 2, dt);
@@ -84,10 +84,11 @@ export function Orb({ input, look, thumb }) {
     u.uPulse.value = Math.max(0, u.uPulse.value - dt * 0.7);
     u.uLight.value.set(s.sx * 3, s.sy * 3 + 1, 2.2);
     // Leave room for the words on wide boxes: sit to the right.
-    const wide = !thumb && viewport.aspect > 1.45;
+    const wide = !thumb && side !== "center" && viewport.aspect > 1.45;
+    const dir = side === "left" ? -1 : 1;
     const r = Math.min(viewport.width, viewport.height) * (wide ? 0.34 : 0.3);
     m.scale.setScalar(damp(m.scale.x, r / 1.4, 3, dt));
-    m.position.x = damp(m.position.x, (wide ? viewport.width * 0.22 : 0) + s.sx * 0.35, 3, dt);
+    m.position.x = damp(m.position.x, (wide ? dir * viewport.width * 0.22 : 0) + s.sx * 0.35, 3, dt);
     m.position.y = damp(m.position.y, s.sy * 0.25 + (0.5 - s.scroll) * 0.6, 3, dt);
     m.rotation.y += dt * 0.15;
     m.rotation.x = damp(m.rotation.x, -s.sy * 0.5, 3, dt);

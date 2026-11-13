@@ -80,7 +80,15 @@ export function palette(design, scheme) {
   const border = dark ? oklchToHex(0.31, tint * 1.6, hue) : oklchToHex(0.885, tint * 0.7, hue);
   const accent = fitAccent(design.accent, bg, dark);
   const onAccent = contrast("#FFFFFF", accent) >= contrast(bg, accent) ? oklchToHex(0.99, 0.005, hue) : dark ? bg : oklchToHex(0.18, 0.01, hue);
-  return { bg, surface, text, muted, border, accent, onAccent };
+  const pal = { bg, surface, text, muted, border, accent, onAccent };
+  // Exact colours the person set by hand in the builder win over the derived ones.
+  const own = design.colors && design.colors[dark ? "dark" : "light"];
+  if (own && typeof own === "object") {
+    for (const k of Object.keys(pal)) if (typeof own[k] === "string" && /^#[0-9a-f]{6}$/i.test(own[k])) pal[k] = own[k].toUpperCase();
+    // A hand-picked accent or background still needs readable button text.
+    if ((own.accent || own.bg) && !own.onAccent) pal.onAccent = contrast("#FFFFFF", pal.accent) >= contrast("#111111", pal.accent) ? "#FFFFFF" : "#111111";
+  }
+  return pal;
 }
 
 export function resolveScheme(design, systemDark) {

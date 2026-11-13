@@ -34,10 +34,10 @@ export function Crystals({ input, look, thumb }) {
   const state = useRef(gems.map(() => ({ ox: 0, oy: 0, vx: 0, vy: 0, kick: 0 })));
   const light = useRef(null);
   const taps = useRef(0);
-  useFrame(({ clock }, dt) => {
+  useFrame((_, dt) => {
     const s = input.current;
-    dt = Math.min(dt, 0.05);
-    const t = clock.elapsedTime;
+    dt = Math.min(dt, 0.05) * (s.speed || 1);
+    const t = s.time;
     const w = viewport.width / 2;
     const h = viewport.height / 2;
     const px = s.sx * w;

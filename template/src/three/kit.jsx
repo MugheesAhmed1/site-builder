@@ -45,8 +45,9 @@ function cssColor(el, value, fallback) {
 
 // The three scene colours (a, b, c) plus the page background and text, so a scene can tell
 // a light page from a dark one and blend into it.
-// `fixed` is the palette's own three colours, if it has them (Forest, Ocean...).
-export function readColors(el, palette, fixed) {
+// `fixed` is the palette's own three colours, if it has them (Forest, Ocean...); `tint`
+// is a main colour picked in the scene's settings.
+export function readColors(el, palette, fixed, tint) {
   const cs = getComputedStyle(el);
   const get = (n, fb) => cssColor(el, cs.getPropertyValue(n), fb);
   const bg = get("--pf-bg", "#ffffff");
@@ -57,6 +58,7 @@ export function readColors(el, palette, fixed) {
   if (fixed && fixed.length >= 3) [a, b, c] = fixed.map((x) => new Color(x));
   else if (palette === "mono") [a, b, c] = [text.clone(), muted.clone(), text.clone().lerp(bg, 0.5)];
   else [a, b, c] = [accent.clone(), accent.clone().lerp(new Color("#ffffff"), 0.5), accent.clone().lerp(muted, 0.6)];
+  if (tint) a = cssColor(el, tint, "#2f5bea");
   // Colours are in three's linear working space; shaders end with colorspace_fragment.
   const lum = bg.r * 0.2126 + bg.g * 0.7152 + bg.b * 0.0722;
   const font = cs.getPropertyValue("--pf-font-display").trim() || "system-ui, sans-serif";
@@ -67,7 +69,7 @@ export function readColors(el, palette, fixed) {
 // scene maps them onto its own world. `tap` jumps to 1 on a press and fades; `drag` adds up
 // pointer travel while pressed, for spinning things.
 export function useInput(ref) {
-  const input = useRef({ x: 0, y: 0, sx: 0, sy: 0, inside: false, down: false, tap: 0, tapX: 0, tapY: 0, taps: 0, dragX: 0, dragY: 0, scroll: 0.5 });
+  const input = useRef({ x: 0, y: 0, sx: 0, sy: 0, inside: false, down: false, tap: 0, tapX: 0, tapY: 0, taps: 0, dragX: 0, dragY: 0, scroll: 0.5, speed: 1, time: 0 });
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -131,6 +133,7 @@ export function useInput(ref) {
 
 // Called once per frame by every scene: eases the pointer and fades the tap.
 export function stepInput(s, dt) {
+  s.time += dt * (s.speed || 1);
   s.sx = damp(s.sx, s.inside ? s.x : 0, 3.5, dt);
   s.sy = damp(s.sy, s.inside ? s.y : 0, 3.5, dt);
   s.tap = Math.max(0, s.tap - dt * 1.1);

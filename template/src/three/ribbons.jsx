@@ -63,7 +63,7 @@ function Ribbon({ i, look, input, thumb, len }) {
   const taps = useRef(0);
   useFrame((_, dt) => {
     const s = input.current;
-    dt = Math.min(dt, 0.05);
+    dt = Math.min(dt, 0.05) * (s.speed || 1);
     const u = uniforms;
     u.uTime.value += dt * (0.8 + s.scroll * 0.6);
     u.uPointer.value.set(s.sx * viewport.width * 0.5, s.sy * viewport.height * 0.5);

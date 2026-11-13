@@ -39,7 +39,7 @@ void main(){
   #include <colorspace_fragment>
 }`;
 
-export function Knot({ input, look, thumb }) {
+export function Knot({ input, look, thumb, side = "right" }) {
   const mesh = useRef(null);
   const viewport = useThree((s) => s.viewport);
   const [k, setK] = useState(0);
@@ -49,7 +49,7 @@ export function Knot({ input, look, thumb }) {
     const s = input.current;
     const m = mesh.current;
     if (!m) return;
-    dt = Math.min(dt, 0.05);
+    dt = Math.min(dt, 0.05) * (s.speed || 1);
     const p = st.current;
     uniforms.uTime.value += dt;
     uniforms.uLight.value = [s.sx * 4, s.sy * 4 + 1, 4];
@@ -79,11 +79,12 @@ export function Knot({ input, look, thumb }) {
       p.press = null;
     }
     p.squash = Math.max(0, p.squash - dt * 1.8);
-    const wide = !thumb && viewport.aspect > 1.45;
+    const wide = !thumb && side !== "center" && viewport.aspect > 1.45;
+    const dir = side === "left" ? -1 : 1;
     const size = Math.min(viewport.width, viewport.height) * (wide ? 0.21 : 0.2);
     const pop = 1 - Math.sin(p.squash * Math.PI) * 0.18;
     m.scale.setScalar(damp(m.scale.x || size, size * pop, 8, dt));
-    m.position.x = damp(m.position.x, wide ? viewport.width * 0.22 : 0, 3, dt);
+    m.position.x = damp(m.position.x, wide ? dir * viewport.width * 0.22 : 0, 3, dt);
     m.position.y = damp(m.position.y, s.sy * 0.2, 3, dt);
   });
   const [pk, qk] = KNOTS[k];

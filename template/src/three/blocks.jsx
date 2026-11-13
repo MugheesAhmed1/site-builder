@@ -23,12 +23,12 @@ export function Blocks({ input, look, thumb }) {
     for (let i = 0; i < count; i++) m.setColorAt(i, look.c);
     if (m.instanceColor) m.instanceColor.needsUpdate = true;
   }, [count, look]);
-  useFrame(({ camera, clock }, dt) => {
+  useFrame(({ camera }, dt) => {
     const s = input.current;
     const m = mesh.current;
     if (!m) return;
-    dt = Math.min(dt, 0.05);
-    const t = clock.elapsedTime;
+    dt = Math.min(dt, 0.05) * (s.speed || 1);
+    const t = s.time;
     const p = st.current;
     camera.lookAt(0, 0, 0);
     // Where the pointer meets the ground.

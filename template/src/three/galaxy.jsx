@@ -75,7 +75,7 @@ export function Galaxy({ input, look, thumb }) {
     const s = input.current;
     const g = group.current;
     if (!g) return;
-    dt = Math.min(dt, 0.05);
+    dt = Math.min(dt, 0.05) * (s.speed || 1);
     const sp = spin.current;
     uniforms.uTime.value += dt;
     uniforms.uPixel.value = dpr;
