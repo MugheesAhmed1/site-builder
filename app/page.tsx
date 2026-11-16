@@ -1,24 +1,22 @@
 import Link from "next/link";
 import Icon from "@/components/Icon";
 import DocBand from "@/components/DocBand";
-import { LazyCategories, LazyConcepts } from "@/components/home/LazySections";
+import { LazyCategories } from "@/components/home/LazySections";
 import DesignWall from "@/components/home/DesignWall";
-import Hero from "@/components/home/Hero";
+import Engine from "@/components/home/Engine";
+import HomeJourney from "@/components/home/HomeJourney";
+import IntensityDemo from "@/components/home/IntensityDemo";
 import HomeNav from "@/components/home/HomeNav";
 import { ReadDemo, ShuffleDemo, type Swatch } from "@/components/home/HowDemos";
 import LiveDemo from "@/components/home/LiveDemo";
 import { CATEGORIES } from "@/lib/categories";
 import { LIBRARY } from "@/lib/designs";
 import { ROLES } from "@/lib/fit";
-import { CHARACTERS, WIDGETS } from "@/template/src/cast.js";
-import { MOTIONS } from "@/template/src/motion.js";
-import { SCENES, type SceneDef } from "@/template/src/scenes.js";
+import { CHARACTERS as CREATURES, ENVIRONMENTS } from "@/template/src/story.js";
 import { palette } from "@/template/src/theme.js";
 
 // The home page. It is rendered on the server (words, numbers and structure arrive as
 // plain HTML) and only the pieces that move or react are client components.
-
-const HERO_SCENES = ["parrot", "whale", "jungle", "p-whale", "dolphins"];
 
 function swatch(d: (typeof LIBRARY)[number]): Swatch {
   const dark = d.mode === "dark";
@@ -28,26 +26,15 @@ function swatch(d: (typeof LIBRARY)[number]): Swatch {
 
 const FAQ = [
   ["Is it really free?", "Yes. There is no account, no trial and no monthly fee. The site you download is plain files that you own, and the free plans of hosts such as Netlify, Cloudflare Pages and GitHub Pages are enough to put it online."],
-  ["Is there AI in it?", "No. Your request is read by keyword rules, the words are written by templates from your own answers, and the design systems are generated from curated type, colour and shape choices. That is why it works instantly, offline, and never invents facts about your business."],
-  ["Where does my information go?", "Nowhere. Everything, including a résumé or document you drop in, is read and saved inside this browser. Nothing is uploaded to a server. Use Save a backup to move a site to another device."],
+  ["Is there AI in it?", "Only if you want it. Every site is written by rules from your own answers, so it works instantly and never invents facts. When the server has a free Google Gemini key, the AI polish panel can also rewrite your words and direct your 3D journey. You review every change before it lands."],
+  ["Where does my information go?", "Your sites are saved inside this browser, and a résumé or document you drop in is read here too. The only thing that ever leaves is the words you choose to send to AI polish, and never links, emails, phone numbers or prices. Use Save a backup to move a site to another device."],
   ["What exactly do I get?", "A zip with the finished site: one page, its pictures, a browser icon, a share picture and search tags. Unzip it and it opens. Developers can also download the same site as a React and Vite project."],
   ["Can I change it later?", "Open it again here, change anything, and download again. You can also edit every word and colour in a text editor: they live in one readable file inside the download."],
+  ["Will the 3D journey slow my site down?", "No. The 3D world loads only when a visitor reaches it, pauses when it is off screen, uses fewer particles on phones, and is replaced by a still picture for people who turn motion down. Lower the intensity dial for a lighter site."],
   ["Will it work on phones and for screen readers?", "Every site is responsive, passes WCAG AA colour contrast, respects reduced motion and ships with the tags search engines and link previews look for."],
 ];
 
 export default function Home() {
-  const concepts = (SCENES as SceneDef[]).filter((s) => s.group === "concept");
-  const heroScenes = (() => {
-    const picked = HERO_SCENES.map((t) => concepts.find((s) => s.type === t)).filter(Boolean) as SceneDef[];
-    return (picked.length >= 2 ? picked : concepts).slice(0, 3).map(({ id, type, group, palette, name, style }) => ({ id, type, group, palette, name, style }));
-  })();
-  const stats = [
-    { value: String(LIBRARY.length), label: "design systems" },
-    { value: String(MOTIONS.length - 1), label: "animation styles" },
-    { value: String(concepts.length), label: "scene concepts" },
-    { value: String(CHARACTERS.length), label: "characters" },
-    { value: String(WIDGETS.length), label: "live widgets" },
-  ];
   // A spread across the library: every 37th system gives a mix of moods, light and dark.
   const spread = LIBRARY.filter((_, i) => i % 37 === 3).slice(0, 12).map(swatch);
 
@@ -55,7 +42,57 @@ export default function Home() {
     <div className="home-root">
       <HomeNav />
       <main>
-        <Hero stats={stats} concepts={heroScenes} />
+        <HomeJourney />
+
+        <section className="hsec" id="dial" aria-labelledby="dial-title">
+          <header className="hsec-head">
+            <span className="hsec-kicker mono">The intensity dial</span>
+            <h2 id="dial-title">
+              Calm or <em className="serif-i">completely wild.</em> You choose.
+            </h2>
+            <p>One slider sets how much your site moves. Low numbers keep it quiet and fast. Turn it up for pinned scenes, particles and camera moves, and at 10 your visitors fly through a living world.</p>
+          </header>
+          <IntensityDemo />
+        </section>
+
+        <section className="hsec" id="engine" aria-labelledby="engine-title">
+          <header className="hsec-head">
+            <span className="hsec-kicker mono">The animation engine</span>
+            <h2 id="engine-title">
+              Motion described as data, <em className="serif-i">rendered as a world.</em>
+            </h2>
+            <p>Your words go to a director that picks a scene, a character, how the camera moves and how sections arrive. A renderer turns that plan into a real React site, so every choice stays editable.</p>
+          </header>
+          <Engine />
+          <ul className="prim">
+            <li>
+              <b>Worlds</b>
+              {ENVIRONMENTS.map((e) => (
+                <span key={e.id} className="prim-on">{e.label}</span>
+              ))}
+              <span>City, desert, clouds soon</span>
+            </li>
+            <li>
+              <b>Characters</b>
+              {CREATURES.map((c) => (
+                <span key={c.id} className="prim-on">{c.label}</span>
+              ))}
+              <span>Fox, robot, astronaut soon</span>
+            </li>
+            <li>
+              <b>Behaviours</b>
+              {["Looks at the cursor", "Answers a tap", "Crosses the screen", "Dances to sound"].map((x) => (
+                <span key={x} className="prim-on">{x}</span>
+              ))}
+            </li>
+            <li>
+              <b>Sections</b>
+              {["Rise", "Curtain", "Zoom", "Tilt", "Blur", "Slide", "Stack"].map((x) => (
+                <span key={x} className="prim-on">{x}</span>
+              ))}
+            </li>
+          </ul>
+        </section>
 
         <section className="hsec" id="demo" aria-labelledby="demo-title">
           <header className="hsec-head">
@@ -125,10 +162,6 @@ export default function Home() {
           </ol>
         </section>
 
-        <section className="hsec" id="scenes">
-          <LazyConcepts />
-        </section>
-
         <section className="hsec" id="designs" aria-labelledby="designs-title">
           <header className="hsec-head">
             <h2 id="designs-title">
@@ -165,12 +198,12 @@ export default function Home() {
             <li className="bento-a">
               <Icon name="shield" size={22} />
               <h3>Private by design</h3>
-              <p>Nothing you type, drop or upload leaves this browser. There is no server to send it to, no account and no tracking of what you build.</p>
+              <p>Your sites live in this browser. There is no account and no tracking of what you build, and only words you choose to polish are ever sent.</p>
             </li>
             <li className="bento-b">
               <Icon name="bolt" size={22} />
-              <h3>Instant, because there is no AI</h3>
-              <p>Rules and templates write the page from your answers, so it appears as you type and never makes things up.</p>
+              <h3>Instant, with AI only when you ask</h3>
+              <p>Rules write the page from your answers, so it appears as you type. Free Gemini polish is one click away, and you approve every word.</p>
             </li>
             <li className="bento-c">
               <Icon name="edit" size={22} />
@@ -185,7 +218,7 @@ export default function Home() {
             <li className="bento-e">
               <Icon name="heart" size={22} />
               <h3>Works for everyone</h3>
-              <p>Responsive, keyboard friendly, AA contrast in light and dark, and calm for people who turn motion down.</p>
+              <p>Responsive, centred and keyboard friendly, AA contrast in light and dark, and a still version for people who turn motion down.</p>
             </li>
             <li className="bento-f">
               <Icon name="code" size={22} />
@@ -213,8 +246,7 @@ export default function Home() {
         </section>
 
         <section className="endcta" aria-labelledby="end-title">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/real/cinema/agency.webp" alt="" loading="lazy" decoding="async" />
+          <div className="endcta-glow" aria-hidden="true" />
           <div className="endcta-card">
             <h2 id="end-title">
               Your site is <em className="serif-i">one line</em> away.
@@ -235,11 +267,12 @@ export default function Home() {
 
       <footer className="hfoot">
         <div className="hfoot-top">
-          <p>Site Builder turns one line into a finished, animated website you own. Free, private and without AI.</p>
+          <p>Site Builder turns one line into a finished, animated website you own. Free, private, with optional AI polish.</p>
           <nav aria-label="Footer">
             <a href="#demo">Examples</a>
             <a href="#how">How it works</a>
-            <a href="#scenes">Scenes</a>
+            <a href="#dial">Intensity</a>
+            <a href="#engine">Engine</a>
             <a href="#designs">Design systems</a>
             <a href="#faq">Questions</a>
             <Link href="/sites">Your sites</Link>
@@ -248,7 +281,7 @@ export default function Home() {
         <p className="hfoot-word" aria-hidden="true">
           Site Builder
         </p>
-        <p className="hfoot-fine">Scene photos made with Pollinations. Emoji art by Microsoft Fluent (MIT) and Google Noto (Apache 2.0). Animation by Motion.</p>
+        <p className="hfoot-fine">3D by three.js and React Three Fiber (MIT). Motion by Motion and Lenis (MIT). Emoji art by Microsoft Fluent (MIT) and Google Noto (Apache 2.0).</p>
       </footer>
     </div>
   );

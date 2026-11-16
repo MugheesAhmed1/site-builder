@@ -9,7 +9,7 @@ import "@/template/src/flow.css";
 import "./shell.css";
 import "./home.css";
 
-const FONTS = "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600&family=Hanken+Grotesk:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap";
+const FONTS = "https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap";
 
 const TITLE = "Site Builder: say it in one line, get a site that moves";
 const DESCRIPTION = "Describe your business or yourself in one line and get a finished, animated website you own. Cinematic scenes, 500 design systems, no sign up, nothing leaves your browser. Download it and host it free.";
@@ -27,8 +27,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FAFAFC" },
-    { media: "(prefers-color-scheme: dark)", color: "#0D0F16" },
+    { media: "(prefers-color-scheme: light)", color: "#FBFAFE" },
+    { media: "(prefers-color-scheme: dark)", color: "#0E0C17" },
   ],
 };
 

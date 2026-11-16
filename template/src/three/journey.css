@@ -44,3 +44,4 @@
 /* The opening buttons arrive with the journey, not with the page's entrance script. */
 .jr .pf-enter { opacity: 1 !important; transform: none !important; filter: none !important; }
 .jr .pf-hero-ctas { justify-content: center; margin-top: 8px; }
+.jr .pf-btn-quiet, .jr .pf-btn-ghost { color: #fff; border-color: rgb(255 255 255 / 0.5); background: rgb(255 255 255 / 0.08); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }

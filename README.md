@@ -2,7 +2,7 @@
 
 Type one line, such as "website for my bakery in Lahore" or "portfolio for me, I'm a product manager", and get a finished site you can download, unzip and put online for free. No build step, no Node needed on the other side.
 
-**No AI anywhere.** Everything runs in the browser:
+**AI is optional.** Everything below runs in the browser by rules; an optional Gemini step can polish the words (see "AI polish"):
 
 - **Reading the request.** Keyword rules in `lib/categories.ts` decide portfolio or website, and which of 12 business types it is. You can change the guess.
 - **Requirements document to website.** At `/document` you upload a PRD, a BRD or a plain brief (PDF, Word .docx, Markdown or text). `lib/requirements.ts` splits it by its headings, matches each heading to what it is about, and reads lists, tables and "Key: value" lines into the same answers the questions step asks for: name, offer, city, customers, headline, story, features or menu with prices, plans, steps, common questions, team, quotes, tone, brand colour, first action and contact details. You see what was read and where from, fix the basics, then build. Goals and targets are never shown as facts, sections such as timeline, risks and out of scope are skipped, and the author's own email is not used. `lib/docx.ts` reads Word files with JSZip. Nothing is uploaded.
@@ -15,7 +15,9 @@ Type one line, such as "website for my bakery in Lahore" or "portfolio for me, I
   - **Remix** re-rolls one part: colour, type, shape or layout.
   - **Lock** keeps a part fixed while you shuffle.
   - **Save** keeps your own systems for later.
-- **Film-scene openings.** New sites open like a film: a scene photo fills the first screen, the headline sits in the open sky with one word in italic serif (or glowing), a pill with faces sits above it and the numbers run along the foot. The scene pushes in and blurs away as you scroll and follows the pointer. There is also a "Scattered words" opening, a floating glass pill menu, a full-screen curtain menu, a glass call to action, a footer with the name set huge, and a Silk light backdrop. All of it is switchable under Design system, Layout, or in one go with the Cinematic animation pack. The 26 scene photos in `public/real/cinema` were made free with Pollinations.
+- **Animation engine and 3D journeys.** A site's motion is described as data, a scene spec (`template/src/story.js`): `scene` (ocean, jungle, deep space), `character` (whale, parrot), `scrollBehavior`, `characterBehavior` (lookAtCursor, reactToClick, swimAcrossScreen, reactToSound…), `transition` and `sectionFx`. The renderer (`template/src/three/journey.jsx`, three.js with React Three Fiber) turns it into the opening: scrolling flies the camera forward, particles thicken, the words of each chapter rotate into view, the creature watches the cursor, answers a tap with a call, can listen to the microphone and dance, then swims or flies off as the next section melts in. Creatures are modelled in code (`template/src/three/creatures.jsx`) with a small state machine (idle, look, react, dance, away). A still version is shown for reduced motion.
+- **Intensity dial.** One slider from 1 to 10 (`lib/intensity.ts`): Simple (fades, slides, hover), Creative from 4 (parallax, magnetic buttons, kinetic type, smooth scroll), Bold from 7 (pinned scenes, WebGL, particles, camera moves) and Insane at 10 (the full 3D journey).
+- **Centred, animated sections.** Generated sites are centred by default (`design.align`), and every section arrives with a chosen effect: rise, curtain, zoom, tilt, blur, slide or stack, plus scroll details such as drawn heading lines (`template/src/flow.jsx`, `flow.css`).
 - **Living 3D scenes.** 48 scene concepts run as real-time 3D in the page, drawn by a small WebGL engine in `template/src/live` (original code, no libraries, no picture files). Every creature is modelled in code from smooth surfaces and animated in the vertex shader: whales and dolphins swim with a travelling body wave, fish beat their tails, the manta's wings ripple, birds flap and fold, jellyfish pulse. The sea, sky, pond, jungle and garden are shaders with light shafts, caustics, clouds, stars, layered ridges and reflections. Scenes follow the pointer (the camera shifts for depth, creatures turn to look), react to taps (a roll, a take-off, rings on the water) and leave as the page scrolls. 18 scenes come in up to four looks: lifelike, particles in the site's own colours, silhouettes on a painted sky, and cartoon. People can change the look, speed, number of creatures, side and colours (`design.scene.opts`, listed per scene in `SCENE_OPTIONS` in `scenes.js`). Picker thumbnails share one renderer and come alive on hover; scenes pause off screen, lower their resolution on slow devices and show a still for reduced motion.
 - **Colour optimizer.** There are seven harmony options: matched, analogous, complementary, split, triadic, calm and vivid. You can also build around a brand colour. Contrast ratios are shown for light and dark, and accents are adjusted automatically to pass WCAG AA (4.5 to 1).
 
@@ -55,7 +57,11 @@ npm run dev        # http://localhost:3000
 npm run build && npm start
 ```
 
-To deploy the builder itself on Vercel, import the repository. It needs no environment variables and no API keys.
+To deploy the builder itself on Vercel, import the repository. It works with no environment variables.
+
+### AI polish (optional, free)
+
+Set `GEMINI_API_KEY` (a free key from Google AI Studio) in the Vercel project's environment variables, or in `.env.local` for local work. `app/api/refine/route.ts` then lets the studio's "AI polish" panel rewrite the site's words, suggest openings and questions, and direct the 3D journey. The key stays on the server; only words are sent (never links, emails, phone numbers or prices), every change is reviewed before it lands, and requests are rate limited. Without a key the panel uses a local tidy-up and the rule-based director. `GEMINI_MODEL` can name a different model.
 
 ## Checks
 
