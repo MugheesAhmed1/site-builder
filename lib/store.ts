@@ -1,5 +1,5 @@
 "use client";
-import { directStory } from "@/template/src/story.js";
+import { pickAtmos } from "@/template/src/atmos/catalog.js";
 
 import { packById } from "./packs";
 import { LIBRARY, normalizeDesign } from "./designs";
@@ -108,10 +108,10 @@ export function importProjects(input: unknown[]): number {
   return write(KEY, [...all.filter((x) => !ids.has(x.id)), ...items]) ? items.length : 0;
 }
 
-// New projects open at full intensity: a 3D journey the visitor flies through by scrolling,
-// with a creature that reacts, a glass pill menu and the name set huge in the footer. The
-// intensity dial (Motion panel) turns it down to anything from 1 to 10.
-const JOURNEY_START = (category: string, query: string): Partial<Design> => ({ heroStyle: "journey", intensity: 10, story: directStory(category, query, "insane"), sectionFx: "curtain", scrollFx: true, accentFace: "serif", chrome: "pill", menu: "curtain", footer: "wordmark", ctaStyle: "band" });
+// New projects open on a cinematic background (an atmosphere) chosen for their kind of site,
+// at intensity 8: it follows the pointer and pulls focus as the visitor scrolls. A glass pill
+// menu and the name set huge in the footer. The dial (Motion panel) goes from 1 to 10.
+const JOURNEY_START = (category: string, query: string): Partial<Design> => ({ heroStyle: "atmos", intensity: 8, atmos: pickAtmos(category, query), sectionFx: "curtain", scrollFx: true, accentFace: "serif", chrome: "pill", menu: "curtain", footer: "wordmark", ctaStyle: "band" });
 
 // New projects start on the animation pack that suits their kind of site.
 function packFor(category: string) {
@@ -177,9 +177,11 @@ export function markChanged(p: Project, step: StepId): Project {
 export function keepCast(prev: Design, next: Design): Design {
   // Characters, scenes and every motion layer belong to the person, not the design system,
   // so switching design keeps them.
-  const keys = ["cast", "castStory", "intro", "magnetic", "cursor", "scene", "sceneMode", "tilt", "smooth", "grain", "loader", "film", "video", "flight", "carousel", "scrollWords", "showpiece", "scramble", "fogSwitch", "pack", "plate", "accentFace", "chrome", "menu", "footer", "ctaStyle", "edits"] as const;
+  const keys = ["cast", "castStory", "intro", "magnetic", "cursor", "scene", "sceneMode", "tilt", "smooth", "grain", "loader", "film", "video", "flight", "carousel", "scrollWords", "showpiece", "scramble", "fogSwitch", "pack", "plate", "accentFace", "chrome", "menu", "footer", "ctaStyle", "edits", "atmos", "intensity"] as const;
   const keep = Object.fromEntries(keys.map((k) => [k, prev[k]]));
   const out = { ...next } as Design;
+  // A cinematic background opening is the person's choice too, not the design system's.
+  if (prev.heroStyle === "atmos") out.heroStyle = "atmos";
   for (const [k, v] of Object.entries(keep)) if ((out as unknown as Record<string, unknown>)[k] === undefined && v !== undefined) (out as unknown as Record<string, unknown>)[k] = v;
   return out;
 }

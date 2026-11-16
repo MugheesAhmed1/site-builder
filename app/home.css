@@ -1,4 +1,4 @@
-/* Home page and Your sites. The home page is always dark, like the deep sea it opens on: tokens come from
+/* Home page and Your sites. The home page is always dark, like the cinematic background it opens on: tokens come from
    :root:has(.home-root) in globals.css. Motion: ease-out, entrances 300 to 700ms (rare,
    first-visit moments), UI under 300ms, hover only on fine pointers, reduced motion kept. */
 
@@ -19,14 +19,15 @@
 @media (max-width: 1040px) { .hnav-links { display: none; } }
 @media (max-width: 480px) { .hnav-pill { padding-left: 14px; } .hnav-sites { display: none; } }
 
-/* Opening: the live 3D journey, with the prompt in its first chapter */
-.home-jr { position: relative; }
-.home-jr-loading { background: radial-gradient(90% 70% at 50% 40%, #0a3a5c, #04223a 70%); min-height: 100dvh; }
-.home-jr .jr-ch .prompt, .home-jr .jr-ch input, .home-jr .jr-ch select, .home-jr .jr-ch label { pointer-events: auto; }
-.home-jr .jr-ch.is-first { gap: 20px; padding-top: 40px; }
-.home-jr .jr-ch.is-first .jr-title { font-size: clamp(38px, 6.6vw, 88px); max-width: 15ch; }
-.home-jr .jr-ch.is-first .jr-title::first-line { color: #fff; }
-.home-jr .jr-ch:not(.is-first) .jr-title { background: linear-gradient(100deg, #fff 30%, var(--accent-2) 70%, var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none; filter: drop-shadow(0 2px 24px rgb(0 0 0 / 0.4)); }
+/* Opening: a living cinematic background (the same atmospheres generated sites use), prompt centred */
+.home-at { --pf-bg: var(--bg); --pf-gutter: 16px; font-family: var(--font-body, inherit); }
+.home-at h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(40px, 6.4vw, 92px); max-width: 16ch; }
+.home-at h1 .serif-i { font-weight: 400; background: linear-gradient(100deg, #fff 10%, #e2d6ff 45%, #ffc9b0); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: 0.06em; }
+.home-at .at-content { padding-top: clamp(112px, 15vh, 160px); }
+.home-at-dot { width: 7px; height: 7px; border-radius: 50%; background: #9effa8; box-shadow: 0 0 0 4px rgb(158 255 168 / 0.18); }
+.home-at-switch { max-width: 100%; overflow-x: auto; scrollbar-width: none; -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent); mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent); }
+.home-at-switch::-webkit-scrollbar { display: none; }
+.home-at-switch span, .home-at-switch button { flex: none; }
 .home-jr-cta { display: grid; justify-items: center; gap: 14px; width: min(720px, calc(100vw - 32px)); text-shadow: none; }
 .home-jr-cta .prompt { width: 100%; animation: none; }
 .home-jr-worlds { display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: 999px; background: rgb(255 255 255 / 0.08); border: 1px solid rgb(255 255 255 / 0.16); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
@@ -37,13 +38,15 @@
 @media (hover: hover) and (pointer: fine) { .home-jr-worlds button:not(.is-on):hover { background: rgb(255 255 255 / 0.12); color: #fff; } }
 .home-jr-or { margin: 0; font-size: 14px; color: rgb(255 255 255 / 0.66); }
 .home-jr-or a { color: #fff; text-decoration: underline !important; text-decoration-color: rgb(255 255 255 / 0.35) !important; text-underline-offset: 3px; }
-@media (max-height: 700px) { .home-jr .jr-ch.is-first .jr-kicker { display: none; } .home-jr .jr-ch.is-first .jr-title { font-size: clamp(32px, 5vw, 60px); } }
 
 .hsec-kicker { display: inline-block; margin-bottom: 14px; padding: 5px 12px; border-radius: 999px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent-text); background: var(--accent-soft); }
 
 /* The intensity dial demo: one stage that grows wilder as the number rises */
 .ixd { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 36px); align-items: center; padding: clamp(14px, 2vw, 22px); border-radius: 28px; background: var(--panel); border: 1px solid var(--line); }
 .ixd-stage { position: relative; aspect-ratio: 16 / 11; border-radius: 20px; overflow: clip; isolation: isolate; background: var(--sunk); perspective: 900px; }
+.ixd-at { position: absolute; inset: 0; z-index: -1; }
+.ixd-stage .ixd-title { color: #fff; text-shadow: 0 2px 30px rgb(0 0 0 / 0.4); }
+.ixd-stage .ixd-card { background: rgb(255 255 255 / 0.08); border-color: rgb(255 255 255 / 0.16); color: #fff; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
 .ixd-sky { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, color-mix(in oklch, var(--accent) 22%, var(--sunk)), var(--sunk)); transition: opacity 400ms ease, filter 600ms ease; }
 .ixd-title { position: absolute; left: 0; right: 0; top: 16%; text-align: center; font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 4.4vw, 54px); letter-spacing: -0.04em; }
 .ixd-title span { display: inline-block; }

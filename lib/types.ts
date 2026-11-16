@@ -49,7 +49,8 @@ export interface Design {
   hover: "lift" | "glow" | "line" | "spotlight" | "none";
   progress: boolean; // reading progress bar at the top
   marquee: boolean; // skills, clients or services scroll past in a strip
-  heroStyle: "statement" | "portrait" | "split" | "centered" | "stage" | "cinema" | "scatter" | "journey";
+  heroStyle: "statement" | "portrait" | "split" | "centered" | "stage" | "cinema" | "scatter" | "journey" | "atmos";
+  atmos?: string; // the living background of an "atmos" opening: an id from template/src/atmos/catalog.js
   experienceStyle: "ledger" | "timeline" | "list";
   projectStyle: "grid" | "case" | "index";
   serviceStyle: "menu" | "bento" | "rows";

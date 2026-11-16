@@ -12,7 +12,7 @@ import LiveDemo from "@/components/home/LiveDemo";
 import { CATEGORIES } from "@/lib/categories";
 import { LIBRARY } from "@/lib/designs";
 import { ROLES } from "@/lib/fit";
-import { CHARACTERS as CREATURES, ENVIRONMENTS } from "@/template/src/story.js";
+import { ATMOSPHERES } from "@/template/src/atmos/catalog.js";
 import { palette } from "@/template/src/theme.js";
 
 // The home page. It is rendered on the server (words, numbers and structure arrive as
@@ -26,11 +26,11 @@ function swatch(d: (typeof LIBRARY)[number]): Swatch {
 
 const FAQ = [
   ["Is it really free?", "Yes. There is no account, no trial and no monthly fee. The site you download is plain files that you own, and the free plans of hosts such as Netlify, Cloudflare Pages and GitHub Pages are enough to put it online."],
-  ["Is there AI in it?", "Only if you want it. Every site is written by rules from your own answers, so it works instantly and never invents facts. When the server has a free Google Gemini key, the AI polish panel can also rewrite your words and direct your 3D journey. You review every change before it lands."],
+  ["Is there AI in it?", "Only if you want it. Every site is written by rules from your own answers, so it works instantly and never invents facts. When the server has a free Google Gemini key, the AI polish panel can also rewrite your words and direct your opening. You review every change before it lands."],
   ["Where does my information go?", "Your sites are saved inside this browser, and a résumé or document you drop in is read here too. The only thing that ever leaves is the words you choose to send to AI polish, and never links, emails, phone numbers or prices. Use Save a backup to move a site to another device."],
   ["What exactly do I get?", "A zip with the finished site: one page, its pictures, a browser icon, a share picture and search tags. Unzip it and it opens. Developers can also download the same site as a React and Vite project."],
   ["Can I change it later?", "Open it again here, change anything, and download again. You can also edit every word and colour in a text editor: they live in one readable file inside the download."],
-  ["Will the 3D journey slow my site down?", "No. The 3D world loads only when a visitor reaches it, pauses when it is off screen, uses fewer particles on phones, and is replaced by a still picture for people who turn motion down. Lower the intensity dial for a lighter site."],
+  ["Will the moving background slow my site down?", "No. Each background is one small shader drawn at a reduced resolution. It pauses when it is off screen or the tab is hidden, uses fewer particles on phones, and holds still for people who turn motion down. Lower the intensity dial for a still background."],
   ["Will it work on phones and for screen readers?", "Every site is responsive, passes WCAG AA colour contrast, respects reduced motion and ships with the tags search engines and link previews look for."],
 ];
 
@@ -50,7 +50,7 @@ export default function Home() {
             <h2 id="dial-title">
               Calm or <em className="serif-i">completely wild.</em> You choose.
             </h2>
-            <p>One slider sets how much your site moves. Low numbers keep it quiet and fast. Turn it up for pinned scenes, particles and camera moves, and at 10 your visitors fly through a living world.</p>
+            <p>One slider sets how much your site moves. Low numbers keep it quiet and fast. Turn it up and the cinematic background starts to drift, then follows the pointer and pulls focus as visitors scroll.</p>
           </header>
           <IntensityDemo />
         </section>
@@ -59,29 +59,21 @@ export default function Home() {
           <header className="hsec-head">
             <span className="hsec-kicker mono">The animation engine</span>
             <h2 id="engine-title">
-              Motion described as data, <em className="serif-i">rendered as a world.</em>
+              Motion described as data, <em className="serif-i">rendered like film.</em>
             </h2>
-            <p>Your words go to a director that picks a scene, a character, how the camera moves and how sections arrive. A renderer turns that plan into a real React site, so every choice stays editable.</p>
+            <p>Your words go to a director that picks a living background, a headline accent, how much it moves and how sections arrive. A renderer turns that plan into a real React site, so every choice stays editable.</p>
           </header>
           <Engine />
           <ul className="prim">
             <li>
-              <b>Worlds</b>
-              {ENVIRONMENTS.map((e) => (
+              <b>Backgrounds</b>
+              {ATMOSPHERES.map((e) => (
                 <span key={e.id} className="prim-on">{e.label}</span>
               ))}
-              <span>City, desert, clouds soon</span>
             </li>
             <li>
-              <b>Characters</b>
-              {CREATURES.map((c) => (
-                <span key={c.id} className="prim-on">{c.label}</span>
-              ))}
-              <span>Fox, robot, astronaut soon</span>
-            </li>
-            <li>
-              <b>Behaviours</b>
-              {["Looks at the cursor", "Answers a tap", "Crosses the screen", "Dances to sound"].map((x) => (
+              <b>Reacts to</b>
+              {["The pointer", "Scroll", "The intensity dial", "Reduced motion"].map((x) => (
                 <span key={x} className="prim-on">{x}</span>
               ))}
             </li>
@@ -281,7 +273,7 @@ export default function Home() {
         <p className="hfoot-word" aria-hidden="true">
           Site Builder
         </p>
-        <p className="hfoot-fine">3D by three.js and React Three Fiber (MIT). Motion by Motion and Lenis (MIT). Emoji art by Microsoft Fluent (MIT) and Google Noto (Apache 2.0).</p>
+        <p className="hfoot-fine">Backgrounds are original WebGL shaders. 3D by three.js and React Three Fiber (MIT). Motion by Motion and Lenis (MIT). Emoji art by Microsoft Fluent (MIT) and Google Noto (Apache 2.0).</p>
       </footer>
     </div>
   );

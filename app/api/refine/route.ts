@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cleanText, type RefineRequest, type RefineResult } from "@/lib/refine";
-import { BEHAVIOURS, CHARACTERS, ENVIRONMENTS, SCROLL_BEHAVIOURS, TRANSITIONS, normalizeStory } from "@/template/src/story.js";
+import { ATMOSPHERES, atmosOf } from "@/template/src/atmos/catalog.js";
 
 // Server side only. The Gemini key lives in the GEMINI_API_KEY environment variable (set it
 // in the Vercel project settings, or in .env.local when running locally) and never reaches
@@ -59,7 +59,7 @@ function prompt(r: RefineRequest): { system: string; user: string } {
   if (r.task === "direct") {
     return {
       system: "You are the art director of an animation engine for websites. You pick from a fixed library of primitives and answer with JSON only.",
-      user: `${r.brief}${note}\nSite words:\n${JSON.stringify(r.copy)}\n\nDesign the opening as a scroll journey. Choose:\n- scene, one of ${JSON.stringify(ENVIRONMENTS.map((e) => e.id))}\n- character, one of ${JSON.stringify(CHARACTERS.map((c) => c.id))}\n- scrollBehavior, one of ${JSON.stringify(SCROLL_BEHAVIOURS)}\n- characterBehavior, a list from ${JSON.stringify(BEHAVIOURS)}\n- transition, one of ${JSON.stringify(TRANSITIONS)}\n- sectionFx (how later sections arrive), one of ["rise","curtain","zoom","tilt","blur","slide","stack"]\nPick what suits the brand's mood and audience. Return JSON: {"scene":"","character":"","scrollBehavior":"","characterBehavior":[],"transition":"","sectionFx":"","why":"one short sentence"}`,
+      user: `${r.brief}${note}\nSite words:\n${JSON.stringify(r.copy)}\n\nDirect the opening like a premium film-title sequence. Choose:\n- atmos, the living background, one of ${JSON.stringify(ATMOSPHERES.map((a) => ({ id: a.id, look: a.note })))}\n- accentFace, how the one or two key headline words are set: "serif" (italic serif), "glow" or "none"\n- intensity, how much it moves, a whole number from 4 (calm) to 10 (wild)\n- sectionFx (how later sections arrive), one of ["rise","curtain","zoom","tilt","blur","slide","stack"]\nPick what suits the brand's mood and audience, and stay tasteful. Return JSON: {"atmos":"","accentFace":"","intensity":8,"sectionFx":"","why":"one short sentence"}`,
     };
   }
   if (r.task === "faq") {
@@ -156,7 +156,13 @@ export async function POST(req: Request) {
         .map((h) => ({ headline: cleanText(h.headline, 120), sub: cleanText(String(h.sub ?? ""), 240) }));
     } else if (request.task === "direct") {
       const fx = ["rise", "curtain", "zoom", "tilt", "blur", "slide", "stack"];
-      result.story = { ...normalizeStory({ ...data, intensity: "insane" }), sectionFx: fx.includes(String(data.sectionFx)) ? String(data.sectionFx) : "curtain" };
+      const n = Math.round(Number(data.intensity));
+      result.story = {
+        atmos: atmosOf(String(data.atmos ?? "")) || "chrome",
+        accentFace: ["serif", "glow", "none"].includes(String(data.accentFace)) ? String(data.accentFace) : "serif",
+        intensity: Number.isFinite(n) ? Math.max(4, Math.min(10, n)) : 8,
+        sectionFx: fx.includes(String(data.sectionFx)) ? String(data.sectionFx) : "curtain",
+      };
       result.why = cleanText(String(data.why ?? ""), 200);
     } else {
       const list = Array.isArray(data.faq) ? data.faq : [];

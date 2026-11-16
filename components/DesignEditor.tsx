@@ -309,8 +309,8 @@ export default function DesignEditor({
               <Seg
                 label="Opening"
                 value={design.heroStyle}
-                options={["journey", "stage", "statement", "portrait", "split", "centered"]}
-                labels={{ journey: "3D journey", cinema: "Film scene", scatter: "Scattered words", stage: "Character and widgets", statement: "Big statement", portrait: "With photo", split: "With side panel", centered: "Centred" }}
+                options={["atmos", "stage", "statement", "portrait", "split", "centered"]}
+                labels={{ atmos: "Cinematic background", journey: "Cinematic background", cinema: "Film scene", scatter: "Scattered words", stage: "Character and widgets", statement: "Big statement", portrait: "With photo", split: "With side panel", centered: "Centred" }}
                 onChange={(heroStyle) => set({ heroStyle })}
               />
             </div>

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Silk } from "./cinema.jsx";
+import { Atmosphere } from "./atmos/Atmos.jsx";
+import { atmosOf } from "./atmos/catalog.js";
 import { animate, motion, useInView, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
 
 // Rich motion pieces for the opening section and the "At a glance" tiles: an animated
@@ -494,100 +495,10 @@ export function LiveTiles({ stats = [], words = [], place = "", status = "", tit
 
 // ---------------------------------------------------------------- Backgrounds
 
-// Drifting dots joined by faint lines. Pauses when off screen; still with reduced motion.
-export function Particles() {
-  const ref = useRef(null);
-  useEffect(() => {
-    const cv = ref.current;
-    if (!cv) return;
-    const ctx = cv.getContext("2d");
-    if (!ctx) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let w = 0;
-    let hgt = 0;
-    let raf = 0;
-    let visible = true;
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
-    const pts = [];
-    const color = getComputedStyle(cv).color || "#888";
-    const size = () => {
-      const r = cv.getBoundingClientRect();
-      w = r.width;
-      hgt = r.height;
-      cv.width = w * dpr;
-      cv.height = hgt * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const n = Math.round(Math.min(70, (w * hgt) / 16000));
-      pts.length = 0;
-      for (let i = 0; i < n; i++) pts.push({ x: Math.random() * w, y: Math.random() * hgt, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3 });
-    };
-    const draw = () => {
-      ctx.clearRect(0, 0, w, hgt);
-      ctx.fillStyle = color;
-      ctx.strokeStyle = color;
-      for (const p of pts) {
-        if (!reduce) {
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.x < 0 || p.x > w) p.vx *= -1;
-          if (p.y < 0 || p.y > hgt) p.vy *= -1;
-        }
-        ctx.globalAlpha = 0.55;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 1.6, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      for (let i = 0; i < pts.length; i++)
-        for (let j = i + 1; j < pts.length; j++) {
-          const dx = pts[i].x - pts[j].x;
-          const dy = pts[i].y - pts[j].y;
-          const d = dx * dx + dy * dy;
-          if (d < 12000) {
-            ctx.globalAlpha = 0.18 * (1 - d / 12000);
-            ctx.beginPath();
-            ctx.moveTo(pts[i].x, pts[i].y);
-            ctx.lineTo(pts[j].x, pts[j].y);
-            ctx.stroke();
-          }
-        }
-      if (!reduce && visible) raf = requestAnimationFrame(draw);
-    };
-    size();
-    draw();
-    const io = new IntersectionObserver(([e]) => {
-      visible = e.isIntersecting;
-      cancelAnimationFrame(raf);
-      if (visible && !reduce) raf = requestAnimationFrame(draw);
-    });
-    io.observe(cv);
-    const ro = new ResizeObserver(() => {
-      size();
-      if (reduce) draw();
-    });
-    ro.observe(cv);
-    return () => {
-      cancelAnimationFrame(raf);
-      io.disconnect();
-      ro.disconnect();
-    };
-  }, []);
-  return <canvas ref={ref} className="pf-particles" aria-hidden="true" />;
-}
-
-// Three soft colour blobs drifting slowly behind the opening section.
-export function Mesh() {
-  return (
-    <div className="pf-mesh" aria-hidden="true">
-      <span />
-      <span />
-      <span />
-    </div>
-  );
-}
-
-export function Backdrop({ kind }) {
-  if (kind === "silk") return <Silk />;
-  if (kind === "particles") return <Particles />;
-  if (kind === "mesh") return <Mesh />;
-  return null;
+// A quiet living background behind openings that are not full atmospheres. The older choices
+// (silk, particles, colour blobs, glow, grid) now open on the nearest atmosphere, softened.
+export function Backdrop({ kind, accent, intensity }) {
+  const id = atmosOf(kind);
+  if (!id) return null;
+  return <Atmosphere id={id} accent={accent} intensity={Math.min(6, intensity ?? 5)} className="pf-at-backdrop" />;
 }

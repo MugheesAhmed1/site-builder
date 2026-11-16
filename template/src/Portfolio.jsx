@@ -3,8 +3,9 @@ import { palette, resolveScheme } from "./theme.js";
 import { useEdits } from "./edits.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
 import { CastCharacter, CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
-import { JourneyScene, Scene } from "./Scenes.jsx";
-import { normalizeStory, storyChapters } from "./story.js";
+import { Scene } from "./Scenes.jsx";
+import { AtmosHero } from "./atmos/Atmos.jsx";
+import { siteAtmos } from "./atmos/catalog.js";
 import { Carousel, Film, Flight, Grain, LineLoader, ScrollWords, SmoothScroll } from "./studio.jsx";
 import { Arc, Sphere, Track, propsFor, useFogSwitch, useScramble } from "./showpiece.jsx";
 import { Extras } from "./extras.jsx";
@@ -284,8 +285,8 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
   const h = c.hero;
   const nav = visible.filter((s) => NAV_LABELS[s]).slice(0, 6);
   const photo = h.photoUrl;
-  // Film-photo openings were retired with the generated pictures; they open as 3D journeys now.
-  const hero = d.heroStyle === "cinema" || d.heroStyle === "scatter" ? "journey" : d.heroStyle || "statement";
+  // Film-photo openings and the 3D creature journeys were retired; they open on an atmosphere now.
+  const hero = d.heroStyle === "cinema" || d.heroStyle === "scatter" || d.heroStyle === "journey" || d.heroStyle === "atmos" ? "atmos" : d.heroStyle || "statement";
   const skillsFlat = arr("skills").flatMap((g) => g.items || []);
   const ct = c.contact || {};
   const cast = d.cast && d.cast.character ? d.cast : null;
@@ -761,14 +762,16 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
 
       {curtain && <CurtainMenu open={menuOpen} onClose={() => setMenuOpen(false)} links={navLinks} brand={h.name} cta={{ href: "#pf-contact", label: "Get in touch" }} />}
 
-      {hero === "journey" ? (
-        <>
-          <span id="pf-top" />
-          <JourneyScene journey={{ world: normalizeStory(d.story).scene, creature: normalizeStory(d.story).character, behaviours: normalizeStory(d.story).characterBehavior, chapters: storyChapters("portfolio", c), cta: ctas, still: !animated }} />
-        </>
+      {hero === "atmos" ? (
+        <AtmosHero sectionId="pf-top" className="pf-hero pf-hero--atmos" id={siteAtmos(d, h.role, (h.role || "") + " " + (h.tagline || ""))} accent={pal.accent} intensity={d.intensity ?? 7} still={!animated} wordmark={h.name} stats={arr("stats").map((x) => ({ label: x.label, value: (x.value ?? "") + (x.suffix || "") }))}>
+            {kicker}
+            {headline}
+            {intro}
+            {ctas}
+        </AtmosHero>
       ) : (
         <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
-          {animated && <Backdrop kind={d.backdrop} />}
+          {animated && <Backdrop kind={d.backdrop} accent={pal.accent} intensity={d.intensity} />}
           {animated && scene && sceneMode === "backdrop" && sceneEl("pf-scene-backdrop")}
           {renderHero()}
         </section>
@@ -778,7 +781,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
 
       {filmOn && <Film src={filmSrc} steps={storySteps} title={"Selected work"} highlights={arr("stats").map((x) => ({ label: x.label, value: (x.value ?? "") + (x.suffix || "") }))} preview={preview} path="hero.videoUrl" kicker={h.name} />}
 
-      {!(filmSrc && filmOn) && showpiece !== "track" && cast && animated && d.castStory !== false && storySteps.length >= 2 && <CastStory character={cast.character} widgets={cast.widgets} ctx={ctx} steps={storySteps} title={arr("process").length >= 2 ? "How I work" : arr("services").length >= 2 ? "What I do" : "Selected work"} />}
+      {!(filmSrc && filmOn) && showpiece !== "track" && cast && animated && (hero === "atmos" ? d.castStory === true : d.castStory !== false) && storySteps.length >= 2 && <CastStory character={cast.character} widgets={cast.widgets} ctx={ctx} steps={storySteps} title={arr("process").length >= 2 ? "How I work" : arr("services").length >= 2 ? "What I do" : "Selected work"} />}
 
       {showpiece === "sphere" && <Sphere props={propsFor("portfolio")} items={spItems} title={"Explore the work"} />}
       {showpiece === "arc" && <Arc props={propsFor("portfolio")} items={spItems} title={"Explore the work"} />}
