@@ -5,9 +5,8 @@ import Icon from "@/components/Icon";
 import ImageField from "@/components/ImageField";
 import VideoField from "@/components/VideoField";
 import { EDIT_ICON_IDS, iconSvg } from "@/template/src/edits.js";
-import * as sceneCatalog from "@/template/src/scenes.js";
 import { palette } from "@/template/src/theme.js";
-import type { Design, ElementEdit, PageColors, ScenePick } from "@/lib/types";
+import type { Design, ElementEdit, PageColors } from "@/lib/types";
 
 // The panel beside the preview while editing on the page. It shows what can change on the
 // thing that was clicked: its words, link, picture, icon, colours, background, size, shape
@@ -29,7 +28,6 @@ export interface Picked {
   under: { key: string; label: string }[]; // other things stacked under the click
 }
 
-type SceneOption = { key: string; label: string; kind: "color" | "range" | "toggle" | "select"; min?: number; max?: number; step?: number; default?: string | number | boolean; options?: { value: string; label: string }[] | string[] };
 
 const SWATCHES = ["#111827", "#FFFFFF", "#6B7280", "#DC2626", "#EA580C", "#D97706", "#16A34A", "#0D9488", "#0284C7", "#2563EB", "#7C3AED", "#DB2777"];
 const COLOR_NAMES: [keyof PageColors, string][] = [
@@ -204,73 +202,9 @@ function IconPicker({ e, set }: { e: ElementEdit; set: (p: Partial<ElementEdit>)
   );
 }
 
-function SceneSettings({ design, onDesign }: { design: Design; onDesign: (patch: Partial<Design>) => void }) {
-  const scene = design.scene as ScenePick | null | undefined;
-  if (!scene) return <p className="small muted">This site has no live scene. Add one in the Scenes step.</p>;
-  const cat = sceneCatalog as unknown as { SCENE_OPTIONS?: Record<string, SceneOption[]>; SCENE_PALETTES: { id: string; name: string }[]; SCENES: (ScenePick & { type: string })[]; sceneType: (id: string) => { group: string; name: string } };
-  const options = (cat.SCENE_OPTIONS && cat.SCENE_OPTIONS[scene.type]) || [];
-  const opts = scene.opts || {};
-  const setOpt = (k: string, v: string | number | boolean | undefined) => {
-    const next = { ...opts } as Record<string, string | number | boolean | string[]>;
-    if (v === undefined || v === "") delete next[k];
-    else next[k] = v;
-    onDesign({ scene: { ...scene, opts: next } });
-  };
-  const siblings = cat.SCENES.filter((s) => s.type === scene.type);
-  return (
-    <>
-      <p className="small">
-        <strong>{scene.name}</strong>
-      </p>
-      {siblings.length > 1 && (
-        <div className="pe-field">
-          <span className="pe-lbl">Colours</span>
-          <div className="pe-chips">
-            {siblings.map((s) => (
-              <Toggle key={s.id} label={(cat.SCENE_PALETTES.find((p) => p.id === s.palette) || { name: s.palette }).name} on={s.id === scene.id} onChange={() => onDesign({ scene: { ...s, opts: scene.opts } as ScenePick })} />
-            ))}
-          </div>
-        </div>
-      )}
-      <div className="pe-field">
-        <span className="pe-lbl">Where it shows</span>
-        <div className="pe-chips">
-          <Toggle label="Behind the opening words" on={design.sceneMode !== "visual"} onChange={() => onDesign({ sceneMode: "backdrop" })} />
-          <Toggle label="As the opening picture" on={design.sceneMode === "visual"} onChange={() => onDesign({ sceneMode: "visual", heroStyle: "stage" })} />
-        </div>
-      </div>
-      {options.map((o) =>
-        o.kind === "color" ? (
-          <ColorField key={o.key} label={o.label} value={String(opts[o.key] ?? "")} onChange={(v) => setOpt(o.key, v)} brand={[]} />
-        ) : o.kind === "range" ? (
-          <Range key={o.key} label={o.label} value={Number(opts[o.key] ?? o.default ?? 1)} min={o.min ?? 0} max={o.max ?? 2} step={o.step ?? 0.05} onChange={(v) => setOpt(o.key, v)} reset={Number(o.default ?? 1)} />
-        ) : o.kind === "toggle" ? (
-          <div className="pe-chips" key={o.key}>
-            <Toggle label={o.label} on={Boolean(opts[o.key] ?? o.default)} onChange={(v) => setOpt(o.key, v)} />
-          </div>
-        ) : (
-          <div className="pe-field" key={o.key}>
-            <span className="pe-lbl">{o.label}</span>
-            <select value={String(opts[o.key] ?? o.default ?? "")} onChange={(ev) => setOpt(o.key, ev.target.value)} aria-label={o.label}>
-              {(o.options || []).map((x) => {
-                const v = typeof x === "string" ? x : x.value;
-                return (
-                  <option key={v} value={v}>
-                    {typeof x === "string" ? x : x.label}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        )
-      )}
-      <p className="small muted">Click the scene itself to recolour, brighten, blur or hide it. Choose a different scene in the Scenes step.</p>
-      <button type="button" className="btn btn-sm btn-danger" style={{ marginTop: 6 }} onClick={() => onDesign({ scene: null })}>
-        <Icon name="x" size={14} />
-        Remove the scene
-      </button>
-    </>
-  );
+function SceneSettings({ design }: { design: Design; onDesign: (patch: Partial<Design>) => void }) {
+  if (design.heroStyle !== "atmos") return <p className="small muted">This opening has no living scene. Pick one in the Scenes panel.</p>;
+  return <p className="small muted">The scene, where the words sit and its colours are set in the Scenes panel.</p>;
 }
 
 export default function Inspector({
@@ -350,7 +284,7 @@ export default function Inspector({
               </div>
             ))}
           </Group>
-          <Group title="Live scene" open={!!design.scene}>
+          <Group title="Live scene" open={false}>
             <SceneSettings design={design} onDesign={onDesign} />
           </Group>
           <Group title={"Your changes (" + editLabels.length + ")"} open={editLabels.length > 0}>

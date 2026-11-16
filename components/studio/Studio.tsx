@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import CastPicker from "@/components/CastPicker";
 import DesignEditor from "@/components/DesignEditor";
 import Icon from "@/components/Icon";
 import MotionPicker from "@/components/MotionPicker";
@@ -14,18 +13,24 @@ import DetailsPanel from "@/components/studio/DetailsPanel";
 import PagePanel from "@/components/studio/PagePanel";
 import PublishPanel from "@/components/studio/PublishPanel";
 import RefinePanel from "@/components/studio/RefinePanel";
+import ScenesPanel from "@/components/studio/ScenesPanel";
 import { PANELS, describe, nextPanel, panelById, readiness, type PanelId } from "@/lib/flow";
 import { designFor } from "@/lib/project";
 import { keepCast } from "@/lib/store";
 import type { Design, Project, SiteContent } from "@/lib/types";
 import { useProject } from "@/lib/useProject";
-import { castContext } from "@/template/src/Cast.jsx";
 
 // The studio: one workspace for every kind of site. The live site is always on screen; the
 // panels beside it (Details, Design, Scenes, Motion, Page, Publish) are open from the start
 // and can be visited in any order. Every change is saved and can be undone.
 
 const ease = [0.23, 1, 0.32, 1] as const;
+
+// The words the local director reads to suggest scenes: the kind of business or role, plus the opening line.
+function sceneWords(p: Project): string {
+  const h = (p.content?.hero ?? {}) as { headline?: string; role?: string; tagline?: string };
+  return [p.query, h.role, h.headline, h.tagline].filter(Boolean).join(" ");
+}
 
 function useHashPanel(): [PanelId, (p: PanelId) => void] {
   const [panel, setPanel] = useState<PanelId>("details");
@@ -105,7 +110,7 @@ export default function Studio({ id }: { id: string }) {
   const setContent = (c: SiteContent) => update((prev) => ({ ...prev, content: c }));
   const hero = content.hero as { imageUrl?: string; photoUrl?: string; videoUrl?: string };
   const d = p.design;
-  const replayKey = [d.cast?.character.id ?? "", d.cast?.widgets.map((w) => w.id).join("") ?? "", d.scene?.id ?? "", d.sceneMode ?? "", d.anim, d.hover, d.intro ? "i" : "", d.tilt === false ? "t" : "", d.loader ?? "", d.showpiece ?? "", d.heroStyle].join("|");
+  const replayKey = [d.anim, d.hover, d.intro ? "i" : "", d.tilt === false ? "t" : "", d.loader ?? "", d.showpiece ?? "", d.heroStyle].join("|");
   const rename = (name: string) => update((prev) => ({ ...prev, name }));
 
   return (
@@ -193,7 +198,7 @@ export default function Studio({ id }: { id: string }) {
                   />
                 )}
 
-                {panel === "scenes" && <CastPicker photo={hero.imageUrl ?? hero.photoUrl} kind={p.kind} category={p.category} design={p.design} ctx={castContext(p.kind, content)} onChange={patchDesign} />}
+                {panel === "scenes" && <ScenesPanel category={p.category} words={sceneWords(p)} design={p.design} onChange={patchDesign} />}
 
                 {panel === "motion" && (
                   <MotionPicker category={p.category} design={p.design} onChange={patchDesign} video={hero.videoUrl} onVideo={(v) => update((prev) => (prev.content ? ({ ...prev, content: { ...prev.content, hero: { ...prev.content.hero, videoUrl: v } } } as Project) : prev))} />

@@ -1,4 +1,3 @@
-import type { StorySpec } from "@/template/src/story.js";
 // The shapes everything in the app passes around. No AI is involved anywhere:
 // questions are fixed lists, content is composed by rules, design systems are generated.
 
@@ -10,7 +9,7 @@ export const STEPS: { id: StepId; title: string; hint: string }[] = [
   { id: "start", title: "Start", hint: "Say what you want to build" },
   { id: "questions", title: "Questions", hint: "The details that matter" },
   { id: "design", title: "Design system", hint: "Colour, type and shape" },
-  { id: "cast", title: "Scenes and characters", hint: "Scene concepts, characters, widgets" },
+  { id: "cast", title: "Scenes", hint: "The living world your site opens in" },
   { id: "motion", title: "Animation", hint: "728 styles to pick from" },
   { id: "build", title: "Your site", hint: "Preview and edit" },
   { id: "deploy", title: "Deploy", hint: "Download and publish" },
@@ -50,18 +49,16 @@ export interface Design {
   progress: boolean; // reading progress bar at the top
   marquee: boolean; // skills, clients or services scroll past in a strip
   heroStyle: "statement" | "portrait" | "split" | "centered" | "stage" | "cinema" | "scatter" | "journey" | "atmos";
-  atmos?: string; // the living background of an "atmos" opening: an id from template/src/atmos/catalog.js
+  atmos?: string; // the scene the site opens in: an id from template/src/atmos/catalog.js
+  atmosLayout?: "center" | "low" | "high" | "panel" | "wordmark"; // where the words sit over the scene
+  sceneTint?: "scene" | "brand"; // keep the scene's own colours, or recolour it to the brand accent
   experienceStyle: "ledger" | "timeline" | "list";
   projectStyle: "grid" | "case" | "index";
   serviceStyle: "menu" | "bento" | "rows";
-  cast?: CastPick | null; // the character and widgets the site is built around
-  castStory?: boolean; // the pinned scroll scene with the character
   intro?: boolean; // opening counter with a curtain wipe
   magnetic?: boolean; // buttons lean toward the pointer
   cursor?: boolean; // soft custom cursor
   tilt?: boolean; // cards and tiles tilt toward the pointer in 3D
-  scene?: ScenePick | null; // a live interactive scene: particles, nature, photo or 3D
-  sceneMode?: "backdrop" | "visual"; // behind the opening words, or as the opening visual
   smooth?: boolean; // eased, weighted page scrolling
   grain?: boolean; // film grain and a soft vignette over the page
   loader?: "none" | "line"; // a masked line of text, then a wipe opens the site
@@ -81,7 +78,6 @@ export interface Design {
   menu?: "drop" | "curtain"; // the menu: a drop-down on phones, or a full-screen curtain that opens as a circle
   footer?: "simple" | "wordmark"; // the footer: one line, or a card with the name set huge underneath
   ctaStyle?: "band" | "glass"; // the call to action: a colour band, or a glass card over a scene
-  story?: Partial<StorySpec> | null; // the animation engine spec: world, character, behaviours, intensity
   intensity?: number; // animation intensity, 1 (fades and hover) to 10 (a full 3D journey)
   align?: "center" | "left"; // how the words sit on the page: centred (the default) or left aligned
   sectionFx?: SectionFx; // how each section arrives as it scrolls into view
@@ -131,21 +127,6 @@ export interface ElementEdit {
   sat?: number;
   bright?: number;
   blur?: number;
-}
-
-export interface ScenePick {
-  opts?: Record<string, string | number | boolean | string[]>; // settings the person tuned for this scene (for living scenes: look, speed, amount, side, sky, tint, accent)
-  id: string;
-  type: string;
-  group: string;
-  palette: string;
-  name: string;
-  style?: string;
-}
-
-export interface CastPick {
-  character: { id: string; family: string; name: string; palette: string; accessory: string; expression: string; idle: string; variant: number; src?: string; fits?: string[] };
-  widgets: { id: string; kind: string; skin: string; name: string }[];
 }
 
 export type SectionFx = "none" | "rise" | "curtain" | "zoom" | "tilt" | "blur" | "stack" | "slide";

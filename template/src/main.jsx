@@ -1,11 +1,10 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { StrictMode, startTransition } from "react";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import Portfolio from "./Portfolio.jsx";
 import Website from "./Website.jsx";
 import data from "./site-data.json";
 import { palette, resolveScheme } from "./theme.js";
 import "./portfolio.css";
-import "./cast.css";
 import "./studio.css";
 import "./showpiece.css";
 import "./cinema.css";
@@ -20,8 +19,14 @@ document.body.style.background = palette(data.design, scheme).bg;
 
 const Site = data.kind === "website" ? Website : Portfolio;
 
-createRoot(document.getElementById("root")).render(
+const root = document.getElementById("root");
+const app = (
   <StrictMode>
     <Site design={data.design} content={data.content} />
   </StrictMode>
 );
+// A downloaded site arrives as finished HTML (written by the builder); React picks it up where
+// it is instead of drawing it again, in small slices so the page never stops answering.
+// Anything that differs on this screen (a phone, dark mode) is quietly redrawn by React.
+if (root.hasAttribute("data-prerendered")) startTransition(() => void hydrateRoot(root, app, { onRecoverableError() {} }));
+else createRoot(root).render(app);

@@ -12,11 +12,13 @@ const headers = [
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  devIndicators: false,
   async headers() {
     return [
       { source: "/:path*", headers },
       // Pictures and the site kit never change under the same name, so browsers can keep them.
       { source: "/real/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }] },
+      { source: "/scenes/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" }] },
     ];
   },
 };

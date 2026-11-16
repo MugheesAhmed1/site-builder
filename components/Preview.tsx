@@ -53,7 +53,7 @@ function nameOf(el: Element): string {
   return where && what !== "Opening area" ? what + " in " + where : what;
 }
 
-type Snap = { content: SiteContent; edits: Design["edits"]; colors: Design["colors"]; scene: Design["scene"]; sceneMode: Design["sceneMode"]; heroStyle: Design["heroStyle"] };
+type Snap = { content: SiteContent; edits: Design["edits"]; colors: Design["colors"]; atmos: Design["atmos"]; heroStyle: Design["heroStyle"] };
 
 export default function Preview({
   kind,
@@ -115,7 +115,7 @@ export default function Preview({
   const future = useRef<Snap[]>([]);
   const lastPush = useRef({ at: 0, tag: "" });
   const [, setTick] = useState(0);
-  const snap = (): Snap => ({ content: live.current, edits: liveDesign.current.edits, colors: liveDesign.current.colors, scene: liveDesign.current.scene, sceneMode: liveDesign.current.sceneMode, heroStyle: liveDesign.current.heroStyle });
+  const snap = (): Snap => ({ content: live.current, edits: liveDesign.current.edits, colors: liveDesign.current.colors, atmos: liveDesign.current.atmos, heroStyle: liveDesign.current.heroStyle });
   // Typing or dragging a slider is one step, not one per keystroke.
   const remember = (tag: string) => {
     const now = Date.now();
@@ -131,7 +131,7 @@ export default function Preview({
   const restore = (s: Snap) => {
     lastPush.current = { at: 0, tag: "" };
     if (s.content !== live.current) onContentChange?.(s.content);
-    onDesignChange?.({ edits: s.edits, colors: s.colors, scene: s.scene, sceneMode: s.sceneMode, heroStyle: s.heroStyle });
+    onDesignChange?.({ edits: s.edits, colors: s.colors, atmos: s.atmos, heroStyle: s.heroStyle });
   };
   const undo = () => {
     const s = past.current.pop();

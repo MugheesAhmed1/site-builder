@@ -20,7 +20,7 @@ export interface Panel {
 export const PANELS: Panel[] = [
   { id: "details", step: "questions", title: "Details", short: "Details", icon: "list", intro: "The facts your site is written from. Change an answer and the page rewrites itself; anything you edited by hand is kept." },
   { id: "design", step: "design", title: "Design system", short: "Design", icon: "palette", intro: "Made for you from your name and tone. Shuffle for a new one, remix one part, lock what you like, or pick from the library." },
-  { id: "scenes", step: "cast", title: "Scenes and characters", short: "Scenes", icon: "film", intro: "The set piece your site opens with, plus a character and live widgets. All of it reacts to the pointer, taps and drags." },
+  { id: "scenes", step: "cast", title: "Scenes", short: "Scenes", icon: "film", intro: "The living world your site opens in. Flip through them in the drop-down and watch each one blend into the next, roll a surprise, or play the reel." },
   { id: "motion", step: "motion", title: "Animation", short: "Motion", icon: "motion", intro: "How the site moves: one-tap packs, entrance styles, scrolling effects and showpieces. Played by Motion in the site you download too." },
   { id: "page", step: "build", title: "Page", short: "Page", icon: "layout", intro: "Switch sections on and off, drag them into order, and edit every word. Or press Edit on page and click anything in the preview." },
   { id: "refine", step: "build", title: "AI polish", short: "Polish", icon: "sparkle", intro: "Optional help from Google Gemini: polish every word, try new openings or add the questions visitors ask. You review every change, and Undo takes it back." },

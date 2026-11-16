@@ -426,7 +426,7 @@ function Clock({ place }) {
 }
 
 // "At a glance": a bento of tiles that each animate on their own once scrolled into view.
-export function LiveTiles({ stats = [], words = [], place = "", status = "", title = "At a glance" }) {
+export function LiveTiles({ stats = [], words = [], place = "", status = "", title = "At a glance", to = "#pf-contact" }) {
   const num = (v) => {
     const m = /^\s*([\d.,]+)\s*(.*)$/.exec(String(v));
     return m ? { n: parseFloat(m[1].replace(/,/g, "")), s: m[2] } : null;
@@ -474,7 +474,7 @@ export function LiveTiles({ stats = [], words = [], place = "", status = "", tit
   if (tiles.length && tiles.length < 5)
     tiles.push(
       <TileShell key="go" i={tiles.length} className="pf-tile-go">
-        <a href="#pf-contact" className="pf-tile-link">
+        <a href={to} className="pf-tile-link">
           <span className="pf-tile-label">Next step</span>
           <strong className="pf-tile-big">Say hello</strong>
           <motion.span className="pf-tile-arrow" aria-hidden="true" animate={{ x: [0, 6, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}>

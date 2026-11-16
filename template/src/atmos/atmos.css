@@ -29,12 +29,43 @@
   position: absolute;
   inset: 0;
   z-index: -2;
-  background: radial-gradient(120% 90% at 30% 20%, color-mix(in srgb, var(--at-b) 35%, transparent), transparent 60%), linear-gradient(160deg, var(--at-a), color-mix(in srgb, var(--at-c) 25%, var(--at-a)));
+  background: var(--at-flat, #0d0a14);
+  overflow: hidden;
   transform: scale(calc(1.02 + var(--at-s) * 0.14));
   filter: blur(calc(var(--at-s) * 16px)) brightness(calc(1 - var(--at-s) * 0.35));
   transform-origin: 50% 40%;
-  animation: at-fade 1.8s cubic-bezier(0.16, 1, 0.3, 1) both;
   will-change: transform, filter;
+}
+.at-paper {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+}
+.at-paper > canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0 !important;
+}
+.at-gl {
+  position: absolute;
+  inset: 0;
+}
+.at-canvas {
+  position: absolute;
+  inset: 0;
+}
+/* Scenes blend into and out of their own flat colour. */
+.at-flat {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 1;
+  transition-property: opacity, background-color;
+  transition-duration: 900ms, 140ms;
+  transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1), linear;
 }
 .at-hero > .at-stage {
   position: absolute;
@@ -376,3 +407,19 @@
 .pf-nav--pill ~ .pf-hero--atmos {
   margin-top: -81px;
 }
+
+/* The still picture shown without a graphics card drifts slowly; the compositor does it. */
+@keyframes at-poster-drift { from { transform: scale(1.04) translate3d(-0.6%, 0.4%, 0); } to { transform: scale(1.1) translate3d(0.6%, -0.4%, 0); } }
+.at-poster { animation: at-poster-drift 24s ease-in-out infinite alternate; }
+@media (prefers-reduced-motion: reduce) { .at-poster { animation: none; transform: scale(1.04); } }
+
+/* The opening fills the first screen on every size, phones too. A fixed height also means a
+   late web font can never grow it and push the rest of the page down (layout shift). */
+.at-hero.pf-hero { min-height: calc(100svh - 65px); }
+.pf-is-preview .at-hero.pf-hero { min-height: 640px; }
+
+/* Words always read: a soft pool of shade (or light, on a pale scene) sits behind them and
+   fades out long before the edges, so the scene still fills the screen. */
+.at-content::before { content: ""; position: absolute; inset: 10% -8%; z-index: -1; pointer-events: none; background: radial-gradient(closest-side, rgb(6 5 12 / 0.46), rgb(6 5 12 / 0.18) 62%, transparent); }
+.at-tone-light .at-content::before { background: radial-gradient(closest-side, rgb(255 255 255 / 0.66), rgb(255 255 255 / 0.26) 62%, transparent); }
+.at-lay-panel .at-content::before { display: none; }

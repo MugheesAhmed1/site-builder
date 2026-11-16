@@ -28,13 +28,11 @@ describe("project logic", () => {
 
   it("starts from a category tile and a chosen scene", async () => {
     const { createProject } = await import("@/lib/project");
-    const { SCENES } = await import("@/template/src/scenes.js");
-    const scene = SCENES.find((s: { group: string }) => s.group === "concept")!;
-    const p = createProject({ kind: "website", category: "dentist", label: "Dentist", sceneId: scene.id });
+    const p = createProject({ kind: "website", category: "dentist", label: "Dentist", atmos: "ocean" });
     expect(p.category).toBe("dentist");
     expect(p.query).toBe("Website for a dentist");
-    expect(p.design.scene?.id).toBe(scene.id);
-    expect(p.design.sceneMode).toBe("backdrop");
+    expect(p.design.atmos).toBe("ocean");
+    expect(p.design.heroStyle).toBe("atmos");
   });
 
   it("carries new details into the page and keeps hand edits", async () => {

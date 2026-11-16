@@ -483,5 +483,8 @@ export function categoryById(id: string): Category {
 export function extractHints(query: string): { name: string; city: string } {
   const called = /(?:called|named)\s+["“]?([A-Z][\w&' ]{1,40}?)["”]?(?:\s+(?:in|at|for)\b|[,.]|$)/.exec(query);
   const city = /\b(?:in|from|based in)\s+([A-Z][a-zA-Z]+(?:\s[A-Z][a-zA-Z]+)?)/.exec(query);
-  return { name: called?.[1]?.trim() ?? "", city: city?.[1] ?? "" };
+  // "my startup Ledgerly, ..." or "my bakery Crumb House in Lahore": a capitalised name
+  // straight after what the business is.
+  const bare = called ? null : /\bmy\s+(?:(?!(?:in|at|for|from|based|near)\b)[a-z]+\s+){1,3}([A-Z][\w&']+(?:\s+[A-Z][\w&']+){0,3})(?=\s*(?:[,.]|$|\s+(?:in|at|for|from)\b))/.exec(query);
+  return { name: (called?.[1] ?? bare?.[1] ?? "").trim(), city: city?.[1] ?? "" };
 }

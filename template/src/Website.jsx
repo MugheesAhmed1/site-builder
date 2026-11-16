@@ -2,8 +2,6 @@ import { useMemo, useRef, useState } from "react";
 import { palette, resolveScheme } from "./theme.js";
 import { useEdits } from "./edits.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
-import { CastCharacter, CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
-import { Scene } from "./Scenes.jsx";
 import { AtmosHero } from "./atmos/Atmos.jsx";
 import { siteAtmos } from "./atmos/catalog.js";
 import { Carousel, Film, Flight, Grain, LineLoader, ScrollWords, SmoothScroll } from "./studio.jsx";
@@ -11,7 +9,6 @@ import { Arc, Sphere, Track, propsFor, useFogSwitch, useScramble } from "./showp
 import { Extras } from "./extras.jsx";
 import { Badge, CinemaHero, CinemaStrip, CurtainMenu, GlassCta, ScatterHero, WordmarkFooter } from "./cinema.jsx";
 import { plateFor } from "./plates.js";
-import { propsFor as cutoutsFor } from "./props.js";
 import { useSectionFlow } from "./flow.jsx";
 import { Avatar, Counter, cleanContent, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
@@ -212,15 +209,8 @@ export default function Website({ design, content, preview = false, scheme: forc
     arr("services").length > 0 && { type: "tags", items: arr("services").map((x) => x.name) },
   ].filter(Boolean);
 
-  const cast = d.cast && d.cast.character ? d.cast : null;
-  const ctx = castContext("website", c);
   const storySteps = (arr("process").length >= 2 ? arr("process").map((x) => ({ title: x.title, text: x.description })) : arr("services").map((x) => ({ title: x.name, text: x.description }))).slice(0, 5);
 
-  const scene = d.scene && d.scene.type ? d.scene : null;
-  const sceneMode = d.sceneMode || "backdrop";
-  const sceneEl = (cls) => (
-    <Scene def={scene} className={cls} text={c.brand.name} words={arr("services").map((x) => x.name).slice(0, 8)} image={h.imageUrl} alt={c.brand.name} preview={preview} imgPath="hero.imageUrl" />
-  );
   const filmSrc = h.videoUrl || d.video || "";
   const filmOn = animated && (filmSrc ? d.film !== false : preview && d.film === true);
   const flySentence = String((c.about && (c.about.paragraphs || []).find(Boolean)) || h.sub || "").split(/(?<=[.!?])\s/)[0].slice(0, 160);
@@ -242,7 +232,7 @@ export default function Website({ design, content, preview = false, scheme: forc
   const renderHero = () => {
     if (hero === "cinema") {
       return (
-        <CinemaHero plate={h.imageUrl || plate} video={/^(https?:|\/|\.\/)/.test(h.videoUrl || "") && !filmOn ? h.videoUrl : ""} still={!animated} stats={heroStats} path="hero.imageUrl" backdrop={animated && scene && sceneMode === "backdrop" && scene.group === "concept" ? sceneEl("cn-scene") : null} overlay={animated && scene && sceneMode === "backdrop" && scene.group !== "concept" && scene.group !== "photo" ? sceneEl("cn-scene") : null}>
+        <CinemaHero plate={h.imageUrl || plate} video={/^(https?:|\/|\.\/)/.test(h.videoUrl || "") && !filmOn ? h.videoUrl : ""} still={!animated} stats={heroStats} path="hero.imageUrl">
           <Badge text={badgeText} people={people} />
           {headline}
           {sub}
@@ -251,9 +241,8 @@ export default function Website({ design, content, preview = false, scheme: forc
       );
     }
     if (hero === "scatter") {
-      const subject = cast && cast.character && cast.character.src ? cast.character.src : "";
       return (
-        <ScatterHero text={h.headline} subject={subject} plate={h.imageUrl || plate} props={animated ? cutoutsFor(c.brand && c.brand.category) : []} stats={heroStats} still={!animated}>
+        <ScatterHero text={h.headline} plate={h.imageUrl || plate} stats={heroStats} still={!animated}>
           {sub}
           {ctas}
         </ScatterHero>
@@ -268,11 +257,7 @@ export default function Website({ design, content, preview = false, scheme: forc
             {sub}
             {ctas}
           </div>
-          {scene && sceneMode === "visual" ? (
-            <div className="pf-scene-visual pf-enter" style={{ "--i": 2 }}>
-              {sceneEl("")}
-            </div>
-          ) : cast ? <CastStage character={cast.character} widgets={cast.widgets} ctx={ctx} still={!animated} /> : <Stage name={c.brand.name} kind="blob" widgets={widgets} still={!animated} />}
+          <Stage name={c.brand.name} kind="blob" widgets={widgets} still={!animated} />
         </div>
       );
     }
@@ -353,8 +338,7 @@ export default function Website({ design, content, preview = false, scheme: forc
   const render = (s) => {
     switch (s) {
       case "tiles":
-        if (cast && cast.widgets.length) return <WidgetWall key={s} widgets={cast.widgets} ctx={ctx} />;
-        return <LiveTiles key={s} stats={hl} words={arr("services").map((x) => x.name).slice(0, 6)} place={c.visit && c.visit.address ? c.visit.address.split(",").slice(-1)[0].trim() : ""} status={openNow ? "Open " + openNow.days : ""} />;
+        return <LiveTiles key={s} to={toContact} stats={hl} words={arr("services").map((x) => x.name).slice(0, 6)} place={c.visit && c.visit.address ? c.visit.address.split(",").slice(-1)[0].trim() : ""} status={openNow ? "Open " + openNow.days : ""} />;
       case "highlights":
         if (hero === "split") return null;
         return (
@@ -509,7 +493,6 @@ export default function Website({ design, content, preview = false, scheme: forc
         }
         return (
           <section id="pf-cta" className="pf-band" key={s}>
-            {cast && animated && <Peek character={cast.character} />}
             <div className="pf-container pf-band-inner pf-reveal">
               <div>
                 <h2 className="pf-band-title">{c.cta.heading}</h2>
@@ -579,7 +562,6 @@ export default function Website({ design, content, preview = false, scheme: forc
         if (!actions.length && !ct.email && c.visit && c.visit.address) actions.push(["Get directions", "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(c.visit.address)]);
         return (
           <section id="pf-contact" className="pf-section pf-contact" key={s}>
-            {cast && animated && <Peek character={cast.character} />}
             <div className="pf-container">
               <h2 className="pf-h2 pf-reveal">{ct.heading}</h2>
               {ct.blurb && <p className="pf-muted pf-contact-blurb pf-reveal">{ct.blurb}</p>}
@@ -617,7 +599,7 @@ export default function Website({ design, content, preview = false, scheme: forc
 
   return (
     <div ref={rootRef} className={"pf ws pf-scheme-" + scheme + (preview ? " pf-is-preview" : "") + (editing ? " pf-is-editing" : "")} {...motionAttrs(d)} style={themeStyle(d, pal, scheme)}>
-      <link rel="stylesheet" href={fontsHref(d.fonts, d.accentFace)} />
+      {!d.fontsLocal && <link rel="stylesheet" href={fontsHref(d.fonts, d.accentFace)} />}
       <Progress on={animated && d.progress} />
       <SmoothScroll on={animated && d.smooth !== false} preview={preview} />
       {fog.layer}
@@ -657,7 +639,7 @@ export default function Website({ design, content, preview = false, scheme: forc
       {curtain && <CurtainMenu open={menuOpen} onClose={() => setMenuOpen(false)} links={navLinks} brand={c.brand.name} cta={h.primaryCta ? { href: h.primaryHref || toContact, label: h.primaryCta } : null} />}
 
       {hero === "atmos" ? (
-        <AtmosHero sectionId="pf-top" className="pf-hero pf-hero--atmos" id={siteAtmos(d, c.brand && c.brand.category, (c.brand.category || "") + " " + (h.headline || ""))} accent={pal.accent} intensity={d.intensity ?? 7} still={!animated} wordmark={c.brand.name} stats={heroStats}>
+        <AtmosHero sectionId="pf-top" className="pf-hero pf-hero--atmos" id={siteAtmos(d, c.brand && c.brand.category, (c.brand.category || "") + " " + (h.headline || ""))} accent={pal.accent} intensity={d.intensity ?? 7} still={!animated} layout={d.atmosLayout} tint={d.sceneTint} wordmark={c.brand.name} stats={heroStats}>
             {kicker}
             {headline}
             {sub}
@@ -666,7 +648,6 @@ export default function Website({ design, content, preview = false, scheme: forc
       ) : (
         <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
           {animated && <Backdrop kind={d.backdrop} accent={pal.accent} intensity={d.intensity} />}
-          {animated && scene && sceneMode === "backdrop" && !(hero === "cinema" && scene.group !== "photo") && sceneEl("pf-scene-backdrop")}
           {renderHero()}
         </section>
       )}
@@ -675,11 +656,9 @@ export default function Website({ design, content, preview = false, scheme: forc
 
       {filmOn && <Film src={filmSrc} steps={storySteps} title={arr("process").length >= 2 ? "How it works" : "What we do"} highlights={arr("highlights").map((x) => ({ label: x.label, value: x.value }))} preview={preview} path="hero.videoUrl" kicker={c.brand.name} />}
 
-      {!(filmSrc && filmOn) && showpiece !== "track" && cast && animated && (hero === "atmos" ? d.castStory === true : d.castStory !== false) && storySteps.length >= 2 && <CastStory character={cast.character} widgets={cast.widgets} ctx={ctx} steps={storySteps} title={arr("process").length >= 2 ? "How it works" : "What we do"} />}
-
       {showpiece === "sphere" && <Sphere props={propsFor(c.brand && c.brand.category)} items={spItems} title={"Explore"} />}
       {showpiece === "arc" && <Arc props={propsFor(c.brand && c.brand.category)} items={spItems} title={"Explore"} />}
-      {showpiece === "track" && <Track blocks={trackBlocks} title={c.brand.name} mascot={cast ? <CastCharacter def={cast.character} size={180} /> : null} />}
+      {showpiece === "track" && <Track blocks={trackBlocks} title={c.brand.name} />}
 
       {visible.map(render)}
 

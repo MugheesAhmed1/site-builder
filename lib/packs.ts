@@ -38,7 +38,6 @@ const OFF: Partial<Design> = {
   cursor: false,
   tilt: false,
   showpiece: "none",
-  castStory: true,
   sectionFx: "rise",
   scrollFx: true,
 };
@@ -65,8 +64,8 @@ export const PACKS: Pack[] = [
   {
     id: "story",
     name: "Story track",
-    blurb: "Your story slides sideways while your character pushes every line out of its way.",
-    set: { ...OFF, sectionFx: "tilt", smooth: true, film: true, scrollWords: true, grain: true, fogSwitch: true, tilt: true, showpiece: "track", castStory: false },
+    blurb: "Your story slides sideways as you scroll, line by line.",
+    set: { ...OFF, sectionFx: "tilt", smooth: true, film: true, scrollWords: true, grain: true, fogSwitch: true, tilt: true, showpiece: "track" },
   },
   {
     id: "editorial",
@@ -96,7 +95,7 @@ export function packById(id?: string) {
 export function matchPack(d: Design): PackId | undefined {
   const norm = (k: keyof Design, v: unknown) => {
     const cur = d[k];
-    if (k === "smooth" || k === "scrollWords" || k === "flight" || k === "tilt" || k === "fogSwitch" || k === "castStory") return (cur !== false) === (v !== false);
+    if (k === "smooth" || k === "scrollWords" || k === "flight" || k === "tilt" || k === "fogSwitch") return (cur !== false) === (v !== false);
     if (k === "loader") return (cur || "none") === v;
     if (k === "showpiece") return (cur || "none") === v;
     if (k === "heroStyle" || k === "accentFace" || k === "chrome" || k === "menu" || k === "footer" || k === "ctaStyle") return cur === v;

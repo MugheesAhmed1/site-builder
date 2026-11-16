@@ -76,13 +76,15 @@
 
 /* ------------------------------------------------------------------ 2. section arrivals */
 .pf { overflow-x: clip; }
-.pf[data-flow="on"] .pf-flow { --sp: 1; --sx: 0; --k: calc(1 - var(--sp)); will-change: transform, opacity; }
-.pf[data-sfx="rise"] .pf-flow { transform: translate3d(0, calc(var(--k) * 90px), 0); opacity: calc(0.15 + var(--sp) * 0.85); }
+/* Sections move, scale or tilt as they arrive, but never fade: text stays at full contrast
+   wherever it sits on the screen. */
+.pf[data-flow="on"] .pf-flow { --sp: 1; --sx: 0; --k: calc(1 - var(--sp)); will-change: transform; }
+.pf[data-sfx="rise"] .pf-flow { transform: translate3d(0, calc(var(--k) * 90px), 0); }
 .pf[data-sfx="curtain"] .pf-flow { clip-path: inset(calc(var(--k) * 14%) calc(var(--k) * 12%) round calc(var(--k) * 56px)); }
-.pf[data-sfx="zoom"] .pf-flow { transform: scale(calc(0.84 + var(--sp) * 0.16)); transform-origin: 50% 0; border-radius: calc(var(--k) * 48px); opacity: calc(0.3 + var(--sp) * 0.7); }
-.pf[data-sfx="tilt"] .pf-flow { transform: perspective(1400px) translate3d(0, calc(var(--k) * 70px), 0) rotateX(calc(var(--k) * 22deg)); transform-origin: 50% 0; opacity: calc(0.2 + var(--sp) * 0.8); }
-.pf[data-sfx="blur"] .pf-flow { filter: blur(calc(var(--k) * 14px)); transform: scale(calc(1.05 - var(--sp) * 0.05)); opacity: calc(0.1 + var(--sp) * 0.9); }
-.pf[data-sfx="slide"] .pf-flow { transform: translate3d(calc(var(--k) * 140px * var(--side, 1)), 0, 0); opacity: calc(0.2 + var(--sp) * 0.8); }
+.pf[data-sfx="zoom"] .pf-flow { transform: scale(calc(0.84 + var(--sp) * 0.16)); transform-origin: 50% 0; border-radius: calc(var(--k) * 48px); }
+.pf[data-sfx="tilt"] .pf-flow { transform: perspective(1400px) translate3d(0, calc(var(--k) * 70px), 0) rotateX(calc(var(--k) * 22deg)); transform-origin: 50% 0; }
+.pf[data-sfx="blur"] .pf-flow { filter: blur(calc(var(--k) * 14px)); transform: scale(calc(1.05 - var(--sp) * 0.05)); }
+.pf[data-sfx="slide"] .pf-flow { transform: translate3d(calc(var(--k) * 140px * var(--side, 1)), 0, 0); }
 .pf[data-sfx="stack"] .pf-flow { position: sticky; top: var(--stick, 0px); background: var(--pf-bg); border-radius: 32px 32px 0 0; box-shadow: 0 -24px 48px -28px rgb(0 0 0 / 0.35); transform: scale(calc(1 - var(--sx) * 0.07)); transform-origin: 50% 0; filter: brightness(calc(1 - var(--sx) * 0.22)); }
 .pf[data-sfx="stack"] .pf-flow.pf-band { background: var(--pf-accent); }
 .pf[data-sfx="stack"] > footer.pf-flow { border-radius: 0; box-shadow: none; }

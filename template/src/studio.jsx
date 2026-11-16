@@ -129,8 +129,10 @@ export function ScrollWords({ text, className = "", as: Tag = "p" }) {
       const n = spans.length;
       for (let i = 0; i < n; i++) {
         const kk = clamp((p * 1.5 - i / n) * 4);
-        spans[i].style.opacity = String(0.14 + 0.86 * kk);
-        spans[i].style.filter = kk < 1 ? `blur(${((1 - kk) * 4).toFixed(2)}px)` : "";
+        // Unwritten words wait in the muted text colour (still readable, AA contrast) with a
+        // soft blur, and take on the full text colour as they are written.
+        spans[i].style.color = kk >= 1 ? "" : `color-mix(in srgb, var(--pf-text) ${Math.round(kk * 100)}%, var(--pf-muted))`;
+        spans[i].style.filter = kk < 1 ? `blur(${((1 - kk) * 1.6).toFixed(2)}px)` : "";
       }
     },
     [words.join(" ")]

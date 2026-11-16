@@ -6,7 +6,6 @@ import { composeWebsite } from "@/lib/compose";
 import { questionsFor } from "@/lib/questions";
 import { newProject } from "@/lib/store";
 import type { WebsiteContent } from "@/lib/types";
-import { castContext, widgetText } from "@/template/src/Cast.jsx";
 import Website from "@/template/src/Website.jsx";
 
 const mq = () => ({ matches: false, addEventListener() {}, removeEventListener() {}, addListener() {}, removeListener() {} });
@@ -52,37 +51,6 @@ describe("published sites never ship empty blocks", () => {
     const out = site(c, false);
     expect(out).toContain('id="pf-contact"');
     expect(out).toContain("Get directions");
-  });
-});
-
-describe("widgets use the person's own content", () => {
-  it("never repeats one number or invents 'Projects shipped 24' or '92%'", () => {
-    const ctx = castContext("portfolio", {
-      hero: { name: "Sara Malik", role: "Product manager" },
-      stats: [],
-      skills: [{ group: "Product", items: ["Discovery", "Roadmaps", "Pricing"] }],
-      process: [{ title: "Discover" }, { title: "Decide" }, { title: "Build" }, { title: "Learn" }],
-      projects: [{ name: "A" }, { name: "B" }],
-    });
-    const shown = ["stat", "line", "pulse", "ring", "growth"].map((k) => widgetText(k, ctx) as { title: string; value: string });
-    expect(new Set(shown.map((x) => x.title + x.value)).size).toBeGreaterThanOrEqual(4);
-    for (const x of shown) {
-      expect(x.title).not.toBe("Projects shipped");
-      expect(x.value).not.toBe("92%");
-    }
-    expect(shown[0]).toEqual({ title: "Projects featured", value: "2" });
-  });
-
-  it("tells different things even when the only number is a count of steps", () => {
-    const ctx = castContext("portfolio", { hero: { name: "Sara Malik" }, stats: [], process: [{ title: "Discover" }, { title: "Decide" }, { title: "Build" }] });
-    const shown = ["stat", "line", "pulse", "growth"].map((k) => JSON.stringify(widgetText(k, ctx)));
-    expect(new Set(shown).size).toBe(4);
-  });
-
-  it("keeps real numbers first", () => {
-    const ctx = castContext("website", { brand: { name: "Crumb" }, highlights: [{ value: "12", label: "years in business" }, { value: "98%", label: "on time" }], services: [{ name: "Cakes" }] });
-    expect(widgetText("stat", ctx)).toEqual({ title: "years in business", value: "12" });
-    expect(widgetText("ring", ctx)).toEqual({ title: "on time", value: "98%" });
   });
 });
 
