@@ -5,11 +5,13 @@ import "@/template/src/cast.css";
 import "@/template/src/studio.css";
 import "@/template/src/showpiece.css";
 import "@/template/src/cinema.css";
+import "./shell.css";
+import "./home.css";
 
-const FONTS = "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap";
+const FONTS = "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600&family=Hanken+Grotesk:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap";
 
-const TITLE = "Site Builder: say what you need, get a site you own";
-const DESCRIPTION = "Build a business website or a personal portfolio in minutes. No AI, no sign up, nothing leaves your browser. Download a finished site and put it online for free.";
+const TITLE = "Site Builder: say it in one line, get a site that moves";
+const DESCRIPTION = "Describe your business or yourself in one line and get a finished, animated website you own. Cinematic scenes, 500 design systems, no sign up, nothing leaves your browser. Download it and host it free.";
 
 const BASE = process.env.VERCEL_PROJECT_PRODUCTION_URL ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL : process.env.VERCEL_URL ? "https://" + process.env.VERCEL_URL : "http://localhost:3000";
 
@@ -24,15 +26,17 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FBFAF7" },
-    { media: "(prefers-color-scheme: dark)", color: "#1A1815" },
+    { media: "(prefers-color-scheme: light)", color: "#FAFAFC" },
+    { media: "(prefers-color-scheme: dark)", color: "#0D0F16" },
   ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        {/* The person's light or dark pick is applied before the first paint. */}
+        <script dangerouslySetInnerHTML={{ __html: "try{var t=localStorage.getItem('sb.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}" }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         {/* The fonts never hold up the first paint: the sheet loads as "print" and a tiny
