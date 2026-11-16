@@ -1,3 +1,4 @@
+import type { StorySpec } from "@/template/src/story.js";
 // The shapes everything in the app passes around. No AI is involved anywhere:
 // questions are fixed lists, content is composed by rules, design systems are generated.
 
@@ -48,7 +49,7 @@ export interface Design {
   hover: "lift" | "glow" | "line" | "spotlight" | "none";
   progress: boolean; // reading progress bar at the top
   marquee: boolean; // skills, clients or services scroll past in a strip
-  heroStyle: "statement" | "portrait" | "split" | "centered" | "stage" | "cinema" | "scatter";
+  heroStyle: "statement" | "portrait" | "split" | "centered" | "stage" | "cinema" | "scatter" | "journey";
   experienceStyle: "ledger" | "timeline" | "list";
   projectStyle: "grid" | "case" | "index";
   serviceStyle: "menu" | "bento" | "rows";
@@ -79,6 +80,8 @@ export interface Design {
   menu?: "drop" | "curtain"; // the menu: a drop-down on phones, or a full-screen curtain that opens as a circle
   footer?: "simple" | "wordmark"; // the footer: one line, or a card with the name set huge underneath
   ctaStyle?: "band" | "glass"; // the call to action: a colour band, or a glass card over a scene
+  story?: Partial<StorySpec> | null; // the animation engine spec: world, character, behaviours, intensity
+  intensity?: number; // animation intensity, 1 (fades and hover) to 10 (a full 3D journey)
   align?: "center" | "left"; // how the words sit on the page: centred (the default) or left aligned
   sectionFx?: SectionFx; // how each section arrives as it scrolls into view
   scrollFx?: boolean; // scroll-linked extras: drawn title lines, drifting headings, cards that settle into place

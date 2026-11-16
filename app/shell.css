@@ -221,3 +221,17 @@
 @keyframes sfx-slide { 0% { transform: translateX(-120%); } 60%, 100% { transform: none; } }
 @keyframes sfx-slide-r { 0% { transform: translateX(160%); } 60%, 100% { transform: none; } }
 @keyframes sfx-stack { 0% { transform: translateY(30px) scale(1); } 60%, 100% { transform: translateY(0) scale(0.96); } }
+
+/* Animation intensity dial */
+.ix { display: grid; gap: 10px; }
+.ix-num { font-size: 22px; font-weight: 600; color: var(--text); }
+.ix-range { -webkit-appearance: none; appearance: none; width: 100%; height: 8px; border-radius: 999px; background: linear-gradient(90deg, var(--accent) calc(var(--ix) * 100%), var(--line) 0); cursor: pointer; }
+.ix-range::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%; background: var(--panel); border: 2px solid var(--accent); box-shadow: 0 4px 14px -4px color-mix(in oklch, var(--accent) 70%, transparent); transition: transform 140ms var(--ease-out); }
+.ix-range::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--panel); border: 2px solid var(--accent); }
+.ix-range:active::-webkit-slider-thumb { transform: scale(1.15); }
+.ix-scale { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+.ix-scale button { min-height: 30px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font: inherit; font-size: 13px; cursor: pointer; }
+.ix-scale button.is-on { background: var(--accent-soft); color: var(--accent-text); font-weight: 600; }
+.ix-text { min-height: 2.6em; }
+.ix-world { display: grid; gap: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+.ix-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }

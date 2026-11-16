@@ -9,6 +9,7 @@ import { Ribbons } from "./ribbons.jsx";
 import { Knot } from "./knot.jsx";
 import { NameBlocks } from "./name.jsx";
 import { Blocks } from "./blocks.jsx";
+import Journey from "./journey.jsx";
 
 // Real 3D scenes drawn with three.js through react-three-fiber. Scenes.jsx loads this file
 // lazily, so pages without a 3D scene never download three.js. Each scene follows the
@@ -109,7 +110,7 @@ function Snap({ onShot }) {
 }
 
 /** @param {{ type: string, palette?: string, colors?: string[], text?: string, words?: string[], thumb?: boolean, opts?: Record<string, any> }} props */
-export default function ThreeScene({ type, palette = "brand", colors, text = "", words = [], thumb = false, opts = {} }) {
+function SceneInner({ type, palette = "brand", colors, text = "", words = [], thumb = false, opts = {} }) {
   const wrap = useRef(null);
   const input = useInput(wrap);
   const [ready, setReady] = useState(false);
@@ -217,4 +218,10 @@ export default function ThreeScene({ type, palette = "brand", colors, text = "",
       )}
     </div>
   );
+}
+
+// One entry point for the 3D bundle: journeys (scroll films with a creature) or a scene.
+export default function ThreeScene(props) {
+  if (props.type === "journey") return <Journey {...(props.journey || {})} />;
+  return <SceneInner {...props} />;
 }

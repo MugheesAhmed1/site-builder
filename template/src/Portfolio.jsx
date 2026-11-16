@@ -3,7 +3,8 @@ import { palette, resolveScheme } from "./theme.js";
 import { useEdits } from "./edits.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
 import { CastCharacter, CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
-import { Scene } from "./Scenes.jsx";
+import { JourneyScene, Scene } from "./Scenes.jsx";
+import { normalizeStory, storyChapters } from "./story.js";
 import { Carousel, Film, Flight, Grain, LineLoader, ScrollWords, SmoothScroll } from "./studio.jsx";
 import { Arc, Sphere, Track, propsFor, useFogSwitch, useScramble } from "./showpiece.jsx";
 import { Extras } from "./extras.jsx";
@@ -759,11 +760,18 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
 
       {curtain && <CurtainMenu open={menuOpen} onClose={() => setMenuOpen(false)} links={navLinks} brand={h.name} cta={{ href: "#pf-contact", label: "Get in touch" }} />}
 
-      <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
-        {animated && <Backdrop kind={d.backdrop} />}
-        {animated && scene && sceneMode === "backdrop" && sceneEl("pf-scene-backdrop")}
-        {renderHero()}
-      </section>
+      {hero === "journey" ? (
+        <>
+          <span id="pf-top" />
+          <JourneyScene journey={{ world: normalizeStory(d.story).scene, creature: normalizeStory(d.story).character, chapters: storyChapters("portfolio", c), cta: ctas, still: !animated }} />
+        </>
+      ) : (
+        <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
+          {animated && <Backdrop kind={d.backdrop} />}
+          {animated && scene && sceneMode === "backdrop" && sceneEl("pf-scene-backdrop")}
+          {renderHero()}
+        </section>
+      )}
 
       {hero === "cinema" ? <CinemaStrip label="Tools and skills" items={skillsFlat.slice(0, 14)} /> : d.marquee && animated && skillsFlat.length > 3 && <Marquee items={skillsFlat} label="Skills" />}
 

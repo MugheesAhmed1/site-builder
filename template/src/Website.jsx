@@ -3,7 +3,8 @@ import { palette, resolveScheme } from "./theme.js";
 import { useEdits } from "./edits.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
 import { CastCharacter, CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
-import { Scene } from "./Scenes.jsx";
+import { JourneyScene, Scene } from "./Scenes.jsx";
+import { normalizeStory, storyChapters } from "./story.js";
 import { Carousel, Film, Flight, Grain, LineLoader, ScrollWords, SmoothScroll } from "./studio.jsx";
 import { Arc, Sphere, Track, propsFor, useFogSwitch, useScramble } from "./showpiece.jsx";
 import { Extras } from "./extras.jsx";
@@ -653,11 +654,18 @@ export default function Website({ design, content, preview = false, scheme: forc
 
       {curtain && <CurtainMenu open={menuOpen} onClose={() => setMenuOpen(false)} links={navLinks} brand={c.brand.name} cta={h.primaryCta ? { href: h.primaryHref || toContact, label: h.primaryCta } : null} />}
 
-      <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
-        {animated && <Backdrop kind={d.backdrop} />}
-        {animated && scene && sceneMode === "backdrop" && !(hero === "cinema" && scene.group !== "photo") && sceneEl("pf-scene-backdrop")}
-        {renderHero()}
-      </section>
+      {hero === "journey" ? (
+        <>
+          <span id="pf-top" />
+          <JourneyScene journey={{ world: normalizeStory(d.story).scene, creature: normalizeStory(d.story).character, chapters: storyChapters("website", c), cta: ctas, still: !animated }} />
+        </>
+      ) : (
+        <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
+          {animated && <Backdrop kind={d.backdrop} />}
+          {animated && scene && sceneMode === "backdrop" && !(hero === "cinema" && scene.group !== "photo") && sceneEl("pf-scene-backdrop")}
+          {renderHero()}
+        </section>
+      )}
 
       {hero === "cinema" && <CinemaStrip label={c.brand.category ? "What we do" : ""} items={arr("services").map((x) => x.name).concat(arr("clients") || [])} />}
 

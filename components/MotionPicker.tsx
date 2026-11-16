@@ -10,6 +10,7 @@ import { FEELS, MOTIONS, REST, REVEAL_NAMES, TEMPO_NAMES, motionById, type Motio
 import CategorySelect from "@/components/CategorySelect";
 import { categoryLabel, fitFor, fitsMotion } from "@/lib/fit";
 import type { Design, SectionFx } from "@/lib/types";
+import IntensityPicker from "@/components/IntensityPicker";
 
 // The animation step: 728 styles plus "Still", each previewed on a tiny mock page with
 // the same Motion keyframes the finished site uses. Hover, focus or tap a tile to play it.
@@ -122,6 +123,7 @@ export default function MotionPicker({
 
   return (
     <div className="motion-picker">
+      <IntensityPicker design={design} category={category} onChange={onChange} />
       <div className="panel motion-now">
         <div>
           <span className="lbl">Playing now</span>
