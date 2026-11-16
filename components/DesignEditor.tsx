@@ -309,12 +309,12 @@ export default function DesignEditor({
               <Seg
                 label="Opening"
                 value={design.heroStyle}
-                options={["journey", "cinema", "scatter", "stage", "statement", "portrait", "split", "centered"]}
-                labels={{ cinema: "Film scene", scatter: "Scattered words", stage: "Character and widgets", statement: "Big statement", portrait: "With photo", split: "With side panel", centered: "Centred" }}
+                options={["journey", "stage", "statement", "portrait", "split", "centered"]}
+                labels={{ journey: "3D journey", cinema: "Film scene", scatter: "Scattered words", stage: "Character and widgets", statement: "Big statement", portrait: "With photo", split: "With side panel", centered: "Centred" }}
                 onChange={(heroStyle) => set({ heroStyle })}
               />
             </div>
-            {(design.heroStyle === "cinema" || design.heroStyle === "scatter" || design.ctaStyle === "glass") && (
+            {false && (
               <div>
                 <label className="lbl">Scene</label>
                 <p className="hint">The picture behind the opening and the glass call to action. Your own opening photo wins when you add one.</p>
@@ -349,7 +349,7 @@ export default function DesignEditor({
             </div>
             <div>
               <label className="lbl">Call to action</label>
-              <Seg label="Call to action" value={design.ctaStyle ?? "band"} options={["band", "glass"]} labels={{ band: "Colour band", glass: "Glass card on a scene" }} onChange={(ctaStyle) => set({ ctaStyle })} />
+              <Seg label="Call to action" value={design.ctaStyle ?? "band"} options={["band"]} labels={{ band: "Colour band" }} onChange={(ctaStyle) => set({ ctaStyle })} />
             </div>
             <div>
               <label className="lbl">Footer</label>

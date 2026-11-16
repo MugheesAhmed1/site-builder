@@ -19,7 +19,9 @@ function setFor(category) {
 
 /** Raw /real/... paths of the cut-outs a site of this category uses for picture-less tiles. */
 export function propPaths(category) {
-  return PROP_SETS[setFor(category)].map((k) => REAL_PROPS[k]).filter(Boolean);
+  // The generated cut-out pictures were retired: tiles now use drawn shapes and 3D instead.
+  void category;
+  return [];
 }
 
 export function propsFor(category) {

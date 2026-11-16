@@ -4,7 +4,9 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
 import Icon from "@/components/Icon";
 import { TONES, applyCopy, collectCopy, diffCopy, fieldLabel, localPolish, siteBrief, type RefineResult, type RefineTask, type RefineTone } from "@/lib/refine";
-import type { Project, SiteContent, WebsiteContent } from "@/lib/types";
+import type { Project, SectionFx, SiteContent, WebsiteContent } from "@/lib/types";
+import { intensityPatch } from "@/lib/intensity";
+import { directStory, normalizeStory } from "@/template/src/story.js";
 
 // AI polish: optional help from Google Gemini. The words go to this site's own server route,
 // which holds the key; nothing is sent until the person presses a button, and every change
@@ -77,6 +79,11 @@ export default function RefinePanel({ p, update }: { p: Project; update: Update 
       if (r.error === "no-key") {
         setEnabled(false);
         if (task === "polish") runLocal();
+        else if (task === "direct") {
+          const s = directStory(p.category, Object.values(copy).join(" "), "insane");
+          update((prev) => ({ ...prev, design: { ...prev.design, ...intensityPatch(10, { ...prev.design, story: s }, prev.category) } }));
+          setDone(`Directed by the local rules: a ${s.scene} journey with a ${s.character}.`);
+        }
         else setError("AI suggestions need a Gemini key on the server. The local tidy-up still works.");
       } else setError(r.error || "Something went wrong. Your words are unchanged.");
       return;
@@ -88,6 +95,12 @@ export default function RefinePanel({ p, update }: { p: Project; update: Update 
       if (!list.length) setDone("Gemini had nothing to improve. Your words are already in good shape.");
     }
     if (task === "headline") setHeadlines(r.headlines?.length ? r.headlines : null);
+    if (task === "direct" && r.story) {
+      const { sectionFx, ...story } = r.story as { sectionFx?: SectionFx };
+      update((prev) => ({ ...prev, design: { ...prev.design, ...intensityPatch(10, { ...prev.design, story: normalizeStory(story) }, prev.category), ...(sectionFx ? { sectionFx } : {}) } }));
+      const s = normalizeStory(story);
+      setDone(`Gemini directed a ${s.scene} journey with a ${s.character}${r.why ? ": " + r.why : "."} Scroll the preview to see it.`);
+    }
     if (task === "faq") setFaq(r.faq?.length ? r.faq.map((f) => ({ ...f, on: true })) : null);
   };
 
@@ -161,6 +174,14 @@ export default function RefinePanel({ p, update }: { p: Project; update: Update 
             <span className="small muted">{enabled ? `Sends ${Object.keys(copy).length} lines of copy. Links, prices and contact details stay here.` : "Fixes spacing, capitals, doubled words and long buttons on this device."}</span>
           </span>
           {busy === "polish" && <span className="rf-spin" aria-label="Working" />}
+        </button>
+        <button type="button" className="rf-action" disabled={!!busy} onClick={() => run("direct")}>
+          <Icon name="film" size={20} />
+          <span>
+            <b>Direct my 3D journey</b>
+            <span className="small muted">{enabled ? "Gemini reads your site and picks the world, the creature, how it behaves and how sections arrive." : "Picks a world and a creature that suit your kind of site."}</span>
+          </span>
+          {busy === "direct" && <span className="rf-spin" aria-label="Working" />}
         </button>
         <button type="button" className="rf-action" disabled={!!busy || !enabled} onClick={() => run("headline")}>
           <Icon name="edit" size={20} />

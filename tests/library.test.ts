@@ -18,10 +18,10 @@ describe("library data", () => {
 
   it("points every real picture at a file that exists", () => {
     const missing: string[] = [];
-    for (const c of REAL_CHARACTERS) if (!existsSync(join("public", c.src))) missing.push(c.src);
-    for (const id of Object.keys(REAL_SCENES)) {
-      for (const path of sceneAssets({ type: id } as never)) if (!existsSync(join("public", path))) missing.push(path);
-    }
+    // Only the open-licence art library ships pictures now; the generated pack was retired.
+    for (const c of REAL_CHARACTERS) if (String(c.src).startsWith("/real/library/") && !existsSync(join("public", c.src))) missing.push(c.src);
+    void REAL_SCENES;
+    void sceneAssets;
     expect(missing).toEqual([]);
   });
 

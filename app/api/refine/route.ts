@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { cleanText, type RefineRequest, type RefineResult } from "@/lib/refine";
+import { BEHAVIOURS, CHARACTERS, ENVIRONMENTS, SCROLL_BEHAVIOURS, TRANSITIONS, normalizeStory } from "@/template/src/story.js";
 
 // Server side only. The Gemini key lives in the GEMINI_API_KEY environment variable (set it
 // in the Vercel project settings, or in .env.local when running locally) and never reaches
@@ -53,6 +54,12 @@ function prompt(r: RefineRequest): { system: string; user: string } {
     return {
       system: RULES,
       user: `${r.brief}\n${tone}${note}\nCurrent words:\n${JSON.stringify(r.copy)}\n\nWrite three different opening headline options for this site. Each has a headline (under 10 words) and a sub line (one sentence, under 28 words). Return JSON: {"headlines":[{"headline":"","sub":""}]}`,
+    };
+  }
+  if (r.task === "direct") {
+    return {
+      system: "You are the art director of an animation engine for websites. You pick from a fixed library of primitives and answer with JSON only.",
+      user: `${r.brief}${note}\nSite words:\n${JSON.stringify(r.copy)}\n\nDesign the opening as a scroll journey. Choose:\n- scene, one of ${JSON.stringify(ENVIRONMENTS.map((e) => e.id))}\n- character, one of ${JSON.stringify(CHARACTERS.map((c) => c.id))}\n- scrollBehavior, one of ${JSON.stringify(SCROLL_BEHAVIOURS)}\n- characterBehavior, a list from ${JSON.stringify(BEHAVIOURS)}\n- transition, one of ${JSON.stringify(TRANSITIONS)}\n- sectionFx (how later sections arrive), one of ["rise","curtain","zoom","tilt","blur","slide","stack"]\nPick what suits the brand's mood and audience. Return JSON: {"scene":"","character":"","scrollBehavior":"","characterBehavior":[],"transition":"","sectionFx":"","why":"one short sentence"}`,
     };
   }
   if (r.task === "faq") {
@@ -125,7 +132,7 @@ export async function POST(req: Request) {
   } catch {
     return NextResponse.json({ ok: false, source: "local", error: "Bad request." } satisfies RefineResult, { status: 400 });
   }
-  if (!body || !["polish", "headline", "faq"].includes(body.task) || typeof body.copy !== "object" || !body.copy) {
+  if (!body || !["polish", "headline", "faq", "direct"].includes(body.task) || typeof body.copy !== "object" || !body.copy) {
     return NextResponse.json({ ok: false, source: "local", error: "Bad request." } satisfies RefineResult, { status: 400 });
   }
   const copy: Record<string, string> = {};
@@ -147,6 +154,10 @@ export async function POST(req: Request) {
         .filter((h): h is { headline: string; sub: string } => !!h && typeof h.headline === "string")
         .slice(0, 3)
         .map((h) => ({ headline: cleanText(h.headline, 120), sub: cleanText(String(h.sub ?? ""), 240) }));
+    } else if (request.task === "direct") {
+      const fx = ["rise", "curtain", "zoom", "tilt", "blur", "slide", "stack"];
+      result.story = { ...normalizeStory({ ...data, intensity: "insane" }), sectionFx: fx.includes(String(data.sectionFx)) ? String(data.sectionFx) : "curtain" };
+      result.why = cleanText(String(data.why ?? ""), 200);
     } else {
       const list = Array.isArray(data.faq) ? data.faq : [];
       result.faq = list

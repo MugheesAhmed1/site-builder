@@ -185,13 +185,13 @@ export function realAssets(p: Project): string[] {
   }
   // Cinema openings and the glass call to action show a scene from public/real/cinema.
   const d = p.design;
-  if (d.heroStyle === "cinema" || d.heroStyle === "scatter" || d.ctaStyle === "glass") {
+  if (false as boolean) {
     const role = p.kind === "portfolio" ? (p.content as PortfolioContent | null)?.hero?.role : undefined;
     const cat = p.kind === "portfolio" ? "portfolio" : (p.content as WebsiteContent | null)?.brand?.category || p.category;
     out.add(d.plate ? platePath(d.plate) : platePath(cat, role));
   }
   JSON.stringify([p.design, p.content], (_k, v) => {
-    if (typeof v === "string" && /^\/real\/[\w/-]+\.webp$/.test(v)) out.add(v);
+    if (typeof v === "string" && /^\/real\/library\/[\w/-]+\.webp$/.test(v)) out.add(v);
     return v;
   });
   // Pictures from the free public art library carry their open-source licence notice.

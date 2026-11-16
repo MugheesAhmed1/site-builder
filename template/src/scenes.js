@@ -14,7 +14,6 @@ export const SCENE_GROUPS = [
   { id: "nature", name: "Nature" },
   { id: "photo", name: "Your photo" },
   { id: "depth", name: "3D and physics" },
-  { id: "real", name: "Real life" },
   { id: "three", name: "Real 3D" },
 ];
 

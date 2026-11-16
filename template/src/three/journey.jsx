@@ -231,7 +231,7 @@ function Planets() {
 }
 
 // ------------------------------------------------------------------ the camera and the creature
-function Rig({ world, progress, input, brain, creature, chapters, onCall, sound }) {
+function Rig({ world, progress, input, brain, creature, chapters, onCall, sound, leaves = true }) {
   const camera = useThree((s) => s.camera);
   const size = useThree((s) => s.size);
   const scene = useThree((s) => s.scene);
@@ -262,7 +262,7 @@ function Rig({ world, progress, input, brain, creature, chapters, onCall, sound 
       lastTaps.current = s.taps;
       if (brain.state !== "AWAY") onCall();
     }
-    const away = p > 0.03;
+    const away = leaves && p > 0.03;
     brain.step(dt, { near: s.inside, x: s.sx, y: s.sy, tapped: tapped && !away, away, loud: sound.current > 0.25 });
     if (holder.current) {
       // The creature starts right of the words (under them on tall screens). Once the
@@ -271,7 +271,7 @@ function Rig({ world, progress, input, brain, creature, chapters, onCall, sound 
       const parrot = creature === "parrot";
       const sx = wide ? (parrot ? 4.1 : 3.2) : parrot ? 1.4 : 0.6;
       const sy = wide ? (parrot ? -1.2 : -1.3) : parrot ? -2.9 : -2.6;
-      const cross = MathUtils.smootherstep(clamp((p - 0.03) / 0.42, 0, 1), 0, 1);
+      const cross = !leaves ? 0 : MathUtils.smootherstep(clamp((p - 0.03) / 0.42, 0, 1), 0, 1);
       holder.current.position.set(MathUtils.lerp(sx, -16, cross), sy + Math.sin(cross * Math.PI) * (parrot ? 2.5 : 0.8), camera.position.z - 9);
       holder.current.scale.setScalar(wide ? 1 : 0.72);
     }
@@ -297,7 +297,10 @@ function Rig({ world, progress, input, brain, creature, chapters, onCall, sound 
 /**
  * @param {{ world?: string, creature?: string, chapters: { kicker?: string, title: string, text?: string }[], cta?: any, still?: boolean, preview?: boolean }} props
  */
-export default function Journey({ world = "ocean", creature, chapters = [], cta = null, still = false }) {
+export default function Journey({ world = "ocean", creature, behaviours = null, chapters = [], cta = null, still = false }) {
+  const can = (b) => !behaviours || behaviours.includes(b);
+  const hears = can("reactToSound");
+  const leaves = can("reactToScroll") || can("swimAcrossScreen") || can("flyAcrossScreen");
   const wrap = useRef(null);
   const pin = useRef(null);
   const progress = useRef(0);
@@ -460,7 +463,7 @@ export default function Journey({ world = "ocean", creature, chapters = [], cta 
       <div ref={pin} className="jr-pin">
         <div className="jr-canvas">
           <Canvas dpr={[1, 1.75]} frameloop={visible ? "always" : "never"} camera={{ position: [0, 0, 9], fov: 50, near: 0.1, far: 140 }} gl={{ antialias: true, powerPreference: "high-performance" }}>
-            <Rig world={w} progress={progress} input={input} brain={brain} creature={who} onCall={call} sound={sound} />
+            <Rig world={w} progress={progress} input={input} brain={brain} creature={who} onCall={call} sound={sound} leaves={leaves} />
             <Motes world={w} progress={progress} />
             {w === "ocean" && (
               <>
@@ -498,9 +501,11 @@ export default function Journey({ world = "ocean", creature, chapters = [], cta 
           <button type="button" className="jr-btn" onClick={() => setMuted((m) => !m)} aria-pressed={!muted}>
             {muted ? "Sound off" : "Sound on"}
           </button>
-          <button type="button" className="jr-btn" onClick={() => setListening((v) => !v)} aria-pressed={listening}>
-            {listening ? "Listening" : "Let it listen"}
-          </button>
+          {hears && (
+            <button type="button" className="jr-btn" onClick={() => setListening((v) => !v)} aria-pressed={listening}>
+              {listening ? "Listening" : "Let it listen"}
+            </button>
+          )}
         </div>
         <div className="jr-hint" aria-hidden="true">
           <span>Tap the {who}</span>

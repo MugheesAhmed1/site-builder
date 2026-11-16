@@ -9,7 +9,7 @@ import type { SiteContent } from "./types";
 // This file is shared by the server route and the browser, so it holds no secrets and makes
 // no network calls of its own.
 
-export type RefineTask = "polish" | "headline" | "faq";
+export type RefineTask = "polish" | "headline" | "faq" | "direct";
 export type RefineTone = "keep" | "warmer" | "bolder" | "professional" | "playful" | "shorter";
 
 export const TONES: { id: RefineTone; label: string }[] = [
@@ -204,5 +204,7 @@ export interface RefineResult {
   copy?: Record<string, string>; // polish: same keys, better words
   headlines?: { headline: string; sub: string }[]; // headline: three options
   faq?: { question: string; answer: string }[]; // faq: new questions to review
+  story?: Record<string, unknown>; // direct: the animation engine spec, plus a reason
+  why?: string;
   error?: string;
 }

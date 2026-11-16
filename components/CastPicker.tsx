@@ -69,7 +69,7 @@ export default function CastPicker({ design, onChange, ctx, kind, category, phot
   const vars = themeStyle(design, pal, design.mode === "dark" ? "dark" : "light") as React.CSSProperties;
 
   const chars = useMemo(() => {
-    const list = lib.characters.filter((c) => (family === "all" || c.family === family) && (scope === "all" || (family !== "all" && !c.fits) || fitsCharacter(c, fit)));
+    const list = lib.characters.filter((c) => !/^\/real\/(animals|fish|mascots|people|plates|props|sprites|cinema)\//.test(String((c as { src?: string }).src || "")) && (family === "all" || c.family === family) && (scope === "all" || (family !== "all" && !c.fits) || fitsCharacter(c, fit)));
     // Best fitting families first, in the order the category lists them.
     return scope === "fit" ? [...list].sort((a, b) => fit.families.indexOf(a.family) - fit.families.indexOf(b.family)) : list;
   }, [lib.characters, family, scope, fit]);

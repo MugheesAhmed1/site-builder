@@ -97,7 +97,7 @@ describe("project logic", () => {
     expect(readiness(p).ready).toBe(false);
     p = applyDetails(p, { answers: { ...p.answers, what: "Cakes and fresh bread", phone: "+92 300 0000000" } });
     expect(readiness(p).ready).toBe(true);
-    expect(PANELS.map((x) => x.id)).toEqual(["details", "design", "scenes", "motion", "page", "publish"]);
+    expect(PANELS.map((x) => x.id)).toEqual(["details", "design", "scenes", "motion", "page", "refine", "publish"]);
     expect(nextPanel("publish")).toBeNull();
   });
 

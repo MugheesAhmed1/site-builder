@@ -150,7 +150,8 @@ export default function Website({ design, content, preview = false, scheme: forc
   const ct = ct0;
   // Where "get in touch" buttons point: the contact block, or the address and hours, or the top.
   const toContact = visible.includes("contact") ? "#pf-contact" : visible.includes("visit") ? "#pf-visit" : "#pf-top";
-  const hero = d.heroStyle || "statement";
+  // Film-photo openings were retired with the generated pictures; they open as 3D journeys now.
+  const hero = d.heroStyle === "cinema" || d.heroStyle === "scatter" ? "journey" : d.heroStyle || "statement";
   const external = /^https?:|^tel:|^mailto:/.test(h.primaryHref || "");
   const secondaryHref = visible.includes("visit") && h.secondaryCta === "Find us" ? "#pf-visit" : visible.includes("services") ? "#pf-services" : toContact;
   const showImage = h.imageUrl || preview;
@@ -502,7 +503,7 @@ export default function Website({ design, content, preview = false, scheme: forc
           </Section>
         );
       case "cta":
-        if (d.ctaStyle === "glass") {
+        if (false) {
           return <GlassCta key={s} plate={plate} heading={c.cta.heading} text={c.cta.text} button={c.cta.button || h.primaryCta} href={h.primaryHref || toContact} newTab={/^https?:/.test(h.primaryHref)} />;
         }
         return (
@@ -657,7 +658,7 @@ export default function Website({ design, content, preview = false, scheme: forc
       {hero === "journey" ? (
         <>
           <span id="pf-top" />
-          <JourneyScene journey={{ world: normalizeStory(d.story).scene, creature: normalizeStory(d.story).character, chapters: storyChapters("website", c), cta: ctas, still: !animated }} />
+          <JourneyScene journey={{ world: normalizeStory(d.story).scene, creature: normalizeStory(d.story).character, behaviours: normalizeStory(d.story).characterBehavior, chapters: storyChapters("website", c), cta: ctas, still: !animated }} />
         </>
       ) : (
         <section id="pf-top" className={"pf-hero pf-hero--" + hero}>

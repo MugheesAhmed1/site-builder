@@ -284,7 +284,8 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
   const h = c.hero;
   const nav = visible.filter((s) => NAV_LABELS[s]).slice(0, 6);
   const photo = h.photoUrl;
-  const hero = d.heroStyle || "statement";
+  // Film-photo openings were retired with the generated pictures; they open as 3D journeys now.
+  const hero = d.heroStyle === "cinema" || d.heroStyle === "scatter" ? "journey" : d.heroStyle || "statement";
   const skillsFlat = arr("skills").flatMap((g) => g.items || []);
   const ct = c.contact || {};
   const cast = d.cast && d.cast.character ? d.cast : null;
@@ -660,7 +661,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
           </div>
         );
       case "cta":
-        if (d.ctaStyle === "glass") return <GlassCta key={s} plate={plate} heading={c.cta.heading} text={c.cta.text} button={c.cta.button || "Get in touch"} href="#pf-contact" />;
+        if (false) return <GlassCta key={s} plate={plate} heading={c.cta.heading} text={c.cta.text} button={c.cta.button || "Get in touch"} href="#pf-contact" />;
         return (
           <section id="pf-cta" className="pf-band" key={s}>
             {cast && animated && <Peek character={cast.character} />}
@@ -763,7 +764,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
       {hero === "journey" ? (
         <>
           <span id="pf-top" />
-          <JourneyScene journey={{ world: normalizeStory(d.story).scene, creature: normalizeStory(d.story).character, chapters: storyChapters("portfolio", c), cta: ctas, still: !animated }} />
+          <JourneyScene journey={{ world: normalizeStory(d.story).scene, creature: normalizeStory(d.story).character, behaviours: normalizeStory(d.story).characterBehavior, chapters: storyChapters("portfolio", c), cta: ctas, still: !animated }} />
         </>
       ) : (
         <section id="pf-top" className={"pf-hero pf-hero--" + hero}>

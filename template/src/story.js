@@ -53,7 +53,8 @@ export function normalizeStory(raw) {
     scene,
     character,
     scrollBehavior: SCROLL_BEHAVIOURS.includes(r.scrollBehavior) ? r.scrollBehavior : "camera-dive",
-    characterBehavior: behaviour.length ? behaviour : ["lookAtCursor", "reactToClick", "reactToScroll", "reactToSound"],
+    // Watching the cursor and answering a tap are the heart of every character; the spec adds to them.
+    characterBehavior: [...new Set(["lookAtCursor", "reactToClick", ...(behaviour.length ? behaviour : ["reactToScroll", "reactToSound"])])],
     transition: TRANSITIONS.includes(r.transition) ? r.transition : "depth-morph",
   };
 }
