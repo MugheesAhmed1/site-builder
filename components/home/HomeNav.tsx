@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Logo } from "@/components/Topbar";
 import { listProjects } from "@/lib/store";
 
-// The home page menu: a glass pill that floats over the 3D journey and tightens once the
+// The home page menu: a glass pill that floats over the cinematic background and tightens once the
 // page scrolls. It shows "Your sites" with a count when this browser has any.
 export default function HomeNav() {
   const [scrolled, setScrolled] = useState(false);

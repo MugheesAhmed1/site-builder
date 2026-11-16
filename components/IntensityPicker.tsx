@@ -3,17 +3,19 @@
 import { useEffect, useState } from "react";
 import { LEVELS, intensityPatch, levelOf } from "@/lib/intensity";
 import type { Design } from "@/lib/types";
-import { CHARACTERS, ENVIRONMENTS, normalizeStory } from "@/template/src/story.js";
+import { ADVANCED, ALL_ATMOSPHERES, ATMOSPHERES, siteAtmos } from "@/template/src/atmos/catalog.js";
+import { AtmosThumb } from "@/template/src/atmos/Atmos.jsx";
 
-// The animation engine's main dial: one slider from 1 (fades and hover) to 10 (a full 3D
-// journey). At 10 the world and the creature can be picked.
+// The animation engine's main dial: one slider from 1 (still background, fades and hover) to
+// 10 (the densest, fastest atmosphere). Under it, the cinematic background itself is picked.
 
 export default function IntensityPicker({ design, category, onChange }: { design: Design; category: string; onChange: (patch: Partial<Design>) => void }) {
-  const current = design.intensity ?? (design.heroStyle === "journey" ? 10 : 5);
+  const current = design.intensity ?? (design.heroStyle === "journey" || design.heroStyle === "atmos" ? 8 : 5);
   const [n, setN] = useState(current);
   useEffect(() => setN(current), [current]);
   const level = levelOf(n);
-  const story = normalizeStory(design.story);
+  const atmos = siteAtmos(design, category, "");
+  const isAtmos = ["atmos", "journey", "cinema", "scatter"].includes(design.heroStyle);
   const commit = (v: number) => onChange(intensityPatch(v, design, category));
   return (
     <div className="panel ix">
@@ -47,31 +49,26 @@ export default function IntensityPicker({ design, category, onChange }: { design
         ))}
       </div>
       <p className="small muted ix-text">{level.text}</p>
-      {n >= 10 && design.heroStyle === "journey" && (
-        <div className="ix-world">
-          <div>
-            <span className="lbl">World</span>
-            <div className="ix-chips" role="radiogroup" aria-label="World">
-              {ENVIRONMENTS.map((e) => (
-                <button key={e.id} type="button" role="radio" aria-checked={story.scene === e.id} className={"chip" + (story.scene === e.id ? " is-on" : "")} onClick={() => onChange({ story: { ...story, scene: e.id, character: e.character } })}>
-                  {e.label}
+      <div className="ix-world">
+        <span className="lbl">Cinematic background</span>
+        {[
+          { label: "Cinematic", list: ATMOSPHERES },
+          { label: "Advanced shaders (okaybabe, MIT)", list: ADVANCED },
+        ].map((g) => (
+          <div key={g.label} className="ix-atmos-group">
+            <span className="small muted">{g.label}</span>
+            <div className="ix-atmos" role="radiogroup" aria-label={g.label}>
+              {g.list.map((a) => (
+                <button key={a.id} type="button" role="radio" aria-checked={isAtmos && atmos === a.id} className={"ix-atmos-tile" + (isAtmos && atmos === a.id ? " is-on" : "")} title={a.note} onClick={() => onChange({ atmos: a.id, heroStyle: "atmos" })}>
+                  <AtmosThumb id={a.id} accent={design.accent} />
+                  <span>{a.label}</span>
                 </button>
               ))}
             </div>
           </div>
-          <div>
-            <span className="lbl">Creature</span>
-            <div className="ix-chips" role="radiogroup" aria-label="Creature">
-              {CHARACTERS.map((c) => (
-                <button key={c.id} type="button" role="radio" aria-checked={story.character === c.id} className={"chip" + (story.character === c.id ? " is-on" : "")} onClick={() => onChange({ story: { ...story, character: c.id } })}>
-                  {c.label}
-                </button>
-              ))}
-            </div>
-          </div>
-          <p className="small muted">Scroll the preview to fly through it. Point at the creature, tap it, or press “Let it listen” and talk to it.</p>
-        </div>
-      )}
+        ))}
+        <p className="small muted">{isAtmos ? ALL_ATMOSPHERES.find((a) => a.id === atmos)?.note + " Move the pointer over the preview and scroll it." : "Pick one to open the site on a living, cinematic background."}</p>
+      </div>
     </div>
   );
 }

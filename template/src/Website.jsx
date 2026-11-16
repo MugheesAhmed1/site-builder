@@ -3,8 +3,9 @@ import { palette, resolveScheme } from "./theme.js";
 import { useEdits } from "./edits.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
 import { CastCharacter, CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
-import { JourneyScene, Scene } from "./Scenes.jsx";
-import { normalizeStory, storyChapters } from "./story.js";
+import { Scene } from "./Scenes.jsx";
+import { AtmosHero } from "./atmos/Atmos.jsx";
+import { siteAtmos } from "./atmos/catalog.js";
 import { Carousel, Film, Flight, Grain, LineLoader, ScrollWords, SmoothScroll } from "./studio.jsx";
 import { Arc, Sphere, Track, propsFor, useFogSwitch, useScramble } from "./showpiece.jsx";
 import { Extras } from "./extras.jsx";
@@ -150,8 +151,8 @@ export default function Website({ design, content, preview = false, scheme: forc
   const ct = ct0;
   // Where "get in touch" buttons point: the contact block, or the address and hours, or the top.
   const toContact = visible.includes("contact") ? "#pf-contact" : visible.includes("visit") ? "#pf-visit" : "#pf-top";
-  // Film-photo openings were retired with the generated pictures; they open as 3D journeys now.
-  const hero = d.heroStyle === "cinema" || d.heroStyle === "scatter" ? "journey" : d.heroStyle || "statement";
+  // Film-photo openings and the 3D creature journeys were retired; they open on an atmosphere now.
+  const hero = d.heroStyle === "cinema" || d.heroStyle === "scatter" || d.heroStyle === "journey" || d.heroStyle === "atmos" ? "atmos" : d.heroStyle || "statement";
   const external = /^https?:|^tel:|^mailto:/.test(h.primaryHref || "");
   const secondaryHref = visible.includes("visit") && h.secondaryCta === "Find us" ? "#pf-visit" : visible.includes("services") ? "#pf-services" : toContact;
   const showImage = h.imageUrl || preview;
@@ -655,14 +656,16 @@ export default function Website({ design, content, preview = false, scheme: forc
 
       {curtain && <CurtainMenu open={menuOpen} onClose={() => setMenuOpen(false)} links={navLinks} brand={c.brand.name} cta={h.primaryCta ? { href: h.primaryHref || toContact, label: h.primaryCta } : null} />}
 
-      {hero === "journey" ? (
-        <>
-          <span id="pf-top" />
-          <JourneyScene journey={{ world: normalizeStory(d.story).scene, creature: normalizeStory(d.story).character, behaviours: normalizeStory(d.story).characterBehavior, chapters: storyChapters("website", c), cta: ctas, still: !animated }} />
-        </>
+      {hero === "atmos" ? (
+        <AtmosHero sectionId="pf-top" className="pf-hero pf-hero--atmos" id={siteAtmos(d, c.brand && c.brand.category, (c.brand.category || "") + " " + (h.headline || ""))} accent={pal.accent} intensity={d.intensity ?? 7} still={!animated} wordmark={c.brand.name} stats={heroStats}>
+            {kicker}
+            {headline}
+            {sub}
+            {ctas}
+        </AtmosHero>
       ) : (
         <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
-          {animated && <Backdrop kind={d.backdrop} />}
+          {animated && <Backdrop kind={d.backdrop} accent={pal.accent} intensity={d.intensity} />}
           {animated && scene && sceneMode === "backdrop" && !(hero === "cinema" && scene.group !== "photo") && sceneEl("pf-scene-backdrop")}
           {renderHero()}
         </section>
@@ -672,7 +675,7 @@ export default function Website({ design, content, preview = false, scheme: forc
 
       {filmOn && <Film src={filmSrc} steps={storySteps} title={arr("process").length >= 2 ? "How it works" : "What we do"} highlights={arr("highlights").map((x) => ({ label: x.label, value: x.value }))} preview={preview} path="hero.videoUrl" kicker={c.brand.name} />}
 
-      {!(filmSrc && filmOn) && showpiece !== "track" && cast && animated && d.castStory !== false && storySteps.length >= 2 && <CastStory character={cast.character} widgets={cast.widgets} ctx={ctx} steps={storySteps} title={arr("process").length >= 2 ? "How it works" : "What we do"} />}
+      {!(filmSrc && filmOn) && showpiece !== "track" && cast && animated && (hero === "atmos" ? d.castStory === true : d.castStory !== false) && storySteps.length >= 2 && <CastStory character={cast.character} widgets={cast.widgets} ctx={ctx} steps={storySteps} title={arr("process").length >= 2 ? "How it works" : "What we do"} />}
 
       {showpiece === "sphere" && <Sphere props={propsFor(c.brand && c.brand.category)} items={spItems} title={"Explore"} />}
       {showpiece === "arc" && <Arc props={propsFor(c.brand && c.brand.category)} items={spItems} title={"Explore"} />}

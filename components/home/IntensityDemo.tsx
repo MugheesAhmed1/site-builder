@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { LEVELS, levelOf } from "@/lib/intensity";
+import { Atmosphere } from "@/template/src/atmos/Atmos.jsx";
 
-// A live taste of the intensity dial: the little stage changes with the slider, from a
-// quiet fade to a creature crossing a 3D-feeling sea.
+// A live taste of the intensity dial: a real atmosphere that is still at 1, drifts at 4,
+// follows the pointer from 5 and runs dense and fast at 10.
 
 export default function IntensityDemo() {
   const [n, setN] = useState(7);
@@ -12,13 +13,7 @@ export default function IntensityDemo() {
   return (
     <div className="ixd" data-level={level.name.toLowerCase()}>
       <div className="ixd-stage" aria-hidden="true">
-        <div className="ixd-sky" />
-        <div className="ixd-particles">
-          {Array.from({ length: 24 }, (_, i) => (
-            <i key={i} style={{ "--i": i } as React.CSSProperties} />
-          ))}
-        </div>
-        <div className="ixd-creature" />
+        <Atmosphere id="meadow" accent="#8b5cf6" intensity={n} className="ixd-at" />
         <div className="ixd-card ixd-card-a">
           <b>Fresh bread daily</b>
           <span />

@@ -235,3 +235,9 @@
 .ix-text { min-height: 2.6em; }
 .ix-world { display: grid; gap: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
 .ix-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.ix-atmos-group { display: grid; gap: 6px; }
+.ix-atmos { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 8px; }
+.ix-atmos-tile { display: grid; gap: 6px; padding: 0 0 8px; border: 1px solid var(--line); border-radius: 12px; background: none; color: inherit; font: inherit; font-size: 12px; text-align: center; cursor: pointer; overflow: hidden; transition: border-color 0.2s, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.ix-atmos-tile .at-thumb { border-radius: 11px 11px 0 0; }
+.ix-atmos-tile:hover { transform: translateY(-2px); }
+.ix-atmos-tile.is-on { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }

@@ -6,7 +6,7 @@ import Icon from "@/components/Icon";
 import { TONES, applyCopy, collectCopy, diffCopy, fieldLabel, localPolish, siteBrief, type RefineResult, type RefineTask, type RefineTone } from "@/lib/refine";
 import type { Project, SectionFx, SiteContent, WebsiteContent } from "@/lib/types";
 import { intensityPatch } from "@/lib/intensity";
-import { directStory, normalizeStory } from "@/template/src/story.js";
+import { atmosById, pickAtmos } from "@/template/src/atmos/catalog.js";
 
 // AI polish: optional help from Google Gemini. The words go to this site's own server route,
 // which holds the key; nothing is sent until the person presses a button, and every change
@@ -80,9 +80,9 @@ export default function RefinePanel({ p, update }: { p: Project; update: Update 
         setEnabled(false);
         if (task === "polish") runLocal();
         else if (task === "direct") {
-          const s = directStory(p.category, Object.values(copy).join(" "), "insane");
-          update((prev) => ({ ...prev, design: { ...prev.design, ...intensityPatch(10, { ...prev.design, story: s }, prev.category) } }));
-          setDone(`Directed by the local rules: a ${s.scene} journey with a ${s.character}.`);
+          const id = pickAtmos(p.category, Object.values(copy).join(" "));
+          update((prev) => ({ ...prev, design: { ...prev.design, ...intensityPatch(prev.design.intensity ?? 8, { ...prev.design, atmos: id }, prev.category), heroStyle: "atmos" } }));
+          setDone(`Directed by the local rules: the ${atmosById(id).label} background.`);
         }
         else setError("AI suggestions need a Gemini key on the server. The local tidy-up still works.");
       } else setError(r.error || "Something went wrong. Your words are unchanged.");
@@ -96,10 +96,12 @@ export default function RefinePanel({ p, update }: { p: Project; update: Update 
     }
     if (task === "headline") setHeadlines(r.headlines?.length ? r.headlines : null);
     if (task === "direct" && r.story) {
-      const { sectionFx, ...story } = r.story as { sectionFx?: SectionFx };
-      update((prev) => ({ ...prev, design: { ...prev.design, ...intensityPatch(10, { ...prev.design, story: normalizeStory(story) }, prev.category), ...(sectionFx ? { sectionFx } : {}) } }));
-      const s = normalizeStory(story);
-      setDone(`Gemini directed a ${s.scene} journey with a ${s.character}${r.why ? ": " + r.why : "."} Scroll the preview to see it.`);
+      const st = r.story;
+      update((prev) => ({
+        ...prev,
+        design: { ...prev.design, ...intensityPatch(st.intensity, { ...prev.design, atmos: st.atmos }, prev.category), heroStyle: "atmos", sectionFx: st.sectionFx as SectionFx, accentFace: st.accentFace as Project["design"]["accentFace"] },
+      }));
+      setDone(`Gemini picked the ${atmosById(st.atmos).label} background at intensity ${st.intensity}${r.why ? ": " + r.why : "."} Scroll the preview to see it.`);
     }
     if (task === "faq") setFaq(r.faq?.length ? r.faq.map((f) => ({ ...f, on: true })) : null);
   };
@@ -178,8 +180,8 @@ export default function RefinePanel({ p, update }: { p: Project; update: Update 
         <button type="button" className="rf-action" disabled={!!busy} onClick={() => run("direct")}>
           <Icon name="film" size={20} />
           <span>
-            <b>Direct my 3D journey</b>
-            <span className="small muted">{enabled ? "Gemini reads your site and picks the world, the creature, how it behaves and how sections arrive." : "Picks a world and a creature that suit your kind of site."}</span>
+            <b>Direct my opening</b>
+            <span className="small muted">{enabled ? "Gemini reads your site and picks the cinematic background, the headline accent, how much it moves and how sections arrive." : "Picks a cinematic background that suits your kind of site."}</span>
           </span>
           {busy === "direct" && <span className="rf-spin" aria-label="Working" />}
         </button>

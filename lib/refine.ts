@@ -204,7 +204,7 @@ export interface RefineResult {
   copy?: Record<string, string>; // polish: same keys, better words
   headlines?: { headline: string; sub: string }[]; // headline: three options
   faq?: { question: string; answer: string }[]; // faq: new questions to review
-  story?: Record<string, unknown>; // direct: the animation engine spec, plus a reason
+  story?: { atmos: string; accentFace: string; intensity: number; sectionFx: string }; // direct: the opening's direction, plus a reason
   why?: string;
   error?: string;
 }

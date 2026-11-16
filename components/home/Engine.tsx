@@ -10,19 +10,14 @@ const ease = [0.23, 1, 0.32, 1] as const;
 
 const LAYERS = [
   { name: "UI motion", tech: "Motion", items: ["Entrances", "Hover and press", "Magnetic buttons", "Kinetic type"] },
-  { name: "Scroll story", tech: "Lenis + scroll engine", items: ["Camera dives", "Pinned scenes", "Section transitions", "Parallax"] },
-  { name: "3D world", tech: "three.js + React Three Fiber", items: ["Worlds", "Creatures", "Particles", "Sound reactive"] },
+  { name: "Scroll story", tech: "Lenis + scroll engine", items: ["Scroll focus-pull", "Pinned scenes", "Section transitions", "Parallax"] },
+  { name: "Living background", tech: "WebGL shaders", items: ["11 atmospheres", "Pointer depth", "Focus-pull on scroll", "Grain and light"] },
 ];
 
 const SPEC = `{
-  "scene": "ocean",
-  "character": "whale",
-  "scrollBehavior": "camera-dive",
-  "characterBehavior": [
-    "lookAtCursor", "reactToClick",
-    "swimAcrossScreen", "reactToSound"
-  ],
-  "transition": "depth-morph",
+  "atmos": "meadow",
+  "accentFace": "serif",
+  "intensity": 8,
   "sectionFx": "curtain"
 }`;
 
@@ -34,7 +29,7 @@ export default function Engine() {
     <div className="eng" ref={ref}>
       <motion.div className="eng-node eng-in" {...step(0)}>
         <span className="eng-tag mono">Input</span>
-        <b>“Website for my dive school in Karachi”</b>
+        <b>“Website for my flower shop in Lahore”</b>
       </motion.div>
       <div className="eng-wire" aria-hidden="true" />
       <motion.div className="eng-node eng-director" {...step(1)}>
