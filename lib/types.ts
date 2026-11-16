@@ -79,6 +79,9 @@ export interface Design {
   menu?: "drop" | "curtain"; // the menu: a drop-down on phones, or a full-screen curtain that opens as a circle
   footer?: "simple" | "wordmark"; // the footer: one line, or a card with the name set huge underneath
   ctaStyle?: "band" | "glass"; // the call to action: a colour band, or a glass card over a scene
+  align?: "center" | "left"; // how the words sit on the page: centred (the default) or left aligned
+  sectionFx?: SectionFx; // how each section arrives as it scrolls into view
+  scrollFx?: boolean; // scroll-linked extras: drawn title lines, drifting headings, cards that settle into place
   // Edit on page: what the person changed on single elements, keyed by where the element is
   // (see template/src/edits.js), and exact page colours set by hand for light and dark.
   edits?: Record<string, ElementEdit>;
@@ -140,6 +143,8 @@ export interface CastPick {
   character: { id: string; family: string; name: string; palette: string; accessory: string; expression: string; idle: string; variant: number; src?: string; fits?: string[] };
   widgets: { id: string; kind: string; skin: string; name: string }[];
 }
+
+export type SectionFx = "none" | "rise" | "curtain" | "zoom" | "tilt" | "blur" | "stack" | "slide";
 
 export type DesignPart = "colour" | "type" | "shape" | "layout" | "motion";
 

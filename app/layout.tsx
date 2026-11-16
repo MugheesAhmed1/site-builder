@@ -5,6 +5,7 @@ import "@/template/src/cast.css";
 import "@/template/src/studio.css";
 import "@/template/src/showpiece.css";
 import "@/template/src/cinema.css";
+import "@/template/src/flow.css";
 import "./shell.css";
 import "./home.css";
 

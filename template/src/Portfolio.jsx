@@ -9,6 +9,7 @@ import { Arc, Sphere, Track, propsFor, useFogSwitch, useScramble } from "./showp
 import { Extras } from "./extras.jsx";
 import { Badge, CinemaHero, CinemaStrip, CurtainMenu, GlassCta, ScatterHero, WordmarkFooter } from "./cinema.jsx";
 import { plateFor } from "./plates.js";
+import { useSectionFlow } from "./flow.jsx";
 import { Avatar, Counter, cleanContent, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
 // The whole portfolio, driven by two objects:
@@ -276,6 +277,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
   useScramble(rootRef, d.motion !== "none" && d.anim !== "M-000" && !!d.scramble, JSON.stringify(c) + (d.scramble ? 1 : 0));
   const fog = useFogSwitch();
   useSpotlight(rootRef, animated && d.hover === "spotlight");
+  useSectionFlow(rootRef, JSON.stringify(c.sections) + (d.sectionFx || "") + (d.scrollFx === false ? "0" : "1") + d.anim + d.motion + d.heroStyle + (d.showpiece || "") + scheme, d, !!editing);
   useActiveSection(rootRef, visible.join(","), setActiveId);
 
   const h = c.hero;

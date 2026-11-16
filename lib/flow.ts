@@ -6,7 +6,7 @@ import type { PortfolioContent, Project, StepId, WebsiteContent } from "./types"
 // screen. This file describes the panels, the suggested order through them, and the launch
 // check that says what is still worth doing before the site goes online.
 
-export type PanelId = "details" | "design" | "scenes" | "motion" | "page" | "publish";
+export type PanelId = "details" | "design" | "scenes" | "motion" | "page" | "refine" | "publish";
 
 export interface Panel {
   id: PanelId;
@@ -23,6 +23,7 @@ export const PANELS: Panel[] = [
   { id: "scenes", step: "cast", title: "Scenes and characters", short: "Scenes", icon: "film", intro: "The set piece your site opens with, plus a character and live widgets. All of it reacts to the pointer, taps and drags." },
   { id: "motion", step: "motion", title: "Animation", short: "Motion", icon: "motion", intro: "How the site moves: one-tap packs, entrance styles, scrolling effects and showpieces. Played by Motion in the site you download too." },
   { id: "page", step: "build", title: "Page", short: "Page", icon: "layout", intro: "Switch sections on and off, drag them into order, and edit every word. Or press Edit on page and click anything in the preview." },
+  { id: "refine", step: "build", title: "AI polish", short: "Polish", icon: "sparkle", intro: "Optional help from Google Gemini: polish every word, try new openings or add the questions visitors ask. You review every change, and Undo takes it back." },
   { id: "publish", step: "deploy", title: "Publish", short: "Publish", icon: "rocket", intro: "Download the finished site and put it online for free. It is yours: plain files, no account, no monthly fee." },
 ];
 

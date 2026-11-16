@@ -13,6 +13,7 @@ import { StorageNotice } from "@/components/Topbar";
 import DetailsPanel from "@/components/studio/DetailsPanel";
 import PagePanel from "@/components/studio/PagePanel";
 import PublishPanel from "@/components/studio/PublishPanel";
+import RefinePanel from "@/components/studio/RefinePanel";
 import { PANELS, describe, nextPanel, panelById, readiness, type PanelId } from "@/lib/flow";
 import { designFor } from "@/lib/project";
 import { keepCast } from "@/lib/store";
@@ -200,6 +201,8 @@ export default function Studio({ id }: { id: string }) {
 
                 {panel === "page" && <PagePanel p={p} update={update} />}
 
+                {panel === "refine" && <RefinePanel p={p} update={update} />}
+
                 {panel === "publish" && <PublishPanel p={p} go={go} onDownloaded={() => update((prev) => ({ ...prev, steps: { ...prev.steps, deploy: "approved" } }), true)} />}
               </motion.div>
             </AnimatePresence>
@@ -218,7 +221,7 @@ export default function Studio({ id }: { id: string }) {
         </section>
 
         <section className="studio-canvas" aria-label="Live preview">
-          <Preview kind={p.kind} design={p.design} content={content} replayKey={replayKey} onContentChange={setContent} {...({ onDesignChange: patchDesign } as object)} />
+          <Preview kind={p.kind} design={p.design} content={content} replayKey={replayKey} onContentChange={setContent} onDesignChange={patchDesign} />
         </section>
       </div>
 

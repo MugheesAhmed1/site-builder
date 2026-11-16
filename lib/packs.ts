@@ -39,6 +39,8 @@ const OFF: Partial<Design> = {
   tilt: false,
   showpiece: "none",
   castStory: true,
+  sectionFx: "rise",
+  scrollFx: true,
 };
 
 export const PACKS: Pack[] = [
@@ -46,43 +48,43 @@ export const PACKS: Pack[] = [
     id: "cinema",
     name: "Cinematic",
     blurb: "A film-like scene behind your words that pushes in as you scroll, a glass pill menu, a glass call to action and your name set huge at the foot.",
-    set: { ...OFF, smooth: true, loader: "line", scrollWords: true, fogSwitch: true, magnetic: true, grain: true, heroStyle: "cinema", accentFace: "serif", chrome: "pill", menu: "curtain", footer: "wordmark", ctaStyle: "glass" },
+    set: { ...OFF, sectionFx: "curtain", smooth: true, loader: "line", scrollWords: true, fogSwitch: true, magnetic: true, grain: true, heroStyle: "cinema", accentFace: "serif", chrome: "pill", menu: "curtain", footer: "wordmark", ctaStyle: "glass" },
   },
   {
     id: "studio",
     name: "Studio reel",
     blurb: "A spinning sphere of your work, a scroll film, grain and a line loader. Award-site energy.",
-    set: { ...OFF, smooth: true, loader: "line", film: true, flight: true, scrollWords: true, grain: true, scramble: true, fogSwitch: true, magnetic: true, cursor: true, tilt: true, showpiece: "sphere" },
+    set: { ...OFF, sectionFx: "stack", smooth: true, loader: "line", film: true, flight: true, scrollWords: true, grain: true, scramble: true, fogSwitch: true, magnetic: true, cursor: true, tilt: true, showpiece: "sphere" },
   },
   {
     id: "launch",
     name: "Product launch",
     blurb: "Cards curve around a stage and each pick is scanned into place. Built for products and menus.",
-    set: { ...OFF, smooth: true, loader: "line", flight: true, scrollWords: true, fogSwitch: true, magnetic: true, tilt: true, showpiece: "arc" },
+    set: { ...OFF, sectionFx: "zoom", smooth: true, loader: "line", flight: true, scrollWords: true, fogSwitch: true, magnetic: true, tilt: true, showpiece: "arc" },
   },
   {
     id: "story",
     name: "Story track",
     blurb: "Your story slides sideways while your character pushes every line out of its way.",
-    set: { ...OFF, smooth: true, film: true, scrollWords: true, grain: true, fogSwitch: true, tilt: true, showpiece: "track", castStory: false },
+    set: { ...OFF, sectionFx: "tilt", smooth: true, film: true, scrollWords: true, grain: true, fogSwitch: true, tilt: true, showpiece: "track", castStory: false },
   },
   {
     id: "editorial",
     name: "Quiet editorial",
     blurb: "Smooth scroll, a masked line loader and words that sharpen as you read. Calm and confident.",
-    set: { ...OFF, smooth: true, loader: "line", scrollWords: true, fogSwitch: true },
+    set: { ...OFF, sectionFx: "blur", smooth: true, loader: "line", scrollWords: true, fogSwitch: true },
   },
   {
     id: "playful",
     name: "Playful",
     blurb: "Tiles that fly, a drag carousel, magnetic buttons and scrambled titles. Lively, never noisy.",
-    set: { ...OFF, smooth: true, flight: true, carousel: true, scramble: true, fogSwitch: true, magnetic: true, cursor: true, tilt: true, showpiece: "sphere" },
+    set: { ...OFF, sectionFx: "slide", smooth: true, flight: true, carousel: true, scramble: true, fogSwitch: true, magnetic: true, cursor: true, tilt: true, showpiece: "sphere" },
   },
   {
     id: "calm",
     name: "Calm and fast",
     blurb: "Only gentle entrances. Fastest to load and kindest to people who prefer less motion.",
-    set: { ...OFF },
+    set: { ...OFF, sectionFx: "none", scrollFx: false },
   },
 ];
 

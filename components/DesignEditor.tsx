@@ -336,6 +336,10 @@ export default function DesignEditor({
               <p className="hint">Put *stars* around the words to accent in your headline, or the last word is used.</p>
             </div>
             <div>
+              <label className="lbl">Text alignment</label>
+              <Seg label="Text alignment" value={design.align ?? "center"} options={["center", "left"]} labels={{ center: "Centred", left: "Left aligned" }} onChange={(align) => set({ align })} />
+            </div>
+            <div>
               <label className="lbl">Navigation</label>
               <Seg label="Navigation" value={design.chrome ?? "bar"} options={["bar", "pill"]} labels={{ bar: "Full bar", pill: "Floating glass pill" }} onChange={(chrome) => set({ chrome })} />
             </div>
