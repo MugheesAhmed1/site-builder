@@ -11,6 +11,9 @@ import { ALL_ATMOSPHERES, ATMOS_IDS, SCENES, atmosOf, pickAtmos, sceneFiles, sit
 import { PAPER_SCENES } from "@/template/src/atmos/paper.js";
 import { FRAGS } from "@/template/src/atmos/shaders.js";
 import { OKAYBABE } from "@/template/src/atmos/vendor/okaybabe.js";
+import { MOTION_PRIMITIVES } from "@/template/src/atmos/vendor/motion-primitives.js";
+import { STUDIO_FRAGS } from "@/template/src/atmos/studio.js";
+import { KK_CONTROLS, SHADER_CONTROLS } from "@/template/src/atmos/controls.js";
 
 vi.stubGlobal("window", { dispatchEvent: () => true });
 vi.stubGlobal("localStorage", { getItem: () => null, setItem: () => undefined });
@@ -45,7 +48,7 @@ describe("journeys and the animation engine", () => {
 
   it("has a renderer for every scene and picks one for every kind of site", () => {
     for (const a of ALL_ATMOSPHERES) {
-      const ok = a.family === "plate" ? !!a.plate : a.family === "paper" ? PAPER_SCENES.some((x) => x.id === a.id) : Boolean(FRAGS[a.id as keyof typeof FRAGS]) || OKAYBABE.some((o) => o.id === a.id);
+      const ok = a.family === "plate" ? !!a.plate : a.family === "paper" ? PAPER_SCENES.some((x) => x.id === a.id) : a.family === "kokonut" ? Boolean(a.kk && KK_CONTROLS[a.kk]) : a.family === "studio" ? Boolean((STUDIO_FRAGS as Record<string, string>)[a.id] && SHADER_CONTROLS[a.id]) : a.family === "motionprimitives" ? MOTION_PRIMITIVES.some((o: { id: string }) => o.id === a.id) : Boolean(FRAGS[a.id as keyof typeof FRAGS]) || OKAYBABE.some((o) => o.id === a.id);
       expect(ok, a.id).toBe(true);
       expect(a.flat).toMatch(/^#[0-9a-f]{6}$/i);
     }

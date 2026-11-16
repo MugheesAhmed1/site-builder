@@ -168,7 +168,7 @@ export function markChanged(p: Project, step: StepId): Project {
 export function keepCast(prev: Design, next: Design): Design {
   // Characters, scenes and every motion layer belong to the person, not the design system,
   // so switching design keeps them.
-  const keys = ["intro", "magnetic", "cursor", "tilt", "smooth", "grain", "loader", "film", "video", "flight", "carousel", "scrollWords", "showpiece", "scramble", "fogSwitch", "pack", "plate", "accentFace", "chrome", "menu", "footer", "ctaStyle", "edits", "atmos", "atmosLayout", "sceneTint", "intensity"] as const;
+  const keys = ["intro", "magnetic", "cursor", "tilt", "smooth", "grain", "loader", "film", "video", "flight", "carousel", "scrollWords", "showpiece", "scramble", "fogSwitch", "pack", "plate", "accentFace", "chrome", "menu", "footer", "ctaStyle", "edits", "atmos", "atmosLayout", "sceneTint", "sceneProps", "intensity"] as const;
   const keep = Object.fromEntries(keys.map((k) => [k, prev[k]]));
   const out = { ...next } as Design;
   // A cinematic background opening is the person's choice too, not the design system's.

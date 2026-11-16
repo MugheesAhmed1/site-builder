@@ -30,6 +30,8 @@ export const EXAMPLES: { id: string; query: string; answers?: Record<string, str
   { id: "developer", query: "Portfolio for me, I'm a software engineer called Omar Khan" },
   { id: "resort", query: "Website for my beach resort called Blue Lagoon in Maldives", answers: { what: "Overwater villas and diving" } },
   { id: "gym", query: "Website for my gym called Iron Hour in Toronto", answers: { what: "Strength training and boxing classes" } },
+  { id: "swim", query: "Website for my swim school called Little Dolphins in Sydney", answers: { what: "Swimming lessons for kids and adults" } },
+  { id: "cyber", query: "Website for my cyber security firm called Bastion Labs", answers: { what: "Penetration testing and security audits" } },
 ];
 
 it("builds every example", async () => {

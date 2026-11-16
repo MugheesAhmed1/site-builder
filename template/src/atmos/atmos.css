@@ -423,3 +423,10 @@
 .at-content::before { content: ""; position: absolute; inset: 10% -8%; z-index: -1; pointer-events: none; background: radial-gradient(closest-side, rgb(6 5 12 / 0.46), rgb(6 5 12 / 0.18) 62%, transparent); }
 .at-tone-light .at-content::before { background: radial-gradient(closest-side, rgb(255 255 255 / 0.66), rgb(255 255 255 / 0.26) 62%, transparent); }
 .at-lay-panel .at-content::before { display: none; }
+
+/* Interactive canvas scenes (Kokonut UI) answer the pointer: the words let it through,
+   except for the links and buttons themselves. */
+.at-hero[data-family="kokonut"] .at-stage { z-index: 0; }
+.at-hero[data-family="kokonut"] .at-content { z-index: 2; pointer-events: none; }
+.at-hero[data-family="kokonut"] .at-content :is(a, button, input, select, textarea, label, .at-panel) { pointer-events: auto; }
+.at-hero[data-family="kokonut"] .at-vignette, .at-hero[data-family="kokonut"] .at-grain, .at-hero[data-family="kokonut"] .at-flat { pointer-events: none; }
