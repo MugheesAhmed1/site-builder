@@ -5,10 +5,12 @@ import Icon from "@/components/Icon";
 import { intensityPatch } from "@/lib/intensity";
 import type { Design } from "@/lib/types";
 import { AtmosThumb } from "@/template/src/atmos/Atmos.jsx";
+import { sceneControls, type SceneControl } from "@/template/src/atmos/controls.js";
 import { MOODS, SCENES, SCENE_GROUPS, atmosById, pickAtmos, sceneHasMood, siteAtmos, type AtmosDef } from "@/template/src/atmos/catalog.js";
 
 // The Scenes panel: the world the site opens in. One live drop-down holds every scene in the
-// library (living photos, our own shaders, Paper Shaders and okaybabe), filtered by mood and
+// library (living photos, our own shaders, Paper Shaders, okaybabe, Motion Primitives and the
+// interactive Kokonut UI canvases), filtered by mood and
 // searchable. Every change blends the preview through the scenes' flat colours. "Surprise me"
 // rolls a scene, and "Play the reel" flips through them on its own until you stop it.
 
@@ -23,8 +25,10 @@ const REEL_MS = 3600;
 
 function familyNote(s: AtmosDef) {
   if (s.family === "plate") return "Living photo · our engine";
-  if (s.family === "shader") return "Original shader";
+  if (s.family === "shader" || s.family === "studio") return "Original shader";
   if (s.family === "paper") return "Paper Shaders · Apache-2.0";
+  if (s.family === "kokonut") return "Kokonut UI · MIT · interactive";
+  if (s.family === "motionprimitives") return "Motion Primitives · MIT";
   return "okaybabe · MIT";
 }
 
@@ -214,8 +218,10 @@ export default function ScenesPanel({ design, category, words, onChange }: { des
             );
           })}
         </div>
-        {design.sceneTint === "brand" && current.family !== "paper" && <p className="small muted">Brand colour recolours the Paper Shaders scenes. This scene keeps its own light.</p>}
+        {design.sceneTint === "brand" && (current.family === "plate" || current.family === "okaybabe") && <p className="small muted">This scene keeps its own light. Brand colour recolours the shader and canvas scenes.</p>}
       </div>
+
+      <SceneSettings scene={current} values={(design.sceneProps || {})[current.id] || {}} onChange={(v) => onChange({ sceneProps: { ...(design.sceneProps || {}), [current.id]: v } })} />
 
       <div className="scn-block">
         <div className="row between">
@@ -225,6 +231,57 @@ export default function ScenesPanel({ design, category, words, onChange }: { des
         <input className="ix-range" type="range" min={1} max={10} step={1} value={energy} aria-label="How much the scene moves, 1 to 10" style={{ "--ix": (energy - 1) / 9 } as React.CSSProperties} onChange={(e) => onChange(intensityPatch(Number(e.target.value), design, category))} />
         <p className="small muted">1 and 2 hold a still frame. From 5 the scene follows the pointer, and it pulls focus as the page scrolls.</p>
       </div>
+    </div>
+  );
+}
+
+type Val = number | boolean | string;
+
+/** The settings this scene offers (Kokonut props, shader uniforms), saved per scene. */
+function SceneSettings({ scene, values, onChange }: { scene: AtmosDef; values: Record<string, Val>; onChange: (v: Record<string, Val>) => void }) {
+  const controls: SceneControl[] = sceneControls(scene);
+  if (!controls.length) return null;
+  const set = (k: string, v: Val) => onChange({ ...values, [k]: v });
+  const changed = Object.keys(values).length > 0;
+  return (
+    <div className="scn-block scn-settings">
+      <div className="row between">
+        <span className="lbl">Scene settings</span>
+        {changed && (
+          <button type="button" className="btn btn-sm" onClick={() => onChange({})}>
+            Reset
+          </button>
+        )}
+      </div>
+      {controls.map((c) => {
+        const v = values[c.key] ?? c.def;
+        const id = "scn-set-" + scene.id + "-" + c.key;
+        if (c.type === "toggle")
+          return (
+            <label key={c.key} className="row between scn-set" htmlFor={id}>
+              <span className="small">{c.label}</span>
+              <input id={id} type="checkbox" checked={Boolean(v)} onChange={(e) => set(c.key, e.target.checked)} />
+            </label>
+          );
+        if (c.type === "color")
+          return (
+            <label key={c.key} className="row between scn-set" htmlFor={id}>
+              <span className="small">{c.label}</span>
+              <input id={id} type="color" value={String(v)} onChange={(e) => set(c.key, e.target.value)} />
+            </label>
+          );
+        const n = Number(v);
+        const min = c.min ?? 0, max = c.max ?? 1;
+        return (
+          <div key={c.key} className="scn-set">
+            <div className="row between">
+              <label className="small" htmlFor={id}>{c.label}</label>
+              <span className="mono small">{Math.round(n * 100) / 100}</span>
+            </div>
+            <input id={id} className="ix-range" type="range" min={min} max={max} step={c.step ?? 0.01} value={n} style={{ "--ix": (n - min) / (max - min || 1) } as React.CSSProperties} onChange={(e) => set(c.key, Number(e.target.value))} />
+          </div>
+        );
+      })}
     </div>
   );
 }

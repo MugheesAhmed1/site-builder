@@ -52,6 +52,7 @@ export interface Design {
   atmos?: string; // the scene the site opens in: an id from template/src/atmos/catalog.js
   atmosLayout?: "center" | "low" | "high" | "panel" | "wordmark"; // where the words sit over the scene
   sceneTint?: "scene" | "brand"; // keep the scene's own colours, or recolour it to the brand accent
+  sceneProps?: Record<string, Record<string, number | boolean | string>>; // each scene's own settings (Kokonut and the studio shaders), by scene id
   experienceStyle: "ledger" | "timeline" | "list";
   projectStyle: "grid" | "case" | "index";
   serviceStyle: "menu" | "bento" | "rows";

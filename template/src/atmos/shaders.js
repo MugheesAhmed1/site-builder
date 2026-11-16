@@ -13,7 +13,7 @@ varying vec2 vUv;
 void main(){ vUv = aPos * 0.5 + 0.5; gl_Position = vec4(aPos, 0.0, 1.0); }
 `;
 
-const HEAD = `
+export const HEAD = `
 precision highp float;
 uniform float uTime; uniform vec2 uRes; uniform vec2 uPointer; uniform float uScroll; uniform vec3 uAccent; uniform float uAmount;
 varying vec2 vUv;

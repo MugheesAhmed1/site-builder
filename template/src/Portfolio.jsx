@@ -746,7 +746,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
       {curtain && <CurtainMenu open={menuOpen} onClose={() => setMenuOpen(false)} links={navLinks} brand={h.name} cta={{ href: "#pf-contact", label: "Get in touch" }} />}
 
       {hero === "atmos" ? (
-        <AtmosHero sectionId="pf-top" className="pf-hero pf-hero--atmos" id={siteAtmos(d, h.role, (h.role || "") + " " + (h.tagline || ""))} accent={pal.accent} intensity={d.intensity ?? 7} still={!animated} layout={d.atmosLayout} tint={d.sceneTint} wordmark={h.name} stats={arr("stats").map((x) => ({ label: x.label, value: (x.value ?? "") + (x.suffix || "") }))}>
+        <AtmosHero sectionId="pf-top" className="pf-hero pf-hero--atmos" id={siteAtmos(d, h.role, (h.role || "") + " " + (h.tagline || ""))} settings={(d.sceneProps || {})[siteAtmos(d, h.role, (h.role || "") + " " + (h.tagline || ""))]} words={skillsFlat} accent={pal.accent} intensity={d.intensity ?? 7} still={!animated} layout={d.atmosLayout} tint={d.sceneTint} wordmark={h.name} stats={arr("stats").map((x) => ({ label: x.label, value: (x.value ?? "") + (x.suffix || "") }))}>
             {kicker}
             {headline}
             {intro}

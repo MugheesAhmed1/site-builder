@@ -15,7 +15,7 @@ const b = await chromium.launch({ args: ["--use-gl=angle", "--use-angle=swiftsha
 // A fresh page per scene: software WebGL is slow, and each scene gets its own first frame.
 for (const s of list) {
   const p = await b.newPage({ viewport: { width: 640, height: 400 } });
-  await p.goto(BASE + "/lab/scene?n=7&id=" + s.id, { waitUntil: "networkidle" });
+  await p.goto(BASE + "/lab/scene?n=7&gpu=1&id=" + s.id, { waitUntil: "load", timeout: 60000 });
   await p.waitForTimeout(Number(process.env.WAIT || 3500));
   await p.screenshot({ path: `/tmp/scene-${s.id}.png` });
   await p.close();

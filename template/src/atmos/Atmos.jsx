@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { atmosById, posterOf, thumbOf } from "./catalog.js";
+import { atmosById, kkPhoto, posterOf, thumbOf } from "./catalog.js";
+import { KokonutScene } from "./kokonut/index.jsx";
 import { mountAtmos, noGpu } from "./engine.js";
 import { mountPaper } from "./paper-mount.js";
 import "./atmos.css";
@@ -25,7 +26,7 @@ const BLEND_IN = 900; // ms: the next scene rises out of it
  * out into its flat colour, morphs that colour into the new scene's, and blends the new one in.
  * The first scene rises out of its flat colour the same way once it has drawn.
  */
-export function Atmosphere({ id, accent, intensity = 7, host, className = "", still: forceStill, tint = "scene" }) {
+export function Atmosphere({ id, accent, intensity = 7, host, className = "", still: forceStill, tint = "scene", settings, name, words }) {
   const canvasRef = useRef(null);
   const paperRef = useRef(null);
   const flatRef = useRef(null);
@@ -37,9 +38,12 @@ export function Atmosphere({ id, accent, intensity = 7, host, className = "", st
   const meta = atmosById(shown);
   const still = !!forceStill || lv.still || reducedMotion();
   const live = useRef({});
-  live.current = { accent, amount: lv.amount, still, noPointer: !lv.pointer, tint: tint === "brand" ? accent : "" };
+  live.current = { accent, amount: lv.amount, still, noPointer: !lv.pointer, tint: tint === "brand" ? accent : "", settings: settings || {} };
+  const settingsKey = JSON.stringify(settings || {});
   const [ready, setReady] = useState(false);
   const [nogl, setNogl] = useState(false);
+  const [kk, setKk] = useState(""); // the Kokonut scene on show, once the browser has it
+  const revealRef = useRef(null);
 
   const cover = (on, ms, colour) => {
     const f = flatRef.current;
@@ -54,7 +58,9 @@ export function Atmosphere({ id, accent, intensity = 7, host, className = "", st
     let alive = true;
     const m = atmosById(shown);
     const reveal = () => alive && requestAnimationFrame(() => alive && setReady(true));
+    revealRef.current = reveal;
     setReady(false);
+    setKk("");
     // No graphics card: the scene's still picture on a plain 2D canvas, with a slow CSS drift.
     // It costs the page almost nothing, and a canvas never counts as its largest paint.
     if (noGpu()) {
@@ -80,6 +86,23 @@ export function Atmosphere({ id, accent, intensity = 7, host, className = "", st
       };
       img.onerror = () => alive && reveal();
       img.src = posterOf(m.id);
+      return () => {
+        alive = false;
+      };
+    }
+    if (m.family === "kokonut") {
+      // A Kokonut UI component renders itself (React), in the stage, and says when it is up.
+      if (gl.current) {
+        gl.current.destroy();
+        gl.current = null;
+      }
+      if (pp.current) {
+        pp.current.destroy();
+        pp.current = null;
+      }
+      canvasRef.current && canvasRef.current.querySelectorAll("canvas").forEach((x) => x.remove());
+      paperRef.current && paperRef.current.querySelectorAll("canvas").forEach((x) => x.remove());
+      setKk(m.id);
       return () => {
         alive = false;
       };
@@ -145,7 +168,7 @@ export function Atmosphere({ id, accent, intensity = 7, host, className = "", st
   useEffect(() => {
     if (gl.current) gl.current.update(live.current);
     if (pp.current) pp.current.update(live.current);
-  }, [accent, lv.amount, still, lv.pointer, tint]);
+  }, [accent, lv.amount, still, lv.pointer, tint, settingsKey]);
 
   // A new scene was asked for: blend out to the old flat colour, then swap.
   useEffect(() => {
@@ -171,6 +194,9 @@ export function Atmosphere({ id, accent, intensity = 7, host, className = "", st
     <div className={"at-stage " + (nogl ? "at-nogl " : "") + className} data-atmos={meta.id} data-family={meta.family} style={{ "--at-flat": meta.flat }} aria-hidden="true">
       <div ref={canvasRef} className="at-gl" style={meta.family === "paper" ? { visibility: "hidden" } : undefined} />
       <div ref={paperRef} className="at-paper" data-paper-shader="" />
+      {kk && kk === meta.id && (
+        <KokonutScene id={meta.kk} settings={settings} ctx={{ name, words, image: kkPhoto(meta), still, tone: meta.tone, accent, brand: tint === "brand" }} onReady={() => revealRef.current && revealRef.current()} />
+      )}
       <div ref={flatRef} className="at-flat" style={{ backgroundColor: meta.flat }} />
       <div className="at-grain" />
     </div>
@@ -212,7 +238,7 @@ function useFocusPull(ref, on) {
  * centred over it (or low, high, in a glass panel, or under a giant debossed word), a stats row
  * along the foot and a scroll cue. Children are the badge, headline, sub line and buttons.
  */
-export function AtmosHero({ id, accent, intensity = 7, layout, wordmark, stats = [], cue = "Scroll to explore", still, className = "", children, sectionId, extra, tint }) {
+export function AtmosHero({ id, accent, intensity = 7, layout, wordmark, stats = [], cue = "Scroll to explore", still, className = "", children, sectionId, extra, tint, settings, words }) {
   const ref = useRef(null);
   const meta = atmosById(id);
   const lv = atmosLevel(intensity);
@@ -220,8 +246,8 @@ export function AtmosHero({ id, accent, intensity = 7, layout, wordmark, stats =
   useFocusPull(ref, lv.focus && !still);
   const shown = stats.filter((s) => s && s.value).slice(0, 4);
   return (
-    <section ref={ref} id={sectionId} className={`at-hero at-tone-${meta.tone} at-lay-${lay} ${className}`} data-atmos={meta.id}>
-      <Atmosphere id={meta.id} accent={accent} intensity={intensity} host={ref} still={still} tint={tint} />
+    <section ref={ref} id={sectionId} className={`at-hero at-tone-${meta.tone} at-lay-${lay} ${className}`} data-atmos={meta.id} data-family={meta.family}>
+      <Atmosphere id={meta.id} accent={accent} intensity={intensity} host={ref} still={still} tint={tint} settings={settings} name={wordmark} words={words} />
       <div className="at-vignette" aria-hidden="true" />
       {lay === "wordmark" && wordmark && (
         <div className="at-wordmark" aria-hidden="true">

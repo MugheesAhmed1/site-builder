@@ -15,6 +15,7 @@
 
 import { PAPER_SCENES } from "./paper.js";
 import { OKAYBABE } from "./vendor/okaybabe.js";
+import { MOTION_PRIMITIVES } from "./vendor/motion-primitives.js";
 import { FLATS } from "./flats.js";
 import { asset } from "../real.js";
 
@@ -65,8 +66,9 @@ const PAPER_GROUP = { meshGradient: "Gradients", staticMeshGradient: "Gradients"
 export const PAPER = PAPER_SCENES.map((s) => ({ id: s.id, label: s.label, note: s.note, tone: s.tone, moods: s.moods, family: "paper", group: PAPER_GROUP[s.shader] || "Play and retro", face: "sans", layout: "center", credit: "Paper Shaders", paper: s }));
 
 // The okaybabe tier: calm, texture-like surfaces that sit well behind words.
-const OB_TONE = { halation: "light", vellum: "light" };
-export const ADVANCED = OKAYBABE.filter((v) => !["chroma-bleed", "hessian", "ink-run", "membrane", "quarry"].includes(v.id.replace(/^ob-/, ""))).map((v) => ({
+// All thirteen are in.
+const OB_TONE = { halation: "light", vellum: "light", hessian: "light" };
+export const ADVANCED = OKAYBABE.map((v) => ({
   id: v.id,
   label: v.label,
   note: v.note,
@@ -79,8 +81,52 @@ export const ADVANCED = OKAYBABE.filter((v) => !["chroma-bleed", "hessian", "ink
   credit: "okaybabe",
 }));
 
-export const SCENES = [...PLATES, ...SIGNATURE, ...PAPER, ...ADVANCED].map((s) => ({ ...s, flat: FLATS[s.id] || (s.tone === "light" ? "#e9e6ef" : "#0d0a14") }));
-export const SCENE_GROUPS = ["Living photos", "Signature", "Gradients", "Light and glass", "Ink and texture", "Play and retro", "Advanced shaders"];
+// Kokonut UI (MIT): interactive canvas scenes, each in Kokonut's light and night themes. kk is
+// the component (template/src/atmos/kokonut), and its settings are saved per site.
+const kk = (base, label, note, moods, tones = ["light", "dark"]) =>
+  tones.map((tone) => ({ id: tone === "light" ? base : base + "-night", kk: base, label: tone === "light" ? label : label + " at night", note, tone, moods: moods.split(" ").concat(tone === "light" ? ["light"] : []), family: "kokonut", group: "Interactive canvas", face: "sans", layout: "center", credit: "Kokonut UI" }));
+export const KOKONUT = [
+  ...kk("kk-paths", "Flowing lines", "A ribbon of fine lines that keeps flowing and parts around the pointer.", "calm tech mono"),
+  ...kk("kk-dots", "Dot membrane", "A halftone dot field: swipe to leave a wake, click to send a shockwave.", "tech play mono"),
+  ...kk("kk-flow", "Wind field", "Hundreds of particles riding the wind, stirred by the pointer.", "calm tech nature"),
+  ...kk("kk-topo", "Living map", "A contour map that drifts; the pointer raises a hill, a click sends a ripple.", "calm nature mono"),
+  ...kk("kk-halftone", "Halftone print", "A living photo printed in dots, with a loupe under the pointer.", "retro mono bold"),
+  ...kk("kk-drape", "Drape", "A curtain of cloth moving in a breeze; grab it and pull.", "luxe calm"),
+  ...kk("kk-caustics", "Pool light", "Sunlight on the floor of a pool; touch the water to ripple it.", "fresh calm"),
+  ...kk("kk-rain", "Rain on glass", "Rain running down a window over a living photo; wipe the glass to see out.", "calm bold"),
+  ...kk("kk-ink", "Ink in water", "The site's name written in ink that you can stir.", "luxe mono calm"),
+  ...kk("kk-shapes", "Falling shapes", "The site's own words fall in as shapes, pile up and can be thrown around.", "play bold"),
+];
+
+// Studio shaders (studio.js): our own GLSL for the popular animated-background effects.
+/** Catalogue rows for the studio shaders: [id, label, note, tone, moods]. */
+const STUDIO_ROWS = [
+  ["st-aurora", "Aurora", "Curtains of green and violet light over a night sky.", "dark", "calm nature brand"],
+  ["st-beams", "Light beams", "Tall shafts of light leaning across the dark, each breathing.", "dark", "luxe calm bold"],
+  ["st-dotgrid", "Dot grid", "An even grid of dots that breathes and swells under the pointer.", "dark", "tech mono"],
+  ["st-galaxy", "Galaxy", "Layers of stars turning around a faint nebula.", "dark", "calm tech"],
+  ["st-iridescence", "Iridescence", "A bright oily film, colours sliding over each other.", "light", "play fresh light"],
+  ["st-lightning", "Lightning", "Forked bolts flickering in a storm sky.", "dark", "bold tech"],
+  ["st-rays", "Light rays", "Soft rays falling from above, leaning toward the pointer.", "dark", "calm luxe"],
+  ["st-prism", "Prism burst", "A full spectrum fanning out from the centre, slowly turning.", "dark", "bold play"],
+  ["st-ripple", "Ripple grid", "A fine grid of light that ripples out from the pointer.", "dark", "tech mono"],
+  ["st-silk", "Silk", "A sheet of satin in the brand colour, folding in slow light.", "dark", "luxe brand calm"],
+  ["st-threads", "Threads", "Fine threads waving across pale paper.", "light", "calm mono light"],
+  ["st-hyperspeed", "Hyperspeed", "Streaks of light racing out of the dark centre.", "dark", "bold tech"],
+  ["st-orb", "Orb", "A glowing ring of colour that drifts after the pointer.", "dark", "tech brand"],
+  ["st-dither", "Dither wave", "A rolling wave drawn in big dithered pixels, like an old screen.", "dark", "retro tech mono"],
+  ["st-terminal", "Terminal", "A wall of flickering glyphs with scan lines and the odd glitch.", "dark", "tech retro"],
+  ["st-squares", "Sliding squares", "A grid of fine squares sliding by; cells near the pointer light up.", "dark", "tech mono"],
+  ["st-swirl", "Paint swirl", "Thick retro paint stirred into a slow whirlpool.", "dark", "retro play bold"],
+  ["st-retrogrid", "Retro grid", "A neon grid floor running toward a striped sun.", "dark", "retro play bold"],
+];
+export const STUDIO = STUDIO_ROWS.map(([id, label, note, tone, moods]) => ({ id, label, note, tone, moods: moods.split(" "), family: "studio", group: "Studio shaders", face: "sans", layout: "center" }));
+
+// Motion Primitives (MIT): their WebGL backgrounds, run in our engine with their own colours.
+export const MP = MOTION_PRIMITIVES.map((v) => ({ id: v.id, label: v.label, note: v.note, tone: "dark", moods: v.moods, family: "motionprimitives", group: "Shader lab", face: "sans", layout: "center", credit: "Motion Primitives" }));
+
+export const SCENES = [...PLATES, ...SIGNATURE, ...STUDIO, ...PAPER, ...ADVANCED, ...MP, ...KOKONUT].map((s) => ({ ...s, flat: FLATS[s.id] || (s.tone === "light" ? "#e9e6ef" : "#0d0a14") }));
+export const SCENE_GROUPS = ["Living photos", "Signature", "Interactive canvas", "Studio shaders", "Gradients", "Light and glass", "Ink and texture", "Play and retro", "Advanced shaders", "Shader lab"];
 export const MOODS = ["calm", "bold", "warm", "fresh", "nature", "luxe", "tech", "play", "retro", "mono", "light", "brand"];
 
 // Older names for the same lists, kept for code that still uses them.
@@ -97,9 +143,12 @@ export const thumbOf = (id) => asset("/scenes/thumbs/" + atmosById(id).id + ".we
 // A still picture of the scene, shown where live WebGL is not worth it (no graphics card).
 const posterPath = (s) => (s.family === "plate" ? "/scenes/plates/" : "/scenes/posters/") + s.id + ".webp";
 export const posterOf = (id) => asset(posterPath(atmosById(id)));
+// The living photo a Kokonut scene looks at (rain on the glass, the halftone print).
+export const KK_PHOTO = { "kk-rain": "city-rain", "kk-halftone": "alpenglow" };
+export const kkPhoto = (s) => (KK_PHOTO[s.kk] ? asset("/scenes/plates/" + KK_PHOTO[s.kk] + ".webp") : "");
 export function sceneFiles(id) {
   const s = atmosById(id);
-  return [posterPath(s)];
+  return KK_PHOTO[s.kk] ? [posterPath(s), "/scenes/plates/" + KK_PHOTO[s.kk] + ".webp"] : [posterPath(s)];
 }
 export const plateSrc = (id) => asset("/scenes/plates/" + id + ".webp");
 
@@ -114,10 +163,23 @@ const FIT = [
   [/restaurant|food|kitchen|catering|bistro|pizza|grill|chef/, "pp-nectar"],
   [/wine|vineyard|winery|olive/, "vineyard"],
   [/farm|organic|grain|harvest|agri/, "golden-wheat"],
+  [/\bpool|swim|aquatic|lifeguard/, "kk-caustics"],
+  [/wind|kite|breeze|hvac|air quality/, "kk-flow"],
   [/pool|swim|surf|dive|marine|boat|yacht|sail|fish/, "reef"],
   [/hotel|resort|villa|beach|holiday|tour|travel/, "tropic"],
   [/hike|hiking|outdoor|camp|adventure|ski|mountain|climb/, "alpenglow"],
   [/eco|climate|green|nature|environment|solar|energy/, "misty-valley"],
+  [/writer|author|poet|calligraph|\bink\b|stationer|publish|translat/, "kk-ink"],
+  [/print|press|zine|magazine|poster|risograph/, "kk-halftone"],
+  [/survey|\bmaps?\b|cartograph|geolog|geograph|urban plan/, "kk-topo"],
+  [/textile|fabric|curtain|tailor|sewing|upholster|bridal/, "kk-drape"],
+  [/silk|satin|lingerie/, "st-silk"],
+  [/arctic|iceland|norway|northern lights|aurora/, "st-aurora"],
+  [/storm|weather|thunder/, "st-lightning"],
+  [/cyber|security|hacker|infosec|terminal/, "st-terminal"],
+  [/metal|steel|weld|forge|foundry/, "mp-liquid-metal"],
+  [/delivery|logistic|courier|shipping|transport|racing|motor|\bcars?\b/, "st-hyperspeed"],
+  [/theatre|theater|stage|spotlight/, "st-beams"],
   [/\bbar\b|lounge|cocktail|jazz|nightlife|taxi|\bcity\b|urban|novel|poet/, "city-rain"],
   [/law|legal|notary|account|audit|tax/, "concrete"],
   [/architect|interior|construction|property|real ?estate|realty/, "concrete"],
@@ -131,9 +193,13 @@ const FIT = [
   [/photo|film|video|cinema|tattoo|barber/, "noir"],
   [/fashion|cloth|apparel|jewel|sneaker|luxury|watch/, "violet-studio"],
   [/shop|store|retail|product|brand/, "violet-studio"],
+  [/astronom|observator|stargaz|planetar/, "st-galaxy"],
   [/space|aero|astro|launch|crypto|web3/, "nebula"],
+  [/analytics|dashboard|metrics/, "kk-dots"],
+  [/gaming|esport|arcade|retro|synth/, "st-retrogrid"],
   [/\bai\b|data|research|science|analytics|machine/, "pp-synapse"],
   [/event|festival|party|club|dj|music|concert/, "pp-stage"],
+  [/kids|toy|daycare|preschool|nursery school/, "kk-shapes"],
   [/kids|toy|play|game|candy|sweet/, "pp-candy"],
   [/design|agency|creative|marketing|portfolio|freelance|artist|illustrat/, "chrome"],
   [/saas|software|app|startup|tech|cloud|platform|automation|engineer|developer|devops|it\b/, "pp-rays"],
@@ -148,7 +214,7 @@ export function pickAtmos(category, words) {
 }
 
 // Older designs saved a simple backdrop, a 3D journey world or a scene that was retired.
-export const LEGACY = { summit: "alpenglow", isles: "sky-isle", horizon: "nebula", studio: "violet-studio", "pp-olive": "pp-sunset", "pp-ripple": "pp-grain-violet", "pp-lava": "pp-candy", "pp-pixel-orb": "pp-pixel-swirl", "pp-pool": "pp-bubbles", "ob-ink-run": "ob-vellum", "ob-membrane": "ob-vellum", "ob-quarry": "ob-foxglove", silk: "chrome", particles: "nebula", mesh: "pp-violet-mesh", aurora: "aurora-lake", grid: "dust", ocean: "ocean", jungle: "sunbeam-forest", cosmos: "nebula", meadow: "night-meadow", garden: "night-meadow", constellation: "nebula" };
+export const LEGACY = { summit: "alpenglow", isles: "sky-isle", horizon: "nebula", studio: "violet-studio", "pp-olive": "pp-sunset", "pp-ripple": "pp-grain-violet", "pp-lava": "pp-candy", "pp-pixel-orb": "pp-pixel-swirl", "pp-pool": "pp-bubbles", silk: "chrome", particles: "nebula", mesh: "pp-violet-mesh", aurora: "aurora-lake", grid: "dust", ocean: "ocean", jungle: "sunbeam-forest", cosmos: "nebula", meadow: "night-meadow", garden: "night-meadow", constellation: "nebula" };
 export const atmosOf = (v) => (BY_ID.has(v) ? v : LEGACY[v] || "");
 
 /** The scene a saved design opens in: its own pick, else the local director's for its kind. */

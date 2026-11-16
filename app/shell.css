@@ -273,6 +273,11 @@
 .scn-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .scn-actions .btn { justify-content: center; }
 .scn-block { display: grid; gap: 8px; }
+.scn-settings { gap: 10px; }
+.scn-set { display: grid; gap: 4px; }
+label.scn-set { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+.scn-set input[type="color"] { width: 40px; height: 28px; padding: 0; border: 1px solid var(--line, #3334); border-radius: 8px; background: none; cursor: pointer; }
+.scn-set input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent, #8b5cf6); }
 .scn-suggest { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
 .seg-wrap { flex-wrap: wrap; }
 @media (prefers-reduced-motion: reduce) { .scn-pop { animation: none; } }

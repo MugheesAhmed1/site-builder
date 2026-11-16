@@ -639,7 +639,7 @@ export default function Website({ design, content, preview = false, scheme: forc
       {curtain && <CurtainMenu open={menuOpen} onClose={() => setMenuOpen(false)} links={navLinks} brand={c.brand.name} cta={h.primaryCta ? { href: h.primaryHref || toContact, label: h.primaryCta } : null} />}
 
       {hero === "atmos" ? (
-        <AtmosHero sectionId="pf-top" className="pf-hero pf-hero--atmos" id={siteAtmos(d, c.brand && c.brand.category, (c.brand.category || "") + " " + (h.headline || ""))} accent={pal.accent} intensity={d.intensity ?? 7} still={!animated} layout={d.atmosLayout} tint={d.sceneTint} wordmark={c.brand.name} stats={heroStats}>
+        <AtmosHero sectionId="pf-top" className="pf-hero pf-hero--atmos" id={siteAtmos(d, c.brand && c.brand.category, (c.brand.category || "") + " " + (h.headline || ""))} settings={(d.sceneProps || {})[siteAtmos(d, c.brand && c.brand.category, (c.brand.category || "") + " " + (h.headline || ""))]} words={arr("services").map((x) => x.name)} accent={pal.accent} intensity={d.intensity ?? 7} still={!animated} layout={d.atmosLayout} tint={d.sceneTint} wordmark={c.brand.name} stats={heroStats}>
             {kicker}
             {headline}
             {sub}

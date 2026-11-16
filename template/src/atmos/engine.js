@@ -6,6 +6,9 @@
 import { FRAGS, PLATE_FRAG, VERT } from "./shaders.js";
 import { atmosById, plateSrc } from "./catalog.js";
 import { OKAYBABE } from "./vendor/okaybabe.js";
+import { MOTION_PRIMITIVES } from "./vendor/motion-primitives.js";
+import { STUDIO_FRAGS } from "./studio.js";
+import { SHADER_CONTROLS } from "./controls.js";
 
 const QUALITY = { dust: 0.6, chrome: 0.75, noir: 0.7, nocturne: 0.7, caustics: 0.6, rainglass: 0.7, topo: 0.8 };
 
@@ -23,7 +26,7 @@ function compile(gl, vs, fs) {
   gl.linkProgram(p);
   if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error("atmos link: " + gl.getProgramInfoLog(p));
   const u = {};
-  ["uTime", "uRes", "uPointer", "uScroll", "uAccent", "uAmount"].forEach((n) => (u[n] = gl.getUniformLocation(p, n)));
+  ["uTime", "uRes", "uPointer", "uScroll", "uAccent", "uAmount", "uKnob"].forEach((n) => (u[n] = gl.getUniformLocation(p, n)));
   const n = gl.getProgramParameter(p, gl.ACTIVE_UNIFORMS);
   const all = {};
   for (let i = 0; i < n; i++) {
@@ -68,6 +71,8 @@ export function softwareGL(gl) {
 let cpuOnly = null;
 export function noGpu() {
   if (cpuOnly === null) {
+    // The scene lab (?gpu=1) draws live even on software WebGL, to render the scene pictures.
+    if (typeof location !== "undefined" && /[?&]gpu=1/.test(location.search)) return (cpuOnly = false);
     try {
       const c = document.createElement("canvas");
       const g = c.getContext("webgl");
@@ -97,9 +102,9 @@ export function mountAtmos(canvas, opts) {
   let scene = null;
   const build = (id) => {
     const meta = atmosById(id);
-    const vendor = OKAYBABE.find((x) => x.id === meta.id);
+    const vendor = OKAYBABE.find((x) => x.id === meta.id) || MOTION_PRIMITIVES.find((x) => x.id === meta.id);
     const isPlate = meta.family === "plate";
-    const frag = compile(gl, VERT, isPlate ? PLATE_FRAG : vendor ? vendor.frag : FRAGS[meta.id]);
+    const frag = compile(gl, VERT, isPlate ? PLATE_FRAG : vendor ? vendor.frag : FRAGS[meta.id] || STUDIO_FRAGS[meta.id]);
     const aPos = gl.getAttribLocation(frag.p, "aPos");
     if (scene && scene.tex) gl.deleteTexture(scene.tex);
     scene = { id: meta.id, frag, aPos, vendor, plate: isPlate ? meta.plate : null, flat: meta.flat, tex: null, img: [1, 1], ready: !isPlate };
@@ -188,6 +193,12 @@ export function mountAtmos(canvas, opts) {
     gl.uniform1f(u.uScroll, scroll);
     if (u.uAccent) gl.uniform3fv(u.uAccent, accent());
     gl.uniform1f(u.uAmount, Math.max(0, Math.min(1, o.amount ?? 0.8)));
+    // Studio shaders: up to four settings from the Scenes panel, as one vec4.
+    if (u.uKnob) {
+      const c = SHADER_CONTROLS[scene.id] || [];
+      const own = o.settings || {};
+      gl.uniform4fv(u.uKnob, [0, 1, 2, 3].map((i) => (c[i] ? Number(own[c[i].key] ?? c[i].def) : 0)));
+    }
   };
 
   // The okaybabe shaders take their own uniforms: resolution, mouse (0..1), reduced motion,
@@ -200,8 +211,15 @@ export function mountAtmos(canvas, opts) {
     if (a.uMouse) gl.uniform2f(a.uMouse, 0.5 + pointer.x * 0.5, 0.5 + pointer.y * 0.5);
     if (a.uReducedMotion) gl.uniform1f(a.uReducedMotion, o.still ? 1 : 0);
     if (a.uColor) gl.uniform3fv(a.uColor, hueLinear(v.hue));
-    for (const [k, val] of Object.entries(v.uniforms)) {
+    const own = o.settings || {};
+    for (const [k, def] of Object.entries(v.uniforms)) {
       if (!a[k]) continue;
+      const val = own[k] ?? def;
+      if (typeof val === "string") {
+        // A colour setting (Motion Primitives); "my brand colour" swaps the first one.
+        gl.uniform3fv(a[k], hex(o.tint && /1$|^uBlobColor$|^uBaseColor$/.test(k) ? o.tint : val));
+        continue;
+      }
       const x = k === "uSpeed" ? val * (0.55 + 0.6 * amt) : k === "uIntensity" ? Math.min(1, val * (0.8 + 0.35 * amt)) : val;
       gl.uniform1f(a[k], x);
     }

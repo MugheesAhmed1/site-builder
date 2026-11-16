@@ -1,0 +1,35 @@
+/* Kokonut UI scenes. The components read their colours from CSS (the canvas's own color,
+   or hidden swatches), so each scene's palette is a handful of variables. Light and dark
+   follow Kokonut's own light and dark themes; "my brand colour" swaps the ink for the accent. */
+.kk-host { position: absolute; inset: 0; }
+.kk-tone-light { --kk-bg: #ffffff; --kk-ink: #18181b; --kk-paper: #ffffff; --kk-light: #ffffff; --kk-shade: #d4d4d8; --kk-fog: #e9edef; --kk-line: #e4e4e7; }
+.kk-tone-dark { --kk-bg: #09090b; --kk-ink: #f4f4f5; --kk-paper: #09090b; --kk-light: #27272a; --kk-shade: #000000; --kk-fog: #14181b; --kk-line: #27272a; }
+.kk-tone-light[data-kk="kk-caustics"] { --kk-bg: #cde5e4; --kk-paper: #cde5e4; --kk-light: #ffffff; }
+.kk-tone-dark[data-kk="kk-caustics"] { --kk-bg: #06201f; --kk-paper: #06201f; --kk-light: #3ea89d; }
+.kk-tone-light[data-kk="kk-drape"] { --kk-bg: #f4f4f5; }
+.kk-tone-light[data-kk="kk-rain"] { --kk-bg: #e4e4e7; }
+.kk-tone-dark[data-kk="kk-rain"] { --kk-bg: #18181b; }
+.kk-tone-dark[data-kk="kk-halftone"] { --kk-ink: #d4d4d8; }
+.kk-host[data-brand] { --kk-ink: var(--kk-brand); }
+.kk-host[data-brand][data-kk="kk-caustics"] { --kk-light: var(--kk-brand); }
+
+.kk-root { position: absolute; inset: 0; overflow: hidden; color: var(--kk-ink); background: var(--kk-bg); touch-action: pan-y; }
+.kk-root[data-grabbing] { cursor: grabbing; }
+.kk-layer { position: absolute; inset: 0; pointer-events: none; }
+.kk-canvas { display: block; width: 100%; height: 100%; opacity: 0; transition: opacity 600ms ease-out; }
+.kk-hide { display: none; }
+.kk-ink-fallback { position: absolute; inset: 40% 0 auto; margin: 0; transform: translateY(-50%); padding: 0 24px; text-align: center; font-size: clamp(44px, 8vw, 88px); font-weight: 600; letter-spacing: -0.03em; }
+
+/* Shape hero: the site's own words as pills that fall, pile up and can be thrown. */
+.kk-shapes { position: absolute; inset: 0; touch-action: pan-y; }
+.kk-shape { position: absolute; top: 0; left: 0; display: flex; align-items: center; justify-content: center; white-space: nowrap; border-radius: 999px; cursor: grab; touch-action: none; user-select: none; will-change: transform; }
+.kk-shapes[data-dragging] .kk-shape { cursor: grabbing; }
+.kk-pill { height: 56px; padding: 0 28px; font-weight: 500; font-size: 18px; letter-spacing: -0.01em; font-family: inherit; }
+.kk-outline { border: 1px solid var(--kk-line); background: var(--kk-paper); color: var(--kk-ink); }
+.kk-solid { background: var(--kk-ink); color: var(--kk-paper); }
+.kk-accent { background: var(--kk-accent, #f97316); color: #fff; }
+.kk-s12 { width: 48px; height: 48px; }
+.kk-s14 { width: 56px; height: 56px; }
+.kk-s16 { width: 64px; height: 64px; }
+.kk-s20 { width: 80px; height: 80px; }
+@media (max-width: 640px) { .kk-pill { height: 44px; padding: 0 20px; font-size: 15px; } }
