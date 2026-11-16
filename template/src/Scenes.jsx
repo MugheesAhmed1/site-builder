@@ -4,6 +4,7 @@ import { asset } from "./real.js";
 import { conceptInfo } from "./concepts.js";
 import { LiveScene, LiveThumb } from "./live/LiveScene.jsx";
 import "./three/three.css";
+import "./three/journey.css";
 
 // The three.js scenes are a separate download, fetched only when one is shown.
 const ThreeScene = lazy(() => import("./three/index.jsx"));
@@ -1924,5 +1925,15 @@ export function Scene({ def, text = "", words = [], image = "", alt = "", previe
     <div className={`sc sc-group-${t.group} sc-pal-${def.palette} ${className}`} style={style} data-scene={def.type}>
       {body}
     </div>
+  );
+}
+
+// A scroll journey from the 3D bundle: the opening as a film driven by scroll, with a
+// creature that reacts. Falls back to the still version while the bundle loads.
+export function JourneyScene({ journey }) {
+  return (
+    <Suspense fallback={<section className="jr jr-loading" data-world={journey.world || "ocean"} aria-hidden="true" />}>
+      <ThreeScene type="journey" journey={journey} />
+    </Suspense>
   );
 }

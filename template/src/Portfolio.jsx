@@ -3,12 +3,14 @@ import { palette, resolveScheme } from "./theme.js";
 import { useEdits } from "./edits.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
 import { CastCharacter, CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
-import { Scene } from "./Scenes.jsx";
+import { JourneyScene, Scene } from "./Scenes.jsx";
+import { normalizeStory, storyChapters } from "./story.js";
 import { Carousel, Film, Flight, Grain, LineLoader, ScrollWords, SmoothScroll } from "./studio.jsx";
 import { Arc, Sphere, Track, propsFor, useFogSwitch, useScramble } from "./showpiece.jsx";
 import { Extras } from "./extras.jsx";
 import { Badge, CinemaHero, CinemaStrip, CurtainMenu, GlassCta, ScatterHero, WordmarkFooter } from "./cinema.jsx";
 import { plateFor } from "./plates.js";
+import { useSectionFlow } from "./flow.jsx";
 import { Avatar, Counter, cleanContent, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
 // The whole portfolio, driven by two objects:
@@ -276,12 +278,14 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
   useScramble(rootRef, d.motion !== "none" && d.anim !== "M-000" && !!d.scramble, JSON.stringify(c) + (d.scramble ? 1 : 0));
   const fog = useFogSwitch();
   useSpotlight(rootRef, animated && d.hover === "spotlight");
+  useSectionFlow(rootRef, JSON.stringify(c.sections) + (d.sectionFx || "") + (d.scrollFx === false ? "0" : "1") + d.anim + d.motion + d.heroStyle + (d.showpiece || "") + scheme, d, !!editing);
   useActiveSection(rootRef, visible.join(","), setActiveId);
 
   const h = c.hero;
   const nav = visible.filter((s) => NAV_LABELS[s]).slice(0, 6);
   const photo = h.photoUrl;
-  const hero = d.heroStyle || "statement";
+  // Film-photo openings were retired with the generated pictures; they open as 3D journeys now.
+  const hero = d.heroStyle === "cinema" || d.heroStyle === "scatter" ? "journey" : d.heroStyle || "statement";
   const skillsFlat = arr("skills").flatMap((g) => g.items || []);
   const ct = c.contact || {};
   const cast = d.cast && d.cast.character ? d.cast : null;
@@ -657,7 +661,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
           </div>
         );
       case "cta":
-        if (d.ctaStyle === "glass") return <GlassCta key={s} plate={plate} heading={c.cta.heading} text={c.cta.text} button={c.cta.button || "Get in touch"} href="#pf-contact" />;
+        if (false) return <GlassCta key={s} plate={plate} heading={c.cta.heading} text={c.cta.text} button={c.cta.button || "Get in touch"} href="#pf-contact" />;
         return (
           <section id="pf-cta" className="pf-band" key={s}>
             {cast && animated && <Peek character={cast.character} />}
@@ -757,11 +761,18 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
 
       {curtain && <CurtainMenu open={menuOpen} onClose={() => setMenuOpen(false)} links={navLinks} brand={h.name} cta={{ href: "#pf-contact", label: "Get in touch" }} />}
 
-      <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
-        {animated && <Backdrop kind={d.backdrop} />}
-        {animated && scene && sceneMode === "backdrop" && sceneEl("pf-scene-backdrop")}
-        {renderHero()}
-      </section>
+      {hero === "journey" ? (
+        <>
+          <span id="pf-top" />
+          <JourneyScene journey={{ world: normalizeStory(d.story).scene, creature: normalizeStory(d.story).character, behaviours: normalizeStory(d.story).characterBehavior, chapters: storyChapters("portfolio", c), cta: ctas, still: !animated }} />
+        </>
+      ) : (
+        <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
+          {animated && <Backdrop kind={d.backdrop} />}
+          {animated && scene && sceneMode === "backdrop" && sceneEl("pf-scene-backdrop")}
+          {renderHero()}
+        </section>
+      )}
 
       {hero === "cinema" ? <CinemaStrip label="Tools and skills" items={skillsFlat.slice(0, 14)} /> : d.marquee && animated && skillsFlat.length > 3 && <Marquee items={skillsFlat} label="Skills" />}
 

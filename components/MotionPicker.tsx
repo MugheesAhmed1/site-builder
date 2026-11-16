@@ -9,7 +9,8 @@ import Icon from "@/components/Icon";
 import { FEELS, MOTIONS, REST, REVEAL_NAMES, TEMPO_NAMES, motionById, type MotionStyle } from "@/template/src/motion.js";
 import CategorySelect from "@/components/CategorySelect";
 import { categoryLabel, fitFor, fitsMotion } from "@/lib/fit";
-import type { Design } from "@/lib/types";
+import type { Design, SectionFx } from "@/lib/types";
+import IntensityPicker from "@/components/IntensityPicker";
 
 // The animation step: 728 styles plus "Still", each previewed on a tiny mock page with
 // the same Motion keyframes the finished site uses. Hover, focus or tap a tile to play it.
@@ -122,6 +123,7 @@ export default function MotionPicker({
 
   return (
     <div className="motion-picker">
+      <IntensityPicker design={design} category={category} onChange={onChange} />
       <div className="panel motion-now">
         <div>
           <span className="lbl">Playing now</span>
@@ -213,6 +215,23 @@ export default function MotionPicker({
         </div>
 
         <div className="layer">
+          <span className="lbl">Sections as they scroll in</span>
+          <div className="sfx-grid" role="radiogroup" aria-label="Section transition">
+            {SECTION_FX.map(([v, name, text]) => (
+              <button key={v} type="button" role="radio" aria-checked={(design.sectionFx ?? "rise") === v} className={"sfx" + ((design.sectionFx ?? "rise") === v ? " is-on" : "")} onClick={() => onChange({ sectionFx: v })}>
+                <span className={"sfx-demo sfx-demo-" + v} aria-hidden="true">
+                  <i />
+                  <i />
+                </span>
+                <b>{name}</b>
+                <span className="small muted">{text}</span>
+              </button>
+            ))}
+          </div>
+          <Toggle on={design.scrollFx !== false} set={(v) => onChange({ scrollFx: v })} name="Scroll details" text="Section titles draw a line under themselves, headings drift and cards settle into place as people scroll." />
+        </div>
+
+        <div className="layer">
           <span className="lbl">Scrolling</span>
           <Toggle on={design.smooth !== false} set={(v) => onChange({ smooth: v })} name="Smooth scroll" text="The page glides with a little weight instead of jumping." />
           <Toggle on={video || design.video ? design.film !== false : !!design.film} set={(v) => onChange({ film: v })} name="Scroll film" text="Your video plays forward and back as people scroll, with your steps pinned beside it." />
@@ -299,6 +318,17 @@ const SHOWPIECE_OPTS: [NonNullable<Design["showpiece"]>, string, string][] = [
   ["sphere", "Work sphere", "A globe of your pictures and services that people spin by dragging. It opens with a count, a spinning ring and a burst. Tap a tile to open it."],
   ["arc", "Card arc", "Cards curve around a stage. Drag, swipe or use the arrows; whichever lands in front is scanned into place with a glowing line."],
   ["track", "Story track", "Your story slides sideways as people scroll, and your character pushes each line of text out of its way."],
+];
+
+const SECTION_FX: [SectionFx, string, string][] = [
+  ["rise", "Rise", "Each section glides up into place."],
+  ["curtain", "Curtain", "A rounded window opens to show it."],
+  ["zoom", "Zoom", "It grows from a card to full width."],
+  ["tilt", "Tilt", "It tips up from the floor in 3D."],
+  ["blur", "Focus", "It comes into focus out of a blur."],
+  ["slide", "Slide", "Sections arrive from alternate sides."],
+  ["stack", "Stack", "Sections stack like cards over the last."],
+  ["none", "None", "Sections are simply there."],
 ];
 
 function Toggle({ on, set, name, text }: { on: boolean; set: (v: boolean) => void; name: string; text: string }) {

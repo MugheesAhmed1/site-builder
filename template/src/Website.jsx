@@ -3,13 +3,15 @@ import { palette, resolveScheme } from "./theme.js";
 import { useEdits } from "./edits.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
 import { CastCharacter, CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
-import { Scene } from "./Scenes.jsx";
+import { JourneyScene, Scene } from "./Scenes.jsx";
+import { normalizeStory, storyChapters } from "./story.js";
 import { Carousel, Film, Flight, Grain, LineLoader, ScrollWords, SmoothScroll } from "./studio.jsx";
 import { Arc, Sphere, Track, propsFor, useFogSwitch, useScramble } from "./showpiece.jsx";
 import { Extras } from "./extras.jsx";
 import { Badge, CinemaHero, CinemaStrip, CurtainMenu, GlassCta, ScatterHero, WordmarkFooter } from "./cinema.jsx";
 import { plateFor } from "./plates.js";
 import { propsFor as cutoutsFor } from "./props.js";
+import { useSectionFlow } from "./flow.jsx";
 import { Avatar, Counter, cleanContent, Headline, Icon, Marquee, Progress, QuoteSlider, Section, Wide, fontsHref, motionAttrs, themeStyle, useActiveSection, useReveal, useSpotlight, useSystemDark } from "./shared.jsx";
 
 // A one-page business website, driven by the same design system and animation styles
@@ -141,13 +143,15 @@ export default function Website({ design, content, preview = false, scheme: forc
   useScramble(rootRef, d.motion !== "none" && d.anim !== "M-000" && !!d.scramble, JSON.stringify(c) + (d.scramble ? 1 : 0));
   const fog = useFogSwitch();
   useSpotlight(rootRef, animated && d.hover === "spotlight");
+  useSectionFlow(rootRef, JSON.stringify(c.sections) + (d.sectionFx || "") + (d.scrollFx === false ? "0" : "1") + d.anim + d.motion + d.heroStyle + (d.showpiece || "") + scheme, d, !!editing);
   useActiveSection(rootRef, visible.join(","), setActiveId);
 
   const h = c.hero;
   const ct = ct0;
   // Where "get in touch" buttons point: the contact block, or the address and hours, or the top.
   const toContact = visible.includes("contact") ? "#pf-contact" : visible.includes("visit") ? "#pf-visit" : "#pf-top";
-  const hero = d.heroStyle || "statement";
+  // Film-photo openings were retired with the generated pictures; they open as 3D journeys now.
+  const hero = d.heroStyle === "cinema" || d.heroStyle === "scatter" ? "journey" : d.heroStyle || "statement";
   const external = /^https?:|^tel:|^mailto:/.test(h.primaryHref || "");
   const secondaryHref = visible.includes("visit") && h.secondaryCta === "Find us" ? "#pf-visit" : visible.includes("services") ? "#pf-services" : toContact;
   const showImage = h.imageUrl || preview;
@@ -499,7 +503,7 @@ export default function Website({ design, content, preview = false, scheme: forc
           </Section>
         );
       case "cta":
-        if (d.ctaStyle === "glass") {
+        if (false) {
           return <GlassCta key={s} plate={plate} heading={c.cta.heading} text={c.cta.text} button={c.cta.button || h.primaryCta} href={h.primaryHref || toContact} newTab={/^https?:/.test(h.primaryHref)} />;
         }
         return (
@@ -651,11 +655,18 @@ export default function Website({ design, content, preview = false, scheme: forc
 
       {curtain && <CurtainMenu open={menuOpen} onClose={() => setMenuOpen(false)} links={navLinks} brand={c.brand.name} cta={h.primaryCta ? { href: h.primaryHref || toContact, label: h.primaryCta } : null} />}
 
-      <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
-        {animated && <Backdrop kind={d.backdrop} />}
-        {animated && scene && sceneMode === "backdrop" && !(hero === "cinema" && scene.group !== "photo") && sceneEl("pf-scene-backdrop")}
-        {renderHero()}
-      </section>
+      {hero === "journey" ? (
+        <>
+          <span id="pf-top" />
+          <JourneyScene journey={{ world: normalizeStory(d.story).scene, creature: normalizeStory(d.story).character, behaviours: normalizeStory(d.story).characterBehavior, chapters: storyChapters("website", c), cta: ctas, still: !animated }} />
+        </>
+      ) : (
+        <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
+          {animated && <Backdrop kind={d.backdrop} />}
+          {animated && scene && sceneMode === "backdrop" && !(hero === "cinema" && scene.group !== "photo") && sceneEl("pf-scene-backdrop")}
+          {renderHero()}
+        </section>
+      )}
 
       {hero === "cinema" && <CinemaStrip label={c.brand.category ? "What we do" : ""} items={arr("services").map((x) => x.name).concat(arr("clients") || [])} />}
 

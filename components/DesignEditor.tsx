@@ -309,12 +309,12 @@ export default function DesignEditor({
               <Seg
                 label="Opening"
                 value={design.heroStyle}
-                options={["cinema", "scatter", "stage", "statement", "portrait", "split", "centered"]}
-                labels={{ cinema: "Film scene", scatter: "Scattered words", stage: "Character and widgets", statement: "Big statement", portrait: "With photo", split: "With side panel", centered: "Centred" }}
+                options={["journey", "stage", "statement", "portrait", "split", "centered"]}
+                labels={{ journey: "3D journey", cinema: "Film scene", scatter: "Scattered words", stage: "Character and widgets", statement: "Big statement", portrait: "With photo", split: "With side panel", centered: "Centred" }}
                 onChange={(heroStyle) => set({ heroStyle })}
               />
             </div>
-            {(design.heroStyle === "cinema" || design.heroStyle === "scatter" || design.ctaStyle === "glass") && (
+            {false && (
               <div>
                 <label className="lbl">Scene</label>
                 <p className="hint">The picture behind the opening and the glass call to action. Your own opening photo wins when you add one.</p>
@@ -336,6 +336,10 @@ export default function DesignEditor({
               <p className="hint">Put *stars* around the words to accent in your headline, or the last word is used.</p>
             </div>
             <div>
+              <label className="lbl">Text alignment</label>
+              <Seg label="Text alignment" value={design.align ?? "center"} options={["center", "left"]} labels={{ center: "Centred", left: "Left aligned" }} onChange={(align) => set({ align })} />
+            </div>
+            <div>
               <label className="lbl">Navigation</label>
               <Seg label="Navigation" value={design.chrome ?? "bar"} options={["bar", "pill"]} labels={{ bar: "Full bar", pill: "Floating glass pill" }} onChange={(chrome) => set({ chrome })} />
             </div>
@@ -345,7 +349,7 @@ export default function DesignEditor({
             </div>
             <div>
               <label className="lbl">Call to action</label>
-              <Seg label="Call to action" value={design.ctaStyle ?? "band"} options={["band", "glass"]} labels={{ band: "Colour band", glass: "Glass card on a scene" }} onChange={(ctaStyle) => set({ ctaStyle })} />
+              <Seg label="Call to action" value={design.ctaStyle ?? "band"} options={["band"]} labels={{ band: "Colour band" }} onChange={(ctaStyle) => set({ ctaStyle })} />
             </div>
             <div>
               <label className="lbl">Footer</label>

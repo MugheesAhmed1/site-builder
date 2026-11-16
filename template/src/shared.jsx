@@ -498,5 +498,6 @@ export function motionAttrs(d) {
     "data-hover": d.hover || (m ? m.hover : "none"),
     "data-density": d.density || "regular",
     "data-backdrop": d.backdrop || "none",
+    "data-align": d.align || "center",
   };
 }

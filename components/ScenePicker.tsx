@@ -31,7 +31,7 @@ export default function ScenePicker({ design, onChange, category, name, words, p
   const scene = design.scene ?? null;
   const mode = design.sceneMode ?? "backdrop";
   const list = useMemo(() => {
-    const l = SCENES.filter((s) => s.group !== "concept" && (group === "fit" ? fit.includes(s.type) : group === "all" || s.group === group) && (pal === "all" || s.palette === pal));
+    const l = SCENES.filter((s) => s.group !== "concept" && s.group !== "real" && (group === "fit" ? fit.includes(s.type) : group === "all" || s.group === group) && (pal === "all" || s.palette === pal));
     return group === "fit" ? [...l].sort((a, b) => fit.indexOf(a.type) - fit.indexOf(b.type)) : l;
   }, [group, pal, fit]);
   const conceptFit = useMemo(() => conceptsFor(category), [category]);

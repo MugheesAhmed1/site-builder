@@ -157,7 +157,7 @@ export const CINEMA_OFF: Pick<Design, "accentFace" | "chrome" | "menu" | "footer
 
 function rollCinema(r: () => number, mood: Mood, heroStyle: Design["heroStyle"]): Pick<Design, "heroStyle" | "accentFace" | "chrome" | "menu" | "footer" | "ctaStyle"> & { backdrop?: Design["backdrop"] } {
   const cinematic = r() < 0.6;
-  const hero: Design["heroStyle"] = cinematic ? (r() < 0.78 ? "cinema" : "scatter") : heroStyle;
+  const hero: Design["heroStyle"] = cinematic ? "journey" : heroStyle;
   const accentFace: Design["accentFace"] = cinematic ? (mood === "tech" || mood === "bold" ? (r() < 0.5 ? "glow" : "serif") : r() < 0.8 ? "serif" : "glow") : r() < 0.35 ? pick(r, ["serif", "glow"] as const) : "none";
   const out: ReturnType<typeof rollCinema> = {
     heroStyle: hero,
@@ -165,7 +165,7 @@ function rollCinema(r: () => number, mood: Mood, heroStyle: Design["heroStyle"])
     chrome: cinematic || r() < 0.4 ? "pill" : "bar",
     menu: r() < 0.5 ? "curtain" : "drop",
     footer: r() < 0.6 ? "wordmark" : "simple",
-    ctaStyle: r() < 0.55 ? "glass" : "band",
+    ctaStyle: "band",
   };
   if (!cinematic && (mood === "bold" || mood === "tech") && r() < 0.35) out.backdrop = "silk";
   return out;

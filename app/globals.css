@@ -1,50 +1,56 @@
 /* Portfolio Builder app styles.
    Design read: a guided tool for people who are not designers / calm, crafted, trustworthy /
    Operate mode. Dials: variance 4, motion 3, density 5.
-   Colour in OKLCH: warm-tinted neutrals, one green accent. Type: Bricolage Grotesque for
-   headings, Hanken Grotesk for UI text, JetBrains Mono for numbers and codes.
+   Colour in OKLCH: violet-tinted neutrals, an electric violet accent with a cyan partner for
+   gradients. Type: Geist for headings and UI, Instrument Serif italics for accents, Geist Mono.
    Motion (Emil Kowalski): ease-out curves, under 300ms, press states, hover on fine pointers only. */
 
+/* Tokens. One violet-tinted ink neutral, one electric accent, light and dark. The device decides
+   until the person picks a theme (html[data-theme]). */
 :root {
-  --bg: oklch(0.985 0.004 80);
-  --panel: oklch(1 0.002 80);
-  --sunk: oklch(0.962 0.006 80);
-  --text: oklch(0.22 0.012 80);
-  --muted: oklch(0.5 0.012 80);
-  --faint: oklch(0.62 0.01 80);
-  --line: oklch(0.91 0.006 80);
-  --line-strong: oklch(0.84 0.008 80);
-  --accent: oklch(0.5 0.12 158);
-  --accent-ink: oklch(0.99 0.01 158);
-  --accent-soft: oklch(0.95 0.035 158);
-  --accent-text: oklch(0.42 0.11 158);
+  --bg: oklch(0.985 0.005 290);
+  --panel: oklch(1 0 0);
+  --sunk: oklch(0.962 0.008 290);
+  --text: oklch(0.19 0.03 285);
+  --muted: oklch(0.47 0.025 285);
+  --faint: oklch(0.62 0.02 285);
+  --line: oklch(0.915 0.01 290);
+  --line-strong: oklch(0.84 0.014 290);
+  --accent: oklch(0.55 0.24 285);
+  --accent-ink: oklch(0.99 0.01 285);
+  --accent-soft: oklch(0.95 0.035 285);
+  --accent-text: oklch(0.48 0.22 285);
+  --accent-2: oklch(0.78 0.15 195);
   --danger: oklch(0.52 0.19 27);
   --danger-soft: oklch(0.96 0.03 27);
   --warn: oklch(0.52 0.13 70);
   --warn-soft: oklch(0.96 0.04 85);
-  --shadow: 0 1px 2px oklch(0.2 0.02 80 / 0.06), 0 10px 30px -14px oklch(0.2 0.02 80 / 0.18);
-  --radius: 10px;
+  --shadow: 0 1px 2px oklch(0.2 0.02 265 / 0.06), 0 10px 30px -14px oklch(0.2 0.02 265 / 0.18);
+  --radius: 12px;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-  --font-display: "Bricolage Grotesque", "Bricolage Fallback", "Bricolage Fallback 2", ui-sans-serif, system-ui, sans-serif;
-  --font-ui: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --font-display: "Geist", "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-ui: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
+  --font-serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: oklch(0.18 0.008 80);
-    --panel: oklch(0.215 0.008 80);
-    --sunk: oklch(0.165 0.008 80);
-    --text: oklch(0.95 0.006 80);
-    --muted: oklch(0.72 0.01 80);
-    --faint: oklch(0.6 0.01 80);
-    --line: oklch(0.29 0.008 80);
-    --line-strong: oklch(0.36 0.01 80);
-    --accent: oklch(0.78 0.14 158);
-    --accent-ink: oklch(0.2 0.04 158);
-    --accent-soft: oklch(0.3 0.05 158);
-    --accent-text: oklch(0.82 0.13 158);
+  :root:not([data-theme="light"]) {
+    --bg: oklch(0.145 0.02 285);
+    --panel: oklch(0.19 0.024 285);
+    --sunk: oklch(0.12 0.02 285);
+    --text: oklch(0.97 0.006 285);
+    --muted: oklch(0.75 0.02 285);
+    --faint: oklch(0.6 0.02 285);
+    --line: oklch(0.27 0.022 285);
+    --line-strong: oklch(0.36 0.026 285);
+    --accent: oklch(0.72 0.18 285);
+    --accent-ink: oklch(0.16 0.04 285);
+    --accent-soft: oklch(0.3 0.08 285);
+    --accent-text: oklch(0.8 0.15 285);
+    --accent-2: oklch(0.82 0.13 195);
     --danger: oklch(0.72 0.16 27);
     --danger-soft: oklch(0.28 0.05 27);
     --warn: oklch(0.8 0.13 80);
@@ -53,6 +59,28 @@
     color-scheme: dark;
   }
 }
+:root[data-theme="dark"], [data-theme="dark"], :root:has(.home-root) {
+  --bg: oklch(0.145 0.02 285);
+  --panel: oklch(0.19 0.024 285);
+  --sunk: oklch(0.12 0.02 285);
+  --text: oklch(0.97 0.006 285);
+  --muted: oklch(0.75 0.02 285);
+  --faint: oklch(0.6 0.02 285);
+  --line: oklch(0.27 0.022 285);
+  --line-strong: oklch(0.36 0.026 285);
+  --accent: oklch(0.72 0.18 285);
+  --accent-ink: oklch(0.16 0.04 285);
+  --accent-soft: oklch(0.3 0.08 285);
+  --accent-text: oklch(0.8 0.15 285);
+  --accent-2: oklch(0.82 0.13 195);
+  --danger: oklch(0.72 0.16 27);
+  --danger-soft: oklch(0.28 0.05 27);
+  --warn: oklch(0.8 0.13 80);
+  --warn-soft: oklch(0.29 0.04 80);
+  --shadow: 0 10px 30px -14px oklch(0 0 0 / 0.7);
+  color-scheme: dark;
+}
+[data-theme="dark"] { color: var(--text); }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; }

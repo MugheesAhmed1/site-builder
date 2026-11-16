@@ -2,7 +2,7 @@
 
 Type one line, such as "website for my bakery in Lahore" or "portfolio for me, I'm a product manager", and get a finished site you can download, unzip and put online for free. No build step, no Node needed on the other side.
 
-**No AI anywhere.** Everything runs in the browser:
+**AI is optional.** Everything below runs in the browser by rules; an optional Gemini step can polish the words (see "AI polish"):
 
 - **Reading the request.** Keyword rules in `lib/categories.ts` decide portfolio or website, and which of 12 business types it is. You can change the guess.
 - **Requirements document to website.** At `/document` you upload a PRD, a BRD or a plain brief (PDF, Word .docx, Markdown or text). `lib/requirements.ts` splits it by its headings, matches each heading to what it is about, and reads lists, tables and "Key: value" lines into the same answers the questions step asks for: name, offer, city, customers, headline, story, features or menu with prices, plans, steps, common questions, team, quotes, tone, brand colour, first action and contact details. You see what was read and where from, fix the basics, then build. Goals and targets are never shown as facts, sections such as timeline, risks and out of scope are skipped, and the author's own email is not used. `lib/docx.ts` reads Word files with JSZip. Nothing is uploaded.
@@ -15,7 +15,9 @@ Type one line, such as "website for my bakery in Lahore" or "portfolio for me, I
   - **Remix** re-rolls one part: colour, type, shape or layout.
   - **Lock** keeps a part fixed while you shuffle.
   - **Save** keeps your own systems for later.
-- **Film-scene openings.** New sites open like a film: a scene photo fills the first screen, the headline sits in the open sky with one word in italic serif (or glowing), a pill with faces sits above it and the numbers run along the foot. The scene pushes in and blurs away as you scroll and follows the pointer. There is also a "Scattered words" opening, a floating glass pill menu, a full-screen curtain menu, a glass call to action, a footer with the name set huge, and a Silk light backdrop. All of it is switchable under Design system, Layout, or in one go with the Cinematic animation pack. The 26 scene photos in `public/real/cinema` were made free with Pollinations.
+- **Animation engine and 3D journeys.** A site's motion is described as data, a scene spec (`template/src/story.js`): `scene` (ocean, jungle, deep space), `character` (whale, parrot), `scrollBehavior`, `characterBehavior` (lookAtCursor, reactToClick, swimAcrossScreen, reactToSound…), `transition` and `sectionFx`. The renderer (`template/src/three/journey.jsx`, three.js with React Three Fiber) turns it into the opening: scrolling flies the camera forward, particles thicken, the words of each chapter rotate into view, the creature watches the cursor, answers a tap with a call, can listen to the microphone and dance, then swims or flies off as the next section melts in. Creatures are modelled in code (`template/src/three/creatures.jsx`) with a small state machine (idle, look, react, dance, away). A still version is shown for reduced motion.
+- **Intensity dial.** One slider from 1 to 10 (`lib/intensity.ts`): Simple (fades, slides, hover), Creative from 4 (parallax, magnetic buttons, kinetic type, smooth scroll), Bold from 7 (pinned scenes, WebGL, particles, camera moves) and Insane at 10 (the full 3D journey).
+- **Centred, animated sections.** Generated sites are centred by default (`design.align`), and every section arrives with a chosen effect: rise, curtain, zoom, tilt, blur, slide or stack, plus scroll details such as drawn heading lines (`template/src/flow.jsx`, `flow.css`).
 - **Living 3D scenes.** 48 scene concepts run as real-time 3D in the page, drawn by a small WebGL engine in `template/src/live` (original code, no libraries, no picture files). Every creature is modelled in code from smooth surfaces and animated in the vertex shader: whales and dolphins swim with a travelling body wave, fish beat their tails, the manta's wings ripple, birds flap and fold, jellyfish pulse. The sea, sky, pond, jungle and garden are shaders with light shafts, caustics, clouds, stars, layered ridges and reflections. Scenes follow the pointer (the camera shifts for depth, creatures turn to look), react to taps (a roll, a take-off, rings on the water) and leave as the page scrolls. 18 scenes come in up to four looks: lifelike, particles in the site's own colours, silhouettes on a painted sky, and cartoon. People can change the look, speed, number of creatures, side and colours (`design.scene.opts`, listed per scene in `SCENE_OPTIONS` in `scenes.js`). Picker thumbnails share one renderer and come alive on hover; scenes pause off screen, lower their resolution on slow devices and show a still for reduced motion.
 - **Colour optimizer.** There are seven harmony options: matched, analogous, complementary, split, triadic, calm and vivid. You can also build around a brand colour. Contrast ratios are shown for light and dark, and accents are adjusted automatically to pass WCAG AA (4.5 to 1).
 
@@ -55,7 +57,11 @@ npm run dev        # http://localhost:3000
 npm run build && npm start
 ```
 
-To deploy the builder itself on Vercel, import the repository. It needs no environment variables and no API keys.
+To deploy the builder itself on Vercel, import the repository. It works with no environment variables.
+
+### AI polish (optional, free)
+
+Set `GEMINI_API_KEY` (a free key from Google AI Studio) in the Vercel project's environment variables, or in `.env.local` for local work. `app/api/refine/route.ts` then lets the studio's "AI polish" panel rewrite the site's words, suggest openings and questions, and direct the 3D journey. The key stays on the server; only words are sent (never links, emails, phone numbers or prices), every change is reviewed before it lands, and requests are rate limited. Without a key the panel uses a local tidy-up and the rule-based director. `GEMINI_MODEL` can name a different model.
 
 ## Checks
 
@@ -75,18 +81,25 @@ Things the builder does on purpose:
 - Fonts never block the first paint, in the builder or in downloaded sites.
 - Responses carry basic security headers (`next.config.mjs`). There is no Content-Security-Policy yet; it needs nonces for the inline bootstrap scripts first.
 
+## How the app is organised
+
+One model, one workspace.
+
+- **A site is always a finished page.** `createProject()` in `lib/project.ts` turns one line (or a category tile, or a scene concept) into a complete project: details, a design system made for the person, a scene, an animation pack and the written page. There is no empty state.
+- **Details flow into the page.** `applyDetails()` rewrites the page when an answer or the portfolio form changes, with a three-way merge: whatever the person edited by hand is kept, everything else follows the details. `rewriteFromDetails()` throws hand edits away on purpose and keeps the old page under Versions.
+- **One studio for every kind of site** (`/studio/[id]`, `components/studio/`). The live site is always on screen. Six panels (Details, Design system, Scenes and characters, Animation, Page, Publish) are open from the start, in any order. `lib/useProject.ts` autosaves after a short pause and keeps undo and redo (Ctrl+Z, Ctrl+Shift+Z). `lib/flow.ts` holds the panels and the launch check. On phones the panel and the site take turns, with tabs along the bottom.
+- **Your sites** (`/sites`): every site made in this browser, with duplicate, backup, import and delete.
+- **Home page** (`app/page.tsx`, `components/home/`): rendered on the server, always dark, with the hero scene, a prompt that shows what it understood, four live example sites built by the same code (`lib/samples.ts`), the three steps, the design system wall, the scene concepts and the kinds of site.
+- Old `/build/[id]` and `/portfolio/[id]` links redirect to the studio.
+
 ## Files
 
-- `app/page.tsx` and `components/HomeBelow.tsx`: the home page, where you type your request.
-- `app/build/[id]/page.tsx` and `app/portfolio/[id]/page.tsx`: the steps for a business website and for a portfolio.
-- `components/DesignEditor.tsx`, `CastPicker.tsx`, `ScenePicker.tsx`, `MotionPicker.tsx`: design, characters, live scenes and animation.
-- `components/Steps.tsx`: the review and download steps. `lib/export.ts` builds both zips.
-- `lib/store.ts`: saving in the browser. `lib/fit.ts`: which characters, widgets, scenes and animations suit each kind of site.
-- `template/src/Portfolio.jsx` and `Website.jsx`: the two site templates, also used for the live preview.
-- `template/src/cinema.jsx` and `cinema.css`: film-scene and scattered-word openings, Silk light, glass call to action, curtain menu, wordmark footer. `template/src/plates.js` picks the scene for each kind of site.
-- `template/src/theme.js`: OKLCH palettes for light and dark, with contrast fitting.
-- `template/src/motion.js`: the animation styles. `template/src/spring.js` turns a spring (duration and bounce) into a CSS `linear()` easing for hover moves and pointer-following shapes.
-- `.claude/skills/motion/` and `.mcp.json`: the free Motion AI Kit (installed with `npx motion-ai`, MIT licence) so coding agents working on this repo get Motion's animation guidance and docs search. Only the free Motion server is set up; Motion+ is paid and left out.
-- `library/`: the shared library, see `library/README.md`.
-- `components/DocIntake.tsx`, `components/DocBand.tsx`, `app/document/`: the requirements document intake. `lib/requirements-sample.ts` has the sample document and the blank template.
-- `tests/`: unit tests.
+- `app/page.tsx`, `app/sites/page.tsx`, `app/studio/[id]/page.tsx`, `app/document/page.tsx`: the pages. `app/shell.css` (studio, panels), `app/home.css` (home, Your sites) and `app/globals.css` (tokens and shared pieces) style them.
+- `lib/project.ts`: creating, changing and merging projects. `lib/flow.ts`: panels and launch check. `lib/useProject.ts`: the studio's state, saving and undo. `lib/store.ts`: saving in the browser. `lib/fit.ts`: which characters, widgets, scenes and animations suit each kind of site.
+- `components/studio/`: the studio and its Details, Page and Publish panels. `DesignEditor`, `CastPicker`, `ScenePicker` and `MotionPicker` are the Design, Scenes and Animation panels. `Preview.tsx` is the live site with Edit on page.
+- `components/PromptBox.tsx`: the one-line prompt, used on the home page and Your sites.
+- `components/DocIntake.tsx`: start from a requirements document.
+- `template/src/Portfolio.jsx` and `Website.jsx`: the two site templates, also used for the live preview. `cinema.jsx`, `showpiece.jsx`, `studio.jsx`, `Cast.jsx`, `Scenes.jsx` and `concept.js` hold the openings, set pieces, effects, characters and scenes.
+- `template/src/theme.js`: OKLCH palettes for light and dark, with contrast fitting. `motion.js`: the animation styles. `spring.js`: springs as CSS `linear()` easing.
+- `.claude/skills/motion/` and `.mcp.json`: the free Motion AI Kit (MIT) so coding agents get Motion's guidance. Motion+ is paid and left out. Keep `motion` pinned at 14.7.1.
+- `library/`: the shared library, see `library/README.md`. `tests/`: unit tests.

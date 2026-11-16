@@ -1,261 +1,288 @@
-"use client";
-
-import { SCENES } from "@/template/src/scenes.js";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
 import Icon from "@/components/Icon";
 import DocBand from "@/components/DocBand";
-import Topbar from "@/components/Topbar";
-import { CATEGORIES, categoryById, classify, extractHints } from "@/lib/categories";
-import { LIBRARY, personalDesign } from "@/lib/designs";
-import { saveBlob, siteName } from "@/lib/export";
-import { defaultAnswers } from "@/lib/questions";
-import { deleteProject, importProjects, keepCast, listProjects, newProject, saveProject } from "@/lib/store";
-import type { Project, SiteKind } from "@/lib/types";
-import { STEPS } from "@/lib/types";
-import { MOTIONS } from "@/template/src/motion.js";
-import { CHARACTERS, WIDGETS } from "@/template/src/cast.js";
-import dynamic from "next/dynamic";
+import { LazyCategories } from "@/components/home/LazySections";
+import DesignWall from "@/components/home/DesignWall";
+import Engine from "@/components/home/Engine";
+import HomeJourney from "@/components/home/HomeJourney";
+import IntensityDemo from "@/components/home/IntensityDemo";
+import HomeNav from "@/components/home/HomeNav";
+import { ReadDemo, ShuffleDemo, type Swatch } from "@/components/home/HowDemos";
+import LiveDemo from "@/components/home/LiveDemo";
+import { CATEGORIES } from "@/lib/categories";
+import { LIBRARY } from "@/lib/designs";
+import { ROLES } from "@/lib/fit";
+import { CHARACTERS as CREATURES, ENVIRONMENTS } from "@/template/src/story.js";
+import { palette } from "@/template/src/theme.js";
 
-// Everything below the first screen hydrates on its own, after the form is usable.
-const HomeBelow = dynamic(() => import("@/components/HomeBelow"));
-// The animated centrepiece is heavy (characters, widgets, live scenes), so it loads after the
-// words and the form are on screen. The placeholder keeps its space.
-const Showreel = dynamic(() => import("@/components/Showreel"), { ssr: false, loading: () => <div className="reel" aria-hidden="true"><div className="reel-stage" /></div> });
-import { ROLES, classifyRole } from "@/lib/fit";
+// The home page. It is rendered on the server (words, numbers and structure arrive as
+// plain HTML) and only the pieces that move or react are client components.
 
-const EXAMPLES = [
-  "Portfolio for me, I'm a product manager",
-  "Website for my bakery called Crumb House in Lahore",
-  "Site for my dental clinic in Karachi",
-  "Landing page for my invoicing app",
-  "I'm a UX designer and want to show my work",
-  "Wedding photography business in Islamabad",
+function swatch(d: (typeof LIBRARY)[number]): Swatch {
+  const dark = d.mode === "dark";
+  const p = palette(d, dark ? "dark" : "light");
+  return { id: d.id, preset: d.preset, display: d.fonts.display, body: d.fonts.body, radius: d.radius, dark, bg: p.bg, text: p.text, border: p.border, accent: p.accent, onAccent: p.onAccent };
+}
+
+const FAQ = [
+  ["Is it really free?", "Yes. There is no account, no trial and no monthly fee. The site you download is plain files that you own, and the free plans of hosts such as Netlify, Cloudflare Pages and GitHub Pages are enough to put it online."],
+  ["Is there AI in it?", "Only if you want it. Every site is written by rules from your own answers, so it works instantly and never invents facts. When the server has a free Google Gemini key, the AI polish panel can also rewrite your words and direct your 3D journey. You review every change before it lands."],
+  ["Where does my information go?", "Your sites are saved inside this browser, and a résumé or document you drop in is read here too. The only thing that ever leaves is the words you choose to send to AI polish, and never links, emails, phone numbers or prices. Use Save a backup to move a site to another device."],
+  ["What exactly do I get?", "A zip with the finished site: one page, its pictures, a browser icon, a share picture and search tags. Unzip it and it opens. Developers can also download the same site as a React and Vite project."],
+  ["Can I change it later?", "Open it again here, change anything, and download again. You can also edit every word and colour in a text editor: they live in one readable file inside the download."],
+  ["Will the 3D journey slow my site down?", "No. The 3D world loads only when a visitor reaches it, pauses when it is off screen, uses fewer particles on phones, and is replaced by a still picture for people who turn motion down. Lower the intensity dial for a lighter site."],
+  ["Will it work on phones and for screen readers?", "Every site is responsive, passes WCAG AA colour contrast, respects reduced motion and ships with the tags search engines and link previews look for."],
 ];
 
 export default function Home() {
-  const router = useRouter();
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [query, setQuery] = useState("");
-  const [kindOverride, setKindOverride] = useState<SiteKind | null>(null);
-  const [catOverride, setCatOverride] = useState<string | null>(null);
-  const [roleOverride, setRoleOverride] = useState<string | null>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
-  useEffect(() => setProjects(listProjects()), []);
-
-  const detected = useMemo(() => classify(query), [query]);
-  const kind = kindOverride ?? detected.kind;
-  const category = kind === "portfolio" ? (roleOverride ?? classifyRole(query)) : (catOverride ?? (detected.kind === "website" ? detected.category : "general"));
-  const hints = useMemo(() => extractHints(query), [query]);
-
-  const start = () => {
-    const q = query.trim() || (kind === "portfolio" ? "A personal portfolio" : "A website for my business");
-    const p = newProject(q, kind, category, hints.name);
-    p.answers = defaultAnswers(kind, category, hints);
-    p.design = keepCast(p.design, personalDesign(hints.name || q, q, undefined, category));
-    saveProject(p);
-    router.push(kind === "portfolio" ? `/portfolio/${p.id}` : `/build/${p.id}`);
-  };
-  const startKind = (k: SiteKind, cat?: string, label?: string, sceneId?: string) => {
-    const q = label ? (k === "portfolio" ? "Portfolio for a " + label.toLowerCase() : "Website for a " + label.toLowerCase()) : k === "portfolio" ? "A personal portfolio" : "A website for my business";
-    const p = newProject(q, k, cat ?? (k === "portfolio" ? "portfolio" : "general"), "");
-    p.answers = defaultAnswers(k, p.category, { name: "", city: "" });
-    p.design = keepCast(p.design, personalDesign(p.query + Date.now(), p.query, undefined, p.category));
-    const picked = sceneId ? SCENES.find((s) => s.id === sceneId) : undefined;
-    if (picked) p.design = { ...p.design, scene: picked, sceneMode: "backdrop" };
-    saveProject(p);
-    router.push(k === "portfolio" ? `/portfolio/${p.id}` : `/build/${p.id}`);
-  };
+  // A spread across the library: every 37th system gives a mix of moods, light and dark.
+  const spread = LIBRARY.filter((_, i) => i % 37 === 3).slice(0, 12).map(swatch);
 
   return (
-    <>
-      <Topbar />
-      <main className="page">
-        <section className="home-hero">
-          <div className="home-hero-text">
-            <p className="home-kicker rise" style={{ ["--i" as string]: 0 }}>
-              <span className="avatar-stack" aria-hidden="true">
-                {["SM", "AK", "HR", "ZN"].map((x, i) => (
-                  <span key={x} className="mono-avatar" style={{ ["--h" as string]: 158 + i * 55 }}>
-                    {x}
-                  </span>
-                ))}
-              </span>
-              No AI, no sign up. Everything stays in your browser.
-            </p>
-            <h1 className="home-title" aria-label="Say what you need. Get a site you own.">
-              {["Say", "what", "you", "need."].map((w, i) => (
-                <span className="hl-word" key={i} aria-hidden="true">
-                  <span className="hl-part hl-up" style={{ animationDelay: 0.1 + i * 0.06 + "s" }}>
-                    {w}
-                  </span>
-                </span>
+    <div className="home-root">
+      <HomeNav />
+      <main>
+        <HomeJourney />
+
+        <section className="hsec" id="dial" aria-labelledby="dial-title">
+          <header className="hsec-head">
+            <span className="hsec-kicker mono">The intensity dial</span>
+            <h2 id="dial-title">
+              Calm or <em className="serif-i">completely wild.</em> You choose.
+            </h2>
+            <p>One slider sets how much your site moves. Low numbers keep it quiet and fast. Turn it up for pinned scenes, particles and camera moves, and at 10 your visitors fly through a living world.</p>
+          </header>
+          <IntensityDemo />
+        </section>
+
+        <section className="hsec" id="engine" aria-labelledby="engine-title">
+          <header className="hsec-head">
+            <span className="hsec-kicker mono">The animation engine</span>
+            <h2 id="engine-title">
+              Motion described as data, <em className="serif-i">rendered as a world.</em>
+            </h2>
+            <p>Your words go to a director that picks a scene, a character, how the camera moves and how sections arrive. A renderer turns that plan into a real React site, so every choice stays editable.</p>
+          </header>
+          <Engine />
+          <ul className="prim">
+            <li>
+              <b>Worlds</b>
+              {ENVIRONMENTS.map((e) => (
+                <span key={e.id} className="prim-on">{e.label}</span>
               ))}
-              <br />
-              {["Get", "a", "site", "you", "own."].map((w, i) => (
-                <span className="hl-word" key={i} aria-hidden="true">
-                  <span className={"hl-part hl-up" + (w === "own." ? " hl-accent" : "")} style={{ animationDelay: 0.34 + i * 0.06 + "s" }}>
-                    {w}
-                  </span>
-                </span>
+              <span>City, desert, clouds soon</span>
+            </li>
+            <li>
+              <b>Characters</b>
+              {CREATURES.map((c) => (
+                <span key={c.id} className="prim-on">{c.label}</span>
               ))}
-            </h1>
-            <p className="lede rise" style={{ ["--i" as string]: 3 }}>
-              Describe it in one line or pick your category. Choose from {LIBRARY.length} design systems, {MOTIONS.length - 1} animation styles, {SCENES.filter((s) => s.group === "concept").length} scene concepts (a parrot that flies in, a whale swimming past, a jungle walk), {CHARACTERS.length} characters, {WIDGETS.length} widgets and {SCENES.filter((s) => s.group !== "concept").length} live scenes you can touch, then download a finished site you can put online for free.
-            </p>
-          <form
-            className="ask rise"
-            style={{ ["--i" as string]: 4 }}
-            onSubmit={(e) => {
-              e.preventDefault();
-              start();
-            }}
-          >
-            <label className="lbl" htmlFor="q">
-              Or just tell us what you want
-            </label>
-            <div className="ask-row">
-              <input id="q" value={query} placeholder="Website for my bakery in Lahore" onChange={(e) => setQuery(e.target.value)} />
-              <button className="btn btn-primary" type="submit">
-                Start
-                <Icon name="arrow" size={16} />
-              </button>
-            </div>
-            <div className="examples" aria-label="Examples">
-              {EXAMPLES.map((x) => (
-                <button
-                  type="button"
-                  key={x}
-                  className="chip"
-                  onClick={() => {
-                    setQuery(x);
-                    setKindOverride(null);
-                    setCatOverride(null);
-                    setRoleOverride(null);
-                  }}
-                >
-                  {x}
-                </button>
+              <span>Fox, robot, astronaut soon</span>
+            </li>
+            <li>
+              <b>Behaviours</b>
+              {["Looks at the cursor", "Answers a tap", "Crosses the screen", "Dances to sound"].map((x) => (
+                <span key={x} className="prim-on">{x}</span>
               ))}
-            </div>
-            <div className="detect" aria-live="polite">
-              <span className="small muted">We&apos;ll build</span>
-              <div className="seg" role="group" aria-label="Kind of site">
-                {(["portfolio", "website"] as const).map((k) => (
-                  <button type="button" key={k} aria-pressed={kind === k} className={kind === k ? "is-on" : ""} onClick={() => setKindOverride(k)}>
-                    {k === "portfolio" ? "A personal portfolio" : "A business website"}
-                  </button>
-                ))}
+            </li>
+            <li>
+              <b>Sections</b>
+              {["Rise", "Curtain", "Zoom", "Tilt", "Blur", "Slide", "Stack"].map((x) => (
+                <span key={x} className="prim-on">{x}</span>
+              ))}
+            </li>
+          </ul>
+        </section>
+
+        <section className="hsec" id="demo" aria-labelledby="demo-title">
+          <header className="hsec-head">
+            <h2 id="demo-title">
+              One line in. <em className="serif-i">A whole site</em> out.
+            </h2>
+            <p>These are not screenshots. Each one is a real site the builder made from the line above it, running live. Scroll inside, switch to phone, try dark.</p>
+          </header>
+          <LiveDemo />
+        </section>
+
+        <section className="hsec" id="how" aria-labelledby="how-title">
+          <header className="hsec-head">
+            <h2 id="how-title">
+              Three moves, <em className="serif-i">no blank page.</em>
+            </h2>
+            <p>You never start from an empty canvas. The site exists from the first second, and everything after that is choosing.</p>
+          </header>
+          <ol className="how">
+            <li className="how-step">
+              <div className="how-text">
+                <span className="how-n mono">1</span>
+                <h3>Say it</h3>
+                <p>Type what you would tell a friend. Simple rules work out whether it is a business or a person, which kind, and pick up a name and a city.</p>
               </div>
-              {kind === "portfolio" && (
-                <select aria-label="Your role" value={category} onChange={(e) => setRoleOverride(e.target.value)}>
-                  {[...ROLES, { id: "portfolio", label: "Any role" }].map((r) => (
-                    <option key={r.id} value={r.id}>
-                      {r.label}
-                    </option>
-                  ))}
-                </select>
-              )}
-              {kind === "website" && (
-                <select aria-label="Type of business" value={category} onChange={(e) => setCatOverride(e.target.value)}>
-                  {CATEGORIES.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.label}
-                    </option>
-                  ))}
-                </select>
-              )}
-            </div>
-          </form>
-          </div>
-          <div className="home-reel rise-reel">
-            <Showreel />
+              <ReadDemo />
+            </li>
+            <li className="how-step">
+              <div className="how-text">
+                <span className="how-n mono">2</span>
+                <h3>Shape it</h3>
+                <p>Your site opens already written, with a design system made for you. Shuffle it, swap the opening scene, pick how it moves, click any word to change it.</p>
+              </div>
+              <ShuffleDemo designs={spread} />
+            </li>
+            <li className="how-step">
+              <div className="how-text">
+                <span className="how-n mono">3</span>
+                <h3>Own it</h3>
+                <p>Download one folder and drop it onto a free host. No account here, no lock-in, no monthly bill. The files are yours for good.</p>
+              </div>
+              <div className="how-demo">
+                <ul className="how-files mono">
+                  <li>
+                    <span>index.html</span>
+                    <span>your page</span>
+                  </li>
+                  <li>
+                    <span>site-data.js</span>
+                    <span>every word and colour</span>
+                  </li>
+                  <li>
+                    <span>site.js · site.css</span>
+                    <span>motion and style</span>
+                  </li>
+                  <li>
+                    <span>images/</span>
+                    <span>your pictures</span>
+                  </li>
+                  <li>
+                    <span>favicon · share.png</span>
+                    <span>icon and link preview</span>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ol>
+        </section>
+
+        <section className="hsec" id="designs" aria-labelledby="designs-title">
+          <header className="hsec-head">
+            <h2 id="designs-title">
+              {LIBRARY.length} design systems. <em className="serif-i">One is made for you.</em>
+            </h2>
+            <p>Each pairs real typefaces with one accent, tinted neutrals, a corner shape and a layout, in light and dark, with contrast checked. Yours is seeded from your name and tone, then you can shuffle, remix one part or lock what you like.</p>
+          </header>
+          <DesignWall designs={spread} />
+        </section>
+
+        <section className="hsec" id="categories" aria-labelledby="cat-title">
+          <header className="hsec-head">
+            <h2 id="cat-title">
+              Made for <em className="serif-i">your kind of work.</em>
+            </h2>
+            <p>
+              {CATEGORIES.length} kinds of business and {ROLES.length} roles, each with its own questions, starting words, scenes, characters and animation. Pick yours and a site opens.
+            </p>
+          </header>
+          <LazyCategories />
+        </section>
+
+        <section className="hsec" aria-label="Start from a document">
+          <DocBand />
+        </section>
+
+        <section className="hsec" id="yours" aria-labelledby="yours-title">
+          <header className="hsec-head">
+            <h2 id="yours-title">
+              Built to be <em className="serif-i">kept.</em>
+            </h2>
+          </header>
+          <ul className="bento">
+            <li className="bento-a">
+              <Icon name="shield" size={22} />
+              <h3>Private by design</h3>
+              <p>Your sites live in this browser. There is no account and no tracking of what you build, and only words you choose to polish are ever sent.</p>
+            </li>
+            <li className="bento-b">
+              <Icon name="bolt" size={22} />
+              <h3>Instant, with AI only when you ask</h3>
+              <p>Rules write the page from your answers, so it appears as you type. Free Gemini polish is one click away, and you approve every word.</p>
+            </li>
+            <li className="bento-c">
+              <Icon name="edit" size={22} />
+              <h3>Click anything to change it</h3>
+              <p>Edit words and pictures right on the page. Change an answer later and the page follows, keeping what you rewrote by hand.</p>
+            </li>
+            <li className="bento-d">
+              <Icon name="globe" size={22} />
+              <h3>Ready for search and sharing</h3>
+              <p>Titles, link previews, business data for search engines, a favicon and a share picture are in every download.</p>
+            </li>
+            <li className="bento-e">
+              <Icon name="heart" size={22} />
+              <h3>Works for everyone</h3>
+              <p>Responsive, centred and keyboard friendly, AA contrast in light and dark, and a still version for people who turn motion down.</p>
+            </li>
+            <li className="bento-f">
+              <Icon name="code" size={22} />
+              <h3>Source included</h3>
+              <p>Prefer code? Take the same site as a React and Vite project, with every setting in one JSON file.</p>
+            </li>
+          </ul>
+        </section>
+
+        <section className="hsec hsec-narrow" id="faq" aria-labelledby="faq-title">
+          <header className="hsec-head">
+            <h2 id="faq-title">Fair questions</h2>
+          </header>
+          <div className="faq">
+            {FAQ.map(([q, a]) => (
+              <details key={q}>
+                <summary>
+                  {q}
+                  <Icon name="plus" size={18} />
+                </summary>
+                <p>{a}</p>
+              </details>
+            ))}
           </div>
         </section>
 
-        <DocBand />
-
-        <HomeBelow startKind={startKind} />
-
-        <div className="row wrap" style={{ marginTop: 18 }}>
-          <button className="btn btn-ghost btn-sm" onClick={() => fileRef.current?.click()}>
-            Import a backup
-          </button>
-          <input
-            ref={fileRef}
-            type="file"
-            accept="application/json"
-            hidden
-            onChange={async (e) => {
-              const f = e.target.files?.[0];
-              if (!f) return;
-              try {
-                const data = JSON.parse(await f.text());
-                const n = importProjects(Array.isArray(data) ? data : [data]);
-                if (!n) throw new Error("no projects");
-                setProjects(listProjects());
-              } catch {
-                alert("That file isn't a Site Builder backup. Choose the .json file you saved from this app.");
-              }
-              e.target.value = "";
-            }}
-          />
-        </div>
-
-        {projects.length > 0 && (
-          <section className="home-section">
-            <div className="row between" style={{ marginBottom: 12 }}>
-              <h2>Your sites</h2>
-              <button className="btn btn-ghost btn-sm" onClick={() => saveBlob(new Blob([JSON.stringify(projects, null, 2)], { type: "application/json" }), "site-builder-backup.json")}>
-                <Icon name="download" size={16} />
-                Back up all
-              </button>
+        <section className="endcta" aria-labelledby="end-title">
+          <div className="endcta-glow" aria-hidden="true" />
+          <div className="endcta-card">
+            <h2 id="end-title">
+              Your site is <em className="serif-i">one line</em> away.
+            </h2>
+            <p>It takes less time than reading this page did.</p>
+            <div className="row wrap" style={{ justifyContent: "center" }}>
+              <a href="#start" className="btn btn-primary">
+                Start building
+                <Icon name="arrow" size={16} />
+              </a>
+              <Link href="/sites" className="btn endcta-ghost">
+                Your sites
+              </Link>
             </div>
-            <ul className="project-list">
-              {projects.map((p) => {
-                const done = STEPS.filter((s) => p.steps[s.id] === "approved").length;
-                return (
-                  <li className="project-item" key={p.id}>
-                    <div className="row" style={{ gap: 14, alignItems: "flex-start" }}>
-                      <span className="mono-avatar is-lg" style={{ background: p.design.accent }} aria-hidden="true">
-                        {(p.content ? siteName(p) : p.answers.name || p.name || "S").split(/\s+/).slice(0, 2).map((w) => w[0]?.toUpperCase()).join("")}
-                      </span>
-                      <div>
-                      <h3>{p.content ? siteName(p) : p.answers.name || p.name}</h3>
-                      <p className="small muted" style={{ marginTop: 4 }}>
-                        <span className="progress-dots" aria-label={`${done} of ${STEPS.length} steps approved`}>
-                          {STEPS.map((s, i) => (
-                            <span key={s.id} className={i < done ? "on" : ""} />
-                          ))}
-                        </span>
-                        {p.kind === "portfolio" ? "Portfolio" + (ROLES.find((r) => r.id === p.category) ? ", " + ROLES.find((r) => r.id === p.category)!.label.toLowerCase() : "") : categoryById(p.category).label} · {p.design.preset} · edited {new Date(p.updatedAt).toLocaleDateString()}
-                      </p>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <button
-                        className="btn btn-ghost btn-sm btn-danger"
-                        onClick={() => {
-                          if (confirm("Delete this site from this browser? This can't be undone unless you have a backup.")) {
-                            deleteProject(p.id);
-                            setProjects(listProjects());
-                          }
-                        }}
-                      >
-                        Delete
-                      </button>
-                      <Link className="btn btn-sm" href={p.kind === "portfolio" ? `/portfolio/${p.id}` : `/build/${p.id}`}>
-                        Continue
-                      </Link>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          </section>
-        )}
+          </div>
+        </section>
       </main>
-    </>
+
+      <footer className="hfoot">
+        <div className="hfoot-top">
+          <p>Site Builder turns one line into a finished, animated website you own. Free, private, with optional AI polish.</p>
+          <nav aria-label="Footer">
+            <a href="#demo">Examples</a>
+            <a href="#how">How it works</a>
+            <a href="#dial">Intensity</a>
+            <a href="#engine">Engine</a>
+            <a href="#designs">Design systems</a>
+            <a href="#faq">Questions</a>
+            <Link href="/sites">Your sites</Link>
+          </nav>
+        </div>
+        <p className="hfoot-word" aria-hidden="true">
+          Site Builder
+        </p>
+        <p className="hfoot-fine">3D by three.js and React Three Fiber (MIT). Motion by Motion and Lenis (MIT). Emoji art by Microsoft Fluent (MIT) and Google Noto (Apache 2.0).</p>
+      </footer>
+    </div>
   );
 }

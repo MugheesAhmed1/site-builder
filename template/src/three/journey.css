@@ -1,0 +1,47 @@
+/* Scroll journeys (three/journey.jsx). The section is one screen tall per chapter plus one;
+   the pinned screen inside holds the canvas, the words and a small control strip. */
+.jr { --jv: 100vh; --jp: 0; --melt: 0; position: relative; height: calc(var(--jv) * (var(--chapters, 3) + 1.2)); background: #04223a; color: #fff; text-align: center; }
+.jr[data-world="jungle"] { background: #0d2a1a; }
+.jr[data-world="cosmos"] { background: #05040f; }
+.jr-loading { height: var(--jv, 100vh); }
+.jr-pin { position: sticky; top: 0; height: var(--jv); overflow: hidden; isolation: isolate; }
+.jr-canvas { position: absolute; inset: 0; z-index: 0; }
+.jr-canvas canvas { display: block; touch-action: pan-y; }
+.jr-vignette { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(120% 90% at 50% 45%, transparent 45%, rgb(0 0 0 / 0.45)), linear-gradient(180deg, rgb(0 0 0 / 0.25), transparent 30%, transparent 70%, rgb(0 0 0 / 0.35)); }
+.jr-copy { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; pointer-events: none; perspective: 1100px; padding: 0 var(--pf-gutter, 24px); }
+.jr-ch { --in: 0; --out: 0; grid-area: 1 / 1; display: grid; justify-items: center; gap: 16px; max-width: 900px; transform-origin: 50% 50% -200px;
+  transform: translate3d(0, calc((1 - var(--in)) * 90px - var(--out) * 90px), 0) rotateX(calc((1 - var(--in)) * -75deg + var(--out) * 70deg)) scale(calc(0.9 + var(--in) * 0.1));
+  opacity: calc(var(--in) - var(--out)); filter: blur(calc((1 - var(--in) + var(--out)) * 8px)); text-shadow: 0 2px 30px rgb(0 0 0 / 0.45); }
+.jr-ch .pf-hero-ctas, .jr-ch a, .jr-ch button { pointer-events: auto; }
+.jr-kicker { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: rgb(255 255 255 / 0.12); border: 1px solid rgb(255 255 255 / 0.22); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); font-size: 14px; font-weight: 600; letter-spacing: 0.02em; }
+.jr-title { margin: 0; font-family: var(--pf-font-display, inherit); font-size: clamp(38px, 7cqi, 96px); line-height: 0.98; letter-spacing: -0.035em; font-weight: 700; text-wrap: balance; color: #fff; }
+.jr-ch:not(.is-first) .jr-title { font-size: clamp(32px, 5.6cqi, 76px); }
+.jr-text { margin: 0; max-width: 46ch; font-size: clamp(16px, 1.6cqi, 20px); line-height: 1.5; color: rgb(255 255 255 / 0.86); }
+.jr .pf-btn { box-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.5); }
+.jr-hud { position: absolute; z-index: 3; left: 50%; bottom: 22px; translate: -50% 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgb(0 0 0 / 0.28); border: 1px solid rgb(255 255 255 / 0.16); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); font-size: 13px; }
+.jr-state { display: inline-flex; align-items: center; gap: 8px; padding: 0 12px; min-height: 32px; white-space: nowrap; }
+.jr-dot { width: 8px; height: 8px; border-radius: 50%; background: #9ae6b4; box-shadow: 0 0 0 0 currentColor; transition: background-color 200ms ease; }
+.jr-dot.is-look { background: #7dd3fc; }
+.jr-dot.is-react { background: #fbbf24; animation: jr-ping 0.6s ease-out infinite; }
+.jr-dot.is-dance { background: #f472b6; animation: jr-ping 0.4s ease-out infinite; }
+.jr-dot.is-away { background: #a5b4fc; }
+@keyframes jr-ping { from { box-shadow: 0 0 0 0 rgb(255 255 255 / 0.6); } to { box-shadow: 0 0 0 8px rgb(255 255 255 / 0); } }
+.jr-btn { min-height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid rgb(255 255 255 / 0.2); background: rgb(255 255 255 / 0.08); color: #fff; font: inherit; cursor: pointer; transition: background-color 150ms ease, transform 120ms ease; }
+.jr-btn[aria-pressed="true"] { background: rgb(255 255 255 / 0.22); }
+.jr-btn:active { transform: scale(0.96); }
+.jr-hint { position: absolute; z-index: 3; top: 50%; right: clamp(16px, 4cqi, 48px); translate: 0 -50%; display: grid; gap: 8px; justify-items: end; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(255 255 255 / 0.7); opacity: calc(1 - var(--jp) * 8); }
+.jr-scroll::after { content: ""; display: block; width: 1px; height: 40px; margin: 8px 0 0 auto; background: linear-gradient(#fff, transparent); animation: jr-drop 1.8s ease-in-out infinite; transform-origin: top; }
+@keyframes jr-drop { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
+.jr-progress { position: absolute; z-index: 3; left: 0; top: 0; height: 3px; width: 100%; background: var(--pf-accent, #fff); transform: scaleX(var(--jp)); transform-origin: 0 50%; }
+/* The last stretch melts into the page colour so the next section seems to grow out of it. */
+.jr-melt { position: absolute; inset: 0; z-index: 4; pointer-events: none; background: var(--pf-bg, #fff); clip-path: circle(calc(var(--melt) * 75%) at 50% 50%); opacity: calc(var(--melt) * 1.2); }
+.jr-still { height: auto; padding: 120px var(--pf-gutter, 24px); }
+.jr-stillbg { position: absolute; inset: 0; background: radial-gradient(circle at 50% 30%, rgb(255 255 255 / 0.12), transparent 60%); }
+.jr-still .jr-copy { position: relative; display: grid; gap: 64px; }
+.jr-static { display: grid; justify-items: center; gap: 14px; }
+@media (max-width: 640px) { .jr-hint { display: none; } .jr-hud { bottom: 12px; font-size: 12px; } }
+@media (prefers-reduced-motion: reduce) { .jr-ch { transform: none; filter: none; } }
+/* The opening buttons arrive with the journey, not with the page's entrance script. */
+.jr .pf-enter { opacity: 1 !important; transform: none !important; filter: none !important; }
+.jr .pf-hero-ctas { justify-content: center; margin-top: 8px; }
+.jr .pf-btn-quiet, .jr .pf-btn-ghost { color: #fff; border-color: rgb(255 255 255 / 0.5); background: rgb(255 255 255 / 0.08); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }

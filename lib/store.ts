@@ -1,4 +1,5 @@
 "use client";
+import { directStory } from "@/template/src/story.js";
 
 import { packById } from "./packs";
 import { LIBRARY, normalizeDesign } from "./designs";
@@ -107,9 +108,10 @@ export function importProjects(input: unknown[]): number {
   return write(KEY, [...all.filter((x) => !ids.has(x.id)), ...items]) ? items.length : 0;
 }
 
-// New projects open like a film: a scene behind the words, a glass pill menu, a glass call
-// to action and the name set huge in the footer. Every piece can be switched off later.
-const CINEMA_START: Partial<Design> = { heroStyle: "cinema", accentFace: "serif", chrome: "pill", menu: "curtain", footer: "wordmark", ctaStyle: "glass" };
+// New projects open at full intensity: a 3D journey the visitor flies through by scrolling,
+// with a creature that reacts, a glass pill menu and the name set huge in the footer. The
+// intensity dial (Motion panel) turns it down to anything from 1 to 10.
+const JOURNEY_START = (category: string, query: string): Partial<Design> => ({ heroStyle: "journey", intensity: 10, story: directStory(category, query, "insane"), sectionFx: "curtain", scrollFx: true, accentFace: "serif", chrome: "pill", menu: "curtain", footer: "wordmark", ctaStyle: "band" });
 
 // New projects start on the animation pack that suits their kind of site.
 function packFor(category: string) {
@@ -136,7 +138,7 @@ export function newProject(query: string, kind: SiteKind, category: string, name
     resumeText: "",
     resumeFileName: "",
     profile: null,
-    design: { ...LIBRARY[0], cast: castFor(category, seedOf(id)), scene: sceneFor(category, seedOf(id)), ...packFor(category), ...CINEMA_START, ...(kind === "website" ? { plate: category } : {}) },
+    design: { ...LIBRARY[0], cast: castFor(category, seedOf(id)), scene: sceneFor(category, seedOf(id)), ...packFor(category), ...JOURNEY_START(category, query), ...(kind === "website" ? { plate: category } : {}) },
     locks: {},
     content: null,
     history: [],

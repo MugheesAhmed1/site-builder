@@ -85,6 +85,12 @@ export function questionsFor(kind: SiteKind, category: string): Question[] {
 export function defaultAnswers(kind: SiteKind, category: string, hints: { name: string; city: string }): Record<string, string> {
   const a: Record<string, string> = {};
   for (const q of questionsFor(kind, category)) if (q.suggest) a[q.id] = q.suggest;
+  // A site opens already written, so the two answers every headline leans on start from a
+  // fitting example the person can overwrite, not from nothing.
+  if (kind === "website") {
+    a.what = examples[category] ?? examples.general;
+    a.audience = audiences[category] ?? audiences.general;
+  }
   if (hints.name) a.name = hints.name;
   if (hints.city) a[kind === "portfolio" ? "location" : "city"] = hints.city;
   return a;
