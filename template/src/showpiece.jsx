@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { propsFor } from "./props.js";
+// Picture-less tiles once took a cut-out from a retired pack; they now draw their own shapes.
+const propsFor = () => [];
 export { propsFor };
 
 // Showpieces: one big interactive set piece per site, the kind of moment people remember.

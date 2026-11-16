@@ -12,7 +12,7 @@ import LiveDemo from "@/components/home/LiveDemo";
 import { CATEGORIES } from "@/lib/categories";
 import { LIBRARY } from "@/lib/designs";
 import { ROLES } from "@/lib/fit";
-import { ATMOSPHERES } from "@/template/src/atmos/catalog.js";
+import { SCENES, SCENE_GROUPS } from "@/template/src/atmos/catalog.js";
 import { palette } from "@/template/src/theme.js";
 
 // The home page. It is rendered on the server (words, numbers and structure arrive as
@@ -66,9 +66,11 @@ export default function Home() {
           <Engine />
           <ul className="prim">
             <li>
-              <b>Backgrounds</b>
-              {ATMOSPHERES.map((e) => (
-                <span key={e.id} className="prim-on">{e.label}</span>
+              <b>{SCENES.length} scenes</b>
+              {SCENE_GROUPS.map((g) => (
+                <span key={g} className="prim-on">
+                  {g} · {SCENES.filter((s) => s.group === g).length}
+                </span>
               ))}
             </li>
             <li>
@@ -170,7 +172,7 @@ export default function Home() {
               Made for <em className="serif-i">your kind of work.</em>
             </h2>
             <p>
-              {CATEGORIES.length} kinds of business and {ROLES.length} roles, each with its own questions, starting words, scenes, characters and animation. Pick yours and a site opens.
+              {CATEGORIES.length} kinds of business and {ROLES.length} roles, each with its own questions, starting words, scene and animation. Pick yours and a site opens.
             </p>
           </header>
           <LazyCategories />

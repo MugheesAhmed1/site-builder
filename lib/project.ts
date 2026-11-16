@@ -5,7 +5,6 @@ import { classifyRole } from "./fit";
 import { TONE_MOOD, defaultAnswers, questionsFor } from "./questions";
 import { keepCast, newProject } from "./store";
 import type { PortfolioInput, Project, SiteContent, SiteKind } from "./types";
-import { SCENES } from "@/template/src/scenes.js";
 
 // One place for what a project is and how it changes. Pages and panels call these pure
 // functions; none of them touch storage or the screen, so they are easy to test.
@@ -58,7 +57,7 @@ export interface CreateOptions {
   kind?: SiteKind | null;
   category?: string | null;
   label?: string; // the category's name, when started from a category tile
-  sceneId?: string; // open on this scene
+  atmos?: string; // open in this scene
   vary?: boolean; // a different design each time, for starts that carry no name
 }
 
@@ -72,8 +71,7 @@ export function createProject(o: CreateOptions = {}): Project {
   p.answers = defaultAnswers(read.kind, read.category, read.hints);
   if (read.kind === "portfolio") p.input = portfolioInput(p);
   p.design = keepCast(p.design, designFor(p, o.vary || !read.hints.name ? p.id : ""));
-  const scene = o.sceneId ? SCENES.find((s) => s.id === o.sceneId) : undefined;
-  if (scene) p.design = { ...p.design, scene, sceneMode: "backdrop" };
+  if (o.atmos) p.design = { ...p.design, heroStyle: "atmos", atmos: o.atmos };
   p = { ...p, content: composeProject(p) };
   return p;
 }

@@ -1,8 +1,5 @@
 import { CATEGORIES } from "./categories";
-import { CHARACTERS, SKINS, WIDGETS, type CharacterDef, type WidgetDef } from "@/template/src/cast.js";
 import { MOTIONS, type MotionStyle } from "@/template/src/motion.js";
-import { SCENES } from "@/template/src/scenes.js";
-import { conceptsFor } from "@/template/src/concepts.js";
 
 // Categories for both kinds of site: business types (restaurant, dentist, hospital, agency,
 // creator and so on) and portfolio roles (product manager, IT manager, CEO and so on).
@@ -119,34 +116,8 @@ export const CATEGORY_GROUPS = [
   { kind: "portfolio" as const, title: "Individuals", items: [...ROLES.map((r) => ({ id: r.id, label: r.label })), { id: "portfolio", label: "Any role" }] },
 ];
 
-export function fitsCharacter(c: CharacterDef, fit: Fit) {
-  // Real-life characters each list the categories they suit (a chef for food, a dentist for dentists).
-  if (c.fits) return c.fits.includes(FIT_ID.get(fit) ?? "general");
-  return fit.families.includes(c.family);
-}
-export function fitsWidget(w: WidgetDef, fit: Fit) {
-  return fit.widgets.includes(w.kind);
-}
 export function fitsMotion(m: MotionStyle, fit: Fit) {
   return m.id === "M-000" || (fit.feels.includes(m.feel ?? "") && fit.tempos.includes(m.tempo));
-}
-
-const FOOD_LIKE = new Set(["food", "hotel", "events"]);
-
-// A starting cast for a category, stable per project.
-export function castFor(category: string, seed: number, strict = false): { character: CharacterDef; widgets: WidgetDef[] } {
-  const fit = fitFor(category);
-  const family = strict ? fit.families[0] : fit.families[(seed >>> 0) % Math.min(3, fit.families.length)];
-  const all = CHARACTERS.filter((c) => c.family === family);
-  // The darkest palettes hide the face on a dark page, so the showcase skips them.
-  const bright = strict ? all.filter((c) => c.palette !== "ink" && c.palette !== "slate") : all;
-  // A chef's hat only makes sense where food is made, so other categories never start with one.
-  const suited = FOOD_LIKE.has(category) ? bright : bright.filter((c) => c.accessory !== "chef");
-  const pool = suited.length ? suited : bright.length ? bright : all;
-  const character = pool[(seed >>> 3) % pool.length];
-  const skin = SKINS[(seed >>> 5) % SKINS.length].id;
-  const widgets = fit.widgets.slice(0, 6).map((k) => WIDGETS.find((w) => w.kind === k && w.skin === skin) ?? WIDGETS.find((w) => w.kind === k)!);
-  return { character, widgets };
 }
 
 // An animation style that suits the category, stable per seed.
@@ -156,40 +127,3 @@ export function motionFor(category: string, seed: number): string {
   return pool.length ? pool[(seed >>> 2) % pool.length].id : "M-002";
 }
 
-// The face of a category, for menus and the home page.
-export function iconFor(category: string) {
-  let h = 0;
-  for (const ch of category) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-  return castFor(category, h, true).character;
-}
-
-// Live scenes (particles, nature, photo, 3D) that suit each category, best first.
-const SCENE_FIT: Record<string, string> = {
-  food: "petals fireflies sky bubbles reveal beans blossoms", beauty: "petals liquid glass reveal fireflies blossoms butterflies ribbons", fitness: "orbs vortex dotgrid swarm leaves orb", health: "meadow sky waves bubbles drift butterflies",
-  dentist: "bubbles sky glass waves drift", hospital: "constellation dotgrid sky bubbles drift", agency: "swarm knot charms liquid flow orbs glass gold ribbons", creator: "swarm name3d charms vortex orbs stars pixels butterflies galaxy",
-  consulting: "constellation flow globe glass leaves terrain", law: "constellation stars glass flow leaves crystals", photo: "reveal tilt ripple slices pixels leaves", property: "sky tree glass tilt leaves",
-  product: "globe orb charms constellation dotgrid flow swarm drift blocks", shop: "charms bubbles orbs petals glass gold blossoms crystals", nonprofit: "tree meadow fireflies sky butterflies leaves", events: "stars fireflies swarm vortex gold butterflies galaxy",
-  school: "tree bubbles stars meadow butterflies galaxy", hotel: "waves sky aquarium petals reef blossoms", trades: "dotgrid orbs sky rain leaves", auto: "flow vortex dotgrid rain leaves terrain", pets: "aquarium meadow fireflies bubbles reef butterflies",
-  general: "constellation fireflies bubbles sky butterflies orb", portfolio: "swarm name3d constellation fireflies tilt drift orb", "role-pm": "constellation bubbles flow drift", "role-it": "globe dotgrid constellation drift terrain",
-  "role-ceo": "globe stars glass gold crystals", "role-designer": "liquid ribbons charms swarm petals glass butterflies blossoms knot", "role-dev": "dotgrid blocks flow constellation swarm drift terrain", "role-marketer": "bubbles orbs vortex gold orb",
-  "role-data": "globe constellation flow drift galaxy blocks", "role-engineer": "dotgrid globe flow leaves blocks", "role-sales": "orbs bubbles vortex gold crystals", "role-hr": "bubbles meadow fireflies butterflies", "role-finance": "globe constellation glass gold crystals",
-  "role-teacher": "tree stars bubbles leaves", "role-doctor": "waves sky meadow drift", "role-writer": "rain petals snow stars leaves flurry", "role-photo": "reveal tilt ripple pixels leaves", "role-creator": "swarm vortex stars orbs butterflies galaxy name3d", "role-student": "stars bubbles tree leaves galaxy",
-};
-export function scenesFor(category: string): string[] {
-  return (SCENE_FIT[category] ?? SCENE_FIT.general).split(" ");
-}
-
-// A starting scene for a category, stable per seed: one of the real-life scene concepts that
-// suit it (a macaw that lands, a humpback whale...), so every new site opens with a
-// set piece. People can change it or pick a live scene in the Scenes and characters step.
-export function sceneFor(category: string, seed: number) {
-  const real = conceptsFor(category).filter((id) => SCENES.some((s) => s.type === id && s.style === "real"));
-  if (real.length) {
-    const id = real[(seed >>> 4) % Math.min(3, real.length)];
-    const hit = SCENES.find((s) => s.type === id);
-    if (hit) return hit;
-  }
-  const types = scenesFor(category).filter((t) => !["tilt", "reveal", "pixels", "ripple", "slices"].includes(t));
-  const type = types[(seed >>> 4) % Math.min(2, types.length)] ?? "constellation";
-  return SCENES.find((s) => s.type === type && s.palette === "brand") ?? SCENES[0];
-}

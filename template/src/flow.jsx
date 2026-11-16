@@ -66,7 +66,10 @@ export function useSectionFlow(rootRef, key, design, editing) {
       flows.forEach((s, i) => {
         const r = rects[i];
         const top = r.top - top0;
-        const sp = easeOut(clamp((vh - top) / (vh * 0.75)));
+        // Sections still wholly below the screen sit at rest (fully drawn), so nothing on the
+        // page is ever left half-faded for readers, crawlers or audits; the effect starts as a
+        // section's top reaches the bottom edge, where the switch cannot be seen.
+        const sp = top > vh * 1.02 ? 1 : easeOut(clamp((vh - top) / (vh * 0.75)));
         s.style.setProperty("--sp", sp.toFixed(3));
         if (fx === "stack") {
           s.style.setProperty("--stick", Math.min(0, Math.round(vh - r.height)) + "px");

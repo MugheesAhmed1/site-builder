@@ -1,12 +1,10 @@
 "use client";
 
-import { propPaths } from "@/template/src/props.js";
-import { platePath } from "@/template/src/plates.js";
 import { getMedia, mediaRefs, swapMedia } from "@/lib/media";
 import { palette, resolveScheme } from "@/template/src/theme.js";
-import { sceneAssets } from "@/template/src/scenes.js";
+import { sceneFiles, siteAtmos } from "@/template/src/atmos/catalog.js";
+import { fontsHref } from "@/template/src/shared.jsx";
 import type { PortfolioContent, Project, WebsiteContent } from "./types";
-import { ART_LICENCE_FILE } from "@/template/src/library-art.js";
 
 // Two downloads are built here from the same project:
 // - "ready": a finished site (index.html, site.js, site.css, site-data.js and its pictures).
@@ -177,26 +175,9 @@ export function headTags(p: Project, base: "" | ".") {
 const ROBOTS = "User-agent: *\nAllow: /\n";
 
 export function realAssets(p: Project): string[] {
-  const out = new Set<string>(sceneAssets(p.design.scene));
-  // The sphere and arc showpieces give picture-less tiles a cut-out from the real-life pack.
-  if (p.design.showpiece === "sphere" || p.design.showpiece === "arc") {
-    const cat = p.kind === "portfolio" ? "portfolio" : (p.content as WebsiteContent | null)?.brand?.category || p.category;
-    for (const path of propPaths(cat)) out.add(path);
-  }
-  // Cinema openings and the glass call to action show a scene from public/real/cinema.
-  const d = p.design;
-  if (false as boolean) {
-    const role = p.kind === "portfolio" ? (p.content as PortfolioContent | null)?.hero?.role : undefined;
-    const cat = p.kind === "portfolio" ? "portfolio" : (p.content as WebsiteContent | null)?.brand?.category || p.category;
-    out.add(d.plate ? platePath(d.plate) : platePath(cat, role));
-  }
-  JSON.stringify([p.design, p.content], (_k, v) => {
-    if (typeof v === "string" && /^\/real\/library\/[\w/-]+\.webp$/.test(v)) out.add(v);
-    return v;
-  });
-  // Pictures from the free public art library carry their open-source licence notice.
-  if ([...out].some((f) => f.startsWith("/real/library/"))) out.add(ART_LICENCE_FILE);
-  return [...out];
+  // A living-plate scene carries its picture (and depth map) with the site.
+  const cat = p.kind === "portfolio" ? "portfolio" : (p.content as WebsiteContent | null)?.brand?.category || p.category;
+  return sceneFiles(siteAtmos(p.design, cat, ""));
 }
 
 // Collects the site's own files (videos, pictures, real-life pack pictures) and returns the
@@ -230,7 +211,7 @@ async function gather(p: Project, put: (path: string, data: Blob | string, base6
       put(name, m[2], true);
       return prefix + name;
     }
-    if (prefix === "./" && /^\/(real|images|media)\//.test(v)) return "." + v;
+    if (prefix === "./" && /^\/(real|images|media|scenes)\//.test(v)) return "." + v;
     return v;
   };
   const content = JSON.parse(JSON.stringify(swapMedia(p.content, (r) => vids.get(r) || "")), fix);
@@ -243,8 +224,7 @@ async function gather(p: Project, put: (path: string, data: Blob | string, base6
 function firstPicture(data: { design: any; content: any }): string {
   const hero = data.content?.hero?.imageUrl || data.content?.hero?.photoUrl;
   if (typeof hero === "string" && /^\.\/(images|real)\//.test(hero)) return hero;
-  const ch = data.design?.cast?.character?.src;
-  return typeof ch === "string" && /^\.\/real\//.test(ch) ? ch : "";
+  return "";
 }
 
 // What the page shows before its script has arrived: the right background straight away and,
@@ -274,6 +254,45 @@ function firstView(p: Project): { css: string; html: string } {
   const html = quiet ? "" : `<div class="first-view"><b>${esc(siteName(p))}</b><h1>${esc(headline)}</h1>${sub && sub !== siteName(p) ? `<p>${esc(sub)}</p>` : ""}</div>`;
   return { css, html };
 }
+
+// The site's fonts travel with it: the Google Fonts files it uses (Latin and Latin Extended)
+// are copied into fonts/ and declared in the page itself. No request to another server
+// before the first paint, nothing for a visitor's browser to report to Google, and the
+// text shows straight away in a fallback face while they load (font-display: swap).
+const FONT_UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36";
+async function localFonts(href: string, display: string, put: (path: string, data: Blob | string) => void): Promise<{ css: string; lead: string }> {
+  try {
+    const r = await fetch(href, { headers: { "User-Agent": FONT_UA } });
+    if (!r.ok) return { css: "", lead: "" };
+    const css = await r.text();
+    const faces = [...css.matchAll(/\/\* ([\w-]+) \*\/\s*(@font-face\s*\{[^}]*\})/g)].filter((m) => m[1] === "latin" || m[1] === "latin-ext");
+    if (!faces.length) return { css: "", lead: "" };
+    let lead = "";
+    const got = new Map<string, string>();
+    const out: string[] = [];
+    for (const [, sub, face] of faces) {
+      const u = /url\((https:\/\/fonts\.gstatic\.com\/[^)]+\.woff2)\)/.exec(face)?.[1];
+      if (!u) continue;
+      if (!got.has(u)) {
+        const f = await fetch(u);
+        if (!f.ok) return { css: "", lead: "" };
+        const name = "fonts/" + u.split("/").pop();
+        put(name, await f.blob());
+        got.set(u, "./" + name);
+      }
+      out.push(face.replace(u, got.get(u)!).replace(/\s+/g, " "));
+      // The headline's face (Latin, bold) is fetched first, so the opening rarely re-wraps.
+      if (sub === "latin" && face.includes(`'${display}'`) && /font-weight: (6|7)00/.test(face)) lead = got.get(u)!;
+    }
+    return { css: out.join("\n"), lead };
+  } catch {
+    return { css: "", lead: "" };
+  }
+}
+
+// With the finished HTML on screen, the script is only needed for motion and the live scene,
+// so it is fetched once the page has painted and loaded, never competing with the first view.
+const LOAD_LATER = `(function(){var go=function(){["./site-data.js","./site.js"].forEach(function(u){var s=document.createElement("script");s.src=u;s.async=false;document.body.appendChild(s)})};if(document.readyState==="complete")setTimeout(go,0);else addEventListener("load",function(){setTimeout(go,0)})})();`;
 
 async function kitFile(name: string) {
   const r = await fetch("/site-kit/" + name, { cache: "no-cache" });
@@ -308,12 +327,12 @@ WHAT IS IN HERE
   index.html      the page, with its title, description and sharing details
   site.js         the site's code (already built)
   site.css        the site's styles
-  site-3d.js      the 3D scenes (three.js), loaded only when one is shown
   site-data.js    your words, colours, fonts and motion settings
   favicon.svg     the small icon in the browser tab
   share.png       the picture shown when the link is shared
   robots.txt      tells search engines they may list the site
-  images, media, real   your pictures and videos
+  images, media, scenes   your pictures, videos and the opening scene
+  fonts           the typefaces, so the site never waits on another server
 `;
 
 export async function buildZip(p: Project, kind: DownloadKind = "ready"): Promise<{ blob: Blob; name: string }> {
@@ -347,14 +366,19 @@ export async function buildZip(p: Project, kind: DownloadKind = "ready"): Promis
     if (share) folder.file("public/share.png", share);
     folder.file("src/site-data.json", JSON.stringify(data, null, 2));
   } else {
-    const [js, css, js3d] = await Promise.all([kitFile("site.js"), kitFile("site.css"), kitFile("site-3d.js")]);
+    const [js, css] = await Promise.all([kitFile("site.js"), kitFile("site.css")]);
     const data = await gather(p, (path, d, b64) => folder.file(path, d, b64 ? { base64: true } : undefined), "./");
+    const fonts = p.design.fonts ? await localFonts(fontsHref(p.design.fonts, p.design.accentFace), p.design.fonts.display, (path, d) => folder.file(path, d)) : { css: "", lead: "" };
+    const fontCss = fonts.css;
+    // The page itself declares its fonts now, so the site does not ask Google for them.
+    if (fontCss) data.design = { ...data.design, fontsLocal: true };
     const first = firstPicture(data);
     const shell = firstView(p);
+    // The finished page as HTML; the plain first view is only the fallback.
+    const { prerender, BOOT_SCRIPT } = await import("./prerender");
+    const page = prerender(data);
     folder.file("site.js", js);
     folder.file("site.css", css);
-    // The 3D scenes (three.js), fetched by the page only when a 3D scene is shown.
-    folder.file("site-3d.js", js3d);
     folder.file("site-data.js", "// Your site's words, colours, fonts and motion settings. Edit and reload.\nwindow.__ASSET_BASE__ = \".\";\nwindow.__SITE_DATA__ = " + JSON.stringify(data, null, 2).replace(/<\/script/gi, "<\\/script") + ";\n");
     folder.file("favicon.svg", faviconSvg(p));
     folder.file("robots.txt", ROBOTS);
@@ -370,17 +394,15 @@ export async function buildZip(p: Project, kind: DownloadKind = "ready"): Promis
     <title>${title}</title>
     <meta name="description" content="${desc}" />
     <meta name="theme-color" content="${theme}" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    ${headTags(p, ".")}
+    ${fontCss ? "" : `<link rel="preconnect" href="https://fonts.googleapis.com" />\n    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />`}
+    ${fontCss ? headTags(p, ".").replace(/\s*<(link|noscript)[^\n]*fonts\.googleapis[^\n]*/g, "") : headTags(p, ".")}${fonts.lead ? `\n    <link rel="preload" as="font" type="font/woff2" href="${fonts.lead}" crossorigin />` : ""}${fontCss ? `\n    <style>${fontCss}</style>` : ""}
     <link rel="stylesheet" href="./site.css" />${first ? `\n    <link rel="preload" as="image" href="${esc(first)}" fetchpriority="high" />` : ""}
     <style>${shell.css}</style>
   </head>
   <body>
-    <div id="root">${shell.html}</div>
-    <noscript><main style="max-width:40rem;margin:15vh auto;padding:0 24px;font-family:system-ui,sans-serif;color:${fg}"><h1>${esc(h.headline || h.name || siteName(p))}</h1><p>${esc(h.sub || h.tagline || p.content.meta.description)}</p><p>Turn on JavaScript to see the full site.</p></main></noscript>
-    <script src="./site-data.js" defer></script>
-    <script src="./site.js" defer></script>
+    ${page ? `<div id="root" data-prerendered="">${page}</div>\n    <script>${BOOT_SCRIPT}</script>` : `<div id="root">${shell.html}</div>`}
+    ${page ? "" : `<noscript><main style="max-width:40rem;margin:15vh auto;padding:0 24px;font-family:system-ui,sans-serif;color:${fg}"><h1>${esc(h.headline || h.name || siteName(p))}</h1><p>${esc(h.sub || h.tagline || p.content.meta.description)}</p><p>Turn on JavaScript to see the full site.</p></main></noscript>`}
+    ${page ? `<script>${LOAD_LATER}</script>` : `<script src="./site-data.js" defer></script>\n    <script src="./site.js" defer></script>`}
   </body>
 </html>
 `

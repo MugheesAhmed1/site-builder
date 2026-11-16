@@ -55,7 +55,7 @@ export function cssSpring({ visualDuration = 0.4, bounce = 0.2, rest = 0.001 } =
 }
 
 // The springs the site styles use. Each is written into the CSS as a custom property
-// (portfolio.css and cast.css), and a test keeps the CSS in step with these numbers.
+// (portfolio.css), and a test keeps the CSS in step with these numbers.
 export const CSS_SPRINGS = {
   // Hover lifts and small nudges: quick, with a hint of overshoot.
   "--pf-spring-hover": { visualDuration: 0.28, bounce: 0.18 },

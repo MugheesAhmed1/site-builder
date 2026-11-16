@@ -2,8 +2,6 @@ import { useMemo, useRef, useState } from "react";
 import { palette, resolveScheme } from "./theme.js";
 import { useEdits } from "./edits.js";
 import { Backdrop, LiveTiles, Stage } from "./rich.jsx";
-import { CastCharacter, CastStage, CastStory, Peek, WidgetWall, castContext } from "./Cast.jsx";
-import { Scene } from "./Scenes.jsx";
 import { AtmosHero } from "./atmos/Atmos.jsx";
 import { siteAtmos } from "./atmos/catalog.js";
 import { Carousel, Film, Flight, Grain, LineLoader, ScrollWords, SmoothScroll } from "./studio.jsx";
@@ -289,8 +287,6 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
   const hero = d.heroStyle === "cinema" || d.heroStyle === "scatter" || d.heroStyle === "journey" || d.heroStyle === "atmos" ? "atmos" : d.heroStyle || "statement";
   const skillsFlat = arr("skills").flatMap((g) => g.items || []);
   const ct = c.contact || {};
-  const cast = d.cast && d.cast.character ? d.cast : null;
-  const ctx = castContext("portfolio", c);
   const storySteps = (arr("process").length >= 2
     ? arr("process").map((x) => ({ title: x.title, text: x.description }))
     : arr("services").length >= 2
@@ -375,11 +371,6 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
     skillsFlat.length > 0 && { type: "tags", items: skillsFlat },
   ].filter(Boolean);
 
-  const scene = d.scene && d.scene.type ? d.scene : null;
-  const sceneMode = d.sceneMode || "backdrop";
-  const sceneEl = (cls) => (
-    <Scene def={scene} className={cls} text={h.name} words={(skillsFlat.length ? skillsFlat : arr("services").map((x) => x.name)).slice(0, 8)} image={h.photoUrl} alt={h.name} preview={preview} imgPath="hero.photoUrl" />
-  );
   const filmSrc = h.videoUrl || d.video || "";
   const filmOn = animated && (filmSrc ? d.film !== false : preview && d.film === true);
   const flySentence = String(h.intro || (c.about && (c.about.paragraphs || []).find(Boolean)) || "").split(/(?<=[.!?])\s/)[0].slice(0, 160);
@@ -411,9 +402,8 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
       );
     }
     if (hero === "scatter") {
-      const subject = cast && cast.character && cast.character.src ? cast.character.src : "";
       return (
-        <ScatterHero text={h.tagline} subject={subject} plate={photo || plate} props={[]} stats={heroStats} still={!animated}>
+        <ScatterHero text={h.tagline} plate={photo || plate} props={[]} stats={heroStats} still={!animated}>
           {kicker}
           {intro}
           {ctas}
@@ -429,11 +419,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
             {intro}
             {ctas}
           </div>
-          {scene && sceneMode === "visual" ? (
-            <div className="pf-scene-visual pf-enter" style={{ "--i": 2 }}>
-              {sceneEl("")}
-            </div>
-          ) : cast ? <CastStage character={cast.character} widgets={cast.widgets} ctx={ctx} still={!animated} /> : <Stage name={h.name} kind="person" widgets={widgets} still={!animated} />}
+          <Stage name={h.name} kind="person" widgets={widgets} still={!animated} />
         </div>
       );
     }
@@ -507,7 +493,6 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
   const render = (s) => {
     switch (s) {
       case "tiles":
-        if (cast && cast.widgets.length) return <WidgetWall key={s} widgets={cast.widgets} ctx={ctx} />;
         return <LiveTiles key={s} stats={c.stats} words={skillsFlat.slice(0, 6)} place={h.location} status={h.availability} />;
       case "stats":
         if (hero === "split") return null;
@@ -665,7 +650,6 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
         if (false) return <GlassCta key={s} plate={plate} heading={c.cta.heading} text={c.cta.text} button={c.cta.button || "Get in touch"} href="#pf-contact" />;
         return (
           <section id="pf-cta" className="pf-band" key={s}>
-            {cast && animated && <Peek character={cast.character} />}
             <div className="pf-container pf-band-inner pf-reveal">
               <div>
                 <h2 className="pf-band-title">{c.cta.heading}</h2>
@@ -685,7 +669,6 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
         ].filter(([, u]) => u);
         return (
           <section id="pf-contact" className="pf-section pf-contact" key={s}>
-            {cast && animated && <Peek character={cast.character} />}
             <div className="pf-container">
               <h2 className="pf-h2 pf-reveal">{ct.heading}</h2>
               {ct.blurb && <p className="pf-muted pf-contact-blurb pf-reveal">{ct.blurb}</p>}
@@ -723,7 +706,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
 
   return (
     <div ref={rootRef} className={"pf pf-scheme-" + scheme + (preview ? " pf-is-preview" : "") + (editing ? " pf-is-editing" : "")} {...motionAttrs(d)} style={themeStyle(d, pal, scheme)}>
-      <link rel="stylesheet" href={fontsHref(d.fonts, d.accentFace)} />
+      {!d.fontsLocal && <link rel="stylesheet" href={fontsHref(d.fonts, d.accentFace)} />}
       <Progress on={animated && d.progress} />
       <SmoothScroll on={animated && d.smooth !== false} preview={preview} />
       {fog.layer}
@@ -763,7 +746,7 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
       {curtain && <CurtainMenu open={menuOpen} onClose={() => setMenuOpen(false)} links={navLinks} brand={h.name} cta={{ href: "#pf-contact", label: "Get in touch" }} />}
 
       {hero === "atmos" ? (
-        <AtmosHero sectionId="pf-top" className="pf-hero pf-hero--atmos" id={siteAtmos(d, h.role, (h.role || "") + " " + (h.tagline || ""))} accent={pal.accent} intensity={d.intensity ?? 7} still={!animated} wordmark={h.name} stats={arr("stats").map((x) => ({ label: x.label, value: (x.value ?? "") + (x.suffix || "") }))}>
+        <AtmosHero sectionId="pf-top" className="pf-hero pf-hero--atmos" id={siteAtmos(d, h.role, (h.role || "") + " " + (h.tagline || ""))} accent={pal.accent} intensity={d.intensity ?? 7} still={!animated} layout={d.atmosLayout} tint={d.sceneTint} wordmark={h.name} stats={arr("stats").map((x) => ({ label: x.label, value: (x.value ?? "") + (x.suffix || "") }))}>
             {kicker}
             {headline}
             {intro}
@@ -772,7 +755,6 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
       ) : (
         <section id="pf-top" className={"pf-hero pf-hero--" + hero}>
           {animated && <Backdrop kind={d.backdrop} accent={pal.accent} intensity={d.intensity} />}
-          {animated && scene && sceneMode === "backdrop" && sceneEl("pf-scene-backdrop")}
           {renderHero()}
         </section>
       )}
@@ -781,11 +763,9 @@ export default function Portfolio({ design, content, preview = false, scheme: fo
 
       {filmOn && <Film src={filmSrc} steps={storySteps} title={"Selected work"} highlights={arr("stats").map((x) => ({ label: x.label, value: (x.value ?? "") + (x.suffix || "") }))} preview={preview} path="hero.videoUrl" kicker={h.name} />}
 
-      {!(filmSrc && filmOn) && showpiece !== "track" && cast && animated && (hero === "atmos" ? d.castStory === true : d.castStory !== false) && storySteps.length >= 2 && <CastStory character={cast.character} widgets={cast.widgets} ctx={ctx} steps={storySteps} title={arr("process").length >= 2 ? "How I work" : arr("services").length >= 2 ? "What I do" : "Selected work"} />}
-
       {showpiece === "sphere" && <Sphere props={propsFor("portfolio")} items={spItems} title={"Explore the work"} />}
       {showpiece === "arc" && <Arc props={propsFor("portfolio")} items={spItems} title={"Explore the work"} />}
-      {showpiece === "track" && <Track blocks={trackBlocks} title={h.name} mascot={cast ? <CastCharacter def={cast.character} size={180} /> : null} />}
+      {showpiece === "track" && <Track blocks={trackBlocks} title={h.name} />}
 
       {visible.map(render)}
 

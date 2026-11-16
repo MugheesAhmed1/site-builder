@@ -79,7 +79,7 @@ const HEAD_FROM = {
 function playHeadline(root, m) {
   const h = root.querySelector(".pf-hl");
   if (!h) return;
-  const parts = h.querySelectorAll(".pf-hl-part:not(.is-in)");
+  const parts = h.querySelectorAll(".pf-hl-part:not(.is-in):not([data-in])");
   if (!parts.length) return;
   const mode = m.headline;
   if (reduced()) {
@@ -97,8 +97,13 @@ export function useReveal(rootRef, key, design) {
     if (!root) return;
     const m = motionById(id);
     const still = id === "M-000" || !m.from;
-    const enters = root.querySelectorAll(".pf-enter:not(.is-in)");
-    const reveals = root.querySelectorAll(".pf-reveal:not(.is-in)");
+    // The page's own first-view script hands over: from here Motion plays what is left.
+    if (typeof window !== "undefined" && window.__pfBoot) {
+      window.__pfBoot.disconnect();
+      window.__pfBoot = null;
+    }
+    const enters = root.querySelectorAll(".pf-enter:not(.is-in):not([data-in])");
+    const reveals = root.querySelectorAll(".pf-reveal:not(.is-in):not([data-in])");
     if (still) {
       root.querySelectorAll(".pf-enter, .pf-reveal, .pf-hl-part").forEach(settle);
       return;

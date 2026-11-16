@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { useStartSite } from "@/components/PromptBox";
-import { CATEGORY_GROUPS, iconFor } from "@/lib/fit";
-import { CastCharacter } from "@/template/src/Cast.jsx";
+import { CATEGORY_GROUPS } from "@/lib/fit";
+import { thumbOf, pickAtmos } from "@/template/src/atmos/catalog.js";
 
-// Start from a kind of business or a role. Each tile opens a site with the questions,
-// characters, scenes and animation that suit it.
+// Start from a kind of business or a role. Each tile shows the scene that kind of site opens
+// in, and opens a site with the questions, scene and animation that suit it.
 export default function Categories() {
   const start = useStartSite();
   const [group, setGroup] = useState(0);
@@ -24,7 +24,7 @@ export default function Categories() {
         {g.items.map((c, i) => (
           <button key={c.id} type="button" className="cat-tile" style={{ ["--i" as string]: Math.min(i, 14) }} onClick={() => start({ kind: g.kind, category: c.id, label: c.id === "portfolio" ? undefined : c.label, vary: true })}>
             <span className="cat-tile-art" aria-hidden="true">
-              <CastCharacter def={iconFor(c.id)} size={46} />
+              <img src={thumbOf(pickAtmos(c.id, c.label))} alt="" loading="lazy" decoding="async" width="92" height="58" />
             </span>
             <span className="cat-tile-label">{c.label}</span>
           </button>

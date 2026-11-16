@@ -10,7 +10,7 @@ import { atmosById } from "@/template/src/atmos/catalog.js";
 // same renderer every generated site uses) with the prompt centred over it. The visitor can
 // switch backgrounds to see what their site could open on.
 
-const SHOW = ["chrome", "meadow", "dust", "summit", "garden", "constellation", "horizon", "noir"];
+const SHOW = ["chrome", "night-meadow", "pp-violet-mesh", "aurora-lake", "ocean", "pp-chrome-flow", "nebula", "noir"];
 
 export default function HomeJourney() {
   const [id, setId] = useState("chrome");

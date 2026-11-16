@@ -5,9 +5,6 @@ import { packById } from "./packs";
 import { LIBRARY, normalizeDesign } from "./designs";
 import type { Design, Project, SiteKind, StepId } from "./types";
 import { STEPS } from "./types";
-import { castFor, sceneFor } from "./fit";
-import { conceptAlias } from "@/template/src/concepts.js";
-import { SCENES } from "@/template/src/scenes.js";
 
 // Projects are saved in this browser's local storage. Nothing is sent to a server.
 // Use Export and Import on the home page to back up or move them.
@@ -64,14 +61,8 @@ function normalize(p: Project): Project {
   const kind = p.kind ?? "portfolio";
   const category = p.category ?? "portfolio";
   const design = normalizeDesign(p.design);
-  if (design.cast === undefined || (design.cast && !design.cast.character)) design.cast = castFor(category, seedOf(p.id));
-  if (design.scene === undefined) design.scene = sceneFor(category, seedOf(p.id));
-  // Scene concepts from before the 3D engine move to the scene that replaced them.
-  else if (design.scene && design.scene.group === "concept") {
-    const to = conceptAlias(design.scene.type);
-    const hit = to ? SCENES.find((s) => s.type === to) : null;
-    design.scene = hit ? { ...hit, ...(design.scene.opts ? { opts: design.scene.opts } : {}) } : sceneFor(category, seedOf(p.id));
-  }
+  // Characters, creature scenes and 3D stories were retired: older designs drop them.
+  for (const k of ["cast", "castStory", "scene", "sceneMode", "story"]) delete (design as unknown as Record<string, unknown>)[k];
   const steps = { ...p.steps };
   if (!steps.cast) steps.cast = steps.motion === "approved" ? "approved" : steps.design === "approved" ? "draft" : "todo";
   return { ...p, kind, category, answers: p.answers ?? {}, locks: p.locks ?? {}, design, steps };
@@ -138,7 +129,7 @@ export function newProject(query: string, kind: SiteKind, category: string, name
     resumeText: "",
     resumeFileName: "",
     profile: null,
-    design: { ...LIBRARY[0], cast: castFor(category, seedOf(id)), scene: sceneFor(category, seedOf(id)), ...packFor(category), ...JOURNEY_START(category, query), ...(kind === "website" ? { plate: category } : {}) },
+    design: { ...LIBRARY[0], ...packFor(category), ...JOURNEY_START(category, query), ...(kind === "website" ? { plate: category } : {}) },
     locks: {},
     content: null,
     history: [],
@@ -177,7 +168,7 @@ export function markChanged(p: Project, step: StepId): Project {
 export function keepCast(prev: Design, next: Design): Design {
   // Characters, scenes and every motion layer belong to the person, not the design system,
   // so switching design keeps them.
-  const keys = ["cast", "castStory", "intro", "magnetic", "cursor", "scene", "sceneMode", "tilt", "smooth", "grain", "loader", "film", "video", "flight", "carousel", "scrollWords", "showpiece", "scramble", "fogSwitch", "pack", "plate", "accentFace", "chrome", "menu", "footer", "ctaStyle", "edits", "atmos", "intensity"] as const;
+  const keys = ["intro", "magnetic", "cursor", "tilt", "smooth", "grain", "loader", "film", "video", "flight", "carousel", "scrollWords", "showpiece", "scramble", "fogSwitch", "pack", "plate", "accentFace", "chrome", "menu", "footer", "ctaStyle", "edits", "atmos", "atmosLayout", "sceneTint", "intensity"] as const;
   const keep = Object.fromEntries(keys.map((k) => [k, prev[k]]));
   const out = { ...next } as Design;
   // A cinematic background opening is the person's choice too, not the design system's.
