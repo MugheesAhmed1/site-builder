@@ -59,6 +59,19 @@ Runtime code lives under `template/src` in the folder layout PRD section 50 asks
 
 `experienceQA()` answers the ten Experience QA questions from the Experience JSON; `qualityGates()` adds performance budget, accessibility, SEO, mobile, reduced motion and licensing before export. Console errors, real motion and Lighthouse are checked in a browser on the example sites.
 
+## The renderer (PRD sections 4, 12, 13, 22, 39 and 45)
+
+`template/src/Site.tsx` draws a site from three things: the content, the design system and the Experience JSON. The same code runs in the builder's preview, in the downloaded site (`template/src/main.tsx`, built once into `public/site-kit`) and at download time to write finished HTML (`lib/prerender.ts`).
+
+- **Scenes, not sections.** Each shown content section takes its storyboard scene in order (`sceneList` in `Site.tsx`). A scene is a `<section id="pf-…">` with a composition (`left`, `right`, `center`, `wide`) that leaves room for the stage, and an entrance and a headline primitive from the motion registry.
+- **One stage per page.** `template/src/scenes/Stage.tsx` is a sticky, full-height layer behind the scenes that runs one animation loop. It blends the scenes' beats by the scroll position, so the anchor object transforms continuously from the hero to the call to action. Fifteen engines live in `template/src/scenes/engines/`: twelve draw on a canvas (landscape, depths, cosmos, brew, morph, grow, assemble, liquid, playground, character, progress, orbit) and three move real elements (interface, ledger, kinetic), so words in them stay crisp.
+- **Scroll is an input.** `template/src/motion/scroll.ts` (the conductor) turns the scroll position into a fractional scene index. The stage, each scene's `--p` progress and the page's `--page` progress all read it. The hero and the call to action pin while the stage plays on.
+- **Content shows without JavaScript.** Entrances only hide what a script will reveal: `data-anim="on"` is set by the boot script or the runtime, never in the HTML.
+- **Performance pass at run time.** The stage starts after the page has painted and gone quiet. If drawing takes too long it first drops resolution, then frame rate, then holds a still frame. Phones start at 30 frames a second with a 1.5 pixel ratio cap. Reduced motion draws each scene's finished state with time frozen.
+- **Layout follows the page, not the window.** `.xp-page` is a size container, so the builder's phone preview and a real phone get the same layout (`cqi` units and `@container` rules in `styles/site.css`).
+- **Night stages open dark.** Stages that paint their own night sky, deep water or holographic panels use the dark theme whatever the setting, so the words always read (`needsDark` in `Site.tsx`).
+- **The download ships only what runs.** `scripts/bundle-template.mjs` follows the imports from `src/main.tsx`, so the source download holds the renderer and nothing from the old template.
+
 ## Calls made where the PRD is silent or conflicts with the old code
 
 - **GSAP and ScrollTrigger are not used.** PRD section 41 lists them, but section 35 is mandatory and prefers MIT, Apache or BSD. GSAP's licence is not an open licence and restricts use in website-building tools. Scroll orchestration is our own code with Lenis (MIT).
@@ -66,4 +79,5 @@ Runtime code lives under `template/src` in the folder layout PRD section 50 asks
 - **The builder stays at the repository root** instead of `/apps/builder`, so the Vercel project keeps deploying without a settings change.
 - **Rapier stays optional.** The playground concepts use a small physics step of our own, which keeps the physics profile out of every site that does not need it.
 - **Default intensity** is the concept's own level (for example 7 for a mountain journey, 4 for a law firm), lowered for the Minimal and Luxury styles and raised for Bold and Experimental.
+- **The old template stays in the repository for now.** `Website.jsx`, `Portfolio.jsx` and the old scene library are no longer drawn by the preview or shipped in downloads, but the home page and two studio panels still read their catalogues. They are removed with the new studio and home page.
 - **3D loads only at intensity 7 and up**, only for concepts with a 3D version, and only after the page is usable (PRD sections 17, 18 and 37).

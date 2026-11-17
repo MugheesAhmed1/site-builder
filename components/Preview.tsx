@@ -5,8 +5,8 @@ import Icon from "@/components/Icon";
 import Inspector, { type Picked } from "@/components/Inspector";
 import { cachedMediaUrl, mediaRefs, mediaUrl, swapMedia } from "@/lib/media";
 // The exact same components that ship in the downloaded project.
-import Portfolio from "@/template/src/Portfolio.jsx";
-import Website from "@/template/src/Website.jsx";
+import Site, { needsDark, prefersDark } from "@/template/src/Site";
+import type { Experience } from "@/template/src/experiences/types";
 import { findText, getAt, imageFromClipboard, imageToDataUrl, parsePath, setAt, type Path } from "@/lib/edit";
 import { editFind, editKey, ownWords, patchEdits } from "@/template/src/edits.js";
 import type { Design, ElementEdit, SiteContent, SiteKind } from "@/lib/types";
@@ -31,14 +31,14 @@ function nameOf(el: Element): string {
   const cls = typeof el.className === "string" ? el.className : "";
   let what = "Box";
   if (el.classList.contains("pf")) return "Whole page";
-  if (el.classList.contains("sc") || (tag === "canvas" && el.closest(".sc"))) what = "Live scene";
+  if (el.classList.contains("xp-stage") || el.closest(".xp-stage")) what = "Live scene";
   else if (tag === "canvas") what = "Moving effect";
   else if (el.hasAttribute("data-video")) what = "Video";
   else if (tag === "img" || el.hasAttribute("data-img")) what = "Picture";
   else if (tag === "svg") what = "Icon or vector";
   else if (tag === "video") what = "Video";
   else if (/^h[1-6]$/.test(tag)) what = tag === "h1" ? "Headline" : "Heading";
-  else if (tag === "button" || /\bbtn\b|pf-btn|-cta\b/.test(cls)) what = "Button";
+  else if (tag === "button" || /\bbtn\b|pf-btn|xp-btn|-cta\b/.test(cls)) what = "Button";
   else if (tag === "a") what = "Link";
   else if (tag === "p" || tag === "blockquote" || tag === "figcaption") what = "Text";
   else if (tag === "li" || tag === "dt" || tag === "dd") what = "List item";
@@ -59,6 +59,7 @@ export default function Preview({
   kind,
   design,
   content,
+  experience,
   compact,
   replayKey,
   onContentChange,
@@ -67,6 +68,7 @@ export default function Preview({
   kind: SiteKind;
   design: Design;
   content: SiteContent;
+  experience?: Experience;
   compact?: boolean;
   replayKey?: string | number;
   onContentChange?: (c: SiteContent) => void;
@@ -78,7 +80,7 @@ export default function Preview({
   const shell = useRef<HTMLDivElement>(null);
   const hoverBox = useRef<HTMLDivElement>(null);
   const pickBox = useRef<HTMLDivElement>(null);
-  const [scheme, setScheme] = useState<"light" | "dark">(design.mode === "dark" ? "dark" : "light");
+  const [scheme, setScheme] = useState<"light" | "dark">(design.mode === "dark" || needsDark(experience) || (design.mode === "auto" && prefersDark(experience)) ? "dark" : "light");
   const [editing, setEditing] = useState(false);
   const [picked, setPicked] = useState<Picked | null>(null);
   const [panel, setPanel] = useState(false); // the inspector is open (page settings when nothing is picked)
@@ -91,9 +93,8 @@ export default function Preview({
   liveDesign.current = design;
   // Follow the design's starting theme when it changes (a new system, for example).
   useEffect(() => {
-    if (design.mode !== "auto") setScheme(design.mode);
-  }, [design.mode]);
-  const Site = (kind === "website" ? Website : Portfolio) as React.ComponentType<{ design: Design; content: SiteContent; preview: boolean; scheme: string; editing?: boolean }>;
+    setScheme(needsDark(experience) ? "dark" : design.mode === "auto" ? (prefersDark(experience) ? "dark" : "light") : design.mode);
+  }, [design.mode, experience?.world]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Uploaded videos live in the browser's own storage; swap their references for playable links.
   const [, setLoaded] = useState(0);
@@ -520,7 +521,7 @@ export default function Preview({
         <div ref={viewport} data-scroll-root="" className={"preview-viewport" + (device === "mobile" ? " is-mobile" : "") + (editing ? " is-editing" : "")}>
           <div className="preview-device">
             {/* A new key remounts the site so every entrance animation plays again. */}
-            <Site key={`${run}-${device}-${replayKey ?? ""}`} design={shownDesign} content={shown} preview scheme={scheme} editing={editing} />
+            <Site key={`${run}-${device}-${replayKey ?? ""}`} kind={kind} design={shownDesign} content={shown} experience={experience} preview scheme={scheme} editing={editing} />
           </div>
           {editing && (
             <div className="pe-boxes" aria-hidden="true">

@@ -226,7 +226,7 @@ export default function Studio({ id }: { id: string }) {
         </section>
 
         <section className="studio-canvas" aria-label="Live preview">
-          <Preview kind={p.kind} design={p.design} content={content} replayKey={replayKey} onContentChange={setContent} onDesignChange={patchDesign} />
+          <Preview kind={p.kind} design={p.design} content={content} experience={p.experience} replayKey={replayKey} onContentChange={setContent} onDesignChange={patchDesign} />
         </section>
       </div>
 

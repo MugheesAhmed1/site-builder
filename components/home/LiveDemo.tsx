@@ -45,7 +45,7 @@ export default function LiveDemo() {
         <span className="mono">You type</span>
         <q>{sample.query}</q>
       </p>
-      <div className="demo-stage">{project && project.content ? <Preview key={sample.id} kind={project.kind} design={project.design} content={project.content} /> : <div className="demo-loading" aria-hidden="true" />}</div>
+      <div className="demo-stage">{project && project.content ? <Preview key={sample.id} kind={project.kind} design={project.design} content={project.content} experience={project.experience} /> : <div className="demo-loading" aria-hidden="true" />}</div>
     </div>
   );
 }
