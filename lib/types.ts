@@ -1,3 +1,5 @@
+import type { Experience } from "@/template/src/experiences/types";
+
 // The shapes everything in the app passes around. No AI is involved anywhere:
 // questions are fixed lists, content is composed by rules, design systems are generated.
 
@@ -266,5 +268,9 @@ export interface Project {
   design: Design;
   locks: Partial<Record<DesignPart, boolean>>;
   content: SiteContent | null;
+  /** The Experience JSON: concept, scenes and motion (PRD sections 13 and 44). Content stays in `content`. */
+  experience?: Experience;
+  /** Earlier experiences, for compare and restore (PRD sections 32 and 49). */
+  experiences?: { at: string; label: string; experience: Experience }[];
   history: { at: string; label: string; content: SiteContent }[];
 }
