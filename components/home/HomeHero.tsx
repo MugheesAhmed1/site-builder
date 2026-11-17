@@ -29,7 +29,17 @@ export default function HomeHero() {
   const box = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const go = () => setReady(true);
+    // Phones open on the lighter space stage (the liquid one paints every pixel) and start it
+    // on the first touch or scroll, or after a few seconds, so the page stays responsive.
+    const phone = window.matchMedia("(max-width: 760px), (pointer: coarse)").matches;
+    if (phone) setI(1);
+    let done = false;
+    const go = () => !done && ((done = true), setReady(true));
+    if (phone) {
+      for (const ev of ["pointerdown", "scroll", "keydown"]) window.addEventListener(ev, go, { once: true, passive: true });
+      setTimeout(go, 4500);
+      return;
+    }
     const w = window as Window & { requestIdleCallback?: (f: () => void, o?: { timeout: number }) => number };
     const later = () => (w.requestIdleCallback ? w.requestIdleCallback(go, { timeout: 2500 }) : setTimeout(go, 1200));
     if (document.readyState === "complete") later();
