@@ -114,14 +114,14 @@ export function BuildStep({
           </button>
         ))}
       </div>
-      {tab === "preview" && <Preview kind={p.kind} design={p.design} content={c} onContentChange={onEdit} onDesignChange={onDesign} />}
+      {tab === "preview" && <Preview kind={p.kind} design={p.design} content={c} experience={p.experience} onContentChange={onEdit} onDesignChange={onDesign} />}
       {tab === "content" && (
         <div className="design-grid" style={{ gridTemplateColumns: "minmax(0, 400px) minmax(0, 1fr)" }}>
           <div className="panel">
             <FieldsEditor value={c} onChange={onEdit} skip={["sections"]} />
           </div>
           <div className="sticky-preview">
-            <Preview kind={p.kind} design={p.design} content={c} onContentChange={onEdit} onDesignChange={onDesign} />
+            <Preview kind={p.kind} design={p.design} content={c} experience={p.experience} onContentChange={onEdit} onDesignChange={onDesign} />
           </div>
         </div>
       )}
@@ -159,7 +159,7 @@ export function BuildStep({
             })}
           </div>
           <div className="sticky-preview">
-            <Preview kind={p.kind} design={p.design} content={c} onContentChange={onEdit} onDesignChange={onDesign} />
+            <Preview kind={p.kind} design={p.design} content={c} experience={p.experience} onContentChange={onEdit} onDesignChange={onDesign} />
           </div>
         </div>
       )}

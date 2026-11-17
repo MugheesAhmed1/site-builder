@@ -1,10 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import "@/template/src/portfolio.css";
-import "@/template/src/studio.css";
-import "@/template/src/showpiece.css";
-import "@/template/src/cinema.css";
-import "@/template/src/flow.css";
+// The renderer's own styles: the preview draws the exact site the download ships.
+import "@/template/src/styles/site.css";
 import "./shell.css";
 import "./home.css";
 

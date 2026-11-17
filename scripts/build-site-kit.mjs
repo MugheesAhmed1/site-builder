@@ -37,7 +37,7 @@ await build({
     cssCodeSplit: false,
     chunkSizeWarningLimit: 2000,
     rollupOptions: {
-      input: join(root, "src/main.jsx"),
+      input: join(root, "src/main.tsx"),
       output: { format: "iife", inlineDynamicImports: true, entryFileNames: "site.js", assetFileNames: "site[extname]" },
     },
   },

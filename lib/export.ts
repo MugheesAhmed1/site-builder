@@ -216,7 +216,8 @@ async function gather(p: Project, put: (path: string, data: Blob | string, base6
   };
   const content = JSON.parse(JSON.stringify(swapMedia(p.content, (r) => vids.get(r) || "")), fix);
   const design = JSON.parse(JSON.stringify(swapMedia(p.design, (r) => vids.get(r) || "")), fix);
-  return { kind: p.kind, design, content };
+  // The experience (scenes, stage and motion) ships as it is: it holds no pictures or uploads.
+  return { kind: p.kind, design, content, experience: p.experience };
 }
 
 // The picture the visitor sees first (the hero photo, or a real-life character), so the
