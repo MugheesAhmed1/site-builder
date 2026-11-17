@@ -1,5 +1,4 @@
 import { CATEGORIES } from "./categories";
-import { MOTIONS, type MotionStyle } from "@/template/src/motion.js";
 
 // Categories for both kinds of site: business types (restaurant, dentist, hospital, agency,
 // creator and so on) and portfolio roles (product manager, IT manager, CEO and so on).
@@ -116,14 +115,9 @@ export const CATEGORY_GROUPS = [
   { kind: "portfolio" as const, title: "Individuals", items: [...ROLES.map((r) => ({ id: r.id, label: r.label })), { id: "portfolio", label: "Any role" }] },
 ];
 
-export function fitsMotion(m: MotionStyle, fit: Fit) {
-  return m.id === "M-000" || (fit.feels.includes(m.feel ?? "") && fit.tempos.includes(m.tempo));
-}
-
-// An animation style that suits the category, stable per seed.
-export function motionFor(category: string, seed: number): string {
-  const fit = fitFor(category);
-  const pool = MOTIONS.filter((m) => m.id !== "M-000" && fitsMotion(m, fit));
-  return pool.length ? pool[(seed >>> 2) % pool.length].id : "M-002";
+// Motion is chosen by the experience engine (packages/experience-core); the design keeps a
+// fixed legacy id so older backups stay valid.
+export function motionFor(_category: string, _seed: number): string {
+  return "M-002";
 }
 

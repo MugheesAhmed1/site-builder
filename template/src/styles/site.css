@@ -348,6 +348,41 @@
   will-change: transform;
 }
 
+/* Scene transitions (PRD section 9): how a scene's words leave as the next scene arrives.
+   --p is the scene's own progress (0.5 when it is centred); the exit plays from 0.62 to 1.
+   The stage itself always continues (the object carries on), so these act on the words. */
+.xp-root[data-anim="on"] .xp-scene[data-tr] > .xp-pin {
+  --x: clamp(0, (var(--p, 0.5) - 0.62) * 2.6, 1);
+}
+.xp-root[data-anim="on"] .xp-scene[data-tr="crossfade"] > .xp-pin,
+.xp-root[data-anim="on"] .xp-scene[data-tr="morph"] > .xp-pin {
+  opacity: calc(1 - var(--x) * 0.85);
+}
+.xp-root[data-anim="on"] .xp-scene[data-tr="morph"] > .xp-pin {
+  filter: blur(calc(var(--x) * 6px)) saturate(calc(1 + var(--x)));
+}
+.xp-root[data-anim="on"] .xp-scene[data-tr="wipe"] > .xp-pin {
+  clip-path: inset(calc(var(--x) * 100%) 0 0 0);
+}
+.xp-root[data-anim="on"] .xp-scene[data-tr="depth"] > .xp-pin {
+  transform: scale(calc(1 - var(--x) * 0.08));
+  opacity: calc(1 - var(--x) * 0.9);
+  filter: blur(calc(var(--x) * 3px));
+}
+.xp-root[data-anim="on"] .xp-scene[data-tr="warp"] > .xp-pin {
+  transform: scale(calc(1 + var(--x) * 0.18));
+  opacity: calc(1 - var(--x));
+  filter: blur(calc(var(--x) * 8px));
+}
+.xp-root[data-anim="on"] .xp-scene[data-tr="continue"] > .xp-pin {
+  opacity: calc(1 - var(--x) * 0.5);
+}
+@container (max-width: 759px) {
+  .xp-root[data-anim="on"] .xp-scene[data-tr] > .xp-pin {
+    filter: none;
+  }
+}
+
 /* ------------------------------------------------------------------ type */
 
 .xp-h1,

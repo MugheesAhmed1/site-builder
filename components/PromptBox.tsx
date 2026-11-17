@@ -63,9 +63,22 @@ function useTypedHint(on: boolean) {
   return text;
 }
 
-export default function PromptBox({ variant = "plain", id = "q" }: { variant?: "hero" | "plain"; id?: string }) {
+const STYLES = ["minimal", "bold", "playful", "luxury", "experimental"] as const;
+const EXPERIENCES = [
+  { id: "editorial", label: "Editorial" },
+  { id: "cinematic", label: "Cinematic" },
+  { id: "world", label: "Interactive" },
+  { id: "playful", label: "Playful" },
+] as const;
+const CHIPS = ["A modern coffee shop in Lahore serving specialty coffee and fresh pastries", "A premium mountain resort", "Portfolio for a product designer", "Invoicing app for freelancers"];
+
+export default function PromptBox({ variant = "plain", id = "q", controls = false }: { variant?: "hero" | "plain"; id?: string; controls?: boolean }) {
   const start = useStartSite();
   const [query, setQuery] = useState("");
+  // PRD section 28: optional controls; one sentence alone is always enough.
+  const [style, setStyle] = useState<(typeof STYLES)[number] | undefined>();
+  const [mode, setMode] = useState<(typeof EXPERIENCES)[number]["id"] | undefined>();
+  const [intensity, setIntensity] = useState<number | undefined>();
   const [kind, setKind] = useState<SiteKind | null>(null);
   const [category, setCategory] = useState<string | null>(null);
   const read = useMemo(() => readRequest(query, kind, category), [query, kind, category]);
@@ -77,11 +90,11 @@ export default function PromptBox({ variant = "plain", id = "q" }: { variant?: "
       className={"prompt prompt-" + variant}
       onSubmit={(e) => {
         e.preventDefault();
-        start({ query, kind: read.kind, category: read.category });
+        start({ query, kind: read.kind, category: read.category, style, mode, intensity });
       }}
     >
-      <label className="sr-only" htmlFor={id}>
-        Describe the site you want
+      <label className={controls ? "prompt-q" : "sr-only"} htmlFor={id}>
+        What are you building?
       </label>
       <div className="prompt-row">
         <input
@@ -96,7 +109,7 @@ export default function PromptBox({ variant = "plain", id = "q" }: { variant?: "
           }}
         />
         <button className="btn btn-primary prompt-go" type="submit">
-          Build it
+          {controls ? "Create your website" : "Build it"}
           <Icon name="arrow" size={16} />
         </button>
       </div>
@@ -138,6 +151,54 @@ export default function PromptBox({ variant = "plain", id = "q" }: { variant?: "
           </span>
         )}
       </div>
+      {controls && (
+        <>
+          <div className="prompt-chips" aria-label="Examples">
+            {CHIPS.map((c) => (
+              <button key={c} type="button" className="prompt-chip" onClick={() => (setQuery(c), reset())}>
+                {c}
+              </button>
+            ))}
+          </div>
+          <details className="prompt-more">
+            <summary>Style, motion and experience</summary>
+            <div className="prompt-ctl">
+              <span className="prompt-ctl-label" id={id + "-style"}>
+                Style
+              </span>
+              <div className="prompt-seg" role="group" aria-labelledby={id + "-style"}>
+                {STYLES.map((x) => (
+                  <button key={x} type="button" aria-pressed={style === x} onClick={() => setStyle(style === x ? undefined : x)}>
+                    {x[0].toUpperCase() + x.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="prompt-ctl">
+              <label className="prompt-ctl-label" htmlFor={id + "-motion"}>
+                Motion
+              </label>
+              <div className="prompt-range">
+                <span>Calm</span>
+                <input id={id + "-motion"} type="range" min={1} max={10} value={intensity ?? 6} onChange={(e) => setIntensity(Number(e.target.value))} aria-valuetext={intensity ? `${intensity} of 10` : "Chosen for you"} />
+                <span>Insane</span>
+              </div>
+            </div>
+            <div className="prompt-ctl">
+              <span className="prompt-ctl-label" id={id + "-xp"}>
+                Experience
+              </span>
+              <div className="prompt-seg" role="group" aria-labelledby={id + "-xp"}>
+                {EXPERIENCES.map((x) => (
+                  <button key={x.id} type="button" aria-pressed={mode === x.id} onClick={() => setMode(mode === x.id ? undefined : x.id)}>
+                    {x.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </details>
+        </>
+      )}
     </form>
   );
 }

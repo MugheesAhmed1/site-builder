@@ -12,7 +12,6 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@paper-design/shaders": "0.0.82",
     "@react-three/fiber": "9.8.2",
     "jszip": "^3.10.2",
     "lenis": "1.1.13",

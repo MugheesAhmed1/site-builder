@@ -1,6 +1,5 @@
 import type { Design, DesignPart } from "./types";
 import { hexToOklch, oklchToHex, palette, contrast } from "@/template/src/theme.js";
-import { MOTIONS } from "@/template/src/motion.js";
 import { motionFor } from "./fit";
 
 // Rule-based design-system generator. No AI: every system is built from curated parts
@@ -144,8 +143,8 @@ function rollLayout(r: () => number, mood: Mood): Pick<Design, "heroStyle" | "ex
 
 // Always animated by default; "Still" is only ever a deliberate choice.
 function rollMotion(r: () => number, mood: Mood): Pick<Design, "motion" | "anim" | "hover" | "progress" | "marquee" | "backdrop"> {
-  const pool = MOTIONS.slice(1).filter((m: { tempo: string }) => (mood === "minimal" || mood === "editorial" ? m.tempo !== "quick" || r() < 0.5 : true));
-  const m = pick(r, pool) as { id: string; hover: Design["hover"] };
+  // Motion itself lives in the Experience JSON now; these legacy fields only keep older backups valid.
+  const m = { id: "M-002", hover: pick(r, ["lift", "glow", "line"] as const) };
   const backdrop: Design["backdrop"] = pick(r, mood === "bold" || mood === "tech" ? (["aurora", "particles", "mesh", "grid"] as const) : (["none", "aurora", "mesh", "particles"] as const));
   return { motion: "expressive", anim: m.id, hover: r() < 0.25 ? "spotlight" : m.hover, progress: r() < 0.5, marquee: r() < 0.6, backdrop };
 }
