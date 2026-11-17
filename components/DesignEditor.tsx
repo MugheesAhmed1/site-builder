@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { PLATE_IDS, platePath } from "@/template/src/plates.js";
 import Icon from "@/components/Icon";
 import { useLibrary } from "@/lib/library";
 import { ALL_FONTS, HUES, TYPE_PAIRINGS, colourOptions, contrastReport, fontsHref, fromBrandColour, moodFor, remix, shuffle, styleOf } from "@/lib/designs";

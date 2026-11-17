@@ -67,7 +67,7 @@ type Draft = Omit<Concept, "license" | "source" | "flags" | "technologies" | "ca
 function C(d: Draft): Concept {
   const webgl = !!d.webgl;
   const canvas = !["interface", "ledger", "kinetic", "assemble"].includes(d.engine);
-  const tech = d.technologies ?? ["css", "motion", ...(canvas ? ["canvas"] : ["svg"]), ...(d.motionIntensity >= 5 ? ["lenis"] : []), ...(webgl ? ["three", "r3f", "drei"] : [])];
+  const tech = d.technologies ?? ["css", "motion", ...(canvas ? ["canvas"] : ["svg"]), ...(d.motionIntensity >= 5 ? ["lenis"] : []), ...(webgl ? ["three", "r3f"] : [])];
   const category: Concept["category"] = d.category ?? (webgl ? "3d" : d.modes[0] === "product" ? "product" : d.modes[0] === "editorial" ? "editorial" : d.modes[0] === "playful" ? "playful" : d.modes[0] === "world" ? "interactive" : "cinematic");
   return {
     ...ORIGINAL,

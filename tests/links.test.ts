@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cleanContent, safeUrl } from "@/template/src/shared.jsx";
+import { cleanContent, safeUrl } from "@/template/src/content/clean";
 
 describe("link safety", () => {
   it("keeps ordinary links", () => {

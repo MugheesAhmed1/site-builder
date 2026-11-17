@@ -2,8 +2,7 @@
 
 import { getMedia, mediaRefs, swapMedia } from "@/lib/media";
 import { palette, resolveScheme } from "@/template/src/theme.js";
-import { sceneFiles, siteAtmos } from "@/template/src/atmos/catalog.js";
-import { fontsHref } from "@/template/src/shared.jsx";
+import { fontsHref } from "@/template/src/content/clean";
 import type { PortfolioContent, Project, WebsiteContent } from "./types";
 
 // Two downloads are built here from the same project:
@@ -174,11 +173,6 @@ export function headTags(p: Project, base: "" | ".") {
 
 const ROBOTS = "User-agent: *\nAllow: /\n";
 
-export function realAssets(p: Project): string[] {
-  // A living-plate scene carries its picture (and depth map) with the site.
-  const cat = p.kind === "portfolio" ? "portfolio" : (p.content as WebsiteContent | null)?.brand?.category || p.category;
-  return sceneFiles(siteAtmos(p.design, cat, ""));
-}
 
 // Collects the site's own files (videos, pictures, real-life pack pictures) and returns the
 // site data with every reference pointing at a real file. `prefix` is "/" or "./".
@@ -193,12 +187,6 @@ async function gather(p: Project, put: (path: string, data: Blob | string, base6
     const name = `media/video-${++vn}.${ext}`;
     put(name, b);
     vids.set(ref, prefix + name);
-  }
-  // Real-life pack pictures (a photoreal character, real fish or sprites) are files served by
-  // the builder under /real; the download gets its own copy at the same path.
-  for (const path of realAssets(p)) {
-    const r = await fetch(path).catch(() => null);
-    if (r && r.ok) put(path.slice(1), await r.blob());
   }
   // Pictures uploaded or pasted in the builder become real files in images/.
   let n = 0;
@@ -392,7 +380,7 @@ export async function buildZip(p: Project, kind: DownloadKind = "ready"): Promis
     const three = uses3d(p);
     const [js, css, js3d] = await Promise.all([kitFile("site.js"), kitFile("site.css"), three ? kitFile("site-3d.js") : Promise.resolve("")]);
     const data = await gather(p, (path, d, b64) => folder.file(path, d, b64 ? { base64: true } : undefined), "./");
-    const fonts = p.design.fonts ? await localFonts(fontsHref(p.design.fonts, p.design.accentFace), p.design.fonts.display, (path, d) => folder.file(path, d)) : { css: "", lead: "" };
+    const fonts = p.design.fonts ? await localFonts(fontsHref(p.design.fonts), p.design.fonts.display, (path, d) => folder.file(path, d)) : { css: "", lead: "" };
     const fontCss = fonts.css;
     // The page itself declares its fonts now, so the site does not ask Google for them.
     if (fontCss) data.design = { ...data.design, fontsLocal: true };

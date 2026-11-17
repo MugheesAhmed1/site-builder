@@ -51,7 +51,7 @@ export interface Design {
   progress: boolean; // reading progress bar at the top
   marquee: boolean; // skills, clients or services scroll past in a strip
   heroStyle: "statement" | "portrait" | "split" | "centered" | "stage" | "cinema" | "scatter" | "journey" | "atmos";
-  atmos?: string; // the scene the site opens in: an id from template/src/atmos/catalog.js
+  atmos?: string; // legacy: a scene id saved by older projects; the Experience JSON now decides the opening scene
   atmosLayout?: "center" | "low" | "high" | "panel" | "wordmark"; // where the words sit over the scene
   sceneTint?: "scene" | "brand"; // keep the scene's own colours, or recolour it to the brand accent
   sceneProps?: Record<string, Record<string, number | boolean | string>>; // each scene's own settings (Kokonut and the studio shaders), by scene id

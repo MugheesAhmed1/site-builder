@@ -1,22 +1,19 @@
 import Link from "next/link";
 import Icon from "@/components/Icon";
 import DocBand from "@/components/DocBand";
-import { LazyCategories } from "@/components/home/LazySections";
 import DesignWall from "@/components/home/DesignWall";
-import Engine from "@/components/home/Engine";
-import HomeJourney from "@/components/home/HomeJourney";
-import IntensityDemo from "@/components/home/IntensityDemo";
+import { LazyGallery } from "@/components/home/LazySections";
+import HomeHero from "@/components/home/HomeHero";
 import HomeNav from "@/components/home/HomeNav";
 import { ReadDemo, ShuffleDemo, type Swatch } from "@/components/home/HowDemos";
 import LiveDemo from "@/components/home/LiveDemo";
-import { CATEGORIES } from "@/lib/categories";
 import { LIBRARY } from "@/lib/designs";
-import { ROLES } from "@/lib/fit";
-import { SCENES, SCENE_GROUPS } from "@/template/src/atmos/catalog.js";
+import { CONCEPTS, PRESETS } from "@/packages/experience-core";
 import { palette } from "@/template/src/theme.js";
 
-// The home page. It is rendered on the server (words, numbers and structure arrive as
-// plain HTML) and only the pieces that move or react are client components.
+// The home page (PRD sections 61 and 62). It demonstrates the product: the opening runs the
+// same live stage a generated site runs, and the Experience Gallery shows every concept live.
+// It is rendered on the server and only the pieces that move or react are client components.
 
 function swatch(d: (typeof LIBRARY)[number]): Swatch {
   const dark = d.mode === "dark";
@@ -26,11 +23,11 @@ function swatch(d: (typeof LIBRARY)[number]): Swatch {
 
 const FAQ = [
   ["Is it really free?", "Yes. There is no account, no trial and no monthly fee. The site you download is plain files that you own, and the free plans of hosts such as Netlify, Cloudflare Pages and GitHub Pages are enough to put it online."],
-  ["Is there AI in it?", "Only if you want it. Every site is written by rules from your own answers, so it works instantly and never invents facts. When the server has a free Google Gemini key, the AI polish panel can also rewrite your words and direct your opening. You review every change before it lands."],
-  ["Where does my information go?", "Your sites are saved inside this browser, and a résumé or document you drop in is read here too. The only thing that ever leaves is the words you choose to send to AI polish, and never links, emails, phone numbers or prices. Use Save a backup to move a site to another device."],
+  ["How is my site made?", "You describe what you are building. The builder works out the business, writes the first version of every section, and designs an interactive experience around it: a concept, a world, how visitors play with it and how it moves. Then you shape anything you like."],
+  ["Where does my information go?", "Your sites are saved inside this browser, and a résumé or document you drop in is read here too. The only thing that ever leaves is the words you choose to polish, and never links, emails, phone numbers or prices. Use Save a backup to move a site to another device."],
   ["What exactly do I get?", "A zip with the finished site: one page, its pictures, a browser icon, a share picture and search tags. Unzip it and it opens. Developers can also download the same site as a React and Vite project."],
   ["Can I change it later?", "Open it again here, change anything, and download again. You can also edit every word and colour in a text editor: they live in one readable file inside the download."],
-  ["Will the moving background slow my site down?", "No. Each background is one small shader drawn at a reduced resolution. It pauses when it is off screen or the tab is hidden, uses fewer particles on phones, and holds still for people who turn motion down. Lower the intensity dial for a still background."],
+  ["Will all that motion slow my site down?", "No. The words arrive first as plain HTML and the experience starts once the page is quiet. It draws fewer pixels and frames on phones, steps down on its own if a device struggles, loads 3D only on computers that can draw it, and holds still for people who turn motion down."],
   ["Will it work on phones and for screen readers?", "Every site is responsive, passes WCAG AA colour contrast, respects reduced motion and ships with the tags search engines and link previews look for."],
 ];
 
@@ -42,50 +39,17 @@ export default function Home() {
     <div className="home-root">
       <HomeNav />
       <main>
-        <HomeJourney />
+        <HomeHero />
 
-        <section className="hsec" id="dial" aria-labelledby="dial-title">
+        <section className="hsec" id="gallery" aria-labelledby="gallery-title">
           <header className="hsec-head">
-            <span className="hsec-kicker mono">The intensity dial</span>
-            <h2 id="dial-title">
-              Calm or <em className="serif-i">completely wild.</em> You choose.
+            <span className="hsec-kicker mono">Experience Gallery</span>
+            <h2 id="gallery-title">
+              {CONCEPTS.length} experiences. <em className="serif-i">Every one is live.</em>
             </h2>
-            <p>One slider sets how much your site moves. Low numbers keep it quiet and fast. Turn it up and the cinematic background starts to drift, then follows the pointer and pulls focus as visitors scroll.</p>
+            <p>Not screenshots: each card runs the experience itself. Scroll to play its story, hover or tap to take control. Start a site from any of them, or from one of {PRESETS.length} presets inside the studio.</p>
           </header>
-          <IntensityDemo />
-        </section>
-
-        <section className="hsec" id="engine" aria-labelledby="engine-title">
-          <header className="hsec-head">
-            <span className="hsec-kicker mono">The animation engine</span>
-            <h2 id="engine-title">
-              Motion described as data, <em className="serif-i">rendered like film.</em>
-            </h2>
-            <p>Your words go to a director that picks a living background, a headline accent, how much it moves and how sections arrive. A renderer turns that plan into a real React site, so every choice stays editable.</p>
-          </header>
-          <Engine />
-          <ul className="prim">
-            <li>
-              <b>{SCENES.length} scenes</b>
-              {SCENE_GROUPS.map((g) => (
-                <span key={g} className="prim-on">
-                  {g} · {SCENES.filter((s) => s.group === g).length}
-                </span>
-              ))}
-            </li>
-            <li>
-              <b>Reacts to</b>
-              {["The pointer", "Scroll", "The intensity dial", "Reduced motion"].map((x) => (
-                <span key={x} className="prim-on">{x}</span>
-              ))}
-            </li>
-            <li>
-              <b>Sections</b>
-              {["Rise", "Curtain", "Zoom", "Tilt", "Blur", "Slide", "Stack"].map((x) => (
-                <span key={x} className="prim-on">{x}</span>
-              ))}
-            </li>
-          </ul>
+          <LazyGallery />
         </section>
 
         <section className="hsec" id="demo" aria-labelledby="demo-title">
@@ -93,7 +57,7 @@ export default function Home() {
             <h2 id="demo-title">
               One line in. <em className="serif-i">A whole site</em> out.
             </h2>
-            <p>These are not screenshots. Each one is a real site the builder made from the line above it, running live. Scroll inside, switch to phone, try dark.</p>
+            <p>Each one is a real site the builder made from the line above it, running live. Scroll inside, switch to phone, try dark.</p>
           </header>
           <LiveDemo />
         </section>
@@ -118,7 +82,7 @@ export default function Home() {
               <div className="how-text">
                 <span className="how-n mono">2</span>
                 <h3>Shape it</h3>
-                <p>Your site opens already written, with a design system made for you. Shuffle it, swap the opening scene, pick how it moves, click any word to change it.</p>
+                <p>Your site opens complete: words, design and an experience made for it. Remix it in plain words, press Surprise me for a new direction, tune each kind of motion, click any word to change it.</p>
               </div>
               <ShuffleDemo designs={spread} />
             </li>
@@ -166,18 +130,6 @@ export default function Home() {
           <DesignWall designs={spread} />
         </section>
 
-        <section className="hsec" id="categories" aria-labelledby="cat-title">
-          <header className="hsec-head">
-            <h2 id="cat-title">
-              Made for <em className="serif-i">your kind of work.</em>
-            </h2>
-            <p>
-              {CATEGORIES.length} kinds of business and {ROLES.length} roles, each with its own questions, starting words, scene and animation. Pick yours and a site opens.
-            </p>
-          </header>
-          <LazyCategories />
-        </section>
-
         <section className="hsec" aria-label="Start from a document">
           <DocBand />
         </section>
@@ -192,12 +144,12 @@ export default function Home() {
             <li className="bento-a">
               <Icon name="shield" size={22} />
               <h3>Private by design</h3>
-              <p>Your sites live in this browser. There is no account and no tracking of what you build, and only words you choose to polish are ever sent.</p>
+              <p>Your sites live in this browser. There is no account and no tracking of what you build.</p>
             </li>
             <li className="bento-b">
               <Icon name="bolt" size={22} />
-              <h3>Instant, with AI only when you ask</h3>
-              <p>Rules write the page from your answers, so it appears as you type. Free Gemini polish is one click away, and you approve every word.</p>
+              <h3>Complete from the first second</h3>
+              <p>No blank canvas and no lorem ipsum. Copy, design, motion, call to action, contact and a phone version are there at once, and you approve every change.</p>
             </li>
             <li className="bento-c">
               <Icon name="edit" size={22} />
@@ -243,12 +195,12 @@ export default function Home() {
           <div className="endcta-glow" aria-hidden="true" />
           <div className="endcta-card">
             <h2 id="end-title">
-              Your site is <em className="serif-i">one line</em> away.
+              Build a website <em className="serif-i">that moves.</em>
             </h2>
             <p>It takes less time than reading this page did.</p>
             <div className="row wrap" style={{ justifyContent: "center" }}>
               <a href="#start" className="btn btn-primary">
-                Start building
+                Create your website
                 <Icon name="arrow" size={16} />
               </a>
               <Link href="/sites" className="btn endcta-ghost">
@@ -261,13 +213,12 @@ export default function Home() {
 
       <footer className="hfoot">
         <div className="hfoot-top">
-          <p>Site Builder turns one line into a finished, animated website you own. Free, private, with optional AI polish.</p>
+          <p>Site Builder turns one line into an interactive website you own. Describe your idea, shape the experience, make it yours.</p>
           <nav aria-label="Footer">
+            <a href="#gallery">Experiences</a>
+            <Link href="/lab">Experience Lab</Link>
             <a href="#demo">Examples</a>
             <a href="#how">How it works</a>
-            <a href="#dial">Intensity</a>
-            <a href="#engine">Engine</a>
-            <a href="#designs">Design systems</a>
             <a href="#faq">Questions</a>
             <Link href="/sites">Your sites</Link>
           </nav>
@@ -275,7 +226,7 @@ export default function Home() {
         <p className="hfoot-word" aria-hidden="true">
           Site Builder
         </p>
-        <p className="hfoot-fine">Backgrounds are original WebGL shaders. 3D by three.js and React Three Fiber (MIT). Motion by Motion and Lenis (MIT). Emoji art by Microsoft Fluent (MIT) and Google Noto (Apache 2.0).</p>
+        <p className="hfoot-fine">Every experience is original code. 3D by three.js and React Three Fiber (MIT). Motion by Motion and Lenis (MIT).</p>
       </footer>
     </div>
   );

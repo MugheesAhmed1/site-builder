@@ -1,5 +1,4 @@
 "use client";
-import { pickAtmos } from "@/template/src/atmos/catalog.js";
 
 import { packById } from "./packs";
 import { LIBRARY, normalizeDesign } from "./designs";
@@ -102,7 +101,7 @@ export function importProjects(input: unknown[]): number {
 // New projects open on a cinematic background (an atmosphere) chosen for their kind of site,
 // at intensity 8: it follows the pointer and pulls focus as the visitor scrolls. A glass pill
 // menu and the name set huge in the footer. The dial (Motion panel) goes from 1 to 10.
-const JOURNEY_START = (category: string, query: string): Partial<Design> => ({ heroStyle: "atmos", intensity: 8, atmos: pickAtmos(category, query), sectionFx: "curtain", scrollFx: true, accentFace: "serif", chrome: "pill", menu: "curtain", footer: "wordmark", ctaStyle: "band" });
+const JOURNEY_START = (category: string, query: string): Partial<Design> => ({ heroStyle: "atmos", intensity: 8, sectionFx: "curtain", scrollFx: true, accentFace: "serif", chrome: "pill", menu: "curtain", footer: "wordmark", ctaStyle: "band" });
 
 // New projects start on the animation pack that suits their kind of site.
 function packFor(category: string) {

@@ -310,6 +310,7 @@ export default function Site({ kind, design, content, experience, preview = fals
                 className={"xp-scene is-" + s.composition + " xp-kind-" + s.kind + (pinned ? " is-pinned" : "")}
                 data-scene={i}
                 data-section={s.section}
+                data-tr={s.transitions[0]?.primitive.replace(/^transition\./, "") || undefined}
                 style={{ ["--dur" as string]: pinned ? s.duration : 1 }}
                 aria-label={s.section === "hero" ? undefined : s.title}
               >

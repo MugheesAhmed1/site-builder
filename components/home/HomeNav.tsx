@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Logo } from "@/components/Topbar";
 import { listProjects } from "@/lib/store";
 
-// The home page menu: a glass pill that floats over the cinematic background and tightens once the
+// The home page menu: a glass pill that floats over the live stage and tightens once the
 // page scrolls. It shows "Your sites" with a count when this browser has any.
 export default function HomeNav() {
   const [scrolled, setScrolled] = useState(false);
@@ -22,11 +22,10 @@ export default function HomeNav() {
       <div className="hnav-pill">
         <Logo />
         <nav className="hnav-links" aria-label="Main">
+          <a href="#gallery">Experiences</a>
+          <Link href="/lab">Lab</Link>
           <a href="#demo">Examples</a>
           <a href="#how">How it works</a>
-          <a href="#dial">Intensity</a>
-          <a href="#engine">Engine</a>
-          <a href="#designs">Design systems</a>
           <a href="#faq">Questions</a>
         </nav>
         <div className="hnav-end">
@@ -35,7 +34,7 @@ export default function HomeNav() {
             {count > 0 && <span className="mono">{count}</span>}
           </Link>
           <a href="#start" className="btn btn-sm hnav-cta">
-            Start free
+            Create your website
           </a>
         </div>
       </div>

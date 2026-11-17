@@ -115,7 +115,7 @@
 .prim span.prim-on { color: var(--text); border: 1px solid color-mix(in oklch, var(--accent) 45%, var(--line)); background: color-mix(in oklch, var(--accent-soft) 45%, transparent); }
 
 /* Prompt */
-.prompt { width: min(720px, 100%); display: grid; gap: 12px; animation: rise 700ms var(--ease-out) 420ms both; }
+.prompt { width: min(720px, 100%); display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; animation: rise 700ms var(--ease-out) 420ms both; }
 .prompt-row { display: flex; gap: 8px; padding: 7px; border-radius: 20px; background: color-mix(in oklch, var(--panel) 70%, transparent); border: 1px solid var(--line-strong); box-shadow: var(--shadow); transition: border-color 150ms ease, box-shadow 200ms ease; }
 .prompt-hero .prompt-row { background: rgb(12 14 24 / 0.55); border-color: rgb(255 255 255 / 0.22); backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3); box-shadow: 0 30px 80px -30px rgb(0 0 0 / 0.8); }
 .prompt-row:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px color-mix(in oklch, var(--accent) 22%, transparent), var(--shadow); }
@@ -293,4 +293,78 @@
 @media (prefers-reduced-motion: reduce) {
   .prompt, .cat-tile, .faq details p, .ixd *, .eng-wire::after, .endcta-glow { animation: none !important; }
   .hsec-head, .how-step, .bento li, .demo, .wall-card, .ixd, .prim li { animation: none; }
+}
+
+/* Hero (PRD section 61): the live stage behind the words */
+.hh { position: relative; min-height: max(100svh, 720px); display: grid; grid-template-columns: minmax(0, 1fr); place-items: center; padding: 120px 20px 72px; overflow: clip; isolation: isolate; color: #fff; background: #07060f; }
+.hh-stage { position: absolute; inset: 0; z-index: -1; }
+.hh-stage::after { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 55% at 50% 48%, rgb(7 6 15 / 0.62), rgb(7 6 15 / 0.2) 70%, rgb(7 6 15 / 0.55)), linear-gradient(to bottom, transparent 70%, var(--bg)); pointer-events: none; }
+.live-stage { position: absolute; inset: 0; --vh: 100%; }
+.live-stage .xp-stage { position: absolute; inset: 0; height: 100%; margin: 0; }
+.hh-inner { width: min(860px, 100%); display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 18px; text-align: center; }
+.hh-title { font-family: var(--font-display); font-weight: 650; font-size: clamp(44px, 7.4vw, 104px); line-height: 0.98; letter-spacing: -0.045em; text-wrap: balance; margin: 0; text-shadow: 0 2px 40px rgb(0 0 0 / 0.5); animation: rise-in 800ms var(--ease-out) 80ms both; }
+.hh-sub { margin: 0; font-size: clamp(17px, 2vw, 22px); color: rgb(255 255 255 / 0.84); text-wrap: balance; animation: rise-in 800ms var(--ease-out) 200ms both; }
+.hh-prompt { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; scroll-margin-top: 90px; }
+.hh-ctas { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.hh-ghost { background: rgb(255 255 255 / 0.08); color: #fff; border-color: rgb(255 255 255 / 0.28); border-radius: 999px; backdrop-filter: blur(10px); }
+.hh-ghost:hover { background: rgb(255 255 255 / 0.16); }
+.hh-switch { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.hh-switch button { min-height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid rgb(255 255 255 / 0.2); background: rgb(255 255 255 / 0.06); color: rgb(255 255 255 / 0.82); font: inherit; font-size: 13px; cursor: pointer; transition: background-color 150ms ease, color 150ms ease, transform 120ms var(--ease-out); }
+.hh-switch button:active { transform: scale(0.97); }
+.hh-switch button.is-on { background: #fff; color: #111; border-color: #fff; }
+
+/* Prompt extras (PRD section 28) */
+.prompt-q { font-size: 15px; font-weight: 600; text-align: left; color: inherit; }
+.prompt-hero .prompt-q { color: rgb(255 255 255 / 0.9); text-align: center; }
+.prompt-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.prompt-chip { min-width: 0; min-height: 30px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); font: inherit; font-size: 13px; cursor: pointer; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.prompt-hero .prompt-chip { border-color: rgb(255 255 255 / 0.18); background: rgb(255 255 255 / 0.06); color: rgb(255 255 255 / 0.85); }
+.prompt-more { justify-self: center; width: 100%; text-align: center; }
+.prompt-more > summary { display: inline-flex; cursor: pointer; font-size: 14px; color: var(--muted); padding: 4px 8px; border-radius: 8px; list-style: none; }
+.prompt-more > summary::-webkit-details-marker { display: none; }
+.prompt-hero .prompt-more > summary { color: rgb(255 255 255 / 0.8); text-decoration: underline; text-underline-offset: 3px; }
+.prompt-more[open] > summary { margin-bottom: 10px; }
+.prompt-ctl { display: grid; gap: 6px; justify-items: center; margin-top: 10px; }
+.prompt-ctl-label { font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; opacity: 0.85; }
+.prompt-seg { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; }
+.prompt-seg button { min-height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line-strong); background: transparent; color: inherit; font: inherit; font-size: 14px; cursor: pointer; }
+.prompt-hero .prompt-seg button { border-color: rgb(255 255 255 / 0.24); }
+.prompt-seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink, #fff); }
+.prompt-range { display: flex; align-items: center; gap: 10px; width: min(420px, 100%); font-size: 13px; }
+.prompt-range input { flex: 1; accent-color: var(--accent); }
+
+/* Experience Gallery (PRD section 62) */
+.xg { display: grid; gap: 22px; }
+.xg-cats { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.xg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 16px; }
+.xg-card { display: grid; grid-template-rows: auto 1fr; border-radius: 18px; overflow: clip; border: 1px solid var(--line); background: var(--panel); transition: border-color 200ms ease, transform 300ms var(--ease-out), box-shadow 300ms ease; }
+.xg-card.is-play { border-color: var(--line-strong); transform: translateY(-3px); box-shadow: 0 24px 60px -30px rgb(0 0 0 / 0.6); }
+.xg-view { position: relative; aspect-ratio: 16 / 10; background: #07060f; cursor: pointer; }
+.xg-text { display: grid; gap: 8px; align-content: start; padding: 16px; }
+.xg-text h3 { margin: 0; font-size: 18px; letter-spacing: -0.01em; }
+.xg-text p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.xg-tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; }
+.xg-tags li { font-size: 12px; padding: 2px 8px; border-radius: 999px; background: var(--sunk); color: var(--muted); }
+.xg-use { justify-self: start; margin-top: 4px; }
+.xg-lab { text-align: center; color: var(--muted); }
+.xg-lab a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Experience Lab (PRD section 63) */
+.lab { display: grid; grid-template-columns: minmax(280px, 340px) 1fr; min-height: 100dvh; background: var(--bg); color: var(--text); }
+.lab-side { display: grid; align-content: start; gap: 16px; padding: 20px; border-right: 1px solid var(--line); overflow-y: auto; max-height: 100dvh; position: sticky; top: 0; }
+.lab-head h1 { margin: 0 0 4px; font-size: 24px; letter-spacing: -0.02em; }
+.lab-field { display: grid; gap: 6px; font-size: 14px; }
+.lab-field > span { font-weight: 600; }
+.lab-field select { min-height: 38px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--panel); color: var(--text); font: inherit; }
+.lab-field input[type="range"] { accent-color: var(--accent); }
+.lab-seg button { padding: 0 8px; font-size: 13px; }
+.lab-check { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; font-weight: 600; }
+.lab-check small { display: block; font-weight: 400; }
+.lab-view { min-width: 0; padding: 12px; height: 100dvh; position: sticky; top: 0; }
+.lab-view .preview { height: 100%; display: flex; flex-direction: column; }
+.lab-view .preview-work, .lab-view .preview-viewport { flex: 1; min-height: 0; max-height: none; }
+@media (max-width: 860px) {
+  .lab { grid-template-columns: 1fr; }
+  .lab-side { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--line); }
+  .lab-view { height: 80svh; position: static; }
 }

@@ -65,6 +65,8 @@ export interface CreateOptions {
   mode?: "editorial" | "cinematic" | "world" | "product" | "playful";
   preset?: string;
   intensity?: number;
+  /** Start from this experience concept (the Experience Gallery). */
+  concept?: string;
 }
 
 // From one line (or a category tile) to a complete project with a finished first page.
@@ -80,7 +82,7 @@ export function createProject(o: CreateOptions = {}): Project {
   if (o.atmos) p.design = { ...p.design, heroStyle: "atmos", atmos: o.atmos };
   p = { ...p, content: composeProject(p) };
   // The experience is designed for this business before anything is shown (PRD section 29).
-  p = { ...p, experience: experienceFor(p, { style: o.style, mode: o.mode, preset: o.preset, intensity: o.intensity }) };
+  p = { ...p, experience: experienceFor(p, { style: o.style, mode: o.mode, preset: o.preset, intensity: o.intensity, concept: o.concept }) };
   return p;
 }
 
