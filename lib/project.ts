@@ -4,6 +4,7 @@ import { personalDesign } from "./designs";
 import { classifyRole } from "./fit";
 import { TONE_MOOD, defaultAnswers, questionsFor } from "./questions";
 import { keepCast, newProject } from "./store";
+import { experienceFor, syncExperience } from "./experience";
 import type { PortfolioInput, Project, SiteContent, SiteKind } from "./types";
 
 // One place for what a project is and how it changes. Pages and panels call these pure
@@ -59,6 +60,11 @@ export interface CreateOptions {
   label?: string; // the category's name, when started from a category tile
   atmos?: string; // open in this scene
   vary?: boolean; // a different design each time, for starts that carry no name
+  // The home page's optional controls (PRD section 28).
+  style?: "minimal" | "bold" | "playful" | "luxury" | "experimental";
+  mode?: "editorial" | "cinematic" | "world" | "product" | "playful";
+  preset?: string;
+  intensity?: number;
 }
 
 // From one line (or a category tile) to a complete project with a finished first page.
@@ -73,6 +79,8 @@ export function createProject(o: CreateOptions = {}): Project {
   p.design = keepCast(p.design, designFor(p, o.vary || !read.hints.name ? p.id : ""));
   if (o.atmos) p.design = { ...p.design, heroStyle: "atmos", atmos: o.atmos };
   p = { ...p, content: composeProject(p) };
+  // The experience is designed for this business before anything is shown (PRD section 29).
+  p = { ...p, experience: experienceFor(p, { style: o.style, mode: o.mode, preset: o.preset, intensity: o.intensity }) };
   return p;
 }
 
@@ -82,7 +90,7 @@ export function ensureProject(p: Project): Project {
   let out = p;
   if (out.kind === "portfolio" && !out.input) out = { ...out, input: portfolioInput(out) };
   if (!out.content) out = { ...out, content: composeProject(out) };
-  return out;
+  return syncExperience(out);
 }
 
 const isObj = (x: unknown): x is Record<string, unknown> => !!x && typeof x === "object" && !Array.isArray(x);
@@ -147,7 +155,7 @@ export function applyDetails(prev: Project, patch: Partial<Pick<Project, "answer
   const after = composeProject(next);
   next.content = prev.content ? mergeContent(composeProject(prev), after, prev.content) : after;
   next.steps = { ...next.steps, questions: next.steps.questions === "todo" ? "draft" : next.steps.questions };
-  return next;
+  return syncExperience(next);
 }
 
 // Switch between a portfolio and a business website, or change the kind of business. The
@@ -167,7 +175,7 @@ export function changeType(prev: Project, kind: SiteKind, category: string): Pro
     if (kind === "portfolio") next.input = portfolioInput(next);
     next.design = { ...next.design, plate: kind === "website" ? category : undefined };
     next.content = composeProject(next);
-    return next;
+    return { ...next, experience: experienceFor(next) };
   }
   const next = applyDetails(prev, { answers, category });
   if (kind === "website" && (!prev.design.plate || prev.design.plate === prev.category)) next.design = { ...next.design, plate: category };
@@ -176,13 +184,13 @@ export function changeType(prev: Project, kind: SiteKind, category: string): Pro
 
 // Throw away hand edits and write the page again from the details.
 export function rewriteFromDetails(prev: Project): Project {
-  return { ...prev, content: composeProject(prev), history: remember(prev, "Before rewriting from details") };
+  return syncExperience({ ...prev, content: composeProject(prev), history: remember(prev, "Before rewriting from details") });
 }
 
 export function restoreVersion(prev: Project, index: number): Project {
   const hit = prev.history[index];
   if (!hit) return prev;
-  return { ...prev, content: hit.content, history: [{ at: new Date().toISOString(), label: "Before restoring", content: prev.content! }, ...prev.history.filter((_, i) => i !== index)].slice(0, HISTORY_LIMIT) };
+  return syncExperience({ ...prev, content: hit.content, history: [{ at: new Date().toISOString(), label: "Before restoring", content: prev.content! }, ...prev.history.filter((_, i) => i !== index)].slice(0, HISTORY_LIMIT) });
 }
 
 // True when the page holds words or pictures the details would not have written.
