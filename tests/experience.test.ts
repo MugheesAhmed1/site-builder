@@ -115,7 +115,7 @@ describe("generation pipeline (PRD 7)", () => {
     expect(calm.profile).not.toBe("webgl");
     expect(show.stage.webgl).toBe("product3d");
     expect(show.profile).toBe("webgl");
-    expect(show.technologies).toEqual(expect.arrayContaining(["three", "r3f", "drei"]));
+    expect(show.technologies).toEqual(expect.arrayContaining(["three", "r3f"]));
     expect(show.budget.particles).toBeGreaterThan(calm.budget.particles);
     expect(show.scenes[0].duration).toBeGreaterThan(calm.scenes[0].duration);
     expect(calm.channels.cursor).toBeLessThan(show.channels.cursor);

@@ -1,9 +1,14 @@
+import * as React from "react";
 import { StrictMode, startTransition } from "react";
+import * as JsxRuntime from "react/jsx-runtime";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import Site, { needsDark, prefersDark } from "./Site";
 import data from "./site-data.json";
 import { palette, resolveScheme } from "./theme.js";
 import "./styles/site.css";
+
+// site-3d.js (React Three Fiber) loads later as its own script and uses this copy of React.
+Object.assign(window, { __xpReact: React, __xpJsx: JsxRuntime });
 
 // site-data.json holds the experience (the scenes, the stage and the motion), the design
 // system and every word on the page. kind is "portfolio" (a personal site) or "website".

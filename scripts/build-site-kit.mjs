@@ -56,7 +56,7 @@ await build({
   },
 });
 
-// The 3D layer as its own plain script: it registers window.__xp3d when it loads.
+// The 3D layer as its own plain script (three.js and React Three Fiber): it registers window.__xp3d when it loads.
 await build({
   root,
   configFile: false,
@@ -68,7 +68,9 @@ await build({
     chunkSizeWarningLimit: 2000,
     rollupOptions: {
       input: join(root, "src/scenes/webgl/kit.ts"),
-      output: { format: "iife", inlineDynamicImports: true, entryFileNames: "site-3d.js" },
+      // React comes from site.js (main.tsx shares it), so React Three Fiber runs on the page's own copy.
+      external: ["react", "react/jsx-runtime"],
+      output: { format: "iife", inlineDynamicImports: true, entryFileNames: "site-3d.js", globals: { react: "__xpReact", "react/jsx-runtime": "__xpJsx" } },
     },
   },
 });

@@ -14,8 +14,8 @@ import type { Concept } from "./concepts";
 export const PROFILE_PACKAGES: Record<DependencyProfile, string[]> = {
   basic: ["react", "react-dom", "motion"],
   cinematic: ["react", "react-dom", "motion", "lenis"],
-  webgl: ["react", "react-dom", "motion", "lenis", "three", "@react-three/fiber", "@react-three/drei"],
-  physics: ["react", "react-dom", "motion", "lenis", "three", "@react-three/fiber", "@react-three/drei", "@react-three/rapier"],
+  webgl: ["react", "react-dom", "motion", "lenis", "three", "@react-three/fiber"],
+  physics: ["react", "react-dom", "motion", "lenis", "three", "@react-three/fiber", "@react-three/rapier"],
 };
 
 export function selectSystems(c: Concept, level: number, webgl: boolean, smooth: boolean, sound: boolean): { technologies: string[]; profile: DependencyProfile } {
@@ -23,7 +23,7 @@ export function selectSystems(c: Concept, level: number, webgl: boolean, smooth:
   if (["interface", "ledger", "kinetic", "assemble", "morph", "grow"].includes(c.engine)) t.add("svg");
   if (!["interface", "ledger", "kinetic", "assemble"].includes(c.engine)) t.add("canvas");
   if (smooth) t.add("lenis");
-  if (webgl) ["three", "r3f", "drei"].forEach((x) => t.add(x));
+  if (webgl) ["three", "r3f"].forEach((x) => t.add(x));
   if (webgl && level >= 9) t.add("postprocessing");
   if (sound) t.add("web-audio");
   const profile: DependencyProfile = webgl ? "webgl" : smooth ? "cinematic" : "basic";

@@ -67,6 +67,7 @@ describe("3D layer and dependency profiles (PRD 17, 18, 40)", () => {
     const deep = sourceFiles(TEMPLATE_FILES, true);
     expect(deep["src/scenes/webgl/product.ts"]).toBeTruthy();
     expect(JSON.parse(deep["package.json"]).dependencies.three).toBe("0.185.0");
+    expect(JSON.parse(deep["package.json"]).dependencies["@react-three/fiber"]).toBe("9.8.2");
     expect(uses3d({ ...hi, experience: { ...hi.experience, noWebgl: true } })).toBe(false);
   });
 });

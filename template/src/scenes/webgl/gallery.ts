@@ -1,6 +1,6 @@
 import { AmbientLight, BoxGeometry, CanvasTexture, Group, Mesh, MeshBasicMaterial, MeshStandardMaterial, PlaneGeometry, PointLight, RepeatWrapping, SRGBColorSpace } from "three";
 import { clamp, hsl, hueOf, lerp, num, rng, type Frame } from "../frame";
-import { disposeKit, makeKit, resizeKit, type Init3D, type View3D } from "./core";
+import {host, type Init3D, type Kit } from "./core";
 
 // gallery3d: a corridor of framed work the camera walks through. Beat key cam (0 the entrance
 // .. 1 the far wall). The work is the site's own words on generated canvases; the cursor
@@ -46,9 +46,7 @@ function floorTexture() {
   return t;
 }
 
-export function gallery3d(canvas: HTMLCanvasElement, init: Init3D): View3D | null {
-  const k = makeKit(canvas, { fov: 55, mobile: init.mobile });
-  if (!k) return null;
+export const gallery3d = host({ fov: 55 }, (k: Kit, init: Init3D) => {
   const { scene, camera, renderer } = k;
   const hue = hueOf(init.pal.accent);
   const words = init.labels.length ? init.labels : ["Work", "Studio", "Story", "Craft"];
@@ -98,12 +96,6 @@ export function gallery3d(canvas: HTMLCanvasElement, init: Init3D): View3D | nul
       camera.rotation.x = lerp(camera.rotation.x, f.pointer ? -f.ny * 0.12 : 0, 0.06);
       lights.forEach((l, i) => l.position.set(i % 2 ? 2.5 : -2.5, 2.4, z - 3 - i * 3));
       renderer.render(scene, camera);
-    },
-    resize(w, h, dpr) {
-      resizeKit(k, w, h, dpr);
-    },
-    dispose() {
-      disposeKit(k);
-    },
+    }
   };
-}
+});
