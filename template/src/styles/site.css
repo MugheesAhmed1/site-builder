@@ -27,7 +27,7 @@
   max-width: 100%;
   display: block;
 }
-.xp-root a {
+:where(.xp-root) a {
   color: inherit;
 }
 .xp-root :focus-visible {
@@ -67,6 +67,16 @@
 }
 .xp-stage[data-live] .xp-canvas {
   opacity: 1;
+}
+/* The 3D layer replaces the 2D engine once it has loaded; until then (or if it cannot run) the 2D engine plays. */
+.xp-stage .xp-canvas.xp-gl {
+  opacity: 0;
+}
+.xp-stage[data-gl] .xp-canvas.xp-gl {
+  opacity: 1;
+}
+.xp-stage[data-gl] > :not(.xp-gl) {
+  visibility: hidden;
 }
 .xp-stage-cosmos {
   background: radial-gradient(70% 70% at 50% 40%, #1a1f45, #04050d);

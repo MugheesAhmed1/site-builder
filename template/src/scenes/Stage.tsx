@@ -4,6 +4,7 @@ import type { Conductor } from "../motion/scroll";
 import { deviceCaps, tone } from "../motion/runtime";
 import { beatAt, clamp, lerp, sideOf, type Engine2D, type Frame, type Palette, type Tap } from "./frame";
 import { ENGINES } from "./engines";
+import type { Mount3D, View3D } from "./webgl/core";
 
 // The stage: the visual world that stays on screen behind the scenes and carries the concept
 // from the hero to the call to action (PRD sections 4.1, 12 and 13). One loop per page drives
@@ -29,6 +30,30 @@ export interface DomEngineProps {
 
 export type StageEngineDef = { kind: "canvas"; draw: Engine2D } | { kind: "dom"; Component: ComponentType<DomEngineProps> };
 
+/** The 3D layer: already loaded, a downloaded site's site-3d.js, or a code-split import in the builder. */
+function load3d(): Promise<Mount3D | null> {
+  const w = window as Window & { __xp3d?: Mount3D; __XP_3D_SRC?: string };
+  if (w.__xp3d) return Promise.resolve(w.__xp3d);
+  if (w.__XP_3D_SRC)
+    return new Promise((done) => {
+      const s = document.createElement("script");
+      s.src = w.__XP_3D_SRC!;
+      s.async = true;
+      s.onload = () => done(w.__xp3d ?? null);
+      s.onerror = () => done(null);
+      document.head.appendChild(s);
+    });
+  return import("./webgl").then((m) => (m.default as Mount3D | null) ?? null).catch(() => null);
+}
+
+function webgl2() {
+  try {
+    return !!document.createElement("canvas").getContext("webgl2");
+  } catch {
+    return false;
+  }
+}
+
 const INTERACTIVE = "a,button,input,textarea,select,label,summary,[contenteditable],[role=button],.xp-nav,.xp-btn";
 
 export function Stage({
@@ -53,6 +78,9 @@ export function Stage({
 }) {
   const wrap = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
+  const glCanvas = useRef<HTMLCanvasElement>(null);
+  // PRD sections 17 and 18: real 3D only from intensity 7, where the concept has it and the person allows it.
+  const want3d = !!e.stage.webgl && e.intensity >= 7 && !e.noWebgl;
   const bus = useRef<Bus>({ frame: null, on: new Set() }).current;
   const def = ENGINES[e.stage.engine];
   const live = useRef({ e, pal, labels, reduced, editing, sound, scenes });
@@ -84,6 +112,8 @@ export function Stage({
     let side = 0.5;
     let presence = 1;
     let drawn = false;
+    let view: View3D | null = null;
+    let gone = false;
     const g = canvas.current?.getContext("2d", { alpha: true }) ?? null;
 
     const size = () => {
@@ -97,6 +127,7 @@ export function Stage({
         canvas.current.width = Math.round(w * dpr);
         canvas.current.height = Math.round(h * dpr);
       }
+      view?.resize(w, h, Math.min(dpr, 1.5));
       drawn = false;
     };
     size();
@@ -185,7 +216,21 @@ export function Stage({
         seed: e.seed,
       };
       bus.frame = frame;
-      if (def?.kind === "canvas" && g) {
+      if (view) {
+        const t1 = performance.now();
+        // An object behind the words steps back, as the 2D anchor does; whole worlds stay.
+        if (glCanvas.current && (e.stage.webgl === "product3d" || e.stage.webgl === "blob3d")) glCanvas.current.style.opacity = (0.35 + presence * 0.65).toFixed(3);
+        view.frame(frame);
+        if (performance.now() - t1 > 14) cost++;
+        else cost = Math.max(0, cost - 0.25);
+        if (cost > 2) {
+          // The device cannot keep the 3D stage smooth: back to the 2D engine (PRD section 39).
+          view.dispose();
+          view = null;
+          cost = 0;
+          el.removeAttribute("data-gl");
+        }
+      } else if (def?.kind === "canvas" && g) {
         g.setTransform(dpr, 0, 0, dpr, 0, 0);
         g.clearRect(0, 0, w, h);
         const t1 = performance.now();
@@ -210,11 +255,24 @@ export function Stage({
       started = true;
       t0 = last = performance.now();
       raf = requestAnimationFrame(loop);
+      const { e, reduced, pal, labels } = live.current;
+      if (want3d && e.stage.webgl && !reduced && caps.finePointer && !caps.lowPower && w >= 760 && glCanvas.current && webgl2())
+        load3d().then((mount) => {
+          if (gone || !mount || !glCanvas.current) return;
+          view = mount(glCanvas.current, e.stage.webgl!, { params: e.stage.params, pal, labels, mobile: w < 760 });
+          if (!view) return;
+          view.resize(w, h, Math.min(dpr, 1.5));
+          el.setAttribute("data-gl", "");
+        });
     };
     const kick = setTimeout(() => (idle ? idle(begin, { timeout: 1200 }) : begin()), document.readyState === "complete" ? 60 : 400);
     return () => {
       clearTimeout(kick);
       started = true;
+      gone = true;
+      view?.dispose();
+      view = null;
+      el.removeAttribute("data-gl");
       cancelAnimationFrame(raf);
       ro?.disconnect();
       io?.disconnect();
@@ -222,12 +280,13 @@ export function Stage({
       window.removeEventListener("pointerdown", down);
       document.removeEventListener("pointerleave", leave);
     };
-  }, [e.stage.engine]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [e.stage.engine, e.stage.webgl, want3d]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const Dom = def?.kind === "dom" ? def.Component : null;
   return (
     <div ref={wrap} className={"xp-stage xp-stage-" + e.stage.engine} data-engine={e.stage.engine} aria-hidden="true">
       {def?.kind === "canvas" && <canvas ref={canvas} className="xp-canvas" />}
+      {want3d && <canvas ref={glCanvas} className="xp-canvas xp-gl" />}
       {Dom && <Dom bus={bus} pal={pal} labels={labels} params={e.stage.params} mobile={false} />}
     </div>
   );

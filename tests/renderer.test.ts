@@ -50,3 +50,23 @@ describe("renderer", () => {
     expect(html).toContain("data-enter=");
   });
 });
+
+describe("3D layer and dependency profiles (PRD 17, 18, 40)", () => {
+  it("ships three.js only with sites that use 3D", async () => {
+    const { sourceFiles, uses3d } = await import("@/lib/export");
+    const { TEMPLATE_FILES } = await import("@/lib/template-files");
+    const { setIntensity } = await import("@/packages/experience-core");
+    const p = createProject({ query: "Website for my dental clinic in Karachi" });
+    const lo = { ...p, experience: setIntensity(p.experience!, briefInput(p), 4) };
+    const hi = { ...p, experience: setIntensity(p.experience!, briefInput(p), 8) };
+    expect(uses3d(lo)).toBe(false);
+    expect(uses3d(hi)).toBe(!!hi.experience.stage.webgl);
+    const flat = sourceFiles(TEMPLATE_FILES, false);
+    expect(Object.keys(flat).filter((k) => k.startsWith("src/scenes/webgl/"))).toEqual(["src/scenes/webgl/index.ts"]);
+    expect(JSON.parse(flat["package.json"]).dependencies.three).toBeUndefined();
+    const deep = sourceFiles(TEMPLATE_FILES, true);
+    expect(deep["src/scenes/webgl/product.ts"]).toBeTruthy();
+    expect(JSON.parse(deep["package.json"]).dependencies.three).toBe("0.185.0");
+    expect(uses3d({ ...hi, experience: { ...hi.experience, noWebgl: true } })).toBe(false);
+  });
+});

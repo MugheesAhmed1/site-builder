@@ -27,7 +27,7 @@ PRD section 67 recommends `/apps` and `/packages`. The builder stays at the repo
 | experience-core (runtime types) | `template/src/experiences/` | yes |
 | motion-engine | `template/src/motion/` (primitive registry, scroll orchestration, runtime) | yes |
 | scene-engine | `template/src/scenes/` (stage engines, objects, characters) | yes |
-| webgl-engine | `template/src/scenes/webgl/` (three.js, React Three Fiber, Drei) | only when the profile is `webgl` |
+| webgl-engine | `template/src/scenes/webgl/` (three.js) | only when the profile is `webgl` |
 | design-system | `lib/designs.ts`, `template/src/theme.js` | theme only |
 | content-engine | `lib/compose.ts`, `lib/requirements.ts`, `template/src/content/` | content helpers only |
 | export-engine | `lib/export.ts`, `lib/prerender.ts`, `scripts/build-site-kit.mjs` | no |
@@ -81,3 +81,5 @@ Runtime code lives under `template/src` in the folder layout PRD section 50 asks
 - **Default intensity** is the concept's own level (for example 7 for a mountain journey, 4 for a law firm), lowered for the Minimal and Luxury styles and raised for Bold and Experimental.
 - **The old template stays in the repository for now.** `Website.jsx`, `Portfolio.jsx` and the old scene library are no longer drawn by the preview or shipped in downloads, but the home page and two studio panels still read their catalogues. They are removed with the new studio and home page.
 - **3D loads only at intensity 7 and up**, only for concepts with a 3D version, and only after the page is usable (PRD sections 17, 18 and 37).
+- **The 3D layer is plain three.js, not React Three Fiber or Drei.** The stage already owns one loop, the scroll blend and the pacing, so each 3D engine is a small view (`frame`, `resize`, `dispose`) that the stage drives. That keeps the extra download to `site-3d.js` (about 140 KB gzipped) and lets the stage fall back to the 2D engine on the same frame. Four engines exist: `product3d` (tooth or bottle), `blob3d` (liquid, silk, glass, chrome), `space3d` (stars and planets) and `gallery3d` (a corridor of framed work).
+- **When 3D runs.** Intensity 7 or more, a concept with `stage.webgl`, a fine pointer, not a low-power device, a viewport 760 px or wider and WebGL2. If a 3D frame keeps costing more than 14 ms the view is dropped and the 2D engine takes over. Downloaded source only lists `three@0.185.0` in `package.json` when the site uses 3D.
