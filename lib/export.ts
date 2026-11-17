@@ -295,6 +295,28 @@ async function localFonts(href: string, display: string, put: (path: string, dat
 // so it is fetched once the page has painted and loaded, never competing with the first view.
 const LOAD_LATER = `(function(){var go=function(){["./site-data.js","./site.js"].forEach(function(u){var s=document.createElement("script");s.src=u;s.async=false;document.body.appendChild(s)})};if(document.readyState==="complete")setTimeout(go,0);else addEventListener("load",function(){setTimeout(go,0)})})();`;
 
+/** PRD sections 17 and 40: a site carries the 3D layer only when its experience uses it. */
+export function uses3d(p: Project) {
+  const e = p.experience;
+  return !!e && !!e.stage.webgl && e.intensity >= 7 && !e.noWebgl;
+}
+
+/** The dependency profile of a source download (PRD section 40): three.js only for 3D sites. */
+export function sourceFiles(files: Record<string, string>, three: boolean): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [path, text] of Object.entries(files)) {
+    if (!three && path.startsWith("src/scenes/webgl/")) continue;
+    out[path] = text;
+  }
+  if (!three) out["src/scenes/webgl/index.ts"] = "// This site does not use the 3D layer, so three.js is not a dependency.\nexport default null;\n";
+  if (three && out["package.json"]) {
+    const pkg = JSON.parse(out["package.json"]);
+    pkg.dependencies = { ...pkg.dependencies, three: "0.185.0" };
+    out["package.json"] = JSON.stringify(pkg, null, 2) + "\n";
+  }
+  return out;
+}
+
 async function kitFile(name: string) {
   const r = await fetch("/site-kit/" + name, { cache: "no-cache" });
   if (!r.ok) throw new Error("The ready-to-host files could not be loaded (" + name + "). Check your connection and try again.");
@@ -353,7 +375,7 @@ export async function buildZip(p: Project, kind: DownloadKind = "ready"): Promis
 
   if (kind === "source") {
     const { TEMPLATE_FILES } = await import("./template-files");
-    for (const [path, text] of Object.entries(TEMPLATE_FILES)) {
+    for (const [path, text] of Object.entries(sourceFiles(TEMPLATE_FILES, uses3d(p)))) {
       let out = text;
       if (path === "index.html") {
         out = out.replace("%SITE_TITLE%", title).replace("%SITE_DESCRIPTION%", desc).replace("%SITE_THEME%", theme).replace("<!--SITE_HEAD-->", headTags(p, ""));
@@ -367,7 +389,8 @@ export async function buildZip(p: Project, kind: DownloadKind = "ready"): Promis
     if (share) folder.file("public/share.png", share);
     folder.file("src/site-data.json", JSON.stringify(data, null, 2));
   } else {
-    const [js, css] = await Promise.all([kitFile("site.js"), kitFile("site.css")]);
+    const three = uses3d(p);
+    const [js, css, js3d] = await Promise.all([kitFile("site.js"), kitFile("site.css"), three ? kitFile("site-3d.js") : Promise.resolve("")]);
     const data = await gather(p, (path, d, b64) => folder.file(path, d, b64 ? { base64: true } : undefined), "./");
     const fonts = p.design.fonts ? await localFonts(fontsHref(p.design.fonts, p.design.accentFace), p.design.fonts.display, (path, d) => folder.file(path, d)) : { css: "", lead: "" };
     const fontCss = fonts.css;
@@ -380,7 +403,8 @@ export async function buildZip(p: Project, kind: DownloadKind = "ready"): Promis
     const page = prerender(data);
     folder.file("site.js", js);
     folder.file("site.css", css);
-    folder.file("site-data.js", "// Your site's words, colours, fonts and motion settings. Edit and reload.\nwindow.__ASSET_BASE__ = \".\";\nwindow.__SITE_DATA__ = " + JSON.stringify(data, null, 2).replace(/<\/script/gi, "<\\/script") + ";\n");
+    if (js3d) folder.file("site-3d.js", js3d);
+    folder.file("site-data.js", "// Your site's words, colours, fonts and motion settings. Edit and reload.\nwindow.__ASSET_BASE__ = \".\";\n" + (js3d ? 'window.__XP_3D_SRC = "./site-3d.js";\n' : "") + "window.__SITE_DATA__ = " + JSON.stringify(data, null, 2).replace(/<\/script/gi, "<\\/script") + ";\n");
     folder.file("favicon.svg", faviconSvg(p));
     folder.file("robots.txt", ROBOTS);
     if (share) folder.file("share.png", share);
