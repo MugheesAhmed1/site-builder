@@ -14,7 +14,7 @@ import {
   Vector2,
 } from "three";
 import { clamp, freshTaps, lerp, num, smooth, str, type Frame } from "../frame";
-import { anchor3, col, disposeKit, makeKit, resizeKit, type Init3D, type View3D } from "./core";
+import {anchor3, col, host, type Init3D, type Kit } from "./core";
 
 // product3d: the product (or a tooth) as a real object under studio light. Beat keys as in the
 // 2D morph engine: shape (the story step), spin (degrees), scale, shine. The cursor turns it a
@@ -80,9 +80,7 @@ function bottle(body: MeshPhysicalMaterial, accent: MeshPhysicalMaterial) {
   return g;
 }
 
-export function product3d(canvas: HTMLCanvasElement, init: Init3D): View3D | null {
-  const k = makeKit(canvas, { env: true, fov: 32, mobile: init.mobile });
-  if (!k) return null;
+export const product3d = host({ env: true, fov: 32 }, (k: Kit, init: Init3D) => {
   const { scene, camera, renderer } = k;
   const subject = str(init.params, "subject", "product");
   const accent = col(init.pal.accent);
@@ -142,12 +140,6 @@ export function product3d(canvas: HTMLCanvasElement, init: Init3D): View3D | nul
         ring.position.y = Math.sin(f.t * 1.6) * 0.9;
       }
       renderer.render(scene, camera);
-    },
-    resize(w, h, dpr) {
-      resizeKit(k, w, h, dpr);
-    },
-    dispose() {
-      disposeKit(k);
-    },
+    }
   };
-}
+});

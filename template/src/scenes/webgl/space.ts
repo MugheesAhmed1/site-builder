@@ -17,7 +17,7 @@ import {
   DoubleSide,
 } from "three";
 import { clamp, freshTaps, hsl, hueOf, lerp, num, rng, smooth, type Frame } from "../frame";
-import { anchor3, disposeKit, makeKit, resizeKit, visible, type Init3D, type View3D } from "./core";
+import {anchor3, host, type Init3D, type Kit, visible } from "./core";
 
 // space3d: a flight through stars past real lit planets. Beat keys as in the 2D cosmos
 // engine: cam, warp, planet (fractional: the current planet leaves as the next arrives).
@@ -63,9 +63,7 @@ void main(){
   gl_FragColor = vec4(vec3(0.92, 0.95, 1.0), a * vA);
 }`;
 
-export function space3d(canvas: HTMLCanvasElement, init: Init3D): View3D | null {
-  const k = makeKit(canvas, { fov: 50, mobile: init.mobile });
-  if (!k) return null;
+export const space3d = host({ fov: 50 }, (k: Kit, init: Init3D) => {
   const { scene, camera, renderer } = k;
   const n = init.mobile ? 1500 : 4000;
   const pos = new Float32Array(n * 3);
@@ -142,12 +140,6 @@ export function space3d(canvas: HTMLCanvasElement, init: Init3D): View3D | null 
       if (kf > 0.02) place(i + 1, 1 - kf);
       else if (planets.has(i + 1)) planets.get(i + 1)!.visible = false;
       renderer.render(scene, camera);
-    },
-    resize(w, h, dpr) {
-      resizeKit(k, w, h, dpr);
-    },
-    dispose() {
-      disposeKit(k);
-    },
+    }
   };
-}
+});

@@ -1,9 +1,11 @@
-import { Color, PerspectiveCamera, Scene, SRGBColorSpace, ACESFilmicToneMapping, WebGLRenderer, PMREMGenerator, type Texture } from "three";
+import { createRoot, useFrame, useThree } from "@react-three/fiber";
+import { createElement, useEffect, useMemo } from "react";
+import { Color, PerspectiveCamera, PMREMGenerator, Scene, setConsoleFunction, WebGLRenderer, type Texture } from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import type { Frame, Palette } from "../frame";
 import type { Params, StageEngine3D } from "../../experiences/types";
 
-// The 3D layer (PRD sections 17, 18 and 37): three.js only, loaded on demand after the page
+// The 3D layer (PRD sections 17, 18 and 37): three.js through React Three Fiber, loaded on demand after the page
 // is usable, and only where the intensity, the device and the visitor allow it. Each engine
 // gets the same frame as the 2D engines, so scroll, cursor and taps drive it the same way.
 
@@ -31,37 +33,99 @@ export interface Kit {
   h: number;
 }
 
-export function makeKit(canvas: HTMLCanvasElement, opts: { env?: boolean; fov?: number; mobile: boolean }): Kit | null {
-  let renderer: WebGLRenderer;
-  try {
-    renderer = new WebGLRenderer({ canvas, alpha: true, antialias: !opts.mobile, powerPreference: "high-performance" });
-  } catch {
-    return null;
-  }
-  renderer.outputColorSpace = SRGBColorSpace;
-  renderer.toneMapping = ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1;
+export interface KitOptions {
+  env?: boolean;
+  fov?: number;
+}
+
+/** What an engine builds into the scene once: it gets a frame each tick and renders itself. */
+export interface Built {
+  frame(f: Frame): void;
+  dispose?(): void;
+}
+
+export type Build = (k: Kit, init: Init3D) => Built;
+
+/**
+ * Mounts an engine with React Three Fiber. R3F owns the renderer, the canvas size, the pixel
+ * ratio and the camera; the stage keeps the one loop for the whole page and advances R3F from
+ * it (frameloop "never"), so 2D and 3D share pacing and the slow-frame fallback. The engine
+ * registers a useFrame callback with a priority, so it renders the scene itself.
+ */
+// A finished site must keep a clean console. React Three Fiber still creates a THREE.Clock,
+// which three now flags as deprecated; that one notice is dropped and everything else passes through.
+setConsoleFunction((type: string, message: string, ...rest: unknown[]) => {
+  if (typeof message === "string" && message.includes("THREE.Clock")) return;
+  const c = console as unknown as Record<string, (...a: unknown[]) => void>;
+  (c[type] ?? console.log)(message, ...rest);
+});
+
+export function host(o: KitOptions, build: Build): (canvas: HTMLCanvasElement, init: Init3D) => View3D | null {
+  return (canvas, init) => {
+    const root = createRoot(canvas);
+    let advance: ((t: number) => void) | null = null;
+    let latest: Frame | null = null;
+    let gone = false;
+    function Engine() {
+      const state = useThree();
+      const kit = useMemo(() => kitOf(state.gl, state.scene, state.camera as PerspectiveCamera, o), []); // eslint-disable-line react-hooks/exhaustive-deps
+      const view = useMemo(() => build(kit, init), [kit]);
+      useFrame(() => {
+        if (latest) view.frame(latest);
+      }, 1);
+      useEffect(() => {
+        advance = (t) => state.advance(t);
+        return () => {
+          advance = null;
+          view.dispose?.();
+          disposeKit(kit);
+        };
+      }, []); // eslint-disable-line react-hooks/exhaustive-deps
+      return null;
+    }
+    const el = createElement(Engine);
+    let size = { width: 1, height: 1, dpr: 1 };
+    const show = () =>
+      root
+        .configure({
+          gl: { alpha: true, antialias: !init.mobile, powerPreference: "high-performance" },
+          camera: { fov: o.fov ?? 35, near: 0.1, far: 200, position: [0, 0, 8] },
+          frameloop: "never",
+          flat: false,
+          size: { width: size.width, height: size.height, top: 0, left: 0 },
+          dpr: size.dpr,
+          onCreated: (s) => s.gl.setClearColor(0x000000, 0),
+        })
+        .then(() => !gone && root.render(el))
+        .catch((e) => console.warn("3D stage", e));
+    show();
+    return {
+      frame(f) {
+        latest = f;
+        advance?.(performance.now());
+      },
+      resize(w, h, dpr) {
+        size = { width: w, height: h, dpr };
+        show();
+      },
+      dispose() {
+        gone = true;
+        root.unmount();
+      },
+    };
+  };
+}
+
+function kitOf(renderer: WebGLRenderer, scene: Scene, camera: PerspectiveCamera, o: KitOptions): Kit {
   renderer.setClearColor(0x000000, 0);
-  const scene = new Scene();
-  const camera = new PerspectiveCamera(opts.fov ?? 35, 1, 0.1, 200);
-  camera.position.set(0, 0, 8);
   let env: Texture | null = null;
-  if (opts.env) {
+  if (o.env) {
     const pm = new PMREMGenerator(renderer);
     env = pm.fromScene(new RoomEnvironment(), 0.04).texture;
     pm.dispose();
     scene.environment = env;
   }
   return { renderer, scene, camera, env, w: 1, h: 1 };
-}
-
-export function resizeKit(k: Kit, w: number, h: number, dpr: number) {
-  k.w = w;
-  k.h = h;
-  k.renderer.setPixelRatio(dpr);
-  k.renderer.setSize(w, h, false);
-  k.camera.aspect = w / Math.max(1, h);
-  k.camera.updateProjectionMatrix();
 }
 
 /** World units visible at the origin plane. */
@@ -94,6 +158,4 @@ export function disposeKit(k: Kit) {
     }
   });
   k.env?.dispose();
-  k.renderer.dispose();
-  k.renderer.forceContextLoss();
 }

@@ -301,7 +301,7 @@ export function uses3d(p: Project) {
   return !!e && !!e.stage.webgl && e.intensity >= 7 && !e.noWebgl;
 }
 
-/** The dependency profile of a source download (PRD section 40): three.js only for 3D sites. */
+/** The dependency profile of a source download (PRD section 40): three.js and React Three Fiber only for 3D sites. */
 export function sourceFiles(files: Record<string, string>, three: boolean): Record<string, string> {
   const out: Record<string, string> = {};
   for (const [path, text] of Object.entries(files)) {
@@ -311,7 +311,7 @@ export function sourceFiles(files: Record<string, string>, three: boolean): Reco
   if (!three) out["src/scenes/webgl/index.ts"] = "// This site does not use the 3D layer, so three.js is not a dependency.\nexport default null;\n";
   if (three && out["package.json"]) {
     const pkg = JSON.parse(out["package.json"]);
-    pkg.dependencies = { ...pkg.dependencies, three: "0.185.0" };
+    pkg.dependencies = { ...pkg.dependencies, three: "0.185.0", "@react-three/fiber": "9.8.2" };
     out["package.json"] = JSON.stringify(pkg, null, 2) + "\n";
   }
   return out;

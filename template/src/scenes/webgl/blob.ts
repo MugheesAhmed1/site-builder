@@ -1,6 +1,6 @@
 import { Color, Group, IcosahedronGeometry, Mesh, ShaderMaterial, Vector3 } from "three";
 import { clamp, freshTaps, hueOf, lerp, num, str, type Frame } from "../frame";
-import { anchor3, disposeKit, makeKit, resizeKit, type Init3D, type View3D } from "./core";
+import {anchor3, host, type Init3D, type Kit } from "./core";
 
 // blob3d: a living drop of liquid, silk, glass or chrome. The surface is displaced by noise
 // in the vertex shader and shaded with a fresnel sheen, so it costs one draw per drop. Beat
@@ -84,9 +84,7 @@ function hsl(h: number, s: number, l: number) {
   return new Color().setHSL((((h % 360) + 360) % 360) / 360, s, l, "srgb");
 }
 
-export function blob3d(canvas: HTMLCanvasElement, init: Init3D): View3D | null {
-  const k = makeKit(canvas, { fov: 35, mobile: init.mobile });
-  if (!k) return null;
+export const blob3d = host({ fov: 35 }, (k: Kit, init: Init3D) => {
   const { scene, camera, renderer } = k;
   const mat = ["liquid", "silk", "glass", "chrome", "fluid"].indexOf(str(init.params, "material", "liquid"));
   const make = (detail: number) =>
@@ -157,12 +155,6 @@ export function blob3d(canvas: HTMLCanvasElement, init: Init3D): View3D | null {
         set(d, 0.18);
       });
       renderer.render(scene, camera);
-    },
-    resize(w, h, dpr) {
-      resizeKit(k, w, h, dpr);
-    },
-    dispose() {
-      disposeKit(k);
-    },
+    }
   };
-}
+});
