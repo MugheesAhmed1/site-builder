@@ -4,13 +4,13 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
 import Icon from "@/components/Icon";
 import { TONES, applyCopy, collectCopy, diffCopy, fieldLabel, localPolish, siteBrief, type RefineResult, type RefineTask, type RefineTone } from "@/lib/refine";
-import type { Project, SectionFx, SiteContent, WebsiteContent } from "@/lib/types";
-import { intensityPatch } from "@/lib/intensity";
-import { atmosById, pickAtmos } from "@/template/src/atmos/catalog.js";
+import type { Project, SiteContent, WebsiteContent } from "@/lib/types";
 
-// AI polish: optional help from Google Gemini. The words go to this site's own server route,
-// which holds the key; nothing is sent until the person presses a button, and every change
-// is shown for review before it is applied. Without a key the panel offers a local tidy-up.
+// Wording tools in the Content panel: polish every word, new openings, suggested questions.
+// The words go to this builder's own server route, which holds any service key; nothing is
+// sent until the person presses a button, and every change is shown for review before it is
+// applied. Without the server service the panel offers a local tidy-up. The product never
+// names how the words are written (PRD section 27).
 
 type Update = (fn: (prev: Project) => Project) => void;
 type Change = { key: string; from: string; to: string; on: boolean };
@@ -40,7 +40,7 @@ export default function RefinePanel({ p, update }: { p: Project; update: Update 
   const [busy, setBusy] = useState<RefineTask | "local" | null>(null);
   const [error, setError] = useState("");
   const [changes, setChanges] = useState<Change[] | null>(null);
-  const [source, setSource] = useState<"gemini" | "local">("gemini");
+  const [source, setSource] = useState<"server" | "local">("server");
   const [headlines, setHeadlines] = useState<{ headline: string; sub: string }[] | null>(null);
   const [faq, setFaq] = useState<{ question: string; answer: string; on: boolean }[] | null>(null);
   const [done, setDone] = useState("");
@@ -79,30 +79,17 @@ export default function RefinePanel({ p, update }: { p: Project; update: Update 
       if (r.error === "no-key") {
         setEnabled(false);
         if (task === "polish") runLocal();
-        else if (task === "direct") {
-          const id = pickAtmos(p.category, Object.values(copy).join(" "));
-          update((prev) => ({ ...prev, design: { ...prev.design, ...intensityPatch(prev.design.intensity ?? 8, { ...prev.design, atmos: id }, prev.category), heroStyle: "atmos" } }));
-          setDone(`Directed by the local rules: the ${atmosById(id).label} background.`);
-        }
-        else setError("AI suggestions need a Gemini key on the server. The local tidy-up still works.");
+        else setError("New openings and questions are not switched on for this builder yet. The local tidy-up still works.");
       } else setError(r.error || "Something went wrong. Your words are unchanged.");
       return;
     }
-    setSource("gemini");
+    setSource("server");
     if (task === "polish" && r.copy) {
       const list = diffCopy(copy, r.copy).map((c) => ({ ...c, on: true }));
       setChanges(list);
-      if (!list.length) setDone("Gemini had nothing to improve. Your words are already in good shape.");
+      if (!list.length) setDone("Nothing to improve. Your words are already in good shape.");
     }
     if (task === "headline") setHeadlines(r.headlines?.length ? r.headlines : null);
-    if (task === "direct" && r.story) {
-      const st = r.story;
-      update((prev) => ({
-        ...prev,
-        design: { ...prev.design, ...intensityPatch(st.intensity, { ...prev.design, atmos: st.atmos }, prev.category), heroStyle: "atmos", sectionFx: st.sectionFx as SectionFx, accentFace: st.accentFace as Project["design"]["accentFace"] },
-      }));
-      setDone(`Gemini picked the ${atmosById(st.atmos).label} background at intensity ${st.intensity}${r.why ? ": " + r.why : "."} Scroll the preview to see it.`);
-    }
     if (task === "faq") setFaq(r.faq?.length ? r.faq.map((f) => ({ ...f, on: true })) : null);
   };
 
@@ -148,11 +135,6 @@ export default function RefinePanel({ p, update }: { p: Project; update: Update 
 
   return (
     <div className="rf">
-      <div className={"rf-status" + (enabled ? " is-on" : "")} role="status">
-        <span className="rf-dot" aria-hidden="true" />
-        {enabled === null ? "Checking for Gemini" : enabled ? "Gemini is connected on the server" : "Gemini is not set up. Local tidy-up only."}
-      </div>
-
       <div className="card rf-card">
         <h2 className="rf-h">How should it sound?</h2>
         <div className="rf-tones" role="radiogroup" aria-label="Tone">
@@ -163,7 +145,7 @@ export default function RefinePanel({ p, update }: { p: Project; update: Update 
           ))}
         </div>
         <label className="rf-note">
-          <span className="small muted">Anything Gemini should know? (optional)</span>
+          <span className="small muted">Anything the writer should know? (optional)</span>
           <input type="text" value={note} maxLength={300} placeholder="We are family run since 1998, keep it simple" onChange={(e) => setNote(e.target.value)} />
         </label>
       </div>
@@ -176,14 +158,6 @@ export default function RefinePanel({ p, update }: { p: Project; update: Update 
             <span className="small muted">{enabled ? `Sends ${Object.keys(copy).length} lines of copy. Links, prices and contact details stay here.` : "Fixes spacing, capitals, doubled words and long buttons on this device."}</span>
           </span>
           {busy === "polish" && <span className="rf-spin" aria-label="Working" />}
-        </button>
-        <button type="button" className="rf-action" disabled={!!busy} onClick={() => run("direct")}>
-          <Icon name="film" size={20} />
-          <span>
-            <b>Direct my opening</b>
-            <span className="small muted">{enabled ? "Gemini reads your site and picks the cinematic background, the headline accent, how much it moves and how sections arrive." : "Picks a cinematic background that suits your kind of site."}</span>
-          </span>
-          {busy === "direct" && <span className="rf-spin" aria-label="Working" />}
         </button>
         <button type="button" className="rf-action" disabled={!!busy || !enabled} onClick={() => run("headline")}>
           <Icon name="edit" size={20} />
@@ -205,7 +179,7 @@ export default function RefinePanel({ p, update }: { p: Project; update: Update 
         )}
         {enabled && (
           <button type="button" className="btn btn-ghost btn-sm rf-local" disabled={!!busy} onClick={runLocal}>
-            Or tidy locally, without AI
+            Or tidy on this device only
           </button>
         )}
       </div>
@@ -227,7 +201,7 @@ export default function RefinePanel({ p, update }: { p: Project; update: Update 
         <section className="rf-review" aria-label="Suggested changes">
           <header className="row between">
             <h2 className="rf-h">
-              {changes.filter((c) => c.on).length} of {changes.length} changes {source === "gemini" ? "from Gemini" : "from the tidy-up"}
+              {changes.filter((c) => c.on).length} of {changes.length} changes {source === "server" ? "suggested" : "from the tidy-up"}
             </h2>
             <button type="button" className="btn btn-ghost btn-sm" onClick={() => setChanges(changes.map((c) => ({ ...c, on: !changes.every((x) => x.on) })))}>
               {changes.every((c) => c.on) ? "None" : "All"}
@@ -307,7 +281,7 @@ export default function RefinePanel({ p, update }: { p: Project; update: Update 
       )}
 
       <p className="small muted rf-fine">
-        AI polish is optional and uses Google Gemini through this builder&apos;s server. Only the words listed above are sent, never your contact details, links or pictures. The rest of the builder works without it.
+        Polishing is optional. Only the words listed above go to this builder&apos;s server, never your contact details, links or pictures.
       </p>
     </div>
   );

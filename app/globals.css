@@ -249,7 +249,9 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 .preview-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px 8px 14px; border-bottom: 1px solid var(--line); background: var(--panel); }
 .preview-viewport { overflow: auto; max-height: calc(100dvh - 200px); overscroll-behavior: contain; }
 .preview-viewport.is-mobile { display: flex; justify-content: center; padding: 20px 0; }
-.preview-viewport.is-mobile > .preview-device { width: 390px; border-radius: 20px; overflow: clip; box-shadow: 0 0 0 1px var(--line-strong), var(--shadow); }
+.preview-viewport.is-mobile.is-tablet > .preview-device { width: 820px; }
+.preview-sim select { height: 32px; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--text); padding: 0 10px; font: inherit; font-size: 13px; }
+.preview-viewport.is-mobile > .preview-device { width: 390px; max-width: 100%; border-radius: 20px; overflow: clip; box-shadow: 0 0 0 1px var(--line-strong), var(--shadow); }
 
 .q-list { display: grid; gap: 0; counter-reset: q; }
 .q-item { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 4px 12px; padding: 22px 0; border-top: 1px solid var(--line); }

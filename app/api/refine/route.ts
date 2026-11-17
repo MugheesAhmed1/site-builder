@@ -174,6 +174,6 @@ export async function POST(req: Request) {
     return NextResponse.json(result);
   } catch (e) {
     // The message names the model and status only; the key is never part of it.
-    return NextResponse.json({ ok: false, source: "local", error: "Gemini did not answer (" + (e as Error).message + "). Your words are unchanged." } satisfies RefineResult, { status: 502 });
+    return NextResponse.json({ ok: false, source: "local", error: "The writing service did not answer. Your words are unchanged." } satisfies RefineResult, { status: 502 });
   }
 }

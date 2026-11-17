@@ -5,6 +5,7 @@ import { packById, presetById } from "./presets";
 import { directionsFor, hash } from "./direction";
 import { motionLanguageFor, understand, type BriefInput, type StyleChoice } from "./understand";
 import { storyboard } from "./storyboard";
+import { applyBetter, type BetterId } from "./better";
 import { budgetFor, channelsFor, fallbacksFor, selectSystems, tierOf, useWebgl } from "./systems";
 
 // The experience concept engine (PRD sections 2, 7 and 78, P0 items 1 to 9). One call runs the
@@ -16,6 +17,8 @@ export { CONCEPTS, conceptById } from "./concepts";
 export { ENVIRONMENTS, environmentById } from "./environments";
 export { PRESETS, PACKS, presetById, packById } from "./presets";
 export { understand } from "./understand";
+export { findImprovements, applyBetter } from "./better";
+export type { BetterId, Improvement } from "./better";
 export type { Brief, StyleChoice } from "./understand";
 
 export interface GenerateOptions {
@@ -37,6 +40,8 @@ export interface GenerateOptions {
   params?: Params;
   world?: string;
   hidden?: string[];
+  /** Make it better fixes to keep applying. */
+  better?: string[];
 }
 
 const clampLevel = (n: number) => Math.max(1, Math.min(10, Math.round(n)));
@@ -74,7 +79,7 @@ export function generateExperience(input: BriefInput, o: GenerateOptions = {}): 
   const tier = tierOf(concept, webgl, level);
   const cursorOn = channels.cursor > 0;
   const mode = (o.mode && concept.modes.includes(o.mode) ? o.mode : directions.find((d) => d.concept === concept.id)?.mode) ?? concept.modes[0];
-  return {
+  return applyBetter({
     version: 2,
     seed,
     mode,
@@ -107,7 +112,8 @@ export function generateExperience(input: BriefInput, o: GenerateOptions = {}): 
     directions,
     noWebgl: o.allow3d === false || undefined,
     control: o.control ?? "smart",
-  };
+    better: o.better?.length ? o.better : undefined,
+  });
 }
 
 /** The options that rebuild the same experience, so a change keeps everything else. */
@@ -126,7 +132,29 @@ export function optionsOf(e: Experience): GenerateOptions {
     allow3d: e.noWebgl ? false : undefined,
     channels: custom ? e.channels : undefined,
     hidden: e.scenes.filter((s) => s.hidden).map((s) => s.section),
+    better: e.better,
   };
+}
+
+/** Make it better: apply some of the fixes findImprovements offered. */
+export function makeBetter(e: Experience, input: BriefInput, ids: BetterId[]): Experience {
+  const better = Array.from(new Set([...(e.better ?? []), ...ids.filter((id) => id !== "spacing")]));
+  return { ...generateExperience(input, { ...optionsOf(e), better, channels: e.control === "custom" ? e.channels : undefined }), directions: e.directions };
+}
+
+/** Motion panel (PRD section 30): set channels by hand. The experience switches to Custom control. */
+export function setChannels(e: Experience, input: BriefInput, channels: Partial<MotionChannels>): Experience {
+  return { ...generateExperience(input, { ...optionsOf(e), control: "custom", channels: { ...e.channels, ...channels } }), directions: e.directions };
+}
+
+/** Back to Smart: the channels follow the intensity again. */
+export function setControl(e: Experience, input: BriefInput, control: Experience["control"]): Experience {
+  return { ...generateExperience(input, { ...optionsOf(e), control, channels: control === "custom" ? e.channels : undefined }), directions: e.directions };
+}
+
+/** Turn the 3D layer on or off (it still only runs where the device allows). */
+export function set3d(e: Experience, input: BriefInput, on: boolean): Experience {
+  return { ...generateExperience(input, { ...optionsOf(e), allow3d: on ? undefined : false }), directions: e.directions };
 }
 
 /** Rebuild the scenes after the content changed (a section added, removed or reordered). */
@@ -155,6 +183,19 @@ export function changeWorld(e: Experience, input: BriefInput, world: string): Ex
   if (current && current.engine === env.engine) return { ...generateExperience(input, { ...optionsOf(e), world }), directions: e.directions };
   const match = CONCEPTS.find((c) => c.world === world) ?? CONCEPTS.find((c) => c.engine === env.engine);
   return match ? { ...changeConcept(e, input, match.id), world: match.world === world ? world : e.world } : e;
+}
+
+/** Change the interaction (PRD section 30): editorial, cinematic, interactive world, product or playful. The concept stays when it supports the mode. */
+export function changeMode(e: Experience, input: BriefInput, mode: ExperienceMode): Experience {
+  const c = conceptById(e.concept);
+  if (c?.modes.includes(mode)) return { ...generateExperience(input, { ...optionsOf(e), mode }), directions: e.directions };
+  return { ...generateExperience(input, { ...optionsOf(e), concept: undefined, world: undefined, preset: undefined, pack: undefined, mode, intensity: undefined }), directions: e.directions };
+}
+
+/** Start from one of the curated presets (PRD section 33). */
+export function applyPreset(e: Experience, input: BriefInput, preset: string): Experience {
+  if (!presetById(preset)) return e;
+  return { ...generateExperience(input, { ...optionsOf(e), preset, concept: undefined, world: undefined, pack: undefined, mode: undefined, intensity: undefined, better: undefined }), directions: e.directions };
 }
 
 /** Surprise me (PRD section 32): a new creative direction for the same business. */

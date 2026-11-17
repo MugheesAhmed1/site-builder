@@ -6,7 +6,7 @@ import type { PortfolioContent, Project, StepId, WebsiteContent } from "./types"
 // screen. This file describes the panels, the suggested order through them, and the launch
 // check that says what is still worth doing before the site goes online.
 
-export type PanelId = "details" | "design" | "scenes" | "motion" | "page" | "refine" | "publish";
+export type PanelId = "content" | "experience" | "design" | "motion" | "page" | "publish";
 
 export interface Panel {
   id: PanelId;
@@ -17,18 +17,22 @@ export interface Panel {
   intro: string;
 }
 
+// PRD section 30: five controls (Content, Experience, Design, Motion, Page), then Publish.
 export const PANELS: Panel[] = [
-  { id: "details", step: "questions", title: "Details", short: "Details", icon: "list", intro: "The facts your site is written from. Change an answer and the page rewrites itself; anything you edited by hand is kept." },
-  { id: "design", step: "design", title: "Design system", short: "Design", icon: "palette", intro: "Made for you from your name and tone. Shuffle for a new one, remix one part, lock what you like, or pick from the library." },
-  { id: "scenes", step: "cast", title: "Scenes", short: "Scenes", icon: "film", intro: "The living world your site opens in. Flip through them in the drop-down and watch each one blend into the next, roll a surprise, or play the reel." },
-  { id: "motion", step: "motion", title: "Animation", short: "Motion", icon: "motion", intro: "How the site moves: one-tap packs, entrance styles, scrolling effects and showpieces. Played by Motion in the site you download too." },
-  { id: "page", step: "build", title: "Page", short: "Page", icon: "layout", intro: "Switch sections on and off, drag them into order, and edit every word. Or press Edit on page and click anything in the preview." },
-  { id: "refine", step: "build", title: "AI polish", short: "Polish", icon: "sparkle", intro: "Optional help from Google Gemini: polish every word, try new openings or add the questions visitors ask. You review every change, and Undo takes it back." },
-  { id: "publish", step: "deploy", title: "Publish", short: "Publish", icon: "rocket", intro: "Download the finished site and put it online for free. It is yours: plain files, no account, no monthly fee." },
+  { id: "content", step: "questions", title: "Content", short: "Content", icon: "list", intro: "Your business, every line of text, the call to action, contact details, services, prices and questions. Change an answer and the page rewrites itself; anything you edited by hand is kept." },
+  { id: "experience", step: "cast", title: "Experience", short: "Experience", icon: "film", intro: "The idea your site is built around: its concept, its world, how visitors play with it and how much it moves. Remix it in plain words, or let Surprise me try a new direction." },
+  { id: "design", step: "design", title: "Design", short: "Design", icon: "palette", intro: "Colours, type, spacing, shape, materials and light or dark. Shuffle for a new system, lock what you like, or pick from the library." },
+  { id: "motion", step: "motion", title: "Motion", short: "Motion", icon: "motion", intro: "Tune each kind of movement on its own: scroll, cursor, hover, click, transitions, type, characters and the world around them." },
+  { id: "page", step: "build", title: "Page", short: "Page", icon: "layout", intro: "Reorder, add, remove, hide and show sections, and edit every word. Or press Edit on page and click anything in the preview." },
+  { id: "publish", step: "deploy", title: "Publish", short: "Publish", icon: "rocket", intro: "Quality checks, then download the finished site or its complete source. It is yours: plain files, no account, no monthly fee." },
 ];
 
+// Links saved before the studio had five controls still open the right place.
+const OLD: Record<string, PanelId> = { details: "content", refine: "content", scenes: "experience" };
+
 export function panelById(id: string | null | undefined): Panel {
-  return PANELS.find((p) => p.id === id) ?? PANELS[0];
+  const want = (id && OLD[id]) || id;
+  return PANELS.find((p) => p.id === want) ?? PANELS[0];
 }
 
 export function nextPanel(id: PanelId): Panel | null {
@@ -51,17 +55,17 @@ export function launchChecks(p: Project): Check[] {
   if (p.kind === "portfolio") {
     const inp = p.input;
     const pc = c as PortfolioContent | null;
-    out.push({ id: "name", label: "Your name", done: !!inp?.name?.trim(), panel: "details", must: true });
-    out.push({ id: "role", label: "What you do", done: !!inp?.role?.trim(), panel: "details", must: true });
-    out.push({ id: "reach", label: "A way to reach you", done: !!(inp?.email || inp?.phone || inp?.links?.length || pc?.contact.email), panel: "details", must: true });
-    out.push({ id: "work", label: "Experience or projects", done: !!((inp?.experience?.length ?? 0) + (inp?.projects?.length ?? 0) || (pc?.experience.length ?? 0) + (pc?.projects.length ?? 0)), panel: "details", must: false });
+    out.push({ id: "name", label: "Your name", done: !!inp?.name?.trim(), panel: "content", must: true });
+    out.push({ id: "role", label: "What you do", done: !!inp?.role?.trim(), panel: "content", must: true });
+    out.push({ id: "reach", label: "A way to reach you", done: !!(inp?.email || inp?.phone || inp?.links?.length || pc?.contact.email), panel: "content", must: true });
+    out.push({ id: "work", label: "Experience or projects", done: !!((inp?.experience?.length ?? 0) + (inp?.projects?.length ?? 0) || (pc?.experience.length ?? 0) + (pc?.projects.length ?? 0)), panel: "content", must: false });
     if (p.design.heroStyle === "portrait") out.push({ id: "photo", label: "A photo of you", done: !!pc?.hero.photoUrl, panel: "page", must: false });
   } else {
     const wc = c as WebsiteContent | null;
     const a = p.answers;
-    for (const q of questionsFor(p.kind, p.category).filter((q) => q.required)) out.push({ id: "q-" + q.id, label: q.label.replace(/[?.!]+$/, ""), done: !!(a[q.id] ?? "").trim(), panel: "details", must: true });
+    for (const q of questionsFor(p.kind, p.category).filter((q) => q.required)) out.push({ id: "q-" + q.id, label: q.label.replace(/[?.!]+$/, ""), done: !!(a[q.id] ?? "").trim(), panel: "content", must: true });
     const ct = wc?.contact;
-    out.push({ id: "reach", label: "A phone, WhatsApp, email or address", done: !!(ct && (ct.email || ct.phone || ct.whatsapp || ct.instagram || ct.facebook || ct.linkedin)) || !!wc?.visit?.address, panel: "details", must: true });
+    out.push({ id: "reach", label: "A phone, WhatsApp, email or address", done: !!(ct && (ct.email || ct.phone || ct.whatsapp || ct.instagram || ct.facebook || ct.linkedin)) || !!wc?.visit?.address, panel: "content", must: true });
     out.push({ id: "photo", label: "A main photo", done: !!wc?.hero.imageUrl || p.design.heroStyle === "cinema" || p.design.heroStyle === "scatter", panel: "page", must: false });
     if (wc?.sections.includes("gallery") && wc.gallery.length) out.push({ id: "gallery", label: "Gallery photos", done: wc.gallery.every((g) => !!g.imageUrl), panel: "page", must: false });
   }

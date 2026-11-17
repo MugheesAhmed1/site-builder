@@ -85,7 +85,7 @@ export function BuildStep({
     <>
       {head(
         "Your " + word,
-        "Check it on desktop and phone, in light and dark. Press Edit on page, then click anything to change it: words, pictures, icons, buttons, colours, backgrounds, widgets and the live scene. Nothing here is written by AI; it comes from your answers.",
+        "Check it on desktop and phone, in light and dark. Press Edit on page, then click anything to change it: words, pictures, icons, buttons, colours, backgrounds, widgets and the live scene. Everything comes from your answers.",
         <button className="btn btn-primary" onClick={onApprove}>
           Approve {word}
           <Icon name="arrow" size={16} />

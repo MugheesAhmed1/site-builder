@@ -74,7 +74,8 @@ export default function Preview({
   onContentChange?: (c: SiteContent) => void;
   onDesignChange?: (patch: Partial<Design>) => void;
 }) {
-  const [device, setDevice] = useState<"desktop" | "mobile">("desktop");
+  const [device, setDevice] = useState<"desktop" | "tablet" | "mobile">("desktop");
+  const [sim, setSim] = useState<"normal" | "reduced" | "low">("normal");
   const [run, setRun] = useState(0);
   const viewport = useRef<HTMLDivElement>(null);
   const shell = useRef<HTMLDivElement>(null);
@@ -508,20 +509,27 @@ export default function Preview({
             </button>
           </div>
           <div className="seg" role="group" aria-label="Screen size">
-            <button aria-pressed={device === "desktop"} className={device === "desktop" ? "is-on" : ""} onClick={() => setDevice("desktop")}>
-              Desktop
-            </button>
-            <button aria-pressed={device === "mobile"} className={device === "mobile" ? "is-on" : ""} onClick={() => setDevice("mobile")}>
-              Phone
-            </button>
+            {(["desktop", "tablet", "mobile"] as const).map((d) => (
+              <button key={d} aria-pressed={device === d} className={device === d ? "is-on" : ""} onClick={() => setDevice(d)}>
+                {d === "desktop" ? "Desktop" : d === "tablet" ? "Tablet" : "Phone"}
+              </button>
+            ))}
           </div>
+          <label className="preview-sim">
+            <span className="sr-only">Play as</span>
+            <select value={sim} onChange={(e) => setSim(e.target.value as typeof sim)} aria-label="Play the site as">
+              <option value="normal">Normal</option>
+              <option value="reduced">Reduced motion</option>
+              <option value="low">Low power</option>
+            </select>
+          </label>
         </div>
       </div>
       <div className="preview-work">
-        <div ref={viewport} data-scroll-root="" className={"preview-viewport" + (device === "mobile" ? " is-mobile" : "") + (editing ? " is-editing" : "")}>
+        <div ref={viewport} data-scroll-root="" className={"preview-viewport" + (device === "mobile" ? " is-mobile" : device === "tablet" ? " is-mobile is-tablet" : "") + (editing ? " is-editing" : "")}>
           <div className="preview-device">
             {/* A new key remounts the site so every entrance animation plays again. */}
-            <Site key={`${run}-${device}-${replayKey ?? ""}`} kind={kind} design={shownDesign} content={shown} experience={experience} preview scheme={scheme} editing={editing} />
+            <Site key={`${run}-${device}-${sim}-${replayKey ?? ""}`} kind={kind} design={shownDesign} content={shown} experience={experience} preview scheme={scheme} editing={editing} simulate={sim === "normal" ? undefined : sim} />
           </div>
           {editing && (
             <div className="pe-boxes" aria-hidden="true">

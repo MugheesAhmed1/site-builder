@@ -245,4 +245,6 @@ export interface Experience {
   noWebgl?: boolean;
   /** PRD section 65: Smart by default, Creative or Custom for people who want more. */
   control: "smart" | "creative" | "custom";
+  /** Make it better (PRD section 66): the fixes applied, re-applied whenever the scenes are rebuilt. */
+  better?: string[];
 }

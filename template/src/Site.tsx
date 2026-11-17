@@ -23,6 +23,8 @@ export interface SiteProps {
   preview?: boolean;
   scheme?: "light" | "dark";
   editing?: boolean;
+  /** Studio preview modes (PRD section 48): play the site as with reduced motion, or on a low-power device. */
+  simulate?: "reduced" | "low";
 }
 
 /** Worlds that read best at night; with the theme on auto they open dark. */
@@ -144,11 +146,11 @@ function Cursor({ mode }: { mode: string }) {
   return <div ref={el} className={"xp-cursor is-" + mode} aria-hidden="true" />;
 }
 
-export default function Site({ kind, design, content, experience, preview = false, scheme: forced, editing = false }: SiteProps) {
+export default function Site({ kind, design, content, experience, preview = false, scheme: forced, editing = false, simulate }: SiteProps) {
   const root = useRef<HTMLDivElement>(null);
   const page = useRef<HTMLDivElement>(null);
   const conductor = useRef<Conductor | null>(null);
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotion() || simulate === "reduced";
   const systemDark = useSystemDark();
   const c = useMemo(() => cleanContent(content), [content]);
   const sections = useMemo(() => visibleSections(kind, c, preview), [kind, c, preview]);
@@ -266,7 +268,7 @@ export default function Site({ kind, design, content, experience, preview = fals
     >
       {!design.fontsLocal && design.fonts && <link rel="stylesheet" href={fontsHref(design.fonts)} />}
       <div ref={page} className="xp-page">
-        <Stage experience={e} scenes={scenes} pal={pal} labels={labels} conductor={conductor} reduced={reduced} editing={editing} sound={sound} />
+        <Stage experience={e} scenes={scenes} pal={pal} labels={labels} conductor={conductor} reduced={reduced} lowPower={simulate === "low"} editing={editing} sound={sound} />
         <header className="xp-nav">
           <a className="xp-brand" href="#pf-top">
             {brand}

@@ -5,14 +5,45 @@ import Icon from "@/components/Icon";
 import { downloadZip, saveBlob, siteName, slug as slugOf } from "@/lib/export";
 import { readiness, type PanelId } from "@/lib/flow";
 import type { Project } from "@/lib/types";
+import { qualityGates } from "@/packages/quality-engine";
+import { contrast, palette } from "@/template/src/theme.js";
 
-// Publish: a launch check, the download, and the short road to a free host.
+// Publish: a launch check, the quality gates (PRD section 54), the download, and the short
+// road to a free host.
+
+type Img = { src: string; alt: string };
+
+/** Every picture in the content, with the words that describe it. */
+function pictures(v: unknown, out: Img[] = []): Img[] {
+  if (Array.isArray(v)) v.forEach((x) => pictures(x, out));
+  else if (v && typeof v === "object") {
+    const o = v as Record<string, unknown>;
+    for (const k of ["imageUrl", "photoUrl"]) {
+      const src = o[k];
+      if (typeof src === "string" && src) out.push({ src, alt: String(o.alt ?? o.caption ?? o.title ?? o.name ?? o.headline ?? "") });
+    }
+    for (const [k, x] of Object.entries(o)) if (k !== "imageUrl" && k !== "photoUrl") pictures(x, out);
+  }
+  return out;
+}
+
+function gatesFor(p: Project) {
+  if (!p.experience || !p.content) return [];
+  const ratios = (["light", "dark"] as const).flatMap((scheme) => {
+    const c = palette(p.design, scheme);
+    return [contrast(c.text, c.bg), contrast(c.muted, c.bg), contrast(c.onAccent, c.accent)];
+  });
+  const meta = (p.content as { meta?: { title?: string; description?: string } }).meta ?? {};
+  return qualityGates({ experience: p.experience, meta, contrast: ratios, images: pictures(p.content) });
+}
 
 export default function PublishPanel({ p, onDownloaded, go }: { p: Project; onDownloaded: () => void; go: (panel: PanelId) => void }) {
   const [busy, setBusy] = useState<"" | "ready" | "source">("");
   const [error, setError] = useState("");
   const [got, setGot] = useState(false);
   const { checks, ready } = readiness(p);
+  const gates = gatesFor(p);
+  const failing = gates.filter((g) => !g.pass);
   const open = checks.filter((c) => !c.done && c.id !== "download");
   const repo = p.kind === "portfolio" ? "portfolio" : "my-site";
   const download = async (kind: "ready" | "source") => {
@@ -34,6 +65,27 @@ export default function PublishPanel({ p, onDownloaded, go }: { p: Project; onDo
 
   return (
     <div className="pn-stack">
+      {gates.length > 0 && (
+        <section className="pn-card">
+          <div className="pn-card-head">
+            <h3>Quality checks</h3>
+            <p className="small muted">{failing.length ? `${failing.length} of ${gates.length} need a look before you publish.` : "Performance, accessibility, SEO, motion, mobile, reduced motion and licences all pass."}</p>
+          </div>
+          <ul className="pn-checks">
+            {gates.map((g) => (
+              <li key={g.id} className={g.pass ? "is-done" : "is-must"}>
+                <span className="pn-check-dot" aria-hidden="true">
+                  {g.pass && <Icon name="check" size={12} />}
+                </span>
+                <span className="grow">
+                  {g.question}
+                  <span className="small muted pn-gate-detail">{g.detail}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
       <section className="pn-card">
         <div className="pn-card-head">
           <h3>Launch check</h3>

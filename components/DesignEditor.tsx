@@ -90,6 +90,7 @@ export default function DesignEditor({
   personal,
   onChange,
   onLocks,
+  extra,
 }: {
   kind: SiteKind;
   design: Design;
@@ -97,6 +98,8 @@ export default function DesignEditor({
   personal: Design;
   onChange: (d: Design) => void;
   onLocks: (l: Partial<Record<DesignPart, boolean>>) => void;
+  /** More design controls from the studio (materials), shown after the built-in groups. */
+  extra?: React.ReactNode;
 }) {
   const [tab, setTab] = useState<"tune" | "library">("tune");
   const { list: LIBRARY, source } = useLibrary();
@@ -303,75 +306,13 @@ export default function DesignEditor({
             </div>
           </Group>
 
-          <Group title="Layout" hint="How the sections are arranged. Animation has its own step next." part="layout" locks={locks} onLock={lockToggle} onRemix={doRemix}>
-            <div>
-              <label className="lbl">Opening</label>
-              <Seg
-                label="Opening"
-                value={design.heroStyle}
-                options={["atmos", "stage", "statement", "portrait", "split", "centered"]}
-                labels={{ atmos: "Cinematic background", journey: "Cinematic background", cinema: "Film scene", scatter: "Scattered words", stage: "Character and widgets", statement: "Big statement", portrait: "With photo", split: "With side panel", centered: "Centred" }}
-                onChange={(heroStyle) => set({ heroStyle })}
-              />
-            </div>
-            {false && (
-              <div>
-                <label className="lbl">Scene</label>
-                <p className="hint">The picture behind the opening and the glass call to action. Your own opening photo wins when you add one.</p>
-                <div className="plate-grid" role="group" aria-label="Scene">
-                  <button className={"plate-pick" + (!design.plate ? " is-on" : "")} aria-pressed={!design.plate} onClick={() => set({ plate: undefined })}>
-                    <span>Match my site</span>
-                  </button>
-                  {PLATE_IDS.map((id) => (
-                    <button key={id} className={"plate-pick" + (design.plate === id ? " is-on" : "")} aria-pressed={design.plate === id} onClick={() => set({ plate: id })} title={id}>
-                      <img src={platePath(id)} alt={id} loading="lazy" />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-            <div>
-              <label className="lbl">Headline accent</label>
-              <Seg label="Headline accent" value={design.accentFace ?? "none"} options={["none", "serif", "glow"]} labels={{ none: "Plain", serif: "Italic serif word", glow: "Glowing word" }} onChange={(accentFace) => set({ accentFace })} />
-              <p className="hint">Put *stars* around the words to accent in your headline, or the last word is used.</p>
-            </div>
+          <Group title="Layout" hint="How the words sit over the experience." part="layout" locks={locks} onLock={lockToggle} onRemix={doRemix}>
             <div>
               <label className="lbl">Text alignment</label>
               <Seg label="Text alignment" value={design.align ?? "center"} options={["center", "left"]} labels={{ center: "Centred", left: "Left aligned" }} onChange={(align) => set({ align })} />
             </div>
-            <div>
-              <label className="lbl">Navigation</label>
-              <Seg label="Navigation" value={design.chrome ?? "bar"} options={["bar", "pill"]} labels={{ bar: "Full bar", pill: "Floating glass pill" }} onChange={(chrome) => set({ chrome })} />
-            </div>
-            <div>
-              <label className="lbl">Menu</label>
-              <Seg label="Menu" value={design.menu ?? "drop"} options={["drop", "curtain"]} labels={{ drop: "Drop down on phones", curtain: "Full-screen curtain" }} onChange={(menu) => set({ menu })} />
-            </div>
-            <div>
-              <label className="lbl">Call to action</label>
-              <Seg label="Call to action" value={design.ctaStyle ?? "band"} options={["band"]} labels={{ band: "Colour band" }} onChange={(ctaStyle) => set({ ctaStyle })} />
-            </div>
-            <div>
-              <label className="lbl">Footer</label>
-              <Seg label="Footer" value={design.footer ?? "simple"} options={["simple", "wordmark"]} labels={{ simple: "One line", wordmark: "Card and giant name" }} onChange={(footer) => set({ footer })} />
-            </div>
-            {kind === "portfolio" && (
-              <>
-                <div>
-                  <label className="lbl">Work</label>
-                  <Seg label="Work" value={design.projectStyle} options={["grid", "case", "index"]} labels={{ grid: "Card grid", case: "Case studies", index: "Index list" }} onChange={(projectStyle) => set({ projectStyle })} />
-                </div>
-                <div>
-                  <label className="lbl">Experience</label>
-                  <Seg label="Experience" value={design.experienceStyle} options={["ledger", "timeline", "list"]} onChange={(experienceStyle) => set({ experienceStyle })} />
-                </div>
-              </>
-            )}
-            <div>
-              <label className="lbl">Services</label>
-              <Seg label="Services" value={design.serviceStyle} options={["menu", "bento", "rows"]} labels={{ menu: "Price menu", bento: "Bento grid", rows: "Numbered rows" }} onChange={(serviceStyle) => set({ serviceStyle })} />
-            </div>
           </Group>
+          {extra}
         </>
       )}
 
