@@ -63,6 +63,7 @@ export function Stage({
   labels,
   conductor,
   reduced,
+  lowPower = false,
   editing,
   sound,
 }: {
@@ -73,6 +74,8 @@ export function Stage({
   labels: string[];
   conductor: { current: Conductor | null };
   reduced: boolean;
+  /** Act as on a low-power device (the studio's Low power preview). */
+  lowPower?: boolean;
   editing: boolean;
   sound: boolean;
 }) {
@@ -89,7 +92,8 @@ export function Stage({
   useEffect(() => {
     const el = wrap.current;
     if (!el) return;
-    const caps = deviceCaps();
+    const dc = deviceCaps();
+    const caps = { ...dc, lowPower: dc.lowPower || lowPower };
     const state: Record<string, any> = {};
     const taps: Tap[] = [];
     let px = -1;
@@ -280,7 +284,7 @@ export function Stage({
       window.removeEventListener("pointerdown", down);
       document.removeEventListener("pointerleave", leave);
     };
-  }, [e.stage.engine, e.stage.webgl, want3d]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [e.stage.engine, e.stage.webgl, want3d, lowPower]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const Dom = def?.kind === "dom" ? def.Component : null;
   return (

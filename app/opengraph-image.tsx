@@ -17,7 +17,7 @@ export default function OpengraphImage() {
           <div style={{ fontSize: 92, fontWeight: 700, lineHeight: 1.02, letterSpacing: -3 }}>Say what you need.</div>
           <div style={{ fontSize: 92, fontWeight: 700, lineHeight: 1.02, letterSpacing: -3, color: "#1F6F5C" }}>Get a site you own.</div>
         </div>
-        <div style={{ display: "flex", fontSize: 30, color: "#5c574f" }}>No AI, no sign up. Everything stays in your browser.</div>
+        <div style={{ display: "flex", fontSize: 30, color: "#5c574f" }}>Describe it. Shape it. Make it yours.</div>
       </div>
     ),
     size

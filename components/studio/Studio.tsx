@@ -5,35 +5,42 @@ import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import DesignEditor from "@/components/DesignEditor";
 import Icon from "@/components/Icon";
-import MotionPicker from "@/components/MotionPicker";
 import Preview from "@/components/Preview";
 import ThemeToggle from "@/components/ThemeToggle";
 import { StorageNotice } from "@/components/Topbar";
 import DetailsPanel from "@/components/studio/DetailsPanel";
+import ExperiencePanel from "@/components/studio/ExperiencePanel";
+import MotionPanel from "@/components/studio/MotionPanel";
 import PagePanel from "@/components/studio/PagePanel";
 import PublishPanel from "@/components/studio/PublishPanel";
 import RefinePanel from "@/components/studio/RefinePanel";
-import ScenesPanel from "@/components/studio/ScenesPanel";
 import { PANELS, describe, nextPanel, panelById, readiness, type PanelId } from "@/lib/flow";
+import { briefInput, withExperience } from "@/lib/experience";
 import { designFor } from "@/lib/project";
+import { changeWorld } from "@/packages/experience-core";
+import type { Experience } from "@/template/src/experiences/types";
 import { keepCast } from "@/lib/store";
 import type { Design, Project, SiteContent } from "@/lib/types";
 import { useProject } from "@/lib/useProject";
 
-// The studio: one workspace for every kind of site. The live site is always on screen; the
-// panels beside it (Details, Design, Scenes, Motion, Page, Publish) are open from the start
-// and can be visited in any order. Every change is saved and can be undone.
+// The studio (PRD section 30): one workspace for every kind of site. The live site is always
+// on screen; the five controls beside it (Content, Experience, Design, Motion, Page) and
+// Publish are open from the start and can be visited in any order. Every change is saved and
+// can be undone, and earlier experiences can be compared in the preview and restored.
 
 const ease = [0.23, 1, 0.32, 1] as const;
 
-// The words the local director reads to suggest scenes: the kind of business or role, plus the opening line.
-function sceneWords(p: Project): string {
-  const h = (p.content?.hero ?? {}) as { headline?: string; role?: string; tagline?: string };
-  return [p.query, h.role, h.headline, h.tagline].filter(Boolean).join(" ");
-}
+// Materials (PRD section 30, Design): for liquid concepts the material is the world.
+const MATERIALS = [
+  { world: "liquid", label: "Liquid" },
+  { world: "fabric", label: "Silk" },
+  { world: "glass", label: "Glass" },
+  { world: "metallic", label: "Chrome" },
+  { world: "fluid", label: "Smoke" },
+];
 
 function useHashPanel(): [PanelId, (p: PanelId) => void] {
-  const [panel, setPanel] = useState<PanelId>("details");
+  const [panel, setPanel] = useState<PanelId>("content");
   useEffect(() => {
     const read = () => setPanel(panelById(window.location.hash.slice(1)).id);
     read();
@@ -69,6 +76,7 @@ export default function Studio({ id }: { id: string }) {
   const [panel, go] = useHashPanel();
   const [view, setView] = useState<"edit" | "preview">("edit"); // phones show one at a time
   const [focus, setFocus] = useState(false); // desktop: the preview alone
+  const [compare, setCompare] = useState<Experience | null>(null); // an earlier experience shown in the preview
   const body = useRef<HTMLDivElement>(null);
 
   // Opening a panel counts as having looked at it (the launch check uses this).
@@ -185,7 +193,15 @@ export default function Studio({ id }: { id: string }) {
                   <p className="muted">{info.intro}</p>
                 </header>
 
-                {panel === "details" && <DetailsPanel p={p} update={update} />}
+                {panel === "content" && (
+                  <>
+                    <DetailsPanel p={p} update={update} />
+                    <h2 className="studio-sub">Polish the words</h2>
+                    <RefinePanel p={p} update={update} />
+                  </>
+                )}
+
+                {panel === "experience" && p.experience && <ExperiencePanel p={p} update={update} compare={compare} onCompare={setCompare} />}
 
                 {panel === "design" && (
                   <DesignEditor
@@ -195,18 +211,32 @@ export default function Studio({ id }: { id: string }) {
                     personal={personal}
                     onChange={(design) => update((prev) => ({ ...prev, design: keepCast(prev.design, design) }))}
                     onLocks={(locks) => update((prev) => ({ ...prev, locks }), true)}
+                    extra={
+                      p.experience?.stage.engine === "liquid" ? (
+                        <section className="xpp-block" aria-labelledby="st-material">
+                          <h3 id="st-material">Material</h3>
+                          <div className="seg" role="group" aria-labelledby="st-material">
+                            {MATERIALS.map((m) => (
+                              <button
+                                key={m.world}
+                                type="button"
+                                aria-pressed={p.experience?.world === m.world}
+                                className={p.experience?.world === m.world ? "is-on" : ""}
+                                onClick={() => update((prev) => (prev.experience ? withExperience(prev, changeWorld(prev.experience, briefInput(prev), m.world), "Material: " + m.label) : prev))}
+                              >
+                                {m.label}
+                              </button>
+                            ))}
+                          </div>
+                        </section>
+                      ) : null
+                    }
                   />
                 )}
 
-                {panel === "scenes" && <ScenesPanel category={p.category} words={sceneWords(p)} design={p.design} onChange={patchDesign} />}
-
-                {panel === "motion" && (
-                  <MotionPicker category={p.category} design={p.design} onChange={patchDesign} video={hero.videoUrl} onVideo={(v) => update((prev) => (prev.content ? ({ ...prev, content: { ...prev.content, hero: { ...prev.content.hero, videoUrl: v } } } as Project) : prev))} />
-                )}
+                {panel === "motion" && p.experience && <MotionPanel p={p} update={update} />}
 
                 {panel === "page" && <PagePanel p={p} update={update} />}
-
-                {panel === "refine" && <RefinePanel p={p} update={update} />}
 
                 {panel === "publish" && <PublishPanel p={p} go={go} onDownloaded={() => update((prev) => ({ ...prev, steps: { ...prev.steps, deploy: "approved" } }), true)} />}
               </motion.div>
@@ -226,7 +256,20 @@ export default function Studio({ id }: { id: string }) {
         </section>
 
         <section className="studio-canvas" aria-label="Live preview">
-          <Preview kind={p.kind} design={p.design} content={content} experience={p.experience} replayKey={replayKey} onContentChange={setContent} onDesignChange={patchDesign} />
+          {compare && (
+            <div className="studio-compare" role="status">
+              <span>
+                Showing an earlier version: <b>{compare.name}</b>
+              </span>
+              <button type="button" className="btn btn-ghost btn-sm" onClick={() => setCompare(null)}>
+                Back to current
+              </button>
+              <button type="button" className="btn btn-primary btn-sm" onClick={() => (update((prev) => withExperience(prev, compare, "Restore " + compare.name)), setCompare(null))}>
+                Restore it
+              </button>
+            </div>
+          )}
+          <Preview kind={p.kind} design={p.design} content={content} experience={compare ?? p.experience} replayKey={replayKey} onContentChange={setContent} onDesignChange={patchDesign} />
         </section>
       </div>
 
