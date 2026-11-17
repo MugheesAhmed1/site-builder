@@ -1,8 +1,12 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import PromptBox from "@/components/PromptBox";
-import LiveStage from "./LiveStage";
+
+// The stage and the experience engine load after the page is usable, so the words and the
+// prompt paint and respond first on phones.
+const LiveStage = dynamic(() => import("./LiveStage"), { ssr: false });
 
 // The home page's opening (PRD section 61): no static SaaS hero. Behind the words runs the
 // same stage a generated site runs, and it changes concept on its own every few seconds, so
@@ -21,7 +25,16 @@ export default function HomeHero() {
   const [i, setI] = useState(0);
   const [held, setHeld] = useState(false); // the visitor picked one: stop rotating
   const [pos, setPos] = useState(0);
+  const [ready, setReady] = useState(false);
   const box = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const go = () => setReady(true);
+    const w = window as Window & { requestIdleCallback?: (f: () => void, o?: { timeout: number }) => number };
+    const later = () => (w.requestIdleCallback ? w.requestIdleCallback(go, { timeout: 2500 }) : setTimeout(go, 1200));
+    if (document.readyState === "complete") later();
+    else window.addEventListener("load", later, { once: true });
+  }, []);
 
   useEffect(() => {
     if (held || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -47,7 +60,7 @@ export default function HomeHero() {
   return (
     <section ref={box} className="hh" aria-labelledby="hh-title">
       <div className="hh-stage" aria-hidden="true">
-        <LiveStage concept={s.concept} accent={s.accent} pos={pos} labels={["Your idea", "Moves", "Reacts", "Yours"]} />
+        {ready && <LiveStage concept={s.concept} accent={s.accent} pos={pos} labels={["Your idea", "Moves", "Reacts", "Yours"]} />}
       </div>
       <div className="hh-inner">
         <h1 id="hh-title" className="hh-title">
