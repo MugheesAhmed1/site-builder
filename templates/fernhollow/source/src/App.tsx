@@ -1,49 +1,28 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AudioEngine } from './valley/AudioEngine';
 import { ValleyEngine } from './valley/ValleyEngine';
+import { applyTheme, fill, safeHref, useContent, type XP } from './xp';
 
-type SectionKey = 'work' | 'about' | 'journal' | 'talk' | null;
+type SectionKey = 'work' | 'about' | 'journal' | 'contact' | null;
 
-const WORK_ITEMS = [
-  {
-    title: 'Kauri Watershed Atlas',
-    discipline: 'Ecological Mapping · Spatial Web',
-    year: '2026',
-    summary:
-      'Interactive catchment telemetry and living forest restoration archive built for Aotearoa watershed stewards.',
-  },
-  {
-    title: 'Mycelium Material Index',
-    discipline: 'Design System · Tactile Archive',
-    year: '2025',
-    summary:
-      'Open-source material library cataloging regenerative mycelium composites, lifecycle carbon data, and tactile acoustics.',
-  },
-  {
-    title: 'Solstice Seed Commons',
-    discipline: 'Brand Identity · Digital Platform',
-    year: '2025',
-    summary:
-      'Community seed-saving network connecting regional botanical growers with heritage alpine and meadow cultivars.',
-  },
-];
+const SECTIONS: Exclude<SectionKey, null>[] = ['work', 'about', 'journal', 'contact'];
 
-const JOURNAL_ENTRIES = [
-  {
-    date: 'Autumn 2026',
-    title: 'Software that ages like timber, not plastic',
-    excerpt:
-      'Notes on low-energy rendering, patient motion curves, and interfaces designed to stay legible for decades.',
-  },
-  {
-    date: 'Winter 2026',
-    title: 'Listening to nocturnal pollinators in coastal valleys',
-    excerpt:
-      'Field recordings and light-level studies informing our dark-first botanical visual language.',
-  },
-];
+function Linked({ href, children }: { href?: string; children: React.ReactNode }) {
+  const h = safeHref(href);
+  return h ? (
+    <a href={h} target={h.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className="sheet-link">
+      {children}
+    </a>
+  ) : (
+    <>{children}</>
+  );
+}
 
 export default function App() {
+  const data = useContent();
+  const f = (t: unknown) => fill(t, data);
+  const on = (k: Exclude<SectionKey, null>) => data.sections?.[k] !== false;
+
   const valleyRef = useRef<HTMLDivElement | null>(null);
   const engineRef = useRef<ValleyEngine | null>(null);
   const audioRef = useRef<AudioEngine | null>(null);
@@ -57,14 +36,26 @@ export default function App() {
   const [inquiryEmail, setInquiryEmail] = useState('');
   const [inquiryNote, setInquiryNote] = useState('');
   const [inquirySent, setInquirySent] = useState(false);
+  const [sendError, setSendError] = useState('');
+
+  useEffect(() => {
+    applyTheme(data.theme);
+    document.title = f(data.seo?.title || data.brand?.name);
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', f(data.seo?.description));
+  });
+
+  // The valley and its sound are rebuilt only when their own settings change.
+  const valleyKey = useMemo(() => JSON.stringify([data.valley, data.sound]), [data.valley, data.sound]);
 
   useEffect(() => {
     const container = valleyRef.current;
     if (!container) return;
 
-    const audio = new AudioEngine();
+    const audio = new AudioEngine(data.sound || {});
     audio.initAudio();
     audioRef.current = audio;
+    setSoundPlaying(false);
 
     let shown = false;
     const engine = new ValleyEngine(
@@ -76,7 +67,8 @@ export default function App() {
           setIntroShown(true);
         }
       },
-      audio
+      audio,
+      data.valley || {}
     );
     engineRef.current = engine;
 
@@ -86,7 +78,8 @@ export default function App() {
       engineRef.current = null;
       audioRef.current = null;
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [valleyKey]);
 
   useEffect(() => {
     if (!activeSection) {
@@ -96,13 +89,16 @@ export default function App() {
     engineRef.current?.startHoverTransition();
 
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setActiveSection(null);
-      }
+      if (e.key === 'Escape') setActiveSection(null);
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [activeSection]);
+
+  // A section switched off in the builder closes if it is open.
+  useEffect(() => {
+    if (activeSection && !on(activeSection)) setActiveSection(null);
+  });
 
   const handleToggleSound = () => {
     const audio = audioRef.current;
@@ -114,17 +110,45 @@ export default function App() {
   const openSection = (section: SectionKey, e?: React.MouseEvent) => {
     e?.preventDefault();
     setInquirySent(false);
+    setSendError('');
     setActiveSection((prev) => (prev === section ? null : section));
   };
 
-  const handleSubmitInquiry = (e: React.FormEvent) => {
+  const handleSubmitInquiry = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inquiryName.trim() || !inquiryEmail.trim()) return;
-    setInquirySent(true);
-    setInquiryName('');
-    setInquiryEmail('');
-    setInquiryNote('');
+    const c = data.contact || {};
+    const action = safeHref(c.formAction);
+    setSendError('');
+    try {
+      if (action.startsWith('https:')) {
+        const body = new FormData();
+        body.append('name', inquiryName);
+        body.append('email', inquiryEmail);
+        body.append('message', inquiryNote);
+        const res = await fetch(action, { method: 'POST', body, headers: { Accept: 'application/json' } });
+        if (!res.ok) throw new Error(String(res.status));
+      } else if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(c.email || ''))) {
+        const subject = encodeURIComponent(`${f(c.label || 'Enquiry')} — ${inquiryName}`);
+        const body = encodeURIComponent(`${inquiryNote}\n\n${inquiryName} <${inquiryEmail}>`);
+        window.location.href = `mailto:${c.email}?subject=${subject}&body=${body}`;
+      }
+      setInquirySent(true);
+      setInquiryName('');
+      setInquiryEmail('');
+      setInquiryNote('');
+    } catch {
+      setSendError('The message could not be sent. Please try again.');
+    }
   };
+
+  const nav = data.nav || {};
+  const hero = data.hero || {};
+  const work = data.work || {};
+  const about = data.about || {};
+  const journal = data.journal || {};
+  const contact = data.contact || {};
+  const opens: SectionKey = SECTIONS.includes(hero.opens) && on(hero.opens) ? hero.opens : SECTIONS.find(on) || null;
 
   return (
     <>
@@ -137,54 +161,64 @@ export default function App() {
           <a
             className="logo"
             href="#top"
-            aria-label="Fernhollow"
+            aria-label={f(data.brand?.name)}
             onClick={(e) => {
               e.preventDefault();
               setActiveSection(null);
             }}
           >
-            Fernhollow
+            {f(data.brand?.name)}
           </a>
           <nav aria-label="Main">
-            <a href="#work" onClick={(e) => openSection('work', e)}>
-              Work
-            </a>
-            <a href="#about" onClick={(e) => openSection('about', e)}>
-              About
-            </a>
-            <a href="#journal" onClick={(e) => openSection('journal', e)}>
-              Journal
-            </a>
-            <a className="pill" href="#talk" onClick={(e) => openSection('talk', e)}>
-              Let’s talk
-            </a>
+            {on('work') && (
+              <a href="#work" onClick={(e) => openSection('work', e)}>
+                {f(nav.work)}
+              </a>
+            )}
+            {on('about') && (
+              <a href="#about" onClick={(e) => openSection('about', e)}>
+                {f(nav.about)}
+              </a>
+            )}
+            {on('journal') && (
+              <a href="#journal" onClick={(e) => openSection('journal', e)}>
+                {f(nav.journal)}
+              </a>
+            )}
+            {on('contact') && (
+              <a className="pill" href="#contact" onClick={(e) => openSection('contact', e)}>
+                {f(nav.cta)}
+              </a>
+            )}
           </nav>
         </header>
 
         <section className={`hero ${activeSection ? 'dimmed' : ''}`}>
-          <h1>Grown, not built.</h1>
+          <h1>{f(hero.title)}</h1>
           <p className="cap">
-            Rooted in nature.
-            <br />
-            Built for what’s next.
+            {f(hero.caption1)}
+            {hero.caption2 ? <br /> : null}
+            {f(hero.caption2)}
           </p>
-          <a
-            className="go"
-            href="#work"
-            id="go"
-            aria-label="See our work"
-            onPointerEnter={() => {
-              if (!activeSection) engineRef.current?.startHoverTransition();
-            }}
-            onPointerLeave={() => {
-              if (!activeSection) engineRef.current?.stopHoverTransition();
-            }}
-            onClick={(e) => openSection('work', e)}
-          >
-            <svg viewBox="0 0 24 24">
-              <path d="M4 12h16M14 6l6 6-6 6" />
-            </svg>
-          </a>
+          {opens && (
+            <a
+              className="go"
+              href={`#${opens}`}
+              id="go"
+              aria-label={f(hero.button)}
+              onPointerEnter={() => {
+                if (!activeSection) engineRef.current?.startHoverTransition();
+              }}
+              onPointerLeave={() => {
+                if (!activeSection) engineRef.current?.stopHoverTransition();
+              }}
+              onClick={(e) => openSection(opens, e)}
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M4 12h16M14 6l6 6-6 6" />
+              </svg>
+            </a>
+          )}
         </section>
 
         {activeSection && (
@@ -198,165 +232,93 @@ export default function App() {
             }}
           >
             <div className="sheet-panel">
-              <div className="flex items-center justify-between gap-6 border-b border-[#f5efe2]/15 pb-5 mb-7">
-                <span className="text-xs font-medium uppercase tracking-[0.18em] text-[#f5efe2]/70">
-                  {activeSection === 'work' && 'Selected Work'}
-                  {activeSection === 'about' && 'About Fernhollow'}
-                  {activeSection === 'journal' && 'Field Journal'}
-                  {activeSection === 'talk' && 'Start a Conversation'}
+              <div className="sheet-head">
+                <span className="sheet-kicker">
+                  {activeSection === 'work' && f(work.label)}
+                  {activeSection === 'about' && f(about.label)}
+                  {activeSection === 'journal' && f(journal.label)}
+                  {activeSection === 'contact' && f(contact.label)}
                 </span>
-                <button
-                  type="button"
-                  onClick={() => setActiveSection(null)}
-                  className="text-xs font-medium uppercase tracking-[0.16em] text-[#f5efe2]/80 hover:text-[#f5efe2] transition-opacity px-3 py-1.5 border border-[#f5efe2]/25 rounded-full"
-                >
-                  Close
+                <button type="button" onClick={() => setActiveSection(null)} className="sheet-close">
+                  {f(nav.close || 'Close')}
                 </button>
               </div>
 
               {activeSection === 'work' && (
-                <div className="space-y-6">
-                  {WORK_ITEMS.map((item) => (
-                    <article
-                      key={item.title}
-                      className="border-b border-[#f5efe2]/10 pb-5 last:border-b-0 last:pb-0"
-                    >
-                      <div className="flex flex-wrap items-baseline justify-between gap-2 mb-1.5">
-                        <h2
-                          className="text-2xl tracking-tight text-[#f5efe2]"
-                          style={{ fontFamily: 'Antonio, sans-serif' }}
-                        >
-                          {item.title}
+                <div className="sheet-list">
+                  {(work.items || []).map((item: XP, i: number) => (
+                    <article key={i} className="sheet-item">
+                      <div className="sheet-row">
+                        <h2 className="sheet-title">
+                          <Linked href={item.link}>{f(item.title)}</Linked>
                         </h2>
-                        <span className="text-xs text-[#f5efe2]/60 tabular-nums">
-                          {item.discipline} · {item.year}
+                        <span className="sheet-meta">
+                          {[item.discipline, item.year].filter(Boolean).map(f).join(' · ')}
                         </span>
                       </div>
-                      <p className="text-sm leading-relaxed text-[#f5efe2]/80">
-                        {item.summary}
-                      </p>
+                      <p className="sheet-text">{f(item.summary)}</p>
                     </article>
                   ))}
                 </div>
               )}
 
               {activeSection === 'about' && (
-                <div className="space-y-5">
-                  <h2
-                    className="text-4xl leading-none text-[#f5efe2]"
-                    style={{ fontFamily: 'Antonio, sans-serif' }}
-                  >
-                    Regenerative craft for living digital ecosystems.
-                  </h2>
-                  <p className="text-sm leading-relaxed text-[#f5efe2]/80">
-                    Fernhollow is an independent regenerative design studio partnering with
-                    ecological research initiatives, climate pioneers, and cultural
-                    institutions. We treat every digital space like a cultivated habitat—lightweight,
-                    adaptive, and attuned to natural rhythms.
-                  </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-[#f5efe2]/15 text-xs text-[#f5efe2]/75">
-                    <div>
-                      <div className="uppercase tracking-[0.16em] text-[#f5efe2]/50 mb-1">
-                        Practice
-                      </div>
-                      <div>Spatial Web &amp; Ecological Systems</div>
+                <div className="sheet-stack">
+                  <h2 className="sheet-big">{f(about.title)}</h2>
+                  <p className="sheet-text">{f(about.text)}</p>
+                  {(about.facts || []).length > 0 && (
+                    <div className="sheet-facts">
+                      {(about.facts || []).map((x: XP, i: number) => (
+                        <div key={i}>
+                          <div className="sheet-fact-label">{f(x.label)}</div>
+                          <div>{f(x.value)}</div>
+                        </div>
+                      ))}
                     </div>
-                    <div>
-                      <div className="uppercase tracking-[0.16em] text-[#f5efe2]/50 mb-1">
-                        Ethos
-                      </div>
-                      <div>Low-carbon, open botanical data</div>
-                    </div>
-                    <div>
-                      <div className="uppercase tracking-[0.16em] text-[#f5efe2]/50 mb-1">
-                        Studio
-                      </div>
-                      <div>Tāmaki Makaurau · Remote</div>
-                    </div>
-                  </div>
+                  )}
                 </div>
               )}
 
               {activeSection === 'journal' && (
-                <div className="space-y-6">
-                  {JOURNAL_ENTRIES.map((entry) => (
-                    <article
-                      key={entry.title}
-                      className="border-b border-[#f5efe2]/10 pb-5 last:border-b-0 last:pb-0"
-                    >
-                      <div className="text-xs uppercase tracking-[0.16em] text-[#f5efe2]/55 mb-1.5">
-                        {entry.date}
-                      </div>
-                      <h2
-                        className="text-2xl text-[#f5efe2] mb-2"
-                        style={{ fontFamily: 'Antonio, sans-serif' }}
-                      >
-                        {entry.title}
+                <div className="sheet-list">
+                  {(journal.entries || []).map((entry: XP, i: number) => (
+                    <article key={i} className="sheet-item">
+                      <div className="sheet-date">{f(entry.date)}</div>
+                      <h2 className="sheet-title">
+                        <Linked href={entry.link}>{f(entry.title)}</Linked>
                       </h2>
-                      <p className="text-sm leading-relaxed text-[#f5efe2]/80">
-                        {entry.excerpt}
-                      </p>
+                      <p className="sheet-text">{f(entry.excerpt)}</p>
                     </article>
                   ))}
                 </div>
               )}
 
-              {activeSection === 'talk' && (
+              {activeSection === 'contact' && (
                 <div>
                   {inquirySent ? (
-                    <div className="py-6 space-y-3">
-                      <h2
-                        className="text-3xl text-[#f5efe2]"
-                        style={{ fontFamily: 'Antonio, sans-serif' }}
-                      >
-                        Note received.
-                      </h2>
-                      <p className="text-sm text-[#f5efe2]/80">
-                        Thank you for reaching out to Fernhollow. We will reply within two
-                        working days.
-                      </p>
+                    <div className="sheet-thanks">
+                      <h2 className="sheet-mid">{f(contact.thanksTitle)}</h2>
+                      <p className="sheet-text">{f(contact.thanksText)}</p>
                     </div>
                   ) : (
-                    <form onSubmit={handleSubmitInquiry} className="space-y-4">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <label className="block text-xs uppercase tracking-[0.14em] text-[#f5efe2]/70">
-                          Name
-                          <input
-                            type="text"
-                            required
-                            value={inquiryName}
-                            onChange={(e) => setInquiryName(e.target.value)}
-                            placeholder="Your name"
-                            className="mt-2 w-full bg-transparent border border-[#f5efe2]/25 px-3.5 py-2.5 text-sm text-[#f5efe2] placeholder:text-[#f5efe2]/35 focus:outline-none focus:border-[#f5efe2]"
-                          />
+                    <form onSubmit={handleSubmitInquiry} className="sheet-form">
+                      <div className="sheet-two">
+                        <label className="sheet-label">
+                          {f(contact.nameLabel)}
+                          <input type="text" required value={inquiryName} onChange={(e) => setInquiryName(e.target.value)} placeholder={f(contact.namePlaceholder)} />
                         </label>
-                        <label className="block text-xs uppercase tracking-[0.14em] text-[#f5efe2]/70">
-                          Email
-                          <input
-                            type="email"
-                            required
-                            value={inquiryEmail}
-                            onChange={(e) => setInquiryEmail(e.target.value)}
-                            placeholder="you@domain.com"
-                            className="mt-2 w-full bg-transparent border border-[#f5efe2]/25 px-3.5 py-2.5 text-sm text-[#f5efe2] placeholder:text-[#f5efe2]/35 focus:outline-none focus:border-[#f5efe2]"
-                          />
+                        <label className="sheet-label">
+                          {f(contact.emailLabel)}
+                          <input type="email" required value={inquiryEmail} onChange={(e) => setInquiryEmail(e.target.value)} placeholder={f(contact.emailPlaceholder)} />
                         </label>
                       </div>
-                      <label className="block text-xs uppercase tracking-[0.14em] text-[#f5efe2]/70">
-                        Project Note
-                        <textarea
-                          rows={3}
-                          value={inquiryNote}
-                          onChange={(e) => setInquiryNote(e.target.value)}
-                          placeholder="Tell us what you are growing..."
-                          className="mt-2 w-full bg-transparent border border-[#f5efe2]/25 px-3.5 py-2.5 text-sm text-[#f5efe2] placeholder:text-[#f5efe2]/35 focus:outline-none focus:border-[#f5efe2]"
-                        />
+                      <label className="sheet-label">
+                        {f(contact.noteLabel)}
+                        <textarea rows={3} value={inquiryNote} onChange={(e) => setInquiryNote(e.target.value)} placeholder={f(contact.notePlaceholder)} />
                       </label>
-                      <button
-                        type="submit"
-                        className="inline-flex items-center px-6 py-2.5 rounded-full bg-[#f5efe2] text-[#151510] text-xs font-medium uppercase tracking-[0.16em] hover:opacity-90 transition-opacity"
-                      >
-                        Send message
+                      {sendError && <p className="sheet-error">{sendError}</p>}
+                      <button type="submit" className="sheet-send">
+                        {f(contact.button)}
                       </button>
                     </form>
                   )}
@@ -367,22 +329,19 @@ export default function App() {
         )}
 
         <div className="corner">
-          <span>Scroll to wander</span>
-          <i />
-          <button
-            className="sound"
-            id="sound"
-            type="button"
-            aria-pressed={soundPlaying}
-            aria-label="Ambient sound"
-            onClick={handleToggleSound}
-          >
-            <svg viewBox="0 0 24 24">
-              <path d="M4 9.5v5h3.5L12 18V6L7.5 9.5Z" />
-              <path className="w" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" />
-              <path className="x" d="m16 10 4 4m0-4-4 4" />
-            </svg>
-          </button>
+          <span>{f(hero.hint)}</span>
+          {data.sound?.enabled !== false && hero.showSoundButton !== false && (
+            <>
+              <i />
+              <button className="sound" id="sound" type="button" aria-pressed={soundPlaying} aria-label="Ambient sound" onClick={handleToggleSound}>
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 9.5v5h3.5L12 18V6L7.5 9.5Z" />
+                  <path className="w" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" />
+                  <path className="x" d="m16 10 4 4m0-4-4 4" />
+                </svg>
+              </button>
+            </>
+          )}
         </div>
       </div>
 

@@ -49,6 +49,9 @@ export default function Topbar({ children }: { children?: React.ReactNode }) {
             <Link href="/sites" aria-current={path === "/sites" ? "page" : undefined}>
               Your sites
             </Link>
+            <Link href="/templates" aria-current={path === "/templates" ? "page" : undefined}>
+              Templates
+            </Link>
             <Link href="/#scenes">Scenes</Link>
             <Link href="/#how">How it works</Link>
           </nav>

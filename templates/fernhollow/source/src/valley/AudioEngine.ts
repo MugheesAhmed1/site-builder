@@ -1,4 +1,27 @@
+/** The ambient sound a template user can change (content.json "sound"). */
+export interface SoundOptions {
+  enabled: boolean;
+  volume: number;
+  mood: 'night' | 'warm' | 'airy';
+  wind: number;
+}
+
+export const DEFAULT_SOUND: SoundOptions = { enabled: true, volume: 0.36, mood: 'night', wind: 0.35 };
+
+const MOODS: Record<SoundOptions['mood'], number[]> = {
+  // D minor 9th / F#m atmospheric voicing
+  night: [73.42, 110.0, 146.83, 185.0, 220.0, 277.18, 329.63],
+  // D major add 9
+  warm: [73.42, 110.0, 146.83, 185.0, 220.0, 329.63, 369.99],
+  // open fifths, high and light
+  airy: [110.0, 164.81, 220.0, 246.94, 329.63, 440.0, 493.88],
+};
+
 export class AudioEngine {
+  private o: SoundOptions;
+  constructor(options: Partial<SoundOptions> = {}) {
+    this.o = { ...DEFAULT_SOUND, ...options };
+  }
   private ctx: AudioContext | null = null;
   private masterGain: GainNode | null = null;
   private muffleFilter: BiquadFilterNode | null = null;
@@ -46,7 +69,7 @@ export class AudioEngine {
     this.muffleFilter = muffleFilter;
 
     // Warm nocturnal harmonic pad (D minor 9th / F#m atmospheric voicing)
-    const freqs = [73.42, 110.0, 146.83, 185.0, 220.0, 277.18, 329.63];
+    const freqs = MOODS[this.o.mood] || MOODS.night;
     const gains = [0.22, 0.16, 0.14, 0.08, 0.09, 0.045, 0.04];
 
     freqs.forEach((freq, idx) => {
@@ -121,7 +144,7 @@ export class AudioEngine {
     windLfoGain.connect(windFilter.frequency);
 
     const windGain = ctx.createGain();
-    windGain.gain.value = 0.35;
+    windGain.gain.value = Math.max(0, Math.min(1, this.o.wind));
 
     noise.connect(windFilter);
     windFilter.connect(windGain);
@@ -149,7 +172,7 @@ export class AudioEngine {
     const now = this.ctx.currentTime;
     this.masterGain.gain.cancelScheduledValues(now);
     this.masterGain.gain.setValueAtTime(this.masterGain.gain.value, now);
-    this.masterGain.gain.linearRampToValueAtTime(this.isMuted ? 0 : 0.36, now + 0.85);
+    this.masterGain.gain.linearRampToValueAtTime(this.isMuted ? 0 : Math.max(0, Math.min(1, this.o.volume)), now + 0.85);
 
     return this.isMuted;
   }

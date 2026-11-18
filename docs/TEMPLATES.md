@@ -1,6 +1,8 @@
 # Imported templates
 
-Whole projects someone hands over (a `.zip` of a site or app) become templates in the builder. Each one keeps its own code, look and motion; a person using it changes its words and pictures (its *slots*), watches the change live, then downloads the finished site or its source.
+Whole projects someone hands over (a `.zip` of a site or app) become **templates**, not copies. A template keeps its code, look and motion, but reads everything it shows from one content object, and the builder gives a person a field for every part of it: words, lists, pictures, video, links, colours, fonts, which sections show, and motion. They see each change live, then download the finished site or its source with their content in place.
+
+Every template is also filed under the **business types** it suits (the builder's own categories in `lib/categories.ts`), so people can browse by business at `/templates` and in the Experience Gallery.
 
 Mossline and Fernhollow were the first two (2026-11-18).
 
@@ -12,45 +14,56 @@ Mossline and Fernhollow were the first two (2026-11-18).
    npm run import-template -- path/to/project.zip --owner "Owner name"
    ```
 
-   The archive is treated as untrusted data and nothing in it is run. The importer refuses paths that leave the folder, links and archives over 80 MB unpacked; it drops `node_modules`, build output, `.git`, lockfiles and every `.env` file; it unwraps a single top folder; it removes dependencies no file imports (for example an AI SDK the page never calls); and for a page that runs as it is (no `<script type="module" src=…>`), it drops the app scaffolding around it. The project lands in `templates/<id>/source`, with a drafted `templates/<id>/template.json`.
+   The archive is treated as untrusted data and nothing in it is run. The importer refuses paths that leave the folder, links and archives over 80 MB unpacked; it drops `node_modules`, build output, `.git`, lockfiles and every `.env` file; it unwraps a single top folder; it removes dependencies no file imports (for example an AI SDK the page never calls); and for a page that runs as it is (no `<script type="module" src=…>`), it drops the app scaffolding around it. The project lands in `templates/<id>/source`, with a drafted `template.json` and `content.json`. A draft is left out of the site until step 3 is done.
 
-2. **Edit `template.json`.** The draft names the business, the description and the headings it found. Add the rest of the words people will want to change, pick categories (the Experience Gallery's: Cinematic, 3D, Interactive, Scroll, Characters, WebGL, Editorial, Playful, Product, Experimental), features, and `heavy: true` for real WebGL. Remove `"draft": true`.
+2. **Understand the project and file it.** Read it through: what does the business do, who is it for, what does each section say? Then set in `template.json`:
 
-   A slot's `default` is the exact text as it appears in the files. Words wrapped over several lines in JSX still match. Avoid defaults that contain HTML entities (`&amp;`): use a neighbouring piece of text instead. A picture slot (`"type": "image"`) holds the picture's address and accepts only `https://` or site-relative addresses.
+   - `business`: the business types it suits, best fit first, as ids from `lib/categories.ts` (`food`, `beauty`, `fitness`, `health`, `agency`, `consulting`, `photo`, `property`, `product`, `shop`, `nonprofit`, `events`, `dentist`, `hospital`, `creator`, `law`, `school`, `hotel`, `trades`, `auto`, `pets`). The first one is shown on its card. The build refuses unknown ids.
+   - `sector`: one line on the kind of business it was made for (for example "Climate tech and environmental data").
+   - `categories`: gallery styles (Cinematic, 3D, Interactive, Scroll, Characters, WebGL, Editorial, Playful, Product, Experimental), `features`, `intensity`, and `heavy: true` for real WebGL.
 
-3. **Build and check.**
+3. **Make it a template.** This is the real work, and it is what makes it a template rather than a copy.
+
+   - Write `content.json`: every word, list (projects, cards, stats, links), picture, video, link, colour, font, section switch and motion setting the page uses, with the project's own values as the defaults. Use `{name}` for the business name inside text and `{year}` for the current year.
+   - Change the project so it reads all of it from `window.__XP__` and nothing is hard-coded. `index.html` must load `<script src="./xp-content.js"></script>` in `<head>` (for a Vite app it lives in `public/`). Colours become CSS variables `--c-<name>`, fonts `--f-<role>` (load Google Fonts on demand), numbers `--n-<name>`. Sections switched off are not rendered. Lists render however many items there are. Links pass a safe-address check (http(s), mailto, tel, `#`, `/`, `./`), and text is escaped.
+   - In preview mode (`window.__XP_PREVIEW__`), prefer `window.__XP_HASH__` when set, post `{type: "xp-ready"}` to the parent once listening, and redraw on `{type: "xp-data", data}` from the parent. Keep expensive work (a WebGL scene, decoded video frames) and rebuild it only when its own settings change.
+   - Add a `schema` to `template.json`: groups of fields, each with a `path` into the content, a `label`, a `type` and optional `hint`. Types: `text`, `textarea`, `url`, `image`, `video` (both accept an address or an upload), `color`, `colors` (a list of colours), `font` (any Google Fonts family), `number` (`min`, `max`, `step`), `toggle`, `select` (`options`), and `list` (`fields` for one item, `min`, `max`, `itemLabel`). Remove `"draft": true`.
+
+   `lib/template-schema.mjs` has the contract. Fernhollow (`src/xp.ts`, `src/App.tsx`) and Mossline (`index.html`, `render()` and `start()`/`stop()`) are worked examples of each kind.
+
+4. **Build and check.**
 
    ```
    npm run templates
    ```
 
-   This builds every template into `public/tpl/<id>` and registers it in `lib/templates.gen.json`. It fails if a slot is missing from the source or the built site, if a one-word slot could hit a name in the code, or if a dependency is not installed in the builder or not under an open licence. Templates written with Tailwind build with the builder's pinned Tailwind.
+   This builds every template into `public/tpl/<id>` and registers it in `lib/templates.gen.json`. It fails if any value in `content.json` has no field (so nothing is left uneditable), if a field points at nothing or holds the wrong type, if a business type is unknown, if `index.html` does not load `xp-content.js`, or if a dependency is not installed in the builder or not under an open licence. Then open `/templates/<id>`, change one field in every group and watch the preview follow.
 
-4. **Optional poster.** Heavy templates show `templates/<id>/poster.webp` (960 × 600) in the gallery until someone hovers or taps the card. Light ones play live.
+5. **Optional poster.** Heavy templates show `templates/<id>/poster.webp` (960 × 600) in the gallery until someone hovers or taps the card. Light ones play live.
 
-5. Commit `templates/<id>` and `lib/templates.gen.json`. `public/tpl` is built on every deploy.
+6. Commit `templates/<id>` and `lib/templates.gen.json`. `public/tpl` is built on every deploy.
 
 ## How it works
 
 | Piece | File |
 | --- | --- |
 | Importer | `scripts/import-template.mjs` |
+| Content contract: schema checks, `xp-content.js`, uploads to `media/` | `lib/template-schema.mjs` (shared by the build and the builder) |
 | Build, checks and registry | `scripts/build-templates.mjs` → `public/tpl/<id>/{site,source,files.json}`, `lib/templates.gen.json` |
-| Replacing slots with the right escaping (HTML, JS string, JSX text, JSX attribute, JSON) | `lib/template-apply.mjs` (shared by the build and the builder) |
-| Preview bridge (only in `preview.html`, never in a download) | `scripts/template-bridge.js` |
-| Registry, preview address, downloads | `lib/templates.ts` |
-| Template studio at `/templates/<id>` | `components/templates/TemplateStudio.tsx` |
-| Gallery cards ("Templates" category) | `components/home/ExperienceGallery.tsx` |
+| Registry, preview address, saved content, downloads | `lib/templates.ts` |
+| Template studio at `/templates/<id>` (a field for every schema entry) | `components/templates/TemplateStudio.tsx` |
+| Templates by business type at `/templates` (`?business=agency`) | `components/templates/TemplateIndex.tsx` |
+| Gallery cards, style and business-type filters | `components/home/ExperienceGallery.tsx` |
 
-- **Preview.** The studio frames `public/tpl/<id>/site/preview.html`, sandboxed without same-origin access, so a template's code cannot read the builder's saved projects. The replacements travel in the address when the frame loads (the bridge applies them before the page's own inline scripts run, so scripts that split words see the new ones) and by message as the person types.
-- **Downloads.** "Download site" zips the built files, "Download source" the project, both with the replacements written in and a README. Values are kept in the browser per template.
+- **Preview.** The studio frames `public/tpl/<id>/site/preview.html` (the built page with preview mode switched on), sandboxed without same-origin access, so a template's code cannot read the builder's saved projects. The content travels in the address when the frame loads (uploads excepted) and by message as the person edits.
+- **Downloads.** "Download site" zips the built files and "Download source" the project, each with the person's `xp-content.js`, their uploads under `media/`, and a README that says where to change things. Content is kept in the browser per template; big uploads may be too large to keep, and the studio says so.
 - **Headers.** Only `/tpl/*` may be framed, and only by the builder itself (`X-Frame-Options: SAMEORIGIN`, `frame-ancestors 'self'`); it allows cross-origin reads because the sandboxed frame's module scripts are cross-origin requests.
 
 ## Licences
 
-Templates are recorded in the licence register as `owner-supplied`: the holder in `template.json` supplied the project to be used as a builder template. Their libraries must still be open licences (checked at build). Pictures and video a template loads from other hosts are listed in `remoteAssets`; the studio warns about them and the downloaded README lists them so they can be copied in before launch.
+Templates are recorded in the licence register as `owner-supplied`: the holder in `template.json` supplied the project to be used as a builder template. Their libraries must still be open licences (checked at build). Pictures and video the default content loads from other hosts are listed in `remoteAssets`; the downloaded README lists any still in use so they can be copied in before launch, and people can upload their own in the studio.
 
-## Notes on the first two
+## The first two
 
-- **Mossline** is one HTML page with its own scroll engine: a scroll-scrubbed video, layered parallax, fog, hotspots and a counting card. Its six pictures and the video are the owner's Higgsfield generations, loaded from Higgsfield's CDN. The cloud build machines cannot reach that CDN, so they are not copied into the repository yet; including them in the zip (for example under `public/media/`) makes them part of the template.
-- **Fernhollow** is a Vite + React + three.js app: a procedural night valley with bloom, grain, ambient Web Audio and a drawer for work, about, journal and contact. Its unused AI SDK, server and animation dependencies were dropped on import.
+- **Mossline**, filed under *App, SaaS or startup* (also consultants and nonprofits): a climate-tech and environmental data company that measures carbon and biodiversity. One HTML page with its own scroll engine: a scroll-scrubbed video, layered parallax, fog, hotspots, a proof card with a chart, solution cards, counting numbers and a contact section. Everything (including the menu, hotspot positions, chart, cards, colours, fonts, story length and each effect) is in its schema. Its pictures and video are the owner's Higgsfield generations on Higgsfield's CDN, which the cloud build machines cannot reach; people replace them by uploading their own.
+- **Fernhollow**, filed under *Marketing or design agency* (also photographers and creatives, consultants): a regenerative design studio's portfolio. A Vite + React + three.js app: a procedural night valley with bloom, grain, ambient Web Audio and a drawer for work, about, journal and contact. Projects, facts and journal entries are lists; the valley's sky, fog, flower and leaf colours, counts, bloom, grain and motion, the sound's mood and volume, and where the contact form sends are all fields.

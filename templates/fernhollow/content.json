@@ -1,0 +1,139 @@
+{
+  "seo": {
+    "title": "{name}",
+    "description": "A regenerative design studio. Wander through a night valley of flowers that grows as you move."
+  },
+  "brand": {
+    "name": "Fernhollow"
+  },
+  "nav": {
+    "work": "Work",
+    "about": "About",
+    "journal": "Journal",
+    "cta": "Let’s talk",
+    "close": "Close"
+  },
+  "sections": {
+    "work": true,
+    "about": true,
+    "journal": true,
+    "contact": true
+  },
+  "hero": {
+    "title": "Grown, not built.",
+    "caption1": "Rooted in nature.",
+    "caption2": "Built for what’s next.",
+    "button": "See our work",
+    "opens": "work",
+    "hint": "Scroll to wander",
+    "showSoundButton": true
+  },
+  "work": {
+    "label": "Selected Work",
+    "items": [
+      {
+        "title": "Kauri Watershed Atlas",
+        "discipline": "Ecological Mapping · Spatial Web",
+        "year": "2026",
+        "summary": "Interactive catchment telemetry and living forest restoration archive built for Aotearoa watershed stewards.",
+        "link": ""
+      },
+      {
+        "title": "Mycelium Material Index",
+        "discipline": "Design System · Tactile Archive",
+        "year": "2025",
+        "summary": "Open-source material library cataloging regenerative mycelium composites, lifecycle carbon data, and tactile acoustics.",
+        "link": ""
+      },
+      {
+        "title": "Solstice Seed Commons",
+        "discipline": "Brand Identity · Digital Platform",
+        "year": "2025",
+        "summary": "Community seed-saving network connecting regional botanical growers with heritage alpine and meadow cultivars.",
+        "link": ""
+      }
+    ]
+  },
+  "about": {
+    "label": "About {name}",
+    "title": "Regenerative craft for living digital ecosystems.",
+    "text": "{name} is an independent regenerative design studio partnering with ecological research initiatives, climate pioneers, and cultural institutions. We treat every digital space like a cultivated habitat—lightweight, adaptive, and attuned to natural rhythms.",
+    "facts": [
+      { "label": "Practice", "value": "Spatial Web & Ecological Systems" },
+      { "label": "Ethos", "value": "Low-carbon, open botanical data" },
+      { "label": "Studio", "value": "Tāmaki Makaurau · Remote" }
+    ]
+  },
+  "journal": {
+    "label": "Field Journal",
+    "entries": [
+      {
+        "date": "Autumn 2026",
+        "title": "Software that ages like timber, not plastic",
+        "excerpt": "Notes on low-energy rendering, patient motion curves, and interfaces designed to stay legible for decades.",
+        "link": ""
+      },
+      {
+        "date": "Winter 2026",
+        "title": "Listening to nocturnal pollinators in coastal valleys",
+        "excerpt": "Field recordings and light-level studies informing our dark-first botanical visual language.",
+        "link": ""
+      }
+    ]
+  },
+  "contact": {
+    "label": "Start a Conversation",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@domain.com",
+    "noteLabel": "Project Note",
+    "notePlaceholder": "Tell us what you are growing...",
+    "button": "Send message",
+    "thanksTitle": "Note received.",
+    "thanksText": "Thank you for reaching out to {name}. We will reply within two working days.",
+    "email": "",
+    "formAction": ""
+  },
+  "theme": {
+    "colors": {
+      "text": "#f5efe2",
+      "buttonText": "#151510",
+      "background": "#000000",
+      "panel": "#0b0d0b"
+    },
+    "fonts": {
+      "display": "Antonio",
+      "body": "Manrope"
+    },
+    "headlineSize": 158,
+    "pillRadius": 99
+  },
+  "valley": {
+    "sky": "#030508",
+    "fog": "#04070b",
+    "fogDensity": 0.022,
+    "flowers": ["#f5efe2", "#f6e6c9", "#e6c2b8", "#b6bfe8", "#9dd6c3", "#f0c888"],
+    "leaves": ["#132820", "#1b362b", "#254437", "#182a31"],
+    "glow": "#f5e6c2",
+    "rays": true,
+    "rayColor": "#cfdcf0",
+    "stars": 450,
+    "starColor": "#dbe2f0",
+    "flowerCount": 15000,
+    "leafCount": 10000,
+    "dust": 1400,
+    "bloom": 0.58,
+    "grain": 0.045,
+    "vignette": 0.44,
+    "drift": 1,
+    "wander": 1,
+    "sway": 1
+  },
+  "sound": {
+    "enabled": true,
+    "volume": 0.36,
+    "mood": "night",
+    "wind": 0.35
+  }
+}

@@ -1,58 +1,62 @@
-import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import JSZip from "jszip";
 import { describe, expect, it } from "vitest";
-import { applyToText, cleanUrl, occurrences, plan, slotProblems } from "@/lib/template-apply.mjs";
+import { contentScript, countChanges, extractMedia, getPath, schemaProblems, setPath, type SchemaGroup } from "@/lib/template-schema.mjs";
 import { TEMPLATES } from "@/lib/templates";
-import { cleanEntryName, detectKind, draftSlots, pruneDependencies, readArchive } from "@/scripts/import-template.mjs";
+import { CATEGORIES } from "@/lib/categories";
+import { cleanEntryName, detectKind, draftContent, pruneDependencies, readArchive } from "@/scripts/import-template.mjs";
 
-const slot = (d: string, extra = {}) => ({ key: "k", label: "K", default: d, ...extra });
+const schema = [
+  {
+    group: "G",
+    fields: [
+      { path: "brand.name", label: "Name", type: "text" as const },
+      { path: "theme.ink", label: "Ink", type: "color" as const },
+      { path: "items", label: "Items", type: "list" as const, fields: [{ path: "title", label: "Title", type: "text" as const }, { path: "n", label: "N", type: "number" as const, min: 0, max: 9 }] },
+    ],
+  },
+];
+const content = { brand: { name: "Moss" }, theme: { ink: "#112233" }, items: [{ title: "A", n: 1 }] };
 
-describe("applying template slots", () => {
-  it("escapes for HTML text and attributes", () => {
-    const r = plan([slot("Mossline")], { k: `Tom & "Jerry" <b>` });
-    expect(applyToText("index.html", "<title>Mossline</title>", r)).toBe("<title>Tom &amp; &quot;Jerry&quot; &lt;b&gt;</title>");
+describe("template schema and content", () => {
+  it("accepts a schema that covers every value", () => {
+    expect(schemaProblems(schema, content)).toEqual([]);
   });
 
-  it("escapes for JS strings inside an HTML script", () => {
-    const r = plan([slot("Mossline")], { k: `a'b"c` });
-    const out = applyToText("index.html", `<script>const n = 'Mossline';</script>`, r);
-    expect(out).toBe(`<script>const n = 'a\\u0027b\\u0022c';</script>`);
-    expect(new Function(out.slice(8, -9) + "; return n;")()).toBe(`a'b"c`);
+  it("flags values with no field, missing values and wrong types", () => {
+    const errs = schemaProblems(schema, { ...content, extra: { word: "x" }, theme: { ink: "red" }, items: [{ title: "A", n: 12, more: 1 }] });
+    expect(errs.join("\n")).toMatch(/extra\.word is in content\.json but has no field/);
+    expect(errs.join("\n")).toMatch(/theme\.ink: color field needs a #rrggbb colour/);
+    expect(errs.join("\n")).toMatch(/items\[0\]\.n: 12 is outside 0 to 9/);
+    expect(errs.join("\n")).toMatch(/items\[0\]\.more has no field/);
+    expect(schemaProblems(schema, { theme: { ink: "#000000" }, items: [] }).join("\n")).toMatch(/brand\.name is not in content\.json/);
   });
 
-  it("uses entities in JSX text and JSX attributes, escapes in JS strings", () => {
-    const r = plan([slot("Fernhollow")], { k: "A{b}<c>" });
-    const src = `const t = 'About Fernhollow';\n<a aria-label="Fernhollow">Fernhollow</a>`;
-    const out = applyToText("App.tsx", src, r);
-    expect(out).toContain(`aria-label="A{b}&lt;c&gt;"`);
-    expect(out).toContain(`>A&#123;b&#125;&lt;c&gt;</a>`);
-    expect(out).toContain(`'About A\\u007bb\\u007d\\u003cc\\u003e'`);
+  it("sets and reads nested values without changing the original", () => {
+    const next = setPath(content, "brand.name", "Fern");
+    expect(getPath(next, "brand.name")).toBe("Fern");
+    expect(content.brand.name).toBe("Moss");
   });
 
-  it("matches words wrapped over several lines", () => {
-    const r = plan([slot("one two three")], { k: "new" });
-    expect(applyToText("App.tsx", "<p>\n  one two\n  three\n</p>", r)).toBe("<p>\n  new\n</p>");
-    expect(occurrences("one\n two  three", "one two three")).toHaveLength(1);
+  it("writes a content script that cannot close its script tag", () => {
+    const js = contentScript({ a: "</script><script>alert(1)</script>" });
+    expect(js).not.toContain("</script>");
+    const w: { __XP__?: { a: string } } = {};
+    new Function("window", js)(w);
+    expect(w.__XP__?.a).toBe("</script><script>alert(1)</script>");
   });
 
-  it("replaces longer defaults first and skips unchanged values", () => {
-    const r = plan([slot("Moss", { key: "a" }), slot("Moss line", { key: "b" })], { a: "X", b: "Moss line" });
-    expect(r.map((x) => x.key)).toEqual(["a"]);
-    const both = plan([slot("Moss", { key: "a" }), slot("Moss line", { key: "b" })], { a: "X", b: "Y" });
-    expect(applyToText("a.html", "Moss line and Moss", both)).toBe("Y and X");
+  it("moves uploads out into media files and reuses repeats", () => {
+    const pic = "data:image/png;base64,iVBORw0KGgo=";
+    const { content: c, files } = extractMedia({ a: pic, b: [pic, "https://x.test/p.png"], v: "data:video/mp4;base64,AAAA" });
+    expect(c).toEqual({ a: "./media/upload-1.png", b: ["./media/upload-1.png", "https://x.test/p.png"], v: "./media/upload-2.mp4" });
+    expect(files.map((f) => f.path)).toEqual(["media/upload-1.png", "media/upload-2.mp4"]);
   });
 
-  it("accepts only https or site-relative picture addresses", () => {
-    expect(cleanUrl("javascript:alert(1)")).toBe("");
-    expect(cleanUrl("http://x.test/a.png")).toBe("");
-    expect(cleanUrl("https://x.test/a'b.png")).toBe("https://x.test/a%27b.png");
-    expect(cleanUrl("./media/pic.webp")).toBe("./media/pic.webp");
-  });
-
-  it("flags a slot that would hit code, not text", () => {
-    expect(slotProblems("a.js", "const Title=1;", slot("Title"))).toHaveLength(1);
-    expect(slotProblems("a.js", 'x("Title")', slot("Title"))).toHaveLength(0);
+  it("counts changes", () => {
+    expect(countChanges(content, content)).toBe(0);
+    expect(countChanges(setPath(setPath(content, "brand.name", "X"), "theme.ink", "#000000"), content)).toBe(2);
   });
 });
 
@@ -76,7 +80,10 @@ describe("importing a project zip", () => {
     expect(Object.keys(files).sort()).toEqual(["index.html", "package.json", "src/main.tsx"]);
     expect(detectKind(files)).toBe("vite");
     expect(pruneDependencies(files).removed).toEqual(["@google/genai"]);
-    expect(draftSlots(files, "Proj").map((s: { default: string }) => s.default)).toEqual(["Proj", "Hello there"]);
+    const draft = draftContent(files, "Proj");
+    expect(draft.content.brand.name).toBe("Proj");
+    expect(draft.content.words).toEqual({ heading1: "Hello there" });
+    expect(schemaProblems(draft.schema as SchemaGroup[], draft.content)).toEqual([]);
   });
 });
 
@@ -86,15 +93,22 @@ describe("registered templates", () => {
   });
 
   for (const t of TEMPLATES) {
-    it(`${t.id}: every slot is in its source`, () => {
-      const dir = join(process.cwd(), "templates", t.id, "source");
-      const walk = (d: string): string[] => readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(join(d, e.name)) : [join(d, e.name)]));
-      const texts = walk(dir)
-        .filter((p) => /\.(html|tsx?|css)$/.test(p))
-        .map((p) => readFileSync(p, "utf8"));
-      for (const s of t.slots) expect(texts.some((x) => occurrences(x, s.default).length), s.key).toBe(true);
+    it(`${t.id}: every value has a field, and it is filed under real business types`, () => {
+      const dir = join(process.cwd(), "templates", t.id);
+      const c = JSON.parse(readFileSync(join(dir, "content.json"), "utf8"));
+      expect(schemaProblems(t.schema, c)).toEqual([]);
+      expect(t.content).toEqual(c);
+      expect(t.business.length).toBeGreaterThan(0);
+      for (const b of t.business) expect(CATEGORIES.some((x) => x.id === b), b).toBe(true);
+      expect(t.sector).toBeTruthy();
       expect(t.licence.holder).toBeTruthy();
-      expect(existsSync(join(dir, ".env"))).toBe(false);
+      expect(existsSync(join(dir, "source", ".env"))).toBe(false);
+      expect(readFileSync(join(dir, "source", "index.html"), "utf8")).toContain('<script src="./xp-content.js"></script>');
     });
   }
+
+  it("files Mossline as a product (climate data) site and Fernhollow as a studio", () => {
+    expect(TEMPLATES.find((t) => t.id === "mossline")?.business[0]).toBe("product");
+    expect(TEMPLATES.find((t) => t.id === "fernhollow")?.business[0]).toBe("agency");
+  });
 });
