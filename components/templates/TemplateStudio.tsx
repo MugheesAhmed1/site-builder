@@ -279,7 +279,22 @@ function Field({ f, value, set, sample, onError }: { f: SchemaField; value: any;
             </details>
           ))}
           {items.length < max && (
-            <button type="button" className="btn btn-sm tpl-add" onClick={() => set([...items, blankItem(f, (sample as Record<string, unknown>[] | undefined)?.[0] ?? items[0])])}>
+            <button
+              type="button"
+              className="btn btn-sm tpl-add"
+              onClick={(e) => {
+                const box = e.currentTarget.parentElement;
+                set([...items, blankItem(f, (sample as Record<string, unknown>[] | undefined)?.[0] ?? items[0])]);
+                // Open the new item and put the cursor in it, so the person sees what was added.
+                requestAnimationFrame(() => {
+                  const all = box?.querySelectorAll<HTMLDetailsElement>(":scope > details");
+                  const last = all?.[all.length - 1];
+                  if (!last) return;
+                  last.open = true;
+                  last.querySelector<HTMLElement>("input, textarea")?.focus();
+                });
+              }}
+            >
               Add {(f.itemLabel || "item").toLowerCase()}
             </button>
           )}

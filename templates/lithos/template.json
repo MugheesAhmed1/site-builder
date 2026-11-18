@@ -22,10 +22,7 @@
     "note": "Supplied by its owner as a whole project for use as a builder template.",
     "added": "2026-11-18"
   },
-  "remoteAssets": [
-    "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_195923_b0ba8ace-1d1d-4f2c-9a28-1ab84b330680.png&w=1280&q=85",
-    "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_201152_bba90a12-bf12-459f-91f0-51f237dbaf3b.png&w=1280&q=85"
-  ],
+  "remoteAssets": [],
   "features": [
     "Cursor spotlight reveal",
     "Two pictures",
@@ -133,6 +130,299 @@
           "path": "hero.revealImage",
           "label": "Picture the spotlight reveals",
           "type": "image"
+        }
+      ]
+    },
+    {
+      "group": "Sections",
+      "fields": [
+        {
+          "path": "sections.course",
+          "label": "Course",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.guides",
+          "label": "Field guides",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.geology",
+          "label": "Geology layers",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.plans",
+          "label": "Plans",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.tour",
+          "label": "Live tour",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.footer",
+          "label": "Footer",
+          "type": "toggle"
+        }
+      ]
+    },
+    {
+      "group": "Course",
+      "fields": [
+        {
+          "path": "course.kicker",
+          "label": "Small heading",
+          "type": "text"
+        },
+        {
+          "path": "course.title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "course.text",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "course.chapters",
+          "label": "Chapters",
+          "type": "list",
+          "itemLabel": "Chapter",
+          "min": 0,
+          "max": 12,
+          "fields": [
+            {
+              "path": "title",
+              "label": "Title",
+              "type": "text"
+            },
+            {
+              "path": "text",
+              "label": "Text",
+              "type": "textarea"
+            },
+            {
+              "path": "length",
+              "label": "Length",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Field guides",
+      "fields": [
+        {
+          "path": "guides.kicker",
+          "label": "Small heading",
+          "type": "text"
+        },
+        {
+          "path": "guides.title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "guides.text",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "guides.items",
+          "label": "Guides",
+          "type": "list",
+          "itemLabel": "Guide",
+          "min": 0,
+          "max": 9,
+          "fields": [
+            {
+              "path": "tag",
+              "label": "Tag",
+              "type": "text"
+            },
+            {
+              "path": "title",
+              "label": "Title",
+              "type": "text"
+            },
+            {
+              "path": "text",
+              "label": "Text",
+              "type": "textarea"
+            },
+            {
+              "path": "image",
+              "label": "Picture",
+              "type": "image"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Geology layers",
+      "fields": [
+        {
+          "path": "geology.kicker",
+          "label": "Small heading",
+          "type": "text"
+        },
+        {
+          "path": "geology.title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "geology.text",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "geology.layers",
+          "label": "Layers (top first)",
+          "type": "list",
+          "itemLabel": "Layer",
+          "min": 1,
+          "max": 10,
+          "fields": [
+            {
+              "path": "name",
+              "label": "Name",
+              "type": "text"
+            },
+            {
+              "path": "age",
+              "label": "Age",
+              "type": "text"
+            },
+            {
+              "path": "color",
+              "label": "Colour",
+              "type": "color"
+            },
+            {
+              "path": "thickness",
+              "label": "Thickness",
+              "type": "number",
+              "min": 1,
+              "max": 6,
+              "step": 1
+            },
+            {
+              "path": "text",
+              "label": "Text",
+              "type": "textarea"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Plans",
+      "fields": [
+        {
+          "path": "plans.kicker",
+          "label": "Small heading",
+          "type": "text"
+        },
+        {
+          "path": "plans.title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "plans.text",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "plans.tiers",
+          "label": "Plans",
+          "type": "list",
+          "itemLabel": "Plan",
+          "min": 0,
+          "max": 4,
+          "fields": [
+            {
+              "path": "name",
+              "label": "Name",
+              "type": "text"
+            },
+            {
+              "path": "price",
+              "label": "Price",
+              "type": "text"
+            },
+            {
+              "path": "period",
+              "label": "Per",
+              "type": "text"
+            },
+            {
+              "path": "features",
+              "label": "Features (one per line)",
+              "type": "textarea"
+            },
+            {
+              "path": "button",
+              "label": "Button (opens sign-up)",
+              "type": "text"
+            },
+            {
+              "path": "featured",
+              "label": "Highlight this plan",
+              "type": "toggle"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Live tour",
+      "fields": [
+        {
+          "path": "tour.kicker",
+          "label": "Small heading",
+          "type": "text"
+        },
+        {
+          "path": "tour.title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "tour.text",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "tour.button",
+          "label": "Button (opens sign-up)",
+          "type": "text"
+        },
+        {
+          "path": "tour.image",
+          "label": "Background picture",
+          "type": "image"
+        }
+      ]
+    },
+    {
+      "group": "Footer",
+      "fields": [
+        {
+          "path": "footer.left",
+          "label": "Left text",
+          "type": "text"
+        },
+        {
+          "path": "footer.right",
+          "label": "Right text",
+          "type": "text"
         }
       ]
     },

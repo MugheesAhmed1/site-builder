@@ -23,14 +23,7 @@
       "note": "Supplied by its owner as a whole project for use as a builder template.",
       "added": "2026-11-18"
     },
-    "remoteAssets": [
-      "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/0e201fcd-ffc0-46a0-bd06-faa07bf0e84b.webp",
-      "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/2bebad68-8177-446a-9550-d64074166364.webp",
-      "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/e80ba08d-d7b6-4b27-b0cd-8d0ad09c788c.webp",
-      "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/62b0d7c1-3eb7-44bd-9b19-57b975fb250f.webp",
-      "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/156ff74d-ee37-4443-8f3a-11ae2095ed4c.webp",
-      "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/7b6ad638-89ec-4dec-be74-d36fbff3ea53.webp"
-    ],
+    "remoteAssets": [],
     "features": [
       "Draggable before-and-after belt",
       "Particle scanner",
@@ -645,7 +638,7 @@
             "text": "",
             "rows": "200x | stronger\n87% | lower emissions",
             "button": "",
-            "image": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/0e201fcd-ffc0-46a0-bd06-faa07bf0e84b.webp",
+            "image": "./media/home.webp",
             "image2": "",
             "image3": "",
             "address": "kessler.co/",
@@ -681,7 +674,7 @@
             "text": "",
             "rows": "34% | lighter track\n3.4x | service life\n0 | unplanned closures",
             "button": "",
-            "image": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/2bebad68-8177-446a-9550-d64074166364.webp",
+            "image": "./media/case.webp",
             "image2": "",
             "image3": "",
             "address": "kessler.co/cases/atlas-rail",
@@ -699,8 +692,8 @@
             "text": "How {site} pours alloy\nat the edge of the desert",
             "rows": "",
             "button": "",
-            "image": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/e80ba08d-d7b6-4b27-b0cd-8d0ad09c788c.webp",
-            "image2": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/62b0d7c1-3eb7-44bd-9b19-57b975fb250f.webp",
+            "image": "./media/vision1.webp",
+            "image2": "./media/vision2.webp",
             "image3": "",
             "address": "kessler.co/vision",
             "original": 55870,
@@ -717,7 +710,7 @@
             "text": "",
             "rows": "Product | K-Alloy 7\nTensile | 1,940 MPa\nDatasheet | PDF ↗",
             "button": "",
-            "image": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/156ff74d-ee37-4443-8f3a-11ae2095ed4c.webp",
+            "image": "./media/alloy.webp",
             "image2": "",
             "image3": "",
             "address": "kessler.co/products/k-alloy-7",
@@ -735,9 +728,9 @@
             "text": "",
             "rows": "FIELD NOTES | Mining nothing but light on the salt flats\nPLANTS | Atacama, year one\nPROCESS | Why we melt sand at noon",
             "button": "",
-            "image": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/7b6ad638-89ec-4dec-be74-d36fbff3ea53.webp",
-            "image2": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/62b0d7c1-3eb7-44bd-9b19-57b975fb250f.webp",
-            "image3": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/0e201fcd-ffc0-46a0-bd06-faa07bf0e84b.webp",
+            "image": "./media/j1.webp",
+            "image2": "./media/j2.webp",
+            "image3": "./media/j3.webp",
             "address": "kessler.co/journal",
             "original": 47316,
             "distilled": 7602,
@@ -811,8 +804,8 @@
       "extras": []
     },
     "poster": false,
-    "siteFiles": 4,
-    "sourceFiles": 12
+    "siteFiles": 12,
+    "sourceFiles": 20
   },
   {
     "id": "fernhollow",
@@ -1620,17 +1613,7 @@
       "note": "Supplied by its owner as a whole project for use as a builder template.",
       "added": "2026-11-18"
     },
-    "remoteAssets": [
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85"
-    ],
+    "remoteAssets": [],
     "refusedAssets": {
       "note": "Left out: preview GIFs of other studios' sites (motionsites.ai) and pictures from a third-party Figma site. They are not the owner's to reuse. Replaced with free generated pictures (Pollinations) in source/public/media and the owner's own Higgsfield renders.",
       "urls": [
@@ -2236,36 +2219,36 @@
         "label": "3D and motion showcase reel",
         "row1": [
           {
-            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85"
+            "image": "./media/reel-1.webp"
           },
           {
-            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85"
+            "image": "./media/reel-2.webp"
           },
           {
-            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85"
+            "image": "./media/reel-3.webp"
           },
           {
-            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85"
+            "image": "./media/reel-4.webp"
           },
           {
-            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85"
+            "image": "./media/reel-5.webp"
           }
         ],
         "row2": [
           {
-            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85"
+            "image": "./media/reel-6.webp"
           },
           {
-            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85"
+            "image": "./media/reel-7.webp"
           },
           {
-            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85"
+            "image": "./media/reel-8.webp"
           },
           {
-            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85"
+            "image": "./media/reel-9.webp"
           },
           {
-            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85"
+            "image": "./media/reel-10.webp"
           }
         ]
       },
@@ -2318,9 +2301,9 @@
             "year": "2026",
             "summary": "Complete 3D visual direction, custom spatial scenes, and interactive web experience crafted to position Nextlevel Studio as a standout digital production house.",
             "deliverables": "3D Environment Modeling, Octane Rendering, Interactive Web UI",
-            "image1": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85",
-            "image2": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85",
-            "image3": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85",
+            "image1": "./media/project-1a.webp",
+            "image2": "./media/project-1b.webp",
+            "image3": "./media/project-1c.webp",
             "link": ""
           },
           {
@@ -2330,9 +2313,9 @@
             "year": "2026",
             "summary": "Sculptural material exploration and brand identity system blending iridescent glass shaders, bespoke packaging renders, and editorial motion typography.",
             "deliverables": "Brand Identity System, Shader & Material Lookdev, Motion Graphics",
-            "image1": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85",
-            "image2": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85",
-            "image3": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85",
+            "image1": "./media/project-2a.webp",
+            "image2": "./media/project-2b.webp",
+            "image3": "./media/project-2c.webp",
             "link": ""
           },
           {
@@ -2342,9 +2325,9 @@
             "year": "2026",
             "summary": "Photorealistic architectural lighting studies and high-conversion web flagship designed around kinetic 3D hero visuals and precision grid geometry.",
             "deliverables": "3D Product Visualization, Web Design, Art Direction",
-            "image1": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85",
-            "image2": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85",
-            "image3": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85",
+            "image1": "./media/project-3a.webp",
+            "image2": "./media/project-3b.webp",
+            "image3": "./media/project-3c.webp",
             "link": ""
           }
         ]
@@ -2397,8 +2380,8 @@
       "extras": []
     },
     "poster": false,
-    "siteFiles": 9,
-    "sourceFiles": 29
+    "siteFiles": 28,
+    "sourceFiles": 48
   },
   {
     "id": "lithos",
@@ -2424,10 +2407,7 @@
       "note": "Supplied by its owner as a whole project for use as a builder template.",
       "added": "2026-11-18"
     },
-    "remoteAssets": [
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_195923_b0ba8ace-1d1d-4f2c-9a28-1ab84b330680.png&w=1280&q=85",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_201152_bba90a12-bf12-459f-91f0-51f237dbaf3b.png&w=1280&q=85"
-    ],
+    "remoteAssets": [],
     "features": [
       "Cursor spotlight reveal",
       "Two pictures",
@@ -2535,6 +2515,299 @@
             "path": "hero.revealImage",
             "label": "Picture the spotlight reveals",
             "type": "image"
+          }
+        ]
+      },
+      {
+        "group": "Sections",
+        "fields": [
+          {
+            "path": "sections.course",
+            "label": "Course",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.guides",
+            "label": "Field guides",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.geology",
+            "label": "Geology layers",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.plans",
+            "label": "Plans",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.tour",
+            "label": "Live tour",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.footer",
+            "label": "Footer",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Course",
+        "fields": [
+          {
+            "path": "course.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "course.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "course.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "course.chapters",
+            "label": "Chapters",
+            "type": "list",
+            "itemLabel": "Chapter",
+            "min": 0,
+            "max": 12,
+            "fields": [
+              {
+                "path": "title",
+                "label": "Title",
+                "type": "text"
+              },
+              {
+                "path": "text",
+                "label": "Text",
+                "type": "textarea"
+              },
+              {
+                "path": "length",
+                "label": "Length",
+                "type": "text"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Field guides",
+        "fields": [
+          {
+            "path": "guides.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "guides.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "guides.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "guides.items",
+            "label": "Guides",
+            "type": "list",
+            "itemLabel": "Guide",
+            "min": 0,
+            "max": 9,
+            "fields": [
+              {
+                "path": "tag",
+                "label": "Tag",
+                "type": "text"
+              },
+              {
+                "path": "title",
+                "label": "Title",
+                "type": "text"
+              },
+              {
+                "path": "text",
+                "label": "Text",
+                "type": "textarea"
+              },
+              {
+                "path": "image",
+                "label": "Picture",
+                "type": "image"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Geology layers",
+        "fields": [
+          {
+            "path": "geology.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "geology.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "geology.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "geology.layers",
+            "label": "Layers (top first)",
+            "type": "list",
+            "itemLabel": "Layer",
+            "min": 1,
+            "max": 10,
+            "fields": [
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "age",
+                "label": "Age",
+                "type": "text"
+              },
+              {
+                "path": "color",
+                "label": "Colour",
+                "type": "color"
+              },
+              {
+                "path": "thickness",
+                "label": "Thickness",
+                "type": "number",
+                "min": 1,
+                "max": 6,
+                "step": 1
+              },
+              {
+                "path": "text",
+                "label": "Text",
+                "type": "textarea"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Plans",
+        "fields": [
+          {
+            "path": "plans.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "plans.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "plans.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "plans.tiers",
+            "label": "Plans",
+            "type": "list",
+            "itemLabel": "Plan",
+            "min": 0,
+            "max": 4,
+            "fields": [
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "price",
+                "label": "Price",
+                "type": "text"
+              },
+              {
+                "path": "period",
+                "label": "Per",
+                "type": "text"
+              },
+              {
+                "path": "features",
+                "label": "Features (one per line)",
+                "type": "textarea"
+              },
+              {
+                "path": "button",
+                "label": "Button (opens sign-up)",
+                "type": "text"
+              },
+              {
+                "path": "featured",
+                "label": "Highlight this plan",
+                "type": "toggle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Live tour",
+        "fields": [
+          {
+            "path": "tour.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "tour.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "tour.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "tour.button",
+            "label": "Button (opens sign-up)",
+            "type": "text"
+          },
+          {
+            "path": "tour.image",
+            "label": "Background picture",
+            "type": "image"
+          }
+        ]
+      },
+      {
+        "group": "Footer",
+        "fields": [
+          {
+            "path": "footer.left",
+            "label": "Left text",
+            "type": "text"
+          },
+          {
+            "path": "footer.right",
+            "label": "Right text",
+            "type": "text"
           }
         ]
       },
@@ -2764,23 +3037,23 @@
         "links": [
           {
             "label": "Course",
-            "href": "#top"
+            "href": "#course"
           },
           {
             "label": "Field Guides",
-            "href": "#top"
+            "href": "#guides"
           },
           {
             "label": "Geology",
-            "href": "#top"
+            "href": "#geology"
           },
           {
             "label": "Plans",
-            "href": "#top"
+            "href": "#plans"
           },
           {
             "label": "Live Tour",
-            "href": "#top"
+            "href": "#tour"
           }
         ],
         "cta": "Sign Up"
@@ -2791,9 +3064,165 @@
         "left": "Every layer of sediment records a chapter of our planet, from ancient seabeds to drifting ash, layered across millions of years beneath us.",
         "right": "Our interactive maps let you peel back the crust to trace how stones, fossils, and deep time combine to shape the ground beneath your feet.",
         "button": "Start Digging",
-        "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_195923_b0ba8ace-1d1d-4f2c-9a28-1ab84b330680.png&w=1280&q=85",
+        "image": "./media/surface.webp",
         "imageAlt": "Layered rock face",
-        "revealImage": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_201152_bba90a12-bf12-459f-91f0-51f237dbaf3b.png&w=1280&q=85"
+        "revealImage": "./media/strata.webp"
+      },
+      "sections": {
+        "course": true,
+        "guides": true,
+        "geology": true,
+        "plans": true,
+        "tour": true,
+        "footer": true
+      },
+      "course": {
+        "kicker": "The course",
+        "title": "Read the ground like a book",
+        "text": "Eight short chapters take you from a pebble in your hand to four billion years of Earth history. Watch, then dig into each layer on the map.",
+        "chapters": [
+          {
+            "title": "How layers form",
+            "text": "Rivers, seas and volcanoes lay down sediment grain by grain. See how a single flood becomes a band of rock.",
+            "length": "12 min"
+          },
+          {
+            "title": "Reading a rock face",
+            "text": "Colour, grain size and fossils tell you where a layer came from and how old it is.",
+            "length": "18 min"
+          },
+          {
+            "title": "Deep time",
+            "text": "Put millions of years into a scale you can feel, from the first cells to last week's mud.",
+            "length": "15 min"
+          },
+          {
+            "title": "Faults and folds",
+            "text": "Why layers tilt, break and bend, and what that says about the forces underneath.",
+            "length": "20 min"
+          },
+          {
+            "title": "Fossils as clocks",
+            "text": "Use index fossils to date a layer in the field without a lab.",
+            "length": "16 min"
+          }
+        ]
+      },
+      "guides": {
+        "kicker": "Field guides",
+        "title": "Pocket guides for the trail",
+        "text": "Download a guide, take it offline and match what you see on the cliff to what is in your hand.",
+        "items": [
+          {
+            "tag": "Fossils",
+            "title": "Ammonites and shells",
+            "text": "Spot, name and date the most common marine fossils in limestone.",
+            "image": "./media/guide-fossils.webp"
+          },
+          {
+            "tag": "Minerals",
+            "title": "Crystals and ores",
+            "text": "Tell quartz from calcite with a scratch, a drop and a lens.",
+            "image": "./media/guide-minerals.webp"
+          },
+          {
+            "tag": "Landscapes",
+            "title": "Canyons and cliffs",
+            "text": "Read a whole valley wall from the viewpoint, layer by layer.",
+            "image": "./media/guide-canyons.webp"
+          }
+        ]
+      },
+      "geology": {
+        "kicker": "Geology",
+        "title": "Peel back the crust",
+        "text": "Point at a layer to see what it is made of and how long ago it was laid down.",
+        "layers": [
+          {
+            "name": "Topsoil and loess",
+            "age": "0 – 10 ka",
+            "color": "#6b5a43",
+            "thickness": 1,
+            "text": "Wind-blown dust and roots: the youngest layer, still forming today."
+          },
+          {
+            "name": "Glacial till",
+            "age": "10 – 120 ka",
+            "color": "#8b8172",
+            "thickness": 2,
+            "text": "Unsorted clay and boulders dropped by melting ice sheets."
+          },
+          {
+            "name": "Chalk and limestone",
+            "age": "66 – 145 Ma",
+            "color": "#cdbf9f",
+            "thickness": 3,
+            "text": "The shells of countless sea creatures, pressed into white rock with ammonites inside."
+          },
+          {
+            "name": "Red sandstone",
+            "age": "200 – 250 Ma",
+            "color": "#a6503a",
+            "thickness": 3,
+            "text": "Ancient desert dunes, still showing the slant of the wind that built them."
+          },
+          {
+            "name": "Volcanic ash band",
+            "age": "300 Ma",
+            "color": "#3f3b3a",
+            "thickness": 1,
+            "text": "A single eruption, a few centimetres thick, that dates everything around it."
+          },
+          {
+            "name": "Granite basement",
+            "age": "1.7 Ga",
+            "color": "#7c6f73",
+            "thickness": 2,
+            "text": "Crystalline rock that cooled deep underground before any of the layers above existed."
+          }
+        ]
+      },
+      "plans": {
+        "kicker": "Plans",
+        "title": "Choose how deep you go",
+        "text": "Start free. Upgrade when you want offline guides and live tours.",
+        "tiers": [
+          {
+            "name": "Explorer",
+            "price": "Free",
+            "period": "",
+            "features": "Two course chapters\nThe interactive strata map\nOne field guide",
+            "button": "Start free",
+            "featured": false
+          },
+          {
+            "name": "Field",
+            "price": "$9",
+            "period": "/ month",
+            "features": "Every course chapter\nAll field guides, offline\nMonthly live tour",
+            "button": "Join Field",
+            "featured": true
+          },
+          {
+            "name": "Classroom",
+            "price": "$49",
+            "period": "/ month",
+            "features": "Up to 30 students\nLesson plans and quizzes\nPrivate live tours",
+            "button": "Talk to us",
+            "featured": false
+          }
+        ]
+      },
+      "tour": {
+        "kicker": "Live tour",
+        "title": "Walk a canyon with a geologist",
+        "text": "Every month we stream a live walk along a real rock face. Ask questions as we go and keep the recording.",
+        "button": "Save my spot",
+        "image": "./media/tour.webp"
+      },
+      "footer": {
+        "left": "© {year} {name}. All rights reserved.",
+        "right": "Made for curious minds and muddy boots."
       },
       "explore": {
         "kicker": "Strata Column",
@@ -2855,8 +3284,8 @@
       "extras": []
     },
     "poster": false,
-    "siteFiles": 4,
-    "sourceFiles": 12
+    "siteFiles": 10,
+    "sourceFiles": 19
   },
   {
     "id": "milo",
@@ -3879,14 +4308,7 @@
       "note": "Supplied by its owner as a whole project for use as a builder template.",
       "added": "2026-11-18"
     },
-    "remoteAssets": [
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_031618_8ce6dca1-972d-429d-8d13-bf0691c37848.png&w=2400&q=88",
-      "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261106_025717_906b686d-9a9a-4dea-bab4-ae2454f8390e.mp4",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_031657_baaa3380-5ece-482a-a623-a1838fd7653c.png&w=2400&q=90",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025635_82593f6a-1cf7-41c1-94ac-96fb89ebfd1a.png&w=2400&q=85",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025630_9a37a1e0-2547-4973-8160-c75205993914.png&w=1400&q=82",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025545_b003e5cc-e68f-4fee-b686-c217a5d81eea.png&w=1400&q=82"
-    ],
+    "remoteAssets": [],
     "features": [
       "Scroll-scrubbed video",
       "Layered parallax",
@@ -4529,11 +4951,11 @@
         "hint": "SCROLL TO EXPLORE",
         "hudChip": "Biodiversity",
         "hudLines": "LAT  34.0922° N\nLON 116.2432° W\nELEV 842 M",
-        "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_031618_8ce6dca1-972d-429d-8d13-bf0691c37848.png&w=2400&q=88",
+        "image": "./media/plate.webp",
         "imageAlt": "Floating moss island",
-        "frontImage": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_031657_baaa3380-5ece-482a-a623-a1838fd7653c.png&w=2400&q=90",
-        "video": "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261106_025717_906b686d-9a9a-4dea-bab4-ae2454f8390e.mp4",
-        "rockImage": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025635_82593f6a-1cf7-41c1-94ac-96fb89ebfd1a.png&w=2400&q=85",
+        "frontImage": "",
+        "video": "./media/push.mp4",
+        "rockImage": "",
         "rockCrop": true
       },
       "vision": {
@@ -4607,7 +5029,7 @@
             "tag": "[Nature-based solutions]",
             "title": "Forest & peatland\ncarbon projects",
             "text": "Continuous flux measurement replaces sampled estimates, so credits reflect what the land actually absorbs.",
-            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025630_9a37a1e0-2547-4973-8160-c75205993914.png&w=1400&q=82",
+            "image": "./media/card-1.webp",
             "focus": "22% 70%",
             "zoom": 260,
             "href": ""
@@ -4616,7 +5038,7 @@
             "tag": "[Supply chain solutions]",
             "title": "Scope 3 sourcing\nverification",
             "text": "Trace commodities to the plots that grew them, with deforestation-free evidence attached to every shipment.",
-            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025545_b003e5cc-e68f-4fee-b686-c217a5d81eea.png&w=1400&q=82",
+            "image": "./media/card-2.webp",
             "focus": "50% 50%",
             "zoom": 190,
             "href": ""
@@ -4625,7 +5047,7 @@
             "tag": "[Biodiversity credits]",
             "title": "Living species\nbaselines",
             "text": "Acoustic and eDNA monitoring builds a measurable biodiversity baseline you can report against year over year.",
-            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025630_9a37a1e0-2547-4973-8160-c75205993914.png&w=1400&q=82",
+            "image": "./media/card-3.webp",
             "focus": "62% 30%",
             "zoom": 230,
             "href": ""
@@ -4694,8 +5116,8 @@
       "extras": []
     },
     "poster": false,
-    "siteFiles": 2,
-    "sourceFiles": 2
+    "siteFiles": 7,
+    "sourceFiles": 7
   },
   {
     "id": "stride",
@@ -5353,6 +5775,6 @@
     },
     "poster": false,
     "siteFiles": 10,
-    "sourceFiles": 16
+    "sourceFiles": 17
   }
 ]
