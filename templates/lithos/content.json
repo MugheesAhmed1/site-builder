@@ -1,0 +1,103 @@
+{
+  "seo": {
+    "title": "{name} — Layers Hold Tales of Time",
+    "description": "Explore the deep history of Earth's crust through interactive geological strata maps and field guides."
+  },
+  "brand": {
+    "name": "Lithos",
+    "showMark": true
+  },
+  "nav": {
+    "links": [
+      {
+        "label": "Course",
+        "href": "#top"
+      },
+      {
+        "label": "Field Guides",
+        "href": "#top"
+      },
+      {
+        "label": "Geology",
+        "href": "#top"
+      },
+      {
+        "label": "Plans",
+        "href": "#top"
+      },
+      {
+        "label": "Live Tour",
+        "href": "#top"
+      }
+    ],
+    "cta": "Sign Up"
+  },
+  "hero": {
+    "line1": "Layers hold",
+    "line2": "tales of time",
+    "left": "Every layer of sediment records a chapter of our planet, from ancient seabeds to drifting ash, layered across millions of years beneath us.",
+    "right": "Our interactive maps let you peel back the crust to trace how stones, fossils, and deep time combine to shape the ground beneath your feet.",
+    "button": "Start Digging",
+    "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_195923_b0ba8ace-1d1d-4f2c-9a28-1ab84b330680.png&w=1280&q=85",
+    "imageAlt": "Layered rock face",
+    "revealImage": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_201152_bba90a12-bf12-459f-91f0-51f237dbaf3b.png&w=1280&q=85"
+  },
+  "explore": {
+    "kicker": "Strata Column",
+    "title": "Core Sample 04 — Colorado Plateau",
+    "text": "Select a horizon to inspect mineral density, fossil indices, and depositional timelines.",
+    "layers": [
+      {
+        "name": "Holocene & Quaternary",
+        "detail": "0 – 45 m",
+        "text": "Alluvial silt, wind-blown loess, glacial till"
+      },
+      {
+        "name": "Mesozoic Limestone",
+        "detail": "45 – 320 m",
+        "text": "Calcite seabeds, ammonite fossils, chert nodules"
+      },
+      {
+        "name": "Paleozoic Sandstone",
+        "detail": "320 – 890 m",
+        "text": "Cross-bedded quartz grains, volcanic ash bands"
+      }
+    ],
+    "button": "Return to Map Spotlight"
+  },
+  "signup": {
+    "kicker": "Field Access",
+    "title": "Join {name}",
+    "text": "Unlock interactive stratigraphic cross-sections, offline field guides, and live geological tours.",
+    "label": "Email address",
+    "placeholder": "geologist@fieldnotes.org",
+    "button": "Create Account",
+    "thanksTitle": "You're on the list",
+    "thanksText": "We've reserved field guide access for you.",
+    "email": "",
+    "formAction": ""
+  },
+  "theme": {
+    "colors": {
+      "accent": "#e8702a",
+      "accentHover": "#d2611f",
+      "text": "#ffffff",
+      "page": "#000000",
+      "panel": "#0a0a0a",
+      "button": "#ffffff",
+      "buttonText": "#111827"
+    },
+    "fonts": {
+      "display": "Playfair Display",
+      "body": "Inter"
+    },
+    "headlineSize": 96
+  },
+  "motion": {
+    "spotlight": 260,
+    "follow": 0.1,
+    "zoomIn": true,
+    "entrance": true
+  },
+  "extras": []
+}

@@ -1,0 +1,744 @@
+{
+  "id": "milo",
+  "name": "Milo",
+  "pitch": "A deep-ocean 3D portfolio: a live WebGL sea you descend through as you scroll, a giant gradient opening, a blurred line-by-line about, big hover-lit services, a sideways gallery of live 3D project worlds you can orbit, and a magnetic contact call.",
+  "kind": "vite",
+  "categories": [
+    "3D",
+    "WebGL",
+    "Cinematic",
+    "Scroll",
+    "Interactive"
+  ],
+  "business": [
+    "creator",
+    "agency",
+    "photo"
+  ],
+  "sector": "3D artist and digital world builder portfolio (environments, motion, art direction, interactive web)",
+  "intensity": 8,
+  "heavy": true,
+  "licence": {
+    "kind": "owner",
+    "holder": "Mughees",
+    "note": "Supplied by its owner as a whole project for use as a builder template.",
+    "added": "2026-11-18"
+  },
+  "remoteAssets": [],
+  "features": [
+    "Live WebGL ocean you descend through",
+    "Orbitable 3D project worlds",
+    "Sideways scroll gallery",
+    "Line-by-line blur reveal",
+    "Custom cursor",
+    "Magnetic button",
+    "Commission form"
+  ],
+  "schema": [
+    {
+      "group": "Business",
+      "fields": [
+        {
+          "path": "brand.name",
+          "label": "Your name",
+          "type": "text",
+          "hint": "Fills every {name} in the text below."
+        },
+        {
+          "path": "seo.title",
+          "label": "Page title (search and browser tab)",
+          "type": "text"
+        },
+        {
+          "path": "seo.description",
+          "label": "Short description (search and sharing)",
+          "type": "textarea"
+        },
+        {
+          "path": "brand.mark",
+          "label": "Logo text",
+          "type": "text",
+          "hint": "Shown in the menu bar, e.g. MILO®."
+        },
+        {
+          "path": "brand.tagline",
+          "label": "Tagline (menu)",
+          "type": "text"
+        },
+        {
+          "path": "brand.email",
+          "label": "Email",
+          "type": "text",
+          "hint": "Shown in contact and used for the form when no form service is set."
+        }
+      ]
+    },
+    {
+      "group": "Sections",
+      "fields": [
+        {
+          "path": "sections.hero",
+          "label": "Opening",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.descent",
+          "label": "Descent line",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.about",
+          "label": "About",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.services",
+          "label": "Services",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.projects",
+          "label": "Projects",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.contact",
+          "label": "Contact",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.footer",
+          "label": "Footer",
+          "type": "toggle"
+        }
+      ]
+    },
+    {
+      "group": "Menu",
+      "fields": [
+        {
+          "path": "nav.world",
+          "label": "Depth counter label",
+          "type": "text"
+        },
+        {
+          "path": "nav.menu",
+          "label": "Menu button",
+          "type": "text"
+        },
+        {
+          "path": "nav.close",
+          "label": "Close button",
+          "type": "text"
+        },
+        {
+          "path": "nav.chaptersTitle",
+          "label": "Chapters title",
+          "type": "text"
+        },
+        {
+          "path": "nav.worksTitle",
+          "label": "Projects title",
+          "type": "text"
+        },
+        {
+          "path": "nav.chapters",
+          "label": "Chapters",
+          "type": "list",
+          "itemLabel": "Chapter",
+          "fields": [
+            {
+              "path": "label",
+              "label": "Label",
+              "type": "text"
+            },
+            {
+              "path": "target",
+              "label": "Goes to",
+              "type": "select",
+              "options": [
+                {
+                  "value": "surface",
+                  "label": "Surface"
+                },
+                {
+                  "value": "descent",
+                  "label": "Descent"
+                },
+                {
+                  "value": "creator",
+                  "label": "Creator"
+                },
+                {
+                  "value": "services",
+                  "label": "Services"
+                },
+                {
+                  "value": "projects",
+                  "label": "Projects"
+                },
+                {
+                  "value": "contact",
+                  "label": "Contact"
+                }
+              ]
+            }
+          ],
+          "min": 0,
+          "max": 8
+        }
+      ]
+    },
+    {
+      "group": "Opening",
+      "fields": [
+        {
+          "path": "hero.label",
+          "label": "Small label",
+          "type": "text"
+        },
+        {
+          "path": "hero.kicker",
+          "label": "Word above the headline",
+          "type": "text"
+        },
+        {
+          "path": "hero.line1",
+          "label": "Headline, line 1",
+          "type": "text"
+        },
+        {
+          "path": "hero.line2",
+          "label": "Headline, line 2 (gradient)",
+          "type": "text"
+        },
+        {
+          "path": "hero.text",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "hero.scrollHint",
+          "label": "Scroll hint",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Descent",
+      "fields": [
+        {
+          "path": "descent.kicker",
+          "label": "Small label",
+          "type": "text"
+        },
+        {
+          "path": "descent.line1",
+          "label": "Line 1",
+          "type": "text"
+        },
+        {
+          "path": "descent.line2",
+          "label": "Line 2 (accent)",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "About",
+      "fields": [
+        {
+          "path": "about.number",
+          "label": "Big number",
+          "type": "text"
+        },
+        {
+          "path": "about.label",
+          "label": "Label",
+          "type": "text"
+        },
+        {
+          "path": "about.text",
+          "label": "Text (each line reveals in turn)",
+          "type": "textarea"
+        },
+        {
+          "path": "about.stats",
+          "label": "Numbers",
+          "type": "list",
+          "itemLabel": "Number",
+          "fields": [
+            {
+              "path": "value",
+              "label": "Value",
+              "type": "text"
+            },
+            {
+              "path": "label",
+              "label": "Label",
+              "type": "text"
+            }
+          ],
+          "min": 0,
+          "max": 6
+        }
+      ]
+    },
+    {
+      "group": "Services",
+      "fields": [
+        {
+          "path": "services.label",
+          "label": "Small label",
+          "type": "text"
+        },
+        {
+          "path": "services.title",
+          "label": "Title (one line per row)",
+          "type": "textarea"
+        },
+        {
+          "path": "services.items",
+          "label": "Services",
+          "type": "list",
+          "itemLabel": "Service",
+          "fields": [
+            {
+              "path": "title",
+              "label": "Name",
+              "type": "text"
+            },
+            {
+              "path": "description",
+              "label": "Description",
+              "type": "textarea"
+            }
+          ],
+          "min": 0,
+          "max": 12
+        }
+      ]
+    },
+    {
+      "group": "Projects",
+      "fields": [
+        {
+          "path": "projects.label",
+          "label": "Small label",
+          "type": "text"
+        },
+        {
+          "path": "projects.title",
+          "label": "Title (one line per row; the last is gradient)",
+          "type": "textarea"
+        },
+        {
+          "path": "projects.view",
+          "label": "View button",
+          "type": "text"
+        },
+        {
+          "path": "projects.clientLabel",
+          "label": "Client label",
+          "type": "text"
+        },
+        {
+          "path": "projects.roleLabel",
+          "label": "Role label",
+          "type": "text"
+        },
+        {
+          "path": "projects.deliverablesLabel",
+          "label": "Deliverables label",
+          "type": "text"
+        },
+        {
+          "path": "projects.commission",
+          "label": "Commission button",
+          "type": "text"
+        },
+        {
+          "path": "projects.inquirePrefix",
+          "label": "Form note before the project's name",
+          "type": "text"
+        },
+        {
+          "path": "projects.orbitHint",
+          "label": "3D hint",
+          "type": "text"
+        },
+        {
+          "path": "projects.items",
+          "label": "Projects",
+          "type": "list",
+          "itemLabel": "Project",
+          "fields": [
+            {
+              "path": "title",
+              "label": "Title",
+              "type": "text"
+            },
+            {
+              "path": "category",
+              "label": "Category",
+              "type": "text"
+            },
+            {
+              "path": "year",
+              "label": "Year",
+              "type": "text"
+            },
+            {
+              "path": "scene",
+              "label": "3D world",
+              "type": "select",
+              "options": [
+                {
+                  "value": "abyss",
+                  "label": "Abyss (glowing deep-sea flora)"
+                },
+                {
+                  "value": "orbital",
+                  "label": "Orbital (floating rings)"
+                },
+                {
+                  "value": "tideline",
+                  "label": "Tideline (liquid metal waves)"
+                },
+                {
+                  "value": "echo",
+                  "label": "Echo (sound rings)"
+                }
+              ]
+            },
+            {
+              "path": "description",
+              "label": "Short description",
+              "type": "textarea"
+            },
+            {
+              "path": "client",
+              "label": "Client",
+              "type": "text"
+            },
+            {
+              "path": "role",
+              "label": "Role",
+              "type": "text"
+            },
+            {
+              "path": "deliverables",
+              "label": "Deliverables (one per line)",
+              "type": "textarea"
+            },
+            {
+              "path": "narrative",
+              "label": "Story",
+              "type": "textarea"
+            },
+            {
+              "path": "primary",
+              "label": "Placeholder colour, dark",
+              "type": "color"
+            },
+            {
+              "path": "secondary",
+              "label": "Placeholder colour, light",
+              "type": "color"
+            }
+          ],
+          "min": 0,
+          "max": 12
+        }
+      ]
+    },
+    {
+      "group": "Contact",
+      "fields": [
+        {
+          "path": "contact.label",
+          "label": "Small label",
+          "type": "text"
+        },
+        {
+          "path": "contact.title",
+          "label": "Title (one line per row; the last is accent)",
+          "type": "textarea"
+        },
+        {
+          "path": "contact.button",
+          "label": "Button",
+          "type": "text"
+        },
+        {
+          "path": "contact.copy",
+          "label": "Copy button",
+          "type": "text"
+        },
+        {
+          "path": "contact.copied",
+          "label": "Copied note",
+          "type": "text"
+        },
+        {
+          "path": "contact.socials",
+          "label": "Social links",
+          "type": "list",
+          "itemLabel": "Link",
+          "fields": [
+            {
+              "path": "label",
+              "label": "Label",
+              "type": "text"
+            },
+            {
+              "path": "href",
+              "label": "Address",
+              "type": "url"
+            }
+          ],
+          "min": 0,
+          "max": 8
+        }
+      ]
+    },
+    {
+      "group": "Commission form",
+      "fields": [
+        {
+          "path": "contact.formKicker",
+          "label": "Label",
+          "type": "text"
+        },
+        {
+          "path": "contact.formTitle",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "contact.disciplineLabel",
+          "label": "Discipline label",
+          "type": "text",
+          "hint": "The choices are your services."
+        },
+        {
+          "path": "contact.nameLabel",
+          "label": "Name label",
+          "type": "text"
+        },
+        {
+          "path": "contact.namePlaceholder",
+          "label": "Name hint",
+          "type": "text"
+        },
+        {
+          "path": "contact.emailLabel",
+          "label": "Email label",
+          "type": "text"
+        },
+        {
+          "path": "contact.emailPlaceholder",
+          "label": "Email hint",
+          "type": "text"
+        },
+        {
+          "path": "contact.briefLabel",
+          "label": "Message label",
+          "type": "text"
+        },
+        {
+          "path": "contact.briefPlaceholder",
+          "label": "Message hint",
+          "type": "textarea"
+        },
+        {
+          "path": "contact.send",
+          "label": "Send button",
+          "type": "text"
+        },
+        {
+          "path": "contact.thanksKicker",
+          "label": "Thank-you label",
+          "type": "text"
+        },
+        {
+          "path": "contact.thanksTitle",
+          "label": "Thank-you title",
+          "type": "text"
+        },
+        {
+          "path": "contact.thanksText",
+          "label": "Thank-you text",
+          "type": "textarea"
+        },
+        {
+          "path": "contact.back",
+          "label": "Close button",
+          "type": "text"
+        },
+        {
+          "path": "contact.error",
+          "label": "Error message",
+          "type": "text"
+        },
+        {
+          "path": "contact.formAction",
+          "label": "Post to a form service (https)",
+          "type": "url",
+          "hint": "For example a Formspree or Basin endpoint. Without one the form opens the visitor's email app addressed to your email."
+        }
+      ]
+    },
+    {
+      "group": "Footer",
+      "fields": [
+        {
+          "path": "footer.left",
+          "label": "Left",
+          "type": "text"
+        },
+        {
+          "path": "footer.middle",
+          "label": "Middle",
+          "type": "text"
+        },
+        {
+          "path": "footer.right",
+          "label": "Right",
+          "type": "text",
+          "hint": "{year} becomes this year."
+        }
+      ]
+    },
+    {
+      "group": "Colours",
+      "fields": [
+        {
+          "path": "theme.colors.page",
+          "label": "Page and deep sea",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.surface",
+          "label": "Panels",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.deep",
+          "label": "Footer and surfacing light",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.text",
+          "label": "Text",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.accent",
+          "label": "Accent (glow, links)",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.accent2",
+          "label": "Second accent",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.highlight",
+          "label": "Highlight (light rays)",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.light",
+          "label": "Services background",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.lightText",
+          "label": "Services text",
+          "type": "color"
+        }
+      ]
+    },
+    {
+      "group": "Font",
+      "fields": [
+        {
+          "path": "theme.fonts.body",
+          "label": "Font",
+          "type": "font"
+        }
+      ]
+    },
+    {
+      "group": "3D ocean",
+      "fields": [
+        {
+          "path": "ocean.show",
+          "label": "Live 3D ocean behind the page",
+          "type": "toggle"
+        },
+        {
+          "path": "ocean.particles",
+          "label": "Floating particles",
+          "type": "number",
+          "min": 0,
+          "max": 3000,
+          "step": 50
+        },
+        {
+          "path": "ocean.manta",
+          "label": "Gliding manta",
+          "type": "toggle"
+        },
+        {
+          "path": "ocean.parallax",
+          "label": "Pointer parallax",
+          "type": "number",
+          "min": 0,
+          "max": 3,
+          "step": 0.1
+        },
+        {
+          "path": "ocean.fog",
+          "label": "Fog thickness",
+          "type": "number",
+          "min": 0.2,
+          "max": 3,
+          "step": 0.1
+        }
+      ]
+    },
+    {
+      "group": "Motion",
+      "fields": [
+        {
+          "path": "motion.animate",
+          "label": "Animations on",
+          "type": "toggle"
+        },
+        {
+          "path": "motion.cursor",
+          "label": "Custom cursor",
+          "type": "toggle"
+        },
+        {
+          "path": "motion.progress",
+          "label": "Scroll progress bar",
+          "type": "toggle"
+        }
+      ]
+    },
+    {
+      "group": "Library blocks",
+      "fields": [
+        {
+          "path": "extras",
+          "label": "Blocks from the library",
+          "type": "blocks",
+          "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+        }
+      ]
+    }
+  ]
+}

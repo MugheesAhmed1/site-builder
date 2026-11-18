@@ -1,0 +1,352 @@
+{
+  "id": "lithos",
+  "name": "Lithos",
+  "pitch": "A full-screen photo you dig into: the cursor is a spotlight that reveals a second picture underneath, with a two-line serif headline, side notes and pop-up panels for a layer list and sign-up.",
+  "kind": "vite",
+  "categories": [
+    "Cinematic",
+    "Interactive",
+    "Editorial"
+  ],
+  "business": [
+    "school",
+    "product",
+    "nonprofit"
+  ],
+  "sector": "Online course and field-guide platform (geology and earth science education)",
+  "intensity": 6,
+  "heavy": false,
+  "licence": {
+    "kind": "owner",
+    "holder": "Mughees",
+    "note": "Supplied by its owner as a whole project for use as a builder template.",
+    "added": "2026-11-18"
+  },
+  "remoteAssets": [
+    "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_195923_b0ba8ace-1d1d-4f2c-9a28-1ab84b330680.png&w=1280&q=85",
+    "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_201152_bba90a12-bf12-459f-91f0-51f237dbaf3b.png&w=1280&q=85"
+  ],
+  "features": [
+    "Cursor spotlight reveal",
+    "Two pictures",
+    "Layer list panel",
+    "Sign-up form"
+  ],
+  "schema": [
+    {
+      "group": "Business",
+      "fields": [
+        {
+          "path": "brand.name",
+          "label": "Business name",
+          "type": "text",
+          "hint": "Fills every {name} in the text below."
+        },
+        {
+          "path": "seo.title",
+          "label": "Page title (search and browser tab)",
+          "type": "text"
+        },
+        {
+          "path": "seo.description",
+          "label": "Short description (search and sharing)",
+          "type": "textarea"
+        },
+        {
+          "path": "brand.showMark",
+          "label": "Show the logo mark",
+          "type": "toggle"
+        }
+      ]
+    },
+    {
+      "group": "Menu",
+      "fields": [
+        {
+          "path": "nav.links",
+          "label": "Menu links",
+          "type": "list",
+          "itemLabel": "Link",
+          "fields": [
+            {
+              "path": "label",
+              "label": "Label",
+              "type": "text"
+            },
+            {
+              "path": "href",
+              "label": "Goes to",
+              "type": "url"
+            }
+          ],
+          "min": 0,
+          "max": 7
+        },
+        {
+          "path": "nav.cta",
+          "label": "Sign-up button",
+          "type": "text",
+          "hint": "Leave empty to hide it."
+        }
+      ]
+    },
+    {
+      "group": "Opening",
+      "fields": [
+        {
+          "path": "hero.line1",
+          "label": "Headline, line 1 (italic)",
+          "type": "text"
+        },
+        {
+          "path": "hero.line2",
+          "label": "Headline, line 2",
+          "type": "text"
+        },
+        {
+          "path": "hero.left",
+          "label": "Left note",
+          "type": "textarea"
+        },
+        {
+          "path": "hero.right",
+          "label": "Right note",
+          "type": "textarea"
+        },
+        {
+          "path": "hero.button",
+          "label": "Button",
+          "type": "text",
+          "hint": "Opens the layer list."
+        },
+        {
+          "path": "hero.image",
+          "label": "Picture on top",
+          "type": "image"
+        },
+        {
+          "path": "hero.imageAlt",
+          "label": "Picture description",
+          "type": "text"
+        },
+        {
+          "path": "hero.revealImage",
+          "label": "Picture the spotlight reveals",
+          "type": "image"
+        }
+      ]
+    },
+    {
+      "group": "Layer list panel",
+      "fields": [
+        {
+          "path": "explore.kicker",
+          "label": "Label",
+          "type": "text"
+        },
+        {
+          "path": "explore.title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "explore.text",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "explore.layers",
+          "label": "Layers",
+          "type": "list",
+          "itemLabel": "Layer",
+          "fields": [
+            {
+              "path": "name",
+              "label": "Name",
+              "type": "text"
+            },
+            {
+              "path": "detail",
+              "label": "Detail (right)",
+              "type": "text"
+            },
+            {
+              "path": "text",
+              "label": "Text",
+              "type": "textarea"
+            }
+          ],
+          "min": 0,
+          "max": 8
+        },
+        {
+          "path": "explore.button",
+          "label": "Close button",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Sign-up panel",
+      "fields": [
+        {
+          "path": "signup.kicker",
+          "label": "Label",
+          "type": "text"
+        },
+        {
+          "path": "signup.title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "signup.text",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "signup.label",
+          "label": "Email label",
+          "type": "text"
+        },
+        {
+          "path": "signup.placeholder",
+          "label": "Email hint",
+          "type": "text"
+        },
+        {
+          "path": "signup.button",
+          "label": "Button",
+          "type": "text"
+        },
+        {
+          "path": "signup.thanksTitle",
+          "label": "Thank-you title",
+          "type": "text"
+        },
+        {
+          "path": "signup.thanksText",
+          "label": "Thank-you text",
+          "type": "textarea"
+        },
+        {
+          "path": "signup.email",
+          "label": "Send messages to (email)",
+          "type": "text",
+          "hint": "Opens the visitor's email app with the message filled in."
+        },
+        {
+          "path": "signup.formAction",
+          "label": "Or post to a form service (https)",
+          "type": "url",
+          "hint": "For example a Formspree or Basin endpoint. Wins over email."
+        }
+      ]
+    },
+    {
+      "group": "Colours",
+      "fields": [
+        {
+          "path": "theme.colors.text",
+          "label": "Text",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.accent",
+          "label": "Accent button",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.accentHover",
+          "label": "Accent, on hover",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.page",
+          "label": "Page",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.panel",
+          "label": "Panels",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.button",
+          "label": "Sign-up button",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.buttonText",
+          "label": "Sign-up button text",
+          "type": "color"
+        }
+      ]
+    },
+    {
+      "group": "Fonts and size",
+      "fields": [
+        {
+          "path": "theme.fonts.display",
+          "label": "Headline font (italic line)",
+          "type": "font"
+        },
+        {
+          "path": "theme.fonts.body",
+          "label": "Body font",
+          "type": "font"
+        },
+        {
+          "path": "theme.headlineSize",
+          "label": "Headline size (px)",
+          "type": "number",
+          "min": 40,
+          "max": 180,
+          "step": 2
+        }
+      ]
+    },
+    {
+      "group": "Motion",
+      "fields": [
+        {
+          "path": "motion.spotlight",
+          "label": "Spotlight size (px)",
+          "type": "number",
+          "min": 80,
+          "max": 600,
+          "step": 10
+        },
+        {
+          "path": "motion.follow",
+          "label": "Spotlight follow speed",
+          "type": "number",
+          "min": 0.02,
+          "max": 1,
+          "step": 0.01
+        },
+        {
+          "path": "motion.zoomIn",
+          "label": "Picture zooms in on load",
+          "type": "toggle"
+        },
+        {
+          "path": "motion.entrance",
+          "label": "Words rise in on load",
+          "type": "toggle"
+        }
+      ]
+    },
+    {
+      "group": "Library blocks",
+      "fields": [
+        {
+          "path": "extras",
+          "label": "Blocks from the library",
+          "type": "blocks",
+          "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+        }
+      ]
+    }
+  ]
+}
