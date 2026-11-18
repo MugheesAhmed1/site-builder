@@ -84,6 +84,9 @@ export default function HomeHero() {
           <a className="btn hh-ghost" href="#gallery">
             Explore experiences
           </a>
+          <a className="btn hh-ghost" href="/create">
+            Create from one line with AI
+          </a>
         </div>
         <div className="hh-switch" role="radiogroup" aria-label="Background concept">
           {SHOWCASE.map((x, k) => (
