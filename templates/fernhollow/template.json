@@ -1,0 +1,214 @@
+{
+  "id": "fernhollow",
+  "name": "Fernhollow",
+  "pitch": "A night valley of glowing flowers in real WebGL that grows as you move, with bloom, film grain, ambient sound and a studio drawer for work, about, journal and contact.",
+  "kind": "vite",
+  "categories": [
+    "3D",
+    "WebGL",
+    "Interactive",
+    "Experimental",
+    "Cinematic"
+  ],
+  "intensity": 8,
+  "heavy": true,
+  "licence": {
+    "kind": "owner",
+    "holder": "Mughees",
+    "note": "Supplied by its owner as a whole project for use as a builder template.",
+    "added": "2026-11-18"
+  },
+  "remoteAssets": [],
+  "slots": [
+    {
+      "key": "name",
+      "label": "Studio name",
+      "group": "Brand",
+      "default": "Fernhollow"
+    },
+    {
+      "key": "description",
+      "label": "Short description (search and sharing)",
+      "group": "Brand",
+      "default": "A regenerative design studio. Wander through a night valley of flowers that grows as you move.",
+      "long": true
+    },
+    {
+      "key": "cta",
+      "label": "Call to action",
+      "group": "Brand",
+      "default": "Let’s talk"
+    },
+    {
+      "key": "hero",
+      "label": "Main headline",
+      "group": "Opening",
+      "default": "Grown, not built."
+    },
+    {
+      "key": "cap1",
+      "label": "Caption, line 1",
+      "group": "Opening",
+      "default": "Rooted in nature."
+    },
+    {
+      "key": "cap2",
+      "label": "Caption, line 2",
+      "group": "Opening",
+      "default": "Built for what’s next."
+    },
+    {
+      "key": "hint",
+      "label": "Scroll hint",
+      "group": "Opening",
+      "default": "Scroll to wander"
+    },
+    {
+      "key": "w1",
+      "label": "Project 1 name",
+      "group": "Work",
+      "default": "Kauri Watershed Atlas"
+    },
+    {
+      "key": "w1d",
+      "label": "Project 1 discipline",
+      "group": "Work",
+      "default": "Ecological Mapping · Spatial Web"
+    },
+    {
+      "key": "w1s",
+      "label": "Project 1 summary",
+      "group": "Work",
+      "default": "Interactive catchment telemetry and living forest restoration archive built for Aotearoa watershed stewards.",
+      "long": true
+    },
+    {
+      "key": "w2",
+      "label": "Project 2 name",
+      "group": "Work",
+      "default": "Mycelium Material Index"
+    },
+    {
+      "key": "w2d",
+      "label": "Project 2 discipline",
+      "group": "Work",
+      "default": "Design System · Tactile Archive"
+    },
+    {
+      "key": "w2s",
+      "label": "Project 2 summary",
+      "group": "Work",
+      "default": "Open-source material library cataloging regenerative mycelium composites, lifecycle carbon data, and tactile acoustics.",
+      "long": true
+    },
+    {
+      "key": "w3",
+      "label": "Project 3 name",
+      "group": "Work",
+      "default": "Solstice Seed Commons"
+    },
+    {
+      "key": "w3d",
+      "label": "Project 3 discipline",
+      "group": "Work",
+      "default": "Brand Identity · Digital Platform"
+    },
+    {
+      "key": "w3s",
+      "label": "Project 3 summary",
+      "group": "Work",
+      "default": "Community seed-saving network connecting regional botanical growers with heritage alpine and meadow cultivars.",
+      "long": true
+    },
+    {
+      "key": "about-h",
+      "label": "About headline",
+      "group": "About",
+      "default": "Regenerative craft for living digital ecosystems."
+    },
+    {
+      "key": "about-p",
+      "label": "About text (follows the studio name)",
+      "group": "About",
+      "default": "is an independent regenerative design studio partnering with ecological research initiatives, climate pioneers, and cultural institutions. We treat every digital space like a cultivated habitat—lightweight, adaptive, and attuned to natural rhythms.",
+      "long": true
+    },
+    {
+      "key": "ethos",
+      "label": "Ethos",
+      "group": "About",
+      "default": "Low-carbon, open botanical data"
+    },
+    {
+      "key": "place",
+      "label": "Where you are",
+      "group": "About",
+      "default": "Tāmaki Makaurau · Remote"
+    },
+    {
+      "key": "j1d",
+      "label": "Journal 1 date",
+      "group": "Journal",
+      "default": "Autumn 2026"
+    },
+    {
+      "key": "j1",
+      "label": "Journal 1 title",
+      "group": "Journal",
+      "default": "Software that ages like timber, not plastic"
+    },
+    {
+      "key": "j1e",
+      "label": "Journal 1 excerpt",
+      "group": "Journal",
+      "default": "Notes on low-energy rendering, patient motion curves, and interfaces designed to stay legible for decades.",
+      "long": true
+    },
+    {
+      "key": "j2d",
+      "label": "Journal 2 date",
+      "group": "Journal",
+      "default": "Winter 2026"
+    },
+    {
+      "key": "j2",
+      "label": "Journal 2 title",
+      "group": "Journal",
+      "default": "Listening to nocturnal pollinators in coastal valleys"
+    },
+    {
+      "key": "j2e",
+      "label": "Journal 2 excerpt",
+      "group": "Journal",
+      "default": "Field recordings and light-level studies informing our dark-first botanical visual language.",
+      "long": true
+    },
+    {
+      "key": "reply",
+      "label": "Reply promise",
+      "group": "Contact",
+      "default": "We will reply within two working days."
+    },
+    {
+      "key": "note-ph",
+      "label": "Message box hint",
+      "group": "Contact",
+      "default": "Tell us what you are growing..."
+    }
+  ],
+  "industries": [
+    "studio",
+    "agency",
+    "design",
+    "portfolio",
+    "environment",
+    "creative"
+  ],
+  "features": [
+    "three.js valley",
+    "Grows as you move",
+    "Ambient sound",
+    "Work and journal drawer",
+    "Contact form"
+  ]
+}

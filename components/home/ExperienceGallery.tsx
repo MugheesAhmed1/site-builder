@@ -7,18 +7,21 @@ import { CONCEPTS } from "@/packages/experience-core";
 import type { Concept } from "@/packages/experience-core/concepts";
 import { categoryLabel } from "@/lib/fit";
 import LiveStage from "./LiveStage";
+import { TEMPLATES, templateBase, type TemplateInfo } from "@/lib/templates";
 
 // The Experience Gallery (PRD section 62). Every card is the concept's own stage, live, not a
 // screenshot: scrolling the page walks it through its story, and hovering or tapping a card
 // plays it and hands it the pointer. Cards mount their stage only near the screen.
 
-const CATS = ["All", "Cinematic", "3D", "Interactive", "Scroll", "Characters", "WebGL", "Editorial", "Playful", "Product", "Experimental"] as const;
+const CATS = ["All", "Templates", "Cinematic", "3D", "Interactive", "Scroll", "Characters", "WebGL", "Editorial", "Playful", "Product", "Experimental"] as const;
 type Cat = (typeof CATS)[number];
 
 function inCat(c: Concept, cat: Cat): boolean {
   switch (cat) {
     case "All":
       return true;
+    case "Templates":
+      return false;
     case "Cinematic":
       return c.modes.includes("cinematic");
     case "3D":
@@ -99,6 +102,52 @@ function Card({ c }: { c: Concept }) {
   );
 }
 
+// A whole project someone supplied (docs/TEMPLATES.md), running as itself in a frame. Light
+// templates play when near the screen; heavy ones (real WebGL) show a still until hovered or tapped.
+function TemplateCard({ t }: { t: TemplateInfo }) {
+  const el = useRef<HTMLElement>(null);
+  const view = useRef<HTMLDivElement>(null);
+  const [near, setNear] = useState(false);
+  const [play, setPlay] = useState(false);
+  const [scale, setScale] = useState(0.25);
+
+  useEffect(() => {
+    const node = el.current;
+    if (!node) return;
+    const io = new IntersectionObserver(([x]) => setNear(x.isIntersecting), { rootMargin: "200px 0px" });
+    io.observe(node);
+    const v = view.current;
+    const ro = new ResizeObserver(() => v && setScale(Math.max(v.clientWidth / 1440, v.clientHeight / 900)));
+    if (v) ro.observe(v);
+    return () => (io.disconnect(), ro.disconnect());
+  }, []);
+
+  const live = near && (!t.heavy || play);
+  return (
+    <article ref={el} className={"xg-card xg-tpl" + (play ? " is-play" : "")} onPointerEnter={() => setPlay(true)} onPointerLeave={() => setPlay(false)} onFocus={() => setPlay(true)} onBlur={() => setPlay(false)}>
+      <div className="xg-view" ref={view} aria-hidden="true" onClick={() => setPlay(true)}>
+        <span className="xg-badge">Full template</span>
+        {t.poster ? <img src={`${templateBase(t.id)}/poster.webp`} alt="" loading="lazy" decoding="async" /> : <div className="xg-poster">{t.name}</div>}
+        {live && <iframe className="xg-frame" src={`${templateBase(t.id)}/site/preview.html`} title={t.name} tabIndex={-1} loading="lazy" sandbox="allow-scripts" style={{ transform: `scale(${scale})` }} />}
+      </div>
+      <div className="xg-text">
+        <h3>{t.name}</h3>
+        <p>{t.pitch}</p>
+        <ul className="xg-tags" aria-label="What it does">
+          {(t.features || []).slice(0, 4).map((x) => (
+            <li key={x}>{x}</li>
+          ))}
+        </ul>
+        <Link className="btn btn-sm xg-use" href={`/templates/${t.id}`}>
+          Use this template
+        </Link>
+      </div>
+    </article>
+  );
+}
+
+const tplIn = (t: TemplateInfo, cat: Cat) => cat === "All" || cat === "Templates" || t.categories.includes(cat);
+
 export default function ExperienceGallery() {
   const [cat, setCat] = useState<Cat>("All");
   const list = CONCEPTS.filter((c) => inCat(c, cat));
@@ -112,6 +161,9 @@ export default function ExperienceGallery() {
         ))}
       </div>
       <div className="xg-grid">
+        {TEMPLATES.filter((t) => tplIn(t, cat)).map((t) => (
+          <TemplateCard key={t.id} t={t} />
+        ))}
         {list.map((c) => (
           <Card key={c.id} c={c} />
         ))}
