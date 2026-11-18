@@ -1,0 +1,511 @@
+[
+  {
+    "id": "fernhollow",
+    "name": "Fernhollow",
+    "pitch": "A night valley of glowing flowers in real WebGL that grows as you move, with bloom, film grain, ambient sound and a studio drawer for work, about, journal and contact.",
+    "kind": "vite",
+    "categories": [
+      "3D",
+      "WebGL",
+      "Interactive",
+      "Experimental",
+      "Cinematic"
+    ],
+    "intensity": 8,
+    "heavy": true,
+    "licence": {
+      "kind": "owner",
+      "holder": "Mughees",
+      "note": "Supplied by its owner as a whole project for use as a builder template.",
+      "added": "2026-11-18"
+    },
+    "remoteAssets": [],
+    "slots": [
+      {
+        "key": "name",
+        "label": "Studio name",
+        "group": "Brand",
+        "default": "Fernhollow"
+      },
+      {
+        "key": "description",
+        "label": "Short description (search and sharing)",
+        "group": "Brand",
+        "default": "A regenerative design studio. Wander through a night valley of flowers that grows as you move.",
+        "long": true
+      },
+      {
+        "key": "cta",
+        "label": "Call to action",
+        "group": "Brand",
+        "default": "Let’s talk"
+      },
+      {
+        "key": "hero",
+        "label": "Main headline",
+        "group": "Opening",
+        "default": "Grown, not built."
+      },
+      {
+        "key": "cap1",
+        "label": "Caption, line 1",
+        "group": "Opening",
+        "default": "Rooted in nature."
+      },
+      {
+        "key": "cap2",
+        "label": "Caption, line 2",
+        "group": "Opening",
+        "default": "Built for what’s next."
+      },
+      {
+        "key": "hint",
+        "label": "Scroll hint",
+        "group": "Opening",
+        "default": "Scroll to wander"
+      },
+      {
+        "key": "w1",
+        "label": "Project 1 name",
+        "group": "Work",
+        "default": "Kauri Watershed Atlas"
+      },
+      {
+        "key": "w1d",
+        "label": "Project 1 discipline",
+        "group": "Work",
+        "default": "Ecological Mapping · Spatial Web"
+      },
+      {
+        "key": "w1s",
+        "label": "Project 1 summary",
+        "group": "Work",
+        "default": "Interactive catchment telemetry and living forest restoration archive built for Aotearoa watershed stewards.",
+        "long": true
+      },
+      {
+        "key": "w2",
+        "label": "Project 2 name",
+        "group": "Work",
+        "default": "Mycelium Material Index"
+      },
+      {
+        "key": "w2d",
+        "label": "Project 2 discipline",
+        "group": "Work",
+        "default": "Design System · Tactile Archive"
+      },
+      {
+        "key": "w2s",
+        "label": "Project 2 summary",
+        "group": "Work",
+        "default": "Open-source material library cataloging regenerative mycelium composites, lifecycle carbon data, and tactile acoustics.",
+        "long": true
+      },
+      {
+        "key": "w3",
+        "label": "Project 3 name",
+        "group": "Work",
+        "default": "Solstice Seed Commons"
+      },
+      {
+        "key": "w3d",
+        "label": "Project 3 discipline",
+        "group": "Work",
+        "default": "Brand Identity · Digital Platform"
+      },
+      {
+        "key": "w3s",
+        "label": "Project 3 summary",
+        "group": "Work",
+        "default": "Community seed-saving network connecting regional botanical growers with heritage alpine and meadow cultivars.",
+        "long": true
+      },
+      {
+        "key": "about-h",
+        "label": "About headline",
+        "group": "About",
+        "default": "Regenerative craft for living digital ecosystems."
+      },
+      {
+        "key": "about-p",
+        "label": "About text (follows the studio name)",
+        "group": "About",
+        "default": "is an independent regenerative design studio partnering with ecological research initiatives, climate pioneers, and cultural institutions. We treat every digital space like a cultivated habitat—lightweight, adaptive, and attuned to natural rhythms.",
+        "long": true
+      },
+      {
+        "key": "ethos",
+        "label": "Ethos",
+        "group": "About",
+        "default": "Low-carbon, open botanical data"
+      },
+      {
+        "key": "place",
+        "label": "Where you are",
+        "group": "About",
+        "default": "Tāmaki Makaurau · Remote"
+      },
+      {
+        "key": "j1d",
+        "label": "Journal 1 date",
+        "group": "Journal",
+        "default": "Autumn 2026"
+      },
+      {
+        "key": "j1",
+        "label": "Journal 1 title",
+        "group": "Journal",
+        "default": "Software that ages like timber, not plastic"
+      },
+      {
+        "key": "j1e",
+        "label": "Journal 1 excerpt",
+        "group": "Journal",
+        "default": "Notes on low-energy rendering, patient motion curves, and interfaces designed to stay legible for decades.",
+        "long": true
+      },
+      {
+        "key": "j2d",
+        "label": "Journal 2 date",
+        "group": "Journal",
+        "default": "Winter 2026"
+      },
+      {
+        "key": "j2",
+        "label": "Journal 2 title",
+        "group": "Journal",
+        "default": "Listening to nocturnal pollinators in coastal valleys"
+      },
+      {
+        "key": "j2e",
+        "label": "Journal 2 excerpt",
+        "group": "Journal",
+        "default": "Field recordings and light-level studies informing our dark-first botanical visual language.",
+        "long": true
+      },
+      {
+        "key": "reply",
+        "label": "Reply promise",
+        "group": "Contact",
+        "default": "We will reply within two working days."
+      },
+      {
+        "key": "note-ph",
+        "label": "Message box hint",
+        "group": "Contact",
+        "default": "Tell us what you are growing..."
+      }
+    ],
+    "industries": [
+      "studio",
+      "agency",
+      "design",
+      "portfolio",
+      "environment",
+      "creative"
+    ],
+    "features": [
+      "three.js valley",
+      "Grows as you move",
+      "Ambient sound",
+      "Work and journal drawer",
+      "Contact form"
+    ],
+    "poster": true,
+    "siteFiles": 3,
+    "sourceFiles": 10
+  },
+  {
+    "id": "mossline",
+    "name": "Mossline",
+    "pitch": "A floating moss island you scroll into: the camera pushes through the frame, fog rolls in, live field readings pop up and a carbon card counts itself up.",
+    "kind": "static",
+    "categories": [
+      "Cinematic",
+      "Scroll",
+      "Interactive",
+      "Editorial",
+      "Product"
+    ],
+    "intensity": 7,
+    "heavy": false,
+    "licence": {
+      "kind": "owner",
+      "holder": "Mughees",
+      "note": "Supplied by its owner as a whole project for use as a builder template.",
+      "added": "2026-11-18"
+    },
+    "remoteAssets": [
+      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_031618_8ce6dca1-972d-429d-8d13-bf0691c37848.png&w=2400&q=88",
+      "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261106_025717_906b686d-9a9a-4dea-bab4-ae2454f8390e.mp4",
+      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_031657_baaa3380-5ece-482a-a623-a1838fd7653c.png&w=2400&q=90",
+      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025635_82593f6a-1cf7-41c1-94ac-96fb89ebfd1a.png&w=2400&q=85",
+      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025630_9a37a1e0-2547-4973-8160-c75205993914.png&w=1400&q=82",
+      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025545_b003e5cc-e68f-4fee-b686-c217a5d81eea.png&w=1400&q=82"
+    ],
+    "slots": [
+      {
+        "key": "name",
+        "label": "Business name",
+        "group": "Brand",
+        "default": "Mossline"
+      },
+      {
+        "key": "description",
+        "label": "Short description (search and sharing)",
+        "group": "Brand",
+        "default": "Measure the Living Planet — Real-time ecosystem insights powered by field sensors, atmospheric flux towers, and transparent data.",
+        "long": true
+      },
+      {
+        "key": "cta",
+        "label": "Call to action",
+        "group": "Brand",
+        "default": "LET'S TALK"
+      },
+      {
+        "key": "chip",
+        "label": "Hero label",
+        "group": "Opening",
+        "default": "Planet intelligence"
+      },
+      {
+        "key": "hero",
+        "label": "Main headline",
+        "group": "Opening",
+        "default": "Measure the Living Planet"
+      },
+      {
+        "key": "cap1",
+        "label": "Caption, line 1",
+        "group": "Opening",
+        "default": "Real-time ecosystem insights."
+      },
+      {
+        "key": "cap2",
+        "label": "Caption, line 2",
+        "group": "Opening",
+        "default": "Powered by science, blockchain,"
+      },
+      {
+        "key": "cap3",
+        "label": "Caption, line 3",
+        "group": "Opening",
+        "default": "and transparent data."
+      },
+      {
+        "key": "vision-chip",
+        "label": "Vision label",
+        "group": "Vision",
+        "default": "Our vision"
+      },
+      {
+        "key": "vision-p1",
+        "label": "Vision line 1",
+        "group": "Vision",
+        "default": "A breakthrough in environmental measurement,"
+      },
+      {
+        "key": "vision-p2",
+        "label": "Vision line 2",
+        "group": "Vision",
+        "default": "built for commercial use."
+      },
+      {
+        "key": "acct",
+        "label": "What you do",
+        "group": "Hotspots",
+        "default": "Our ecosystem-level accounting translates complex field science into verifiable, compliance-ready metrics — so you can drive measurable results, not just reports.",
+        "long": true
+      },
+      {
+        "key": "hs1",
+        "label": "Hotspot 1",
+        "group": "Hotspots",
+        "default": "Soil carbon"
+      },
+      {
+        "key": "hs2",
+        "label": "Hotspot 2",
+        "group": "Hotspots",
+        "default": "Canopy moisture"
+      },
+      {
+        "key": "hs3",
+        "label": "Hotspot 3",
+        "group": "Hotspots",
+        "default": "Species index"
+      },
+      {
+        "key": "hs4",
+        "label": "Hotspot 4",
+        "group": "Hotspots",
+        "default": "Microclimate"
+      },
+      {
+        "key": "station",
+        "label": "Station label",
+        "group": "Proof",
+        "default": "Field station 07"
+      },
+      {
+        "key": "cred",
+        "label": "Proof headline",
+        "group": "Proof",
+        "default": "Scientific credibility for corporate climate action"
+      },
+      {
+        "key": "card",
+        "label": "Card title",
+        "group": "Proof",
+        "default": "Accumulated carbon"
+      },
+      {
+        "key": "f1",
+        "label": "Feature 1",
+        "group": "Proof",
+        "default": "Gold-standard observation system"
+      },
+      {
+        "key": "f2",
+        "label": "Feature 2",
+        "group": "Proof",
+        "default": "World-class atmospheric monitoring (AMRV)"
+      },
+      {
+        "key": "f3",
+        "label": "Feature 3",
+        "group": "Proof",
+        "default": "Integrated algorithmic processing"
+      },
+      {
+        "key": "f4",
+        "label": "Feature 4",
+        "group": "Proof",
+        "default": "Blockchain-secured traceability"
+      },
+      {
+        "key": "f5",
+        "label": "Feature 5",
+        "group": "Proof",
+        "default": "Built for scale and complexity"
+      },
+      {
+        "key": "sol-chip",
+        "label": "Solutions label",
+        "group": "Solutions",
+        "default": "Our solutions"
+      },
+      {
+        "key": "sol-h",
+        "label": "Solutions headline",
+        "group": "Solutions",
+        "default": "Validating what the ecosystem does naturally"
+      },
+      {
+        "key": "sol-p",
+        "label": "Solutions text",
+        "group": "Solutions",
+        "default": "Field sensors, atmospheric flux towers and satellite data fused into one auditable record — so every tonne you report can be traced back to the ground it came from.",
+        "long": true
+      },
+      {
+        "key": "c1-tag",
+        "label": "Card 1 label",
+        "group": "Solutions",
+        "default": "[Nature-based solutions]"
+      },
+      {
+        "key": "c1-p",
+        "label": "Card 1 text",
+        "group": "Solutions",
+        "default": "Continuous flux measurement replaces sampled estimates, so credits reflect what the land actually absorbs.",
+        "long": true
+      },
+      {
+        "key": "c2-tag",
+        "label": "Card 2 label",
+        "group": "Solutions",
+        "default": "[Supply chain solutions]"
+      },
+      {
+        "key": "c2-p",
+        "label": "Card 2 text",
+        "group": "Solutions",
+        "default": "Trace commodities to the plots that grew them, with deforestation-free evidence attached to every shipment.",
+        "long": true
+      },
+      {
+        "key": "c3-tag",
+        "label": "Card 3 label",
+        "group": "Solutions",
+        "default": "[Biodiversity credits]"
+      },
+      {
+        "key": "c3-p",
+        "label": "Card 3 text",
+        "group": "Solutions",
+        "default": "Acoustic and eDNA monitoring builds a measurable biodiversity baseline you can report against year over year.",
+        "long": true
+      },
+      {
+        "key": "s1",
+        "label": "Stat 1 label",
+        "group": "Numbers",
+        "default": "Sensors deployed"
+      },
+      {
+        "key": "s2",
+        "label": "Stat 2 label",
+        "group": "Numbers",
+        "default": "Countries monitored"
+      },
+      {
+        "key": "s3",
+        "label": "Stat 3 label",
+        "group": "Numbers",
+        "default": "Mt CO₂e verified"
+      },
+      {
+        "key": "s4",
+        "label": "Stat 4 label",
+        "group": "Numbers",
+        "default": "% Data uptime"
+      },
+      {
+        "key": "pic-sol1",
+        "label": "Solutions picture 1",
+        "group": "Pictures",
+        "type": "image",
+        "default": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025630_9a37a1e0-2547-4973-8160-c75205993914.png&w=1400&q=82",
+        "hint": "Used by cards 1 and 3."
+      },
+      {
+        "key": "pic-sol2",
+        "label": "Solutions picture 2",
+        "group": "Pictures",
+        "type": "image",
+        "default": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025545_b003e5cc-e68f-4fee-b686-c217a5d81eea.png&w=1400&q=82",
+        "hint": "Used by card 2."
+      }
+    ],
+    "industries": [
+      "environment",
+      "science",
+      "climate",
+      "data",
+      "agency",
+      "technology"
+    ],
+    "features": [
+      "Scroll-scrubbed video",
+      "Layered parallax",
+      "Clickable hotspots",
+      "Counting stats"
+    ],
+    "poster": false,
+    "siteFiles": 1,
+    "sourceFiles": 1
+  }
+]
