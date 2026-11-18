@@ -1,0 +1,35 @@
+{
+  "name": "Giant gradient headline",
+  "kind": "section",
+  "from": "milo",
+  "description": "A screen-filling headline whose last line glows in a three-colour gradient, rising in line by line.",
+  "tags": ["hero", "headline", "typography", "opening"],
+  "business": ["creator", "agency", "product", "events", "fitness", "auto"],
+  "heavy": false,
+  "fields": [
+    { "path": "kicker", "label": "Small label", "type": "text" },
+    { "path": "lines", "label": "Headline (one line per row; the last glows)", "type": "textarea" },
+    { "path": "body", "label": "Text", "type": "textarea" },
+    { "path": "upper", "label": "Capital letters", "type": "toggle" },
+    { "path": "size", "label": "Headline size", "type": "number", "min": 6, "max": 30, "step": 1 },
+    { "path": "height", "label": "Height (% of the screen)", "type": "number", "min": 30, "max": 100, "step": 5 },
+    { "path": "background", "label": "Background", "type": "color" },
+    { "path": "text", "label": "Text colour", "type": "color" },
+    { "path": "from", "label": "Gradient, top", "type": "color" },
+    { "path": "via", "label": "Gradient, middle", "type": "color" },
+    { "path": "to", "label": "Gradient, bottom", "type": "color" }
+  ],
+  "defaults": {
+    "kicker": "Welcome",
+    "lines": "Make it\nAlive",
+    "body": "A short line that says what you do and who it is for.",
+    "upper": true,
+    "size": 17,
+    "height": 90,
+    "background": "#02070a",
+    "text": "#f2fbff",
+    "from": "#d9f7ff",
+    "via": "#63e6ff",
+    "to": "#4ba3ff"
+  }
+}

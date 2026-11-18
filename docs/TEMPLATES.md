@@ -4,7 +4,7 @@ Whole projects someone hands over (a `.zip` of a site or app) become **templates
 
 Every template is also filed under the **business types** it suits (the builder's own categories in `lib/categories.ts`), so people can browse by business at `/templates` and in the Experience Gallery.
 
-Mossline and Fernhollow were the first two (2026-11-18).
+Mossline and Fernhollow were the first two (2026-11-18); Lithos, Jack, Milo, Distill and Stride followed the same day. Every template also takes **library blocks**: sections, 3D scenes and effects taken from all the templates, which anyone can add to any template and change (see [LIBRARY.md](LIBRARY.md)).
 
 ## Adding a template
 
@@ -27,9 +27,11 @@ Mossline and Fernhollow were the first two (2026-11-18).
    - Write `content.json`: every word, list (projects, cards, stats, links), picture, video, link, colour, font, section switch and motion setting the page uses, with the project's own values as the defaults. Use `{name}` for the business name inside text and `{year}` for the current year.
    - Change the project so it reads all of it from `window.__XP__` and nothing is hard-coded. `index.html` must load `<script src="./xp-content.js"></script>` in `<head>` (for a Vite app it lives in `public/`). Colours become CSS variables `--c-<name>`, fonts `--f-<role>` (load Google Fonts on demand), numbers `--n-<name>`. Sections switched off are not rendered. Lists render however many items there are. Links pass a safe-address check (http(s), mailto, tel, `#`, `/`, `./`), and text is escaped.
    - In preview mode (`window.__XP_PREVIEW__`), prefer `window.__XP_HASH__` when set, post `{type: "xp-ready"}` to the parent once listening, and redraw on `{type: "xp-data", data}` from the parent. Keep expensive work (a WebGL scene, decoded video frames) and rebuild it only when its own settings change.
-   - Add a `schema` to `template.json`: groups of fields, each with a `path` into the content, a `label`, a `type` and optional `hint`. Types: `text`, `textarea`, `url`, `image`, `video` (both accept an address or an upload), `color`, `colors` (a list of colours), `font` (any Google Fonts family), `number` (`min`, `max`, `step`), `toggle`, `select` (`options`), and `list` (`fields` for one item, `min`, `max`, `itemLabel`). Remove `"draft": true`.
+   - Add a `schema` to `template.json`: groups of fields, each with a `path` into the content, a `label`, a `type` and optional `hint`. Types: `text`, `textarea`, `url`, `image`, `video` (both accept an address or an upload), `color`, `colors` (a list of colours), `font` (any Google Fonts family), `number` (`min`, `max`, `step`), `toggle`, `select` (`options`), `list` (`fields` for one item, `min`, `max`, `itemLabel`; a list cannot hold a list, so use a `textarea` of lines such as `name | price` instead), and `blocks` (library blocks). Remove `"draft": true`.
+   - Give it a spot for library blocks: `"extras": []` in `content.json`, a "Library blocks" group with `{ "path": "extras", "type": "blocks" }` in the schema, and an empty `<div data-xp-extras>` where added blocks should appear (without one they go at the end of the page). Nothing more is needed: `xp-content.js` loads the library only when the list is not empty.
+   - Vite + React templates can use the shared helper kit in `templates/_kit/` (`xp.ts`: `useXP`, `fill`, `lines`, `pairs`, `applyTheme`, `applySeo`, `safeHref`, `safeSrc`, `on`; `icons.tsx`). The build copies it into `src/` of any template that has a file of the same name.
 
-   `lib/template-schema.mjs` has the contract. Fernhollow (`src/xp.ts`, `src/App.tsx`) and Mossline (`index.html`, `render()` and `start()`/`stop()`) are worked examples of each kind.
+   `lib/template-schema.mjs` has the contract. Fernhollow (`src/xp.ts`, `src/App.tsx`) and Mossline (`index.html`, `render()` and `start()`/`stop()`) are worked examples of each kind; Stride shows an engine with its own state that rebuilds (`key`) only when its structure changes, and Milo a three.js scene whose colours come from the theme.
 
 4. **Build and check.**
 
@@ -54,16 +56,25 @@ Mossline and Fernhollow were the first two (2026-11-18).
 | Template studio at `/templates/<id>` (a field for every schema entry) | `components/templates/TemplateStudio.tsx` |
 | Templates by business type at `/templates` (`?business=agency`) | `components/templates/TemplateIndex.tsx` |
 | Gallery cards, style and business-type filters | `components/home/ExperienceGallery.tsx` |
+| Shared helper kit for React templates | `templates/_kit/` |
+| Library blocks and assets | [LIBRARY.md](LIBRARY.md) |
 
 - **Preview.** The studio frames `public/tpl/<id>/site/preview.html` (the built page with preview mode switched on), sandboxed without same-origin access, so a template's code cannot read the builder's saved projects. The content travels in the address when the frame loads (uploads excepted) and by message as the person edits.
-- **Downloads.** "Download site" zips the built files and "Download source" the project, each with the person's `xp-content.js`, their uploads under `media/`, and a README that says where to change things. Content is kept in the browser per template; big uploads may be too large to keep, and the studio says so.
+- **Downloads.** "Download site" zips the built files and "Download source" the project, each with the person's `xp-content.js`, their uploads under `media/`, the library (`xp-lib/`) when they added blocks, and a README that says where to change things. Content is kept in the browser per template; big uploads may be too large to keep, and the studio says so.
 - **Headers.** Only `/tpl/*` may be framed, and only by the builder itself (`X-Frame-Options: SAMEORIGIN`, `frame-ancestors 'self'`); it allows cross-origin reads because the sandboxed frame's module scripts are cross-origin requests.
 
 ## Licences
 
 Templates are recorded in the licence register as `owner-supplied`: the holder in `template.json` supplied the project to be used as a builder template. Their libraries must still be open licences (checked at build). Pictures and video the default content loads from other hosts are listed in `remoteAssets`; the downloaded README lists any still in use so they can be copied in before launch, and people can upload their own in the studio.
 
-## The first two
+## The templates
 
 - **Mossline**, filed under *App, SaaS or startup* (also consultants and nonprofits): a climate-tech and environmental data company that measures carbon and biodiversity. One HTML page with its own scroll engine: a scroll-scrubbed video, layered parallax, fog, hotspots, a proof card with a chart, solution cards, counting numbers and a contact section. Everything (including the menu, hotspot positions, chart, cards, colours, fonts, story length and each effect) is in its schema. Its pictures and video are the owner's Higgsfield generations on Higgsfield's CDN, which the cloud build machines cannot reach; people replace them by uploading their own.
 - **Fernhollow**, filed under *Marketing or design agency* (also photographers and creatives, consultants): a regenerative design studio's portfolio. A Vite + React + three.js app: a procedural night valley with bloom, grain, ambient Web Audio and a drawer for work, about, journal and contact. Projects, facts and journal entries are lists; the valley's sky, fog, flower and leaf colours, counts, bloom, grain and motion, the sound's mood and volume, and where the contact form sends are all fields.
+- **Lithos**, filed under *Photographers and creatives* (also agencies and product makers): a stone and material studio. Every word, picture, link, colour and font is a field.
+- **Jack**, filed under *Creators* (also agencies and photographers): a 3D creator's portfolio with a marquee, numbered services, a word-by-word statement and stacking project cards.
+- **Milo**, filed under *Creators* (also agencies and photographers): a deep-ocean portfolio with a three.js ocean, chapters, projects you can orbit in 3D, a commission form and a custom cursor. The ocean's particles, manta, parallax and fog, and every colour, are fields.
+- **Distill**, filed under *App, SaaS or startup* (also consultants and agencies): a product site with a belt of cards orbiting in a canvas, pricing tiers, menus and demo, trial and sign-in forms. Each card's layout (home, price, case, vision, alloy, journal) and words are fields. Its default pictures are on the owner's CDN.
+- **Stride**, filed under *Online shop* (also food and product): a plant-protein-bar shop with an intro film, a 3D pack, flavours with their own colours and ingredients, a four-step "what's inside", a cart and a waitlist form. Its sprite sheet and film are on the owner's CDN.
+
+Refused files: anything under a non-commercial or unknown licence, and any picture or film the owner had not cleared, stays out of the repo (see the licence register).

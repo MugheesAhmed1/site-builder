@@ -601,6 +601,17 @@
           "step": 0.01
         }
       ]
+    },
+    {
+      "group": "Library blocks",
+      "fields": [
+        {
+          "path": "extras",
+          "label": "Blocks from the library",
+          "type": "blocks",
+          "hint": "Add any section, effect or scene from the shared library. They show at the end of every drawer."
+        }
+      ]
     }
   ]
 }

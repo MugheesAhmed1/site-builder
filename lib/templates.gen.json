@@ -1417,6 +1417,17 @@
             "step": 0.01
           }
         ]
+      },
+      {
+        "group": "Library blocks",
+        "fields": [
+          {
+            "path": "extras",
+            "label": "Blocks from the library",
+            "type": "blocks",
+            "hint": "Add any section, effect or scene from the shared library. They show at the end of every drawer."
+          }
+        ]
       }
     ],
     "content": {
@@ -1577,7 +1588,8 @@
         "volume": 0.36,
         "mood": "night",
         "wind": 0.35
-      }
+      },
+      "extras": []
     },
     "poster": true,
     "siteFiles": 4,
@@ -4456,6 +4468,17 @@
             "type": "toggle"
           }
         ]
+      },
+      {
+        "group": "Library blocks",
+        "fields": [
+          {
+            "path": "extras",
+            "label": "Blocks from the library",
+            "type": "blocks",
+            "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          }
+        ]
       }
     ],
     "content": {
@@ -4667,7 +4690,8 @@
         "cardTilt": true,
         "countUp": true,
         "pulse": true
-      }
+      },
+      "extras": []
     },
     "poster": false,
     "siteFiles": 2,

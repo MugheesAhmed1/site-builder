@@ -1,0 +1,31 @@
+{
+  "name": "Picture reels",
+  "kind": "section",
+  "from": "jack",
+  "description": "Two rows of pictures gliding in opposite directions, speeding up while the page scrolls.",
+  "tags": ["gallery", "pictures", "marquee", "scroll"],
+  "business": ["creator", "photo", "agency", "food", "events", "beauty"],
+  "heavy": false,
+  "fields": [
+    { "path": "label", "label": "Description (for screen readers)", "type": "text" },
+    { "path": "row1", "label": "Top row", "type": "list", "itemLabel": "Picture", "max": 16, "fields": [{ "path": "image", "label": "Picture", "type": "image" }] },
+    { "path": "row2", "label": "Bottom row", "type": "list", "itemLabel": "Picture", "max": 16, "fields": [{ "path": "image", "label": "Picture", "type": "image" }] },
+    { "path": "size", "label": "Picture height (px)", "type": "number", "min": 80, "max": 600, "step": 10 },
+    { "path": "radius", "label": "Corner rounding", "type": "number", "min": 0, "max": 80, "step": 1 },
+    { "path": "gap", "label": "Space between pictures", "type": "number", "min": 0, "max": 80, "step": 1 },
+    { "path": "speed", "label": "Speed", "type": "number", "min": 0, "max": 4, "step": 0.1 },
+    { "path": "padding", "label": "Space above and below", "type": "number", "min": 0, "max": 200, "step": 4 },
+    { "path": "background", "label": "Background", "type": "color" }
+  ],
+  "defaults": {
+    "label": "Selected work",
+    "row1": [{ "image": "lib:abstract.webp" }, { "image": "lib:product.webp" }, { "image": "lib:city.webp" }, { "image": "lib:abstract.webp" }],
+    "row2": [{ "image": "lib:food.webp" }, { "image": "lib:landscape.webp" }, { "image": "lib:clinic.webp" }, { "image": "lib:landscape-night.webp" }],
+    "size": 240,
+    "radius": 18,
+    "gap": 16,
+    "speed": 1,
+    "padding": 64,
+    "background": "#0b0b0c"
+  }
+}

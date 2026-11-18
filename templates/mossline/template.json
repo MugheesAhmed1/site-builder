@@ -613,6 +613,17 @@
           "type": "toggle"
         }
       ]
+    },
+    {
+      "group": "Library blocks",
+      "fields": [
+        {
+          "path": "extras",
+          "label": "Blocks from the library",
+          "type": "blocks",
+          "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+        }
+      ]
     }
   ]
 }

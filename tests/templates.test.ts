@@ -88,8 +88,8 @@ describe("importing a project zip", () => {
 });
 
 describe("registered templates", () => {
-  it("has Mossline and Fernhollow", () => {
-    expect(TEMPLATES.map((t) => t.id).sort()).toEqual(["fernhollow", "mossline"]);
+  it("has every imported template", () => {
+    expect(TEMPLATES.map((t) => t.id).sort()).toEqual(["distill", "fernhollow", "jack", "lithos", "milo", "mossline", "stride"]);
   });
 
   for (const t of TEMPLATES) {
@@ -104,6 +104,9 @@ describe("registered templates", () => {
       expect(t.licence.holder).toBeTruthy();
       expect(existsSync(join(dir, "source", ".env"))).toBe(false);
       expect(readFileSync(join(dir, "source", "index.html"), "utf8")).toContain('<script src="./xp-content.js"></script>');
+      // Every template takes library blocks, and has a field to add them.
+      expect(Array.isArray(c.extras)).toBe(true);
+      expect(t.schema.some((g) => g.fields.some((f) => f.path === "extras" && f.type === "blocks"))).toBe(true);
     });
   }
 

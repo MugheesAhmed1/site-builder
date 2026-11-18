@@ -1,0 +1,15 @@
+{
+  "name": "Trailing cursor",
+  "kind": "effect",
+  "from": "milo",
+  "description": "A dot that trails the mouse and grows over anything clickable. Hidden on touch screens and for visitors who ask for less motion.",
+  "tags": ["cursor", "pointer", "effect"],
+  "business": ["creator", "agency", "photo", "events", "product"],
+  "heavy": false,
+  "fields": [
+    { "path": "size", "label": "Size", "type": "number", "min": 4, "max": 40, "step": 1 },
+    { "path": "color", "label": "Colour", "type": "color" },
+    { "path": "blend", "label": "Invert what is under it", "type": "toggle" }
+  ],
+  "defaults": { "size": 10, "color": "#ffffff", "blend": true }
+}

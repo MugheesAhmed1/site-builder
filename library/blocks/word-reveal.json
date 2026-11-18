@@ -1,0 +1,25 @@
+{
+  "name": "Word-by-word statement",
+  "kind": "section",
+  "from": "jack",
+  "description": "A large statement whose words light up one by one as the visitor scrolls.",
+  "tags": ["about", "statement", "typography", "scroll"],
+  "business": ["creator", "agency", "consulting", "nonprofit", "law", "school"],
+  "heavy": false,
+  "fields": [
+    { "path": "kicker", "label": "Small label", "type": "text" },
+    { "path": "body", "label": "Statement", "type": "textarea" },
+    { "path": "align", "label": "Alignment", "type": "select", "options": [{ "value": "center", "label": "Centred" }, { "value": "left", "label": "Left" }] },
+    { "path": "dim", "label": "Brightness before it lights up", "type": "number", "min": 0, "max": 1, "step": 0.05 },
+    { "path": "background", "label": "Background", "type": "color" },
+    { "path": "text", "label": "Text colour", "type": "color" }
+  ],
+  "defaults": {
+    "kicker": "About us",
+    "body": "We are a small team that cares about the details. Every project starts with listening, and ends with something people are glad to use.",
+    "align": "center",
+    "dim": 0.18,
+    "background": "#0b0b0c",
+    "text": "#f4f2ee"
+  }
+}

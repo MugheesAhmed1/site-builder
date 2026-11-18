@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { businessLabel, changes, loadContent, previewSrc, saveContent, templateZip, zipName, type Content, type SchemaField, type TemplateInfo } from "@/lib/templates";
+import { BLOCKS, LIBRARY_FONTS, blockById, mediaFor, type LibraryMedia } from "@/lib/library-blocks";
 import { clone, getPath, setPath } from "@/lib/template-schema.mjs";
 
 // The template studio: an imported whole-project template, running as itself, with every part of
@@ -23,6 +24,37 @@ const FONTS = [
 ];
 
 const LIMIT = { image: 8, video: 30 }; // MB per upload
+
+/** Which template is open, its business types, and whether a field belongs to a library block. */
+const Ctx = createContext<{ tid: string; business: string[]; inBlock: boolean }>({ tid: "", business: [], inBlock: false });
+
+/** A thumbnail address for a value: library pictures and the template's own media resolve here. */
+function thumb(v: string, tid: string) {
+  if (v.startsWith("lib:")) return "/lib/media/" + v.slice(4);
+  if (/^(\.\/)?media\//.test(v)) return `/tpl/${tid}/site/` + v.replace(/^\.\//, "");
+  return v;
+}
+
+/** Pictures and films from every template and the library, the ones made for this business first. */
+function MediaPicker({ kind, onPick, onClose }: { kind: "image" | "video"; onPick: (m: LibraryMedia) => void; onClose: () => void }) {
+  const { business } = useContext(Ctx);
+  const list = useMemo(() => mediaFor(kind, business), [kind, business]);
+  return (
+    <div className="tpl-picker" role="listbox" aria-label="Library">
+      {list.length === 0 && <p className="muted small">Nothing of this kind in the library yet.</p>}
+      {list.map((m) => (
+        <button key={m.src} type="button" role="option" aria-selected={false} title={m.label} onClick={() => (onPick(m), onClose())}>
+          {kind === "image" ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={m.src} alt={m.label} loading="lazy" />
+          ) : (
+            <video src={m.src} muted playsInline preload="metadata" />
+          )}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 function readFile(file: File): Promise<string> {
   return new Promise((ok, fail) => {
@@ -45,6 +77,8 @@ function blankItem(f: SchemaField, sample: Record<string, unknown> | undefined) 
 
 function Field({ f, value, set, sample, onError }: { f: SchemaField; value: any; set: (v: unknown) => void; sample?: any; onError: (m: string) => void }) {
   const id = useMemo(() => "f-" + Math.random().toString(36).slice(2, 9), []);
+  const ctx = useContext(Ctx);
+  const [picking, setPicking] = useState(false);
   const hint = f.hint && <small className="muted">{f.hint}</small>;
 
   async function upload(file: File | undefined, kind: "image" | "video") {
@@ -52,6 +86,19 @@ function Field({ f, value, set, sample, onError }: { f: SchemaField; value: any;
     if (!file.type.startsWith(kind + "/")) return onError(`That file is not ${kind === "image" ? "a picture" : "a video"}.`);
     if (file.size > LIMIT[kind] * 1024 * 1024) return onError(`Keep ${kind === "image" ? "pictures" : "videos"} under ${LIMIT[kind]} MB.`);
     set(await readFile(file));
+  }
+
+  /** A library picture: blocks keep the short lib: name; a template's own field gets the file
+   * itself, so the download carries it into media/. Pictures on other hosts stay as addresses. */
+  async function pick(m: LibraryMedia) {
+    if (/^https?:/.test(m.src)) return set(m.src);
+    if (ctx.inBlock && m.src.startsWith("/lib/media/")) return set("lib:" + m.src.slice(11));
+    try {
+      const blob = await fetch(m.src).then((r) => (r.ok ? r.blob() : Promise.reject(new Error(String(r.status)))));
+      set(await readFile(new File([blob], m.src.split("/").pop() || "file", { type: blob.type })));
+    } catch {
+      onError("That picture could not be read. Please try another.");
+    }
   }
 
   switch (f.type) {
@@ -153,9 +200,9 @@ function Field({ f, value, set, sample, onError }: { f: SchemaField; value: any;
           {v &&
             (f.type === "image" ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={v} alt="" className="tpl-thumb" />
+              <img src={thumb(v, ctx.tid)} alt="" className="tpl-thumb" />
             ) : (
-              <video src={v} className="tpl-thumb" muted playsInline preload="metadata" />
+              <video src={thumb(v, ctx.tid)} className="tpl-thumb" muted playsInline preload="metadata" />
             ))}
           <input id={id} type="text" inputMode="url" placeholder="https://… or upload" value={uploaded ? "Uploaded file" : v} readOnly={uploaded} onChange={(e) => set(e.target.value)} />
           <span className="tpl-row">
@@ -163,6 +210,9 @@ function Field({ f, value, set, sample, onError }: { f: SchemaField; value: any;
               Upload
               <input type="file" accept={f.type === "image" ? "image/*" : "video/mp4,video/webm"} hidden onChange={(e) => upload(e.target.files?.[0], f.type as "image" | "video")} />
             </label>
+            <button type="button" className="btn btn-sm" aria-expanded={picking} onClick={() => setPicking((x) => !x)}>
+              Library
+            </button>
             {v && (
               <button type="button" className="btn btn-sm" onClick={() => set("")}>
                 Remove
@@ -174,10 +224,13 @@ function Field({ f, value, set, sample, onError }: { f: SchemaField; value: any;
               </button>
             )}
           </span>
+          {picking && <MediaPicker kind={f.type as "image" | "video"} onPick={pick} onClose={() => setPicking(false)} />}
           {hint}
         </div>
       );
     }
+    case "blocks":
+      return <BlocksField f={f} value={value} set={set} onError={onError} />;
     case "list": {
       const items: Record<string, unknown>[] = Array.isArray(value) ? value : [];
       const max = f.max ?? 12;
@@ -243,6 +296,109 @@ function Field({ f, value, set, sample, onError }: { f: SchemaField; value: any;
         </label>
       );
   }
+}
+
+type Extra = { block: string; props?: Record<string, unknown> };
+
+/** Library blocks added to this template: add any of them, change every setting, reorder, remove. */
+function BlocksField({ f, value, set, onError }: { f: SchemaField; value: any; set: (v: unknown) => void; onError: (m: string) => void }) {
+  const ctx = useContext(Ctx);
+  const items: Extra[] = Array.isArray(value) ? value : [];
+  const [choice, setChoice] = useState("");
+  const [open, setOpen] = useState(-1);
+  const groups = useMemo(() => {
+    const fit = (b: (typeof BLOCKS)[number]) => b.business.some((x) => ctx.business.includes(x));
+    return (["section", "scene", "effect"] as const).map((kind) => ({
+      kind,
+      label: kind === "section" ? "Sections" : kind === "scene" ? "3D scenes" : "Effects",
+      blocks: BLOCKS.filter((b) => b.kind === kind).sort((a, b) => Number(fit(b)) - Number(fit(a)) || a.name.localeCompare(b.name)),
+    }));
+  }, [ctx.business]);
+  const move = (i: number, d: number) => {
+    const n = [...items];
+    [n[i], n[i + d]] = [n[i + d], n[i]];
+    set(n);
+    setOpen(i + d);
+  };
+  const add = () => {
+    const b = blockById(choice || groups[0].blocks[0]?.id);
+    if (!b) return;
+    set([...items, { block: b.id, props: clone(b.defaults) }]);
+    setOpen(items.length);
+    setChoice("");
+  };
+  return (
+    <div className="lab-field tpl-list tpl-blocks">
+      <span>
+        {f.label} <small className="muted">({items.length})</small>
+      </span>
+      {items.map((x, i) => {
+        const b = blockById(x.block);
+        const props = { ...(b?.defaults || {}), ...(x.props || {}) };
+        return (
+          <details key={i} className="tpl-item" open={open === i} onToggle={(e) => (e.currentTarget.open ? setOpen(i) : open === i && setOpen(-1))}>
+            <summary>
+              <span>
+                {b ? b.name : x.block} <em> · {b ? (b.kind === "scene" ? "3D scene" : b.kind) : "not in the library"}</em>
+              </span>
+            </summary>
+            <div className="tpl-item-body">
+              {b && <small className="muted">{b.description}</small>}
+              <Ctx.Provider value={{ ...ctx, inBlock: true }}>
+                {(b?.fields || []).map((s) => (
+                  <Field
+                    key={s.path}
+                    f={s}
+                    value={getPath(props, s.path)}
+                    sample={getPath(b!.defaults, s.path)}
+                    onError={onError}
+                    set={(v) => set(items.map((y, j) => (j === i ? { ...y, props: setPath(props, s.path, v) } : y)))}
+                  />
+                ))}
+              </Ctx.Provider>
+              <span className="tpl-row">
+                <button type="button" className="btn btn-sm" disabled={i === 0} onClick={() => move(i, -1)}>
+                  Up
+                </button>
+                <button type="button" className="btn btn-sm" disabled={i === items.length - 1} onClick={() => move(i, 1)}>
+                  Down
+                </button>
+                <button type="button" className="btn btn-sm" disabled={items.length >= 12} onClick={() => set([...items.slice(0, i + 1), clone(x), ...items.slice(i + 1)])}>
+                  Copy
+                </button>
+                <button type="button" className="btn btn-sm" onClick={() => (set(items.filter((_, j) => j !== i)), setOpen(-1))}>
+                  Remove
+                </button>
+              </span>
+            </div>
+          </details>
+        );
+      })}
+      {items.length < 12 && (
+        <span className="tpl-row tpl-block-add">
+          <select aria-label="Block to add" value={choice || groups[0].blocks[0]?.id || ""} onChange={(e) => setChoice(e.target.value)}>
+            {groups.map((g) => (
+              <optgroup key={g.kind} label={g.label}>
+                {g.blocks.map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.name}
+                    {b.business.some((x) => ctx.business.includes(x)) ? " ★" : ""}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
+          <button type="button" className="btn btn-sm" onClick={add}>
+            Add block
+          </button>
+          <Link href="/library" className="tpl-link small" target="_blank">
+            Browse the library
+          </Link>
+        </span>
+      )}
+      {f.hint && <small className="muted">{f.hint} ★ marks blocks made for this kind of business.</small>}
+    </div>
+  );
 }
 
 export default function TemplateStudio({ t }: { t: TemplateInfo }) {
@@ -366,11 +522,12 @@ export default function TemplateStudio({ t }: { t: TemplateInfo }) {
         )}
 
         <datalist id="tpl-fonts">
-          {FONTS.map((x) => (
+          {[...new Set([...FONTS, ...LIBRARY_FONTS])].map((x) => (
             <option key={x} value={x} />
           ))}
         </datalist>
 
+        <Ctx.Provider value={{ tid: t.id, business: t.business, inBlock: false }}>
         {t.schema.map((g, gi) => (
           <details key={g.group} className="tpl-group" open={gi < 2}>
             <summary>{g.group}</summary>
@@ -381,6 +538,7 @@ export default function TemplateStudio({ t }: { t: TemplateInfo }) {
             </div>
           </details>
         ))}
+        </Ctx.Provider>
 
         <p className="muted small">
           Template supplied by {t.licence.holder}. {t.licence.note}

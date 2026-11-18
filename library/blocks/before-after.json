@@ -1,0 +1,35 @@
+{
+  "name": "Before and after",
+  "kind": "section",
+  "from": "distill",
+  "description": "Two pictures of the same thing split by a glowing line the visitor drags: smiles, rooms, gardens, cars, designs.",
+  "tags": ["compare", "results", "interactive", "pictures"],
+  "business": ["dentist", "beauty", "trades", "property", "auto", "fitness", "health", "photo", "agency"],
+  "heavy": false,
+  "fields": [
+    { "path": "title", "label": "Title", "type": "text" },
+    { "path": "body", "label": "Text", "type": "textarea" },
+    { "path": "before", "label": "Before picture", "type": "image" },
+    { "path": "after", "label": "After picture", "type": "image" },
+    { "path": "beforeLabel", "label": "Before label", "type": "text" },
+    { "path": "afterLabel", "label": "After label", "type": "text" },
+    { "path": "sliderLabel", "label": "Slider name (for screen readers)", "type": "text" },
+    { "path": "start", "label": "Line starts at (%)", "type": "number", "min": 0, "max": 100, "step": 1 },
+    { "path": "glow", "label": "Line colour", "type": "color" },
+    { "path": "background", "label": "Background", "type": "color" },
+    { "path": "text", "label": "Text colour", "type": "color" }
+  ],
+  "defaults": {
+    "title": "See the difference",
+    "body": "Drag the line to compare.",
+    "before": "lib:landscape.webp",
+    "after": "lib:landscape-night.webp",
+    "beforeLabel": "Before",
+    "afterLabel": "After",
+    "sliderLabel": "Compare before and after",
+    "start": 50,
+    "glow": "#ff5a1f",
+    "background": "#eef0f2",
+    "text": "#0f1115"
+  }
+}

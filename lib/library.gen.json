@@ -1,0 +1,2589 @@
+{
+  "blocks": [
+    {
+      "id": "before-after",
+      "name": "Before and after",
+      "kind": "section",
+      "from": "distill",
+      "description": "Two pictures of the same thing split by a glowing line the visitor drags: smiles, rooms, gardens, cars, designs.",
+      "tags": [
+        "compare",
+        "results",
+        "interactive",
+        "pictures"
+      ],
+      "business": [
+        "dentist",
+        "beauty",
+        "trades",
+        "property",
+        "auto",
+        "fitness",
+        "health",
+        "photo",
+        "agency"
+      ],
+      "heavy": false,
+      "fields": [
+        {
+          "path": "title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "body",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "before",
+          "label": "Before picture",
+          "type": "image"
+        },
+        {
+          "path": "after",
+          "label": "After picture",
+          "type": "image"
+        },
+        {
+          "path": "beforeLabel",
+          "label": "Before label",
+          "type": "text"
+        },
+        {
+          "path": "afterLabel",
+          "label": "After label",
+          "type": "text"
+        },
+        {
+          "path": "sliderLabel",
+          "label": "Slider name (for screen readers)",
+          "type": "text"
+        },
+        {
+          "path": "start",
+          "label": "Line starts at (%)",
+          "type": "number",
+          "min": 0,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "path": "glow",
+          "label": "Line colour",
+          "type": "color"
+        },
+        {
+          "path": "background",
+          "label": "Background",
+          "type": "color"
+        },
+        {
+          "path": "text",
+          "label": "Text colour",
+          "type": "color"
+        }
+      ],
+      "defaults": {
+        "title": "See the difference",
+        "body": "Drag the line to compare.",
+        "before": "lib:landscape.webp",
+        "after": "lib:landscape-night.webp",
+        "beforeLabel": "Before",
+        "afterLabel": "After",
+        "sliderLabel": "Compare before and after",
+        "start": 50,
+        "glow": "#ff5a1f",
+        "background": "#eef0f2",
+        "text": "#0f1115"
+      },
+      "files": [
+        "library/blocks/before-after.json",
+        "library/blocks/before-after.tsx",
+        "library/kit.ts"
+      ]
+    },
+    {
+      "id": "contact-form",
+      "name": "Contact form",
+      "kind": "section",
+      "from": "jack",
+      "description": "A title, your details and a short form. Messages go to a form service, or open the visitor's email app addressed to you.",
+      "tags": [
+        "contact",
+        "form",
+        "lead",
+        "booking"
+      ],
+      "business": [
+        "dentist",
+        "health",
+        "hospital",
+        "law",
+        "consulting",
+        "trades",
+        "agency",
+        "beauty",
+        "fitness",
+        "food",
+        "property",
+        "auto",
+        "pets",
+        "school",
+        "nonprofit",
+        "events",
+        "hotel",
+        "photo",
+        "creator",
+        "product",
+        "shop"
+      ],
+      "heavy": false,
+      "fields": [
+        {
+          "path": "anchor",
+          "label": "Section name for links (e.g. contact)",
+          "type": "text"
+        },
+        {
+          "path": "kicker",
+          "label": "Small label",
+          "type": "text"
+        },
+        {
+          "path": "title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "body",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "email",
+          "label": "Your email (messages go here)",
+          "type": "text"
+        },
+        {
+          "path": "phone",
+          "label": "Phone (optional)",
+          "type": "text"
+        },
+        {
+          "path": "formAction",
+          "label": "Or post to a form service (https)",
+          "type": "url",
+          "hint": "For example a Formspree or Basin endpoint. Wins over email."
+        },
+        {
+          "path": "nameLabel",
+          "label": "Name label",
+          "type": "text"
+        },
+        {
+          "path": "emailLabel",
+          "label": "Email label",
+          "type": "text"
+        },
+        {
+          "path": "messageLabel",
+          "label": "Message label",
+          "type": "text"
+        },
+        {
+          "path": "button",
+          "label": "Send button",
+          "type": "text"
+        },
+        {
+          "path": "thanksTitle",
+          "label": "Thank-you title",
+          "type": "text"
+        },
+        {
+          "path": "thanksText",
+          "label": "Thank-you text",
+          "type": "textarea"
+        },
+        {
+          "path": "error",
+          "label": "Error message",
+          "type": "text"
+        },
+        {
+          "path": "background",
+          "label": "Background",
+          "type": "color"
+        },
+        {
+          "path": "text",
+          "label": "Text colour",
+          "type": "color"
+        },
+        {
+          "path": "accent",
+          "label": "Button colour",
+          "type": "color"
+        },
+        {
+          "path": "buttonText",
+          "label": "Button text colour",
+          "type": "color"
+        }
+      ],
+      "defaults": {
+        "anchor": "contact",
+        "kicker": "Get in touch",
+        "title": "Let's talk",
+        "body": "Tell us a little about what you need and we will get back to you within a day.",
+        "email": "hello@example.com",
+        "phone": "",
+        "formAction": "",
+        "nameLabel": "Name",
+        "emailLabel": "Email",
+        "messageLabel": "Message",
+        "button": "Send message",
+        "thanksTitle": "Thank you",
+        "thanksText": "Your message is on its way. We will reply soon.",
+        "error": "That did not go through. Please email us instead.",
+        "background": "#f2f4f0",
+        "text": "#13201a",
+        "accent": "#13201a",
+        "buttonText": "#ffffff"
+      },
+      "files": [
+        "library/blocks/contact-form.json",
+        "library/blocks/contact-form.tsx",
+        "library/kit.ts"
+      ]
+    },
+    {
+      "id": "count-up-stats",
+      "name": "Counting numbers",
+      "kind": "section",
+      "from": "mossline",
+      "description": "A row of key numbers that count up from zero when they scroll into view.",
+      "tags": [
+        "stats",
+        "numbers",
+        "proof",
+        "results"
+      ],
+      "business": [
+        "product",
+        "consulting",
+        "nonprofit",
+        "health",
+        "hospital",
+        "dentist",
+        "fitness",
+        "school"
+      ],
+      "heavy": false,
+      "fields": [
+        {
+          "path": "title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "items",
+          "label": "Numbers",
+          "type": "list",
+          "itemLabel": "Number",
+          "max": 8,
+          "fields": [
+            {
+              "path": "value",
+              "label": "Number",
+              "type": "number",
+              "min": 0,
+              "max": 1000000000,
+              "step": 0.1
+            },
+            {
+              "path": "decimals",
+              "label": "Decimal places",
+              "type": "number",
+              "min": 0,
+              "max": 3,
+              "step": 1
+            },
+            {
+              "path": "prefix",
+              "label": "Before (e.g. $)",
+              "type": "text"
+            },
+            {
+              "path": "suffix",
+              "label": "After (e.g. % or +)",
+              "type": "text"
+            },
+            {
+              "path": "label",
+              "label": "Label",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "path": "duration",
+          "label": "Count time (seconds)",
+          "type": "number",
+          "min": 0.2,
+          "max": 6,
+          "step": 0.1
+        },
+        {
+          "path": "background",
+          "label": "Background",
+          "type": "color"
+        },
+        {
+          "path": "text",
+          "label": "Text colour",
+          "type": "color"
+        },
+        {
+          "path": "accent",
+          "label": "Number colour",
+          "type": "color"
+        }
+      ],
+      "defaults": {
+        "title": "Results that speak for themselves",
+        "items": [
+          {
+            "value": 12,
+            "decimals": 0,
+            "prefix": "",
+            "suffix": "+",
+            "label": "Years of experience"
+          },
+          {
+            "value": 4800,
+            "decimals": 0,
+            "prefix": "",
+            "suffix": "",
+            "label": "Happy clients"
+          },
+          {
+            "value": 98,
+            "decimals": 0,
+            "prefix": "",
+            "suffix": "%",
+            "label": "Would recommend us"
+          }
+        ],
+        "duration": 1.6,
+        "background": "#f2f4f0",
+        "text": "#13201a",
+        "accent": "#2f7d5b"
+      },
+      "files": [
+        "library/blocks/count-up-stats.json",
+        "library/blocks/count-up-stats.tsx",
+        "library/kit.ts"
+      ]
+    },
+    {
+      "id": "custom-cursor",
+      "name": "Trailing cursor",
+      "kind": "effect",
+      "from": "milo",
+      "description": "A dot that trails the mouse and grows over anything clickable. Hidden on touch screens and for visitors who ask for less motion.",
+      "tags": [
+        "cursor",
+        "pointer",
+        "effect"
+      ],
+      "business": [
+        "creator",
+        "agency",
+        "photo",
+        "events",
+        "product"
+      ],
+      "heavy": false,
+      "fields": [
+        {
+          "path": "size",
+          "label": "Size",
+          "type": "number",
+          "min": 4,
+          "max": 40,
+          "step": 1
+        },
+        {
+          "path": "color",
+          "label": "Colour",
+          "type": "color"
+        },
+        {
+          "path": "blend",
+          "label": "Invert what is under it",
+          "type": "toggle"
+        }
+      ],
+      "defaults": {
+        "size": 10,
+        "color": "#ffffff",
+        "blend": true
+      },
+      "files": [
+        "library/blocks/custom-cursor.json",
+        "library/blocks/custom-cursor.tsx",
+        "library/kit.ts"
+      ]
+    },
+    {
+      "id": "gradient-headline",
+      "name": "Giant gradient headline",
+      "kind": "section",
+      "from": "milo",
+      "description": "A screen-filling headline whose last line glows in a three-colour gradient, rising in line by line.",
+      "tags": [
+        "hero",
+        "headline",
+        "typography",
+        "opening"
+      ],
+      "business": [
+        "creator",
+        "agency",
+        "product",
+        "events",
+        "fitness",
+        "auto"
+      ],
+      "heavy": false,
+      "fields": [
+        {
+          "path": "kicker",
+          "label": "Small label",
+          "type": "text"
+        },
+        {
+          "path": "lines",
+          "label": "Headline (one line per row; the last glows)",
+          "type": "textarea"
+        },
+        {
+          "path": "body",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "upper",
+          "label": "Capital letters",
+          "type": "toggle"
+        },
+        {
+          "path": "size",
+          "label": "Headline size",
+          "type": "number",
+          "min": 6,
+          "max": 30,
+          "step": 1
+        },
+        {
+          "path": "height",
+          "label": "Height (% of the screen)",
+          "type": "number",
+          "min": 30,
+          "max": 100,
+          "step": 5
+        },
+        {
+          "path": "background",
+          "label": "Background",
+          "type": "color"
+        },
+        {
+          "path": "text",
+          "label": "Text colour",
+          "type": "color"
+        },
+        {
+          "path": "from",
+          "label": "Gradient, top",
+          "type": "color"
+        },
+        {
+          "path": "via",
+          "label": "Gradient, middle",
+          "type": "color"
+        },
+        {
+          "path": "to",
+          "label": "Gradient, bottom",
+          "type": "color"
+        }
+      ],
+      "defaults": {
+        "kicker": "Welcome",
+        "lines": "Make it\nAlive",
+        "body": "A short line that says what you do and who it is for.",
+        "upper": true,
+        "size": 17,
+        "height": 90,
+        "background": "#02070a",
+        "text": "#f2fbff",
+        "from": "#d9f7ff",
+        "via": "#63e6ff",
+        "to": "#4ba3ff"
+      },
+      "files": [
+        "library/blocks/gradient-headline.json",
+        "library/blocks/gradient-headline.tsx",
+        "library/kit.ts"
+      ]
+    },
+    {
+      "id": "image-hotspots",
+      "name": "Picture with hotspots",
+      "kind": "section",
+      "from": "mossline",
+      "description": "A picture with pulsing pins placed anywhere on it. Each pin opens a short note: rooms, features, product parts, places on a map.",
+      "tags": [
+        "map",
+        "product",
+        "tour",
+        "interactive"
+      ],
+      "business": [
+        "property",
+        "hotel",
+        "product",
+        "shop",
+        "auto",
+        "school",
+        "events"
+      ],
+      "heavy": false,
+      "fields": [
+        {
+          "path": "title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "image",
+          "label": "Picture",
+          "type": "image"
+        },
+        {
+          "path": "alt",
+          "label": "Picture description",
+          "type": "text"
+        },
+        {
+          "path": "spots",
+          "label": "Pins",
+          "type": "list",
+          "itemLabel": "Pin",
+          "max": 12,
+          "fields": [
+            {
+              "path": "x",
+              "label": "Across (% from left)",
+              "type": "number",
+              "min": 0,
+              "max": 100,
+              "step": 1
+            },
+            {
+              "path": "y",
+              "label": "Down (% from top)",
+              "type": "number",
+              "min": 0,
+              "max": 100,
+              "step": 1
+            },
+            {
+              "path": "title",
+              "label": "Title",
+              "type": "text"
+            },
+            {
+              "path": "text",
+              "label": "Note",
+              "type": "textarea"
+            }
+          ]
+        },
+        {
+          "path": "background",
+          "label": "Background",
+          "type": "color"
+        },
+        {
+          "path": "text",
+          "label": "Text colour",
+          "type": "color"
+        },
+        {
+          "path": "pin",
+          "label": "Pin colour",
+          "type": "color"
+        }
+      ],
+      "defaults": {
+        "title": "Take a look around",
+        "image": "lib:abstract.webp",
+        "alt": "A bright studio",
+        "spots": [
+          {
+            "x": 28,
+            "y": 55,
+            "title": "The work table",
+            "text": "Where every project starts, with paper first."
+          },
+          {
+            "x": 66,
+            "y": 40,
+            "title": "Natural light",
+            "text": "North-facing windows keep colours true all day."
+          },
+          {
+            "x": 82,
+            "y": 72,
+            "title": "Plants",
+            "text": "Looked after by everyone, named by the newest person."
+          }
+        ],
+        "background": "#0e1512",
+        "text": "#f2f4f0",
+        "pin": "#ffffff"
+      },
+      "files": [
+        "library/blocks/image-hotspots.json",
+        "library/blocks/image-hotspots.tsx",
+        "library/kit.ts"
+      ]
+    },
+    {
+      "id": "image-marquee",
+      "name": "Picture reels",
+      "kind": "section",
+      "from": "jack",
+      "description": "Two rows of pictures gliding in opposite directions, speeding up while the page scrolls.",
+      "tags": [
+        "gallery",
+        "pictures",
+        "marquee",
+        "scroll"
+      ],
+      "business": [
+        "creator",
+        "photo",
+        "agency",
+        "food",
+        "events",
+        "beauty"
+      ],
+      "heavy": false,
+      "fields": [
+        {
+          "path": "label",
+          "label": "Description (for screen readers)",
+          "type": "text"
+        },
+        {
+          "path": "row1",
+          "label": "Top row",
+          "type": "list",
+          "itemLabel": "Picture",
+          "max": 16,
+          "fields": [
+            {
+              "path": "image",
+              "label": "Picture",
+              "type": "image"
+            }
+          ]
+        },
+        {
+          "path": "row2",
+          "label": "Bottom row",
+          "type": "list",
+          "itemLabel": "Picture",
+          "max": 16,
+          "fields": [
+            {
+              "path": "image",
+              "label": "Picture",
+              "type": "image"
+            }
+          ]
+        },
+        {
+          "path": "size",
+          "label": "Picture height (px)",
+          "type": "number",
+          "min": 80,
+          "max": 600,
+          "step": 10
+        },
+        {
+          "path": "radius",
+          "label": "Corner rounding",
+          "type": "number",
+          "min": 0,
+          "max": 80,
+          "step": 1
+        },
+        {
+          "path": "gap",
+          "label": "Space between pictures",
+          "type": "number",
+          "min": 0,
+          "max": 80,
+          "step": 1
+        },
+        {
+          "path": "speed",
+          "label": "Speed",
+          "type": "number",
+          "min": 0,
+          "max": 4,
+          "step": 0.1
+        },
+        {
+          "path": "padding",
+          "label": "Space above and below",
+          "type": "number",
+          "min": 0,
+          "max": 200,
+          "step": 4
+        },
+        {
+          "path": "background",
+          "label": "Background",
+          "type": "color"
+        }
+      ],
+      "defaults": {
+        "label": "Selected work",
+        "row1": [
+          {
+            "image": "lib:abstract.webp"
+          },
+          {
+            "image": "lib:product.webp"
+          },
+          {
+            "image": "lib:city.webp"
+          },
+          {
+            "image": "lib:abstract.webp"
+          }
+        ],
+        "row2": [
+          {
+            "image": "lib:food.webp"
+          },
+          {
+            "image": "lib:landscape.webp"
+          },
+          {
+            "image": "lib:clinic.webp"
+          },
+          {
+            "image": "lib:landscape-night.webp"
+          }
+        ],
+        "size": 240,
+        "radius": 18,
+        "gap": 16,
+        "speed": 1,
+        "padding": 64,
+        "background": "#0b0b0c"
+      },
+      "files": [
+        "library/blocks/image-marquee.json",
+        "library/blocks/image-marquee.tsx",
+        "library/kit.ts"
+      ]
+    },
+    {
+      "id": "magnetic-button",
+      "name": "Magnetic call to action",
+      "kind": "section",
+      "from": "milo",
+      "description": "A large closing line and a pill button that is pulled towards the pointer.",
+      "tags": [
+        "cta",
+        "button",
+        "contact",
+        "pointer"
+      ],
+      "business": [
+        "creator",
+        "agency",
+        "consulting",
+        "product",
+        "events",
+        "fitness",
+        "photo"
+      ],
+      "heavy": false,
+      "fields": [
+        {
+          "path": "title",
+          "label": "Line (one line per row)",
+          "type": "textarea"
+        },
+        {
+          "path": "button",
+          "label": "Button",
+          "type": "text"
+        },
+        {
+          "path": "link",
+          "label": "Button link",
+          "type": "url"
+        },
+        {
+          "path": "strength",
+          "label": "Pull",
+          "type": "number",
+          "min": 0,
+          "max": 1,
+          "step": 0.05
+        },
+        {
+          "path": "background",
+          "label": "Background",
+          "type": "color"
+        },
+        {
+          "path": "text",
+          "label": "Text colour",
+          "type": "color"
+        },
+        {
+          "path": "accent",
+          "label": "Button colour",
+          "type": "color"
+        }
+      ],
+      "defaults": {
+        "title": "Let's make\nsomething alive.",
+        "button": "Start a project",
+        "link": "#contact",
+        "strength": 0.3,
+        "background": "#02070a",
+        "text": "#f2fbff",
+        "accent": "#63e6ff"
+      },
+      "files": [
+        "library/blocks/magnetic-button.json",
+        "library/blocks/magnetic-button.tsx",
+        "library/kit.ts"
+      ]
+    },
+    {
+      "id": "night-valley",
+      "name": "Night valley",
+      "kind": "scene",
+      "from": "fernhollow",
+      "description": "A full-screen 3D valley at night: thousands of swaying flowers and leaves, stars, light rays, bloom and grain, with your words over it.",
+      "tags": [
+        "3d",
+        "webgl",
+        "nature",
+        "atmosphere",
+        "hero"
+      ],
+      "business": [
+        "agency",
+        "hotel",
+        "nonprofit",
+        "photo",
+        "events",
+        "beauty",
+        "health"
+      ],
+      "heavy": true,
+      "fields": [
+        {
+          "path": "kicker",
+          "label": "Small label",
+          "type": "text"
+        },
+        {
+          "path": "title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "body",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "sky",
+          "label": "Sky",
+          "type": "color"
+        },
+        {
+          "path": "fog",
+          "label": "Fog",
+          "type": "color"
+        },
+        {
+          "path": "glow",
+          "label": "Glow",
+          "type": "color"
+        },
+        {
+          "path": "flowers",
+          "label": "Main flower colour",
+          "type": "color"
+        },
+        {
+          "path": "density",
+          "label": "How full the valley is",
+          "type": "number",
+          "min": 0.1,
+          "max": 1,
+          "step": 0.05
+        },
+        {
+          "path": "stars",
+          "label": "Stars",
+          "type": "number",
+          "min": 0,
+          "max": 2000,
+          "step": 10
+        },
+        {
+          "path": "bloom",
+          "label": "Glow strength",
+          "type": "number",
+          "min": 0,
+          "max": 2,
+          "step": 0.02
+        },
+        {
+          "path": "height",
+          "label": "Height (% of the screen)",
+          "type": "number",
+          "min": 50,
+          "max": 100,
+          "step": 5
+        },
+        {
+          "path": "text",
+          "label": "Text colour",
+          "type": "color"
+        }
+      ],
+      "defaults": {
+        "kicker": "After dark",
+        "title": "A quiet place to begin",
+        "body": "Slow down, look closer, and let the details lead the way.",
+        "sky": "#030508",
+        "fog": "#04070b",
+        "glow": "#f5e6c2",
+        "flowers": "#f5efe2",
+        "density": 0.6,
+        "stars": 450,
+        "bloom": 0.58,
+        "height": 100,
+        "text": "#f5efe2"
+      },
+      "files": [
+        "library/blocks/night-valley.json",
+        "library/blocks/night-valley.tsx",
+        "library/kit.ts",
+        "templates/fernhollow/source/src/valley/AudioEngine.ts",
+        "templates/fernhollow/source/src/valley/ValleyEngine.ts",
+        "templates/fernhollow/source/src/valley/textures.ts"
+      ]
+    },
+    {
+      "id": "numbered-list",
+      "name": "Numbered services",
+      "kind": "section",
+      "from": "jack",
+      "description": "A title and big numbered rows (services, steps, reasons) that slide in and lean towards the pointer.",
+      "tags": [
+        "services",
+        "steps",
+        "list",
+        "typography"
+      ],
+      "business": [
+        "agency",
+        "consulting",
+        "creator",
+        "trades",
+        "law",
+        "dentist",
+        "health",
+        "fitness"
+      ],
+      "heavy": false,
+      "fields": [
+        {
+          "path": "title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "items",
+          "label": "Rows",
+          "type": "list",
+          "itemLabel": "Row",
+          "max": 12,
+          "fields": [
+            {
+              "path": "title",
+              "label": "Name",
+              "type": "text"
+            },
+            {
+              "path": "text",
+              "label": "Description",
+              "type": "textarea"
+            }
+          ]
+        },
+        {
+          "path": "background",
+          "label": "Background",
+          "type": "color"
+        },
+        {
+          "path": "text",
+          "label": "Text colour",
+          "type": "color"
+        },
+        {
+          "path": "accent",
+          "label": "Number colour on hover",
+          "type": "color"
+        }
+      ],
+      "defaults": {
+        "title": "What we do",
+        "items": [
+          {
+            "title": "Strategy",
+            "text": "We start with your goals, your customers and what makes you different."
+          },
+          {
+            "title": "Design",
+            "text": "A look and voice that people remember, made for every screen."
+          },
+          {
+            "title": "Build",
+            "text": "Fast, accessible pages that are easy for you to keep up to date."
+          },
+          {
+            "title": "Grow",
+            "text": "Measure what works, then do more of it."
+          }
+        ],
+        "background": "#f4f2ee",
+        "text": "#0b0b0c",
+        "accent": "#ff5a1f"
+      },
+      "files": [
+        "library/blocks/numbered-list.json",
+        "library/blocks/numbered-list.tsx",
+        "library/kit.ts"
+      ]
+    },
+    {
+      "id": "pricing-plans",
+      "name": "Pricing plans",
+      "kind": "section",
+      "from": "distill",
+      "description": "Plans or packages side by side, each with a price, what is included and a button. One can be picked out.",
+      "tags": [
+        "pricing",
+        "plans",
+        "packages",
+        "membership"
+      ],
+      "business": [
+        "product",
+        "fitness",
+        "consulting",
+        "school",
+        "agency",
+        "beauty",
+        "dentist",
+        "pets",
+        "photo"
+      ],
+      "heavy": false,
+      "fields": [
+        {
+          "path": "anchor",
+          "label": "Section name for links (e.g. pricing)",
+          "type": "text"
+        },
+        {
+          "path": "title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "body",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "plans",
+          "label": "Plans",
+          "type": "list",
+          "itemLabel": "Plan",
+          "max": 6,
+          "fields": [
+            {
+              "path": "name",
+              "label": "Name",
+              "type": "text"
+            },
+            {
+              "path": "price",
+              "label": "Price",
+              "type": "text"
+            },
+            {
+              "path": "detail",
+              "label": "Detail",
+              "type": "text"
+            },
+            {
+              "path": "features",
+              "label": "Included (one per line)",
+              "type": "textarea"
+            },
+            {
+              "path": "button",
+              "label": "Button",
+              "type": "text"
+            },
+            {
+              "path": "link",
+              "label": "Button link",
+              "type": "url"
+            },
+            {
+              "path": "highlight",
+              "label": "Pick this one out",
+              "type": "toggle"
+            }
+          ]
+        },
+        {
+          "path": "background",
+          "label": "Background",
+          "type": "color"
+        },
+        {
+          "path": "card",
+          "label": "Card colour",
+          "type": "color"
+        },
+        {
+          "path": "text",
+          "label": "Text colour",
+          "type": "color"
+        },
+        {
+          "path": "accent",
+          "label": "Accent",
+          "type": "color"
+        }
+      ],
+      "defaults": {
+        "anchor": "pricing",
+        "title": "Simple pricing",
+        "body": "Pick the plan that fits. Change or cancel any time.",
+        "plans": [
+          {
+            "name": "Starter",
+            "price": "$0",
+            "detail": "For trying it out",
+            "features": "One project\nEmail support",
+            "button": "Start free",
+            "link": "#contact",
+            "highlight": false
+          },
+          {
+            "name": "Growth",
+            "price": "$49 / mo",
+            "detail": "For growing teams",
+            "features": "Ten projects\nPriority support\nCustom domain",
+            "button": "Choose Growth",
+            "link": "#contact",
+            "highlight": true
+          },
+          {
+            "name": "Studio",
+            "price": "Custom",
+            "detail": "For larger needs",
+            "features": "Unlimited projects\nDedicated contact\nTraining",
+            "button": "Talk to us",
+            "link": "#contact",
+            "highlight": false
+          }
+        ],
+        "background": "#eef0f2",
+        "card": "#ffffff",
+        "text": "#0f1115",
+        "accent": "#ff5a1f"
+      },
+      "files": [
+        "library/blocks/pricing-plans.json",
+        "library/blocks/pricing-plans.tsx",
+        "library/kit.ts"
+      ]
+    },
+    {
+      "id": "product-cards",
+      "name": "Product cards",
+      "kind": "section",
+      "from": "stride",
+      "description": "A bold title and bright coloured cards for products, menu items or packages, each tilting towards the pointer.",
+      "tags": [
+        "shop",
+        "products",
+        "menu",
+        "cards"
+      ],
+      "business": [
+        "shop",
+        "food",
+        "product",
+        "beauty",
+        "pets",
+        "fitness"
+      ],
+      "heavy": false,
+      "fields": [
+        {
+          "path": "anchor",
+          "label": "Section name for links (e.g. shop)",
+          "type": "text"
+        },
+        {
+          "path": "title",
+          "label": "Title (one line per row)",
+          "type": "textarea"
+        },
+        {
+          "path": "body",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "items",
+          "label": "Products",
+          "type": "list",
+          "itemLabel": "Product",
+          "max": 12,
+          "fields": [
+            {
+              "path": "name",
+              "label": "Name",
+              "type": "text"
+            },
+            {
+              "path": "color",
+              "label": "Card colour",
+              "type": "color"
+            },
+            {
+              "path": "image",
+              "label": "Picture (a cut-out works best)",
+              "type": "image"
+            },
+            {
+              "path": "price",
+              "label": "Price",
+              "type": "text"
+            },
+            {
+              "path": "cta",
+              "label": "Button",
+              "type": "text"
+            },
+            {
+              "path": "link",
+              "label": "Link (e.g. your shop page)",
+              "type": "url"
+            }
+          ]
+        },
+        {
+          "path": "background",
+          "label": "Background",
+          "type": "color"
+        },
+        {
+          "path": "text",
+          "label": "Text colour",
+          "type": "color"
+        },
+        {
+          "path": "cardText",
+          "label": "Card text colour",
+          "type": "color"
+        }
+      ],
+      "defaults": {
+        "anchor": "shop",
+        "title": "Grab\na bag",
+        "body": "Bold flavours, real ingredients. Pick your favourite or try them all.",
+        "items": [
+          {
+            "name": "Peanut Cocoa",
+            "color": "#b79474",
+            "image": "",
+            "price": "$2.99",
+            "cta": "Add",
+            "link": ""
+          },
+          {
+            "name": "Berry Oat",
+            "color": "#ab9ac4",
+            "image": "",
+            "price": "$2.99",
+            "cta": "Add",
+            "link": ""
+          },
+          {
+            "name": "Salted Caramel",
+            "color": "#d1ad6c",
+            "image": "",
+            "price": "$2.99",
+            "cta": "Add",
+            "link": ""
+          },
+          {
+            "name": "Mint Chip",
+            "color": "#94bdb4",
+            "image": "",
+            "price": "$2.99",
+            "cta": "Add",
+            "link": ""
+          }
+        ],
+        "background": "#f0e8e0",
+        "text": "#1c1a1f",
+        "cardText": "#ffffff"
+      },
+      "files": [
+        "library/blocks/product-cards.json",
+        "library/blocks/product-cards.tsx",
+        "library/kit.ts"
+      ]
+    },
+    {
+      "id": "scroll-progress",
+      "name": "Reading progress",
+      "kind": "effect",
+      "from": "milo",
+      "description": "A thin bar along the top, or a short track at the right, that fills as the visitor scrolls.",
+      "tags": [
+        "progress",
+        "scroll",
+        "effect"
+      ],
+      "business": [
+        "creator",
+        "agency",
+        "school",
+        "nonprofit",
+        "consulting",
+        "law",
+        "product"
+      ],
+      "heavy": false,
+      "fields": [
+        {
+          "path": "position",
+          "label": "Where",
+          "type": "select",
+          "options": [
+            {
+              "value": "top",
+              "label": "Along the top"
+            },
+            {
+              "value": "right",
+              "label": "Right edge"
+            }
+          ]
+        },
+        {
+          "path": "thickness",
+          "label": "Thickness",
+          "type": "number",
+          "min": 1,
+          "max": 12,
+          "step": 1
+        },
+        {
+          "path": "color",
+          "label": "Colour",
+          "type": "color"
+        }
+      ],
+      "defaults": {
+        "position": "top",
+        "thickness": 3,
+        "color": "#63e6ff"
+      },
+      "files": [
+        "library/blocks/scroll-progress.json",
+        "library/blocks/scroll-progress.tsx",
+        "library/kit.ts"
+      ]
+    },
+    {
+      "id": "scroll-video",
+      "name": "Scroll-driven film",
+      "kind": "section",
+      "from": "mossline",
+      "description": "A film pinned to the screen that plays as the visitor scrolls, forwards and backwards, with captions taking turns.",
+      "tags": [
+        "video",
+        "story",
+        "scroll",
+        "cinematic"
+      ],
+      "business": [
+        "product",
+        "auto",
+        "property",
+        "hotel",
+        "events",
+        "food",
+        "fitness"
+      ],
+      "heavy": false,
+      "fields": [
+        {
+          "path": "video",
+          "label": "Film (short, mp4)",
+          "type": "video",
+          "hint": "Films with a keyframe every few frames scrub most smoothly."
+        },
+        {
+          "path": "captions",
+          "label": "Captions (one per line, in order)",
+          "type": "textarea"
+        },
+        {
+          "path": "length",
+          "label": "Scroll length (screens)",
+          "type": "number",
+          "min": 1.5,
+          "max": 8,
+          "step": 0.5
+        },
+        {
+          "path": "shade",
+          "label": "Darken the film",
+          "type": "number",
+          "min": 0,
+          "max": 0.9,
+          "step": 0.05
+        },
+        {
+          "path": "background",
+          "label": "Background",
+          "type": "color"
+        },
+        {
+          "path": "text",
+          "label": "Text colour",
+          "type": "color"
+        }
+      ],
+      "defaults": {
+        "video": "",
+        "captions": "It starts with an idea.\nThen it takes shape.\nAnd then it is yours.",
+        "length": 3,
+        "shade": 0.35,
+        "background": "#000000",
+        "text": "#ffffff"
+      },
+      "files": [
+        "library/blocks/scroll-video.json",
+        "library/blocks/scroll-video.tsx",
+        "library/kit.ts"
+      ]
+    },
+    {
+      "id": "spotlight-reveal",
+      "name": "Spotlight reveal",
+      "kind": "section",
+      "from": "lithos",
+      "description": "A full-width picture with a spotlight that follows the pointer and shows a second picture through it. Drifts by itself when nobody points.",
+      "tags": [
+        "hero",
+        "picture",
+        "pointer",
+        "reveal"
+      ],
+      "business": [
+        "school",
+        "photo",
+        "property",
+        "hotel",
+        "nonprofit"
+      ],
+      "heavy": false,
+      "fields": [
+        {
+          "path": "image",
+          "label": "Picture",
+          "type": "image"
+        },
+        {
+          "path": "revealImage",
+          "label": "Picture inside the spotlight",
+          "type": "image"
+        },
+        {
+          "path": "alt",
+          "label": "Picture description",
+          "type": "text"
+        },
+        {
+          "path": "title",
+          "label": "Headline",
+          "type": "text"
+        },
+        {
+          "path": "body",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "radius",
+          "label": "Spotlight size",
+          "type": "number",
+          "min": 40,
+          "max": 600,
+          "step": 10
+        },
+        {
+          "path": "follow",
+          "label": "How quickly it follows",
+          "type": "number",
+          "min": 0.02,
+          "max": 1,
+          "step": 0.01
+        },
+        {
+          "path": "height",
+          "label": "Height (% of the screen)",
+          "type": "number",
+          "min": 40,
+          "max": 100,
+          "step": 5
+        },
+        {
+          "path": "background",
+          "label": "Background",
+          "type": "color"
+        },
+        {
+          "path": "text",
+          "label": "Text colour",
+          "type": "color"
+        }
+      ],
+      "defaults": {
+        "image": "lib:landscape.webp",
+        "revealImage": "lib:landscape-night.webp",
+        "alt": "A misty valley at dawn",
+        "title": "Look a little closer",
+        "body": "Move across the picture to see what lies underneath.",
+        "radius": 220,
+        "follow": 0.1,
+        "height": 90,
+        "background": "#000000",
+        "text": "#ffffff"
+      },
+      "files": [
+        "library/blocks/spotlight-reveal.json",
+        "library/blocks/spotlight-reveal.tsx",
+        "library/kit.ts"
+      ]
+    },
+    {
+      "id": "stacking-cards",
+      "name": "Stacking project cards",
+      "kind": "section",
+      "from": "jack",
+      "description": "Large cards for projects, rooms, products or cases that stick and stack on top of each other as the page scrolls.",
+      "tags": [
+        "projects",
+        "portfolio",
+        "cards",
+        "scroll"
+      ],
+      "business": [
+        "creator",
+        "agency",
+        "photo",
+        "property",
+        "hotel",
+        "consulting"
+      ],
+      "heavy": false,
+      "fields": [
+        {
+          "path": "title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "items",
+          "label": "Cards",
+          "type": "list",
+          "itemLabel": "Card",
+          "max": 10,
+          "fields": [
+            {
+              "path": "title",
+              "label": "Title",
+              "type": "text"
+            },
+            {
+              "path": "meta",
+              "label": "Small label",
+              "type": "text"
+            },
+            {
+              "path": "text",
+              "label": "Text",
+              "type": "textarea"
+            },
+            {
+              "path": "image",
+              "label": "Picture",
+              "type": "image"
+            },
+            {
+              "path": "link",
+              "label": "Link (optional)",
+              "type": "url"
+            },
+            {
+              "path": "linkLabel",
+              "label": "Link label",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "path": "shrink",
+          "label": "Cards shrink as they stack",
+          "type": "toggle"
+        },
+        {
+          "path": "background",
+          "label": "Background",
+          "type": "color"
+        },
+        {
+          "path": "card",
+          "label": "Card colour",
+          "type": "color"
+        },
+        {
+          "path": "text",
+          "label": "Text colour",
+          "type": "color"
+        }
+      ],
+      "defaults": {
+        "title": "Selected work",
+        "items": [
+          {
+            "title": "North Studio",
+            "meta": "Brand and website",
+            "text": "A calm new identity and a website that books itself.",
+            "image": "lib:abstract.webp",
+            "link": "",
+            "linkLabel": "View"
+          },
+          {
+            "title": "Stoneware",
+            "meta": "Product launch",
+            "text": "Launch film, product pages and a shop that tripled orders.",
+            "image": "lib:product.webp",
+            "link": "",
+            "linkLabel": "View"
+          },
+          {
+            "title": "Harbour Lofts",
+            "meta": "Property",
+            "text": "A scroll story for twelve new homes by the water.",
+            "image": "lib:city.webp",
+            "link": "",
+            "linkLabel": "View"
+          }
+        ],
+        "shrink": true,
+        "background": "#0b0b0c",
+        "card": "#17171a",
+        "text": "#f4f2ee"
+      },
+      "files": [
+        "library/blocks/stacking-cards.json",
+        "library/blocks/stacking-cards.tsx",
+        "library/kit.ts"
+      ]
+    },
+    {
+      "id": "word-reveal",
+      "name": "Word-by-word statement",
+      "kind": "section",
+      "from": "jack",
+      "description": "A large statement whose words light up one by one as the visitor scrolls.",
+      "tags": [
+        "about",
+        "statement",
+        "typography",
+        "scroll"
+      ],
+      "business": [
+        "creator",
+        "agency",
+        "consulting",
+        "nonprofit",
+        "law",
+        "school"
+      ],
+      "heavy": false,
+      "fields": [
+        {
+          "path": "kicker",
+          "label": "Small label",
+          "type": "text"
+        },
+        {
+          "path": "body",
+          "label": "Statement",
+          "type": "textarea"
+        },
+        {
+          "path": "align",
+          "label": "Alignment",
+          "type": "select",
+          "options": [
+            {
+              "value": "center",
+              "label": "Centred"
+            },
+            {
+              "value": "left",
+              "label": "Left"
+            }
+          ]
+        },
+        {
+          "path": "dim",
+          "label": "Brightness before it lights up",
+          "type": "number",
+          "min": 0,
+          "max": 1,
+          "step": 0.05
+        },
+        {
+          "path": "background",
+          "label": "Background",
+          "type": "color"
+        },
+        {
+          "path": "text",
+          "label": "Text colour",
+          "type": "color"
+        }
+      ],
+      "defaults": {
+        "kicker": "About us",
+        "body": "We are a small team that cares about the details. Every project starts with listening, and ends with something people are glad to use.",
+        "align": "center",
+        "dim": 0.18,
+        "background": "#0b0b0c",
+        "text": "#f4f2ee"
+      },
+      "files": [
+        "library/blocks/word-reveal.json",
+        "library/blocks/word-reveal.tsx",
+        "library/kit.ts"
+      ]
+    },
+    {
+      "id": "world-3d",
+      "name": "Live 3D world",
+      "kind": "scene",
+      "from": "milo",
+      "description": "A live 3D scene beside your words that visitors can drag to turn and scroll to zoom: glowing deep-sea flora, floating rings, liquid metal waves or sound rings.",
+      "tags": [
+        "3d",
+        "webgl",
+        "interactive",
+        "showcase"
+      ],
+      "business": [
+        "creator",
+        "agency",
+        "product",
+        "events"
+      ],
+      "heavy": true,
+      "fields": [
+        {
+          "path": "world",
+          "label": "World",
+          "type": "select",
+          "options": [
+            {
+              "value": "abyss",
+              "label": "Abyss (glowing deep-sea flora)"
+            },
+            {
+              "value": "orbital",
+              "label": "Orbital (floating rings)"
+            },
+            {
+              "value": "tideline",
+              "label": "Tideline (liquid metal waves)"
+            },
+            {
+              "value": "echo",
+              "label": "Echo (sound rings)"
+            }
+          ]
+        },
+        {
+          "path": "orbit",
+          "label": "Visitors can turn and zoom it",
+          "type": "toggle"
+        },
+        {
+          "path": "kicker",
+          "label": "Small label",
+          "type": "text"
+        },
+        {
+          "path": "title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "body",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "height",
+          "label": "Scene height (% of the screen)",
+          "type": "number",
+          "min": 30,
+          "max": 90,
+          "step": 5
+        },
+        {
+          "path": "background",
+          "label": "Background",
+          "type": "color"
+        },
+        {
+          "path": "text",
+          "label": "Text colour",
+          "type": "color"
+        }
+      ],
+      "defaults": {
+        "world": "abyss",
+        "orbit": true,
+        "kicker": "In motion",
+        "title": "Step inside",
+        "body": "Drag to turn the scene, scroll to come closer.",
+        "height": 60,
+        "background": "#02070a",
+        "text": "#f2fbff"
+      },
+      "files": [
+        "library/blocks/world-3d.json",
+        "library/blocks/world-3d.tsx",
+        "library/kit.ts",
+        "templates/milo/source/src/components/ProjectVisualScene.tsx",
+        "templates/milo/source/src/data/portfolioData.ts",
+        "templates/milo/source/src/hooks/usePortfolioHooks.ts",
+        "templates/milo/source/src/utils/webgl.ts",
+        "templates/milo/source/src/xp.ts"
+      ]
+    }
+  ],
+  "assets": {
+    "media": [
+      {
+        "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/0e201fcd-ffc0-46a0-bd06-faa07bf0e84b.webp",
+        "type": "image",
+        "label": "Cards 1: Picture",
+        "from": [
+          "distill"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "agency"
+        ]
+      },
+      {
+        "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/2bebad68-8177-446a-9550-d64074166364.webp",
+        "type": "image",
+        "label": "Cards 3: Picture",
+        "from": [
+          "distill"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "agency"
+        ]
+      },
+      {
+        "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/e80ba08d-d7b6-4b27-b0cd-8d0ad09c788c.webp",
+        "type": "image",
+        "label": "Cards 4: Picture",
+        "from": [
+          "distill"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "agency"
+        ]
+      },
+      {
+        "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/156ff74d-ee37-4443-8f3a-11ae2095ed4c.webp",
+        "type": "image",
+        "label": "Cards 5: Picture",
+        "from": [
+          "distill"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "agency"
+        ]
+      },
+      {
+        "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/7b6ad638-89ec-4dec-be74-d36fbff3ea53.webp",
+        "type": "image",
+        "label": "Cards 6: Picture",
+        "from": [
+          "distill"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "agency"
+        ]
+      },
+      {
+        "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/62b0d7c1-3eb7-44bd-9b19-57b975fb250f.webp",
+        "type": "image",
+        "label": "Cards 4: Second picture (vision, journal)",
+        "from": [
+          "distill"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/portrait.webp",
+        "type": "image",
+        "label": "Portrait",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85",
+        "type": "image",
+        "label": "Top row 1: Picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85",
+        "type": "image",
+        "label": "Top row 2: Picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85",
+        "type": "image",
+        "label": "Top row 3: Picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85",
+        "type": "image",
+        "label": "Top row 4: Picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85",
+        "type": "image",
+        "label": "Top row 5: Picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85",
+        "type": "image",
+        "label": "Bottom row 2: Picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85",
+        "type": "image",
+        "label": "Bottom row 3: Picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85",
+        "type": "image",
+        "label": "Bottom row 4: Picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85",
+        "type": "image",
+        "label": "Bottom row 5: Picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/decor1.webp",
+        "type": "image",
+        "label": "Picture, top left",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/decor2.webp",
+        "type": "image",
+        "label": "Picture, bottom left",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/decor3.webp",
+        "type": "image",
+        "label": "Picture, top right",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/decor4.webp",
+        "type": "image",
+        "label": "Picture, bottom right",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_195923_b0ba8ace-1d1d-4f2c-9a28-1ab84b330680.png&w=1280&q=85",
+        "type": "image",
+        "label": "Picture on top",
+        "from": [
+          "lithos"
+        ],
+        "business": [
+          "school",
+          "product",
+          "nonprofit"
+        ]
+      },
+      {
+        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_201152_bba90a12-bf12-459f-91f0-51f237dbaf3b.png&w=1280&q=85",
+        "type": "image",
+        "label": "Picture the spotlight reveals",
+        "from": [
+          "lithos"
+        ],
+        "business": [
+          "school",
+          "product",
+          "nonprofit"
+        ]
+      },
+      {
+        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_031618_8ce6dca1-972d-429d-8d13-bf0691c37848.png&w=2400&q=88",
+        "type": "image",
+        "label": "Opening picture",
+        "from": [
+          "mossline"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "nonprofit"
+        ]
+      },
+      {
+        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_031657_baaa3380-5ece-482a-a623-a1838fd7653c.png&w=2400&q=90",
+        "type": "image",
+        "label": "Foreground cut-out",
+        "from": [
+          "mossline"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "nonprofit"
+        ]
+      },
+      {
+        "src": "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261106_025717_906b686d-9a9a-4dea-bab4-ae2454f8390e.mp4",
+        "type": "video",
+        "label": "Push-in video",
+        "from": [
+          "mossline"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "nonprofit"
+        ]
+      },
+      {
+        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025635_82593f6a-1cf7-41c1-94ac-96fb89ebfd1a.png&w=2400&q=85",
+        "type": "image",
+        "label": "Floating rock picture",
+        "from": [
+          "mossline"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "nonprofit"
+        ]
+      },
+      {
+        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025630_9a37a1e0-2547-4973-8160-c75205993914.png&w=1400&q=82",
+        "type": "image",
+        "label": "Cards 1: Picture",
+        "from": [
+          "mossline"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "nonprofit"
+        ]
+      },
+      {
+        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025545_b003e5cc-e68f-4fee-b686-c217a5d81eea.png&w=1400&q=82",
+        "type": "image",
+        "label": "Cards 2: Picture",
+        "from": [
+          "mossline"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "nonprofit"
+        ]
+      },
+      {
+        "src": "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261116_131908_b6239896-c077-450c-ad91-575153973fcf.mp4",
+        "type": "video",
+        "label": "Film",
+        "from": [
+          "stride"
+        ],
+        "business": [
+          "shop",
+          "food",
+          "product"
+        ]
+      },
+      {
+        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261116_132032_30242d8c-5062-4d60-8a3d-238f0a2ff788.png&w=2200&q=85",
+        "type": "image",
+        "label": "Sheet with every bar and ingredient",
+        "from": [
+          "stride"
+        ],
+        "business": [
+          "shop",
+          "food",
+          "product"
+        ]
+      },
+      {
+        "src": "/lib/media/landscape.webp",
+        "type": "image",
+        "label": "Before picture",
+        "from": [
+          "library"
+        ],
+        "business": [
+          "dentist",
+          "beauty",
+          "trades",
+          "property",
+          "auto",
+          "fitness",
+          "health",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/lib/media/landscape-night.webp",
+        "type": "image",
+        "label": "After picture",
+        "from": [
+          "library"
+        ],
+        "business": [
+          "dentist",
+          "beauty",
+          "trades",
+          "property",
+          "auto",
+          "fitness",
+          "health",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/lib/media/abstract.webp",
+        "type": "image",
+        "label": "Picture",
+        "from": [
+          "library"
+        ],
+        "business": [
+          "property",
+          "hotel",
+          "product",
+          "shop",
+          "auto",
+          "school",
+          "events"
+        ]
+      },
+      {
+        "src": "/lib/media/city.webp",
+        "type": "image",
+        "label": "city",
+        "from": [
+          "library"
+        ],
+        "business": []
+      },
+      {
+        "src": "/lib/media/clinic.webp",
+        "type": "image",
+        "label": "clinic",
+        "from": [
+          "library"
+        ],
+        "business": []
+      },
+      {
+        "src": "/lib/media/food.webp",
+        "type": "image",
+        "label": "food",
+        "from": [
+          "library"
+        ],
+        "business": []
+      },
+      {
+        "src": "/lib/media/product.webp",
+        "type": "image",
+        "label": "product",
+        "from": [
+          "library"
+        ],
+        "business": []
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Inter",
+        "from": [
+          "distill",
+          "lithos",
+          "stride"
+        ]
+      },
+      {
+        "family": "Newsreader",
+        "from": [
+          "distill"
+        ]
+      },
+      {
+        "family": "IBM Plex Mono",
+        "from": [
+          "distill"
+        ]
+      },
+      {
+        "family": "Antonio",
+        "from": [
+          "fernhollow"
+        ]
+      },
+      {
+        "family": "Manrope",
+        "from": [
+          "fernhollow",
+          "milo"
+        ]
+      },
+      {
+        "family": "Kanit",
+        "from": [
+          "jack"
+        ]
+      },
+      {
+        "family": "Playfair Display",
+        "from": [
+          "lithos"
+        ]
+      },
+      {
+        "family": "Inter Tight",
+        "from": [
+          "mossline"
+        ]
+      },
+      {
+        "family": "JetBrains Mono",
+        "from": [
+          "mossline"
+        ]
+      },
+      {
+        "family": "Archivo Black",
+        "from": [
+          "stride"
+        ]
+      },
+      {
+        "family": "DM Mono",
+        "from": [
+          "stride"
+        ]
+      }
+    ],
+    "palettes": [
+      {
+        "from": "distill",
+        "name": "Distill",
+        "colors": {
+          "bg": "#EEF0F2",
+          "ink": "#0F1115",
+          "body": "#2A2E35",
+          "muted": "#8B9098",
+          "code": "#7A7F88",
+          "comment": "#B3B8BF",
+          "hot": "#FF5A1F",
+          "hotSoft": "#FFE1D3",
+          "hotDeep": "#D9430F",
+          "buttonText": "#FFFFFF"
+        }
+      },
+      {
+        "from": "fernhollow",
+        "name": "Fernhollow",
+        "colors": {
+          "text": "#f5efe2",
+          "buttonText": "#151510",
+          "background": "#000000",
+          "panel": "#0b0d0b"
+        }
+      },
+      {
+        "from": "jack",
+        "name": "Jack",
+        "colors": {
+          "page": "#0c0c0c",
+          "text": "#d7e2ea",
+          "surface": "#141414",
+          "light": "#ffffff",
+          "lightText": "#0c0c0c",
+          "headingFrom": "#646973",
+          "headingTo": "#bbccd7",
+          "grad1": "#18011f",
+          "grad2": "#b600a8",
+          "grad3": "#7621b0",
+          "grad4": "#be4c00",
+          "buttonText": "#ffffff"
+        }
+      },
+      {
+        "from": "lithos",
+        "name": "Lithos",
+        "colors": {
+          "accent": "#e8702a",
+          "accentHover": "#d2611f",
+          "text": "#ffffff",
+          "page": "#000000",
+          "panel": "#0a0a0a",
+          "button": "#ffffff",
+          "buttonText": "#111827"
+        }
+      },
+      {
+        "from": "milo",
+        "name": "Milo",
+        "colors": {
+          "page": "#02070A",
+          "surface": "#041319",
+          "deep": "#082838",
+          "text": "#F2FBFF",
+          "accent": "#63E6FF",
+          "accent2": "#4BA3FF",
+          "highlight": "#D9F7FF",
+          "light": "#F2FBFF",
+          "lightText": "#02070A"
+        }
+      },
+      {
+        "from": "mossline",
+        "name": "Mossline",
+        "colors": {
+          "ink": "#10291a",
+          "ink2": "#2c4434",
+          "mist": "#e7ebe8",
+          "paper": "#ffffff",
+          "accent": "#c6f35c",
+          "accent2": "#a9dd3a",
+          "positive": "#4f8a12",
+          "deep": "#1b3122"
+        }
+      },
+      {
+        "from": "stride",
+        "name": "Stride",
+        "colors": {
+          "ink": "#1c1a1f",
+          "cream": "#f0e8e0",
+          "dark": "#191a1e"
+        }
+      }
+    ]
+  }
+}

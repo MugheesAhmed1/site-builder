@@ -1,0 +1,36 @@
+{
+  "name": "Picture with hotspots",
+  "kind": "section",
+  "from": "mossline",
+  "description": "A picture with pulsing pins placed anywhere on it. Each pin opens a short note: rooms, features, product parts, places on a map.",
+  "tags": ["map", "product", "tour", "interactive"],
+  "business": ["property", "hotel", "product", "shop", "auto", "school", "events"],
+  "heavy": false,
+  "fields": [
+    { "path": "title", "label": "Title", "type": "text" },
+    { "path": "image", "label": "Picture", "type": "image" },
+    { "path": "alt", "label": "Picture description", "type": "text" },
+    { "path": "spots", "label": "Pins", "type": "list", "itemLabel": "Pin", "max": 12, "fields": [
+      { "path": "x", "label": "Across (% from left)", "type": "number", "min": 0, "max": 100, "step": 1 },
+      { "path": "y", "label": "Down (% from top)", "type": "number", "min": 0, "max": 100, "step": 1 },
+      { "path": "title", "label": "Title", "type": "text" },
+      { "path": "text", "label": "Note", "type": "textarea" }
+    ] },
+    { "path": "background", "label": "Background", "type": "color" },
+    { "path": "text", "label": "Text colour", "type": "color" },
+    { "path": "pin", "label": "Pin colour", "type": "color" }
+  ],
+  "defaults": {
+    "title": "Take a look around",
+    "image": "lib:abstract.webp",
+    "alt": "A bright studio",
+    "spots": [
+      { "x": 28, "y": 55, "title": "The work table", "text": "Where every project starts, with paper first." },
+      { "x": 66, "y": 40, "title": "Natural light", "text": "North-facing windows keep colours true all day." },
+      { "x": 82, "y": 72, "title": "Plants", "text": "Looked after by everyone, named by the newest person." }
+    ],
+    "background": "#0e1512",
+    "text": "#f2f4f0",
+    "pin": "#ffffff"
+  }
+}

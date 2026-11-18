@@ -1,0 +1,36 @@
+{
+  "name": "Stacking project cards",
+  "kind": "section",
+  "from": "jack",
+  "description": "Large cards for projects, rooms, products or cases that stick and stack on top of each other as the page scrolls.",
+  "tags": ["projects", "portfolio", "cards", "scroll"],
+  "business": ["creator", "agency", "photo", "property", "hotel", "consulting"],
+  "heavy": false,
+  "fields": [
+    { "path": "title", "label": "Title", "type": "text" },
+    { "path": "items", "label": "Cards", "type": "list", "itemLabel": "Card", "max": 10, "fields": [
+      { "path": "title", "label": "Title", "type": "text" },
+      { "path": "meta", "label": "Small label", "type": "text" },
+      { "path": "text", "label": "Text", "type": "textarea" },
+      { "path": "image", "label": "Picture", "type": "image" },
+      { "path": "link", "label": "Link (optional)", "type": "url" },
+      { "path": "linkLabel", "label": "Link label", "type": "text" }
+    ] },
+    { "path": "shrink", "label": "Cards shrink as they stack", "type": "toggle" },
+    { "path": "background", "label": "Background", "type": "color" },
+    { "path": "card", "label": "Card colour", "type": "color" },
+    { "path": "text", "label": "Text colour", "type": "color" }
+  ],
+  "defaults": {
+    "title": "Selected work",
+    "items": [
+      { "title": "North Studio", "meta": "Brand and website", "text": "A calm new identity and a website that books itself.", "image": "lib:abstract.webp", "link": "", "linkLabel": "View" },
+      { "title": "Stoneware", "meta": "Product launch", "text": "Launch film, product pages and a shop that tripled orders.", "image": "lib:product.webp", "link": "", "linkLabel": "View" },
+      { "title": "Harbour Lofts", "meta": "Property", "text": "A scroll story for twelve new homes by the water.", "image": "lib:city.webp", "link": "", "linkLabel": "View" }
+    ],
+    "shrink": true,
+    "background": "#0b0b0c",
+    "card": "#17171a",
+    "text": "#f4f2ee"
+  }
+}
