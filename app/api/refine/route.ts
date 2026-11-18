@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { callGemini, geminiKey as key, limited, parseJson as parse } from "@/lib/gemini";
 import { cleanText, type RefineRequest, type RefineResult } from "@/lib/refine";
 
 // Server side only. The Gemini key lives in the GEMINI_API_KEY environment variable (set it
@@ -10,22 +11,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 
-const MODELS = [process.env.GEMINI_MODEL, "gemini-flash-lite-latest", "gemini-3.5-flash-lite", "gemini-flash-latest"].filter(Boolean) as string[];
-const ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/";
 const MAX_BODY = 40_000;
-
-const key = () => (process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY || "").trim();
-
-// A small per-instance limit so one open tab cannot run through the free quota.
-const hits = new Map<string, number[]>();
-function limited(ip: string): boolean {
-  const now = Date.now();
-  const list = (hits.get(ip) ?? []).filter((t) => now - t < 60_000);
-  list.push(now);
-  hits.set(ip, list);
-  if (hits.size > 5000) hits.clear();
-  return list.length > 12;
-}
 
 const RULES = [
   "You are a senior copywriter improving the words of a small website.",
@@ -65,45 +51,6 @@ function prompt(r: RefineRequest): { system: string; user: string } {
     system: RULES,
     user: `${r.brief}\n${tone}${note}\nHere are the site's words as a JSON object of field id to text. Improve each one: clearer, more specific, better rhythm, no new facts. Return a JSON object with exactly the same keys and the improved text as values. Keep a value unchanged if it is already good.\n\n${JSON.stringify(r.copy)}`,
   };
-}
-
-async function callGemini(system: string, user: string, apiKey: string): Promise<{ text: string; model: string }> {
-  let last = "No model answered";
-  for (const model of MODELS) {
-    const ctl = new AbortController();
-    const timer = setTimeout(() => ctl.abort(), 18_000);
-    try {
-      const res = await fetch(ENDPOINT + encodeURIComponent(model) + ":generateContent", {
-        method: "POST",
-        signal: ctl.signal,
-        headers: { "content-type": "application/json", "x-goog-api-key": apiKey },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: system }] },
-          contents: [{ role: "user", parts: [{ text: user }] }],
-          generationConfig: { responseMimeType: "application/json", temperature: 0.7, maxOutputTokens: 4096 },
-        }),
-      });
-      if (!res.ok) {
-        last = `${model}: ${res.status}`;
-        if (res.status === 400 || res.status === 401 || res.status === 403) break; // a key problem: other models will say the same
-        continue;
-      }
-      const data = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
-      const text = data.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
-      if (text) return { text, model };
-      last = `${model}: empty answer`;
-    } catch (e) {
-      last = `${model}: ${(e as Error).name === "AbortError" ? "timed out" : "unreachable"}`;
-    } finally {
-      clearTimeout(timer);
-    }
-  }
-  throw new Error(last);
-}
-
-function parse(text: string): unknown {
-  const t = text.trim().replace(/^```(?:json)?\s*/i, "").replace(/```$/, "");
-  return JSON.parse(t);
 }
 
 export async function GET() {

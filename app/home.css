@@ -458,3 +458,33 @@ details.tpl-group[open] > summary::before { content: "− "; }
 .lib-palettes li { display: flex; align-items: center; gap: 8px; }
 .lib-swatches { display: inline-flex; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); }
 .lib-swatches i { width: 18px; height: 22px; }
+
+/* Animator engine (/create) */
+.an-page { padding-top: 48px; max-width: 1400px; }
+.an-hero { max-width: 780px; display: grid; gap: 14px; }
+.an-hero h1 { margin: 0; }
+.an-form { display: flex; gap: 8px; margin-top: 8px; }
+.an-form input { flex: 1; min-width: 0; min-height: 52px; font-size: 18px; padding: 0 16px; border-radius: 14px; border: 1px solid var(--line-strong, var(--line)); background: var(--panel); color: var(--text); }
+.an-form .btn { min-height: 52px; padding: 0 22px; }
+.an-examples { display: flex; flex-wrap: wrap; gap: 6px; }
+.an-work { margin-top: 36px; display: grid; gap: 22px; }
+.an-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 14px; color: var(--muted); }
+.an-steps li { display: flex; align-items: center; gap: 8px; transition: color 200ms ease; }
+.an-steps li.is-on, .an-steps li.is-done { color: var(--text); }
+.an-dot { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid currentColor; flex: none; transition: background-color 200ms ease; }
+.an-steps li.is-done .an-dot { background: var(--accent); border-color: var(--accent); }
+.an-steps li.is-on .an-dot { animation: an-pulse 1s ease-in-out infinite; }
+@keyframes an-pulse { 50% { transform: scale(1.5); opacity: 0.5; } }
+.an-grid { display: grid; grid-template-columns: minmax(280px, 360px) 1fr; gap: 22px; align-items: start; }
+.an-plan { display: grid; gap: 14px; padding: 18px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
+.an-plan h2 { margin: 0; font-size: 24px; }
+.an-plan textarea { font-size: 13px; line-height: 1.5; }
+.an-actions { display: grid; gap: 8px; }
+.an-view { position: relative; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--sunk); position: sticky; top: 16px; }
+.an-fit { overflow: hidden; }
+.an-device { transform-origin: 0 0; }
+.an-device iframe { width: 100%; height: 100%; border: 0; display: block; }
+.an-veil { position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, color-mix(in oklab, var(--panel) 55%, transparent) 50%, transparent 70%); background-size: 220% 100%; animation: an-sweep 1.4s linear infinite; pointer-events: none; }
+@keyframes an-sweep { from { background-position: 120% 0; } to { background-position: -120% 0; } }
+@media (max-width: 900px) { .an-grid { grid-template-columns: 1fr; } .an-view { position: relative; top: 0; order: -1; } .an-form { flex-direction: column; } }
+@media (prefers-reduced-motion: reduce) { .an-steps li.is-on .an-dot, .an-veil { animation: none; } }

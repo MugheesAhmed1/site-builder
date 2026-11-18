@@ -46,6 +46,9 @@ export default function Topbar({ children }: { children?: React.ReactNode }) {
         <div className="row" style={{ gap: 22 }}>
           <Logo />
           <nav className="topbar-nav" aria-label="Main">
+            <Link href="/create" aria-current={path === "/create" ? "page" : undefined}>
+              Create with AI
+            </Link>
             <Link href="/sites" aria-current={path === "/sites" ? "page" : undefined}>
               Your sites
             </Link>
