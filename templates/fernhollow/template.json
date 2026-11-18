@@ -10,6 +10,12 @@
     "Experimental",
     "Cinematic"
   ],
+  "business": [
+    "agency",
+    "photo",
+    "consulting"
+  ],
+  "sector": "Creative and design studio (portfolio, journal and enquiries)",
   "intensity": 8,
   "heavy": true,
   "licence": {
@@ -19,196 +25,582 @@
     "added": "2026-11-18"
   },
   "remoteAssets": [],
-  "slots": [
-    {
-      "key": "name",
-      "label": "Studio name",
-      "group": "Brand",
-      "default": "Fernhollow"
-    },
-    {
-      "key": "description",
-      "label": "Short description (search and sharing)",
-      "group": "Brand",
-      "default": "A regenerative design studio. Wander through a night valley of flowers that grows as you move.",
-      "long": true
-    },
-    {
-      "key": "cta",
-      "label": "Call to action",
-      "group": "Brand",
-      "default": "Let’s talk"
-    },
-    {
-      "key": "hero",
-      "label": "Main headline",
-      "group": "Opening",
-      "default": "Grown, not built."
-    },
-    {
-      "key": "cap1",
-      "label": "Caption, line 1",
-      "group": "Opening",
-      "default": "Rooted in nature."
-    },
-    {
-      "key": "cap2",
-      "label": "Caption, line 2",
-      "group": "Opening",
-      "default": "Built for what’s next."
-    },
-    {
-      "key": "hint",
-      "label": "Scroll hint",
-      "group": "Opening",
-      "default": "Scroll to wander"
-    },
-    {
-      "key": "w1",
-      "label": "Project 1 name",
-      "group": "Work",
-      "default": "Kauri Watershed Atlas"
-    },
-    {
-      "key": "w1d",
-      "label": "Project 1 discipline",
-      "group": "Work",
-      "default": "Ecological Mapping · Spatial Web"
-    },
-    {
-      "key": "w1s",
-      "label": "Project 1 summary",
-      "group": "Work",
-      "default": "Interactive catchment telemetry and living forest restoration archive built for Aotearoa watershed stewards.",
-      "long": true
-    },
-    {
-      "key": "w2",
-      "label": "Project 2 name",
-      "group": "Work",
-      "default": "Mycelium Material Index"
-    },
-    {
-      "key": "w2d",
-      "label": "Project 2 discipline",
-      "group": "Work",
-      "default": "Design System · Tactile Archive"
-    },
-    {
-      "key": "w2s",
-      "label": "Project 2 summary",
-      "group": "Work",
-      "default": "Open-source material library cataloging regenerative mycelium composites, lifecycle carbon data, and tactile acoustics.",
-      "long": true
-    },
-    {
-      "key": "w3",
-      "label": "Project 3 name",
-      "group": "Work",
-      "default": "Solstice Seed Commons"
-    },
-    {
-      "key": "w3d",
-      "label": "Project 3 discipline",
-      "group": "Work",
-      "default": "Brand Identity · Digital Platform"
-    },
-    {
-      "key": "w3s",
-      "label": "Project 3 summary",
-      "group": "Work",
-      "default": "Community seed-saving network connecting regional botanical growers with heritage alpine and meadow cultivars.",
-      "long": true
-    },
-    {
-      "key": "about-h",
-      "label": "About headline",
-      "group": "About",
-      "default": "Regenerative craft for living digital ecosystems."
-    },
-    {
-      "key": "about-p",
-      "label": "About text (follows the studio name)",
-      "group": "About",
-      "default": "is an independent regenerative design studio partnering with ecological research initiatives, climate pioneers, and cultural institutions. We treat every digital space like a cultivated habitat—lightweight, adaptive, and attuned to natural rhythms.",
-      "long": true
-    },
-    {
-      "key": "ethos",
-      "label": "Ethos",
-      "group": "About",
-      "default": "Low-carbon, open botanical data"
-    },
-    {
-      "key": "place",
-      "label": "Where you are",
-      "group": "About",
-      "default": "Tāmaki Makaurau · Remote"
-    },
-    {
-      "key": "j1d",
-      "label": "Journal 1 date",
-      "group": "Journal",
-      "default": "Autumn 2026"
-    },
-    {
-      "key": "j1",
-      "label": "Journal 1 title",
-      "group": "Journal",
-      "default": "Software that ages like timber, not plastic"
-    },
-    {
-      "key": "j1e",
-      "label": "Journal 1 excerpt",
-      "group": "Journal",
-      "default": "Notes on low-energy rendering, patient motion curves, and interfaces designed to stay legible for decades.",
-      "long": true
-    },
-    {
-      "key": "j2d",
-      "label": "Journal 2 date",
-      "group": "Journal",
-      "default": "Winter 2026"
-    },
-    {
-      "key": "j2",
-      "label": "Journal 2 title",
-      "group": "Journal",
-      "default": "Listening to nocturnal pollinators in coastal valleys"
-    },
-    {
-      "key": "j2e",
-      "label": "Journal 2 excerpt",
-      "group": "Journal",
-      "default": "Field recordings and light-level studies informing our dark-first botanical visual language.",
-      "long": true
-    },
-    {
-      "key": "reply",
-      "label": "Reply promise",
-      "group": "Contact",
-      "default": "We will reply within two working days."
-    },
-    {
-      "key": "note-ph",
-      "label": "Message box hint",
-      "group": "Contact",
-      "default": "Tell us what you are growing..."
-    }
-  ],
-  "industries": [
-    "studio",
-    "agency",
-    "design",
-    "portfolio",
-    "environment",
-    "creative"
-  ],
   "features": [
     "three.js valley",
     "Grows as you move",
     "Ambient sound",
     "Work and journal drawer",
     "Contact form"
+  ],
+  "schema": [
+    {
+      "group": "Business",
+      "fields": [
+        {
+          "path": "brand.name",
+          "label": "Studio name",
+          "type": "text",
+          "hint": "Fills every {name} in the text below."
+        },
+        {
+          "path": "seo.title",
+          "label": "Page title (search and browser tab)",
+          "type": "text"
+        },
+        {
+          "path": "seo.description",
+          "label": "Short description (search and sharing)",
+          "type": "textarea"
+        }
+      ]
+    },
+    {
+      "group": "Sections",
+      "fields": [
+        {
+          "path": "sections.work",
+          "label": "Work",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.about",
+          "label": "About",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.journal",
+          "label": "Journal",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.contact",
+          "label": "Contact",
+          "type": "toggle"
+        }
+      ]
+    },
+    {
+      "group": "Menu",
+      "fields": [
+        {
+          "path": "nav.work",
+          "label": "Work link",
+          "type": "text"
+        },
+        {
+          "path": "nav.about",
+          "label": "About link",
+          "type": "text"
+        },
+        {
+          "path": "nav.journal",
+          "label": "Journal link",
+          "type": "text"
+        },
+        {
+          "path": "nav.cta",
+          "label": "Contact button",
+          "type": "text"
+        },
+        {
+          "path": "nav.close",
+          "label": "Close button",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Opening",
+      "fields": [
+        {
+          "path": "hero.title",
+          "label": "Headline",
+          "type": "text"
+        },
+        {
+          "path": "hero.caption1",
+          "label": "Caption, line 1",
+          "type": "text"
+        },
+        {
+          "path": "hero.caption2",
+          "label": "Caption, line 2",
+          "type": "text"
+        },
+        {
+          "path": "hero.button",
+          "label": "Arrow button label (for screen readers)",
+          "type": "text"
+        },
+        {
+          "path": "hero.opens",
+          "label": "Arrow button opens",
+          "type": "select",
+          "options": [
+            {
+              "value": "work",
+              "label": "Work"
+            },
+            {
+              "value": "about",
+              "label": "About"
+            },
+            {
+              "value": "journal",
+              "label": "Journal"
+            },
+            {
+              "value": "contact",
+              "label": "Contact"
+            }
+          ]
+        },
+        {
+          "path": "hero.hint",
+          "label": "Corner hint",
+          "type": "text"
+        },
+        {
+          "path": "hero.showSoundButton",
+          "label": "Show the sound button",
+          "type": "toggle"
+        }
+      ]
+    },
+    {
+      "group": "Work",
+      "fields": [
+        {
+          "path": "work.label",
+          "label": "Drawer title",
+          "type": "text"
+        },
+        {
+          "path": "work.items",
+          "label": "Projects",
+          "type": "list",
+          "min": 0,
+          "max": 12,
+          "itemLabel": "Project",
+          "fields": [
+            {
+              "path": "title",
+              "label": "Name",
+              "type": "text"
+            },
+            {
+              "path": "discipline",
+              "label": "Discipline",
+              "type": "text"
+            },
+            {
+              "path": "year",
+              "label": "Year",
+              "type": "text"
+            },
+            {
+              "path": "summary",
+              "label": "Summary",
+              "type": "textarea"
+            },
+            {
+              "path": "link",
+              "label": "Link (optional)",
+              "type": "url"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "About",
+      "fields": [
+        {
+          "path": "about.label",
+          "label": "Drawer title",
+          "type": "text"
+        },
+        {
+          "path": "about.title",
+          "label": "Headline",
+          "type": "text"
+        },
+        {
+          "path": "about.text",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "about.facts",
+          "label": "Facts",
+          "type": "list",
+          "min": 0,
+          "max": 6,
+          "itemLabel": "Fact",
+          "fields": [
+            {
+              "path": "label",
+              "label": "Label",
+              "type": "text"
+            },
+            {
+              "path": "value",
+              "label": "Value",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Journal",
+      "fields": [
+        {
+          "path": "journal.label",
+          "label": "Drawer title",
+          "type": "text"
+        },
+        {
+          "path": "journal.entries",
+          "label": "Entries",
+          "type": "list",
+          "min": 0,
+          "max": 12,
+          "itemLabel": "Entry",
+          "fields": [
+            {
+              "path": "date",
+              "label": "Date",
+              "type": "text"
+            },
+            {
+              "path": "title",
+              "label": "Title",
+              "type": "text"
+            },
+            {
+              "path": "excerpt",
+              "label": "Excerpt",
+              "type": "textarea"
+            },
+            {
+              "path": "link",
+              "label": "Link (optional)",
+              "type": "url"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Contact",
+      "fields": [
+        {
+          "path": "contact.label",
+          "label": "Drawer title",
+          "type": "text"
+        },
+        {
+          "path": "contact.nameLabel",
+          "label": "Name label",
+          "type": "text"
+        },
+        {
+          "path": "contact.namePlaceholder",
+          "label": "Name hint",
+          "type": "text"
+        },
+        {
+          "path": "contact.emailLabel",
+          "label": "Email label",
+          "type": "text"
+        },
+        {
+          "path": "contact.emailPlaceholder",
+          "label": "Email hint",
+          "type": "text"
+        },
+        {
+          "path": "contact.noteLabel",
+          "label": "Message label",
+          "type": "text"
+        },
+        {
+          "path": "contact.notePlaceholder",
+          "label": "Message hint",
+          "type": "text"
+        },
+        {
+          "path": "contact.button",
+          "label": "Send button",
+          "type": "text"
+        },
+        {
+          "path": "contact.thanksTitle",
+          "label": "Thank-you headline",
+          "type": "text"
+        },
+        {
+          "path": "contact.thanksText",
+          "label": "Thank-you text",
+          "type": "textarea"
+        },
+        {
+          "path": "contact.email",
+          "label": "Send messages to (email)",
+          "type": "text",
+          "hint": "Opens the visitor's email app with the message filled in."
+        },
+        {
+          "path": "contact.formAction",
+          "label": "Or post to a form service (https)",
+          "type": "url",
+          "hint": "For example a Formspree or Basin endpoint. Wins over email."
+        }
+      ]
+    },
+    {
+      "group": "Colours",
+      "fields": [
+        {
+          "path": "theme.colors.text",
+          "label": "Text",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.buttonText",
+          "label": "Button text",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.background",
+          "label": "Page background",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.panel",
+          "label": "Drawer",
+          "type": "color"
+        }
+      ]
+    },
+    {
+      "group": "Fonts and shape",
+      "fields": [
+        {
+          "path": "theme.fonts.display",
+          "label": "Headline font",
+          "type": "font"
+        },
+        {
+          "path": "theme.fonts.body",
+          "label": "Body font",
+          "type": "font"
+        },
+        {
+          "path": "theme.headlineSize",
+          "label": "Headline size (px)",
+          "type": "number",
+          "min": 60,
+          "max": 240,
+          "step": 2
+        },
+        {
+          "path": "theme.pillRadius",
+          "label": "Button rounding (px)",
+          "type": "number",
+          "min": 0,
+          "max": 99,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "group": "Valley",
+      "fields": [
+        {
+          "path": "valley.sky",
+          "label": "Sky",
+          "type": "color"
+        },
+        {
+          "path": "valley.fog",
+          "label": "Fog",
+          "type": "color"
+        },
+        {
+          "path": "valley.fogDensity",
+          "label": "Fog thickness",
+          "type": "number",
+          "min": 0,
+          "max": 0.08,
+          "step": 0.001
+        },
+        {
+          "path": "valley.flowers",
+          "label": "Flower colours",
+          "type": "colors",
+          "min": 1,
+          "max": 8
+        },
+        {
+          "path": "valley.leaves",
+          "label": "Leaf colours",
+          "type": "colors",
+          "min": 1,
+          "max": 6
+        },
+        {
+          "path": "valley.glow",
+          "label": "Flower glow",
+          "type": "color"
+        },
+        {
+          "path": "valley.rays",
+          "label": "Light rays",
+          "type": "toggle"
+        },
+        {
+          "path": "valley.rayColor",
+          "label": "Ray colour",
+          "type": "color"
+        },
+        {
+          "path": "valley.stars",
+          "label": "Stars",
+          "type": "number",
+          "min": 0,
+          "max": 2000,
+          "step": 10
+        },
+        {
+          "path": "valley.starColor",
+          "label": "Star colour",
+          "type": "color"
+        },
+        {
+          "path": "valley.flowerCount",
+          "label": "Flowers",
+          "type": "number",
+          "min": 1000,
+          "max": 30000,
+          "step": 500
+        },
+        {
+          "path": "valley.leafCount",
+          "label": "Leaves",
+          "type": "number",
+          "min": 0,
+          "max": 20000,
+          "step": 500
+        },
+        {
+          "path": "valley.dust",
+          "label": "Floating dust",
+          "type": "number",
+          "min": 0,
+          "max": 4000,
+          "step": 50
+        },
+        {
+          "path": "valley.bloom",
+          "label": "Bloom",
+          "type": "number",
+          "min": 0,
+          "max": 2,
+          "step": 0.01
+        },
+        {
+          "path": "valley.grain",
+          "label": "Film grain",
+          "type": "number",
+          "min": 0,
+          "max": 0.2,
+          "step": 0.005
+        },
+        {
+          "path": "valley.vignette",
+          "label": "Vignette",
+          "type": "number",
+          "min": 0,
+          "max": 1,
+          "step": 0.01
+        }
+      ]
+    },
+    {
+      "group": "Motion",
+      "fields": [
+        {
+          "path": "valley.drift",
+          "label": "Idle camera drift",
+          "type": "number",
+          "min": 0,
+          "max": 3,
+          "step": 0.1
+        },
+        {
+          "path": "valley.wander",
+          "label": "Scroll and swipe speed",
+          "type": "number",
+          "min": 0.2,
+          "max": 3,
+          "step": 0.1
+        },
+        {
+          "path": "valley.sway",
+          "label": "Flower sway",
+          "type": "number",
+          "min": 0,
+          "max": 3,
+          "step": 0.1
+        }
+      ]
+    },
+    {
+      "group": "Sound",
+      "fields": [
+        {
+          "path": "sound.enabled",
+          "label": "Ambient sound",
+          "type": "toggle"
+        },
+        {
+          "path": "sound.volume",
+          "label": "Volume",
+          "type": "number",
+          "min": 0,
+          "max": 1,
+          "step": 0.01
+        },
+        {
+          "path": "sound.mood",
+          "label": "Mood",
+          "type": "select",
+          "options": [
+            {
+              "value": "night",
+              "label": "Night"
+            },
+            {
+              "value": "warm",
+              "label": "Warm"
+            },
+            {
+              "value": "airy",
+              "label": "Airy"
+            }
+          ]
+        },
+        {
+          "path": "sound.wind",
+          "label": "Wind",
+          "type": "number",
+          "min": 0,
+          "max": 1,
+          "step": 0.01
+        }
+      ]
+    }
   ]
 }

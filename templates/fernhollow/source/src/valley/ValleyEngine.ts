@@ -80,6 +80,59 @@ function detectSoftwareGl(): boolean {
   }
 }
 
+/** Everything about the valley a template user can change (see content.json "valley"). */
+export interface ValleyOptions {
+  sky: string;
+  fog: string;
+  fogDensity: number;
+  flowers: string[];
+  leaves: string[];
+  glow: string;
+  rays: boolean;
+  rayColor: string;
+  stars: number;
+  starColor: string;
+  flowerCount: number;
+  leafCount: number;
+  dust: number;
+  bloom: number;
+  grain: number;
+  vignette: number;
+  drift: number;
+  wander: number;
+  sway: number;
+}
+
+export const DEFAULT_VALLEY: ValleyOptions = {
+  sky: '#030508',
+  fog: '#04070b',
+  fogDensity: 0.022,
+  flowers: ['#f5efe2', '#f6e6c9', '#e6c2b8', '#b6bfe8', '#9dd6c3', '#f0c888'],
+  leaves: ['#132820', '#1b362b', '#254437', '#182a31'],
+  glow: '#f5e6c2',
+  rays: true,
+  rayColor: '#cfdcf0',
+  stars: 450,
+  starColor: '#dbe2f0',
+  flowerCount: 15000,
+  leafCount: 10000,
+  dust: 1400,
+  bloom: 0.58,
+  grain: 0.045,
+  vignette: 0.44,
+  drift: 1,
+  wander: 1,
+  sway: 1,
+};
+
+const col = (c: string, fallback: string) => {
+  try {
+    return new THREE.Color(c || fallback);
+  } catch {
+    return new THREE.Color(fallback);
+  }
+};
+
 function terrainHeight(x: number, z: number): number {
   const macro =
     Math.sin(x * 0.045) * Math.cos(z * 0.042) * 3.8 +
@@ -94,6 +147,7 @@ export class ValleyEngine {
   private onLoaded: () => void;
   private onIntroDone: () => void;
   private audio: AudioEngine;
+  private o: ValleyOptions;
 
   private renderer!: THREE.WebGLRenderer;
   private scene!: THREE.Scene;
@@ -143,8 +197,10 @@ export class ValleyEngine {
     container: HTMLElement,
     onLoaded: () => void,
     onIntroDone: () => void,
-    audio: AudioEngine
+    audio: AudioEngine,
+    options: Partial<ValleyOptions> = {}
   ) {
+    this.o = { ...DEFAULT_VALLEY, ...options };
     this.container = container;
     this.mountEl =
       (container.querySelector('.js-canvas-container') as HTMLElement) || container;
@@ -173,8 +229,8 @@ export class ValleyEngine {
     const height = window.innerHeight;
 
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x030508);
-    this.scene.fog = new THREE.FogExp2(0x04070b, 0.022);
+    this.scene.background = col(this.o.sky, DEFAULT_VALLEY.sky);
+    this.scene.fog = new THREE.FogExp2(col(this.o.fog, DEFAULT_VALLEY.fog), this.o.fogDensity);
 
     this.camera = new THREE.PerspectiveCamera(56, width / height, 0.15, 130);
 
@@ -206,7 +262,7 @@ export class ValleyEngine {
     this.curve = new THREE.CatmullRomCurve3(points, true, 'catmullrom', 0.5);
 
     this.buildValleyPoints();
-    this.buildLightRays();
+    if (this.o.rays) this.buildLightRays();
     this.buildDustParticles();
     this.buildNightSkyBackdrop();
 
@@ -216,13 +272,14 @@ export class ValleyEngine {
 
       this.bloomPass = new UnrealBloomPass(
         new THREE.Vector2(width, height),
-        0.58,
+        this.o.bloom,
         0.72,
         0.42
       );
       this.composer.addPass(this.bloomPass);
 
       this.postPass = new ShaderPass(ValleyPostShader);
+      this.postPass.uniforms.uNoiseAmount.value = this.o.grain;
       this.composer.addPass(this.postPass);
     }
 
@@ -236,25 +293,15 @@ export class ValleyEngine {
     const leafAtlas = createLeafAtlasTexture();
     this.textures.push(flowerAtlas, leafAtlas);
 
-    const flowerPalette = [
-      new THREE.Color('#f5efe2'), // warm cream
-      new THREE.Color('#f6e6c9'), // moonlit amber-ivory
-      new THREE.Color('#e6c2b8'), // dusty blush
-      new THREE.Color('#b6bfe8'), // twilight periwinkle
-      new THREE.Color('#9dd6c3'), // nocturnal sage glow
-      new THREE.Color('#f0c888'), // golden evening primrose
-    ];
-
-    const leafPalette = [
-      new THREE.Color('#132820'),
-      new THREE.Color('#1b362b'),
-      new THREE.Color('#254437'),
-      new THREE.Color('#182a31'),
-    ];
+    const pick = (list: string[], fb: string[]) => (list && list.length ? list : fb).map((c, i) => col(c, fb[i % fb.length]));
+    const flowerPalette = pick(this.o.flowers, DEFAULT_VALLEY.flowers);
+    while (flowerPalette.length < 6) flowerPalette.push(flowerPalette[flowerPalette.length % Math.max(1, flowerPalette.length)].clone());
+    const leafPalette = pick(this.o.leaves, DEFAULT_VALLEY.leaves);
 
     const sampleSteps = 340;
-    const flowerCount = 15000;
-    const leafCount = 10000;
+    const cap = this.isSoftwareGl ? 0.4 : 1;
+    const flowerCount = Math.round(Math.max(500, Math.min(40000, this.o.flowerCount)) * cap);
+    const leafCount = Math.round(Math.max(0, Math.min(30000, this.o.leafCount)) * cap);
 
     // Helper to sample organic corridor point around spline
     const sampleCorridorPoint = (
@@ -354,8 +401,10 @@ export class ValleyEngine {
         uMouse: { value: new THREE.Vector2(0, 0) },
         uAspect: { value: window.innerWidth / window.innerHeight },
         uHoverDisperse: { value: 0 },
-        uFogColor: { value: new THREE.Color(0x04070b) },
-        uFogDensity: { value: 0.022 },
+        uFogColor: { value: col(this.o.fog, DEFAULT_VALLEY.fog) },
+        uFogDensity: { value: this.o.fogDensity },
+        uGlow: { value: col(this.o.glow, DEFAULT_VALLEY.glow) },
+        uSway: { value: this.o.sway },
       },
       vertexShader: `
         attribute vec3 aColor;
@@ -370,6 +419,7 @@ export class ValleyEngine {
         uniform vec2 uMouse;
         uniform float uAspect;
         uniform float uHoverDisperse;
+        uniform float uSway;
 
         varying vec3 vColor;
         varying float vTile;
@@ -383,9 +433,9 @@ export class ValleyEngine {
           vec3 pos = position;
 
           // Gentle organic breeze sway
-          float sway = sin(uTime * 0.85 + aPhase) * 0.14;
+          float sway = sin(uTime * 0.85 + aPhase) * 0.14 * uSway;
           pos.x += sway;
-          pos.z += cos(uTime * 0.72 + aPhase * 1.3) * 0.11;
+          pos.z += cos(uTime * 0.72 + aPhase * 1.3) * 0.11 * uSway;
 
           // Hover transition: disperse flowers outward into floating glowing particles
           float disperseAmt = uHoverDisperse * (3.2 + fract(aPhase) * 4.5);
@@ -430,6 +480,7 @@ export class ValleyEngine {
         uniform sampler2D uAtlas;
         uniform vec3 uFogColor;
         uniform float uFogDensity;
+        uniform vec3 uGlow;
 
         varying vec3 vColor;
         varying float vTile;
@@ -459,7 +510,7 @@ export class ValleyEngine {
 
           vec3 baseCol = mix(sprite.rgb * vColor, vColor * 1.45, vDisperse * 0.72);
           // Cursor proximity luminescence
-          baseCol += vec3(0.96, 0.90, 0.76) * vMouseGlow * 0.65;
+          baseCol += uGlow * vMouseGlow * 0.65;
 
           // Exponential depth fog
           float fogFactor = 1.0 - exp(-uFogDensity * uFogDensity * vFogDepth * vFogDepth);
@@ -527,8 +578,10 @@ export class ValleyEngine {
         uMouse: { value: new THREE.Vector2(0, 0) },
         uAspect: { value: window.innerWidth / window.innerHeight },
         uHoverDisperse: { value: 0 },
-        uFogColor: { value: new THREE.Color(0x04070b) },
-        uFogDensity: { value: 0.022 },
+        uFogColor: { value: col(this.o.fog, DEFAULT_VALLEY.fog) },
+        uFogDensity: { value: this.o.fogDensity },
+        uGlow: { value: col(this.o.glow, DEFAULT_VALLEY.glow) },
+        uSway: { value: this.o.sway },
       },
       vertexShader: `
         attribute vec3 aColor;
@@ -543,6 +596,7 @@ export class ValleyEngine {
         uniform vec2 uMouse;
         uniform float uAspect;
         uniform float uHoverDisperse;
+        uniform float uSway;
 
         varying vec3 vColor;
         varying float vTile;
@@ -553,7 +607,7 @@ export class ValleyEngine {
 
         void main() {
           vec3 pos = position;
-          pos.x += sin(uTime * 0.6 + aPhase) * 0.09;
+          pos.x += sin(uTime * 0.6 + aPhase) * 0.09 * uSway;
           pos += aDisp * uHoverDisperse * 2.5;
 
           vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
@@ -637,13 +691,14 @@ export class ValleyEngine {
     this.geometries.push(rayGeo);
 
     const rayCount = 22;
+    const flowerTint = col(this.o.flowers?.[0], DEFAULT_VALLEY.flowers[0]);
     for (let i = 0; i < rayCount; i++) {
       const t = i / rayCount;
       const pt = this.curve.getPointAt(t);
       const sideOffset = (Math.random() - 0.5) * 18;
       const mat = new THREE.MeshBasicMaterial({
         map: rayTex,
-        color: i % 2 === 0 ? 0xcfdcf0 : 0xf5efe2,
+        color: i % 2 === 0 ? col(this.o.rayColor, DEFAULT_VALLEY.rayColor) : flowerTint,
         transparent: true,
         opacity: 0.055,
         blending: THREE.AdditiveBlending,
@@ -668,7 +723,7 @@ export class ValleyEngine {
     const dustTex = createDustTexture();
     this.textures.push(dustTex);
 
-    const count = 1400;
+    const count = Math.max(0, Math.min(6000, Math.round(this.o.dust)));
     const pos = new Float32Array(count * 3);
     const scale = new Float32Array(count);
     const phase = new Float32Array(count);
@@ -741,7 +796,7 @@ export class ValleyEngine {
 
   private buildNightSkyBackdrop(): void {
     // Faint distant starfield dome so sky never reads flat
-    const starCount = 450;
+    const starCount = Math.max(0, Math.min(3000, Math.round(this.o.stars)));
     const sPos = new Float32Array(starCount * 3);
     for (let i = 0; i < starCount; i++) {
       const theta = Math.random() * Math.PI * 2;
@@ -756,7 +811,7 @@ export class ValleyEngine {
     this.geometries.push(starGeo);
 
     const starMat = new THREE.PointsMaterial({
-      color: 0xdbe2f0,
+      color: col(this.o.starColor, DEFAULT_VALLEY.starColor),
       size: 0.42,
       transparent: true,
       opacity: 0.35,
@@ -775,7 +830,7 @@ export class ValleyEngine {
   };
 
   private onWheel = (e: WheelEvent): void => {
-    const delta = e.deltaY * 0.000018;
+    const delta = e.deltaY * 0.000018 * this.o.wander;
     this.targetVelocity = THREE.MathUtils.clamp(this.targetVelocity + delta, -0.045, 0.065);
   };
 
@@ -791,7 +846,7 @@ export class ValleyEngine {
       // 20x touch multiplier as described in the valley scroller spec
       const deltaY = (this.lastTouchY - currentY) * 20;
       this.lastTouchY = currentY;
-      const delta = deltaY * 0.000012;
+      const delta = deltaY * 0.000012 * this.o.wander;
       this.targetVelocity = THREE.MathUtils.clamp(this.targetVelocity + delta, -0.055, 0.075);
     }
   };
@@ -908,7 +963,7 @@ export class ValleyEngine {
     this.mouse.y = THREE.MathUtils.damp(this.mouse.y, this.targetMouse.y, 5.5, dt);
 
     // Virtual scroller + gentle idle drift eased to stop on hover
-    const idleDrift = this.reducedMotion ? 0 : 0.0044;
+    const idleDrift = this.reducedMotion ? 0 : 0.0044 * this.o.drift;
     this.targetVelocity = THREE.MathUtils.damp(this.targetVelocity, 0, 3.2, dt);
     this.velocity = THREE.MathUtils.damp(
       this.velocity,
@@ -975,7 +1030,7 @@ export class ValleyEngine {
     if (this.postPass) {
       this.postPass.uniforms.uTime.value = this.elapsed;
       this.postPass.uniforms.uRgbShift.value = 0.0014 + Math.min(0.0055, speedMag * 0.09);
-      this.postPass.uniforms.uVignette.value = 0.44 + Math.min(0.45, speedMag * 9.0);
+      this.postPass.uniforms.uVignette.value = this.o.vignette + Math.min(0.45, speedMag * 9.0);
     }
 
     if (this.isSoftwareGl || !this.composer) {

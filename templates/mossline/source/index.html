@@ -3,32 +3,43 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Mossline — Measure the Living Planet</title>
-  <meta name="description" content="Measure the Living Planet — Real-time ecosystem insights powered by field sensors, atmospheric flux towers, and transparent data.">
-  <meta property="og:title" content="Mossline — Measure the Living Planet">
-  <meta property="og:description" content="Measure the Living Planet — Real-time ecosystem insights powered by field sensors, atmospheric flux towers, and transparent data.">
+  <title>Mossline</title>
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Words, pictures, video, links, colours, fonts, sections and motion: edit xp-content.js -->
+  <script src="./xp-content.js"></script>
   <style>
     :root{
-      --ink:#10291a;
-      --ink2:#2c4434;
-      --mist:#e7ebe8;
-      --paper:#f6f7f4;
-      --lime:#c6f35c;
-      --lime2:#a9dd3a;
-      --glass:rgba(244,247,243,.16);
-      --line:rgba(255,255,255,.28);
-      --sans:"Inter Tight","Helvetica Neue",Arial,sans-serif;
-      --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+      --c-ink:#10291a;
+      --c-ink2:#2c4434;
+      --c-mist:#e7ebe8;
+      --c-paper:#ffffff;
+      --c-accent:#c6f35c;
+      --c-accent2:#a9dd3a;
+      --c-positive:#4f8a12;
+      --c-deep:#1b3122;
+      --f-sans:"Inter Tight";
+      --f-mono:"JetBrains Mono";
+      --n-radius:12;
+      --ink:var(--c-ink);
+      --ink2:var(--c-ink2);
+      --mist:var(--c-mist);
+      --lime:var(--c-accent);
+      --lime2:var(--c-accent2);
+      --sans:var(--f-sans),"Helvetica Neue",Arial,sans-serif;
+      --mono:var(--f-mono),ui-monospace,Menlo,monospace;
+      --r:calc(var(--n-radius) * 1px);
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{background:var(--mist)}
     body{font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
     a{color:inherit;text-decoration:none}
+    a:focus-visible,button:focus-visible{outline:2px solid var(--lime2);outline-offset:3px}
 
     .mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px}
     .chip{display:inline-flex;align-items:center;justify-content:center;height:22px;padding:0 9px;background:var(--lime);color:var(--ink);border-radius:3px;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
@@ -45,9 +56,9 @@
     .talk .sq{width:20px;height:20px;background:var(--lime);color:var(--ink);border-radius:3px;display:grid;place-items:center;font-family:var(--sans);font-size:15px;line-height:1;transition:transform .3s}
     .talk:hover .sq{transform:translateX(3px)}
 
-    /* Scroll Story */
+    /* Scroll story */
     #story{position:relative;height:640vh}
-    .stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#dfe3e0}
+    .stage{position:sticky;top:0;height:100vh;overflow:hidden;background:color-mix(in srgb,var(--mist) 92%,#000)}
     .cam{position:absolute;inset:-9% -3% -3%;will-change:transform}
     #cv{width:100%;height:100%;display:block}
     .plate{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
@@ -71,12 +82,13 @@
     .rock{position:absolute;overflow:hidden;pointer-events:none;will-change:transform,filter}
     .rock .bob{position:absolute;inset:0;animation:bob 7s ease-in-out infinite alternate}
     .rock img{position:absolute;max-width:none;height:auto;display:block}
+    .rock.whole img{inset:0;width:100%;height:100%;object-fit:contain}
     .rk1{left:4%;top:13%;width:7.5vw;aspect-ratio:260/295}
     .rk1 .bob{animation-duration:6s}
-    .rk1 img{width:461.53846%;left:-11.53846%;top:-67.79661%}
+    .rk1:not(.whole) img{width:461.53846%;left:-11.53846%;top:-67.79661%}
     .rk3{left:80%;top:58%;width:14vw;aspect-ratio:265/270}
     .rk3 .bob{animation-duration:8.5s;animation-delay:-3s}
-    .rk3 img{width:452.83019%;left:-337.73585%;top:-88.88889%}
+    .rk3:not(.whole) img{width:452.83019%;left:-337.73585%;top:-88.88889%}
     @keyframes bob{from{transform:translateY(-1.2%) rotate(-1.2deg)}to{transform:translateY(1.6%) rotate(1.4deg)}}
 
     /* Layers */
@@ -116,15 +128,16 @@
     .L3{visibility:hidden}
     .acct{position:absolute;left:34px;top:14vh;width:min(560px,86vw);color:var(--ink);font-size:clamp(20px,1.9vw,29px);line-height:1.16;letter-spacing:-.02em;text-shadow:0 0 24px rgba(255,255,255,.8)}
     .acct .w{display:inline-block;will-change:filter,opacity}
-    .hs{position:absolute;display:inline-flex;align-items:center;gap:10px;cursor:pointer;will-change:transform;margin-left:-11px;margin-top:-11px;transform-origin:11px 50%}
-    .hs .dot{position:relative;width:22px;height:22px;border-radius:50%;background:var(--lime);flex:none;transition:transform .3s;animation:ping 2.4s infinite}
+    .hs{position:absolute;display:inline-flex;align-items:center;gap:10px;cursor:pointer;will-change:transform;margin-left:-11px;margin-top:-11px;transform-origin:11px 50%;border:0;background:none;font:inherit;color:inherit;text-align:left}
+    .hs .dot{position:relative;width:22px;height:22px;border-radius:50%;background:var(--lime);flex:none;transition:transform .3s}
+    .pulse .hs .dot{animation:ping 2.4s infinite}
     .hs .dot::before,.hs .dot::after{content:"";position:absolute;left:50%;top:50%;background:var(--ink);transform:translate(-50%,-50%)}
     .hs .dot::before{width:10px;height:1.4px}
     .hs .dot::after{width:1.4px;height:10px}
     .hs:hover .dot{transform:scale(1.15)}
-    @keyframes ping{0%{box-shadow:0 0 0 0 rgba(198,243,92,.7)}70%{box-shadow:0 0 0 14px rgba(198,243,92,0)}100%{box-shadow:0 0 0 0 rgba(198,243,92,0)}}
+    @keyframes ping{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--lime) 70%,transparent)}70%{box-shadow:0 0 0 14px transparent}100%{box-shadow:0 0 0 0 transparent}}
     .hs .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);padding:6px 9px;border-radius:4px;background:rgba(246,248,245,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-    .hs .lbl em{display:block;font-style:normal;color:#4f8a12;max-height:0;overflow:hidden;transition:max-height .45s,margin-top .45s}
+    .hs .lbl em{display:block;font-style:normal;color:var(--c-positive);max-height:0;overflow:hidden;transition:max-height .45s,margin-top .45s}
     .hs:hover .lbl em,.hs.on .lbl em{max-height:20px;margin-top:3px}
 
     /* L4 Station */
@@ -133,36 +146,37 @@
     .cred .st-lbl{display:flex;width:max-content;background:var(--lime);color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:4px 8px;border-radius:3px;margin-bottom:14px;text-shadow:none}
     .cred h3{font-weight:500;font-size:inherit;line-height:inherit;letter-spacing:inherit}
 
-    .card{position:absolute;left:38%;top:38vh;width:250px;padding:18px;border-radius:10px;background:rgba(40,58,44,.32);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);color:#fff;will-change:transform,opacity}
+    .card{position:absolute;left:38%;top:38vh;width:250px;padding:18px;border-radius:calc(var(--r) * .85);background:color-mix(in srgb,var(--c-deep) 32%,transparent);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);color:#fff;will-change:transform,opacity}
     .card h4{font-size:15px;font-weight:500;line-height:1.15}
     .card .note{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.7;margin-top:6px}
     .card .big{display:flex;align-items:baseline;gap:6px;margin-top:12px}
-    .card .big #cardNum{font-size:46px;font-weight:500;letter-spacing:-.04em;line-height:1}
+    .card .big .num{font-size:46px;font-weight:500;letter-spacing:-.04em;line-height:1}
     .card .big .unit{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
     .card .tag{position:absolute;right:16px;top:96px;background:var(--lime);color:var(--ink);font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 6px;border-radius:3px}
     .card svg{display:block;width:100%;height:auto;margin-top:8px}
     .card .q{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.7;margin-top:4px}
 
-    .feats{position:absolute;right:34px;top:30vh;width:min(400px,36vw);padding:6px 16px;border-radius:10px;background:rgba(246,248,245,.62);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-    .feat{display:grid;grid-template-columns:30px 1fr 16px;gap:8px;align-items:center;padding:11px 0;border-bottom:1px solid rgba(16,41,26,.14);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:color .3s,padding-left .3s}
+    .feats{position:absolute;right:34px;top:30vh;width:min(400px,36vw);padding:6px 16px;border-radius:calc(var(--r) * .85);background:rgba(246,248,245,.62);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+    .feat{display:grid;grid-template-columns:30px 1fr 16px;gap:8px;align-items:center;width:100%;padding:11px 0;border:0;border-bottom:1px solid color-mix(in srgb,var(--ink) 14%,transparent);background:none;color:inherit;text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:color .3s,padding-left .3s}
     .feat:last-child{border-bottom:none}
     .feat .idx{opacity:.6}
     .feat .arr{transition:transform .3s}
-    .feat:hover,.feat.on{color:#4f8a12;padding-left:6px}
+    .feat:hover,.feat.on{color:var(--c-positive);padding-left:6px}
     .feat:hover .arr,.feat.on .arr{transform:translateX(4px)}
 
     /* Progress bar */
-    .prog{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);width:120px;height:2px;background:rgba(16,41,26,.18);border-radius:2px;overflow:hidden;pointer-events:none}
+    .prog{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);width:120px;height:2px;background:color-mix(in srgb,var(--ink) 18%,transparent);border-radius:2px;overflow:hidden;pointer-events:none}
     .prog .bar{width:100%;height:100%;background:var(--lime2);transform-origin:left center;transform:scaleX(0)}
 
-    /* Solutions section */
-    #sol{position:relative;z-index:5;margin-top:-30vh;background:#fff;border-radius:22px 22px 0 0;padding:70px 34px 90px;box-shadow:0 -30px 60px rgba(16,41,26,.12)}
+    /* Solutions */
+    .after{position:relative;z-index:5;margin-top:-30vh;background:var(--c-paper);border-radius:22px 22px 0 0;box-shadow:0 -30px 60px color-mix(in srgb,var(--ink) 12%,transparent)}
+    #sol{padding:70px 34px 90px}
     .sol-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap}
     .sol-head h2{font-weight:500;font-size:clamp(34px,3.9vw,58px);line-height:1;letter-spacing:-.04em;max-width:640px;margin-top:20px}
-    .sol-head p{font-size:15px;line-height:1.5;max-width:360px;color:#4a5a4f}
+    .sol-head p{font-size:15px;line-height:1.5;max-width:360px;color:color-mix(in srgb,var(--ink) 75%,var(--c-paper))}
 
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:54px}
-    .scard{position:relative;height:440px;border-radius:12px;overflow:hidden;background:#1b3122;color:#fff;transition:transform .25s ease-out;transform-style:preserve-3d}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:54px}
+    .scard{position:relative;display:block;height:440px;border-radius:var(--r);overflow:hidden;background:var(--c-deep);color:#fff;transition:transform .25s ease-out;transform-style:preserve-3d}
     .scard .bg{position:absolute;inset:0;background-repeat:no-repeat;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
     .scard:hover .bg{transform:scale(1.07)}
     .scard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,25,15,.45), transparent 35%, transparent 55%, rgba(10,25,15,.75));pointer-events:none}
@@ -173,12 +187,24 @@
     .scard .bot{position:absolute;left:18px;right:18px;bottom:18px;z-index:2}
     .scard .bot h3{font-size:25px;font-weight:500;letter-spacing:-.03em;line-height:1.05}
     .scard .bot p{font-size:13.5px;line-height:1.45;opacity:.88;max-height:0;overflow:hidden;margin-top:0;transition:max-height .6s,margin-top .6s}
-    .scard:hover .bot p{max-height:80px;margin-top:10px}
+    .scard:hover .bot p,.scard:focus-visible .bot p{max-height:80px;margin-top:10px}
 
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:60px;border-top:1px solid #e0e5e0}
+    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:24px;margin:60px 34px 0;border-top:1px solid color-mix(in srgb,var(--ink) 12%,transparent)}
+    #sol .stats{margin:60px 0 0}
     .stat{padding-top:22px}
     .stat .n{font-size:44px;font-weight:500;letter-spacing:-.04em;line-height:1}
-    .stat .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#6a7a6f;margin-top:8px}
+    .stat .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:color-mix(in srgb,var(--ink) 60%,var(--c-paper));margin-top:8px}
+
+    /* Contact and footer */
+    #contact{padding:90px 34px 60px;border-top:1px solid color-mix(in srgb,var(--ink) 10%,transparent)}
+    .ct{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;align-items:end}
+    .ct h2{font-weight:500;font-size:clamp(34px,4.4vw,64px);line-height:1;letter-spacing:-.04em;margin-top:20px}
+    .ct p{font-size:15px;line-height:1.5;color:color-mix(in srgb,var(--ink) 75%,var(--c-paper));max-width:420px}
+    .ct-actions{display:grid;gap:14px;justify-items:start}
+    .btn{display:inline-flex;align-items:center;gap:12px;height:48px;padding:0 20px;border-radius:999px;background:var(--ink);color:var(--c-paper);font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+    .btn .sq{width:22px;height:22px;border-radius:50%;background:var(--lime);color:var(--ink);display:grid;place-items:center;font-family:var(--sans)}
+    .ct-lines{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1.9;color:var(--ink2)}
+    footer{padding:28px 34px 40px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:color-mix(in srgb,var(--ink) 55%,var(--c-paper))}
 
     @media (max-width:820px){
       nav{padding:16px 18px}
@@ -197,585 +223,393 @@
       .feat{font-size:9.5px;grid-template-columns:24px 1fr}
       .feat .arr{display:none}
       #sol{padding:50px 18px 70px}
-      .cards{grid-template-columns:1fr}
       .scard{height:340px}
-      .stats{grid-template-columns:repeat(2,1fr)}
+      .stats{margin:50px 18px 0}
+      #contact{padding:60px 18px 40px}
+      .ct{grid-template-columns:1fr}
+      footer{padding:24px 18px 32px}
+    }
+    @media (prefers-reduced-motion:reduce){
+      .mist,.fog .f1,.fog .f2,.rock .bob,.hint .chev,.hs .dot{animation:none!important}
+      .hero-copy .line span{animation:none;transform:none}
     }
   </style>
 </head>
 <body>
+  <div id="xp-root"></div>
+  <script>
+    (() => {
+      // ---------- Content (xp-content.js) ----------
+      const read = () => window.__XP_HASH__ || window.__XP__ || {};
+      const ESC = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+      let D = read();
+      const fill = (s) => String(s == null ? "" : s).replace(/\{name\}/g, D.brand && D.brand.name || "").replace(/\{year\}/g, String(new Date().getFullYear()));
+      const esc = (s) => fill(s).replace(/[&<>"']/g, (c) => ESC[c]);
+      const br = (s) => esc(s).replace(/\n/g, "<br>");
+      const href = (h) => { const v = String(h || "").trim(); return /^(https?:|mailto:|tel:|#|\/|\.\/)/i.test(v) ? v : ""; };
+      const url = (u) => { const v = String(u || "").trim(); return /^(https:|data:image\/|data:video\/|\.\/|\/)/i.test(v) ? v : ""; };
+      const cssUrl = (u) => url(u).replace(/["'()\\\s]/g, (c) => "%" + c.charCodeAt(0).toString(16).padStart(2, "0"));
+      const num = (v, d) => (typeof v === "number" && isFinite(v) ? v : d);
+      const on = (k) => !D.sections || D.sections[k] !== false;
+      const words = (s) => fill(s).trim().split(/\s+/).filter(Boolean);
+
+      const fonts = new Set();
+      function theme() {
+        const t = D.theme || {}, root = document.documentElement;
+        for (const [k, v] of Object.entries(t.colors || {})) root.style.setProperty("--c-" + k, String(v));
+        for (const [k, v] of Object.entries(t.fonts || {})) {
+          const f = String(v);
+          if (!/^[A-Za-z0-9 ]{2,40}$/.test(f)) continue;
+          root.style.setProperty("--f-" + k, '"' + f + '"');
+          if (!fonts.has(f)) {
+            fonts.add(f);
+            const l = document.createElement("link");
+            l.rel = "stylesheet";
+            l.href = "https://fonts.googleapis.com/css2?family=" + encodeURIComponent(f).replace(/%20/g, "+") + ":wght@400;500;600&display=swap";
+            document.head.appendChild(l);
+          }
+        }
+        for (const [k, v] of Object.entries(t)) if (typeof v === "number") root.style.setProperty("--n-" + k, String(v));
+        document.title = fill(D.seo && D.seo.title || D.brand && D.brand.name);
+        const desc = fill(D.seo && D.seo.description);
+        for (const sel of ['meta[name="description"]', 'meta[property="og:description"]']) document.querySelector(sel).setAttribute("content", desc);
+        document.querySelector('meta[property="og:title"]').setAttribute("content", document.title);
+      }
+
+      function markup() {
+        const h = D.hero || {}, v = D.vision || {}, hs = D.hotspots || {}, st = D.station || {}, so = D.solutions || {}, ct = D.contact || {}, nav = D.nav || {}, m = D.motion || {};
+        const rock = url(h.rockImage), whole = h.rockCrop === false ? " whole" : "";
+        const chart = String(st.chart || "").split(/[\s,]+/).map(Number).filter((x) => isFinite(x));
+        const pts = chart.length > 1 ? chart.map((y, i) => `${Math.round((i / (chart.length - 1)) * 214)},${Math.max(4, Math.min(66, y))}`).join(" ") : "0,60 214,10";
+        const dots = pts.split(" ");
+        const stats = (D.stats || []).map((s) => `<div class="stat"><div class="n" data-to="${num(s.value, 0)}" data-dec="${Math.max(0, Math.min(3, num(s.decimals, 0)))}">${m.countUp === false ? esc(Number(num(s.value, 0)).toLocaleString("en-US", { minimumFractionDigits: num(s.decimals, 0), maximumFractionDigits: num(s.decimals, 0) })) : "0"}</div><div class="l">${esc(s.label)}</div></div>`).join("");
+        return `
   <nav>
-    <a class="logo" href="#story">
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M16 2l12 7v14l-12 7-12-7V9z" fill="currentColor"/>
-        <path d="M16 8c-4 4-5 9-1 16 1-5 4-9 8-11-3 0-5 1-7 3 0-3 0-5 0-8z" fill="#c6f35c"/>
-      </svg>
-      <span>Mossline</span>
-    </a>
-    <div class="menu">
-      <a href="#sol">Solutions<span class="chev"></span></a>
-      <a href="#story">Our tech<span class="chev"></span></a>
-      <a href="#sol">Company<span class="chev"></span></a>
-      <a href="#sol">Resources<span class="chev"></span></a>
-    </div>
-    <a class="talk" href="#sol">LET'S TALK<span class="sq">›</span></a>
+    <a class="logo" href="#story">${D.brand && D.brand.showMark !== false ? `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2l12 7v14l-12 7-12-7V9z" fill="currentColor"/><path d="M16 8c-4 4-5 9-1 16 1-5 4-9 8-11-3 0-5 1-7 3 0-3 0-5 0-8z" fill="var(--lime)"/></svg>` : ""}<span>${esc(D.brand && D.brand.name)}</span></a>
+    <div class="menu">${(nav.links || []).map((l) => `<a href="${esc(href(l.href) || "#")}">${esc(l.label)}<span class="chev"></span></a>`).join("")}</div>
+    ${nav.cta && nav.cta.label ? `<a class="talk" href="${esc(href(nav.cta.href) || "#contact")}">${esc(nav.cta.label)}<span class="sq">›</span></a>` : "<span></span>"}
   </nav>
 
-  <section id="story">
+  <section id="story" style="height:${Math.max(250, Math.min(1200, num(m.storyLength, 640)))}vh">
     <div class="stage">
       <div class="cam">
         <canvas id="cv"></canvas>
-        <img class="plate" src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_031618_8ce6dca1-972d-429d-8d13-bf0691c37848.png&w=2400&q=88" alt="Floating moss island">
+        ${url(h.image) ? `<img class="plate" src="${esc(url(h.image))}" alt="${esc(h.imageAlt)}">` : ""}
         <div class="mist"></div>
       </div>
-
-      <video id="push" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261106_025717_906b686d-9a9a-4dea-bab4-ae2454f8390e.mp4" muted playsinline preload="auto" crossorigin="anonymous"></video>
-
-      <div class="fog">
-        <div class="f0"></div>
-        <div class="f1"></div>
-        <div class="f2"></div>
-      </div>
-
+      ${url(h.video) ? `<video id="push" src="${esc(url(h.video))}" muted playsinline preload="auto" crossorigin="anonymous"></video>` : ""}
+      ${m.fog === false ? "" : `<div class="fog"><div class="f0"></div><div class="f1"></div><div class="f2"></div></div>`}
       <div class="layer L0">
         <div class="hero-copy">
-          <span class="chip">Planet intelligence</span>
-          <h1><span class="line"><span>Measure the Living Planet</span></span></h1>
+          ${h.chip ? `<span class="chip">${esc(h.chip)}</span>` : ""}
+          <h1><span class="line"><span>${esc(h.title)}</span></span></h1>
         </div>
       </div>
-
-      <div class="cam camF">
-        <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_031657_baaa3380-5ece-482a-a623-a1838fd7653c.png&w=2400&q=90" alt="">
-      </div>
-
-      <div class="rock rk1" data-x="-.3" data-y="-.6" data-d="1.3">
-        <div class="bob"><img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025635_82593f6a-1cf7-41c1-94ac-96fb89ebfd1a.png&w=2400&q=85" alt=""></div>
-      </div>
-      <div class="rock rk3" data-x="1" data-y=".55" data-d="1.8">
-        <div class="bob"><img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025635_82593f6a-1cf7-41c1-94ac-96fb89ebfd1a.png&w=2400&q=85" alt=""></div>
-      </div>
-
+      <div class="cam camF">${url(h.frontImage) ? `<img src="${esc(url(h.frontImage))}" alt="">` : ""}</div>
+      ${rock && m.rocks !== false ? `<div class="rock rk1${whole}" data-x="-.3" data-y="-.6" data-d="1.3"><div class="bob"><img src="${esc(rock)}" alt=""></div></div><div class="rock rk3${whole}" data-x="1" data-y=".55" data-d="1.8"><div class="bob"><img src="${esc(rock)}" alt=""></div></div>` : ""}
       <div class="layer L1">
         <div class="hud">
           <div class="xhair"></div>
-          <span class="chip">Biodiversity</span>
-          <pre>LAT  34.0922° N
-LON 116.2432° W
-ELEV 842 M</pre>
+          ${h.hudChip ? `<span class="chip">${esc(h.hudChip)}</span>` : ""}
+          <pre>${esc(h.hudLines)}</pre>
           <div class="corners"></div>
         </div>
-        <div class="cap">Real-time ecosystem insights.<br>Powered by science, blockchain,<br>and transparent data.</div>
-        <div class="hint"><span class="circ"><span class="chev"></span></span>SCROLL TO EXPLORE</div>
+        <div class="cap">${br(h.caption)}</div>
+        <div class="hint"><span class="circ"><span class="chev"></span></span>${esc(h.hint)}</div>
       </div>
-
-      <div class="layer L2">
-        <div class="vision">
-          <span class="chip">Our vision</span>
-          <h2>
-            <span class="w">From</span> <span class="w">Data</span> <span class="w">Chaos</span> <span class="w">to</span><br>
-            <span class="w">Science-Backed,</span><br>
-            <span class="w">Actionable</span> <span class="w">Insights</span>
-          </h2>
-          <p>A breakthrough in environmental measurement,<br>built for commercial use.</p>
-        </div>
-      </div>
-
-      <div class="layer L3">
-        <p class="acct">Our ecosystem-level accounting translates complex field science into verifiable, compliance-ready metrics — so you can drive measurable results, not just reports.</p>
-        <div class="hs" style="left:12%;top:58%"><span class="dot"></span><span class="lbl">Soil carbon<em>+3.8 t/ha</em></span></div>
-        <div class="hs" style="left:33%;top:41%"><span class="dot"></span><span class="lbl">Canopy moisture<em>71 % RH</em></span></div>
-        <div class="hs" style="left:70%;top:66%"><span class="dot"></span><span class="lbl">Species index<em>214 taxa</em></span></div>
-        <div class="hs" style="left:83%;top:47%"><span class="dot"></span><span class="lbl">Microclimate<em>14.2 °C</em></span></div>
-      </div>
-
-      <div class="layer L4">
-        <div class="cred">
-          <span class="st-lbl">✕ Field station 07</span>
-          <h3>Scientific credibility for corporate climate action</h3>
-        </div>
+      ${on("vision") ? `<div class="layer L2"><div class="vision">${v.chip ? `<span class="chip">${esc(v.chip)}</span>` : ""}<h2>${fill(v.title).split("\n").map((line) => words(line).map((w) => `<span class="w">${esc(w)}</span>`).join(" ")).join("<br>")}</h2><p>${br(v.text)}</p></div></div>` : ""}
+      ${on("hotspots") ? `<div class="layer L3${m.pulse === false ? "" : " pulse"}"><p class="acct">${words(hs.text).map((w) => `<span class="w">${esc(w)}</span>`).join(" ")}</p>${(hs.items || []).map((x) => `<button type="button" class="hs" style="left:${Math.max(0, Math.min(100, num(x.x, 50)))}%;top:${Math.max(0, Math.min(100, num(x.y, 50)))}%"><span class="dot"></span><span class="lbl">${esc(x.label)}<em>${esc(x.value)}</em></span></button>`).join("")}</div>` : ""}
+      ${on("station") ? `<div class="layer L4">
+        <div class="cred">${st.label ? `<span class="st-lbl">✕ ${esc(st.label)}</span>` : ""}<h3>${esc(st.title)}</h3></div>
         <div class="card">
-          <h4>Accumulated carbon<br>balance</h4>
-          <div class="note">Plot 07 · 12 months</div>
-          <div class="big"><span id="cardNum">0</span><span class="unit">tCO₂e</span></div>
-          <div class="tag">+2.6 tCO₂e</div>
-          <svg width="220" height="70" viewBox="0 0 220 70">
-            <polyline id="spark" fill="none" stroke="#c6f35c" stroke-width="1.6" points="0,60 30,55 60,57 90,44 120,46 150,30 180,24 214,10"/>
-            <circle cx="90" cy="44" r="2.4" fill="#fff"/>
-            <circle cx="150" cy="30" r="2.4" fill="#fff"/>
-            <circle cx="214" cy="10" r="3.4" fill="#c6f35c"/>
-          </svg>
-          <div class="q">Q1 · Q2 · Q3 · Q4</div>
+          <h4>${br(st.cardTitle)}</h4>
+          <div class="note">${esc(st.cardNote)}</div>
+          <div class="big"><span class="num" data-to="${num(st.cardValue, 0)}">0</span><span class="unit">${esc(st.cardUnit)}</span></div>
+          ${st.cardTag ? `<div class="tag">${esc(st.cardTag)}</div>` : ""}
+          <svg width="220" height="70" viewBox="0 0 220 70"><polyline class="spark" fill="none" stroke="var(--lime)" stroke-width="1.6" points="${pts}"/>${dots.slice(-1).map((p) => `<circle cx="${p.split(",")[0]}" cy="${p.split(",")[1]}" r="3.4" fill="var(--lime)"/>`).join("")}</svg>
+          <div class="q">${esc(st.cardAxis)}</div>
         </div>
-        <div class="feats">
-          <div class="feat"><span class="idx">01</span><span>Gold-standard observation system</span><span class="arr">→</span></div>
-          <div class="feat"><span class="idx">02</span><span>World-class atmospheric monitoring (AMRV)</span><span class="arr">→</span></div>
-          <div class="feat"><span class="idx">03</span><span>Integrated algorithmic processing</span><span class="arr">→</span></div>
-          <div class="feat"><span class="idx">04</span><span>Blockchain-secured traceability</span><span class="arr">→</span></div>
-          <div class="feat"><span class="idx">05</span><span>Built for scale and complexity</span><span class="arr">→</span></div>
-        </div>
-      </div>
-
+        ${(st.features || []).length ? `<div class="feats">${st.features.map((f, i) => `<button type="button" class="feat"><span class="idx">${String(i + 1).padStart(2, "0")}</span><span>${esc(f.title)}</span><span class="arr">→</span></button>`).join("")}</div>` : ""}
+      </div>` : ""}
       <div class="prog"><div class="bar"></div></div>
     </div>
   </section>
 
-  <section id="sol">
-    <div class="sol-head">
-      <div>
-        <span class="chip">Our solutions</span>
-        <h2>Validating what the ecosystem does naturally</h2>
-      </div>
-      <p>Field sensors, atmospheric flux towers and satellite data fused into one auditable record — so every tonne you report can be traced back to the ground it came from.</p>
-    </div>
-
-    <div class="cards">
-      <div class="scard">
-        <div class="bg" style="background-image:url('https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025630_9a37a1e0-2547-4973-8160-c75205993914.png&w=1400&q=82');background-position:22% 70%;background-size:260%"></div>
-        <div class="top"><span class="tag">[Nature-based solutions]</span><span class="go">→</span></div>
-        <div class="bot">
-          <h3>Forest &amp; peatland<br>carbon projects</h3>
-          <p>Continuous flux measurement replaces sampled estimates, so credits reflect what the land actually absorbs.</p>
-        </div>
-      </div>
-      <div class="scard">
-        <div class="bg" style="background-image:url('https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025545_b003e5cc-e68f-4fee-b686-c217a5d81eea.png&w=1400&q=82');background-position:50% 50%;background-size:190%"></div>
-        <div class="top"><span class="tag">[Supply chain solutions]</span><span class="go">→</span></div>
-        <div class="bot">
-          <h3>Scope 3 sourcing<br>verification</h3>
-          <p>Trace commodities to the plots that grew them, with deforestation-free evidence attached to every shipment.</p>
-        </div>
-      </div>
-      <div class="scard">
-        <div class="bg" style="background-image:url('https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025630_9a37a1e0-2547-4973-8160-c75205993914.png&w=1400&q=82');background-position:62% 30%;background-size:230%"></div>
-        <div class="top"><span class="tag">[Biodiversity credits]</span><span class="go">→</span></div>
-        <div class="bot">
-          <h3>Living species<br>baselines</h3>
-          <p>Acoustic and eDNA monitoring builds a measurable biodiversity baseline you can report against year over year.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="stats">
-      <div class="stat"><div class="n" data-to="1240" data-dec="0" data-comma="1">0</div><div class="l">Sensors deployed</div></div>
-      <div class="stat"><div class="n" data-to="38" data-dec="0">0</div><div class="l">Countries monitored</div></div>
-      <div class="stat"><div class="n" data-to="2.1" data-dec="1">0</div><div class="l">Mt CO₂e verified</div></div>
-      <div class="stat"><div class="n" data-to="99.4" data-dec="1">0</div><div class="l">% Data uptime</div></div>
-    </div>
-  </section>
-
-  <script>
-    (() => {
-      const $ = (s, p = document) => p.querySelector(s);
-      const $$ = (s, p = document) => Array.from(p.querySelectorAll(s));
-      const clamp = v => Math.max(0, Math.min(1, v));
-      const seg = (p, a, b) => clamp((p - a) / (b - a));
-      const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-      const story = $('#story');
-      const cam = $('.cam:not(.camF)');
-      const camF = $('.camF');
-      const plate = $('.plate');
-      const cv = $('#cv');
-      const ctx = cv.getContext('2d');
-      const vid = $('#push');
-      const fog = $('.fog');
-      const rocks = $$('.rock');
-
-      const L0 = $('.L0'), L1 = $('.L1'), L2 = $('.L2'), L3 = $('.L3'), L4 = $('.L4');
-      const heroCopy = $('.hero-copy');
-      const heroH1 = $('h1', heroCopy);
-      const heroLine = $('.line', heroCopy);
-      const heroSpan = $('.line span', heroCopy);
-      const hud = $('.hud');
-      const cap = $('.cap');
-      const hint = $('.hint');
-
-      const visChip = $('.vision .chip');
-      const visWords = $$('.vision h2 .w');
-      const visP = $('.vision p');
-
-      const acctEl = $('.acct');
-      const acctRaw = acctEl.textContent.trim().split(/\s+/);
-      acctEl.innerHTML = acctRaw.map(w => `<span class="w">${w}</span>`).join(' ');
-      const acctWords = $$('.acct .w');
-      const hotspots = $$('.hs');
-
-      const cred = $('.cred');
-      const card = $('.card');
-      const cardNum = $('#cardNum');
-      const spark = $('#spark');
-      const sparkLen = spark.getTotalLength();
-      spark.style.strokeDasharray = sparkLen;
-      spark.style.strokeDashoffset = sparkLen;
-      const featRows = $$('.feat');
-      const progBar = $('.prog .bar');
-
-      const sol = $('#sol');
-      const scards = $$('.scard');
-      const statNums = $$('.stat .n');
-
-      // Hero headline placement
-      function layoutHero() {
-        const W = innerWidth, H = innerHeight;
-        if (W <= 820) {
-          heroCopy.style.top = '';
-          heroH1.style.fontSize = '';
-          heroLine.style.whiteSpace = '';
-          return;
-        }
-        heroLine.style.whiteSpace = 'nowrap';
-        const bw = W * 1.06, bh = H * 1.12;
-        const k = Math.max(bw / 1600, bh / 900);
-        const fernTop = -0.09 * H + (bh - 900 * k) / 2 + 245 * k + 0.06 * H;
-        let fs = Math.min(104, 72 * k);
-        heroH1.style.fontSize = fs + 'px';
-        const sw = heroSpan.getBoundingClientRect().width;
-        if (sw > W * 0.86 && sw > 0) {
-          fs = fs * ((W * 0.86) / sw);
-          heroH1.style.fontSize = fs + 'px';
-        }
-        const bhgt = heroCopy.offsetHeight;
-        heroCopy.style.top = (fernTop + 0.5 * fs - bhgt) + 'px';
+  <div class="after">
+    ${on("solutions") ? `<section id="sol">
+      <div class="sol-head"><div>${so.chip ? `<span class="chip">${esc(so.chip)}</span>` : ""}<h2>${br(so.title)}</h2></div><p>${br(so.text)}</p></div>
+      <div class="cards">${(so.cards || []).map((c) => { const link = href(c.href); const tag = link ? "a" : "div"; return `<${tag} class="scard"${link ? ` href="${esc(link)}"` : ""}><div class="bg" style="background-image:url('${cssUrl(c.image)}');background-position:${esc(String(c.focus || "50% 50%").replace(/[^0-9.% ]/g, ""))};background-size:${Math.max(100, Math.min(400, num(c.zoom, 160)))}%"></div><div class="top"><span class="tag">${esc(c.tag)}</span><span class="go">→</span></div><div class="bot"><h3>${br(c.title)}</h3><p>${br(c.text)}</p></div></${tag}>`; }).join("")}</div>
+      ${on("stats") && stats ? `<div class="stats">${stats}</div>` : ""}
+    </section>` : on("stats") && stats ? `<div class="stats" style="padding-top:60px;border-top:0">${stats}</div>` : ""}
+    ${on("contact") ? `<section id="contact"><div class="ct"><div>${ct.chip ? `<span class="chip">${esc(ct.chip)}</span>` : ""}<h2>${br(ct.title)}</h2></div><div class="ct-actions"><p>${br(ct.text)}</p>${ct.email ? `<a class="btn" href="mailto:${esc(ct.email)}">${esc(ct.button || ct.email)}<span class="sq">›</span></a>` : ""}<div class="ct-lines">${[ct.email, ct.phone, ct.address].filter(Boolean).map(br).join("<br>")}</div></div></div></section>` : ""}
+    <footer>${esc(ct.footer)}</footer>
+  </div>`;
       }
 
-      // Video frame cache
-      const FPS = 24;
-      let NF = 0, frames = [], cached = 0, want = 0, shown = -1, busy = false, inited = false;
-      const grab = document.createElement('canvas');
-      grab.width = 1600;
-      grab.height = 900;
-      const gctx = grab.getContext('2d');
+      // ---------- Scroll story engine ----------
+      const VCACHE = new Map();
+      function start() {
+        const $ = (s, p = document) => p.querySelector(s);
+        const $$ = (s, p = document) => Array.from(p.querySelectorAll(s));
+        const clamp = (v) => Math.max(0, Math.min(1, v));
+        const seg = (p, a, b) => clamp((p - a) / (b - a));
+        const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+        const M = D.motion || {};
+        const PAR = Math.max(0, Math.min(3, num(M.parallax, 1)));
+        const SMOOTH = Math.max(0, Math.min(0.97, num(M.smoothing, 0.86)));
+        const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const off = [];
+        const listen = (t, ev, fn, o) => (t.addEventListener(ev, fn, o), off.push(() => t.removeEventListener(ev, fn, o)));
+        let raf = 0, alive = true;
 
-      function sizeCv() {
-        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-        cv.width = Math.max(1, Math.round(cv.clientWidth * dpr));
-        cv.height = Math.max(1, Math.round(cv.clientHeight * dpr));
-        shown = -1;
-        drawWant();
-      }
+        const story = $("#story");
+        const cam = $(".cam:not(.camF)");
+        const camF = $(".camF");
+        const plate = $(".plate");
+        const cv = $("#cv");
+        const ctx = cv.getContext("2d");
+        const vid = $("#push");
+        const fog = $(".fog");
+        const rocks = $$(".rock");
+        const L0 = $(".L0"), L1 = $(".L1"), L2 = $(".L2"), L3 = $(".L3"), L4 = $(".L4");
+        const heroCopy = $(".hero-copy"), heroH1 = $("h1", heroCopy), heroLine = $(".line", heroCopy), heroSpan = $(".line span", heroCopy);
+        const hud = $(".hud"), cap = $(".cap"), hint = $(".hint");
+        const visChip = L2 && $(".vision .chip"), visWords = L2 ? $$(".vision h2 .w") : [], visP = L2 && $(".vision p");
+        const acctWords = L3 ? $$(".acct .w") : [], hotspots = L3 ? $$(".hs") : [];
+        const cred = L4 && $(".cred"), card = L4 && $(".card"), cardNum = L4 && $(".card .num"), spark = L4 && $(".spark");
+        const sparkLen = spark ? spark.getTotalLength() : 0;
+        if (spark) (spark.style.strokeDasharray = sparkLen), (spark.style.strokeDashoffset = sparkLen);
+        const cardTo = cardNum ? +cardNum.dataset.to : 0;
+        const cardDec = String(cardTo).includes(".") ? String(cardTo).split(".")[1].length : 0;
+        const featRows = L4 ? $$(".feat") : [];
+        const progBar = $(".prog .bar");
+        const after = $(".after");
+        const scards = $$(".scard");
+        const statNums = $$(".stat .n");
 
-      function nearest(t) {
-        if (frames[t]) return t;
-        for (let k = 1; k < NF; k++) {
-          if (t - k >= 0 && frames[t - k]) return t - k;
-          if (t + k < NF && frames[t + k]) return t + k;
-        }
-        return -1;
-      }
-
-      function drawWant() {
-        if (busy || !NF) return;
-        const idx = nearest(want);
-        if (idx < 0 || idx === shown) return;
-        const blob = frames[idx];
-        if (!blob) return;
-        busy = true;
-        createImageBitmap(blob).then(bmp => {
-          const cw = cv.width, ch = cv.height;
-          const bw = bmp.width, bh = bmp.height;
-          const s = Math.max(cw / bw, ch / bh);
-          const dw = bw * s, dh = bh * s;
-          ctx.drawImage(bmp, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
-          bmp.close();
-          shown = idx;
-          busy = false;
-          if (nearest(want) !== shown) drawWant();
-        }).catch(() => {
-          busy = false;
-        });
-      }
-
-      function seekFallback() {
-        let i = 0;
-        const grabNext = () => {
-          if (i >= NF) return;
-          if (!frames[i]) {
-            gctx.drawImage(vid, 0, 0, 1600, 900);
-            grab.toBlob(b => {
-              if (b && !frames[i]) {
-                frames[i] = b;
-                cached++;
-                if (i === want) drawWant();
-              }
-              i++;
-              if (i < NF) {
-                vid.currentTime = Math.min(i / FPS, vid.duration - 0.01);
-              }
-            }, 'image/jpeg', 0.86);
-          } else {
-            i++;
-            if (i < NF) {
-              vid.currentTime = Math.min(i / FPS, vid.duration - 0.01);
-            }
-          }
-        };
-        vid.addEventListener('seeked', grabNext);
-        if (NF > 1) {
-          i = 1;
-          vid.currentTime = Math.min(1 / FPS, vid.duration - 0.01);
-        }
-      }
-
-      function initVideo() {
-        if (inited || !vid.duration || isNaN(vid.duration)) return;
-        inited = true;
-        NF = Math.max(2, Math.round(vid.duration * FPS));
-        frames = new Array(NF);
-
-        gctx.drawImage(vid, 0, 0, 1600, 900);
-        grab.toBlob(b => {
-          if (b && !frames[0]) {
-            frames[0] = b;
-            cached++;
-            drawWant();
-          }
-        }, 'image/jpeg', 0.9);
-
-        if ('requestVideoFrameCallback' in vid) {
-          const step = (_now, meta) => {
-            const i = Math.min(NF - 1, Math.round(meta.mediaTime * FPS));
-            if (i > 0 && !frames[i]) {
-              gctx.drawImage(vid, 0, 0, 1600, 900);
-              grab.toBlob(b => {
-                if (b && !frames[i]) {
-                  frames[i] = b;
-                  cached++;
-                  if (i === want) drawWant();
-                }
-              }, 'image/jpeg', 0.86);
-            }
-            if (!vid.ended && cached < NF) {
-              vid.requestVideoFrameCallback(step);
-            }
-          };
-          vid.requestVideoFrameCallback(step);
-          vid.play().catch(seekFallback);
-        } else {
-          seekFallback();
-        }
-      }
-
-      vid.addEventListener('loadeddata', initVideo);
-      if (vid.readyState >= 2) initVideo();
-
-      window.__hero = {
-        ready: () => NF > 0 && cached >= NF - 2,
-        settled: () => !busy && nearest(want) === shown
-      };
-
-      // Interactive hotspots & feature rows
-      hotspots.forEach(h => {
-        h.addEventListener('click', () => {
-          const was = h.classList.contains('on');
-          hotspots.forEach(x => x.classList.remove('on'));
-          if (!was) h.classList.add('on');
-        });
-      });
-
-      featRows.forEach(r => {
-        r.addEventListener('click', () => {
-          const was = r.classList.contains('on');
-          featRows.forEach(x => x.classList.remove('on'));
-          if (!was) r.classList.add('on');
-        });
-      });
-
-      // Solutions card tilt
-      scards.forEach(c => {
-        c.addEventListener('pointermove', e => {
-          const rc = c.getBoundingClientRect();
-          const x = (e.clientX - rc.left) / rc.width - 0.5;
-          const y = (e.clientY - rc.top) / rc.height - 0.5;
-          c.style.transform = `perspective(1000px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg)`;
-        });
-        c.addEventListener('pointerleave', () => {
-          c.style.transform = '';
-        });
-      });
-
-      // Pointer tracking
-      let mx = 0, my = 0, sx = 0, sy = 0;
-      addEventListener('pointermove', e => {
-        mx = e.clientX / innerWidth - 0.5;
-        my = e.clientY / innerHeight - 0.5;
-      }, { passive: true });
-
-      // Stats count-up
-      let statsDone = false;
-      function runStats() {
-        const start = performance.now();
-        const dur = 1600;
-        const tick = now => {
-          const t = clamp((now - start) / dur);
-          const e = ease(t);
-          statNums.forEach(el => {
-            const to = +el.dataset.to;
-            const dec = +el.dataset.dec;
-            const comma = el.dataset.comma === '1';
-            const val = to * e;
-            let txt = dec > 0 ? val.toFixed(dec) : String(Math.round(val));
-            if (comma) txt = Number(txt).toLocaleString('en-US');
-            el.textContent = txt;
-          });
-          if (t < 1) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-      }
-
-      // Per-frame scroll loop
-      let sp = 0, last = performance.now();
-      function frame(now) {
-        const dt = Math.min(64, now - last);
-        last = now;
-
-        const maxScroll = Math.max(1, story.offsetHeight - innerHeight);
-        const p = clamp(-story.getBoundingClientRect().top / maxScroll);
-        sp += (p - sp) * (1 - Math.pow(0.86, dt / 16.7));
-        if (Math.abs(p - sp) < 0.0002) sp = p;
-
-        sx += (mx - sx) * 0.06;
-        sy += (my - sy) * 0.06;
-
-        // Video scrub
-        const vp = ease(seg(sp, 0.05, 0.70));
-        if (NF) {
-          want = Math.round(vp * (NF - 1));
-          drawWant();
-        }
-
-        // Camera motion
-        const camTx = `translate3d(${-sx * 18}px, ${-sy * 12 + (1 - vp) * innerHeight * 0.06}px, 0) scale(${1 + 0.02 * (1 - vp)})`;
-        cam.style.transform = camTx;
-        camF.style.transform = camTx;
-
-        // Hand-off between high-res still/cut-out and video frame 0
-        const ho = shown < 0 ? 0 : (shown === 0 ? seg(sp, 0.06, 0.105) : 1);
-        const plateOp = 1 - ho;
-        plate.style.opacity = plateOp;
-        plate.style.visibility = plateOp > 0 ? 'visible' : 'hidden';
-        camF.style.opacity = plateOp;
-        camF.style.visibility = plateOp > 0 ? 'visible' : 'hidden';
-
-        // Floating rock sprites
-        const fp = seg(sp, 0.02, 0.2);
-        const fe = fp * fp;
-        rocks.forEach(r => {
-          if (fp >= 1) {
-            r.style.visibility = 'hidden';
+        function layoutHero() {
+          const W = innerWidth, H = innerHeight;
+          if (W <= 820) {
+            heroCopy.style.top = ""; heroH1.style.fontSize = ""; heroLine.style.whiteSpace = "";
             return;
           }
-          r.style.visibility = 'visible';
-          const x = +r.dataset.x, y = +r.dataset.y, d = +r.dataset.d;
-          r.style.transform = `translate3d(${x * fp * 70 + sx * -24 * d}vw, ${y * fp * 60 + sy * -16 * d}vh, 0) scale(${1 + fe * 1.6 * d})`;
-          r.style.filter = `blur(${fe * 5 * d}px)`;
+          heroLine.style.whiteSpace = "nowrap";
+          const bw = W * 1.06, bh = H * 1.12;
+          const k = Math.max(bw / 1600, bh / 900);
+          const fernTop = -0.09 * H + (bh - 900 * k) / 2 + 245 * k + 0.06 * H;
+          let fs = Math.min(104, 72 * k);
+          heroH1.style.fontSize = fs + "px";
+          const sw = heroSpan.getBoundingClientRect().width;
+          if (sw > W * 0.86 && sw > 0) { fs = fs * ((W * 0.86) / sw); heroH1.style.fontSize = fs + "px"; }
+          heroCopy.style.top = fernTop + 0.5 * fs - heroCopy.offsetHeight + "px";
+        }
+
+        // Video frames, cached as the video plays once, then scrubbed by scroll.
+        const FPS = 24;
+        let NF = 0, frames = [], want = 0, shown = -1, busy = false, inited = false;
+        // Frames are kept per video across redraws, so editing words does not refetch them.
+        const vkey = vid ? vid.getAttribute("src") : "";
+        const memo = vid && VCACHE.get(vkey);
+        if (memo) ({ NF, frames } = memo);
+        const grab = document.createElement("canvas");
+        grab.width = 1600; grab.height = 900;
+        const gctx = grab.getContext("2d");
+        function sizeCv() {
+          const dpr = Math.min(devicePixelRatio || 1, 1.5);
+          cv.width = Math.max(1, Math.round(cv.clientWidth * dpr));
+          cv.height = Math.max(1, Math.round(cv.clientHeight * dpr));
+          shown = -1; drawWant();
+        }
+        function nearest(t) {
+          if (frames[t]) return t;
+          for (let k = 1; k < NF; k++) { if (t - k >= 0 && frames[t - k]) return t - k; if (t + k < NF && frames[t + k]) return t + k; }
+          return -1;
+        }
+        function drawWant() {
+          if (busy || !NF) return;
+          const idx = nearest(want);
+          if (idx < 0 || idx === shown) return;
+          busy = true;
+          createImageBitmap(frames[idx]).then((bmp) => {
+            if (!alive) return bmp.close();
+            const cw = cv.width, ch = cv.height, s = Math.max(cw / bmp.width, ch / bmp.height);
+            const dw = bmp.width * s, dh = bmp.height * s;
+            ctx.drawImage(bmp, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+            bmp.close(); shown = idx; busy = false;
+            if (nearest(want) !== shown) drawWant();
+          }).catch(() => { busy = false; });
+        }
+        function store(i, q) {
+          try { gctx.drawImage(vid, 0, 0, 1600, 900); } catch (e) { return; }
+          grab.toBlob((b) => { if (b && !frames[i]) { frames[i] = b; if (alive && (i === want || i === 0)) drawWant(); } }, "image/jpeg", q);
+        }
+        function seekFallback() {
+          let i = 1;
+          const next = () => { if (!alive || i >= NF) return; if (!frames[i]) store(i, 0.86); i++; if (i < NF) vid.currentTime = Math.min(i / FPS, vid.duration - 0.01); };
+          listen(vid, "seeked", next);
+          if (NF > 1) vid.currentTime = Math.min(1 / FPS, vid.duration - 0.01);
+        }
+        function initVideo() {
+          if (inited || !vid.duration || isNaN(vid.duration)) return;
+          inited = true;
+          if (!memo) {
+            NF = Math.max(2, Math.round(vid.duration * FPS));
+            frames = new Array(NF);
+            VCACHE.set(vkey, { NF, frames });
+          }
+          drawWant();
+          let full = true;
+          for (let k = 0; k < NF; k++) if (!frames[k]) { full = false; break; }
+          if (full) return;
+          if (!frames[0]) store(0, 0.9);
+          if ("requestVideoFrameCallback" in vid) {
+            const step = (_n, meta) => {
+              if (!alive) return;
+              const i = Math.min(NF - 1, Math.round(meta.mediaTime * FPS));
+              if (i > 0 && !frames[i]) store(i, 0.86);
+              if (!vid.ended) vid.requestVideoFrameCallback(step);
+            };
+            vid.requestVideoFrameCallback(step);
+            vid.play().catch(seekFallback);
+          } else seekFallback();
+        }
+        if (vid) { listen(vid, "loadeddata", initVideo); if (vid.readyState >= 2) initVideo(); }
+
+        hotspots.forEach((h) => listen(h, "click", () => { const was = h.classList.contains("on"); hotspots.forEach((x) => x.classList.remove("on")); if (!was) h.classList.add("on"); }));
+        featRows.forEach((r) => listen(r, "click", () => { const was = r.classList.contains("on"); featRows.forEach((x) => x.classList.remove("on")); if (!was) r.classList.add("on"); }));
+        if (M.cardTilt !== false && !reduce) scards.forEach((c) => {
+          listen(c, "pointermove", (e) => { const rc = c.getBoundingClientRect(); const x = (e.clientX - rc.left) / rc.width - 0.5, y = (e.clientY - rc.top) / rc.height - 0.5; c.style.transform = `perspective(1000px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg)`; });
+          listen(c, "pointerleave", () => { c.style.transform = ""; });
         });
 
-        // Fog bank
-        const fg = ease(seg(sp, 0.38, 0.47));
-        fog.style.visibility = fg > 0 ? 'visible' : 'hidden';
-        fog.style.opacity = fg;
-        fog.style.transform = `translate3d(${(fg - 1) * 18 + sx * -10}vw, ${sy * -6}px, 0)`;
+        let mx = 0, my = 0, sx = 0, sy = 0;
+        listen(window, "pointermove", (e) => { mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; }, { passive: true });
 
-        // L0 & L1 Hero
-        const h = seg(sp, 0.02, 0.1);
-        L0.style.visibility = h < 1 ? 'visible' : 'hidden';
-        L1.style.visibility = h < 1 ? 'visible' : 'hidden';
-        heroCopy.style.transform = `translate3d(${-sx * 10}px, ${-h * 80 - sy * 6}px, 0) scale(${1 + h * 0.12})`;
-        heroCopy.style.filter = `blur(${h * 14}px)`;
-        heroCopy.style.opacity = 1 - h;
-        hud.style.transform = `translate3d(${sx * 26}px, ${sy * 18 - h * 40}px, 0)`;
-        hud.style.opacity = 1 - seg(sp, 0.02, 0.08);
-        const capOp = 1 - seg(sp, 0.01, 0.05);
-        cap.style.opacity = capOp;
-        hint.style.opacity = capOp;
-
-        // L2 Vision
-        const vIn = seg(sp, 0.16, 0.27);
-        const vOut = seg(sp, 0.34, 0.42);
-        const vVis = vIn > 0 && vOut < 1;
-        L2.style.visibility = vVis ? 'visible' : 'hidden';
-        if (vVis) {
-          visWords.forEach((w, i) => {
-            const k = clamp(vIn * 1.6 - i * 0.08);
-            w.style.transform = `translate3d(0, ${(1 - k) * 30 - vOut * 60}px, 0)`;
-            w.style.filter = `blur(${(1 - k) * 12 + vOut * 14}px)`;
-            w.style.opacity = k * (1 - vOut);
-          });
-          const cpOp = clamp(vIn * 2 - 0.6) * (1 - vOut);
-          const cpTx = `translate3d(0, ${-vOut * 50}px, 0)`;
-          visChip.style.opacity = cpOp;
-          visChip.style.transform = cpTx;
-          visP.style.opacity = cpOp;
-          visP.style.transform = cpTx;
+        let statsDone = M.countUp === false;
+        function runStats() {
+          const t0 = performance.now(), dur = reduce ? 1 : 1600;
+          const tick = (now) => {
+            const t = clamp((now - t0) / dur), e = ease(t);
+            statNums.forEach((el) => { const to = +el.dataset.to, dec = +el.dataset.dec; el.textContent = (to * e).toLocaleString("en-US", { minimumFractionDigits: dec, maximumFractionDigits: dec }); });
+            if (t < 1 && alive) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
         }
 
-        // L3 Accounting & hotspots
-        const aIn = seg(sp, 0.45, 0.55);
-        const aOut = seg(sp, 0.63, 0.68);
-        const aVis = aIn > 0 && aOut < 1;
-        L3.style.visibility = aVis ? 'visible' : 'hidden';
-        if (aVis) {
-          const cnt = acctWords.length;
-          acctWords.forEach((w, i) => {
-            const k = clamp(aIn * 2.2 - (i / cnt) * 1.2);
-            w.style.opacity = (0.15 + 0.85 * k) * (1 - aOut);
-            w.style.filter = `blur(${(1 - k) * 6 + aOut * 10}px)`;
+        let sp = 0, last = performance.now();
+        function frame(now) {
+          if (!alive) return;
+          const dt = Math.min(64, now - last); last = now;
+          const maxScroll = Math.max(1, story.offsetHeight - innerHeight);
+          const p = clamp(-story.getBoundingClientRect().top / maxScroll);
+          sp += (p - sp) * (1 - Math.pow(SMOOTH, dt / 16.7));
+          if (Math.abs(p - sp) < 0.0002 || reduce) sp = p;
+          sx += (mx * PAR - sx) * 0.06; sy += (my * PAR - sy) * 0.06;
+
+          const vp = ease(seg(sp, 0.05, 0.7));
+          if (NF) { want = Math.round(vp * (NF - 1)); drawWant(); }
+          const camTx = `translate3d(${-sx * 18}px, ${-sy * 12 + (1 - vp) * innerHeight * 0.06}px, 0) scale(${1 + 0.02 * (1 - vp)})`;
+          cam.style.transform = camTx; camF.style.transform = camTx;
+
+          // With no video the still stays; with one, the still hands over to the frames.
+          const ho = !vid || shown < 0 ? 0 : shown === 0 ? seg(sp, 0.06, 0.105) : 1;
+          const plateOp = 1 - ho;
+          if (plate) { plate.style.opacity = plateOp; plate.style.visibility = plateOp > 0 ? "visible" : "hidden"; }
+          camF.style.opacity = plateOp; camF.style.visibility = plateOp > 0 && vid ? "visible" : "hidden";
+
+          const fp = seg(sp, 0.02, 0.2), fe = fp * fp;
+          rocks.forEach((r) => {
+            if (fp >= 1) return void (r.style.visibility = "hidden");
+            r.style.visibility = "visible";
+            const x = +r.dataset.x, y = +r.dataset.y, d = +r.dataset.d;
+            r.style.transform = `translate3d(${x * fp * 70 + sx * -24 * d}vw, ${y * fp * 60 + sy * -16 * d}vh, 0) scale(${1 + fe * 1.6 * d})`;
+            r.style.filter = `blur(${fe * 5 * d}px)`;
           });
-          hotspots.forEach((hs, i) => {
-            const k = seg(sp, 0.49 + i * 0.02, 0.53 + i * 0.02);
-            const sc = k * (1 - aOut);
-            hs.style.visibility = sc > 0 ? 'visible' : 'hidden';
-            hs.style.transform = `translate3d(${sx * -30}px, ${sy * -20}px, 0) scale(${sc})`;
-          });
-        } else {
-          hotspots.forEach(hs => { hs.style.visibility = 'hidden'; });
+
+          if (fog) {
+            const fg = ease(seg(sp, 0.38, 0.47));
+            fog.style.visibility = fg > 0 ? "visible" : "hidden"; fog.style.opacity = fg;
+            fog.style.transform = `translate3d(${(fg - 1) * 18 + sx * -10}vw, ${sy * -6}px, 0)`;
+          }
+
+          const h = seg(sp, 0.02, 0.1);
+          L0.style.visibility = h < 1 ? "visible" : "hidden"; L1.style.visibility = h < 1 ? "visible" : "hidden";
+          heroCopy.style.transform = `translate3d(${-sx * 10}px, ${-h * 80 - sy * 6}px, 0) scale(${1 + h * 0.12})`;
+          heroCopy.style.filter = `blur(${h * 14}px)`; heroCopy.style.opacity = 1 - h;
+          hud.style.transform = `translate3d(${sx * 26}px, ${sy * 18 - h * 40}px, 0)`;
+          hud.style.opacity = 1 - seg(sp, 0.02, 0.08);
+          const capOp = 1 - seg(sp, 0.01, 0.05); cap.style.opacity = capOp; hint.style.opacity = capOp;
+
+          if (L2) {
+            const vIn = seg(sp, 0.16, 0.27), vOut = seg(sp, 0.34, 0.42), vis = vIn > 0 && vOut < 1;
+            L2.style.visibility = vis ? "visible" : "hidden";
+            if (vis) {
+              visWords.forEach((w, i) => { const k = clamp(vIn * 1.6 - i * 0.08); w.style.transform = `translate3d(0, ${(1 - k) * 30 - vOut * 60}px, 0)`; w.style.filter = `blur(${(1 - k) * 12 + vOut * 14}px)`; w.style.opacity = k * (1 - vOut); });
+              const o = clamp(vIn * 2 - 0.6) * (1 - vOut), tx = `translate3d(0, ${-vOut * 50}px, 0)`;
+              if (visChip) (visChip.style.opacity = o), (visChip.style.transform = tx);
+              visP.style.opacity = o; visP.style.transform = tx;
+            }
+          }
+
+          if (L3) {
+            const aIn = seg(sp, 0.45, 0.55), aOut = seg(sp, 0.63, 0.68), vis = aIn > 0 && aOut < 1;
+            L3.style.visibility = vis ? "visible" : "hidden";
+            if (vis) {
+              const cnt = acctWords.length || 1;
+              acctWords.forEach((w, i) => { const k = clamp(aIn * 2.2 - (i / cnt) * 1.2); w.style.opacity = (0.15 + 0.85 * k) * (1 - aOut); w.style.filter = `blur(${(1 - k) * 6 + aOut * 10}px)`; });
+              hotspots.forEach((hs, i) => { const k = seg(sp, 0.49 + i * 0.02, 0.53 + i * 0.02), sc = k * (1 - aOut); hs.style.visibility = sc > 0 ? "visible" : "hidden"; hs.style.transform = `translate3d(${sx * -30}px, ${sy * -20}px, 0) scale(${sc})`; });
+            } else hotspots.forEach((hs) => (hs.style.visibility = "hidden"));
+          }
+
+          if (L4) {
+            const sIn = seg(sp, 0.72, 0.82);
+            L4.style.visibility = sIn > 0 ? "visible" : "hidden";
+            if (sIn > 0) {
+              cred.style.opacity = sIn; cred.style.transform = `translate3d(0, ${(1 - sIn) * 30}px, 0)`; cred.style.filter = `blur(${(1 - sIn) * 8}px)`;
+              const cIn = ease(seg(sp, 0.74, 0.86));
+              card.style.opacity = cIn;
+              card.style.transform = `perspective(900px) translate3d(${sx * -14}px, ${(1 - cIn) * 60 + sy * -10}px, 0) rotateY(${sx * 8}deg) rotateX(${-sy * 8}deg)`;
+              cardNum.textContent = (cardTo * seg(sp, 0.76, 0.9)).toFixed(cardDec);
+              spark.style.strokeDashoffset = sparkLen * (1 - seg(sp, 0.77, 0.92));
+              featRows.forEach((row, i) => { const k = ease(seg(sp, 0.76 + i * 0.025, 0.82 + i * 0.025)); row.style.opacity = k; row.style.transform = `translateX(${(1 - k) * 40}px)`; });
+            }
+          }
+
+          progBar.style.transform = `scaleX(${sp})`;
+          if (!statsDone && statNums.length && after.getBoundingClientRect().top <= innerHeight * 0.6) { statsDone = true; runStats(); }
+          raf = requestAnimationFrame(frame);
         }
 
-        // L4 Station
-        const sIn = seg(sp, 0.72, 0.82);
-        L4.style.visibility = sIn > 0 ? 'visible' : 'hidden';
-        if (sIn > 0) {
-          cred.style.opacity = sIn;
-          cred.style.transform = `translate3d(0, ${(1 - sIn) * 30}px, 0)`;
-          cred.style.filter = `blur(${(1 - sIn) * 8}px)`;
-
-          const cIn = ease(seg(sp, 0.74, 0.86));
-          card.style.opacity = cIn;
-          card.style.transform = `perspective(900px) translate3d(${sx * -14}px, ${(1 - cIn) * 60 + sy * -10}px, 0) rotateY(${sx * 8}deg) rotateX(${-sy * 8}deg)`;
-
-          cardNum.textContent = Math.round(24 * seg(sp, 0.76, 0.9));
-          spark.style.strokeDashoffset = sparkLen * (1 - seg(sp, 0.77, 0.92));
-
-          featRows.forEach((row, i) => {
-            const k = ease(seg(sp, 0.76 + i * 0.025, 0.82 + i * 0.025));
-            row.style.opacity = k;
-            row.style.transform = `translateX(${(1 - k) * 40}px)`;
-          });
-        }
-
-        // Progress bar
-        progBar.style.transform = `scaleX(${sp})`;
-
-        // Solutions stats trigger
-        if (!statsDone && sol.getBoundingClientRect().top <= innerHeight * 0.6) {
-          statsDone = true;
-          runStats();
-        }
-
-        requestAnimationFrame(frame);
+        const onResize = () => { layoutHero(); sizeCv(); };
+        listen(window, "resize", onResize);
+        layoutHero(); sizeCv();
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => alive && layoutHero());
+        raf = requestAnimationFrame(frame);
+        return () => { alive = false; cancelAnimationFrame(raf); off.forEach((f) => f()); if (vid) vid.pause(); };
       }
 
-      addEventListener('resize', () => {
-        layoutHero();
-        sizeCv();
-      });
-
-      layoutHero();
-      sizeCv();
-      if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(layoutHero);
+      // ---------- Mount, and redraw when the builder sends new content ----------
+      const root = document.getElementById("xp-root");
+      let stop = null;
+      function mount() {
+        const y = scrollY;
+        if (stop) stop();
+        theme();
+        root.innerHTML = markup();
+        stop = start();
+        scrollTo(0, y);
       }
-      requestAnimationFrame(frame);
+      mount();
+      if (window.__XP_PREVIEW__) {
+        addEventListener("message", (e) => {
+          if (e.source !== parent || !e.data || e.data.type !== "xp-data") return;
+          const next = JSON.stringify(e.data.data || {});
+          if (next === JSON.stringify(D)) return;
+          D = JSON.parse(next);
+          mount();
+        });
+        parent.postMessage({ type: "xp-ready" }, "*");
+      }
     })();
   </script>
 </body>

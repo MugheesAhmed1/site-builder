@@ -4,8 +4,9 @@
 //
 // The archive is treated as untrusted data: nothing in it is run here. Entries that leave the
 // folder, links, oversized archives, secrets (.env), dependencies and build output are refused
-// or dropped. The project lands in templates/<id>/source with a drafted templates/<id>/template.json;
-// edit the slots there, then `npm run templates` builds it and checks every slot.
+// or dropped. The project lands in templates/<id>/source with a drafted template.json and
+// content.json. It stays a draft (left out of the site) until it reads everything it shows from
+// its content; `npm run templates` then builds it and checks every value has a field.
 import JSZip from "jszip";
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, posix } from "node:path";
@@ -131,28 +132,39 @@ export function remoteAssets(files) {
   return [...seen];
 }
 
-/** A first draft of the slots: name, page title, description and the main headings. */
-export function draftSlots(files, name) {
-  const slots = [];
-  const add = (key, label, value, group, long) => {
-    const v = value && value.trim();
-    if (!v || v.length < 4 || slots.some((s) => s.default === v)) return;
-    slots.push({ key, label, group, default: v, ...(long ? { long: true } : {}) });
-  };
-  add("name", "Business name", name, "Brand");
+/**
+ * A first draft of the content model: the name, page title, description and main headings, with
+ * a field for each. It is a starting point only. The project still has to be rebuilt to read
+ * everything it shows from window.__XP__ (docs/TEMPLATES.md, "Making it a template").
+ */
+export function draftContent(files, name) {
   const html = text(files, "index.html");
-  const desc = html.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i)?.[1];
-  add("description", "Short description", desc, "Brand", true);
+  const content = {
+    seo: { title: "{name}", description: html.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i)?.[1]?.trim() || "" },
+    brand: { name },
+    words: {},
+  };
+  const schema = [
+    { group: "Business", fields: [
+      { path: "brand.name", label: "Business name", type: "text" },
+      { path: "seo.title", label: "Page title (search and browser tab)", type: "text" },
+      { path: "seo.description", label: "Short description (search and sharing)", type: "textarea" },
+    ] },
+    { group: "Words", fields: [] },
+  ];
   const sources = [html, ...Object.entries(files).filter(([p]) => /^src\/.*\.(t|j)sx$/.test(p)).map(([, d]) => d.toString("utf8"))];
+  const seen = new Set([name]);
   let n = 0;
   for (const s of sources) {
     for (const m of s.matchAll(/<h([1-3])[^>]*>([\s\S]*?)<\/h\1>/g)) {
-      const t = stripTags(m[2]);
-      if (t.includes("{") || n >= 8) continue;
-      add(`heading-${++n}`, `Heading ${n}`, t, "Words");
+      const t = stripTags(m[2]).trim();
+      if (!t || t.includes("{") || seen.has(t) || n >= 8) continue;
+      seen.add(t);
+      content.words[`heading${++n}`] = t;
+      schema[1].fields.push({ path: `words.heading${n}`, label: `Heading ${n}`, type: "text" });
     }
   }
-  return slots;
+  return { content, schema };
 }
 
 function listFiles(dir, base = dir) {
@@ -212,6 +224,7 @@ async function main() {
   const manifestPath = join(dir, "template.json");
   const remote = remoteAssets(files);
   if (!existsSync(manifestPath)) {
+    const draft = draftContent(files, name);
     const manifest = {
       id,
       name,
@@ -227,15 +240,19 @@ async function main() {
         added: new Date().toISOString().slice(0, 10),
       },
       remoteAssets: remote,
-      slots: draftSlots(files, name),
+      business: [],
+      sector: "",
+      features: [],
+      schema: draft.schema,
       draft: true,
     };
     writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
+    writeFileSync(join(dir, "content.json"), JSON.stringify(draft.content, null, 2) + "\n");
   }
   console.log(`Imported ${listFiles(src).length} files into templates/${id}/source (${kind}).`);
   if (removed.length) console.log(`Dropped unused dependencies: ${removed.join(", ")}`);
   if (remote.length) console.log(`${remote.length} pictures or videos load from other hosts; see remoteAssets in template.json.`);
-  console.log(`Next: review templates/${id}/template.json (slots, categories, then remove "draft"), and run npm run templates.`);
+  console.log(`Next: make templates/${id} a template (docs/TEMPLATES.md): content.json, the schema, business types, then remove "draft".`);
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {

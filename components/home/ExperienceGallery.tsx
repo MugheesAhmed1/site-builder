@@ -6,8 +6,9 @@ import { useStartSite } from "@/components/PromptBox";
 import { CONCEPTS } from "@/packages/experience-core";
 import type { Concept } from "@/packages/experience-core/concepts";
 import { categoryLabel } from "@/lib/fit";
+import { CATEGORIES } from "@/lib/categories";
 import LiveStage from "./LiveStage";
-import { TEMPLATES, templateBase, type TemplateInfo } from "@/lib/templates";
+import { TEMPLATES, businessLabel, templateBase, type TemplateInfo } from "@/lib/templates";
 
 // The Experience Gallery (PRD section 62). Every card is the concept's own stage, live, not a
 // screenshot: scrolling the page walks it through its story, and hovering or tapping a card
@@ -104,7 +105,7 @@ function Card({ c }: { c: Concept }) {
 
 // A whole project someone supplied (docs/TEMPLATES.md), running as itself in a frame. Light
 // templates play when near the screen; heavy ones (real WebGL) show a still until hovered or tapped.
-function TemplateCard({ t }: { t: TemplateInfo }) {
+export function TemplateCard({ t }: { t: TemplateInfo }) {
   const el = useRef<HTMLElement>(null);
   const view = useRef<HTMLDivElement>(null);
   const [near, setNear] = useState(false);
@@ -132,6 +133,7 @@ function TemplateCard({ t }: { t: TemplateInfo }) {
       </div>
       <div className="xg-text">
         <h3>{t.name}</h3>
+        <p className="xg-biz">{businessLabel(t.business[0])}</p>
         <p>{t.pitch}</p>
         <ul className="xg-tags" aria-label="What it does">
           {(t.features || []).slice(0, 4).map((x) => (
@@ -148,9 +150,14 @@ function TemplateCard({ t }: { t: TemplateInfo }) {
 
 const tplIn = (t: TemplateInfo, cat: Cat) => cat === "All" || cat === "Templates" || t.categories.includes(cat);
 
+// Business types that at least one template or experience suits, in the builder's own order.
+const BUSINESSES = CATEGORIES.filter((b) => b.id !== "general" && (TEMPLATES.some((t) => t.business.includes(b.id)) || CONCEPTS.some((c) => c.compatibleIndustries.includes(b.id))));
+
 export default function ExperienceGallery() {
   const [cat, setCat] = useState<Cat>("All");
-  const list = CONCEPTS.filter((c) => inCat(c, cat));
+  const [biz, setBiz] = useState("");
+  const list = CONCEPTS.filter((c) => inCat(c, cat) && (!biz || c.compatibleIndustries.includes(biz)));
+  const tpls = TEMPLATES.filter((t) => tplIn(t, cat) && (!biz || t.business.includes(biz)));
   return (
     <div className="xg">
       <div className="xg-cats" role="tablist" aria-label="Experience categories">
@@ -160,16 +167,34 @@ export default function ExperienceGallery() {
           </button>
         ))}
       </div>
+      <div className="xg-biz-pick">
+        <label>
+          <span>Business type</span>
+          <select value={biz} onChange={(e) => setBiz(e.target.value)}>
+            <option value="">Every business</option>
+            {BUSINESSES.map((b) => (
+              <option key={b.id} value={b.id}>
+                {b.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <span className="muted small">
+          {tpls.length + list.length} {tpls.length + list.length === 1 ? "match" : "matches"}
+          {tpls.length > 0 && ` · ${tpls.length} full template${tpls.length === 1 ? "" : "s"}`}
+        </span>
+      </div>
       <div className="xg-grid">
-        {TEMPLATES.filter((t) => tplIn(t, cat)).map((t) => (
+        {tpls.map((t) => (
           <TemplateCard key={t.id} t={t} />
         ))}
         {list.map((c) => (
           <Card key={c.id} c={c} />
         ))}
       </div>
+      {tpls.length + list.length === 0 && <p className="muted xg-none">Nothing in this style for that business yet. Try another style, or every business.</p>}
       <p className="xg-lab">
-        Want to mix your own? <Link href="/lab">Open the Experience Lab</Link>
+        <Link href="/templates">Browse full templates by business type</Link> · Want to mix your own? <Link href="/lab">Open the Experience Lab</Link>
       </p>
     </div>
   );

@@ -395,3 +395,40 @@
 .xg-frame { position: absolute; left: 0; top: 0; width: 1440px; height: 900px; border: 0; transform-origin: 0 0; pointer-events: none; }
 .xg-badge { position: absolute; left: 10px; top: 10px; z-index: 1; font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: rgb(0 0 0 / 0.6); color: #fff; backdrop-filter: blur(6px); }
 .xg-poster { position: absolute; inset: 0; display: grid; place-items: center; color: #fff; font-size: 14px; background: radial-gradient(120% 90% at 50% 30%, #1d2a22, #050806); }
+
+/* Templates: business types and the schema editor */
+.xg-biz-pick { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 14px; }
+.xg-biz-pick label { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; }
+.xg-biz-pick select { min-height: 36px; max-width: min(78vw, 320px); padding: 0 10px; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--panel); color: var(--text); font: inherit; font-weight: 400; }
+.xg-none { text-align: center; }
+.xg-text .xg-biz { color: var(--text); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.tpl-biz { margin: 6px 0 0; }
+.tpl .xg-tags a { color: inherit; }
+details.tpl-group { display: block; padding: 10px 0 2px; }
+details.tpl-group > summary { cursor: pointer; list-style: none; padding: 2px 0 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+details.tpl-group > summary::-webkit-details-marker { display: none; }
+details.tpl-group > summary::before { content: "+ "; }
+details.tpl-group[open] > summary::before { content: "− "; }
+.tpl-group-body { display: grid; gap: 14px; padding-bottom: 8px; }
+.tpl .lab-field select { min-height: 38px; }
+.tpl-toggle { grid-template-columns: auto 1fr; align-items: center; column-gap: 10px; }
+.tpl-toggle > span { font-weight: 500; }
+.tpl-toggle small { grid-column: 1 / -1; }
+.tpl .lab-field .tpl-toggle input, .tpl .tpl-toggle input { min-height: 0; width: 18px; height: 18px; accent-color: var(--accent); }
+.tpl-num { display: flex; align-items: center; gap: 8px; }
+.tpl-num input[type="range"] { flex: 1; min-width: 0; min-height: 0 !important; padding: 0 !important; border: 0 !important; background: none !important; }
+.tpl-num input[type="number"] { width: 96px; flex: none; }
+.tpl-color .tpl-num input[type="text"] { flex: 1; min-width: 0; font-family: var(--mono, ui-monospace, monospace); }
+.tpl .lab-field input[type="color"] { width: 44px; height: 38px; min-height: 0; padding: 3px; flex: none; cursor: pointer; }
+.tpl-swatches { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.tpl-swatch { position: relative; }
+.tpl-x { position: absolute; right: -6px; top: -6px; width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--line-strong); background: var(--panel); color: var(--text); font-size: 12px; line-height: 1; cursor: pointer; padding: 0; }
+.tpl-media .tpl-thumb { width: 100%; max-height: 140px; object-fit: cover; border-radius: 10px; border: 1px solid var(--line); background: var(--sunk); }
+.tpl-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.tpl-row label.btn { cursor: pointer; }
+.tpl-list { gap: 8px; }
+.tpl-item { border: 1px solid var(--line); border-radius: 12px; background: var(--sunk); }
+.tpl-item > summary { cursor: pointer; padding: 9px 12px; font-size: 14px; font-weight: 600; }
+.tpl-item > summary em { font-style: normal; font-weight: 400; color: var(--muted); }
+.tpl-item-body { display: grid; gap: 12px; padding: 4px 12px 12px; }
+.tpl-add { justify-self: start; }

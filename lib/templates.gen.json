@@ -11,6 +11,12 @@
       "Experimental",
       "Cinematic"
     ],
+    "business": [
+      "agency",
+      "photo",
+      "consulting"
+    ],
+    "sector": "Creative and design studio (portfolio, journal and enquiries)",
     "intensity": 8,
     "heavy": true,
     "licence": {
@@ -20,191 +26,6 @@
       "added": "2026-11-18"
     },
     "remoteAssets": [],
-    "slots": [
-      {
-        "key": "name",
-        "label": "Studio name",
-        "group": "Brand",
-        "default": "Fernhollow"
-      },
-      {
-        "key": "description",
-        "label": "Short description (search and sharing)",
-        "group": "Brand",
-        "default": "A regenerative design studio. Wander through a night valley of flowers that grows as you move.",
-        "long": true
-      },
-      {
-        "key": "cta",
-        "label": "Call to action",
-        "group": "Brand",
-        "default": "Let’s talk"
-      },
-      {
-        "key": "hero",
-        "label": "Main headline",
-        "group": "Opening",
-        "default": "Grown, not built."
-      },
-      {
-        "key": "cap1",
-        "label": "Caption, line 1",
-        "group": "Opening",
-        "default": "Rooted in nature."
-      },
-      {
-        "key": "cap2",
-        "label": "Caption, line 2",
-        "group": "Opening",
-        "default": "Built for what’s next."
-      },
-      {
-        "key": "hint",
-        "label": "Scroll hint",
-        "group": "Opening",
-        "default": "Scroll to wander"
-      },
-      {
-        "key": "w1",
-        "label": "Project 1 name",
-        "group": "Work",
-        "default": "Kauri Watershed Atlas"
-      },
-      {
-        "key": "w1d",
-        "label": "Project 1 discipline",
-        "group": "Work",
-        "default": "Ecological Mapping · Spatial Web"
-      },
-      {
-        "key": "w1s",
-        "label": "Project 1 summary",
-        "group": "Work",
-        "default": "Interactive catchment telemetry and living forest restoration archive built for Aotearoa watershed stewards.",
-        "long": true
-      },
-      {
-        "key": "w2",
-        "label": "Project 2 name",
-        "group": "Work",
-        "default": "Mycelium Material Index"
-      },
-      {
-        "key": "w2d",
-        "label": "Project 2 discipline",
-        "group": "Work",
-        "default": "Design System · Tactile Archive"
-      },
-      {
-        "key": "w2s",
-        "label": "Project 2 summary",
-        "group": "Work",
-        "default": "Open-source material library cataloging regenerative mycelium composites, lifecycle carbon data, and tactile acoustics.",
-        "long": true
-      },
-      {
-        "key": "w3",
-        "label": "Project 3 name",
-        "group": "Work",
-        "default": "Solstice Seed Commons"
-      },
-      {
-        "key": "w3d",
-        "label": "Project 3 discipline",
-        "group": "Work",
-        "default": "Brand Identity · Digital Platform"
-      },
-      {
-        "key": "w3s",
-        "label": "Project 3 summary",
-        "group": "Work",
-        "default": "Community seed-saving network connecting regional botanical growers with heritage alpine and meadow cultivars.",
-        "long": true
-      },
-      {
-        "key": "about-h",
-        "label": "About headline",
-        "group": "About",
-        "default": "Regenerative craft for living digital ecosystems."
-      },
-      {
-        "key": "about-p",
-        "label": "About text (follows the studio name)",
-        "group": "About",
-        "default": "is an independent regenerative design studio partnering with ecological research initiatives, climate pioneers, and cultural institutions. We treat every digital space like a cultivated habitat—lightweight, adaptive, and attuned to natural rhythms.",
-        "long": true
-      },
-      {
-        "key": "ethos",
-        "label": "Ethos",
-        "group": "About",
-        "default": "Low-carbon, open botanical data"
-      },
-      {
-        "key": "place",
-        "label": "Where you are",
-        "group": "About",
-        "default": "Tāmaki Makaurau · Remote"
-      },
-      {
-        "key": "j1d",
-        "label": "Journal 1 date",
-        "group": "Journal",
-        "default": "Autumn 2026"
-      },
-      {
-        "key": "j1",
-        "label": "Journal 1 title",
-        "group": "Journal",
-        "default": "Software that ages like timber, not plastic"
-      },
-      {
-        "key": "j1e",
-        "label": "Journal 1 excerpt",
-        "group": "Journal",
-        "default": "Notes on low-energy rendering, patient motion curves, and interfaces designed to stay legible for decades.",
-        "long": true
-      },
-      {
-        "key": "j2d",
-        "label": "Journal 2 date",
-        "group": "Journal",
-        "default": "Winter 2026"
-      },
-      {
-        "key": "j2",
-        "label": "Journal 2 title",
-        "group": "Journal",
-        "default": "Listening to nocturnal pollinators in coastal valleys"
-      },
-      {
-        "key": "j2e",
-        "label": "Journal 2 excerpt",
-        "group": "Journal",
-        "default": "Field recordings and light-level studies informing our dark-first botanical visual language.",
-        "long": true
-      },
-      {
-        "key": "reply",
-        "label": "Reply promise",
-        "group": "Contact",
-        "default": "We will reply within two working days."
-      },
-      {
-        "key": "note-ph",
-        "label": "Message box hint",
-        "group": "Contact",
-        "default": "Tell us what you are growing..."
-      }
-    ],
-    "industries": [
-      "studio",
-      "agency",
-      "design",
-      "portfolio",
-      "environment",
-      "creative"
-    ],
     "features": [
       "three.js valley",
       "Grows as you move",
@@ -212,9 +33,740 @@
       "Work and journal drawer",
       "Contact form"
     ],
+    "schema": [
+      {
+        "group": "Business",
+        "fields": [
+          {
+            "path": "brand.name",
+            "label": "Studio name",
+            "type": "text",
+            "hint": "Fills every {name} in the text below."
+          },
+          {
+            "path": "seo.title",
+            "label": "Page title (search and browser tab)",
+            "type": "text"
+          },
+          {
+            "path": "seo.description",
+            "label": "Short description (search and sharing)",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "Sections",
+        "fields": [
+          {
+            "path": "sections.work",
+            "label": "Work",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.about",
+            "label": "About",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.journal",
+            "label": "Journal",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.contact",
+            "label": "Contact",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Menu",
+        "fields": [
+          {
+            "path": "nav.work",
+            "label": "Work link",
+            "type": "text"
+          },
+          {
+            "path": "nav.about",
+            "label": "About link",
+            "type": "text"
+          },
+          {
+            "path": "nav.journal",
+            "label": "Journal link",
+            "type": "text"
+          },
+          {
+            "path": "nav.cta",
+            "label": "Contact button",
+            "type": "text"
+          },
+          {
+            "path": "nav.close",
+            "label": "Close button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Opening",
+        "fields": [
+          {
+            "path": "hero.title",
+            "label": "Headline",
+            "type": "text"
+          },
+          {
+            "path": "hero.caption1",
+            "label": "Caption, line 1",
+            "type": "text"
+          },
+          {
+            "path": "hero.caption2",
+            "label": "Caption, line 2",
+            "type": "text"
+          },
+          {
+            "path": "hero.button",
+            "label": "Arrow button label (for screen readers)",
+            "type": "text"
+          },
+          {
+            "path": "hero.opens",
+            "label": "Arrow button opens",
+            "type": "select",
+            "options": [
+              {
+                "value": "work",
+                "label": "Work"
+              },
+              {
+                "value": "about",
+                "label": "About"
+              },
+              {
+                "value": "journal",
+                "label": "Journal"
+              },
+              {
+                "value": "contact",
+                "label": "Contact"
+              }
+            ]
+          },
+          {
+            "path": "hero.hint",
+            "label": "Corner hint",
+            "type": "text"
+          },
+          {
+            "path": "hero.showSoundButton",
+            "label": "Show the sound button",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Work",
+        "fields": [
+          {
+            "path": "work.label",
+            "label": "Drawer title",
+            "type": "text"
+          },
+          {
+            "path": "work.items",
+            "label": "Projects",
+            "type": "list",
+            "min": 0,
+            "max": 12,
+            "itemLabel": "Project",
+            "fields": [
+              {
+                "path": "title",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "discipline",
+                "label": "Discipline",
+                "type": "text"
+              },
+              {
+                "path": "year",
+                "label": "Year",
+                "type": "text"
+              },
+              {
+                "path": "summary",
+                "label": "Summary",
+                "type": "textarea"
+              },
+              {
+                "path": "link",
+                "label": "Link (optional)",
+                "type": "url"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "group": "About",
+        "fields": [
+          {
+            "path": "about.label",
+            "label": "Drawer title",
+            "type": "text"
+          },
+          {
+            "path": "about.title",
+            "label": "Headline",
+            "type": "text"
+          },
+          {
+            "path": "about.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "about.facts",
+            "label": "Facts",
+            "type": "list",
+            "min": 0,
+            "max": 6,
+            "itemLabel": "Fact",
+            "fields": [
+              {
+                "path": "label",
+                "label": "Label",
+                "type": "text"
+              },
+              {
+                "path": "value",
+                "label": "Value",
+                "type": "text"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Journal",
+        "fields": [
+          {
+            "path": "journal.label",
+            "label": "Drawer title",
+            "type": "text"
+          },
+          {
+            "path": "journal.entries",
+            "label": "Entries",
+            "type": "list",
+            "min": 0,
+            "max": 12,
+            "itemLabel": "Entry",
+            "fields": [
+              {
+                "path": "date",
+                "label": "Date",
+                "type": "text"
+              },
+              {
+                "path": "title",
+                "label": "Title",
+                "type": "text"
+              },
+              {
+                "path": "excerpt",
+                "label": "Excerpt",
+                "type": "textarea"
+              },
+              {
+                "path": "link",
+                "label": "Link (optional)",
+                "type": "url"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Contact",
+        "fields": [
+          {
+            "path": "contact.label",
+            "label": "Drawer title",
+            "type": "text"
+          },
+          {
+            "path": "contact.nameLabel",
+            "label": "Name label",
+            "type": "text"
+          },
+          {
+            "path": "contact.namePlaceholder",
+            "label": "Name hint",
+            "type": "text"
+          },
+          {
+            "path": "contact.emailLabel",
+            "label": "Email label",
+            "type": "text"
+          },
+          {
+            "path": "contact.emailPlaceholder",
+            "label": "Email hint",
+            "type": "text"
+          },
+          {
+            "path": "contact.noteLabel",
+            "label": "Message label",
+            "type": "text"
+          },
+          {
+            "path": "contact.notePlaceholder",
+            "label": "Message hint",
+            "type": "text"
+          },
+          {
+            "path": "contact.button",
+            "label": "Send button",
+            "type": "text"
+          },
+          {
+            "path": "contact.thanksTitle",
+            "label": "Thank-you headline",
+            "type": "text"
+          },
+          {
+            "path": "contact.thanksText",
+            "label": "Thank-you text",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.email",
+            "label": "Send messages to (email)",
+            "type": "text",
+            "hint": "Opens the visitor's email app with the message filled in."
+          },
+          {
+            "path": "contact.formAction",
+            "label": "Or post to a form service (https)",
+            "type": "url",
+            "hint": "For example a Formspree or Basin endpoint. Wins over email."
+          }
+        ]
+      },
+      {
+        "group": "Colours",
+        "fields": [
+          {
+            "path": "theme.colors.text",
+            "label": "Text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.buttonText",
+            "label": "Button text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.background",
+            "label": "Page background",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.panel",
+            "label": "Drawer",
+            "type": "color"
+          }
+        ]
+      },
+      {
+        "group": "Fonts and shape",
+        "fields": [
+          {
+            "path": "theme.fonts.display",
+            "label": "Headline font",
+            "type": "font"
+          },
+          {
+            "path": "theme.fonts.body",
+            "label": "Body font",
+            "type": "font"
+          },
+          {
+            "path": "theme.headlineSize",
+            "label": "Headline size (px)",
+            "type": "number",
+            "min": 60,
+            "max": 240,
+            "step": 2
+          },
+          {
+            "path": "theme.pillRadius",
+            "label": "Button rounding (px)",
+            "type": "number",
+            "min": 0,
+            "max": 99,
+            "step": 1
+          }
+        ]
+      },
+      {
+        "group": "Valley",
+        "fields": [
+          {
+            "path": "valley.sky",
+            "label": "Sky",
+            "type": "color"
+          },
+          {
+            "path": "valley.fog",
+            "label": "Fog",
+            "type": "color"
+          },
+          {
+            "path": "valley.fogDensity",
+            "label": "Fog thickness",
+            "type": "number",
+            "min": 0,
+            "max": 0.08,
+            "step": 0.001
+          },
+          {
+            "path": "valley.flowers",
+            "label": "Flower colours",
+            "type": "colors",
+            "min": 1,
+            "max": 8
+          },
+          {
+            "path": "valley.leaves",
+            "label": "Leaf colours",
+            "type": "colors",
+            "min": 1,
+            "max": 6
+          },
+          {
+            "path": "valley.glow",
+            "label": "Flower glow",
+            "type": "color"
+          },
+          {
+            "path": "valley.rays",
+            "label": "Light rays",
+            "type": "toggle"
+          },
+          {
+            "path": "valley.rayColor",
+            "label": "Ray colour",
+            "type": "color"
+          },
+          {
+            "path": "valley.stars",
+            "label": "Stars",
+            "type": "number",
+            "min": 0,
+            "max": 2000,
+            "step": 10
+          },
+          {
+            "path": "valley.starColor",
+            "label": "Star colour",
+            "type": "color"
+          },
+          {
+            "path": "valley.flowerCount",
+            "label": "Flowers",
+            "type": "number",
+            "min": 1000,
+            "max": 30000,
+            "step": 500
+          },
+          {
+            "path": "valley.leafCount",
+            "label": "Leaves",
+            "type": "number",
+            "min": 0,
+            "max": 20000,
+            "step": 500
+          },
+          {
+            "path": "valley.dust",
+            "label": "Floating dust",
+            "type": "number",
+            "min": 0,
+            "max": 4000,
+            "step": 50
+          },
+          {
+            "path": "valley.bloom",
+            "label": "Bloom",
+            "type": "number",
+            "min": 0,
+            "max": 2,
+            "step": 0.01
+          },
+          {
+            "path": "valley.grain",
+            "label": "Film grain",
+            "type": "number",
+            "min": 0,
+            "max": 0.2,
+            "step": 0.005
+          },
+          {
+            "path": "valley.vignette",
+            "label": "Vignette",
+            "type": "number",
+            "min": 0,
+            "max": 1,
+            "step": 0.01
+          }
+        ]
+      },
+      {
+        "group": "Motion",
+        "fields": [
+          {
+            "path": "valley.drift",
+            "label": "Idle camera drift",
+            "type": "number",
+            "min": 0,
+            "max": 3,
+            "step": 0.1
+          },
+          {
+            "path": "valley.wander",
+            "label": "Scroll and swipe speed",
+            "type": "number",
+            "min": 0.2,
+            "max": 3,
+            "step": 0.1
+          },
+          {
+            "path": "valley.sway",
+            "label": "Flower sway",
+            "type": "number",
+            "min": 0,
+            "max": 3,
+            "step": 0.1
+          }
+        ]
+      },
+      {
+        "group": "Sound",
+        "fields": [
+          {
+            "path": "sound.enabled",
+            "label": "Ambient sound",
+            "type": "toggle"
+          },
+          {
+            "path": "sound.volume",
+            "label": "Volume",
+            "type": "number",
+            "min": 0,
+            "max": 1,
+            "step": 0.01
+          },
+          {
+            "path": "sound.mood",
+            "label": "Mood",
+            "type": "select",
+            "options": [
+              {
+                "value": "night",
+                "label": "Night"
+              },
+              {
+                "value": "warm",
+                "label": "Warm"
+              },
+              {
+                "value": "airy",
+                "label": "Airy"
+              }
+            ]
+          },
+          {
+            "path": "sound.wind",
+            "label": "Wind",
+            "type": "number",
+            "min": 0,
+            "max": 1,
+            "step": 0.01
+          }
+        ]
+      }
+    ],
+    "content": {
+      "seo": {
+        "title": "{name}",
+        "description": "A regenerative design studio. Wander through a night valley of flowers that grows as you move."
+      },
+      "brand": {
+        "name": "Fernhollow"
+      },
+      "nav": {
+        "work": "Work",
+        "about": "About",
+        "journal": "Journal",
+        "cta": "Let’s talk",
+        "close": "Close"
+      },
+      "sections": {
+        "work": true,
+        "about": true,
+        "journal": true,
+        "contact": true
+      },
+      "hero": {
+        "title": "Grown, not built.",
+        "caption1": "Rooted in nature.",
+        "caption2": "Built for what’s next.",
+        "button": "See our work",
+        "opens": "work",
+        "hint": "Scroll to wander",
+        "showSoundButton": true
+      },
+      "work": {
+        "label": "Selected Work",
+        "items": [
+          {
+            "title": "Kauri Watershed Atlas",
+            "discipline": "Ecological Mapping · Spatial Web",
+            "year": "2026",
+            "summary": "Interactive catchment telemetry and living forest restoration archive built for Aotearoa watershed stewards.",
+            "link": ""
+          },
+          {
+            "title": "Mycelium Material Index",
+            "discipline": "Design System · Tactile Archive",
+            "year": "2025",
+            "summary": "Open-source material library cataloging regenerative mycelium composites, lifecycle carbon data, and tactile acoustics.",
+            "link": ""
+          },
+          {
+            "title": "Solstice Seed Commons",
+            "discipline": "Brand Identity · Digital Platform",
+            "year": "2025",
+            "summary": "Community seed-saving network connecting regional botanical growers with heritage alpine and meadow cultivars.",
+            "link": ""
+          }
+        ]
+      },
+      "about": {
+        "label": "About {name}",
+        "title": "Regenerative craft for living digital ecosystems.",
+        "text": "{name} is an independent regenerative design studio partnering with ecological research initiatives, climate pioneers, and cultural institutions. We treat every digital space like a cultivated habitat—lightweight, adaptive, and attuned to natural rhythms.",
+        "facts": [
+          {
+            "label": "Practice",
+            "value": "Spatial Web & Ecological Systems"
+          },
+          {
+            "label": "Ethos",
+            "value": "Low-carbon, open botanical data"
+          },
+          {
+            "label": "Studio",
+            "value": "Tāmaki Makaurau · Remote"
+          }
+        ]
+      },
+      "journal": {
+        "label": "Field Journal",
+        "entries": [
+          {
+            "date": "Autumn 2026",
+            "title": "Software that ages like timber, not plastic",
+            "excerpt": "Notes on low-energy rendering, patient motion curves, and interfaces designed to stay legible for decades.",
+            "link": ""
+          },
+          {
+            "date": "Winter 2026",
+            "title": "Listening to nocturnal pollinators in coastal valleys",
+            "excerpt": "Field recordings and light-level studies informing our dark-first botanical visual language.",
+            "link": ""
+          }
+        ]
+      },
+      "contact": {
+        "label": "Start a Conversation",
+        "nameLabel": "Name",
+        "namePlaceholder": "Your name",
+        "emailLabel": "Email",
+        "emailPlaceholder": "you@domain.com",
+        "noteLabel": "Project Note",
+        "notePlaceholder": "Tell us what you are growing...",
+        "button": "Send message",
+        "thanksTitle": "Note received.",
+        "thanksText": "Thank you for reaching out to {name}. We will reply within two working days.",
+        "email": "",
+        "formAction": ""
+      },
+      "theme": {
+        "colors": {
+          "text": "#f5efe2",
+          "buttonText": "#151510",
+          "background": "#000000",
+          "panel": "#0b0d0b"
+        },
+        "fonts": {
+          "display": "Antonio",
+          "body": "Manrope"
+        },
+        "headlineSize": 158,
+        "pillRadius": 99
+      },
+      "valley": {
+        "sky": "#030508",
+        "fog": "#04070b",
+        "fogDensity": 0.022,
+        "flowers": [
+          "#f5efe2",
+          "#f6e6c9",
+          "#e6c2b8",
+          "#b6bfe8",
+          "#9dd6c3",
+          "#f0c888"
+        ],
+        "leaves": [
+          "#132820",
+          "#1b362b",
+          "#254437",
+          "#182a31"
+        ],
+        "glow": "#f5e6c2",
+        "rays": true,
+        "rayColor": "#cfdcf0",
+        "stars": 450,
+        "starColor": "#dbe2f0",
+        "flowerCount": 15000,
+        "leafCount": 10000,
+        "dust": 1400,
+        "bloom": 0.58,
+        "grain": 0.045,
+        "vignette": 0.44,
+        "drift": 1,
+        "wander": 1,
+        "sway": 1
+      },
+      "sound": {
+        "enabled": true,
+        "volume": 0.36,
+        "mood": "night",
+        "wind": 0.35
+      }
+    },
     "poster": true,
-    "siteFiles": 3,
-    "sourceFiles": 10
+    "siteFiles": 4,
+    "sourceFiles": 12
   },
   {
     "id": "mossline",
@@ -228,6 +780,12 @@
       "Editorial",
       "Product"
     ],
+    "business": [
+      "product",
+      "consulting",
+      "nonprofit"
+    ],
+    "sector": "Climate tech and environmental data (carbon and biodiversity measurement)",
     "intensity": 7,
     "heavy": false,
     "licence": {
@@ -244,268 +802,802 @@
       "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025630_9a37a1e0-2547-4973-8160-c75205993914.png&w=1400&q=82",
       "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025545_b003e5cc-e68f-4fee-b686-c217a5d81eea.png&w=1400&q=82"
     ],
-    "slots": [
-      {
-        "key": "name",
-        "label": "Business name",
-        "group": "Brand",
-        "default": "Mossline"
-      },
-      {
-        "key": "description",
-        "label": "Short description (search and sharing)",
-        "group": "Brand",
-        "default": "Measure the Living Planet — Real-time ecosystem insights powered by field sensors, atmospheric flux towers, and transparent data.",
-        "long": true
-      },
-      {
-        "key": "cta",
-        "label": "Call to action",
-        "group": "Brand",
-        "default": "LET'S TALK"
-      },
-      {
-        "key": "chip",
-        "label": "Hero label",
-        "group": "Opening",
-        "default": "Planet intelligence"
-      },
-      {
-        "key": "hero",
-        "label": "Main headline",
-        "group": "Opening",
-        "default": "Measure the Living Planet"
-      },
-      {
-        "key": "cap1",
-        "label": "Caption, line 1",
-        "group": "Opening",
-        "default": "Real-time ecosystem insights."
-      },
-      {
-        "key": "cap2",
-        "label": "Caption, line 2",
-        "group": "Opening",
-        "default": "Powered by science, blockchain,"
-      },
-      {
-        "key": "cap3",
-        "label": "Caption, line 3",
-        "group": "Opening",
-        "default": "and transparent data."
-      },
-      {
-        "key": "vision-chip",
-        "label": "Vision label",
-        "group": "Vision",
-        "default": "Our vision"
-      },
-      {
-        "key": "vision-p1",
-        "label": "Vision line 1",
-        "group": "Vision",
-        "default": "A breakthrough in environmental measurement,"
-      },
-      {
-        "key": "vision-p2",
-        "label": "Vision line 2",
-        "group": "Vision",
-        "default": "built for commercial use."
-      },
-      {
-        "key": "acct",
-        "label": "What you do",
-        "group": "Hotspots",
-        "default": "Our ecosystem-level accounting translates complex field science into verifiable, compliance-ready metrics — so you can drive measurable results, not just reports.",
-        "long": true
-      },
-      {
-        "key": "hs1",
-        "label": "Hotspot 1",
-        "group": "Hotspots",
-        "default": "Soil carbon"
-      },
-      {
-        "key": "hs2",
-        "label": "Hotspot 2",
-        "group": "Hotspots",
-        "default": "Canopy moisture"
-      },
-      {
-        "key": "hs3",
-        "label": "Hotspot 3",
-        "group": "Hotspots",
-        "default": "Species index"
-      },
-      {
-        "key": "hs4",
-        "label": "Hotspot 4",
-        "group": "Hotspots",
-        "default": "Microclimate"
-      },
-      {
-        "key": "station",
-        "label": "Station label",
-        "group": "Proof",
-        "default": "Field station 07"
-      },
-      {
-        "key": "cred",
-        "label": "Proof headline",
-        "group": "Proof",
-        "default": "Scientific credibility for corporate climate action"
-      },
-      {
-        "key": "card",
-        "label": "Card title",
-        "group": "Proof",
-        "default": "Accumulated carbon"
-      },
-      {
-        "key": "f1",
-        "label": "Feature 1",
-        "group": "Proof",
-        "default": "Gold-standard observation system"
-      },
-      {
-        "key": "f2",
-        "label": "Feature 2",
-        "group": "Proof",
-        "default": "World-class atmospheric monitoring (AMRV)"
-      },
-      {
-        "key": "f3",
-        "label": "Feature 3",
-        "group": "Proof",
-        "default": "Integrated algorithmic processing"
-      },
-      {
-        "key": "f4",
-        "label": "Feature 4",
-        "group": "Proof",
-        "default": "Blockchain-secured traceability"
-      },
-      {
-        "key": "f5",
-        "label": "Feature 5",
-        "group": "Proof",
-        "default": "Built for scale and complexity"
-      },
-      {
-        "key": "sol-chip",
-        "label": "Solutions label",
-        "group": "Solutions",
-        "default": "Our solutions"
-      },
-      {
-        "key": "sol-h",
-        "label": "Solutions headline",
-        "group": "Solutions",
-        "default": "Validating what the ecosystem does naturally"
-      },
-      {
-        "key": "sol-p",
-        "label": "Solutions text",
-        "group": "Solutions",
-        "default": "Field sensors, atmospheric flux towers and satellite data fused into one auditable record — so every tonne you report can be traced back to the ground it came from.",
-        "long": true
-      },
-      {
-        "key": "c1-tag",
-        "label": "Card 1 label",
-        "group": "Solutions",
-        "default": "[Nature-based solutions]"
-      },
-      {
-        "key": "c1-p",
-        "label": "Card 1 text",
-        "group": "Solutions",
-        "default": "Continuous flux measurement replaces sampled estimates, so credits reflect what the land actually absorbs.",
-        "long": true
-      },
-      {
-        "key": "c2-tag",
-        "label": "Card 2 label",
-        "group": "Solutions",
-        "default": "[Supply chain solutions]"
-      },
-      {
-        "key": "c2-p",
-        "label": "Card 2 text",
-        "group": "Solutions",
-        "default": "Trace commodities to the plots that grew them, with deforestation-free evidence attached to every shipment.",
-        "long": true
-      },
-      {
-        "key": "c3-tag",
-        "label": "Card 3 label",
-        "group": "Solutions",
-        "default": "[Biodiversity credits]"
-      },
-      {
-        "key": "c3-p",
-        "label": "Card 3 text",
-        "group": "Solutions",
-        "default": "Acoustic and eDNA monitoring builds a measurable biodiversity baseline you can report against year over year.",
-        "long": true
-      },
-      {
-        "key": "s1",
-        "label": "Stat 1 label",
-        "group": "Numbers",
-        "default": "Sensors deployed"
-      },
-      {
-        "key": "s2",
-        "label": "Stat 2 label",
-        "group": "Numbers",
-        "default": "Countries monitored"
-      },
-      {
-        "key": "s3",
-        "label": "Stat 3 label",
-        "group": "Numbers",
-        "default": "Mt CO₂e verified"
-      },
-      {
-        "key": "s4",
-        "label": "Stat 4 label",
-        "group": "Numbers",
-        "default": "% Data uptime"
-      },
-      {
-        "key": "pic-sol1",
-        "label": "Solutions picture 1",
-        "group": "Pictures",
-        "type": "image",
-        "default": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025630_9a37a1e0-2547-4973-8160-c75205993914.png&w=1400&q=82",
-        "hint": "Used by cards 1 and 3."
-      },
-      {
-        "key": "pic-sol2",
-        "label": "Solutions picture 2",
-        "group": "Pictures",
-        "type": "image",
-        "default": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025545_b003e5cc-e68f-4fee-b686-c217a5d81eea.png&w=1400&q=82",
-        "hint": "Used by card 2."
-      }
-    ],
-    "industries": [
-      "environment",
-      "science",
-      "climate",
-      "data",
-      "agency",
-      "technology"
-    ],
     "features": [
       "Scroll-scrubbed video",
       "Layered parallax",
       "Clickable hotspots",
-      "Counting stats"
+      "Counting stats",
+      "Contact section"
     ],
+    "schema": [
+      {
+        "group": "Business",
+        "fields": [
+          {
+            "path": "brand.name",
+            "label": "Business name",
+            "type": "text",
+            "hint": "Fills every {name} in the text below."
+          },
+          {
+            "path": "brand.showMark",
+            "label": "Show the logo mark",
+            "type": "toggle"
+          },
+          {
+            "path": "seo.title",
+            "label": "Page title (search and browser tab)",
+            "type": "text"
+          },
+          {
+            "path": "seo.description",
+            "label": "Short description (search and sharing)",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "Sections",
+        "fields": [
+          {
+            "path": "sections.vision",
+            "label": "Vision",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.hotspots",
+            "label": "Hotspots",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.station",
+            "label": "Proof card",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.solutions",
+            "label": "Solutions cards",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.stats",
+            "label": "Numbers",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.contact",
+            "label": "Contact",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Menu",
+        "fields": [
+          {
+            "path": "nav.links",
+            "label": "Menu links",
+            "type": "list",
+            "min": 0,
+            "max": 6,
+            "itemLabel": "Link",
+            "fields": [
+              {
+                "path": "label",
+                "label": "Label",
+                "type": "text"
+              },
+              {
+                "path": "href",
+                "label": "Goes to",
+                "type": "url",
+                "hint": "#sol, #contact, or a full address"
+              }
+            ]
+          },
+          {
+            "path": "nav.cta.label",
+            "label": "Button label",
+            "type": "text"
+          },
+          {
+            "path": "nav.cta.href",
+            "label": "Button goes to",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "group": "Opening",
+        "fields": [
+          {
+            "path": "hero.chip",
+            "label": "Label above the headline",
+            "type": "text"
+          },
+          {
+            "path": "hero.title",
+            "label": "Headline",
+            "type": "text"
+          },
+          {
+            "path": "hero.caption",
+            "label": "Caption (one line per row)",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.hint",
+            "label": "Scroll hint",
+            "type": "text"
+          },
+          {
+            "path": "hero.hudChip",
+            "label": "Reading label",
+            "type": "text"
+          },
+          {
+            "path": "hero.hudLines",
+            "label": "Reading lines",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.image",
+            "label": "Opening picture",
+            "type": "image"
+          },
+          {
+            "path": "hero.imageAlt",
+            "label": "Opening picture description",
+            "type": "text"
+          },
+          {
+            "path": "hero.frontImage",
+            "label": "Foreground cut-out",
+            "type": "image",
+            "hint": "Sits in front of the headline until the video takes over. Leave empty to skip."
+          },
+          {
+            "path": "hero.video",
+            "label": "Push-in video",
+            "type": "video",
+            "hint": "Scrubbed by scroll. Leave empty to keep the still picture."
+          },
+          {
+            "path": "hero.rockImage",
+            "label": "Floating rock picture",
+            "type": "image",
+            "hint": "Leave empty for no rocks."
+          },
+          {
+            "path": "hero.rockCrop",
+            "label": "Rock picture is the original sprite sheet",
+            "type": "toggle",
+            "hint": "Turn off when you upload a single rock picture of your own."
+          }
+        ]
+      },
+      {
+        "group": "Vision",
+        "fields": [
+          {
+            "path": "vision.chip",
+            "label": "Label",
+            "type": "text"
+          },
+          {
+            "path": "vision.title",
+            "label": "Headline (one line per row)",
+            "type": "textarea"
+          },
+          {
+            "path": "vision.text",
+            "label": "Text",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "Hotspots",
+        "fields": [
+          {
+            "path": "hotspots.text",
+            "label": "What you do",
+            "type": "textarea"
+          },
+          {
+            "path": "hotspots.items",
+            "label": "Hotspots",
+            "type": "list",
+            "min": 0,
+            "max": 6,
+            "itemLabel": "Hotspot",
+            "fields": [
+              {
+                "path": "label",
+                "label": "Label",
+                "type": "text"
+              },
+              {
+                "path": "value",
+                "label": "Reading",
+                "type": "text"
+              },
+              {
+                "path": "x",
+                "label": "Across (%)",
+                "type": "number",
+                "min": 0,
+                "max": 100,
+                "step": 1
+              },
+              {
+                "path": "y",
+                "label": "Down (%)",
+                "type": "number",
+                "min": 0,
+                "max": 100,
+                "step": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Proof card",
+        "fields": [
+          {
+            "path": "station.label",
+            "label": "Label",
+            "type": "text"
+          },
+          {
+            "path": "station.title",
+            "label": "Headline",
+            "type": "text"
+          },
+          {
+            "path": "station.cardTitle",
+            "label": "Card title",
+            "type": "textarea"
+          },
+          {
+            "path": "station.cardNote",
+            "label": "Card note",
+            "type": "text"
+          },
+          {
+            "path": "station.cardValue",
+            "label": "Card number",
+            "type": "number",
+            "min": 0,
+            "max": 1000000,
+            "step": 0.1
+          },
+          {
+            "path": "station.cardUnit",
+            "label": "Unit",
+            "type": "text"
+          },
+          {
+            "path": "station.cardTag",
+            "label": "Tag",
+            "type": "text"
+          },
+          {
+            "path": "station.cardAxis",
+            "label": "Axis labels",
+            "type": "text"
+          },
+          {
+            "path": "station.chart",
+            "label": "Chart points",
+            "type": "text",
+            "hint": "Numbers from 4 to 66, separated by commas. Lower is higher on the chart."
+          },
+          {
+            "path": "station.features",
+            "label": "Features",
+            "type": "list",
+            "min": 0,
+            "max": 7,
+            "itemLabel": "Feature",
+            "fields": [
+              {
+                "path": "title",
+                "label": "Feature",
+                "type": "text"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Solutions",
+        "fields": [
+          {
+            "path": "solutions.chip",
+            "label": "Label",
+            "type": "text"
+          },
+          {
+            "path": "solutions.title",
+            "label": "Headline",
+            "type": "textarea"
+          },
+          {
+            "path": "solutions.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "solutions.cards",
+            "label": "Cards",
+            "type": "list",
+            "min": 0,
+            "max": 6,
+            "itemLabel": "Card",
+            "fields": [
+              {
+                "path": "tag",
+                "label": "Label",
+                "type": "text"
+              },
+              {
+                "path": "title",
+                "label": "Title",
+                "type": "textarea"
+              },
+              {
+                "path": "text",
+                "label": "Text (shows on hover)",
+                "type": "textarea"
+              },
+              {
+                "path": "image",
+                "label": "Picture",
+                "type": "image"
+              },
+              {
+                "path": "focus",
+                "label": "Picture focus",
+                "type": "text",
+                "hint": "Across and down, like 50% 50%."
+              },
+              {
+                "path": "zoom",
+                "label": "Picture zoom (%)",
+                "type": "number",
+                "min": 100,
+                "max": 400,
+                "step": 5
+              },
+              {
+                "path": "href",
+                "label": "Link (optional)",
+                "type": "url"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Numbers",
+        "fields": [
+          {
+            "path": "stats",
+            "label": "Numbers",
+            "type": "list",
+            "min": 0,
+            "max": 6,
+            "itemLabel": "Number",
+            "fields": [
+              {
+                "path": "value",
+                "label": "Number",
+                "type": "number",
+                "min": 0,
+                "max": 100000000,
+                "step": 0.1
+              },
+              {
+                "path": "decimals",
+                "label": "Decimals",
+                "type": "number",
+                "min": 0,
+                "max": 3,
+                "step": 1
+              },
+              {
+                "path": "label",
+                "label": "Label",
+                "type": "text"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Contact",
+        "fields": [
+          {
+            "path": "contact.chip",
+            "label": "Label",
+            "type": "text"
+          },
+          {
+            "path": "contact.title",
+            "label": "Headline",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.button",
+            "label": "Button",
+            "type": "text"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "text"
+          },
+          {
+            "path": "contact.phone",
+            "label": "Phone",
+            "type": "text"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.footer",
+            "label": "Footer",
+            "type": "text",
+            "hint": "{year} becomes this year."
+          }
+        ]
+      },
+      {
+        "group": "Colours",
+        "fields": [
+          {
+            "path": "theme.colors.ink",
+            "label": "Text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.ink2",
+            "label": "Soft text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.mist",
+            "label": "Background",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.paper",
+            "label": "Panels",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.accent",
+            "label": "Accent",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.accent2",
+            "label": "Accent, darker",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.positive",
+            "label": "Good numbers",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.deep",
+            "label": "Deep cards",
+            "type": "color"
+          }
+        ]
+      },
+      {
+        "group": "Fonts and shape",
+        "fields": [
+          {
+            "path": "theme.fonts.sans",
+            "label": "Main font",
+            "type": "font"
+          },
+          {
+            "path": "theme.fonts.mono",
+            "label": "Label font",
+            "type": "font"
+          },
+          {
+            "path": "theme.radius",
+            "label": "Corner rounding (px)",
+            "type": "number",
+            "min": 0,
+            "max": 32,
+            "step": 1
+          }
+        ]
+      },
+      {
+        "group": "Motion",
+        "fields": [
+          {
+            "path": "motion.storyLength",
+            "label": "Scroll story length (screen heights × 100)",
+            "type": "number",
+            "min": 250,
+            "max": 1200,
+            "step": 10
+          },
+          {
+            "path": "motion.smoothing",
+            "label": "Scroll smoothing",
+            "type": "number",
+            "min": 0,
+            "max": 0.97,
+            "step": 0.01
+          },
+          {
+            "path": "motion.parallax",
+            "label": "Pointer parallax",
+            "type": "number",
+            "min": 0,
+            "max": 3,
+            "step": 0.1
+          },
+          {
+            "path": "motion.fog",
+            "label": "Fog bank",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.rocks",
+            "label": "Floating rocks",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.cardTilt",
+            "label": "Cards tilt with the pointer",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.countUp",
+            "label": "Numbers count up",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.pulse",
+            "label": "Hotspots pulse",
+            "type": "toggle"
+          }
+        ]
+      }
+    ],
+    "content": {
+      "seo": {
+        "title": "{name} — Measure the Living Planet",
+        "description": "Measure the Living Planet — Real-time ecosystem insights powered by field sensors, atmospheric flux towers, and transparent data."
+      },
+      "brand": {
+        "name": "Mossline",
+        "showMark": true
+      },
+      "nav": {
+        "links": [
+          {
+            "label": "Solutions",
+            "href": "#sol"
+          },
+          {
+            "label": "Our tech",
+            "href": "#story"
+          },
+          {
+            "label": "Company",
+            "href": "#sol"
+          },
+          {
+            "label": "Resources",
+            "href": "#sol"
+          }
+        ],
+        "cta": {
+          "label": "LET'S TALK",
+          "href": "#contact"
+        }
+      },
+      "sections": {
+        "vision": true,
+        "hotspots": true,
+        "station": true,
+        "solutions": true,
+        "stats": true,
+        "contact": true
+      },
+      "hero": {
+        "chip": "Planet intelligence",
+        "title": "Measure the Living Planet",
+        "caption": "Real-time ecosystem insights.\nPowered by science, blockchain,\nand transparent data.",
+        "hint": "SCROLL TO EXPLORE",
+        "hudChip": "Biodiversity",
+        "hudLines": "LAT  34.0922° N\nLON 116.2432° W\nELEV 842 M",
+        "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_031618_8ce6dca1-972d-429d-8d13-bf0691c37848.png&w=2400&q=88",
+        "imageAlt": "Floating moss island",
+        "frontImage": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_031657_baaa3380-5ece-482a-a623-a1838fd7653c.png&w=2400&q=90",
+        "video": "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261106_025717_906b686d-9a9a-4dea-bab4-ae2454f8390e.mp4",
+        "rockImage": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025635_82593f6a-1cf7-41c1-94ac-96fb89ebfd1a.png&w=2400&q=85",
+        "rockCrop": true
+      },
+      "vision": {
+        "chip": "Our vision",
+        "title": "From Data Chaos to\nScience-Backed,\nActionable Insights",
+        "text": "A breakthrough in environmental measurement,\nbuilt for commercial use."
+      },
+      "hotspots": {
+        "text": "Our ecosystem-level accounting translates complex field science into verifiable, compliance-ready metrics — so you can drive measurable results, not just reports.",
+        "items": [
+          {
+            "label": "Soil carbon",
+            "value": "+3.8 t/ha",
+            "x": 12,
+            "y": 58
+          },
+          {
+            "label": "Canopy moisture",
+            "value": "71 % RH",
+            "x": 33,
+            "y": 41
+          },
+          {
+            "label": "Species index",
+            "value": "214 taxa",
+            "x": 70,
+            "y": 66
+          },
+          {
+            "label": "Microclimate",
+            "value": "14.2 °C",
+            "x": 83,
+            "y": 47
+          }
+        ]
+      },
+      "station": {
+        "label": "Field station 07",
+        "title": "Scientific credibility for corporate climate action",
+        "cardTitle": "Accumulated carbon\nbalance",
+        "cardNote": "Plot 07 · 12 months",
+        "cardValue": 24,
+        "cardUnit": "tCO₂e",
+        "cardTag": "+2.6 tCO₂e",
+        "cardAxis": "Q1 · Q2 · Q3 · Q4",
+        "chart": "60, 55, 57, 44, 46, 30, 24, 10",
+        "features": [
+          {
+            "title": "Gold-standard observation system"
+          },
+          {
+            "title": "World-class atmospheric monitoring (AMRV)"
+          },
+          {
+            "title": "Integrated algorithmic processing"
+          },
+          {
+            "title": "Blockchain-secured traceability"
+          },
+          {
+            "title": "Built for scale and complexity"
+          }
+        ]
+      },
+      "solutions": {
+        "chip": "Our solutions",
+        "title": "Validating what the ecosystem does naturally",
+        "text": "Field sensors, atmospheric flux towers and satellite data fused into one auditable record — so every tonne you report can be traced back to the ground it came from.",
+        "cards": [
+          {
+            "tag": "[Nature-based solutions]",
+            "title": "Forest & peatland\ncarbon projects",
+            "text": "Continuous flux measurement replaces sampled estimates, so credits reflect what the land actually absorbs.",
+            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025630_9a37a1e0-2547-4973-8160-c75205993914.png&w=1400&q=82",
+            "focus": "22% 70%",
+            "zoom": 260,
+            "href": ""
+          },
+          {
+            "tag": "[Supply chain solutions]",
+            "title": "Scope 3 sourcing\nverification",
+            "text": "Trace commodities to the plots that grew them, with deforestation-free evidence attached to every shipment.",
+            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025545_b003e5cc-e68f-4fee-b686-c217a5d81eea.png&w=1400&q=82",
+            "focus": "50% 50%",
+            "zoom": 190,
+            "href": ""
+          },
+          {
+            "tag": "[Biodiversity credits]",
+            "title": "Living species\nbaselines",
+            "text": "Acoustic and eDNA monitoring builds a measurable biodiversity baseline you can report against year over year.",
+            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025630_9a37a1e0-2547-4973-8160-c75205993914.png&w=1400&q=82",
+            "focus": "62% 30%",
+            "zoom": 230,
+            "href": ""
+          }
+        ]
+      },
+      "stats": [
+        {
+          "value": 1240,
+          "decimals": 0,
+          "label": "Sensors deployed"
+        },
+        {
+          "value": 38,
+          "decimals": 0,
+          "label": "Countries monitored"
+        },
+        {
+          "value": 2.1,
+          "decimals": 1,
+          "label": "Mt CO₂e verified"
+        },
+        {
+          "value": 99.4,
+          "decimals": 1,
+          "label": "% Data uptime"
+        }
+      ],
+      "contact": {
+        "chip": "Get in touch",
+        "title": "Put your land on the record.",
+        "text": "Tell us about your sites and reporting needs. We reply within one working day.",
+        "button": "Email us",
+        "email": "hello@example.com",
+        "phone": "",
+        "address": "",
+        "footer": "© {year} {name}. All rights reserved."
+      },
+      "theme": {
+        "colors": {
+          "ink": "#10291a",
+          "ink2": "#2c4434",
+          "mist": "#e7ebe8",
+          "paper": "#ffffff",
+          "accent": "#c6f35c",
+          "accent2": "#a9dd3a",
+          "positive": "#4f8a12",
+          "deep": "#1b3122"
+        },
+        "fonts": {
+          "sans": "Inter Tight",
+          "mono": "JetBrains Mono"
+        },
+        "radius": 12
+      },
+      "motion": {
+        "storyLength": 640,
+        "smoothing": 0.86,
+        "parallax": 1,
+        "fog": true,
+        "rocks": true,
+        "cardTilt": true,
+        "countUp": true,
+        "pulse": true
+      }
+    },
     "poster": false,
-    "siteFiles": 1,
-    "sourceFiles": 1
+    "siteFiles": 2,
+    "sourceFiles": 2
   }
 ]

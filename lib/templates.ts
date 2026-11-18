@@ -1,97 +1,158 @@
 // Imported whole-project templates (docs/TEMPLATES.md). The registry is written by
-// scripts/build-templates.mjs from templates/<id>/template.json; the built files live in
-// public/tpl/<id>. A template keeps its own code and look; a person changes its slots.
+// scripts/build-templates.mjs from templates/<id>/template.json and content.json; the built files
+// live in public/tpl/<id>. A template reads everything it shows from one content object, and its
+// schema lists a field for every value, so a person can change any part of it for their project.
 import registry from "./templates.gen.json";
-import { applyToText, fileKind, plan } from "./template-apply.mjs";
-import type { Replacement, TemplateSlot } from "./template-apply.mjs";
+import { categoryLabel } from "./fit";
+import { clone, contentScript, countChanges, extractMedia, type Content, type SchemaField, type SchemaGroup } from "./template-schema.mjs";
 
-export type { Replacement, TemplateSlot };
+export type { Content, SchemaField, SchemaGroup };
 
 export interface TemplateInfo {
   id: string;
   name: string;
   pitch: string;
   kind: "vite" | "static";
+  /** Gallery styles (Cinematic, 3D, Scroll…). */
   categories: string[];
-  industries?: string[];
+  /** Business types it suits, best first: ids from lib/categories.ts. */
+  business: string[];
+  /** One line on the kind of business it was made for. */
+  sector: string;
   features?: string[];
   intensity: number;
   /** Real WebGL or similar: the gallery shows a still until someone asks for it to play. */
   heavy: boolean;
   licence: { kind: string; holder: string; note: string; added: string };
-  /** Pictures or video the template loads from other hosts. */
+  /** Pictures or video the default content loads from other hosts. */
   remoteAssets: string[];
-  slots: (TemplateSlot & { hint?: string })[];
+  schema: SchemaGroup[];
+  /** The default content: what the template shows before anyone changes it. */
+  content: Content;
   poster: boolean;
   siteFiles: number;
   sourceFiles: number;
 }
 
-export const TEMPLATES = registry as TemplateInfo[];
+export const TEMPLATES = registry as unknown as TemplateInfo[];
 
 export const templateById = (id: string) => TEMPLATES.find((t) => t.id === id);
 
 export const templateBase = (id: string) => `/tpl/${id}`;
 
-/** The preview page, with the replacements in its address so they are in place on first paint. */
-export function previewSrc(id: string, reps: Replacement[]) {
-  const hash = reps.length ? "#xp=" + encodeURIComponent(JSON.stringify(reps.map(({ type, from, to }) => ({ type, from, to })))) : "";
-  return `${templateBase(id)}/site/preview.html${hash}`;
+export const businessLabel = (id: string) => categoryLabel("website", id);
+
+/** Content for the address: uploads are too big for it and follow by message once the page is up. */
+function forAddress(v: unknown): unknown {
+  if (typeof v === "string") return v.startsWith("data:") ? "" : v;
+  if (Array.isArray(v)) return v.map(forAddress);
+  if (v && typeof v === "object") return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, forAddress(x)]));
+  return v;
 }
 
-export { plan };
+/** The preview page, with the content in its address so it is in place on first paint. */
+export function previewSrc(t: TemplateInfo, content?: Content) {
+  const hash = content && countChanges(content, t.content) ? "#xp=" + encodeURIComponent(JSON.stringify(forAddress(content))) : "";
+  return `${templateBase(t.id)}/site/preview.html${hash}`;
+}
 
-const STORE = (id: string) => `xp-template:${id}`;
+const STORE = (id: string) => `xp-template:v2:${id}`;
 
-export function loadValues(id: string): Record<string, string> {
+/** The person's content, or the defaults. Values the template no longer has are dropped. */
+export function loadContent(t: TemplateInfo): Content {
   try {
-    return JSON.parse(localStorage.getItem(STORE(id)) || "{}");
+    const saved = JSON.parse(localStorage.getItem(STORE(t.id)) || "null");
+    if (saved && typeof saved === "object") return merge(t.content, saved) as Content;
   } catch {
-    return {};
+    /* private mode or a bad copy: start from the defaults */
+  }
+  return clone(t.content);
+}
+
+function merge(base: unknown, saved: unknown): unknown {
+  if (Array.isArray(base)) {
+    if (!Array.isArray(saved)) return clone(base);
+    // A list of colours keeps whatever the person saved; a list of items takes each item's shape from the first.
+    const shape = base[0];
+    return saved.map((x) => (shape && typeof shape === "object" ? merge(shape, x) : typeof x === typeof shape ? x : shape));
+  }
+  if (base && typeof base === "object") {
+    const s = saved && typeof saved === "object" && !Array.isArray(saved) ? (saved as Record<string, unknown>) : {};
+    return Object.fromEntries(Object.entries(base).map(([k, v]) => [k, k in s ? merge(v, s[k]) : clone(v)]));
+  }
+  return typeof saved === typeof base ? saved : base;
+}
+
+/** False when the browser could not keep it (usually big uploads). */
+export function saveContent(id: string, c: Content): boolean {
+  try {
+    localStorage.setItem(STORE(id), JSON.stringify(c));
+    return true;
+  } catch {
+    try {
+      localStorage.removeItem(STORE(id));
+    } catch {
+      /* nothing to do */
+    }
+    return false;
   }
 }
 
-export function saveValues(id: string, v: Record<string, string>) {
-  try {
-    localStorage.setItem(STORE(id), JSON.stringify(v));
-  } catch {
-    /* private mode: the values just are not remembered */
-  }
+export const changes = (t: TemplateInfo, c: Content) => countChanges(c, t.content);
+
+const nameOf = (t: TemplateInfo, c: Content) => String(c?.brand?.name || "").trim() || t.name;
+
+function remoteIn(c: Content): string[] {
+  const out = new Set<string>();
+  const walk = (v: unknown) => {
+    if (typeof v === "string" && /^https?:\/\/\S+\.(?:png|jpe?g|webp|gif|avif|svg|mp4|webm|mov)(?:[?#]|$)|^https:\/\/images\.higgs\.ai\//i.test(v)) out.add(v);
+    else if (Array.isArray(v)) v.forEach(walk);
+    else if (v && typeof v === "object") Object.values(v).forEach(walk);
+  };
+  walk(c);
+  return [...out];
 }
 
-function readme(t: TemplateInfo, values: Record<string, string>, which: "site" | "source") {
-  const name = values.name?.trim() || t.name;
+function readme(t: TemplateInfo, c: Content, which: "site" | "source") {
+  const name = nameOf(t, c);
+  const where = which === "source" && t.kind === "vite" ? "public/xp-content.js" : "xp-content.js";
   const run =
     which === "site"
       ? "This folder is the finished site. Upload all of it to any static host (Netlify, Vercel, GitHub Pages, Cloudflare Pages) or open index.html."
       : t.kind === "vite"
         ? "Install and run:\n\n    npm install\n    npm run dev\n\nBuild the site with `npm run build`; the result is in dist/."
         : "The site is index.html and the files next to it. Open it, or upload the folder to any static host.";
-  const remote = t.remoteAssets.length
-    ? `\n\nSome pictures or video load from other hosts:\n\n${t.remoteAssets.map((u) => `- ${u}`).join("\n")}\n\nCopy them next to index.html and point the page at the copies before launch, so the site does not depend on those hosts.`
+  const remote = remoteIn(c);
+  const remoteText = remote.length
+    ? `\n\nSome pictures or video load from other hosts:\n\n${remote.map((u) => `- ${u}`).join("\n")}\n\nCopy them into media/ and change their addresses in ${where} before launch, so the site does not depend on those hosts.`
     : "";
-  return `# ${name}\n\nMade with Site Builder from the ${t.name} template.\n\n${run}${remote}\n\nTemplate: ${t.name}, supplied by ${t.licence.holder}. ${t.licence.note}\n`;
+  return `# ${name}\n\nMade with Site Builder from the ${t.name} template.\n\n${run}\n\n## Changing it\n\nEvery word, picture, video, link, colour, font, section and motion setting is in **${where}**. Change a value there and reload; no code change is needed. Your uploads are in media/.${remoteText}\n\nTemplate: ${t.name}, supplied by ${t.licence.holder}. ${t.licence.note}\n`;
 }
 
-/** A zip of the built site or of the source, with the person's words and pictures in place. */
-export async function templateZip(t: TemplateInfo, values: Record<string, string>, which: "site" | "source"): Promise<Blob> {
+/** A zip of the built site or of the source, with the person's content in place. */
+export async function templateZip(t: TemplateInfo, c: Content, which: "site" | "source"): Promise<Blob> {
   const base = templateBase(t.id);
   const list: { site: string[]; source: string[] } = await fetch(`${base}/files.json`).then((r) => r.json());
-  const reps = plan(t.slots, values);
   const { default: JSZip } = await import("jszip");
   const zip = new JSZip();
+  const contentAt = which === "source" && t.kind === "vite" ? "public/xp-content.js" : "xp-content.js";
+  const mediaAt = which === "source" && t.kind === "vite" ? "public/" : "";
   await Promise.all(
-    list[which].map(async (p) => {
-      const res = await fetch(`${base}/${which}/${p.split("/").map(encodeURIComponent).join("/")}`);
-      if (!res.ok) throw new Error(`Could not read ${p}`);
-      if (fileKind(p)) zip.file(p, applyToText(p, await res.text(), reps));
-      else zip.file(p, await res.arrayBuffer());
-    }),
+    list[which]
+      .filter((p) => p !== contentAt)
+      .map(async (p) => {
+        const res = await fetch(`${base}/${which}/${p.split("/").map(encodeURIComponent).join("/")}`);
+        if (!res.ok) throw new Error(`Could not read ${p}`);
+        zip.file(p, await res.arrayBuffer());
+      }),
   );
-  zip.file(which === "site" ? "README.txt" : "README.md", readme(t, values, which));
+  const { content, files } = extractMedia(c);
+  zip.file(contentAt, contentScript(content));
+  for (const f of files) zip.file(mediaAt + f.path, f.base64, { base64: true });
+  zip.file(which === "site" ? "README.txt" : "README.md", readme(t, c, which));
   if (which === "source" && t.kind === "vite") zip.file(".gitignore", "node_modules/\ndist/\n.env*\n!.env.example\n");
   return zip.generateAsync({ type: "blob", compression: "DEFLATE" });
 }
 
-export const zipName = (t: TemplateInfo, values: Record<string, string>, which: "site" | "source") =>
-  `${(values.name?.trim() || t.name).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || t.id}-${which}.zip`;
+export const zipName = (t: TemplateInfo, c: Content, which: "site" | "source") =>
+  `${nameOf(t, c).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || t.id}-${which}.zip`;

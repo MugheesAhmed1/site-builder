@@ -10,6 +10,12 @@
     "Editorial",
     "Product"
   ],
+  "business": [
+    "product",
+    "consulting",
+    "nonprofit"
+  ],
+  "sector": "Climate tech and environmental data (carbon and biodiversity measurement)",
   "intensity": 7,
   "heavy": false,
   "licence": {
@@ -26,264 +32,587 @@
     "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025630_9a37a1e0-2547-4973-8160-c75205993914.png&w=1400&q=82",
     "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025545_b003e5cc-e68f-4fee-b686-c217a5d81eea.png&w=1400&q=82"
   ],
-  "slots": [
-    {
-      "key": "name",
-      "label": "Business name",
-      "group": "Brand",
-      "default": "Mossline"
-    },
-    {
-      "key": "description",
-      "label": "Short description (search and sharing)",
-      "group": "Brand",
-      "default": "Measure the Living Planet — Real-time ecosystem insights powered by field sensors, atmospheric flux towers, and transparent data.",
-      "long": true
-    },
-    {
-      "key": "cta",
-      "label": "Call to action",
-      "group": "Brand",
-      "default": "LET'S TALK"
-    },
-    {
-      "key": "chip",
-      "label": "Hero label",
-      "group": "Opening",
-      "default": "Planet intelligence"
-    },
-    {
-      "key": "hero",
-      "label": "Main headline",
-      "group": "Opening",
-      "default": "Measure the Living Planet"
-    },
-    {
-      "key": "cap1",
-      "label": "Caption, line 1",
-      "group": "Opening",
-      "default": "Real-time ecosystem insights."
-    },
-    {
-      "key": "cap2",
-      "label": "Caption, line 2",
-      "group": "Opening",
-      "default": "Powered by science, blockchain,"
-    },
-    {
-      "key": "cap3",
-      "label": "Caption, line 3",
-      "group": "Opening",
-      "default": "and transparent data."
-    },
-    {
-      "key": "vision-chip",
-      "label": "Vision label",
-      "group": "Vision",
-      "default": "Our vision"
-    },
-    {
-      "key": "vision-p1",
-      "label": "Vision line 1",
-      "group": "Vision",
-      "default": "A breakthrough in environmental measurement,"
-    },
-    {
-      "key": "vision-p2",
-      "label": "Vision line 2",
-      "group": "Vision",
-      "default": "built for commercial use."
-    },
-    {
-      "key": "acct",
-      "label": "What you do",
-      "group": "Hotspots",
-      "default": "Our ecosystem-level accounting translates complex field science into verifiable, compliance-ready metrics — so you can drive measurable results, not just reports.",
-      "long": true
-    },
-    {
-      "key": "hs1",
-      "label": "Hotspot 1",
-      "group": "Hotspots",
-      "default": "Soil carbon"
-    },
-    {
-      "key": "hs2",
-      "label": "Hotspot 2",
-      "group": "Hotspots",
-      "default": "Canopy moisture"
-    },
-    {
-      "key": "hs3",
-      "label": "Hotspot 3",
-      "group": "Hotspots",
-      "default": "Species index"
-    },
-    {
-      "key": "hs4",
-      "label": "Hotspot 4",
-      "group": "Hotspots",
-      "default": "Microclimate"
-    },
-    {
-      "key": "station",
-      "label": "Station label",
-      "group": "Proof",
-      "default": "Field station 07"
-    },
-    {
-      "key": "cred",
-      "label": "Proof headline",
-      "group": "Proof",
-      "default": "Scientific credibility for corporate climate action"
-    },
-    {
-      "key": "card",
-      "label": "Card title",
-      "group": "Proof",
-      "default": "Accumulated carbon"
-    },
-    {
-      "key": "f1",
-      "label": "Feature 1",
-      "group": "Proof",
-      "default": "Gold-standard observation system"
-    },
-    {
-      "key": "f2",
-      "label": "Feature 2",
-      "group": "Proof",
-      "default": "World-class atmospheric monitoring (AMRV)"
-    },
-    {
-      "key": "f3",
-      "label": "Feature 3",
-      "group": "Proof",
-      "default": "Integrated algorithmic processing"
-    },
-    {
-      "key": "f4",
-      "label": "Feature 4",
-      "group": "Proof",
-      "default": "Blockchain-secured traceability"
-    },
-    {
-      "key": "f5",
-      "label": "Feature 5",
-      "group": "Proof",
-      "default": "Built for scale and complexity"
-    },
-    {
-      "key": "sol-chip",
-      "label": "Solutions label",
-      "group": "Solutions",
-      "default": "Our solutions"
-    },
-    {
-      "key": "sol-h",
-      "label": "Solutions headline",
-      "group": "Solutions",
-      "default": "Validating what the ecosystem does naturally"
-    },
-    {
-      "key": "sol-p",
-      "label": "Solutions text",
-      "group": "Solutions",
-      "default": "Field sensors, atmospheric flux towers and satellite data fused into one auditable record — so every tonne you report can be traced back to the ground it came from.",
-      "long": true
-    },
-    {
-      "key": "c1-tag",
-      "label": "Card 1 label",
-      "group": "Solutions",
-      "default": "[Nature-based solutions]"
-    },
-    {
-      "key": "c1-p",
-      "label": "Card 1 text",
-      "group": "Solutions",
-      "default": "Continuous flux measurement replaces sampled estimates, so credits reflect what the land actually absorbs.",
-      "long": true
-    },
-    {
-      "key": "c2-tag",
-      "label": "Card 2 label",
-      "group": "Solutions",
-      "default": "[Supply chain solutions]"
-    },
-    {
-      "key": "c2-p",
-      "label": "Card 2 text",
-      "group": "Solutions",
-      "default": "Trace commodities to the plots that grew them, with deforestation-free evidence attached to every shipment.",
-      "long": true
-    },
-    {
-      "key": "c3-tag",
-      "label": "Card 3 label",
-      "group": "Solutions",
-      "default": "[Biodiversity credits]"
-    },
-    {
-      "key": "c3-p",
-      "label": "Card 3 text",
-      "group": "Solutions",
-      "default": "Acoustic and eDNA monitoring builds a measurable biodiversity baseline you can report against year over year.",
-      "long": true
-    },
-    {
-      "key": "s1",
-      "label": "Stat 1 label",
-      "group": "Numbers",
-      "default": "Sensors deployed"
-    },
-    {
-      "key": "s2",
-      "label": "Stat 2 label",
-      "group": "Numbers",
-      "default": "Countries monitored"
-    },
-    {
-      "key": "s3",
-      "label": "Stat 3 label",
-      "group": "Numbers",
-      "default": "Mt CO₂e verified"
-    },
-    {
-      "key": "s4",
-      "label": "Stat 4 label",
-      "group": "Numbers",
-      "default": "% Data uptime"
-    },
-    {
-      "key": "pic-sol1",
-      "label": "Solutions picture 1",
-      "group": "Pictures",
-      "type": "image",
-      "default": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025630_9a37a1e0-2547-4973-8160-c75205993914.png&w=1400&q=82",
-      "hint": "Used by cards 1 and 3."
-    },
-    {
-      "key": "pic-sol2",
-      "label": "Solutions picture 2",
-      "group": "Pictures",
-      "type": "image",
-      "default": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025545_b003e5cc-e68f-4fee-b686-c217a5d81eea.png&w=1400&q=82",
-      "hint": "Used by card 2."
-    }
-  ],
-  "industries": [
-    "environment",
-    "science",
-    "climate",
-    "data",
-    "agency",
-    "technology"
-  ],
   "features": [
     "Scroll-scrubbed video",
     "Layered parallax",
     "Clickable hotspots",
-    "Counting stats"
+    "Counting stats",
+    "Contact section"
+  ],
+  "schema": [
+    {
+      "group": "Business",
+      "fields": [
+        {
+          "path": "brand.name",
+          "label": "Business name",
+          "type": "text",
+          "hint": "Fills every {name} in the text below."
+        },
+        {
+          "path": "brand.showMark",
+          "label": "Show the logo mark",
+          "type": "toggle"
+        },
+        {
+          "path": "seo.title",
+          "label": "Page title (search and browser tab)",
+          "type": "text"
+        },
+        {
+          "path": "seo.description",
+          "label": "Short description (search and sharing)",
+          "type": "textarea"
+        }
+      ]
+    },
+    {
+      "group": "Sections",
+      "fields": [
+        {
+          "path": "sections.vision",
+          "label": "Vision",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.hotspots",
+          "label": "Hotspots",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.station",
+          "label": "Proof card",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.solutions",
+          "label": "Solutions cards",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.stats",
+          "label": "Numbers",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.contact",
+          "label": "Contact",
+          "type": "toggle"
+        }
+      ]
+    },
+    {
+      "group": "Menu",
+      "fields": [
+        {
+          "path": "nav.links",
+          "label": "Menu links",
+          "type": "list",
+          "min": 0,
+          "max": 6,
+          "itemLabel": "Link",
+          "fields": [
+            {
+              "path": "label",
+              "label": "Label",
+              "type": "text"
+            },
+            {
+              "path": "href",
+              "label": "Goes to",
+              "type": "url",
+              "hint": "#sol, #contact, or a full address"
+            }
+          ]
+        },
+        {
+          "path": "nav.cta.label",
+          "label": "Button label",
+          "type": "text"
+        },
+        {
+          "path": "nav.cta.href",
+          "label": "Button goes to",
+          "type": "url"
+        }
+      ]
+    },
+    {
+      "group": "Opening",
+      "fields": [
+        {
+          "path": "hero.chip",
+          "label": "Label above the headline",
+          "type": "text"
+        },
+        {
+          "path": "hero.title",
+          "label": "Headline",
+          "type": "text"
+        },
+        {
+          "path": "hero.caption",
+          "label": "Caption (one line per row)",
+          "type": "textarea"
+        },
+        {
+          "path": "hero.hint",
+          "label": "Scroll hint",
+          "type": "text"
+        },
+        {
+          "path": "hero.hudChip",
+          "label": "Reading label",
+          "type": "text"
+        },
+        {
+          "path": "hero.hudLines",
+          "label": "Reading lines",
+          "type": "textarea"
+        },
+        {
+          "path": "hero.image",
+          "label": "Opening picture",
+          "type": "image"
+        },
+        {
+          "path": "hero.imageAlt",
+          "label": "Opening picture description",
+          "type": "text"
+        },
+        {
+          "path": "hero.frontImage",
+          "label": "Foreground cut-out",
+          "type": "image",
+          "hint": "Sits in front of the headline until the video takes over. Leave empty to skip."
+        },
+        {
+          "path": "hero.video",
+          "label": "Push-in video",
+          "type": "video",
+          "hint": "Scrubbed by scroll. Leave empty to keep the still picture."
+        },
+        {
+          "path": "hero.rockImage",
+          "label": "Floating rock picture",
+          "type": "image",
+          "hint": "Leave empty for no rocks."
+        },
+        {
+          "path": "hero.rockCrop",
+          "label": "Rock picture is the original sprite sheet",
+          "type": "toggle",
+          "hint": "Turn off when you upload a single rock picture of your own."
+        }
+      ]
+    },
+    {
+      "group": "Vision",
+      "fields": [
+        {
+          "path": "vision.chip",
+          "label": "Label",
+          "type": "text"
+        },
+        {
+          "path": "vision.title",
+          "label": "Headline (one line per row)",
+          "type": "textarea"
+        },
+        {
+          "path": "vision.text",
+          "label": "Text",
+          "type": "textarea"
+        }
+      ]
+    },
+    {
+      "group": "Hotspots",
+      "fields": [
+        {
+          "path": "hotspots.text",
+          "label": "What you do",
+          "type": "textarea"
+        },
+        {
+          "path": "hotspots.items",
+          "label": "Hotspots",
+          "type": "list",
+          "min": 0,
+          "max": 6,
+          "itemLabel": "Hotspot",
+          "fields": [
+            {
+              "path": "label",
+              "label": "Label",
+              "type": "text"
+            },
+            {
+              "path": "value",
+              "label": "Reading",
+              "type": "text"
+            },
+            {
+              "path": "x",
+              "label": "Across (%)",
+              "type": "number",
+              "min": 0,
+              "max": 100,
+              "step": 1
+            },
+            {
+              "path": "y",
+              "label": "Down (%)",
+              "type": "number",
+              "min": 0,
+              "max": 100,
+              "step": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Proof card",
+      "fields": [
+        {
+          "path": "station.label",
+          "label": "Label",
+          "type": "text"
+        },
+        {
+          "path": "station.title",
+          "label": "Headline",
+          "type": "text"
+        },
+        {
+          "path": "station.cardTitle",
+          "label": "Card title",
+          "type": "textarea"
+        },
+        {
+          "path": "station.cardNote",
+          "label": "Card note",
+          "type": "text"
+        },
+        {
+          "path": "station.cardValue",
+          "label": "Card number",
+          "type": "number",
+          "min": 0,
+          "max": 1000000,
+          "step": 0.1
+        },
+        {
+          "path": "station.cardUnit",
+          "label": "Unit",
+          "type": "text"
+        },
+        {
+          "path": "station.cardTag",
+          "label": "Tag",
+          "type": "text"
+        },
+        {
+          "path": "station.cardAxis",
+          "label": "Axis labels",
+          "type": "text"
+        },
+        {
+          "path": "station.chart",
+          "label": "Chart points",
+          "type": "text",
+          "hint": "Numbers from 4 to 66, separated by commas. Lower is higher on the chart."
+        },
+        {
+          "path": "station.features",
+          "label": "Features",
+          "type": "list",
+          "min": 0,
+          "max": 7,
+          "itemLabel": "Feature",
+          "fields": [
+            {
+              "path": "title",
+              "label": "Feature",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Solutions",
+      "fields": [
+        {
+          "path": "solutions.chip",
+          "label": "Label",
+          "type": "text"
+        },
+        {
+          "path": "solutions.title",
+          "label": "Headline",
+          "type": "textarea"
+        },
+        {
+          "path": "solutions.text",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "solutions.cards",
+          "label": "Cards",
+          "type": "list",
+          "min": 0,
+          "max": 6,
+          "itemLabel": "Card",
+          "fields": [
+            {
+              "path": "tag",
+              "label": "Label",
+              "type": "text"
+            },
+            {
+              "path": "title",
+              "label": "Title",
+              "type": "textarea"
+            },
+            {
+              "path": "text",
+              "label": "Text (shows on hover)",
+              "type": "textarea"
+            },
+            {
+              "path": "image",
+              "label": "Picture",
+              "type": "image"
+            },
+            {
+              "path": "focus",
+              "label": "Picture focus",
+              "type": "text",
+              "hint": "Across and down, like 50% 50%."
+            },
+            {
+              "path": "zoom",
+              "label": "Picture zoom (%)",
+              "type": "number",
+              "min": 100,
+              "max": 400,
+              "step": 5
+            },
+            {
+              "path": "href",
+              "label": "Link (optional)",
+              "type": "url"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Numbers",
+      "fields": [
+        {
+          "path": "stats",
+          "label": "Numbers",
+          "type": "list",
+          "min": 0,
+          "max": 6,
+          "itemLabel": "Number",
+          "fields": [
+            {
+              "path": "value",
+              "label": "Number",
+              "type": "number",
+              "min": 0,
+              "max": 100000000,
+              "step": 0.1
+            },
+            {
+              "path": "decimals",
+              "label": "Decimals",
+              "type": "number",
+              "min": 0,
+              "max": 3,
+              "step": 1
+            },
+            {
+              "path": "label",
+              "label": "Label",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Contact",
+      "fields": [
+        {
+          "path": "contact.chip",
+          "label": "Label",
+          "type": "text"
+        },
+        {
+          "path": "contact.title",
+          "label": "Headline",
+          "type": "textarea"
+        },
+        {
+          "path": "contact.text",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "contact.button",
+          "label": "Button",
+          "type": "text"
+        },
+        {
+          "path": "contact.email",
+          "label": "Email",
+          "type": "text"
+        },
+        {
+          "path": "contact.phone",
+          "label": "Phone",
+          "type": "text"
+        },
+        {
+          "path": "contact.address",
+          "label": "Address",
+          "type": "textarea"
+        },
+        {
+          "path": "contact.footer",
+          "label": "Footer",
+          "type": "text",
+          "hint": "{year} becomes this year."
+        }
+      ]
+    },
+    {
+      "group": "Colours",
+      "fields": [
+        {
+          "path": "theme.colors.ink",
+          "label": "Text",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.ink2",
+          "label": "Soft text",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.mist",
+          "label": "Background",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.paper",
+          "label": "Panels",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.accent",
+          "label": "Accent",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.accent2",
+          "label": "Accent, darker",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.positive",
+          "label": "Good numbers",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.deep",
+          "label": "Deep cards",
+          "type": "color"
+        }
+      ]
+    },
+    {
+      "group": "Fonts and shape",
+      "fields": [
+        {
+          "path": "theme.fonts.sans",
+          "label": "Main font",
+          "type": "font"
+        },
+        {
+          "path": "theme.fonts.mono",
+          "label": "Label font",
+          "type": "font"
+        },
+        {
+          "path": "theme.radius",
+          "label": "Corner rounding (px)",
+          "type": "number",
+          "min": 0,
+          "max": 32,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "group": "Motion",
+      "fields": [
+        {
+          "path": "motion.storyLength",
+          "label": "Scroll story length (screen heights × 100)",
+          "type": "number",
+          "min": 250,
+          "max": 1200,
+          "step": 10
+        },
+        {
+          "path": "motion.smoothing",
+          "label": "Scroll smoothing",
+          "type": "number",
+          "min": 0,
+          "max": 0.97,
+          "step": 0.01
+        },
+        {
+          "path": "motion.parallax",
+          "label": "Pointer parallax",
+          "type": "number",
+          "min": 0,
+          "max": 3,
+          "step": 0.1
+        },
+        {
+          "path": "motion.fog",
+          "label": "Fog bank",
+          "type": "toggle"
+        },
+        {
+          "path": "motion.rocks",
+          "label": "Floating rocks",
+          "type": "toggle"
+        },
+        {
+          "path": "motion.cardTilt",
+          "label": "Cards tilt with the pointer",
+          "type": "toggle"
+        },
+        {
+          "path": "motion.countUp",
+          "label": "Numbers count up",
+          "type": "toggle"
+        },
+        {
+          "path": "motion.pulse",
+          "label": "Hotspots pulse",
+          "type": "toggle"
+        }
+      ]
+    }
   ]
 }
