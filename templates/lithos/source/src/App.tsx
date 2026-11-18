@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Menu, X } from './icons';
 import { RevealLayer } from './components/RevealLayer';
 import { LithosModal, type ModalMode } from './components/LithosModal';
+import { LithosSections } from './components/LithosSections';
 import { fill, safeHref, safeSrc, useTheme, useXP, type XP } from './xp';
 
 export default function App() {
@@ -62,8 +63,29 @@ export default function App() {
     if (!href || href === '#top') {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    const target = href.startsWith('#') ? document.getElementById(href.slice(1)) : null;
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
     }
   };
+
+  // The menu follows the reader: the link of the section on screen is highlighted.
+  useEffect(() => {
+    const ids = links.map((l) => String(safeHref(l.href) || ''));
+    const onScroll = () => {
+      let best = 0;
+      ids.forEach((h, i) => {
+        const el = h.startsWith('#') && h.length > 1 ? document.getElementById(h.slice(1)) : null;
+        if (el && el.getBoundingClientRect().top < window.innerHeight * 0.4) best = i;
+      });
+      setActive(best);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [links.map((l) => l.href).join('|')]);
 
   return (
     <div className="min-h-screen tracking-[-0.02em] lithos-page" id="top">
@@ -181,6 +203,8 @@ export default function App() {
           )}
         </div>
       </section>
+
+      <LithosSections data={data} onSignup={() => setModalMode('signup')} />
 
       <div data-xp-extras="" />
 

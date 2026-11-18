@@ -5,6 +5,11 @@ import { fill, lines, safeSrc, type XP } from './xp';
 export let SHEET_URL = '';
 export let INTRO_VIDEO_URL = '';
 
+/** Swap in another sheet (the drawn one) after setContent(). */
+export function setSheetUrl(url: string): void {
+  SHEET_URL = url;
+}
+
 /** Size in pixels of the product picture sheet the boxes below are measured on. */
 export let SW = 2688;
 export let SH = 1520;

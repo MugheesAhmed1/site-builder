@@ -1680,8 +1680,9 @@ export default function App() {
   const handleThumbClick = (flavIdx: number) => {
     stateRef.current.userTouchedPack = true;
     const emptyIdx = packSlots.findIndex((s) => s === null);
-    if (emptyIdx === -1) return;
     setPackSlots((prev) => {
+      // A full pack swaps out its oldest bar, so a flavour tap always does something.
+      if (emptyIdx === -1) return [...prev.slice(1), flavIdx];
       const next = [...prev];
       next[emptyIdx] = flavIdx;
       return next;

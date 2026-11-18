@@ -1936,7 +1936,7 @@
   "assets": {
     "media": [
       {
-        "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/0e201fcd-ffc0-46a0-bd06-faa07bf0e84b.webp",
+        "src": "/tpl/distill/site/media/home.webp",
         "type": "image",
         "label": "Cards 1: Picture",
         "from": [
@@ -1949,7 +1949,7 @@
         ]
       },
       {
-        "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/2bebad68-8177-446a-9550-d64074166364.webp",
+        "src": "/tpl/distill/site/media/case.webp",
         "type": "image",
         "label": "Cards 3: Picture",
         "from": [
@@ -1962,7 +1962,7 @@
         ]
       },
       {
-        "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/e80ba08d-d7b6-4b27-b0cd-8d0ad09c788c.webp",
+        "src": "/tpl/distill/site/media/vision1.webp",
         "type": "image",
         "label": "Cards 4: Picture",
         "from": [
@@ -1975,7 +1975,7 @@
         ]
       },
       {
-        "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/156ff74d-ee37-4443-8f3a-11ae2095ed4c.webp",
+        "src": "/tpl/distill/site/media/alloy.webp",
         "type": "image",
         "label": "Cards 5: Picture",
         "from": [
@@ -1988,7 +1988,7 @@
         ]
       },
       {
-        "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/7b6ad638-89ec-4dec-be74-d36fbff3ea53.webp",
+        "src": "/tpl/distill/site/media/j1.webp",
         "type": "image",
         "label": "Cards 6: Picture",
         "from": [
@@ -2001,9 +2001,35 @@
         ]
       },
       {
-        "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/62b0d7c1-3eb7-44bd-9b19-57b975fb250f.webp",
+        "src": "/tpl/distill/site/media/vision2.webp",
         "type": "image",
         "label": "Cards 4: Second picture (vision, journal)",
+        "from": [
+          "distill"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/distill/site/media/j2.webp",
+        "type": "image",
+        "label": "Cards 6: Second picture (vision, journal)",
+        "from": [
+          "distill"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/distill/site/media/j3.webp",
+        "type": "image",
+        "label": "Cards 6: Third picture (journal)",
         "from": [
           "distill"
         ],
@@ -2027,7 +2053,7 @@
         ]
       },
       {
-        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85",
+        "src": "/tpl/jack/site/media/reel-1.webp",
         "type": "image",
         "label": "Top row 1: Picture",
         "from": [
@@ -2040,7 +2066,7 @@
         ]
       },
       {
-        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85",
+        "src": "/tpl/jack/site/media/reel-2.webp",
         "type": "image",
         "label": "Top row 2: Picture",
         "from": [
@@ -2053,7 +2079,7 @@
         ]
       },
       {
-        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85",
+        "src": "/tpl/jack/site/media/reel-3.webp",
         "type": "image",
         "label": "Top row 3: Picture",
         "from": [
@@ -2066,7 +2092,7 @@
         ]
       },
       {
-        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85",
+        "src": "/tpl/jack/site/media/reel-4.webp",
         "type": "image",
         "label": "Top row 4: Picture",
         "from": [
@@ -2079,7 +2105,7 @@
         ]
       },
       {
-        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85",
+        "src": "/tpl/jack/site/media/reel-5.webp",
         "type": "image",
         "label": "Top row 5: Picture",
         "from": [
@@ -2092,7 +2118,20 @@
         ]
       },
       {
-        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85",
+        "src": "/tpl/jack/site/media/reel-6.webp",
+        "type": "image",
+        "label": "Bottom row 1: Picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/reel-7.webp",
         "type": "image",
         "label": "Bottom row 2: Picture",
         "from": [
@@ -2105,7 +2144,7 @@
         ]
       },
       {
-        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85",
+        "src": "/tpl/jack/site/media/reel-8.webp",
         "type": "image",
         "label": "Bottom row 3: Picture",
         "from": [
@@ -2118,7 +2157,7 @@
         ]
       },
       {
-        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85",
+        "src": "/tpl/jack/site/media/reel-9.webp",
         "type": "image",
         "label": "Bottom row 4: Picture",
         "from": [
@@ -2131,7 +2170,7 @@
         ]
       },
       {
-        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85",
+        "src": "/tpl/jack/site/media/reel-10.webp",
         "type": "image",
         "label": "Bottom row 5: Picture",
         "from": [
@@ -2196,7 +2235,124 @@
         ]
       },
       {
-        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_195923_b0ba8ace-1d1d-4f2c-9a28-1ab84b330680.png&w=1280&q=85",
+        "src": "/tpl/jack/site/media/project-1a.webp",
+        "type": "image",
+        "label": "Projects 1: Small picture 1",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/project-2a.webp",
+        "type": "image",
+        "label": "Projects 2: Small picture 1",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/project-3a.webp",
+        "type": "image",
+        "label": "Projects 3: Small picture 1",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/project-1b.webp",
+        "type": "image",
+        "label": "Projects 1: Small picture 2",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/project-2b.webp",
+        "type": "image",
+        "label": "Projects 2: Small picture 2",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/project-3b.webp",
+        "type": "image",
+        "label": "Projects 3: Small picture 2",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/project-1c.webp",
+        "type": "image",
+        "label": "Projects 1: Main picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/project-2c.webp",
+        "type": "image",
+        "label": "Projects 2: Main picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/project-3c.webp",
+        "type": "image",
+        "label": "Projects 3: Main picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/lithos/site/media/surface.webp",
         "type": "image",
         "label": "Picture on top",
         "from": [
@@ -2209,7 +2365,7 @@
         ]
       },
       {
-        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_201152_bba90a12-bf12-459f-91f0-51f237dbaf3b.png&w=1280&q=85",
+        "src": "/tpl/lithos/site/media/strata.webp",
         "type": "image",
         "label": "Picture the spotlight reveals",
         "from": [
@@ -2222,7 +2378,59 @@
         ]
       },
       {
-        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_031618_8ce6dca1-972d-429d-8d13-bf0691c37848.png&w=2400&q=88",
+        "src": "/tpl/lithos/site/media/guide-fossils.webp",
+        "type": "image",
+        "label": "Guides 1: Picture",
+        "from": [
+          "lithos"
+        ],
+        "business": [
+          "school",
+          "product",
+          "nonprofit"
+        ]
+      },
+      {
+        "src": "/tpl/lithos/site/media/guide-minerals.webp",
+        "type": "image",
+        "label": "Guides 2: Picture",
+        "from": [
+          "lithos"
+        ],
+        "business": [
+          "school",
+          "product",
+          "nonprofit"
+        ]
+      },
+      {
+        "src": "/tpl/lithos/site/media/guide-canyons.webp",
+        "type": "image",
+        "label": "Guides 3: Picture",
+        "from": [
+          "lithos"
+        ],
+        "business": [
+          "school",
+          "product",
+          "nonprofit"
+        ]
+      },
+      {
+        "src": "/tpl/lithos/site/media/tour.webp",
+        "type": "image",
+        "label": "Background picture",
+        "from": [
+          "lithos"
+        ],
+        "business": [
+          "school",
+          "product",
+          "nonprofit"
+        ]
+      },
+      {
+        "src": "/tpl/mossline/site/media/plate.webp",
         "type": "image",
         "label": "Opening picture",
         "from": [
@@ -2235,20 +2443,7 @@
         ]
       },
       {
-        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_031657_baaa3380-5ece-482a-a623-a1838fd7653c.png&w=2400&q=90",
-        "type": "image",
-        "label": "Foreground cut-out",
-        "from": [
-          "mossline"
-        ],
-        "business": [
-          "product",
-          "consulting",
-          "nonprofit"
-        ]
-      },
-      {
-        "src": "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261106_025717_906b686d-9a9a-4dea-bab4-ae2454f8390e.mp4",
+        "src": "/tpl/mossline/site/media/push.mp4",
         "type": "video",
         "label": "Push-in video",
         "from": [
@@ -2261,20 +2456,7 @@
         ]
       },
       {
-        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025635_82593f6a-1cf7-41c1-94ac-96fb89ebfd1a.png&w=2400&q=85",
-        "type": "image",
-        "label": "Floating rock picture",
-        "from": [
-          "mossline"
-        ],
-        "business": [
-          "product",
-          "consulting",
-          "nonprofit"
-        ]
-      },
-      {
-        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025630_9a37a1e0-2547-4973-8160-c75205993914.png&w=1400&q=82",
+        "src": "/tpl/mossline/site/media/card-1.webp",
         "type": "image",
         "label": "Cards 1: Picture",
         "from": [
@@ -2287,9 +2469,22 @@
         ]
       },
       {
-        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261106_025545_b003e5cc-e68f-4fee-b686-c217a5d81eea.png&w=1400&q=82",
+        "src": "/tpl/mossline/site/media/card-2.webp",
         "type": "image",
         "label": "Cards 2: Picture",
+        "from": [
+          "mossline"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "nonprofit"
+        ]
+      },
+      {
+        "src": "/tpl/mossline/site/media/card-3.webp",
+        "type": "image",
+        "label": "Cards 3: Picture",
         "from": [
           "mossline"
         ],
