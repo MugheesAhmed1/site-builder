@@ -1,0 +1,537 @@
+{
+  "id": "ashgrove",
+  "name": "Ashgrove",
+  "pitch": "A warm, firelit restaurant: embers drifting over a flickering hero, a story told in chapters while the picture changes beside it, a wheel of signature plates that turns as you scroll, a tabbed menu, private dining and a table booking with guests, dates and times.",
+  "kind": "vite",
+  "categories": [
+    "Cinematic",
+    "Scroll",
+    "Interactive",
+    "Editorial"
+  ],
+  "business": [
+    "food",
+    "events",
+    "hotel"
+  ],
+  "sector": "Restaurant, wine bar, bakery or café",
+  "intensity": 7,
+  "heavy": false,
+  "licence": {
+    "kind": "original",
+    "holder": "Site Builder",
+    "note": "Made for the builder as an original template. Pictures are free AI generations (Pollinations) kept in source/public/media.",
+    "added": "2026-11-18"
+  },
+  "remoteAssets": [],
+  "features": [
+    "Ember particles",
+    "Firelight flicker",
+    "Scroll story chapters",
+    "Turning wheel of signature plates",
+    "Tabbed menu",
+    "Private dining enquiry",
+    "Table booking with guests, dates and times",
+    "Hours and directions"
+  ],
+  "schema": [
+    {
+      "group": "Business",
+      "fields": [
+        {
+          "path": "brand.name",
+          "label": "Restaurant name",
+          "type": "text",
+          "hint": "Fills every {name} in the text below."
+        },
+        {
+          "path": "brand.phone",
+          "label": "Phone",
+          "type": "text"
+        },
+        {
+          "path": "brand.email",
+          "label": "Email",
+          "type": "text"
+        },
+        {
+          "path": "brand.address",
+          "label": "Address",
+          "type": "text"
+        },
+        {
+          "path": "brand.mapLink",
+          "label": "Map link",
+          "type": "url"
+        },
+        {
+          "path": "brand.currency",
+          "label": "Currency sign",
+          "type": "text"
+        },
+        {
+          "path": "seo.title",
+          "label": "Page title (search and browser tab)",
+          "type": "text"
+        },
+        {
+          "path": "seo.description",
+          "label": "Short description (search and sharing)",
+          "type": "textarea"
+        }
+      ]
+    },
+    {
+      "group": "Sections",
+      "fields": [
+        {
+          "path": "sections.story",
+          "label": "Show story",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.signature",
+          "label": "Show signature plates",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.menu",
+          "label": "Show menu",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.private",
+          "label": "Show private dining",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.booking",
+          "label": "Show table booking",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.visit",
+          "label": "Show hours and address",
+          "type": "toggle"
+        }
+      ]
+    },
+    {
+      "group": "Menu bar",
+      "fields": [
+        {
+          "path": "nav.links",
+          "label": "Menu links",
+          "type": "list",
+          "itemLabel": "Link",
+          "fields": [
+            {
+              "path": "label",
+              "label": "Label",
+              "type": "text"
+            },
+            {
+              "path": "href",
+              "label": "Goes to",
+              "type": "url"
+            }
+          ],
+          "min": 0,
+          "max": 6
+        },
+        {
+          "path": "nav.cta",
+          "label": "Booking button",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Opening",
+      "fields": [
+        {
+          "path": "hero.kicker",
+          "label": "Small line above",
+          "type": "text"
+        },
+        {
+          "path": "hero.title",
+          "label": "Headline",
+          "type": "textarea"
+        },
+        {
+          "path": "hero.text",
+          "label": "Intro",
+          "type": "textarea"
+        },
+        {
+          "path": "hero.button",
+          "label": "Main button",
+          "type": "text"
+        },
+        {
+          "path": "hero.secondary",
+          "label": "Second button",
+          "type": "text"
+        },
+        {
+          "path": "hero.image",
+          "label": "Picture",
+          "type": "image"
+        },
+        {
+          "path": "hero.embers",
+          "label": "Number of embers",
+          "type": "number",
+          "min": 0,
+          "max": 200,
+          "step": 5
+        }
+      ]
+    },
+    {
+      "group": "Story",
+      "fields": [
+        {
+          "path": "story.kicker",
+          "label": "Small heading",
+          "type": "text"
+        },
+        {
+          "path": "story.chapters",
+          "label": "Chapters",
+          "type": "list",
+          "itemLabel": "Chapter",
+          "fields": [
+            {
+              "path": "title",
+              "label": "Title",
+              "type": "text"
+            },
+            {
+              "path": "text",
+              "label": "Text",
+              "type": "textarea"
+            },
+            {
+              "path": "image",
+              "label": "Picture",
+              "type": "image"
+            }
+          ],
+          "min": 1,
+          "max": 8
+        }
+      ]
+    },
+    {
+      "group": "Signature plates",
+      "fields": [
+        {
+          "path": "signature.kicker",
+          "label": "Small heading",
+          "type": "text"
+        },
+        {
+          "path": "signature.title",
+          "label": "Heading",
+          "type": "text"
+        },
+        {
+          "path": "signature.items",
+          "label": "Plates",
+          "type": "list",
+          "itemLabel": "Plate",
+          "fields": [
+            {
+              "path": "name",
+              "label": "Name",
+              "type": "text"
+            },
+            {
+              "path": "note",
+              "label": "With",
+              "type": "text"
+            },
+            {
+              "path": "price",
+              "label": "Price",
+              "type": "text"
+            },
+            {
+              "path": "image",
+              "label": "Round picture, from above",
+              "type": "image"
+            }
+          ],
+          "min": 1,
+          "max": 10
+        }
+      ]
+    },
+    {
+      "group": "Menu",
+      "fields": [
+        {
+          "path": "menu.kicker",
+          "label": "Small heading",
+          "type": "text"
+        },
+        {
+          "path": "menu.title",
+          "label": "Heading",
+          "type": "text"
+        },
+        {
+          "path": "menu.note",
+          "label": "Note",
+          "type": "textarea"
+        },
+        {
+          "path": "menu.categories",
+          "label": "Menu tabs",
+          "type": "list",
+          "itemLabel": "Tab",
+          "fields": [
+            {
+              "path": "name",
+              "label": "Name",
+              "type": "text"
+            },
+            {
+              "path": "dishes",
+              "label": "Dishes (Name | Price | Note, one per line)",
+              "type": "textarea"
+            }
+          ],
+          "min": 1,
+          "max": 8
+        }
+      ]
+    },
+    {
+      "group": "Private dining",
+      "fields": [
+        {
+          "path": "private.kicker",
+          "label": "Small heading",
+          "type": "text"
+        },
+        {
+          "path": "private.title",
+          "label": "Heading",
+          "type": "text"
+        },
+        {
+          "path": "private.text",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "private.points",
+          "label": "Points (one per line)",
+          "type": "textarea"
+        },
+        {
+          "path": "private.button",
+          "label": "Button (emails you)",
+          "type": "text"
+        },
+        {
+          "path": "private.image",
+          "label": "Picture",
+          "type": "image"
+        }
+      ]
+    },
+    {
+      "group": "Table booking",
+      "fields": [
+        {
+          "path": "booking.kicker",
+          "label": "Small heading",
+          "type": "text"
+        },
+        {
+          "path": "booking.title",
+          "label": "Heading",
+          "type": "text"
+        },
+        {
+          "path": "booking.text",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "booking.times",
+          "label": "Times (one per line)",
+          "type": "textarea"
+        },
+        {
+          "path": "booking.maxParty",
+          "label": "Largest party",
+          "type": "number",
+          "min": 1,
+          "max": 30,
+          "step": 1
+        },
+        {
+          "path": "booking.days",
+          "label": "Days ahead to offer",
+          "type": "number",
+          "min": 3,
+          "max": 30,
+          "step": 1
+        },
+        {
+          "path": "booking.closedDays",
+          "label": "Closed days (0 = Sunday … 6 = Saturday, comma separated)",
+          "type": "text"
+        },
+        {
+          "path": "booking.formAction",
+          "label": "Form address (optional)",
+          "type": "url",
+          "hint": "An https form endpoint such as Formspree. Empty: the form only shows the thank-you message."
+        },
+        {
+          "path": "booking.done",
+          "label": "Thank-you message",
+          "type": "textarea",
+          "hint": "{person}, {when} and {party} are filled in."
+        }
+      ]
+    },
+    {
+      "group": "Hours and address",
+      "fields": [
+        {
+          "path": "visit.kicker",
+          "label": "Small heading",
+          "type": "text"
+        },
+        {
+          "path": "visit.hours",
+          "label": "Hours (Days | Hours, one per line)",
+          "type": "textarea"
+        },
+        {
+          "path": "visit.note",
+          "label": "Getting here",
+          "type": "textarea"
+        }
+      ]
+    },
+    {
+      "group": "Footer",
+      "fields": [
+        {
+          "path": "footer.text",
+          "label": "Line",
+          "type": "text"
+        },
+        {
+          "path": "footer.legal",
+          "label": "Small print",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Colours",
+      "fields": [
+        {
+          "path": "theme.colors.page",
+          "label": "Page",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.surface",
+          "label": "Cards",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.text",
+          "label": "Text",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.muted",
+          "label": "Soft text",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.accent",
+          "label": "Accent",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.glow",
+          "label": "Glow (embers, prices)",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.line",
+          "label": "Lines",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.onAccent",
+          "label": "Text on accent",
+          "type": "color"
+        }
+      ]
+    },
+    {
+      "group": "Fonts",
+      "fields": [
+        {
+          "path": "theme.fonts.display",
+          "label": "Headings font",
+          "type": "font"
+        },
+        {
+          "path": "theme.fonts.body",
+          "label": "Body font",
+          "type": "font"
+        }
+      ]
+    },
+    {
+      "group": "Motion",
+      "fields": [
+        {
+          "path": "motion.animate",
+          "label": "Animations on",
+          "type": "toggle"
+        },
+        {
+          "path": "motion.embers",
+          "label": "Embers",
+          "type": "toggle"
+        },
+        {
+          "path": "motion.flicker",
+          "label": "Firelight flicker",
+          "type": "toggle"
+        },
+        {
+          "path": "motion.spinPlates",
+          "label": "Plates turn as you scroll",
+          "type": "toggle"
+        }
+      ]
+    },
+    {
+      "group": "Library blocks",
+      "fields": [
+        {
+          "path": "extras",
+          "label": "Blocks from the library",
+          "type": "blocks",
+          "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+        }
+      ]
+    }
+  ]
+}

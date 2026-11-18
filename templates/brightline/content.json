@@ -1,0 +1,173 @@
+{
+  "seo": {
+    "title": "{name} | Gentle family and cosmetic dentistry",
+    "description": "Calm, modern dental care for the whole family: check-ups, whitening, aligners, implants and same-week emergency visits."
+  },
+  "brand": {
+    "name": "Brightline Dental",
+    "short": "Brightline",
+    "phone": "+1 (555) 014-2290",
+    "email": "hello@brightline.dental",
+    "address": "48 Harbour Street, Suite 2, Westbridge",
+    "mapLink": "https://maps.google.com/?q=48+Harbour+Street"
+  },
+  "nav": {
+    "links": [
+      { "label": "Treatments", "href": "#treatments" },
+      { "label": "Results", "href": "#results" },
+      { "label": "Team", "href": "#team" },
+      { "label": "Plans", "href": "#plans" },
+      { "label": "Visit", "href": "#visit" }
+    ],
+    "cta": "Book a visit"
+  },
+  "hero": {
+    "kicker": "Now welcoming new patients",
+    "title": "Dentistry that feels like a deep breath.",
+    "text": "Unhurried appointments, clear prices and a team that explains every step. Check-ups, whitening, aligners and implants under one calm roof.",
+    "primary": "Book a visit",
+    "secondary": "See treatments",
+    "image": "./media/smile.webp",
+    "imageAlt": "A patient smiling after treatment",
+    "badge1": "4.9 from 1,200+ reviews",
+    "badge2": "Same-week appointments",
+    "badge3": "Pain-free promise"
+  },
+  "stats": {
+    "items": [
+      { "value": "18", "label": "Years caring for Westbridge" },
+      { "value": "12,400+", "label": "Patients who call us their dentist" },
+      { "value": "4.9", "label": "Average rating from verified reviews" },
+      { "value": "98%", "label": "Say their visit was pain-free" }
+    ]
+  },
+  "treatments": {
+    "kicker": "Treatments",
+    "title": "Everything your smile needs, explained plainly.",
+    "text": "Tap a treatment to see what happens, how long it takes and what it costs.",
+    "items": [
+      { "name": "Check-up and clean", "summary": "A thorough exam, gentle scale and polish, and a plan you understand.", "detail": "We check teeth, gums and bite, take low-dose digital X-rays when needed, and finish with a hygienist clean. You leave with a written plan and no surprises.", "price": "From $85", "time": "45 min", "image": "./media/room.webp" },
+      { "name": "Teeth whitening", "summary": "Up to eight shades brighter with custom trays or in-chair whitening.", "detail": "After a quick check we take impressions for custom trays, or whiten in the chair in one visit. Sensitivity-safe gels and a top-up kit included.", "price": "From $320", "time": "1 visit or 2 weeks", "image": "./media/smile.webp" },
+      { "name": "Clear aligners", "summary": "Straighter teeth with near-invisible aligners and a 3D preview first.", "detail": "A 3D scan shows your finished smile before you commit. Most people wear aligners for six to twelve months, with a check-in every eight weeks.", "price": "From $2,400", "time": "6 to 12 months", "image": "./media/dr1.webp" },
+      { "name": "Dental implants", "summary": "Natural-looking replacements for missing teeth, planned with 3D imaging.", "detail": "We plan the implant on a 3D scan, place it under local anaesthetic and fit the crown once it has healed. Payment plans available.", "price": "From $1,900", "time": "3 to 6 months", "image": "./media/dr2.webp" },
+      { "name": "Children's dentistry", "summary": "Friendly first visits that make kids look forward to the next one.", "detail": "Short, playful appointments, fissure sealants and fluoride varnish. Under-12s are seen free with a parent on a family plan.", "price": "Free on family plans", "time": "30 min", "image": "./media/kids.webp" },
+      { "name": "Emergency care", "summary": "Toothache, a chipped tooth or a lost filling, seen the same day.", "detail": "Call before 11am and we will see you that day. We relieve pain first, then talk through options for a lasting fix.", "price": "From $95", "time": "Same day", "image": "./media/dr3.webp" }
+    ]
+  },
+  "results": {
+    "kicker": "Real results",
+    "title": "Drag to see the difference.",
+    "text": "A whitening and bonding treatment, finished in two visits. Results vary from person to person.",
+    "before": "./media/smile.webp",
+    "after": "./media/smile.webp",
+    "tintBefore": true,
+    "beforeLabel": "Before",
+    "afterLabel": "After"
+  },
+  "journey": {
+    "kicker": "Your first visit",
+    "title": "Four calm steps, no surprises.",
+    "steps": [
+      { "title": "Say hello", "text": "Book online or call. We send a short form so we know your history before you arrive." },
+      { "title": "Look and listen", "text": "A full check with digital X-rays and photos you see on screen, and time to ask anything." },
+      { "title": "Your plan, priced", "text": "A written plan with options and prices. Nothing starts until you say yes." },
+      { "title": "Care that lasts", "text": "Treatment at your pace, then reminders for check-ups so small things stay small." }
+    ]
+  },
+  "team": {
+    "kicker": "The team",
+    "title": "People who take their time.",
+    "members": [
+      { "name": "Dr. Amelia Hart", "role": "Principal dentist", "bio": "Twenty years of family and cosmetic dentistry. Known for explaining everything twice.", "image": "./media/dr1.webp" },
+      { "name": "Dr. Sam Okafor", "role": "Implants and oral surgery", "bio": "Plans every implant on a 3D scan and still answers patient calls himself.", "image": "./media/dr2.webp" },
+      { "name": "Priya Nair", "role": "Lead hygienist", "bio": "Gentle cleans and honest advice on brushing that people actually follow.", "image": "./media/dr3.webp" }
+    ]
+  },
+  "plans": {
+    "kicker": "Membership plans",
+    "title": "No insurance? Join a plan.",
+    "text": "Spread the cost of routine care with one monthly payment. Cancel any time.",
+    "items": [
+      { "name": "Essential", "price": "$19", "period": "/month", "features": "Two check-ups a year\nTwo hygienist cleans\n10% off treatments", "highlight": false, "button": "Join Essential" },
+      { "name": "Complete", "price": "$32", "period": "/month", "features": "Everything in Essential\nX-rays included\nOne emergency visit a year\n15% off treatments", "highlight": true, "button": "Join Complete" },
+      { "name": "Family", "price": "$79", "period": "/month", "features": "Two adults on Complete\nUnder-12s seen free\nPriority family bookings", "highlight": false, "button": "Join Family" }
+    ]
+  },
+  "reviews": {
+    "kicker": "Kind words",
+    "items": [
+      { "quote": "I had avoided the dentist for six years. They were patient, explained everything and it did not hurt once.", "name": "Hannah W.", "detail": "Check-up and fillings" },
+      { "quote": "My aligners finished two months early and the 3D preview was exactly what I got.", "name": "Marcus L.", "detail": "Clear aligners" },
+      { "quote": "Our kids actually ask when they can go back. That says everything.", "name": "The Duarte family", "detail": "Family plan" },
+      { "quote": "Called at 9 with a cracked tooth and was out of pain by lunch.", "name": "Ravi P.", "detail": "Emergency visit" }
+    ],
+    "autoplay": true
+  },
+  "faq": {
+    "kicker": "Questions",
+    "title": "Good to know.",
+    "items": [
+      { "q": "I'm nervous about the dentist. Can you help?", "a": "Yes. Tell us when you book. We go slowly, agree a stop signal and offer sedation for longer treatments." },
+      { "q": "Do you take insurance?", "a": "We work with most major insurers and will submit the claim for you. No insurance? Our plans cover routine care for one monthly fee." },
+      { "q": "How much will my treatment cost?", "a": "You get a written, itemised price before anything starts. Payment plans are available for treatments over $500." },
+      { "q": "Can I bring my children?", "a": "Please do. We see children from their first tooth and keep visits short and fun." }
+    ]
+  },
+  "visit": {
+    "kicker": "Visit us",
+    "title": "Easy to reach, easy to park.",
+    "hours": "Mon – Thu | 8:00 – 19:00\nFriday | 8:00 – 17:00\nSaturday | 9:00 – 14:00\nSunday | Closed",
+    "note": "Free parking behind the building. Step-free access and a lift to every floor.",
+    "emergency": "Dental emergency? Call before 11am and we will see you today.",
+    "image": "./media/hero.webp"
+  },
+  "booking": {
+    "title": "Book a visit",
+    "text": "Pick a treatment, a day and a time. We confirm by text within the hour.",
+    "times": "08:30\n09:15\n10:00\n11:30\n13:00\n14:15\n15:30\n17:00",
+    "closedDays": "0",
+    "days": 12,
+    "formAction": "",
+    "done": "Thank you, {person}. We have your request for {when} and will text you to confirm."
+  },
+  "footer": {
+    "text": "Gentle family and cosmetic dentistry in Westbridge.",
+    "legal": "© {year} {name}. All rights reserved."
+  },
+  "sections": {
+    "stats": true,
+    "treatments": true,
+    "results": true,
+    "journey": true,
+    "team": true,
+    "plans": true,
+    "reviews": true,
+    "faq": true,
+    "visit": true
+  },
+  "theme": {
+    "colors": {
+      "page": "#f6f8f6",
+      "surface": "#ffffff",
+      "text": "#0f2a2a",
+      "muted": "#5b706d",
+      "accent": "#1f8a78",
+      "accentSoft": "#d8efe9",
+      "highlight": "#f4c95d",
+      "dark": "#0f2a2a",
+      "onAccent": "#ffffff"
+    },
+    "fonts": {
+      "display": "Instrument Serif",
+      "body": "Manrope"
+    },
+    "radius": 28
+  },
+  "motion": {
+    "animate": true,
+    "heroScroll": true,
+    "floatBadges": true,
+    "reviewSeconds": 6
+  },
+  "extras": []
+}

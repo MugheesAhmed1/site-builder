@@ -1,0 +1,141 @@
+{
+  "seo": {
+    "title": "{name} | Strength, boxing and conditioning gym",
+    "description": "Coached strength, boxing and conditioning classes for every level. Your first week is free."
+  },
+  "brand": {
+    "name": "Ironhouse",
+    "phone": "+1 (555) 017-4400",
+    "email": "train@ironhouse.gym",
+    "address": "Unit 7, Foundry Yard, Eastside",
+    "mapLink": "https://maps.google.com/?q=Foundry+Yard"
+  },
+  "nav": {
+    "links": [
+      { "label": "Programs", "href": "#programs" },
+      { "label": "Timetable", "href": "#timetable" },
+      { "label": "Membership", "href": "#membership" },
+      { "label": "Coaches", "href": "#coaches" }
+    ],
+    "cta": "Free week"
+  },
+  "hero": {
+    "line1": "Built",
+    "line2": "not born",
+    "text": "Coached strength, boxing and conditioning for every level. Turn up, we handle the plan.",
+    "button": "Claim your free week",
+    "secondary": "See the timetable",
+    "image": "./media/hero.webp",
+    "ticker": "Strength\nBoxing\nConditioning\nMobility\nOpen 5am – 11pm\nNo contracts"
+  },
+  "stats": {
+    "items": [
+      { "value": "40+", "label": "Coached classes a week" },
+      { "value": "1,800", "label": "Members training here" },
+      { "value": "12", "label": "Full-time coaches" },
+      { "value": "18h", "label": "Open every day" }
+    ]
+  },
+  "programs": {
+    "kicker": "Programs",
+    "title": "Pick your fight.",
+    "items": [
+      { "name": "Fight Club", "text": "Technique-first boxing. Pads, bags and footwork, no sparring until you want it.", "image": "./media/c1.webp", "length": "60 min", "intensity": 5, "tag": "Boxing" },
+      { "name": "Iron Strength", "text": "Squat, press, pull. Small groups, a coach on every rack and a program that progresses.", "image": "./media/c2.webp", "length": "60 min", "intensity": 4, "tag": "Strength" },
+      { "name": "Engine", "text": "Ropes, sleds and rowers in short, hard intervals. Leave nothing in the tank.", "image": "./media/c3.webp", "length": "45 min", "intensity": 5, "tag": "Conditioning" },
+      { "name": "Reset", "text": "Mobility and breathwork that undo a week at a desk and keep you training for years.", "image": "./media/c4.webp", "length": "40 min", "intensity": 2, "tag": "Mobility" }
+    ]
+  },
+  "timetable": {
+    "kicker": "Timetable",
+    "title": "Find your slot.",
+    "allLabel": "All classes",
+    "classes": "Mon | 06:00 | Iron Strength | Maya\nMon | 07:15 | Engine | Dre\nMon | 12:30 | Reset | Leo\nMon | 18:00 | Fight Club | Dre\nMon | 19:15 | Iron Strength | Maya\nTue | 06:00 | Engine | Leo\nTue | 12:30 | Fight Club | Dre\nTue | 18:00 | Iron Strength | Maya\nTue | 19:15 | Reset | Leo\nWed | 06:00 | Fight Club | Dre\nWed | 07:15 | Iron Strength | Maya\nWed | 18:00 | Engine | Leo\nWed | 19:15 | Fight Club | Dre\nThu | 06:00 | Iron Strength | Maya\nThu | 12:30 | Engine | Leo\nThu | 18:00 | Fight Club | Dre\nThu | 19:15 | Reset | Leo\nFri | 06:00 | Engine | Leo\nFri | 12:30 | Iron Strength | Maya\nFri | 17:30 | Fight Club | Dre\nSat | 09:00 | Engine | Leo\nSat | 10:15 | Fight Club | Dre\nSat | 11:30 | Reset | Leo\nSun | 10:00 | Iron Strength | Maya\nSun | 11:15 | Reset | Leo",
+    "button": "Book"
+  },
+  "membership": {
+    "kicker": "Membership",
+    "title": "No contracts. No nonsense.",
+    "monthlyLabel": "Monthly",
+    "yearlyLabel": "Yearly",
+    "yearlyNote": "2 months free",
+    "currency": "$",
+    "plans": [
+      { "name": "Off-Peak", "monthly": 39, "yearly": 390, "features": "Open gym 10am – 4pm\n2 classes a week\nApp program", "highlight": false },
+      { "name": "Unlimited", "monthly": 79, "yearly": 790, "features": "Open gym all hours\nUnlimited classes\nApp program\nMonthly check-in", "highlight": true },
+      { "name": "Coached 1:1", "monthly": 249, "yearly": 2490, "features": "Everything in Unlimited\n8 personal sessions a month\nNutrition plan", "highlight": false }
+    ],
+    "button": "Start free week"
+  },
+  "calculator": {
+    "kicker": "Burn calculator",
+    "title": "What a week here does.",
+    "weightLabel": "Your weight (kg)",
+    "sessionsLabel": "Sessions a week",
+    "resultLabel": "calories burned a week",
+    "note": "A rough guide based on a hard 60-minute class. Everyone is different.",
+    "factor": 8
+  },
+  "coaches": {
+    "kicker": "Coaches",
+    "title": "In your corner.",
+    "items": [
+      { "name": "Maya Torres", "role": "Head of strength", "bio": "Former national-level powerlifter. Will fix your squat in one session.", "image": "./media/coach1.webp" },
+      { "name": "Dre Mensah", "role": "Boxing coach", "bio": "Twelve years in the ring and the calmest voice in the room.", "image": "./media/coach2.webp" },
+      { "name": "Leo Park", "role": "Conditioning and mobility", "bio": "Builds engines and fixes backs. Loves a sled push a little too much.", "image": "./media/coach3.webp" }
+    ]
+  },
+  "stories": {
+    "items": [
+      { "quote": "Lost 14 kg and found a deadlift I didn't know I had.", "name": "Sam, member 2 years" },
+      { "quote": "The coaches remember your name and your numbers. It feels like a team.", "name": "Priya, member 8 months" },
+      { "quote": "First gym I've stuck with for more than a month. Now it's my favourite hour of the day.", "name": "Jonah, member 1 year" }
+    ]
+  },
+  "trial": {
+    "kicker": "Free week",
+    "title": "Your first week is on us.",
+    "text": "Seven days, any class, any time. No card needed.",
+    "goals": "Get stronger\nLose weight\nLearn to box\nMove better\nJust get started",
+    "button": "Claim free week",
+    "formAction": "",
+    "done": "You're in, {person}. Check your email for your pass and see you on the floor."
+  },
+  "footer": {
+    "text": "Strength, boxing and conditioning. Open 5am – 11pm.",
+    "legal": "© {year} {name}."
+  },
+  "sections": {
+    "stats": true,
+    "programs": true,
+    "timetable": true,
+    "membership": true,
+    "calculator": true,
+    "coaches": true,
+    "stories": true,
+    "trial": true
+  },
+  "theme": {
+    "colors": {
+      "page": "#0b0b0c",
+      "surface": "#161618",
+      "text": "#f2f0ea",
+      "muted": "#8d8b86",
+      "accent": "#d7ff3a",
+      "onAccent": "#0b0b0c",
+      "hot": "#ff4b2b",
+      "line": "#2a2a2d"
+    },
+    "fonts": {
+      "display": "Anton",
+      "body": "Inter"
+    }
+  },
+  "motion": {
+    "animate": true,
+    "tickerSpeed": 22,
+    "stackCards": true,
+    "heroParallax": true
+  },
+  "extras": []
+}
