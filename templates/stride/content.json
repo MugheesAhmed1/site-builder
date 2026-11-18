@@ -1,0 +1,154 @@
+{
+  "seo": {
+    "title": "{name}: Plant Protein Bars",
+    "description": "Five bold flavours of plant protein bar. Pressed, not baked."
+  },
+  "brand": {
+    "name": "Stride",
+    "showMark": true
+  },
+  "intro": {
+    "show": true,
+    "video": "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261116_131908_b6239896-c077-450c-ad91-575153973fcf.mp4",
+    "start": 0.55,
+    "end": 4.6,
+    "skip": "Skip intro"
+  },
+  "nav": {
+    "flavors": "Flavors",
+    "inside": "Inside",
+    "shop": "Shop",
+    "range": "Range",
+    "offer": "% OFF",
+    "dibs": "First dibs"
+  },
+  "cart": {
+    "title": "YOUR CART",
+    "empty": "Your bag is empty. Pick a bar or build a 3 pack below.",
+    "clear": "Clear cart",
+    "bar": "{flavour} Bar",
+    "pack": "3 Pack ({flavours})",
+    "checkout": "",
+    "checkoutLabel": "Checkout"
+  },
+  "dibs": {
+    "title": "FIRST DIBS",
+    "text": "Get early access to fresh small-batch drops & 15% off your first box.",
+    "placeholder": "you@domain.com",
+    "button": "Join drop list",
+    "thanks": "You're on the list for limited cold-pressed drops.",
+    "email": "",
+    "formAction": ""
+  },
+  "hero": {
+    "next": "Next flavour",
+    "autoplay": "AUTOPLAY"
+  },
+  "flavours": [
+    {
+      "name": "Peanut Cocoa",
+      "label": "PEANUT\nCOCOA",
+      "color": "#b79474",
+      "ingredients": "Peanuts, oats, dates, cocoa, pea protein, sea salt.",
+      "box": "98, 145, 403, 849",
+      "bit": 1
+    },
+    {
+      "name": "Berry Oat",
+      "label": "BERRY\nOAT",
+      "color": "#ab9ac4",
+      "ingredients": "Oats, blueberries, raspberries, dates, pea protein, almonds.",
+      "box": "620, 145, 402, 849",
+      "bit": 0
+    },
+    {
+      "name": "Salted Caramel",
+      "label": "SALTED\nCARAMEL",
+      "color": "#d1ad6c",
+      "ingredients": "Dates, cashews, oats, pea protein, sea salt, vanilla.",
+      "box": "1137, 145, 402, 849",
+      "bit": 2
+    },
+    {
+      "name": "Mint Chip",
+      "label": "MINT\nCHIP",
+      "color": "#94bdb4",
+      "ingredients": "Oats, dark chocolate, almonds, pea protein, peppermint oil.",
+      "box": "1661, 145, 402, 849",
+      "bit": 3
+    },
+    {
+      "name": "Strawberry",
+      "label": "STRAW-\nBERRY",
+      "color": "#d396a7",
+      "ingredients": "Oats, strawberries, dates, cashews, pea protein, lemon.",
+      "box": "2184, 145, 403, 849",
+      "bit": 4
+    }
+  ],
+  "inside": {
+    "steps": [
+      {
+        "title": "REAL FOOD,\nFIRST",
+        "caption": "OATS, NUTS, FRUIT.\nNOTHING YOU CAN'T SAY."
+      },
+      {
+        "title": "PRESSED,\nNOT BAKED",
+        "caption": "REAL INGREDIENTS.\nCLEAN ENERGY."
+      },
+      {
+        "title": "WRAPPED\nSAME DAY",
+        "caption": "COLD-PRESSED AT DAWN.\nSEALED BY NOON."
+      },
+      {
+        "title": "{flavour}",
+        "caption": "12G PLANT PROTEIN.\nNO CRASH."
+      }
+    ]
+  },
+  "shop": {
+    "title": "GRAB\nA BAG",
+    "text": "Five bold flavours. Same\nreal ingredients. Pick your\nfavourite (or try them all).",
+    "add": "Add a bag of {flavour} to the cart"
+  },
+  "range": {
+    "line1": "BUILD YOUR",
+    "line2": "PACK &",
+    "line3": "SAVE $1.49",
+    "price": "$7.48",
+    "add": "Add to cart",
+    "added": "Added to cart",
+    "pick": "Pick {count} more"
+  },
+  "pack": {
+    "weight": "50 G",
+    "nutritionTitle": "NUTRITION",
+    "serving": "Serving size 1 bar (50 g)",
+    "nutrition": "Calories | 210\nProtein | 12 g\nTotal fat | 9 g\nCarbohydrate | 22 g\nFibre | 6 g\nSugars | 8 g\nSalt | 0.2 g",
+    "ingredientsTitle": "INGREDIENTS",
+    "barcode": "5 060123 4560",
+    "slogan": "PRESSED, NOT BAKED"
+  },
+  "sheet": {
+    "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261116_132032_30242d8c-5062-4d60-8a3d-238f0a2ff788.png&w=2200&q=85",
+    "width": 2688,
+    "height": 1520,
+    "bits": "650, 1090, 340, 305\n110, 1125, 280, 255\n1175, 1110, 320, 285\n1680, 1085, 380, 305\n2280, 1095, 250, 295"
+  },
+  "theme": {
+    "colors": {
+      "ink": "#1c1a1f",
+      "cream": "#f0e8e0",
+      "dark": "#191a1e"
+    },
+    "fonts": {
+      "display": "Archivo Black",
+      "body": "Inter",
+      "mono": "DM Mono"
+    }
+  },
+  "motion": {
+    "autoplay": true
+  },
+  "extras": []
+}

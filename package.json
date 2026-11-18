@@ -3,14 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/bundle-template.mjs && node scripts/build-site-kit.mjs && node scripts/build-templates.mjs",
+    "predev": "node scripts/bundle-template.mjs && node scripts/build-site-kit.mjs && node scripts/build-templates.mjs && node scripts/build-library.mjs",
     "dev": "next dev",
-    "prebuild": "node scripts/bundle-template.mjs && node scripts/build-site-kit.mjs && node scripts/build-templates.mjs",
+    "prebuild": "node scripts/bundle-template.mjs && node scripts/build-site-kit.mjs && node scripts/build-templates.mjs && node scripts/build-library.mjs",
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "templates": "node scripts/build-templates.mjs",
+    "templates": "node scripts/build-templates.mjs && node scripts/build-library.mjs",
+    "library": "node scripts/build-library.mjs",
     "import-template": "node scripts/import-template.mjs"
   },
   "dependencies": {

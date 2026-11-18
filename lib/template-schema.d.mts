@@ -1,4 +1,4 @@
-export type FieldType = "text" | "textarea" | "image" | "video" | "url" | "color" | "colors" | "font" | "number" | "toggle" | "select" | "list";
+export type FieldType = "text" | "textarea" | "image" | "video" | "url" | "color" | "colors" | "font" | "number" | "toggle" | "select" | "list" | "blocks";
 export interface SchemaField {
   path: string;
   label: string;

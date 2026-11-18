@@ -1,5 +1,820 @@
 [
   {
+    "id": "distill",
+    "name": "Distill",
+    "pitch": "A SaaS launch page with one striking idea: a draggable belt of sample web pages slides through a glowing scanner and dissolves into clean code, with a live counter of what was saved. Menus, pricing, demo, trial and sign-in panels included.",
+    "kind": "vite",
+    "categories": [
+      "Interactive",
+      "Product",
+      "Experimental"
+    ],
+    "business": [
+      "product",
+      "consulting",
+      "agency"
+    ],
+    "sector": "AI and web infrastructure SaaS (edge service that serves clean pages to AI agents)",
+    "intensity": 6,
+    "heavy": false,
+    "licence": {
+      "kind": "owner",
+      "holder": "Mughees",
+      "note": "Supplied by its owner as a whole project for use as a builder template.",
+      "added": "2026-11-18"
+    },
+    "remoteAssets": [
+      "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/0e201fcd-ffc0-46a0-bd06-faa07bf0e84b.webp",
+      "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/2bebad68-8177-446a-9550-d64074166364.webp",
+      "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/e80ba08d-d7b6-4b27-b0cd-8d0ad09c788c.webp",
+      "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/62b0d7c1-3eb7-44bd-9b19-57b975fb250f.webp",
+      "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/156ff74d-ee37-4443-8f3a-11ae2095ed4c.webp",
+      "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/7b6ad638-89ec-4dec-be74-d36fbff3ea53.webp"
+    ],
+    "features": [
+      "Draggable before-and-after belt",
+      "Particle scanner",
+      "Live savings counter",
+      "Dropdown menus",
+      "Pricing, demo, trial and sign-in panels"
+    ],
+    "schema": [
+      {
+        "group": "Business",
+        "fields": [
+          {
+            "path": "brand.name",
+            "label": "Product name",
+            "type": "text",
+            "hint": "Fills every {name} in the text below."
+          },
+          {
+            "path": "seo.title",
+            "label": "Page title (search and browser tab)",
+            "type": "text"
+          },
+          {
+            "path": "seo.description",
+            "label": "Short description (search and sharing)",
+            "type": "textarea"
+          },
+          {
+            "path": "brand.showMark",
+            "label": "Show the drop logo",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Menu",
+        "fields": [
+          {
+            "path": "nav.menus",
+            "label": "Dropdown menus",
+            "type": "list",
+            "itemLabel": "Menu",
+            "fields": [
+              {
+                "path": "label",
+                "label": "Label",
+                "type": "text"
+              },
+              {
+                "path": "items",
+                "label": "Items (one per line: title | description)",
+                "type": "textarea"
+              }
+            ],
+            "min": 0,
+            "max": 5
+          },
+          {
+            "path": "nav.pricing",
+            "label": "Pricing link (empty hides it)",
+            "type": "text"
+          },
+          {
+            "path": "nav.signin",
+            "label": "Sign-in button (empty hides it)",
+            "type": "text"
+          },
+          {
+            "path": "nav.trial",
+            "label": "Trial button (empty hides it)",
+            "type": "text"
+          },
+          {
+            "path": "nav.demo",
+            "label": "Demo button (empty hides it)",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Opening",
+        "fields": [
+          {
+            "path": "hero.eyebrow",
+            "label": "Small label",
+            "type": "text"
+          },
+          {
+            "path": "hero.line1",
+            "label": "Headline",
+            "type": "text"
+          },
+          {
+            "path": "hero.line2",
+            "label": "Headline, second line (italic)",
+            "type": "text"
+          },
+          {
+            "path": "hero.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.button",
+            "label": "Button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Counter",
+        "fields": [
+          {
+            "path": "badge.label",
+            "label": "Label",
+            "type": "text"
+          },
+          {
+            "path": "badge.less",
+            "label": "After the percentage",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Belt of sample pages",
+        "fields": [
+          {
+            "path": "belt.site",
+            "label": "Sample site name",
+            "type": "text",
+            "hint": "Shown on every card; {site} in the card text becomes it."
+          },
+          {
+            "path": "belt.label",
+            "label": "Description (for screen readers)",
+            "type": "text"
+          },
+          {
+            "path": "belt.cards",
+            "label": "Cards",
+            "type": "list",
+            "itemLabel": "Card",
+            "fields": [
+              {
+                "path": "layout",
+                "label": "Layout",
+                "type": "select",
+                "options": [
+                  {
+                    "value": "home",
+                    "label": "Home: picture with big numbers"
+                  },
+                  {
+                    "value": "price",
+                    "label": "Price: warm gradient with a price list"
+                  },
+                  {
+                    "value": "case",
+                    "label": "Story: blurred picture, headline and three numbers"
+                  },
+                  {
+                    "value": "vision",
+                    "label": "Vision: two pictures and a quote"
+                  },
+                  {
+                    "value": "alloy",
+                    "label": "Product: picture, headline and specs"
+                  },
+                  {
+                    "value": "journal",
+                    "label": "Journal: three article cards"
+                  }
+                ]
+              },
+              {
+                "path": "menu",
+                "label": "Card menu (comma separated)",
+                "type": "text"
+              },
+              {
+                "path": "active",
+                "label": "Highlighted menu item",
+                "type": "text"
+              },
+              {
+                "path": "kicker",
+                "label": "Small label",
+                "type": "text"
+              },
+              {
+                "path": "title",
+                "label": "Headline (a price like $2,400 in the price layout)",
+                "type": "textarea"
+              },
+              {
+                "path": "emphasis",
+                "label": "Italic words after it (vision and product)",
+                "type": "text"
+              },
+              {
+                "path": "text",
+                "label": "Small text (vision)",
+                "type": "textarea"
+              },
+              {
+                "path": "rows",
+                "label": "Rows (one per line: left | right)",
+                "type": "textarea",
+                "hint": "Numbers and labels, prices, specs or article label | title, depending on the layout."
+              },
+              {
+                "path": "button",
+                "label": "Button (price layout)",
+                "type": "text"
+              },
+              {
+                "path": "image",
+                "label": "Picture",
+                "type": "image"
+              },
+              {
+                "path": "image2",
+                "label": "Second picture (vision, journal)",
+                "type": "image"
+              },
+              {
+                "path": "image3",
+                "label": "Third picture (journal)",
+                "type": "image"
+              },
+              {
+                "path": "address",
+                "label": "Page address shown in the code",
+                "type": "text"
+              },
+              {
+                "path": "original",
+                "label": "Size before (tokens)",
+                "type": "number",
+                "min": 0,
+                "max": 1000000,
+                "step": 1
+              },
+              {
+                "path": "distilled",
+                "label": "Size after (tokens)",
+                "type": "number",
+                "min": 0,
+                "max": 1000000,
+                "step": 1
+              },
+              {
+                "path": "html",
+                "label": "Clean code shown after the scanner",
+                "type": "textarea"
+              }
+            ],
+            "min": 1,
+            "max": 10
+          }
+        ]
+      },
+      {
+        "group": "Pricing panel",
+        "fields": [
+          {
+            "path": "pricing.eyebrow",
+            "label": "Small label",
+            "type": "text"
+          },
+          {
+            "path": "pricing.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "pricing.tiers",
+            "label": "Plans (one per line: name | price | detail)",
+            "type": "textarea"
+          },
+          {
+            "path": "pricing.button",
+            "label": "Button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "How it works panel",
+        "fields": [
+          {
+            "path": "explore.eyebrow",
+            "label": "Small label",
+            "type": "text"
+          },
+          {
+            "path": "explore.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "explore.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "explore.facts",
+            "label": "Facts (one per line)",
+            "type": "textarea"
+          },
+          {
+            "path": "explore.button",
+            "label": "Button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Demo, trial and sign-in forms",
+        "fields": [
+          {
+            "path": "forms.demoEyebrow",
+            "label": "Demo label",
+            "type": "text"
+          },
+          {
+            "path": "forms.demoTitle",
+            "label": "Demo title",
+            "type": "text"
+          },
+          {
+            "path": "forms.demoButton",
+            "label": "Demo button",
+            "type": "text"
+          },
+          {
+            "path": "forms.trialEyebrow",
+            "label": "Trial label",
+            "type": "text"
+          },
+          {
+            "path": "forms.trialTitle",
+            "label": "Trial title",
+            "type": "text"
+          },
+          {
+            "path": "forms.trialButton",
+            "label": "Trial button",
+            "type": "text"
+          },
+          {
+            "path": "forms.signinEyebrow",
+            "label": "Sign-in label",
+            "type": "text"
+          },
+          {
+            "path": "forms.signinTitle",
+            "label": "Sign-in title",
+            "type": "text"
+          },
+          {
+            "path": "forms.signinButton",
+            "label": "Sign-in button",
+            "type": "text"
+          },
+          {
+            "path": "forms.signinLink",
+            "label": "Sign-in page (optional)",
+            "type": "url",
+            "hint": "When set, signing in goes to your real app."
+          },
+          {
+            "path": "forms.emailLabel",
+            "label": "Email label",
+            "type": "text"
+          },
+          {
+            "path": "forms.emailPlaceholder",
+            "label": "Email hint",
+            "type": "text"
+          },
+          {
+            "path": "forms.domainLabel",
+            "label": "Domain label",
+            "type": "text"
+          },
+          {
+            "path": "forms.domainPlaceholder",
+            "label": "Domain hint",
+            "type": "text"
+          },
+          {
+            "path": "forms.thanksTitle",
+            "label": "Thank-you title",
+            "type": "text"
+          },
+          {
+            "path": "forms.thanksText",
+            "label": "Thank-you text",
+            "type": "textarea",
+            "hint": "{email} and {domain} are filled in."
+          },
+          {
+            "path": "forms.domainFallback",
+            "label": "When no domain is given",
+            "type": "text"
+          },
+          {
+            "path": "forms.signinThanksTitle",
+            "label": "Sign-in thank-you title",
+            "type": "text"
+          },
+          {
+            "path": "forms.signinThanksText",
+            "label": "Sign-in thank-you text",
+            "type": "textarea"
+          },
+          {
+            "path": "forms.back",
+            "label": "Close button",
+            "type": "text"
+          },
+          {
+            "path": "forms.error",
+            "label": "Error message",
+            "type": "text"
+          },
+          {
+            "path": "forms.email",
+            "label": "Send requests to (email)",
+            "type": "text",
+            "hint": "Opens the visitor's email app with the request filled in."
+          },
+          {
+            "path": "forms.formAction",
+            "label": "Or post to a form service (https)",
+            "type": "url",
+            "hint": "For example a Formspree or Basin endpoint. Wins over email."
+          }
+        ]
+      },
+      {
+        "group": "Colours",
+        "fields": [
+          {
+            "path": "theme.colors.bg",
+            "label": "Page",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.ink",
+            "label": "Headings",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.body",
+            "label": "Text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.muted",
+            "label": "Quiet text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.code",
+            "label": "Code",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.comment",
+            "label": "Code comments",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.hot",
+            "label": "Scanner and buttons",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.hotSoft",
+            "label": "Scanner, soft",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.hotDeep",
+            "label": "Scanner, deep",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.buttonText",
+            "label": "Button text",
+            "type": "color"
+          }
+        ]
+      },
+      {
+        "group": "Fonts",
+        "fields": [
+          {
+            "path": "theme.fonts.sans",
+            "label": "Text",
+            "type": "font"
+          },
+          {
+            "path": "theme.fonts.serif",
+            "label": "Headlines",
+            "type": "font"
+          },
+          {
+            "path": "theme.fonts.mono",
+            "label": "Code",
+            "type": "font"
+          }
+        ]
+      },
+      {
+        "group": "Motion",
+        "fields": [
+          {
+            "path": "motion.speed",
+            "label": "Belt speed",
+            "type": "number",
+            "min": 0,
+            "max": 0.3,
+            "step": 0.005
+          },
+          {
+            "path": "motion.hoverSlow",
+            "label": "Slow down on hover",
+            "type": "number",
+            "min": 0,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "path": "motion.particles",
+            "label": "Dissolving particles",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.sparks",
+            "label": "Sparks",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Library blocks",
+        "fields": [
+          {
+            "path": "extras",
+            "label": "Blocks from the library",
+            "type": "blocks",
+            "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          }
+        ]
+      }
+    ],
+    "content": {
+      "seo": {
+        "title": "{name}: built for people, read by machines",
+        "description": "{name} detects AI agents at the edge and serves them a clean, token-light version of every page, without changing a pixel of what people see."
+      },
+      "brand": {
+        "name": "Distill",
+        "showMark": true
+      },
+      "nav": {
+        "menus": [
+          {
+            "label": "Product",
+            "items": "Edge Agent Detection | Identify crawlers and LLM fetchers in under 2 ms at the CDN edge.\nSemantic HTML Distillation | Strip chrome, scripts, and layout bloat while keeping every fact intact.\nZero Visual Change | Human visitors receive your exact pixel-for-pixel production site."
+          },
+          {
+            "label": "Use cases",
+            "items": "Documentation & Knowledge Bases | Cut agent context windows by up to 94% across technical docs.\nE-Commerce Catalogs | Serve structured pricing, SKUs, and specs directly to shopping agents.\nEditorial & Research | Make long-form journalism and reports cleanly indexable by machines."
+          },
+          {
+            "label": "Resources",
+            "items": "Token Reduction Benchmarks | Compare raw DOM vs. distilled output across 10,000 production pages.\nEdge Integration Guide | Deploy in minutes on Cloudflare Workers, Fastly, or Vercel Edge.\nSpecification & Headers | Inspect Content-Signal and agent negotiation standards."
+          }
+        ],
+        "pricing": "Pricing",
+        "signin": "Sign in",
+        "trial": "Start a free trial",
+        "demo": "Book a demo"
+      },
+      "hero": {
+        "eyebrow": "AI READABILITY",
+        "line1": "Built for people.",
+        "line2": "Read by machines.",
+        "text": "{name} detects AI agents at the edge and serves them a clean, token‑light version of every page, without changing a pixel of what people see.",
+        "button": "Explore {name}"
+      },
+      "badge": {
+        "label": "Token reduction",
+        "less": "% less"
+      },
+      "belt": {
+        "site": "Kessler",
+        "label": "Interactive comparison belt: drag to scrub between visual pages and distilled HTML",
+        "cards": [
+          {
+            "layout": "home",
+            "menu": "PRODUCTS, IMPACT, ABOUT",
+            "active": "",
+            "kicker": "",
+            "title": "Advanced materials for a stronger tomorrow.",
+            "emphasis": "",
+            "text": "",
+            "rows": "200x | stronger\n87% | lower emissions",
+            "button": "",
+            "image": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/0e201fcd-ffc0-46a0-bd06-faa07bf0e84b.webp",
+            "image2": "",
+            "image3": "",
+            "address": "kessler.co/",
+            "original": 70411,
+            "distilled": 6140,
+            "html": "<h1>Kessler — Advanced materials</h1>\n<p>Advanced materials for a stronger\ntomorrow. Ceramic-matrix alloys made\nwith desert sand and solar heat.</p>\n<h2>At a glance</h2>\n<ul>\n  <li>Strength: 200x steel by weight</li>\n  <li>Emissions: 87% lower</li>\n  <li>Plants: Nevada, Atacama, Oman</li>\n  <li>Founded: 2019</li>\n</ul>\n<h2>Products</h2>\n<ul>\n  <li>K-Alloy 7 — structural</li>\n  <li>Basalt fibre — tensile</li>\n  <li>Ceramic matrix — thermal</li>\n</ul>\n<a href=\"/demo\">Book a demo</a>"
+          },
+          {
+            "layout": "price",
+            "menu": "PRODUCTS, PRICING, CONTACT",
+            "active": "PRICING",
+            "kicker": "PER MONTH · INDUSTRIAL",
+            "title": "$2,400",
+            "emphasis": "",
+            "text": "",
+            "rows": "Pilot | $299\nIndustrial | $2,400\nFoundry | Custom",
+            "button": "Start a pilot",
+            "image": "",
+            "image2": "",
+            "image3": "",
+            "address": "kessler.co/pricing",
+            "original": 41208,
+            "distilled": 4960,
+            "html": "<h1>Kessler — Pricing</h1>\n<p>Three plans for every scale of\nproduction. Start small, scale to\nfull foundry output.</p>\n<h2>Pilot — $299 / mo</h2>\n<ul>\n  <li>Sample batches: 4 / mo</li>\n  <li>Alloy grades: 2</li>\n  <li>Support: email</li>\n</ul>\n<h2>Industrial — $2,400 / mo</h2>\n<ul>\n  <li>Tonnage: up to 40 t / mo</li>\n  <li>Alloy grades: all</li>\n  <li>Certification: ISO 9001</li>\n  <li>Support: dedicated engineer</li>\n</ul>"
+          },
+          {
+            "layout": "case",
+            "menu": "PRODUCTS, IMPACT, ABOUT",
+            "active": "",
+            "kicker": "CASE STUDY · ATLAS RAIL",
+            "title": "How Atlas Rail cut track weight by a third in eighteen months",
+            "emphasis": "",
+            "text": "",
+            "rows": "34% | lighter track\n3.4x | service life\n0 | unplanned closures",
+            "button": "",
+            "image": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/2bebad68-8177-446a-9550-d64074166364.webp",
+            "image2": "",
+            "image3": "",
+            "address": "kessler.co/cases/atlas-rail",
+            "original": 98432,
+            "distilled": 6300,
+            "html": "<h1>Case study: Atlas Rail</h1>\n<p>How Atlas Rail cut track weight by\na third in eighteen months.</p>\n<h2>The challenge</h2>\n<p>1,200 km of desert line, rails\nwarping above 50 °C every summer.</p>\n<h2>The result</h2>\n<ul>\n  <li>34% lighter track sections</li>\n  <li>3.4x longer service life</li>\n  <li>0 unplanned closures in 2025</li>\n</ul>\n<p>We stopped losing summers.\n— Head of Infrastructure</p>"
+          },
+          {
+            "layout": "vision",
+            "menu": "PRODUCTS, VISION, ABOUT",
+            "active": "VISION",
+            "kicker": "",
+            "title": "The {site} vision:",
+            "emphasis": "materials that outlast the people who made them.",
+            "text": "How {site} pours alloy\nat the edge of the desert",
+            "rows": "",
+            "button": "",
+            "image": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/e80ba08d-d7b6-4b27-b0cd-8d0ad09c788c.webp",
+            "image2": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/62b0d7c1-3eb7-44bd-9b19-57b975fb250f.webp",
+            "image3": "",
+            "address": "kessler.co/vision",
+            "original": 55870,
+            "distilled": 8215,
+            "html": "<article>\n<h1>The Kessler vision</h1>\n<p>Materials that outlast the people\nwho made them.</p>\n<p>We build where the sun is\nstrongest and the sand is free:\nthree plants, one closed loop.</p>\n<h2>Principles</h2>\n<ol>\n  <li>Heat from the sun, not gas</li>\n  <li>Sand in, scrap back in</li>\n  <li>Publish every number</li>\n</ol>\n</article>"
+          },
+          {
+            "layout": "alloy",
+            "menu": "PRODUCTS, IMPACT, ABOUT",
+            "active": "",
+            "kicker": "",
+            "title": "The carbon‑negative",
+            "emphasis": "alloy.",
+            "text": "",
+            "rows": "Product | K-Alloy 7\nTensile | 1,940 MPa\nDatasheet | PDF ↗",
+            "button": "",
+            "image": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/156ff74d-ee37-4443-8f3a-11ae2095ed4c.webp",
+            "image2": "",
+            "image3": "",
+            "address": "kessler.co/products/k-alloy-7",
+            "original": 63904,
+            "distilled": 5512,
+            "html": "<h1>K-Alloy 7</h1>\n<p>The carbon-negative alloy.</p>\n<h2>Specification</h2>\n<ul>\n  <li>Tensile strength: 1,940 MPa</li>\n  <li>Density: 2.9 g/cm³</li>\n  <li>Max service temp: 1,150 °C</li>\n  <li>CO₂: −0.4 kg per kg made</li>\n</ul>\n<h2>Uses</h2>\n<ul>\n  <li>Rail, bridges, turbine housings</li>\n</ul>\n<a href=\"/k-alloy-7.pdf\">Datasheet</a>"
+          },
+          {
+            "layout": "journal",
+            "menu": "PRODUCTS, JOURNAL, ABOUT",
+            "active": "JOURNAL",
+            "kicker": "",
+            "title": "field notes from the flats",
+            "emphasis": "",
+            "text": "",
+            "rows": "FIELD NOTES | Mining nothing but light on the salt flats\nPLANTS | Atacama, year one\nPROCESS | Why we melt sand at noon",
+            "button": "",
+            "image": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/7b6ad638-89ec-4dec-be74-d36fbff3ea53.webp",
+            "image2": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/62b0d7c1-3eb7-44bd-9b19-57b975fb250f.webp",
+            "image3": "https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/0e201fcd-ffc0-46a0-bd06-faa07bf0e84b.webp",
+            "address": "kessler.co/journal",
+            "original": 47316,
+            "distilled": 7602,
+            "html": "<h1>Kessler Journal</h1>\n<p>Field notes from the flats.</p>\n<article>\n  <h2>Mining nothing but light</h2>\n  <time>2026-03-14</time>\n</article>\n<article>\n  <h2>Atacama, year one</h2>\n  <time>2026-02-02</time>\n</article>\n<article>\n  <h2>Why we melt sand at noon</h2>\n  <time>2026-01-09</time>\n</article>"
+          }
+        ]
+      },
+      "pricing": {
+        "eyebrow": "TRANSPARENT PRICING",
+        "title": "Pay per distilled request.",
+        "tiers": "Starter | $0 / mo | Up to 50,000 agent reads per month\nGrowth | $149 / mo | 1M agent reads · custom edge rules\nEnterprise | Custom | Dedicated POPs · SLA & SOC 2 Type II",
+        "button": "Start a free trial"
+      },
+      "explore": {
+        "eyebrow": "HOW {name} WORKS",
+        "title": "One origin. Two representations.",
+        "text": "Drag any card left or right across the scanner above to inspect how {name} collapses heavy visual DOM trees into pure semantic HTML with an average 89% token reduction.",
+        "facts": "AVG REDUCTION: 89% fewer tokens\nEDGE OVERHEAD: < 2 ms global median\nHUMAN IMPACT: 0 bytes changed",
+        "button": "Book a demo"
+      },
+      "forms": {
+        "demoEyebrow": "LIVE WALKTHROUGH",
+        "demoTitle": "Book a {name} demo",
+        "demoButton": "Schedule demo",
+        "trialEyebrow": "14-DAY FREE TRIAL",
+        "trialTitle": "Start your free trial",
+        "trialButton": "Create trial workspace",
+        "signinEyebrow": "ACCOUNT ACCESS",
+        "signinTitle": "Sign in to {name}",
+        "signinButton": "Send sign-in link",
+        "signinLink": "",
+        "emailLabel": "Work email",
+        "emailPlaceholder": "you@company.com",
+        "domainLabel": "Site domain",
+        "domainPlaceholder": "kessler.co",
+        "thanksTitle": "Request confirmed",
+        "thanksText": "We'll send edge setup details for {domain} to {email}.",
+        "domainFallback": "your domain",
+        "signinThanksTitle": "Magic link sent",
+        "signinThanksText": "We sent a sign-in link to {email}.",
+        "back": "Back to demo",
+        "error": "That didn't go through. Please try again.",
+        "email": "",
+        "formAction": ""
+      },
+      "theme": {
+        "colors": {
+          "bg": "#EEF0F2",
+          "ink": "#0F1115",
+          "body": "#2A2E35",
+          "muted": "#8B9098",
+          "code": "#7A7F88",
+          "comment": "#B3B8BF",
+          "hot": "#FF5A1F",
+          "hotSoft": "#FFE1D3",
+          "hotDeep": "#D9430F",
+          "buttonText": "#FFFFFF"
+        },
+        "fonts": {
+          "sans": "Inter",
+          "serif": "Newsreader",
+          "mono": "IBM Plex Mono"
+        }
+      },
+      "motion": {
+        "speed": 0.075,
+        "hoverSlow": 0.65,
+        "sparks": true,
+        "particles": true
+      },
+      "extras": []
+    },
+    "poster": false,
+    "siteFiles": 4,
+    "sourceFiles": 12
+  },
+  {
     "id": "fernhollow",
     "name": "Fernhollow",
     "pitch": "A night valley of glowing flowers in real WebGL that grows as you move, with bloom, film grain, ambient sound and a studio drawer for work, about, journal and contact.",
@@ -602,6 +1417,17 @@
             "step": 0.01
           }
         ]
+      },
+      {
+        "group": "Library blocks",
+        "fields": [
+          {
+            "path": "extras",
+            "label": "Blocks from the library",
+            "type": "blocks",
+            "hint": "Add any section, effect or scene from the shared library. They show at the end of every drawer."
+          }
+        ]
       }
     ],
     "content": {
@@ -762,11 +1588,2270 @@
         "volume": 0.36,
         "mood": "night",
         "wind": 0.35
-      }
+      },
+      "extras": []
     },
     "poster": true,
     "siteFiles": 4,
     "sourceFiles": 12
+  },
+  {
+    "id": "jack",
+    "name": "Jack",
+    "pitch": "A bold one-person portfolio: a giant gradient headline with a portrait that follows the cursor, scroll-driven image reels, a word-by-word about section, big numbered services and project cards that stack as you scroll.",
+    "kind": "vite",
+    "categories": [
+      "Scroll",
+      "Interactive",
+      "Editorial",
+      "Playful"
+    ],
+    "business": [
+      "creator",
+      "photo",
+      "agency"
+    ],
+    "sector": "Freelance 3D artist and designer portfolio (modeling, rendering, motion, branding, web)",
+    "intensity": 7,
+    "heavy": false,
+    "licence": {
+      "kind": "owner",
+      "holder": "Mughees",
+      "note": "Supplied by its owner as a whole project for use as a builder template.",
+      "added": "2026-11-18"
+    },
+    "remoteAssets": [
+      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85",
+      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85",
+      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85",
+      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85",
+      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85",
+      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85",
+      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85",
+      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85",
+      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85"
+    ],
+    "refusedAssets": {
+      "note": "Left out: preview GIFs of other studios' sites (motionsites.ai) and pictures from a third-party Figma site. They are not the owner's to reuse. Replaced with free generated pictures (Pollinations) in source/public/media and the owner's own Higgsfield renders.",
+      "urls": [
+        "https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png",
+        "https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif",
+        "https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif",
+        "https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif",
+        "https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif",
+        "https://motionsites.ai/assets/hero-asme-preview-B_nGDnTP.gif",
+        "https://motionsites.ai/assets/hero-transform-data-preview-Cx5OU29N.gif",
+        "https://motionsites.ai/assets/hero-vitara-preview-Cjz2QYyU.gif",
+        "https://motionsites.ai/assets/hero-terra-preview-BFjrCr7T.gif",
+        "https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif",
+        "https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif",
+        "https://motionsites.ai/assets/hero-designpro-preview-D8c5_een.gif",
+        "https://motionsites.ai/assets/hero-stellar-ai-preview-D3HL6bw1.gif",
+        "https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif",
+        "https://motionsites.ai/assets/hero-orbit-web3-preview-BXt4OttD.gif",
+        "https://motionsites.ai/assets/hero-nexora-preview-cx5HmUgo.gif",
+        "https://motionsites.ai/assets/hero-evr-ventures-preview-DZxeVFEX.gif",
+        "https://motionsites.ai/assets/hero-planet-orbit-preview-DWAP8Z1P.gif",
+        "https://motionsites.ai/assets/hero-new-era-preview-CocuDUm9.gif",
+        "https://motionsites.ai/assets/hero-wealth-preview-B70idl_u.gif",
+        "https://motionsites.ai/assets/hero-luminex-preview-CxOP7ce6.gif",
+        "https://motionsites.ai/assets/hero-celestia-preview-0yO3jXO8.gif",
+        "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png",
+        "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png",
+        "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png",
+        "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png"
+      ]
+    },
+    "features": [
+      "Magnetic portrait",
+      "Scroll-driven image reels",
+      "Word-by-word reveal",
+      "Stacking project cards",
+      "Contact form"
+    ],
+    "schema": [
+      {
+        "group": "Business",
+        "fields": [
+          {
+            "path": "brand.name",
+            "label": "Your name",
+            "type": "text",
+            "hint": "Fills every {name} in the text below."
+          },
+          {
+            "path": "seo.title",
+            "label": "Page title (search and browser tab)",
+            "type": "text"
+          },
+          {
+            "path": "seo.description",
+            "label": "Short description (search and sharing)",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "Sections",
+        "fields": [
+          {
+            "path": "sections.marquee",
+            "label": "Image reels",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.about",
+            "label": "About",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.services",
+            "label": "Services",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.projects",
+            "label": "Projects",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Menu",
+        "fields": [
+          {
+            "path": "nav.about",
+            "label": "About link",
+            "type": "text"
+          },
+          {
+            "path": "nav.services",
+            "label": "Services link",
+            "type": "text"
+          },
+          {
+            "path": "nav.projects",
+            "label": "Projects link",
+            "type": "text"
+          },
+          {
+            "path": "nav.contact",
+            "label": "Contact link",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Opening",
+        "fields": [
+          {
+            "path": "hero.title",
+            "label": "Headline",
+            "type": "text"
+          },
+          {
+            "path": "hero.tagline",
+            "label": "Line under it",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.portrait",
+            "label": "Portrait",
+            "type": "image"
+          },
+          {
+            "path": "hero.portraitAlt",
+            "label": "Portrait description",
+            "type": "text"
+          },
+          {
+            "path": "hero.blend",
+            "label": "Fade the portrait's edges into the page",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Buttons",
+        "fields": [
+          {
+            "path": "buttons.contact",
+            "label": "Contact button",
+            "type": "text"
+          },
+          {
+            "path": "buttons.project",
+            "label": "Project button",
+            "type": "text"
+          },
+          {
+            "path": "buttons.visit",
+            "label": "Project link button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Image reels",
+        "fields": [
+          {
+            "path": "marquee.label",
+            "label": "Description (for screen readers)",
+            "type": "text"
+          },
+          {
+            "path": "marquee.row1",
+            "label": "Top row",
+            "type": "list",
+            "itemLabel": "Picture",
+            "fields": [
+              {
+                "path": "image",
+                "label": "Picture",
+                "type": "image"
+              }
+            ],
+            "min": 0,
+            "max": 16
+          },
+          {
+            "path": "marquee.row2",
+            "label": "Bottom row",
+            "type": "list",
+            "itemLabel": "Picture",
+            "fields": [
+              {
+                "path": "image",
+                "label": "Picture",
+                "type": "image"
+              }
+            ],
+            "min": 0,
+            "max": 16
+          }
+        ]
+      },
+      {
+        "group": "About",
+        "fields": [
+          {
+            "path": "about.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "about.text",
+            "label": "Text (lights up word by word)",
+            "type": "textarea"
+          },
+          {
+            "path": "about.decor1",
+            "label": "Picture, top left",
+            "type": "image"
+          },
+          {
+            "path": "about.decor2",
+            "label": "Picture, bottom left",
+            "type": "image"
+          },
+          {
+            "path": "about.decor3",
+            "label": "Picture, top right",
+            "type": "image"
+          },
+          {
+            "path": "about.decor4",
+            "label": "Picture, bottom right",
+            "type": "image"
+          },
+          {
+            "path": "about.blend",
+            "label": "Fade the pictures' edges into the page",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Services",
+        "fields": [
+          {
+            "path": "services.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "services.items",
+            "label": "Services",
+            "type": "list",
+            "itemLabel": "Service",
+            "fields": [
+              {
+                "path": "number",
+                "label": "Number",
+                "type": "text"
+              },
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "description",
+                "label": "Description",
+                "type": "textarea"
+              }
+            ],
+            "min": 0,
+            "max": 12
+          }
+        ]
+      },
+      {
+        "group": "Projects",
+        "fields": [
+          {
+            "path": "projects.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "projects.items",
+            "label": "Projects",
+            "type": "list",
+            "itemLabel": "Project",
+            "fields": [
+              {
+                "path": "number",
+                "label": "Number",
+                "type": "text"
+              },
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "category",
+                "label": "Category",
+                "type": "text"
+              },
+              {
+                "path": "year",
+                "label": "Year",
+                "type": "text"
+              },
+              {
+                "path": "summary",
+                "label": "Summary",
+                "type": "textarea"
+              },
+              {
+                "path": "deliverables",
+                "label": "Deliverables (comma or one per line)",
+                "type": "textarea"
+              },
+              {
+                "path": "image1",
+                "label": "Small picture 1",
+                "type": "image"
+              },
+              {
+                "path": "image2",
+                "label": "Small picture 2",
+                "type": "image"
+              },
+              {
+                "path": "image3",
+                "label": "Main picture",
+                "type": "image"
+              },
+              {
+                "path": "link",
+                "label": "Link (optional)",
+                "type": "url"
+              }
+            ],
+            "min": 0,
+            "max": 12
+          }
+        ]
+      },
+      {
+        "group": "Contact form",
+        "fields": [
+          {
+            "path": "contact.kicker",
+            "label": "Label",
+            "type": "text"
+          },
+          {
+            "path": "contact.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "contact.nameLabel",
+            "label": "Name label",
+            "type": "text"
+          },
+          {
+            "path": "contact.namePlaceholder",
+            "label": "Name hint",
+            "type": "text"
+          },
+          {
+            "path": "contact.emailLabel",
+            "label": "Email label",
+            "type": "text"
+          },
+          {
+            "path": "contact.emailPlaceholder",
+            "label": "Email hint",
+            "type": "text"
+          },
+          {
+            "path": "contact.serviceLabel",
+            "label": "Service label",
+            "type": "text",
+            "hint": "The choices are your services."
+          },
+          {
+            "path": "contact.briefLabel",
+            "label": "Message label",
+            "type": "text"
+          },
+          {
+            "path": "contact.briefPlaceholder",
+            "label": "Message hint",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.prefill",
+            "label": "Message started from a project",
+            "type": "textarea",
+            "hint": "{project} becomes the project's name."
+          },
+          {
+            "path": "contact.button",
+            "label": "Send button",
+            "type": "text"
+          },
+          {
+            "path": "contact.thanksTitle",
+            "label": "Thank-you title",
+            "type": "text"
+          },
+          {
+            "path": "contact.thanksText",
+            "label": "Thank-you text",
+            "type": "textarea",
+            "hint": "{visitor}, {service} and {email} are filled in."
+          },
+          {
+            "path": "contact.done",
+            "label": "Close button",
+            "type": "text"
+          },
+          {
+            "path": "contact.error",
+            "label": "Error message",
+            "type": "text"
+          },
+          {
+            "path": "contact.email",
+            "label": "Send messages to (email)",
+            "type": "text",
+            "hint": "Opens the visitor's email app with the message filled in."
+          },
+          {
+            "path": "contact.formAction",
+            "label": "Or post to a form service (https)",
+            "type": "url",
+            "hint": "For example a Formspree or Basin endpoint. Wins over email."
+          }
+        ]
+      },
+      {
+        "group": "Footer",
+        "fields": [
+          {
+            "path": "footer",
+            "label": "Footer line (optional)",
+            "type": "text",
+            "hint": "{year} becomes this year."
+          }
+        ]
+      },
+      {
+        "group": "Colours",
+        "fields": [
+          {
+            "path": "theme.colors.page",
+            "label": "Page",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.text",
+            "label": "Text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.surface",
+            "label": "Cards and inputs",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.light",
+            "label": "Services background",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.lightText",
+            "label": "Services text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.headingFrom",
+            "label": "Headline gradient, top",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.headingTo",
+            "label": "Headline gradient, bottom",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.grad1",
+            "label": "Button gradient 1",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.grad2",
+            "label": "Button gradient 2",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.grad3",
+            "label": "Button gradient 3",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.grad4",
+            "label": "Button gradient 4",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.buttonText",
+            "label": "Button text",
+            "type": "color"
+          }
+        ]
+      },
+      {
+        "group": "Font",
+        "fields": [
+          {
+            "path": "theme.fonts.display",
+            "label": "Font",
+            "type": "font"
+          }
+        ]
+      },
+      {
+        "group": "Motion",
+        "fields": [
+          {
+            "path": "motion.animate",
+            "label": "Animations on",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.marqueeSpeed",
+            "label": "Reel speed",
+            "type": "number",
+            "min": 0,
+            "max": 1.5,
+            "step": 0.05
+          },
+          {
+            "path": "motion.magnet",
+            "label": "Portrait pull (0 is off)",
+            "type": "number",
+            "min": 0,
+            "max": 5,
+            "step": 0.5
+          },
+          {
+            "path": "motion.cardStack",
+            "label": "Project cards shrink as they stack",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Library blocks",
+        "fields": [
+          {
+            "path": "extras",
+            "label": "Blocks from the library",
+            "type": "blocks",
+            "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          }
+        ]
+      }
+    ],
+    "content": {
+      "seo": {
+        "title": "{name} — 3D Creator",
+        "description": "Portfolio of {name}, a 3D creator specialising in 3D modeling, photorealistic rendering, motion design, branding and web design."
+      },
+      "brand": {
+        "name": "Jack"
+      },
+      "nav": {
+        "about": "About",
+        "services": "Price",
+        "projects": "Projects",
+        "contact": "Contact"
+      },
+      "sections": {
+        "marquee": true,
+        "about": true,
+        "services": true,
+        "projects": true
+      },
+      "hero": {
+        "title": "Hi, i'm {name}",
+        "tagline": "a 3d creator driven by crafting striking and unforgettable projects",
+        "portrait": "./media/portrait.webp",
+        "portraitAlt": "Portrait of {name}",
+        "blend": true
+      },
+      "buttons": {
+        "contact": "Contact Me",
+        "project": "Live Project",
+        "visit": "Visit project"
+      },
+      "marquee": {
+        "label": "3D and motion showcase reel",
+        "row1": [
+          {
+            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85"
+          },
+          {
+            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85"
+          },
+          {
+            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85"
+          },
+          {
+            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85"
+          },
+          {
+            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85"
+          }
+        ],
+        "row2": [
+          {
+            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85"
+          },
+          {
+            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85"
+          },
+          {
+            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85"
+          },
+          {
+            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85"
+          },
+          {
+            "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85"
+          }
+        ]
+      },
+      "about": {
+        "title": "About me",
+        "text": "With more than five years of experience in design, i focus on branding, web design, and user experience, i truly enjoy working with businesses that aim to stand out and present their best image. Let's build something incredible together!",
+        "decor1": "./media/decor1.webp",
+        "decor2": "./media/decor2.webp",
+        "decor3": "./media/decor3.webp",
+        "decor4": "./media/decor4.webp",
+        "blend": true
+      },
+      "services": {
+        "title": "Services",
+        "items": [
+          {
+            "number": "01",
+            "name": "3D Modeling",
+            "description": "Creation of detailed objects, characters, or environments tailored to specific client needs, ideal for games, products, and visualizations."
+          },
+          {
+            "number": "02",
+            "name": "Rendering",
+            "description": "High-quality, photorealistic renders that showcase designs with custom lighting, textures, and materials to bring concepts to life."
+          },
+          {
+            "number": "03",
+            "name": "Motion Design",
+            "description": "Dynamic animations and motion graphics that add energy and storytelling to brands, products, and digital experiences."
+          },
+          {
+            "number": "04",
+            "name": "Branding",
+            "description": "Crafting cohesive visual identities -- from logos to full brand systems -- that communicate a clear and memorable presence."
+          },
+          {
+            "number": "05",
+            "name": "Web Design",
+            "description": "Designing clean, modern, and conversion-focused websites with attention to layout, typography, and user experience."
+          }
+        ]
+      },
+      "projects": {
+        "title": "Project",
+        "items": [
+          {
+            "number": "01",
+            "name": "Nextlevel Studio",
+            "category": "Client",
+            "year": "2026",
+            "summary": "Complete 3D visual direction, custom spatial scenes, and interactive web experience crafted to position Nextlevel Studio as a standout digital production house.",
+            "deliverables": "3D Environment Modeling, Octane Rendering, Interactive Web UI",
+            "image1": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85",
+            "image2": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85",
+            "image3": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85",
+            "link": ""
+          },
+          {
+            "number": "02",
+            "name": "Aura Brand Identity",
+            "category": "Personal",
+            "year": "2026",
+            "summary": "Sculptural material exploration and brand identity system blending iridescent glass shaders, bespoke packaging renders, and editorial motion typography.",
+            "deliverables": "Brand Identity System, Shader & Material Lookdev, Motion Graphics",
+            "image1": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85",
+            "image2": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85",
+            "image3": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85",
+            "link": ""
+          },
+          {
+            "number": "03",
+            "name": "Solaris Digital",
+            "category": "Client",
+            "year": "2026",
+            "summary": "Photorealistic architectural lighting studies and high-conversion web flagship designed around kinetic 3D hero visuals and precision grid geometry.",
+            "deliverables": "3D Product Visualization, Web Design, Art Direction",
+            "image1": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85",
+            "image2": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85",
+            "image3": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85",
+            "link": ""
+          }
+        ]
+      },
+      "contact": {
+        "kicker": "Start a Project",
+        "title": "Let's Collaborate",
+        "nameLabel": "Your Name",
+        "namePlaceholder": "Alex Mercer",
+        "emailLabel": "Email Address",
+        "emailPlaceholder": "alex@studio.com",
+        "serviceLabel": "Service Focus",
+        "briefLabel": "Project Brief",
+        "briefPlaceholder": "Tell me about your timeline, creative goals, and deliverables...",
+        "prefill": "Hi {name}, I loved {project} and would like to discuss a similar 3D / design project.",
+        "button": "Send Message",
+        "thanksTitle": "Inquiry Sent",
+        "thanksText": "Thanks {visitor}. Your {service} brief has been received and {name} will get back to you at {email}.",
+        "done": "Done",
+        "error": "The message could not be sent. Please try again.",
+        "email": "hello@example.com",
+        "formAction": ""
+      },
+      "footer": "",
+      "theme": {
+        "colors": {
+          "page": "#0c0c0c",
+          "text": "#d7e2ea",
+          "surface": "#141414",
+          "light": "#ffffff",
+          "lightText": "#0c0c0c",
+          "headingFrom": "#646973",
+          "headingTo": "#bbccd7",
+          "grad1": "#18011f",
+          "grad2": "#b600a8",
+          "grad3": "#7621b0",
+          "grad4": "#be4c00",
+          "buttonText": "#ffffff"
+        },
+        "fonts": {
+          "display": "Kanit"
+        }
+      },
+      "motion": {
+        "animate": true,
+        "marqueeSpeed": 0.3,
+        "magnet": 3,
+        "cardStack": true
+      },
+      "extras": []
+    },
+    "poster": false,
+    "siteFiles": 9,
+    "sourceFiles": 29
+  },
+  {
+    "id": "lithos",
+    "name": "Lithos",
+    "pitch": "A full-screen photo you dig into: the cursor is a spotlight that reveals a second picture underneath, with a two-line serif headline, side notes and pop-up panels for a layer list and sign-up.",
+    "kind": "vite",
+    "categories": [
+      "Cinematic",
+      "Interactive",
+      "Editorial"
+    ],
+    "business": [
+      "school",
+      "product",
+      "nonprofit"
+    ],
+    "sector": "Online course and field-guide platform (geology and earth science education)",
+    "intensity": 6,
+    "heavy": false,
+    "licence": {
+      "kind": "owner",
+      "holder": "Mughees",
+      "note": "Supplied by its owner as a whole project for use as a builder template.",
+      "added": "2026-11-18"
+    },
+    "remoteAssets": [
+      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_195923_b0ba8ace-1d1d-4f2c-9a28-1ab84b330680.png&w=1280&q=85",
+      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_201152_bba90a12-bf12-459f-91f0-51f237dbaf3b.png&w=1280&q=85"
+    ],
+    "features": [
+      "Cursor spotlight reveal",
+      "Two pictures",
+      "Layer list panel",
+      "Sign-up form"
+    ],
+    "schema": [
+      {
+        "group": "Business",
+        "fields": [
+          {
+            "path": "brand.name",
+            "label": "Business name",
+            "type": "text",
+            "hint": "Fills every {name} in the text below."
+          },
+          {
+            "path": "seo.title",
+            "label": "Page title (search and browser tab)",
+            "type": "text"
+          },
+          {
+            "path": "seo.description",
+            "label": "Short description (search and sharing)",
+            "type": "textarea"
+          },
+          {
+            "path": "brand.showMark",
+            "label": "Show the logo mark",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Menu",
+        "fields": [
+          {
+            "path": "nav.links",
+            "label": "Menu links",
+            "type": "list",
+            "itemLabel": "Link",
+            "fields": [
+              {
+                "path": "label",
+                "label": "Label",
+                "type": "text"
+              },
+              {
+                "path": "href",
+                "label": "Goes to",
+                "type": "url"
+              }
+            ],
+            "min": 0,
+            "max": 7
+          },
+          {
+            "path": "nav.cta",
+            "label": "Sign-up button",
+            "type": "text",
+            "hint": "Leave empty to hide it."
+          }
+        ]
+      },
+      {
+        "group": "Opening",
+        "fields": [
+          {
+            "path": "hero.line1",
+            "label": "Headline, line 1 (italic)",
+            "type": "text"
+          },
+          {
+            "path": "hero.line2",
+            "label": "Headline, line 2",
+            "type": "text"
+          },
+          {
+            "path": "hero.left",
+            "label": "Left note",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.right",
+            "label": "Right note",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.button",
+            "label": "Button",
+            "type": "text",
+            "hint": "Opens the layer list."
+          },
+          {
+            "path": "hero.image",
+            "label": "Picture on top",
+            "type": "image"
+          },
+          {
+            "path": "hero.imageAlt",
+            "label": "Picture description",
+            "type": "text"
+          },
+          {
+            "path": "hero.revealImage",
+            "label": "Picture the spotlight reveals",
+            "type": "image"
+          }
+        ]
+      },
+      {
+        "group": "Layer list panel",
+        "fields": [
+          {
+            "path": "explore.kicker",
+            "label": "Label",
+            "type": "text"
+          },
+          {
+            "path": "explore.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "explore.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "explore.layers",
+            "label": "Layers",
+            "type": "list",
+            "itemLabel": "Layer",
+            "fields": [
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "detail",
+                "label": "Detail (right)",
+                "type": "text"
+              },
+              {
+                "path": "text",
+                "label": "Text",
+                "type": "textarea"
+              }
+            ],
+            "min": 0,
+            "max": 8
+          },
+          {
+            "path": "explore.button",
+            "label": "Close button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Sign-up panel",
+        "fields": [
+          {
+            "path": "signup.kicker",
+            "label": "Label",
+            "type": "text"
+          },
+          {
+            "path": "signup.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "signup.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "signup.label",
+            "label": "Email label",
+            "type": "text"
+          },
+          {
+            "path": "signup.placeholder",
+            "label": "Email hint",
+            "type": "text"
+          },
+          {
+            "path": "signup.button",
+            "label": "Button",
+            "type": "text"
+          },
+          {
+            "path": "signup.thanksTitle",
+            "label": "Thank-you title",
+            "type": "text"
+          },
+          {
+            "path": "signup.thanksText",
+            "label": "Thank-you text",
+            "type": "textarea"
+          },
+          {
+            "path": "signup.email",
+            "label": "Send messages to (email)",
+            "type": "text",
+            "hint": "Opens the visitor's email app with the message filled in."
+          },
+          {
+            "path": "signup.formAction",
+            "label": "Or post to a form service (https)",
+            "type": "url",
+            "hint": "For example a Formspree or Basin endpoint. Wins over email."
+          }
+        ]
+      },
+      {
+        "group": "Colours",
+        "fields": [
+          {
+            "path": "theme.colors.text",
+            "label": "Text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.accent",
+            "label": "Accent button",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.accentHover",
+            "label": "Accent, on hover",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.page",
+            "label": "Page",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.panel",
+            "label": "Panels",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.button",
+            "label": "Sign-up button",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.buttonText",
+            "label": "Sign-up button text",
+            "type": "color"
+          }
+        ]
+      },
+      {
+        "group": "Fonts and size",
+        "fields": [
+          {
+            "path": "theme.fonts.display",
+            "label": "Headline font (italic line)",
+            "type": "font"
+          },
+          {
+            "path": "theme.fonts.body",
+            "label": "Body font",
+            "type": "font"
+          },
+          {
+            "path": "theme.headlineSize",
+            "label": "Headline size (px)",
+            "type": "number",
+            "min": 40,
+            "max": 180,
+            "step": 2
+          }
+        ]
+      },
+      {
+        "group": "Motion",
+        "fields": [
+          {
+            "path": "motion.spotlight",
+            "label": "Spotlight size (px)",
+            "type": "number",
+            "min": 80,
+            "max": 600,
+            "step": 10
+          },
+          {
+            "path": "motion.follow",
+            "label": "Spotlight follow speed",
+            "type": "number",
+            "min": 0.02,
+            "max": 1,
+            "step": 0.01
+          },
+          {
+            "path": "motion.zoomIn",
+            "label": "Picture zooms in on load",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.entrance",
+            "label": "Words rise in on load",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Library blocks",
+        "fields": [
+          {
+            "path": "extras",
+            "label": "Blocks from the library",
+            "type": "blocks",
+            "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          }
+        ]
+      }
+    ],
+    "content": {
+      "seo": {
+        "title": "{name} — Layers Hold Tales of Time",
+        "description": "Explore the deep history of Earth's crust through interactive geological strata maps and field guides."
+      },
+      "brand": {
+        "name": "Lithos",
+        "showMark": true
+      },
+      "nav": {
+        "links": [
+          {
+            "label": "Course",
+            "href": "#top"
+          },
+          {
+            "label": "Field Guides",
+            "href": "#top"
+          },
+          {
+            "label": "Geology",
+            "href": "#top"
+          },
+          {
+            "label": "Plans",
+            "href": "#top"
+          },
+          {
+            "label": "Live Tour",
+            "href": "#top"
+          }
+        ],
+        "cta": "Sign Up"
+      },
+      "hero": {
+        "line1": "Layers hold",
+        "line2": "tales of time",
+        "left": "Every layer of sediment records a chapter of our planet, from ancient seabeds to drifting ash, layered across millions of years beneath us.",
+        "right": "Our interactive maps let you peel back the crust to trace how stones, fossils, and deep time combine to shape the ground beneath your feet.",
+        "button": "Start Digging",
+        "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_195923_b0ba8ace-1d1d-4f2c-9a28-1ab84b330680.png&w=1280&q=85",
+        "imageAlt": "Layered rock face",
+        "revealImage": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_201152_bba90a12-bf12-459f-91f0-51f237dbaf3b.png&w=1280&q=85"
+      },
+      "explore": {
+        "kicker": "Strata Column",
+        "title": "Core Sample 04 — Colorado Plateau",
+        "text": "Select a horizon to inspect mineral density, fossil indices, and depositional timelines.",
+        "layers": [
+          {
+            "name": "Holocene & Quaternary",
+            "detail": "0 – 45 m",
+            "text": "Alluvial silt, wind-blown loess, glacial till"
+          },
+          {
+            "name": "Mesozoic Limestone",
+            "detail": "45 – 320 m",
+            "text": "Calcite seabeds, ammonite fossils, chert nodules"
+          },
+          {
+            "name": "Paleozoic Sandstone",
+            "detail": "320 – 890 m",
+            "text": "Cross-bedded quartz grains, volcanic ash bands"
+          }
+        ],
+        "button": "Return to Map Spotlight"
+      },
+      "signup": {
+        "kicker": "Field Access",
+        "title": "Join {name}",
+        "text": "Unlock interactive stratigraphic cross-sections, offline field guides, and live geological tours.",
+        "label": "Email address",
+        "placeholder": "geologist@fieldnotes.org",
+        "button": "Create Account",
+        "thanksTitle": "You're on the list",
+        "thanksText": "We've reserved field guide access for you.",
+        "email": "",
+        "formAction": ""
+      },
+      "theme": {
+        "colors": {
+          "accent": "#e8702a",
+          "accentHover": "#d2611f",
+          "text": "#ffffff",
+          "page": "#000000",
+          "panel": "#0a0a0a",
+          "button": "#ffffff",
+          "buttonText": "#111827"
+        },
+        "fonts": {
+          "display": "Playfair Display",
+          "body": "Inter"
+        },
+        "headlineSize": 96
+      },
+      "motion": {
+        "spotlight": 260,
+        "follow": 0.1,
+        "zoomIn": true,
+        "entrance": true
+      },
+      "extras": []
+    },
+    "poster": false,
+    "siteFiles": 4,
+    "sourceFiles": 12
+  },
+  {
+    "id": "milo",
+    "name": "Milo",
+    "pitch": "A deep-ocean 3D portfolio: a live WebGL sea you descend through as you scroll, a giant gradient opening, a blurred line-by-line about, big hover-lit services, a sideways gallery of live 3D project worlds you can orbit, and a magnetic contact call.",
+    "kind": "vite",
+    "categories": [
+      "3D",
+      "WebGL",
+      "Cinematic",
+      "Scroll",
+      "Interactive"
+    ],
+    "business": [
+      "creator",
+      "agency",
+      "photo"
+    ],
+    "sector": "3D artist and digital world builder portfolio (environments, motion, art direction, interactive web)",
+    "intensity": 8,
+    "heavy": true,
+    "licence": {
+      "kind": "owner",
+      "holder": "Mughees",
+      "note": "Supplied by its owner as a whole project for use as a builder template.",
+      "added": "2026-11-18"
+    },
+    "remoteAssets": [],
+    "features": [
+      "Live WebGL ocean you descend through",
+      "Orbitable 3D project worlds",
+      "Sideways scroll gallery",
+      "Line-by-line blur reveal",
+      "Custom cursor",
+      "Magnetic button",
+      "Commission form"
+    ],
+    "schema": [
+      {
+        "group": "Business",
+        "fields": [
+          {
+            "path": "brand.name",
+            "label": "Your name",
+            "type": "text",
+            "hint": "Fills every {name} in the text below."
+          },
+          {
+            "path": "seo.title",
+            "label": "Page title (search and browser tab)",
+            "type": "text"
+          },
+          {
+            "path": "seo.description",
+            "label": "Short description (search and sharing)",
+            "type": "textarea"
+          },
+          {
+            "path": "brand.mark",
+            "label": "Logo text",
+            "type": "text",
+            "hint": "Shown in the menu bar, e.g. MILO®."
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline (menu)",
+            "type": "text"
+          },
+          {
+            "path": "brand.email",
+            "label": "Email",
+            "type": "text",
+            "hint": "Shown in contact and used for the form when no form service is set."
+          }
+        ]
+      },
+      {
+        "group": "Sections",
+        "fields": [
+          {
+            "path": "sections.hero",
+            "label": "Opening",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.descent",
+            "label": "Descent line",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.about",
+            "label": "About",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.services",
+            "label": "Services",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.projects",
+            "label": "Projects",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.contact",
+            "label": "Contact",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.footer",
+            "label": "Footer",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Menu",
+        "fields": [
+          {
+            "path": "nav.world",
+            "label": "Depth counter label",
+            "type": "text"
+          },
+          {
+            "path": "nav.menu",
+            "label": "Menu button",
+            "type": "text"
+          },
+          {
+            "path": "nav.close",
+            "label": "Close button",
+            "type": "text"
+          },
+          {
+            "path": "nav.chaptersTitle",
+            "label": "Chapters title",
+            "type": "text"
+          },
+          {
+            "path": "nav.worksTitle",
+            "label": "Projects title",
+            "type": "text"
+          },
+          {
+            "path": "nav.chapters",
+            "label": "Chapters",
+            "type": "list",
+            "itemLabel": "Chapter",
+            "fields": [
+              {
+                "path": "label",
+                "label": "Label",
+                "type": "text"
+              },
+              {
+                "path": "target",
+                "label": "Goes to",
+                "type": "select",
+                "options": [
+                  {
+                    "value": "surface",
+                    "label": "Surface"
+                  },
+                  {
+                    "value": "descent",
+                    "label": "Descent"
+                  },
+                  {
+                    "value": "creator",
+                    "label": "Creator"
+                  },
+                  {
+                    "value": "services",
+                    "label": "Services"
+                  },
+                  {
+                    "value": "projects",
+                    "label": "Projects"
+                  },
+                  {
+                    "value": "contact",
+                    "label": "Contact"
+                  }
+                ]
+              }
+            ],
+            "min": 0,
+            "max": 8
+          }
+        ]
+      },
+      {
+        "group": "Opening",
+        "fields": [
+          {
+            "path": "hero.label",
+            "label": "Small label",
+            "type": "text"
+          },
+          {
+            "path": "hero.kicker",
+            "label": "Word above the headline",
+            "type": "text"
+          },
+          {
+            "path": "hero.line1",
+            "label": "Headline, line 1",
+            "type": "text"
+          },
+          {
+            "path": "hero.line2",
+            "label": "Headline, line 2 (gradient)",
+            "type": "text"
+          },
+          {
+            "path": "hero.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.scrollHint",
+            "label": "Scroll hint",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Descent",
+        "fields": [
+          {
+            "path": "descent.kicker",
+            "label": "Small label",
+            "type": "text"
+          },
+          {
+            "path": "descent.line1",
+            "label": "Line 1",
+            "type": "text"
+          },
+          {
+            "path": "descent.line2",
+            "label": "Line 2 (accent)",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "About",
+        "fields": [
+          {
+            "path": "about.number",
+            "label": "Big number",
+            "type": "text"
+          },
+          {
+            "path": "about.label",
+            "label": "Label",
+            "type": "text"
+          },
+          {
+            "path": "about.text",
+            "label": "Text (each line reveals in turn)",
+            "type": "textarea"
+          },
+          {
+            "path": "about.stats",
+            "label": "Numbers",
+            "type": "list",
+            "itemLabel": "Number",
+            "fields": [
+              {
+                "path": "value",
+                "label": "Value",
+                "type": "text"
+              },
+              {
+                "path": "label",
+                "label": "Label",
+                "type": "text"
+              }
+            ],
+            "min": 0,
+            "max": 6
+          }
+        ]
+      },
+      {
+        "group": "Services",
+        "fields": [
+          {
+            "path": "services.label",
+            "label": "Small label",
+            "type": "text"
+          },
+          {
+            "path": "services.title",
+            "label": "Title (one line per row)",
+            "type": "textarea"
+          },
+          {
+            "path": "services.items",
+            "label": "Services",
+            "type": "list",
+            "itemLabel": "Service",
+            "fields": [
+              {
+                "path": "title",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "description",
+                "label": "Description",
+                "type": "textarea"
+              }
+            ],
+            "min": 0,
+            "max": 12
+          }
+        ]
+      },
+      {
+        "group": "Projects",
+        "fields": [
+          {
+            "path": "projects.label",
+            "label": "Small label",
+            "type": "text"
+          },
+          {
+            "path": "projects.title",
+            "label": "Title (one line per row; the last is gradient)",
+            "type": "textarea"
+          },
+          {
+            "path": "projects.view",
+            "label": "View button",
+            "type": "text"
+          },
+          {
+            "path": "projects.clientLabel",
+            "label": "Client label",
+            "type": "text"
+          },
+          {
+            "path": "projects.roleLabel",
+            "label": "Role label",
+            "type": "text"
+          },
+          {
+            "path": "projects.deliverablesLabel",
+            "label": "Deliverables label",
+            "type": "text"
+          },
+          {
+            "path": "projects.commission",
+            "label": "Commission button",
+            "type": "text"
+          },
+          {
+            "path": "projects.inquirePrefix",
+            "label": "Form note before the project's name",
+            "type": "text"
+          },
+          {
+            "path": "projects.orbitHint",
+            "label": "3D hint",
+            "type": "text"
+          },
+          {
+            "path": "projects.items",
+            "label": "Projects",
+            "type": "list",
+            "itemLabel": "Project",
+            "fields": [
+              {
+                "path": "title",
+                "label": "Title",
+                "type": "text"
+              },
+              {
+                "path": "category",
+                "label": "Category",
+                "type": "text"
+              },
+              {
+                "path": "year",
+                "label": "Year",
+                "type": "text"
+              },
+              {
+                "path": "scene",
+                "label": "3D world",
+                "type": "select",
+                "options": [
+                  {
+                    "value": "abyss",
+                    "label": "Abyss (glowing deep-sea flora)"
+                  },
+                  {
+                    "value": "orbital",
+                    "label": "Orbital (floating rings)"
+                  },
+                  {
+                    "value": "tideline",
+                    "label": "Tideline (liquid metal waves)"
+                  },
+                  {
+                    "value": "echo",
+                    "label": "Echo (sound rings)"
+                  }
+                ]
+              },
+              {
+                "path": "description",
+                "label": "Short description",
+                "type": "textarea"
+              },
+              {
+                "path": "client",
+                "label": "Client",
+                "type": "text"
+              },
+              {
+                "path": "role",
+                "label": "Role",
+                "type": "text"
+              },
+              {
+                "path": "deliverables",
+                "label": "Deliverables (one per line)",
+                "type": "textarea"
+              },
+              {
+                "path": "narrative",
+                "label": "Story",
+                "type": "textarea"
+              },
+              {
+                "path": "primary",
+                "label": "Placeholder colour, dark",
+                "type": "color"
+              },
+              {
+                "path": "secondary",
+                "label": "Placeholder colour, light",
+                "type": "color"
+              }
+            ],
+            "min": 0,
+            "max": 12
+          }
+        ]
+      },
+      {
+        "group": "Contact",
+        "fields": [
+          {
+            "path": "contact.label",
+            "label": "Small label",
+            "type": "text"
+          },
+          {
+            "path": "contact.title",
+            "label": "Title (one line per row; the last is accent)",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.button",
+            "label": "Button",
+            "type": "text"
+          },
+          {
+            "path": "contact.copy",
+            "label": "Copy button",
+            "type": "text"
+          },
+          {
+            "path": "contact.copied",
+            "label": "Copied note",
+            "type": "text"
+          },
+          {
+            "path": "contact.socials",
+            "label": "Social links",
+            "type": "list",
+            "itemLabel": "Link",
+            "fields": [
+              {
+                "path": "label",
+                "label": "Label",
+                "type": "text"
+              },
+              {
+                "path": "href",
+                "label": "Address",
+                "type": "url"
+              }
+            ],
+            "min": 0,
+            "max": 8
+          }
+        ]
+      },
+      {
+        "group": "Commission form",
+        "fields": [
+          {
+            "path": "contact.formKicker",
+            "label": "Label",
+            "type": "text"
+          },
+          {
+            "path": "contact.formTitle",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "contact.disciplineLabel",
+            "label": "Discipline label",
+            "type": "text",
+            "hint": "The choices are your services."
+          },
+          {
+            "path": "contact.nameLabel",
+            "label": "Name label",
+            "type": "text"
+          },
+          {
+            "path": "contact.namePlaceholder",
+            "label": "Name hint",
+            "type": "text"
+          },
+          {
+            "path": "contact.emailLabel",
+            "label": "Email label",
+            "type": "text"
+          },
+          {
+            "path": "contact.emailPlaceholder",
+            "label": "Email hint",
+            "type": "text"
+          },
+          {
+            "path": "contact.briefLabel",
+            "label": "Message label",
+            "type": "text"
+          },
+          {
+            "path": "contact.briefPlaceholder",
+            "label": "Message hint",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.send",
+            "label": "Send button",
+            "type": "text"
+          },
+          {
+            "path": "contact.thanksKicker",
+            "label": "Thank-you label",
+            "type": "text"
+          },
+          {
+            "path": "contact.thanksTitle",
+            "label": "Thank-you title",
+            "type": "text"
+          },
+          {
+            "path": "contact.thanksText",
+            "label": "Thank-you text",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.back",
+            "label": "Close button",
+            "type": "text"
+          },
+          {
+            "path": "contact.error",
+            "label": "Error message",
+            "type": "text"
+          },
+          {
+            "path": "contact.formAction",
+            "label": "Post to a form service (https)",
+            "type": "url",
+            "hint": "For example a Formspree or Basin endpoint. Without one the form opens the visitor's email app addressed to your email."
+          }
+        ]
+      },
+      {
+        "group": "Footer",
+        "fields": [
+          {
+            "path": "footer.left",
+            "label": "Left",
+            "type": "text"
+          },
+          {
+            "path": "footer.middle",
+            "label": "Middle",
+            "type": "text"
+          },
+          {
+            "path": "footer.right",
+            "label": "Right",
+            "type": "text",
+            "hint": "{year} becomes this year."
+          }
+        ]
+      },
+      {
+        "group": "Colours",
+        "fields": [
+          {
+            "path": "theme.colors.page",
+            "label": "Page and deep sea",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.surface",
+            "label": "Panels",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.deep",
+            "label": "Footer and surfacing light",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.text",
+            "label": "Text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.accent",
+            "label": "Accent (glow, links)",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.accent2",
+            "label": "Second accent",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.highlight",
+            "label": "Highlight (light rays)",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.light",
+            "label": "Services background",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.lightText",
+            "label": "Services text",
+            "type": "color"
+          }
+        ]
+      },
+      {
+        "group": "Font",
+        "fields": [
+          {
+            "path": "theme.fonts.body",
+            "label": "Font",
+            "type": "font"
+          }
+        ]
+      },
+      {
+        "group": "3D ocean",
+        "fields": [
+          {
+            "path": "ocean.show",
+            "label": "Live 3D ocean behind the page",
+            "type": "toggle"
+          },
+          {
+            "path": "ocean.particles",
+            "label": "Floating particles",
+            "type": "number",
+            "min": 0,
+            "max": 3000,
+            "step": 50
+          },
+          {
+            "path": "ocean.manta",
+            "label": "Gliding manta",
+            "type": "toggle"
+          },
+          {
+            "path": "ocean.parallax",
+            "label": "Pointer parallax",
+            "type": "number",
+            "min": 0,
+            "max": 3,
+            "step": 0.1
+          },
+          {
+            "path": "ocean.fog",
+            "label": "Fog thickness",
+            "type": "number",
+            "min": 0.2,
+            "max": 3,
+            "step": 0.1
+          }
+        ]
+      },
+      {
+        "group": "Motion",
+        "fields": [
+          {
+            "path": "motion.animate",
+            "label": "Animations on",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.cursor",
+            "label": "Custom cursor",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.progress",
+            "label": "Scroll progress bar",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Library blocks",
+        "fields": [
+          {
+            "path": "extras",
+            "label": "Blocks from the library",
+            "type": "blocks",
+            "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          }
+        ]
+      }
+    ],
+    "content": {
+      "seo": {
+        "title": "{name} — 3D Artist & Digital Worlds",
+        "description": "Immersive 3D creative portfolio for {name}, a digital artist and 3D world builder crafting cinematic underwater environments, visual identities, and interactive digital experiences."
+      },
+      "brand": {
+        "name": "Milo",
+        "mark": "MILO®",
+        "tagline": "3D ARTIST & DIGITAL WORLDS",
+        "email": "hello@milo.world"
+      },
+      "sections": {
+        "hero": true,
+        "descent": true,
+        "about": true,
+        "services": true,
+        "projects": true,
+        "contact": true,
+        "footer": true
+      },
+      "nav": {
+        "world": "WORLD",
+        "menu": "MENU",
+        "close": "CLOSE",
+        "chaptersTitle": "DEPTH CHAPTERS",
+        "worksTitle": "SELECTED WORLDS",
+        "chapters": [
+          {
+            "label": "The Surface",
+            "target": "surface"
+          },
+          {
+            "label": "The Descent",
+            "target": "descent"
+          },
+          {
+            "label": "The Creator",
+            "target": "creator"
+          },
+          {
+            "label": "What I Build",
+            "target": "services"
+          },
+          {
+            "label": "Creatures of the Deep",
+            "target": "projects"
+          },
+          {
+            "label": "Emerge & Contact",
+            "target": "contact"
+          }
+        ]
+      },
+      "hero": {
+        "label": "3D ARTIST / DIGITAL WORLDS",
+        "kicker": "ENTER",
+        "line1": "THE",
+        "line2": "WORLD",
+        "text": "I build cinematic 3D worlds, visual identities, and digital experiences that feel alive.",
+        "scrollHint": "SCROLL TO DESCEND"
+      },
+      "descent": {
+        "kicker": "BELOW THE SURFACE",
+        "line1": "DOWN HERE,",
+        "line2": "DETAILS MATTER."
+      },
+      "about": {
+        "number": "01",
+        "label": "THE CREATOR",
+        "text": "I create 3D experiences that live somewhere\nbetween design, technology, and imagination.\nEvery project starts with an idea and ends\nas a world people can step into.",
+        "stats": [
+          {
+            "value": "08+",
+            "label": "YEARS CREATING"
+          },
+          {
+            "value": "42",
+            "label": "WORLDS BUILT"
+          },
+          {
+            "value": "19",
+            "label": "GLOBAL CLIENTS"
+          }
+        ]
+      },
+      "services": {
+        "label": "02 / CAPABILITIES",
+        "title": "WHAT\nI BUILD",
+        "items": [
+          {
+            "title": "3D WORLDS",
+            "description": "Immersive environments, characters, objects, and visual systems designed to make digital experiences feel tangible."
+          },
+          {
+            "title": "MOTION",
+            "description": "Cinematic animation and movement designed to give products, brands, and ideas a sense of energy and personality."
+          },
+          {
+            "title": "DIGITAL ART",
+            "description": "Art-directed visuals combining 3D, lighting, composition, typography, and atmosphere."
+          },
+          {
+            "title": "EXPERIENCES",
+            "description": "Interactive websites and digital experiences where design becomes something users can explore."
+          }
+        ]
+      },
+      "projects": {
+        "label": "03 / SELECTED WORLDS",
+        "title": "CREATURES\nOF THE\nDEEP",
+        "view": "VIEW PROJECT",
+        "clientLabel": "CLIENT",
+        "roleLabel": "ROLE",
+        "deliverablesLabel": "DELIVERABLES",
+        "commission": "COMMISSION A WORLD",
+        "inquirePrefix": "World inspired by",
+        "orbitHint": "DRAG TO ORBIT · SCROLL TO ZOOM",
+        "items": [
+          {
+            "title": "ABYSS",
+            "category": "3D ENVIRONMENT",
+            "year": "2026",
+            "scene": "abyss",
+            "description": "A cinematic exploration of depth, darkness, and bioluminescent life beneath an imagined ocean.",
+            "client": "Oceanic Pavilion",
+            "role": "Direction, Real-Time Shaders & Environment Design",
+            "deliverables": "Real-Time WebGL World\nCustom GLSL Shaders\nSpatial Soundscape",
+            "narrative": "Constructed as a meditative abyssal chamber 4,000 meters below the surface, ABYSS pairs procedural soft-body flora with bioluminescent spore fields that react subtly to viewer presence and current turbulence.",
+            "primary": "#020B12",
+            "secondary": "#082E42"
+          },
+          {
+            "title": "ORBITAL",
+            "category": "ART DIRECTION",
+            "year": "2025",
+            "scene": "orbital",
+            "description": "A visual system built around floating structures, planetary forms, and impossible architecture.",
+            "client": "Kestrel Horizon",
+            "role": "3D Art Direction & Architectural Form Study",
+            "deliverables": "Brand World System\n3D Key Visuals\nMotion Identity",
+            "narrative": "ORBITAL investigates monumental stillness in zero gravity: anisotropic brushed-titanium rings suspended around a dark mineral core, illuminated solely by grazing blue planetary bounce light.",
+            "primary": "#020508",
+            "secondary": "#0E1C28"
+          },
+          {
+            "title": "TIDELINE",
+            "category": "BRAND EXPERIENCE",
+            "year": "2025",
+            "scene": "tideline",
+            "description": "A digital identity designed around movement, fluidity, and the rhythm of changing water.",
+            "client": "Atelier Maris",
+            "role": "Creative Technology & Surface Simulation",
+            "deliverables": "Fluid Shader Engine\nInteractive Flagship\nEditorial Typography",
+            "narrative": "Driven by multi-octave Gerstner wave equations and specular Fresnel reflections, TIDELINE transforms tidal telemetry into a living metallic-liquid horizon that shifts weight with every gesture.",
+            "primary": "#030E14",
+            "secondary": "#0A2B38"
+          },
+          {
+            "title": "ECHO",
+            "category": "INTERACTIVE EXPERIENCE",
+            "year": "2026",
+            "scene": "echo",
+            "description": "An experimental digital world where sound, movement, and visual depth respond to the user.",
+            "client": "Resonance Lab",
+            "role": "Interactive 3D & Procedural Motion",
+            "deliverables": "Harmonic Geometry Rig\nPointer-Reactive Field\nExhibition Installation",
+            "narrative": "ECHO translates harmonic frequencies into suspended sculptural waves and concentric acoustic rings, allowing visitors to perturb standing-wave geometry in real time.",
+            "primary": "#02070A",
+            "secondary": "#072130"
+          }
+        ]
+      },
+      "contact": {
+        "label": "04 / SURFACE",
+        "title": "LET'S\nMAKE\nSOMETHING\nALIVE.",
+        "button": "START A PROJECT",
+        "copy": "COPY",
+        "copied": "COPIED",
+        "socials": [
+          {
+            "label": "INSTAGRAM",
+            "href": "https://instagram.com"
+          },
+          {
+            "label": "BEHANCE",
+            "href": "https://behance.net"
+          },
+          {
+            "label": "DRIBBBLE",
+            "href": "https://dribbble.com"
+          },
+          {
+            "label": "LINKEDIN",
+            "href": "https://linkedin.com"
+          }
+        ],
+        "formKicker": "NEW COMMISSION",
+        "formTitle": "ENTER A NEW WORLD",
+        "disciplineLabel": "DISCIPLINE",
+        "nameLabel": "NAME",
+        "namePlaceholder": "Alex Rivera",
+        "emailLabel": "EMAIL",
+        "emailPlaceholder": "alex@studio.com",
+        "briefLabel": "WORLD BRIEF",
+        "briefPlaceholder": "Describe your vision, timeline, or atmosphere...",
+        "send": "SEND INQUIRY",
+        "thanksKicker": "TRANSMISSION RECEIVED",
+        "thanksTitle": "Thank you.",
+        "thanksText": "Your brief has been logged. {name} typically responds within 48 hours.",
+        "back": "RETURN TO PORTFOLIO",
+        "error": "The message could not be sent. Please email instead.",
+        "formAction": ""
+      },
+      "footer": {
+        "left": "{name}®",
+        "middle": "BUILT BETWEEN IMAGINATION & CODE",
+        "right": "© {year}"
+      },
+      "theme": {
+        "colors": {
+          "page": "#02070A",
+          "surface": "#041319",
+          "deep": "#082838",
+          "text": "#F2FBFF",
+          "accent": "#63E6FF",
+          "accent2": "#4BA3FF",
+          "highlight": "#D9F7FF",
+          "light": "#F2FBFF",
+          "lightText": "#02070A"
+        },
+        "fonts": {
+          "body": "Manrope"
+        }
+      },
+      "ocean": {
+        "show": true,
+        "particles": 1000,
+        "manta": true,
+        "parallax": 1,
+        "fog": 1
+      },
+      "motion": {
+        "animate": true,
+        "cursor": true,
+        "progress": true
+      },
+      "extras": []
+    },
+    "poster": false,
+    "siteFiles": 5,
+    "sourceFiles": 31
   },
   {
     "id": "mossline",
@@ -1383,6 +4468,17 @@
             "type": "toggle"
           }
         ]
+      },
+      {
+        "group": "Library blocks",
+        "fields": [
+          {
+            "path": "extras",
+            "label": "Blocks from the library",
+            "type": "blocks",
+            "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          }
+        ]
       }
     ],
     "content": {
@@ -1594,10 +4690,669 @@
         "cardTilt": true,
         "countUp": true,
         "pulse": true
-      }
+      },
+      "extras": []
     },
     "poster": false,
     "siteFiles": 2,
     "sourceFiles": 2
+  },
+  {
+    "id": "stride",
+    "name": "Stride",
+    "pitch": "A playful product shop for a snack brand: an opening film, a 3D bar carousel you swipe through, a pinned story where the bar flips to show what is inside, a flavour shop with a cart, and a build-your-own 3 pack.",
+    "kind": "vite",
+    "categories": [
+      "3D",
+      "Product",
+      "Playful",
+      "Interactive",
+      "Scroll"
+    ],
+    "business": [
+      "shop",
+      "food",
+      "product"
+    ],
+    "sector": "Food and drink brand selling online (plant protein snack bars)",
+    "intensity": 9,
+    "heavy": true,
+    "licence": {
+      "kind": "owner",
+      "holder": "Mughees",
+      "note": "Supplied by its owner as a whole project for use as a builder template.",
+      "added": "2026-11-18"
+    },
+    "remoteAssets": [
+      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261116_132032_30242d8c-5062-4d60-8a3d-238f0a2ff788.png&w=2200&q=85",
+      "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261116_131908_b6239896-c077-450c-ad91-575153973fcf.mp4"
+    ],
+    "features": [
+      "Opening film",
+      "3D product carousel",
+      "Pinned flip story",
+      "Shop with cart",
+      "Build a 3 pack",
+      "Early-access sign-up"
+    ],
+    "schema": [
+      {
+        "group": "Business",
+        "fields": [
+          {
+            "path": "brand.name",
+            "label": "Brand name",
+            "type": "text",
+            "hint": "Fills every {name} in the text below."
+          },
+          {
+            "path": "seo.title",
+            "label": "Page title (search and browser tab)",
+            "type": "text"
+          },
+          {
+            "path": "seo.description",
+            "label": "Short description (search and sharing)",
+            "type": "textarea"
+          },
+          {
+            "path": "brand.showMark",
+            "label": "Show the mountain logo",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Opening film",
+        "fields": [
+          {
+            "path": "intro.show",
+            "label": "Play the opening film",
+            "type": "toggle"
+          },
+          {
+            "path": "intro.video",
+            "label": "Film",
+            "type": "video"
+          },
+          {
+            "path": "intro.start",
+            "label": "Start at (seconds)",
+            "type": "number",
+            "min": 0,
+            "max": 30,
+            "step": 0.05
+          },
+          {
+            "path": "intro.end",
+            "label": "Move on at (seconds, 0 plays to the end)",
+            "type": "number",
+            "min": 0,
+            "max": 60,
+            "step": 0.1
+          },
+          {
+            "path": "intro.skip",
+            "label": "Skip button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Menu",
+        "fields": [
+          {
+            "path": "nav.flavors",
+            "label": "Flavours link",
+            "type": "text"
+          },
+          {
+            "path": "nav.inside",
+            "label": "Inside link",
+            "type": "text"
+          },
+          {
+            "path": "nav.shop",
+            "label": "Shop link",
+            "type": "text"
+          },
+          {
+            "path": "nav.range",
+            "label": "Pack link",
+            "type": "text"
+          },
+          {
+            "path": "nav.offer",
+            "label": "Offer chip",
+            "type": "text"
+          },
+          {
+            "path": "nav.dibs",
+            "label": "Sign-up button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Flavours",
+        "fields": [
+          {
+            "path": "flavours",
+            "label": "Flavours",
+            "type": "list",
+            "itemLabel": "Flavour",
+            "fields": [
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "label",
+                "label": "Name on the card (one line per row)",
+                "type": "textarea"
+              },
+              {
+                "path": "color",
+                "label": "Colour",
+                "type": "color"
+              },
+              {
+                "path": "ingredients",
+                "label": "Ingredients (printed on the wrapper)",
+                "type": "textarea"
+              },
+              {
+                "path": "box",
+                "label": "Where it sits on the product sheet (x, y, width, height)",
+                "type": "text",
+                "hint": "In pixels on the product picture sheet. Leave as is unless you upload your own sheet."
+              },
+              {
+                "path": "bit",
+                "label": "Ingredient picture (number on the sheet, from 0)",
+                "type": "number",
+                "min": 0,
+                "max": 9,
+                "step": 1
+              }
+            ],
+            "min": 3,
+            "max": 8
+          },
+          {
+            "path": "hero.next",
+            "label": "Next button (for screen readers)",
+            "type": "text"
+          },
+          {
+            "path": "hero.autoplay",
+            "label": "Autoplay label",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Inside story",
+        "fields": [
+          {
+            "path": "inside.steps",
+            "label": "Steps",
+            "type": "list",
+            "itemLabel": "Step",
+            "fields": [
+              {
+                "path": "title",
+                "label": "Title (one line per row; {flavour} is the flavour on show)",
+                "type": "textarea"
+              },
+              {
+                "path": "caption",
+                "label": "Caption (one line per row)",
+                "type": "textarea"
+              }
+            ],
+            "min": 4,
+            "max": 4
+          }
+        ]
+      },
+      {
+        "group": "Shop",
+        "fields": [
+          {
+            "path": "shop.title",
+            "label": "Title (one line per row)",
+            "type": "textarea"
+          },
+          {
+            "path": "shop.text",
+            "label": "Text (one line per row)",
+            "type": "textarea"
+          },
+          {
+            "path": "shop.add",
+            "label": "Add button (for screen readers)",
+            "type": "text",
+            "hint": "{flavour} is the flavour."
+          }
+        ]
+      },
+      {
+        "group": "Build a 3 pack",
+        "fields": [
+          {
+            "path": "range.line1",
+            "label": "Title, line 1",
+            "type": "text"
+          },
+          {
+            "path": "range.line2",
+            "label": "Title, after the 3",
+            "type": "text"
+          },
+          {
+            "path": "range.line3",
+            "label": "Title, line 3",
+            "type": "text"
+          },
+          {
+            "path": "range.price",
+            "label": "Pack price",
+            "type": "text"
+          },
+          {
+            "path": "range.add",
+            "label": "Add button",
+            "type": "text"
+          },
+          {
+            "path": "range.added",
+            "label": "Added note",
+            "type": "text"
+          },
+          {
+            "path": "range.pick",
+            "label": "Still to pick",
+            "type": "text",
+            "hint": "{count} is how many are left."
+          }
+        ]
+      },
+      {
+        "group": "Cart",
+        "fields": [
+          {
+            "path": "cart.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "cart.empty",
+            "label": "When empty",
+            "type": "textarea"
+          },
+          {
+            "path": "cart.clear",
+            "label": "Clear button",
+            "type": "text"
+          },
+          {
+            "path": "cart.bar",
+            "label": "One bar",
+            "type": "text",
+            "hint": "{flavour} is the flavour."
+          },
+          {
+            "path": "cart.pack",
+            "label": "A 3 pack",
+            "type": "text",
+            "hint": "{flavours} lists the three."
+          },
+          {
+            "path": "cart.checkout",
+            "label": "Checkout page (optional)",
+            "type": "url",
+            "hint": "For example your Shopify or Stripe checkout link. Shows a checkout button when set."
+          },
+          {
+            "path": "cart.checkoutLabel",
+            "label": "Checkout button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Early-access sign-up",
+        "fields": [
+          {
+            "path": "dibs.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "dibs.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "dibs.placeholder",
+            "label": "Email hint",
+            "type": "text"
+          },
+          {
+            "path": "dibs.button",
+            "label": "Button",
+            "type": "text"
+          },
+          {
+            "path": "dibs.thanks",
+            "label": "Thank-you text",
+            "type": "textarea"
+          },
+          {
+            "path": "dibs.email",
+            "label": "Send sign-ups to (email)",
+            "type": "text"
+          },
+          {
+            "path": "dibs.formAction",
+            "label": "Or post to a form service (https)",
+            "type": "url",
+            "hint": "For example a Formspree, Basin or Mailchimp endpoint. Wins over email."
+          }
+        ]
+      },
+      {
+        "group": "Wrapper print",
+        "fields": [
+          {
+            "path": "pack.weight",
+            "label": "Weight",
+            "type": "text"
+          },
+          {
+            "path": "pack.nutritionTitle",
+            "label": "Nutrition title",
+            "type": "text"
+          },
+          {
+            "path": "pack.serving",
+            "label": "Serving line",
+            "type": "text"
+          },
+          {
+            "path": "pack.nutrition",
+            "label": "Nutrition (one per line: name | amount; the first two are bold)",
+            "type": "textarea"
+          },
+          {
+            "path": "pack.ingredientsTitle",
+            "label": "Ingredients title",
+            "type": "text"
+          },
+          {
+            "path": "pack.barcode",
+            "label": "Barcode number start",
+            "type": "text"
+          },
+          {
+            "path": "pack.slogan",
+            "label": "Slogan",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Product picture sheet",
+        "fields": [
+          {
+            "path": "sheet.image",
+            "label": "Sheet with every bar and ingredient",
+            "type": "image",
+            "hint": "One picture holding all the bars in a row and their ingredients below."
+          },
+          {
+            "path": "sheet.width",
+            "label": "Sheet width (pixels)",
+            "type": "number",
+            "min": 100,
+            "max": 10000,
+            "step": 1
+          },
+          {
+            "path": "sheet.height",
+            "label": "Sheet height (pixels)",
+            "type": "number",
+            "min": 100,
+            "max": 10000,
+            "step": 1
+          },
+          {
+            "path": "sheet.bits",
+            "label": "Ingredient pictures (one per line: x, y, width, height)",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "Colours",
+        "fields": [
+          {
+            "path": "theme.colors.ink",
+            "label": "Text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.cream",
+            "label": "Page",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.dark",
+            "label": "Dark sections",
+            "type": "color"
+          }
+        ]
+      },
+      {
+        "group": "Fonts",
+        "fields": [
+          {
+            "path": "theme.fonts.display",
+            "label": "Headlines",
+            "type": "font"
+          },
+          {
+            "path": "theme.fonts.body",
+            "label": "Text",
+            "type": "font"
+          },
+          {
+            "path": "theme.fonts.mono",
+            "label": "Labels",
+            "type": "font"
+          }
+        ]
+      },
+      {
+        "group": "Motion",
+        "fields": [
+          {
+            "path": "motion.autoplay",
+            "label": "Carousel plays by itself",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Library blocks",
+        "fields": [
+          {
+            "path": "extras",
+            "label": "Blocks from the library",
+            "type": "blocks",
+            "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          }
+        ]
+      }
+    ],
+    "content": {
+      "seo": {
+        "title": "{name}: Plant Protein Bars",
+        "description": "Five bold flavours of plant protein bar. Pressed, not baked."
+      },
+      "brand": {
+        "name": "Stride",
+        "showMark": true
+      },
+      "intro": {
+        "show": true,
+        "video": "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261116_131908_b6239896-c077-450c-ad91-575153973fcf.mp4",
+        "start": 0.55,
+        "end": 4.6,
+        "skip": "Skip intro"
+      },
+      "nav": {
+        "flavors": "Flavors",
+        "inside": "Inside",
+        "shop": "Shop",
+        "range": "Range",
+        "offer": "% OFF",
+        "dibs": "First dibs"
+      },
+      "cart": {
+        "title": "YOUR CART",
+        "empty": "Your bag is empty. Pick a bar or build a 3 pack below.",
+        "clear": "Clear cart",
+        "bar": "{flavour} Bar",
+        "pack": "3 Pack ({flavours})",
+        "checkout": "",
+        "checkoutLabel": "Checkout"
+      },
+      "dibs": {
+        "title": "FIRST DIBS",
+        "text": "Get early access to fresh small-batch drops & 15% off your first box.",
+        "placeholder": "you@domain.com",
+        "button": "Join drop list",
+        "thanks": "You're on the list for limited cold-pressed drops.",
+        "email": "",
+        "formAction": ""
+      },
+      "hero": {
+        "next": "Next flavour",
+        "autoplay": "AUTOPLAY"
+      },
+      "flavours": [
+        {
+          "name": "Peanut Cocoa",
+          "label": "PEANUT\nCOCOA",
+          "color": "#b79474",
+          "ingredients": "Peanuts, oats, dates, cocoa, pea protein, sea salt.",
+          "box": "98, 145, 403, 849",
+          "bit": 1
+        },
+        {
+          "name": "Berry Oat",
+          "label": "BERRY\nOAT",
+          "color": "#ab9ac4",
+          "ingredients": "Oats, blueberries, raspberries, dates, pea protein, almonds.",
+          "box": "620, 145, 402, 849",
+          "bit": 0
+        },
+        {
+          "name": "Salted Caramel",
+          "label": "SALTED\nCARAMEL",
+          "color": "#d1ad6c",
+          "ingredients": "Dates, cashews, oats, pea protein, sea salt, vanilla.",
+          "box": "1137, 145, 402, 849",
+          "bit": 2
+        },
+        {
+          "name": "Mint Chip",
+          "label": "MINT\nCHIP",
+          "color": "#94bdb4",
+          "ingredients": "Oats, dark chocolate, almonds, pea protein, peppermint oil.",
+          "box": "1661, 145, 402, 849",
+          "bit": 3
+        },
+        {
+          "name": "Strawberry",
+          "label": "STRAW-\nBERRY",
+          "color": "#d396a7",
+          "ingredients": "Oats, strawberries, dates, cashews, pea protein, lemon.",
+          "box": "2184, 145, 403, 849",
+          "bit": 4
+        }
+      ],
+      "inside": {
+        "steps": [
+          {
+            "title": "REAL FOOD,\nFIRST",
+            "caption": "OATS, NUTS, FRUIT.\nNOTHING YOU CAN'T SAY."
+          },
+          {
+            "title": "PRESSED,\nNOT BAKED",
+            "caption": "REAL INGREDIENTS.\nCLEAN ENERGY."
+          },
+          {
+            "title": "WRAPPED\nSAME DAY",
+            "caption": "COLD-PRESSED AT DAWN.\nSEALED BY NOON."
+          },
+          {
+            "title": "{flavour}",
+            "caption": "12G PLANT PROTEIN.\nNO CRASH."
+          }
+        ]
+      },
+      "shop": {
+        "title": "GRAB\nA BAG",
+        "text": "Five bold flavours. Same\nreal ingredients. Pick your\nfavourite (or try them all).",
+        "add": "Add a bag of {flavour} to the cart"
+      },
+      "range": {
+        "line1": "BUILD YOUR",
+        "line2": "PACK &",
+        "line3": "SAVE $1.49",
+        "price": "$7.48",
+        "add": "Add to cart",
+        "added": "Added to cart",
+        "pick": "Pick {count} more"
+      },
+      "pack": {
+        "weight": "50 G",
+        "nutritionTitle": "NUTRITION",
+        "serving": "Serving size 1 bar (50 g)",
+        "nutrition": "Calories | 210\nProtein | 12 g\nTotal fat | 9 g\nCarbohydrate | 22 g\nFibre | 6 g\nSugars | 8 g\nSalt | 0.2 g",
+        "ingredientsTitle": "INGREDIENTS",
+        "barcode": "5 060123 4560",
+        "slogan": "PRESSED, NOT BAKED"
+      },
+      "sheet": {
+        "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261116_132032_30242d8c-5062-4d60-8a3d-238f0a2ff788.png&w=2200&q=85",
+        "width": 2688,
+        "height": 1520,
+        "bits": "650, 1090, 340, 305\n110, 1125, 280, 255\n1175, 1110, 320, 285\n1680, 1085, 380, 305\n2280, 1095, 250, 295"
+      },
+      "theme": {
+        "colors": {
+          "ink": "#1c1a1f",
+          "cream": "#f0e8e0",
+          "dark": "#191a1e"
+        },
+        "fonts": {
+          "display": "Archivo Black",
+          "body": "Inter",
+          "mono": "DM Mono"
+        }
+      },
+      "motion": {
+        "autoplay": true
+      },
+      "extras": []
+    },
+    "poster": false,
+    "siteFiles": 10,
+    "sourceFiles": 16
   }
 ]

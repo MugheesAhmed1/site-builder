@@ -21,10 +21,22 @@ const ROOT = fileURLToPath(new URL("../", import.meta.url));
 const TEMPLATES = join(ROOT, "templates");
 const OUT = join(ROOT, "public", "tpl");
 const REGISTRY = join(ROOT, "lib", "templates.gen.json");
+const KIT = join(TEMPLATES, "_kit");
+
+// Shared template files (templates/_kit) are kept identical in every template that uses them.
+function syncKit(src) {
+  if (!existsSync(KIT)) return;
+  for (const f of readdirSync(KIT)) {
+    const to = join(src, "src", f);
+    if (!existsSync(to)) continue;
+    const want = readFileSync(join(KIT, f), "utf8");
+    if (readFileSync(to, "utf8") !== want) writeFileSync(to, want);
+  }
+}
 // The business types a template can be filed under: the builder's own categories (lib/categories.ts).
 const BUSINESS = new Set([...readFileSync(join(ROOT, "lib", "categories.ts"), "utf8").matchAll(/^\s{4}id: "([a-z-]+)",$/gm)].map((m) => m[1]));
 // Preview mode: the studio sends new content by message, and the address can carry the first copy.
-const PREVIEW = `<script>window.__XP_PREVIEW__=true;try{var m=/[#&]xp=([^&]*)/.exec(location.hash);if(m)window.__XP_HASH__=JSON.parse(decodeURIComponent(m[1]))}catch(e){}</script>`;
+const PREVIEW = `<script>window.__XP_PREVIEW__=true;window.__XP_LIB__="/lib/xp-library.js";try{var m=/[#&]xp=([^&]*)/.exec(location.hash);if(m)window.__XP_HASH__=JSON.parse(decodeURIComponent(m[1]))}catch(e){}</script>`;
 
 function listFiles(dir, base = dir) {
   const out = [];
@@ -78,6 +90,7 @@ async function buildOne(id) {
   const errs = validManifest(m, id);
   if (errs.length) throw new Error(`templates/${id}/template.json:\n  ${errs.join("\n  ")}`);
   const src = join(dir, "source");
+  syncKit(src);
   const depErrs = checkDependencies(src);
   if (depErrs.length) throw new Error(`templates/${id} dependencies:\n  ${depErrs.join("\n  ")}`);
   const content = JSON.parse(readFileSync(join(dir, "content.json"), "utf8"));

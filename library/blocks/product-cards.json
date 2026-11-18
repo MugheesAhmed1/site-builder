@@ -1,0 +1,39 @@
+{
+  "name": "Product cards",
+  "kind": "section",
+  "from": "stride",
+  "description": "A bold title and bright coloured cards for products, menu items or packages, each tilting towards the pointer.",
+  "tags": ["shop", "products", "menu", "cards"],
+  "business": ["shop", "food", "product", "beauty", "pets", "fitness"],
+  "heavy": false,
+  "fields": [
+    { "path": "anchor", "label": "Section name for links (e.g. shop)", "type": "text" },
+    { "path": "title", "label": "Title (one line per row)", "type": "textarea" },
+    { "path": "body", "label": "Text", "type": "textarea" },
+    { "path": "items", "label": "Products", "type": "list", "itemLabel": "Product", "max": 12, "fields": [
+      { "path": "name", "label": "Name", "type": "text" },
+      { "path": "color", "label": "Card colour", "type": "color" },
+      { "path": "image", "label": "Picture (a cut-out works best)", "type": "image" },
+      { "path": "price", "label": "Price", "type": "text" },
+      { "path": "cta", "label": "Button", "type": "text" },
+      { "path": "link", "label": "Link (e.g. your shop page)", "type": "url" }
+    ] },
+    { "path": "background", "label": "Background", "type": "color" },
+    { "path": "text", "label": "Text colour", "type": "color" },
+    { "path": "cardText", "label": "Card text colour", "type": "color" }
+  ],
+  "defaults": {
+    "anchor": "shop",
+    "title": "Grab\na bag",
+    "body": "Bold flavours, real ingredients. Pick your favourite or try them all.",
+    "items": [
+      { "name": "Peanut Cocoa", "color": "#b79474", "image": "", "price": "$2.99", "cta": "Add", "link": "" },
+      { "name": "Berry Oat", "color": "#ab9ac4", "image": "", "price": "$2.99", "cta": "Add", "link": "" },
+      { "name": "Salted Caramel", "color": "#d1ad6c", "image": "", "price": "$2.99", "cta": "Add", "link": "" },
+      { "name": "Mint Chip", "color": "#94bdb4", "image": "", "price": "$2.99", "cta": "Add", "link": "" }
+    ],
+    "background": "#f0e8e0",
+    "text": "#1c1a1f",
+    "cardText": "#ffffff"
+  }
+}

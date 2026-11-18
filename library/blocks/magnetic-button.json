@@ -1,0 +1,27 @@
+{
+  "name": "Magnetic call to action",
+  "kind": "section",
+  "from": "milo",
+  "description": "A large closing line and a pill button that is pulled towards the pointer.",
+  "tags": ["cta", "button", "contact", "pointer"],
+  "business": ["creator", "agency", "consulting", "product", "events", "fitness", "photo"],
+  "heavy": false,
+  "fields": [
+    { "path": "title", "label": "Line (one line per row)", "type": "textarea" },
+    { "path": "button", "label": "Button", "type": "text" },
+    { "path": "link", "label": "Button link", "type": "url" },
+    { "path": "strength", "label": "Pull", "type": "number", "min": 0, "max": 1, "step": 0.05 },
+    { "path": "background", "label": "Background", "type": "color" },
+    { "path": "text", "label": "Text colour", "type": "color" },
+    { "path": "accent", "label": "Button colour", "type": "color" }
+  ],
+  "defaults": {
+    "title": "Let's make\nsomething alive.",
+    "button": "Start a project",
+    "link": "#contact",
+    "strength": 0.3,
+    "background": "#02070a",
+    "text": "#f2fbff",
+    "accent": "#63e6ff"
+  }
+}

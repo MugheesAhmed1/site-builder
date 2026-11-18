@@ -8,3 +8,4 @@ public/site-kit/
 .site-kit-tmp/
 .examples/
 public/tpl/
+public/lib/

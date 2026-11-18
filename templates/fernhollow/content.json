@@ -59,9 +59,18 @@
     "title": "Regenerative craft for living digital ecosystems.",
     "text": "{name} is an independent regenerative design studio partnering with ecological research initiatives, climate pioneers, and cultural institutions. We treat every digital space like a cultivated habitat—lightweight, adaptive, and attuned to natural rhythms.",
     "facts": [
-      { "label": "Practice", "value": "Spatial Web & Ecological Systems" },
-      { "label": "Ethos", "value": "Low-carbon, open botanical data" },
-      { "label": "Studio", "value": "Tāmaki Makaurau · Remote" }
+      {
+        "label": "Practice",
+        "value": "Spatial Web & Ecological Systems"
+      },
+      {
+        "label": "Ethos",
+        "value": "Low-carbon, open botanical data"
+      },
+      {
+        "label": "Studio",
+        "value": "Tāmaki Makaurau · Remote"
+      }
     ]
   },
   "journal": {
@@ -113,8 +122,20 @@
     "sky": "#030508",
     "fog": "#04070b",
     "fogDensity": 0.022,
-    "flowers": ["#f5efe2", "#f6e6c9", "#e6c2b8", "#b6bfe8", "#9dd6c3", "#f0c888"],
-    "leaves": ["#132820", "#1b362b", "#254437", "#182a31"],
+    "flowers": [
+      "#f5efe2",
+      "#f6e6c9",
+      "#e6c2b8",
+      "#b6bfe8",
+      "#9dd6c3",
+      "#f0c888"
+    ],
+    "leaves": [
+      "#132820",
+      "#1b362b",
+      "#254437",
+      "#182a31"
+    ],
     "glow": "#f5e6c2",
     "rays": true,
     "rayColor": "#cfdcf0",
@@ -135,5 +156,6 @@
     "volume": 0.36,
     "mood": "night",
     "wind": 0.35
-  }
+  },
+  "extras": []
 }

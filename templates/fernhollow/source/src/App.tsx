@@ -324,6 +324,8 @@ export default function App() {
                   )}
                 </div>
               )}
+              {/* Blocks added from the library show at the end of every drawer. */}
+              <div data-xp-extras="" className="sheet-extras" />
             </div>
           </div>
         )}

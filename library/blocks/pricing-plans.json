@@ -1,0 +1,41 @@
+{
+  "name": "Pricing plans",
+  "kind": "section",
+  "from": "distill",
+  "description": "Plans or packages side by side, each with a price, what is included and a button. One can be picked out.",
+  "tags": ["pricing", "plans", "packages", "membership"],
+  "business": ["product", "fitness", "consulting", "school", "agency", "beauty", "dentist", "pets", "photo"],
+  "heavy": false,
+  "fields": [
+    { "path": "anchor", "label": "Section name for links (e.g. pricing)", "type": "text" },
+    { "path": "title", "label": "Title", "type": "text" },
+    { "path": "body", "label": "Text", "type": "textarea" },
+    { "path": "plans", "label": "Plans", "type": "list", "itemLabel": "Plan", "max": 6, "fields": [
+      { "path": "name", "label": "Name", "type": "text" },
+      { "path": "price", "label": "Price", "type": "text" },
+      { "path": "detail", "label": "Detail", "type": "text" },
+      { "path": "features", "label": "Included (one per line)", "type": "textarea" },
+      { "path": "button", "label": "Button", "type": "text" },
+      { "path": "link", "label": "Button link", "type": "url" },
+      { "path": "highlight", "label": "Pick this one out", "type": "toggle" }
+    ] },
+    { "path": "background", "label": "Background", "type": "color" },
+    { "path": "card", "label": "Card colour", "type": "color" },
+    { "path": "text", "label": "Text colour", "type": "color" },
+    { "path": "accent", "label": "Accent", "type": "color" }
+  ],
+  "defaults": {
+    "anchor": "pricing",
+    "title": "Simple pricing",
+    "body": "Pick the plan that fits. Change or cancel any time.",
+    "plans": [
+      { "name": "Starter", "price": "$0", "detail": "For trying it out", "features": "One project\nEmail support", "button": "Start free", "link": "#contact", "highlight": false },
+      { "name": "Growth", "price": "$49 / mo", "detail": "For growing teams", "features": "Ten projects\nPriority support\nCustom domain", "button": "Choose Growth", "link": "#contact", "highlight": true },
+      { "name": "Studio", "price": "Custom", "detail": "For larger needs", "features": "Unlimited projects\nDedicated contact\nTraining", "button": "Talk to us", "link": "#contact", "highlight": false }
+    ],
+    "background": "#eef0f2",
+    "card": "#ffffff",
+    "text": "#0f1115",
+    "accent": "#ff5a1f"
+  }
+}

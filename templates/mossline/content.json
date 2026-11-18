@@ -207,5 +207,6 @@
     "cardTilt": true,
     "countUp": true,
     "pulse": true
-  }
+  },
+  "extras": []
 }

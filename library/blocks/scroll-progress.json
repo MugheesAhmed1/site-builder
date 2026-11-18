@@ -1,0 +1,15 @@
+{
+  "name": "Reading progress",
+  "kind": "effect",
+  "from": "milo",
+  "description": "A thin bar along the top, or a short track at the right, that fills as the visitor scrolls.",
+  "tags": ["progress", "scroll", "effect"],
+  "business": ["creator", "agency", "school", "nonprofit", "consulting", "law", "product"],
+  "heavy": false,
+  "fields": [
+    { "path": "position", "label": "Where", "type": "select", "options": [{ "value": "top", "label": "Along the top" }, { "value": "right", "label": "Right edge" }] },
+    { "path": "thickness", "label": "Thickness", "type": "number", "min": 1, "max": 12, "step": 1 },
+    { "path": "color", "label": "Colour", "type": "color" }
+  ],
+  "defaults": { "position": "top", "thickness": 3, "color": "#63e6ff" }
+}

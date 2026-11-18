@@ -1,0 +1,29 @@
+{
+  "name": "Live 3D world",
+  "kind": "scene",
+  "from": "milo",
+  "description": "A live 3D scene beside your words that visitors can drag to turn and scroll to zoom: glowing deep-sea flora, floating rings, liquid metal waves or sound rings.",
+  "tags": ["3d", "webgl", "interactive", "showcase"],
+  "business": ["creator", "agency", "product", "events"],
+  "heavy": true,
+  "fields": [
+    { "path": "world", "label": "World", "type": "select", "options": [{ "value": "abyss", "label": "Abyss (glowing deep-sea flora)" }, { "value": "orbital", "label": "Orbital (floating rings)" }, { "value": "tideline", "label": "Tideline (liquid metal waves)" }, { "value": "echo", "label": "Echo (sound rings)" }] },
+    { "path": "orbit", "label": "Visitors can turn and zoom it", "type": "toggle" },
+    { "path": "kicker", "label": "Small label", "type": "text" },
+    { "path": "title", "label": "Title", "type": "text" },
+    { "path": "body", "label": "Text", "type": "textarea" },
+    { "path": "height", "label": "Scene height (% of the screen)", "type": "number", "min": 30, "max": 90, "step": 5 },
+    { "path": "background", "label": "Background", "type": "color" },
+    { "path": "text", "label": "Text colour", "type": "color" }
+  ],
+  "defaults": {
+    "world": "abyss",
+    "orbit": true,
+    "kicker": "In motion",
+    "title": "Step inside",
+    "body": "Drag to turn the scene, scroll to come closer.",
+    "height": 60,
+    "background": "#02070a",
+    "text": "#f2fbff"
+  }
+}

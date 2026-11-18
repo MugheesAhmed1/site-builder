@@ -1,0 +1,28 @@
+{
+  "name": "Numbered services",
+  "kind": "section",
+  "from": "jack",
+  "description": "A title and big numbered rows (services, steps, reasons) that slide in and lean towards the pointer.",
+  "tags": ["services", "steps", "list", "typography"],
+  "business": ["agency", "consulting", "creator", "trades", "law", "dentist", "health", "fitness"],
+  "heavy": false,
+  "fields": [
+    { "path": "title", "label": "Title", "type": "text" },
+    { "path": "items", "label": "Rows", "type": "list", "itemLabel": "Row", "max": 12, "fields": [{ "path": "title", "label": "Name", "type": "text" }, { "path": "text", "label": "Description", "type": "textarea" }] },
+    { "path": "background", "label": "Background", "type": "color" },
+    { "path": "text", "label": "Text colour", "type": "color" },
+    { "path": "accent", "label": "Number colour on hover", "type": "color" }
+  ],
+  "defaults": {
+    "title": "What we do",
+    "items": [
+      { "title": "Strategy", "text": "We start with your goals, your customers and what makes you different." },
+      { "title": "Design", "text": "A look and voice that people remember, made for every screen." },
+      { "title": "Build", "text": "Fast, accessible pages that are easy for you to keep up to date." },
+      { "title": "Grow", "text": "Measure what works, then do more of it." }
+    ],
+    "background": "#f4f2ee",
+    "text": "#0b0b0c",
+    "accent": "#ff5a1f"
+  }
+}

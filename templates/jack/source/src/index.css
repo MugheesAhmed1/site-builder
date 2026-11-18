@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+:root {
+  --c-page: #0c0c0c;
+  --c-text: #d7e2ea;
+  --c-surface: #141414;
+  --c-light: #ffffff;
+  --c-lightText: #0c0c0c;
+  --c-headingFrom: #646973;
+  --c-headingTo: #bbccd7;
+  --c-grad1: #18011f;
+  --c-grad2: #b600a8;
+  --c-grad3: #7621b0;
+  --c-grad4: #be4c00;
+  --c-buttonText: #ffffff;
+  --f-display: "Kanit";
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html,
+  body,
+  #root {
+    background-color: var(--c-page);
+    color: var(--c-text);
+    font-family: var(--f-display), system-ui, sans-serif;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+.hero-heading {
+  background: linear-gradient(180deg, var(--c-headingFrom) 0%, var(--c-headingTo) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Pictures shot on a dark backdrop fade into the page at their edges. */
+.xp-blend img {
+  -webkit-mask-image: radial-gradient(closest-side, #000 58%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 58%, transparent 100%);
+}

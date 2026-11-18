@@ -1,0 +1,35 @@
+{
+  "name": "Counting numbers",
+  "kind": "section",
+  "from": "mossline",
+  "description": "A row of key numbers that count up from zero when they scroll into view.",
+  "tags": ["stats", "numbers", "proof", "results"],
+  "business": ["product", "consulting", "nonprofit", "health", "hospital", "dentist", "fitness", "school"],
+  "heavy": false,
+  "fields": [
+    { "path": "title", "label": "Title", "type": "text" },
+    { "path": "items", "label": "Numbers", "type": "list", "itemLabel": "Number", "max": 8, "fields": [
+      { "path": "value", "label": "Number", "type": "number", "min": 0, "max": 1000000000, "step": 0.1 },
+      { "path": "decimals", "label": "Decimal places", "type": "number", "min": 0, "max": 3, "step": 1 },
+      { "path": "prefix", "label": "Before (e.g. $)", "type": "text" },
+      { "path": "suffix", "label": "After (e.g. % or +)", "type": "text" },
+      { "path": "label", "label": "Label", "type": "text" }
+    ] },
+    { "path": "duration", "label": "Count time (seconds)", "type": "number", "min": 0.2, "max": 6, "step": 0.1 },
+    { "path": "background", "label": "Background", "type": "color" },
+    { "path": "text", "label": "Text colour", "type": "color" },
+    { "path": "accent", "label": "Number colour", "type": "color" }
+  ],
+  "defaults": {
+    "title": "Results that speak for themselves",
+    "items": [
+      { "value": 12, "decimals": 0, "prefix": "", "suffix": "+", "label": "Years of experience" },
+      { "value": 4800, "decimals": 0, "prefix": "", "suffix": "", "label": "Happy clients" },
+      { "value": 98, "decimals": 0, "prefix": "", "suffix": "%", "label": "Would recommend us" }
+    ],
+    "duration": 1.6,
+    "background": "#f2f4f0",
+    "text": "#13201a",
+    "accent": "#2f7d5b"
+  }
+}

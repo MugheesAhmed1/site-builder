@@ -1,0 +1,33 @@
+{
+  "name": "Spotlight reveal",
+  "kind": "section",
+  "from": "lithos",
+  "description": "A full-width picture with a spotlight that follows the pointer and shows a second picture through it. Drifts by itself when nobody points.",
+  "tags": ["hero", "picture", "pointer", "reveal"],
+  "business": ["school", "photo", "property", "hotel", "nonprofit"],
+  "heavy": false,
+  "fields": [
+    { "path": "image", "label": "Picture", "type": "image" },
+    { "path": "revealImage", "label": "Picture inside the spotlight", "type": "image" },
+    { "path": "alt", "label": "Picture description", "type": "text" },
+    { "path": "title", "label": "Headline", "type": "text" },
+    { "path": "body", "label": "Text", "type": "textarea" },
+    { "path": "radius", "label": "Spotlight size", "type": "number", "min": 40, "max": 600, "step": 10 },
+    { "path": "follow", "label": "How quickly it follows", "type": "number", "min": 0.02, "max": 1, "step": 0.01 },
+    { "path": "height", "label": "Height (% of the screen)", "type": "number", "min": 40, "max": 100, "step": 5 },
+    { "path": "background", "label": "Background", "type": "color" },
+    { "path": "text", "label": "Text colour", "type": "color" }
+  ],
+  "defaults": {
+    "image": "lib:landscape.webp",
+    "revealImage": "lib:landscape-night.webp",
+    "alt": "A misty valley at dawn",
+    "title": "Look a little closer",
+    "body": "Move across the picture to see what lies underneath.",
+    "radius": 220,
+    "follow": 0.1,
+    "height": 90,
+    "background": "#000000",
+    "text": "#ffffff"
+  }
+}

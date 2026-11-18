@@ -341,6 +341,7 @@
       <div class="cards">${(so.cards || []).map((c) => { const link = href(c.href); const tag = link ? "a" : "div"; return `<${tag} class="scard"${link ? ` href="${esc(link)}"` : ""}><div class="bg" style="background-image:url('${cssUrl(c.image)}');background-position:${esc(String(c.focus || "50% 50%").replace(/[^0-9.% ]/g, ""))};background-size:${Math.max(100, Math.min(400, num(c.zoom, 160)))}%"></div><div class="top"><span class="tag">${esc(c.tag)}</span><span class="go">→</span></div><div class="bot"><h3>${br(c.title)}</h3><p>${br(c.text)}</p></div></${tag}>`; }).join("")}</div>
       ${on("stats") && stats ? `<div class="stats">${stats}</div>` : ""}
     </section>` : on("stats") && stats ? `<div class="stats" style="padding-top:60px;border-top:0">${stats}</div>` : ""}
+    <div data-xp-extras></div>
     ${on("contact") ? `<section id="contact"><div class="ct"><div>${ct.chip ? `<span class="chip">${esc(ct.chip)}</span>` : ""}<h2>${br(ct.title)}</h2></div><div class="ct-actions"><p>${br(ct.text)}</p>${ct.email ? `<a class="btn" href="mailto:${esc(ct.email)}">${esc(ct.button || ct.email)}<span class="sq">›</span></a>` : ""}<div class="ct-lines">${[ct.email, ct.phone, ct.address].filter(Boolean).map(br).join("<br>")}</div></div></div></section>` : ""}
     <footer>${esc(ct.footer)}</footer>
   </div>`;

@@ -1,0 +1,501 @@
+{
+  "id": "stride",
+  "name": "Stride",
+  "pitch": "A playful product shop for a snack brand: an opening film, a 3D bar carousel you swipe through, a pinned story where the bar flips to show what is inside, a flavour shop with a cart, and a build-your-own 3 pack.",
+  "kind": "vite",
+  "categories": [
+    "3D",
+    "Product",
+    "Playful",
+    "Interactive",
+    "Scroll"
+  ],
+  "business": [
+    "shop",
+    "food",
+    "product"
+  ],
+  "sector": "Food and drink brand selling online (plant protein snack bars)",
+  "intensity": 9,
+  "heavy": true,
+  "licence": {
+    "kind": "owner",
+    "holder": "Mughees",
+    "note": "Supplied by its owner as a whole project for use as a builder template.",
+    "added": "2026-11-18"
+  },
+  "remoteAssets": [
+    "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261116_132032_30242d8c-5062-4d60-8a3d-238f0a2ff788.png&w=2200&q=85",
+    "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261116_131908_b6239896-c077-450c-ad91-575153973fcf.mp4"
+  ],
+  "features": [
+    "Opening film",
+    "3D product carousel",
+    "Pinned flip story",
+    "Shop with cart",
+    "Build a 3 pack",
+    "Early-access sign-up"
+  ],
+  "schema": [
+    {
+      "group": "Business",
+      "fields": [
+        {
+          "path": "brand.name",
+          "label": "Brand name",
+          "type": "text",
+          "hint": "Fills every {name} in the text below."
+        },
+        {
+          "path": "seo.title",
+          "label": "Page title (search and browser tab)",
+          "type": "text"
+        },
+        {
+          "path": "seo.description",
+          "label": "Short description (search and sharing)",
+          "type": "textarea"
+        },
+        {
+          "path": "brand.showMark",
+          "label": "Show the mountain logo",
+          "type": "toggle"
+        }
+      ]
+    },
+    {
+      "group": "Opening film",
+      "fields": [
+        {
+          "path": "intro.show",
+          "label": "Play the opening film",
+          "type": "toggle"
+        },
+        {
+          "path": "intro.video",
+          "label": "Film",
+          "type": "video"
+        },
+        {
+          "path": "intro.start",
+          "label": "Start at (seconds)",
+          "type": "number",
+          "min": 0,
+          "max": 30,
+          "step": 0.05
+        },
+        {
+          "path": "intro.end",
+          "label": "Move on at (seconds, 0 plays to the end)",
+          "type": "number",
+          "min": 0,
+          "max": 60,
+          "step": 0.1
+        },
+        {
+          "path": "intro.skip",
+          "label": "Skip button",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Menu",
+      "fields": [
+        {
+          "path": "nav.flavors",
+          "label": "Flavours link",
+          "type": "text"
+        },
+        {
+          "path": "nav.inside",
+          "label": "Inside link",
+          "type": "text"
+        },
+        {
+          "path": "nav.shop",
+          "label": "Shop link",
+          "type": "text"
+        },
+        {
+          "path": "nav.range",
+          "label": "Pack link",
+          "type": "text"
+        },
+        {
+          "path": "nav.offer",
+          "label": "Offer chip",
+          "type": "text"
+        },
+        {
+          "path": "nav.dibs",
+          "label": "Sign-up button",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Flavours",
+      "fields": [
+        {
+          "path": "flavours",
+          "label": "Flavours",
+          "type": "list",
+          "itemLabel": "Flavour",
+          "fields": [
+            {
+              "path": "name",
+              "label": "Name",
+              "type": "text"
+            },
+            {
+              "path": "label",
+              "label": "Name on the card (one line per row)",
+              "type": "textarea"
+            },
+            {
+              "path": "color",
+              "label": "Colour",
+              "type": "color"
+            },
+            {
+              "path": "ingredients",
+              "label": "Ingredients (printed on the wrapper)",
+              "type": "textarea"
+            },
+            {
+              "path": "box",
+              "label": "Where it sits on the product sheet (x, y, width, height)",
+              "type": "text",
+              "hint": "In pixels on the product picture sheet. Leave as is unless you upload your own sheet."
+            },
+            {
+              "path": "bit",
+              "label": "Ingredient picture (number on the sheet, from 0)",
+              "type": "number",
+              "min": 0,
+              "max": 9,
+              "step": 1
+            }
+          ],
+          "min": 3,
+          "max": 8
+        },
+        {
+          "path": "hero.next",
+          "label": "Next button (for screen readers)",
+          "type": "text"
+        },
+        {
+          "path": "hero.autoplay",
+          "label": "Autoplay label",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Inside story",
+      "fields": [
+        {
+          "path": "inside.steps",
+          "label": "Steps",
+          "type": "list",
+          "itemLabel": "Step",
+          "fields": [
+            {
+              "path": "title",
+              "label": "Title (one line per row; {flavour} is the flavour on show)",
+              "type": "textarea"
+            },
+            {
+              "path": "caption",
+              "label": "Caption (one line per row)",
+              "type": "textarea"
+            }
+          ],
+          "min": 4,
+          "max": 4
+        }
+      ]
+    },
+    {
+      "group": "Shop",
+      "fields": [
+        {
+          "path": "shop.title",
+          "label": "Title (one line per row)",
+          "type": "textarea"
+        },
+        {
+          "path": "shop.text",
+          "label": "Text (one line per row)",
+          "type": "textarea"
+        },
+        {
+          "path": "shop.add",
+          "label": "Add button (for screen readers)",
+          "type": "text",
+          "hint": "{flavour} is the flavour."
+        }
+      ]
+    },
+    {
+      "group": "Build a 3 pack",
+      "fields": [
+        {
+          "path": "range.line1",
+          "label": "Title, line 1",
+          "type": "text"
+        },
+        {
+          "path": "range.line2",
+          "label": "Title, after the 3",
+          "type": "text"
+        },
+        {
+          "path": "range.line3",
+          "label": "Title, line 3",
+          "type": "text"
+        },
+        {
+          "path": "range.price",
+          "label": "Pack price",
+          "type": "text"
+        },
+        {
+          "path": "range.add",
+          "label": "Add button",
+          "type": "text"
+        },
+        {
+          "path": "range.added",
+          "label": "Added note",
+          "type": "text"
+        },
+        {
+          "path": "range.pick",
+          "label": "Still to pick",
+          "type": "text",
+          "hint": "{count} is how many are left."
+        }
+      ]
+    },
+    {
+      "group": "Cart",
+      "fields": [
+        {
+          "path": "cart.title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "cart.empty",
+          "label": "When empty",
+          "type": "textarea"
+        },
+        {
+          "path": "cart.clear",
+          "label": "Clear button",
+          "type": "text"
+        },
+        {
+          "path": "cart.bar",
+          "label": "One bar",
+          "type": "text",
+          "hint": "{flavour} is the flavour."
+        },
+        {
+          "path": "cart.pack",
+          "label": "A 3 pack",
+          "type": "text",
+          "hint": "{flavours} lists the three."
+        },
+        {
+          "path": "cart.checkout",
+          "label": "Checkout page (optional)",
+          "type": "url",
+          "hint": "For example your Shopify or Stripe checkout link. Shows a checkout button when set."
+        },
+        {
+          "path": "cart.checkoutLabel",
+          "label": "Checkout button",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Early-access sign-up",
+      "fields": [
+        {
+          "path": "dibs.title",
+          "label": "Title",
+          "type": "text"
+        },
+        {
+          "path": "dibs.text",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "dibs.placeholder",
+          "label": "Email hint",
+          "type": "text"
+        },
+        {
+          "path": "dibs.button",
+          "label": "Button",
+          "type": "text"
+        },
+        {
+          "path": "dibs.thanks",
+          "label": "Thank-you text",
+          "type": "textarea"
+        },
+        {
+          "path": "dibs.email",
+          "label": "Send sign-ups to (email)",
+          "type": "text"
+        },
+        {
+          "path": "dibs.formAction",
+          "label": "Or post to a form service (https)",
+          "type": "url",
+          "hint": "For example a Formspree, Basin or Mailchimp endpoint. Wins over email."
+        }
+      ]
+    },
+    {
+      "group": "Wrapper print",
+      "fields": [
+        {
+          "path": "pack.weight",
+          "label": "Weight",
+          "type": "text"
+        },
+        {
+          "path": "pack.nutritionTitle",
+          "label": "Nutrition title",
+          "type": "text"
+        },
+        {
+          "path": "pack.serving",
+          "label": "Serving line",
+          "type": "text"
+        },
+        {
+          "path": "pack.nutrition",
+          "label": "Nutrition (one per line: name | amount; the first two are bold)",
+          "type": "textarea"
+        },
+        {
+          "path": "pack.ingredientsTitle",
+          "label": "Ingredients title",
+          "type": "text"
+        },
+        {
+          "path": "pack.barcode",
+          "label": "Barcode number start",
+          "type": "text"
+        },
+        {
+          "path": "pack.slogan",
+          "label": "Slogan",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Product picture sheet",
+      "fields": [
+        {
+          "path": "sheet.image",
+          "label": "Sheet with every bar and ingredient",
+          "type": "image",
+          "hint": "One picture holding all the bars in a row and their ingredients below."
+        },
+        {
+          "path": "sheet.width",
+          "label": "Sheet width (pixels)",
+          "type": "number",
+          "min": 100,
+          "max": 10000,
+          "step": 1
+        },
+        {
+          "path": "sheet.height",
+          "label": "Sheet height (pixels)",
+          "type": "number",
+          "min": 100,
+          "max": 10000,
+          "step": 1
+        },
+        {
+          "path": "sheet.bits",
+          "label": "Ingredient pictures (one per line: x, y, width, height)",
+          "type": "textarea"
+        }
+      ]
+    },
+    {
+      "group": "Colours",
+      "fields": [
+        {
+          "path": "theme.colors.ink",
+          "label": "Text",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.cream",
+          "label": "Page",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.dark",
+          "label": "Dark sections",
+          "type": "color"
+        }
+      ]
+    },
+    {
+      "group": "Fonts",
+      "fields": [
+        {
+          "path": "theme.fonts.display",
+          "label": "Headlines",
+          "type": "font"
+        },
+        {
+          "path": "theme.fonts.body",
+          "label": "Text",
+          "type": "font"
+        },
+        {
+          "path": "theme.fonts.mono",
+          "label": "Labels",
+          "type": "font"
+        }
+      ]
+    },
+    {
+      "group": "Motion",
+      "fields": [
+        {
+          "path": "motion.autoplay",
+          "label": "Carousel plays by itself",
+          "type": "toggle"
+        }
+      ]
+    },
+    {
+      "group": "Library blocks",
+      "fields": [
+        {
+          "path": "extras",
+          "label": "Blocks from the library",
+          "type": "blocks",
+          "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+        }
+      ]
+    }
+  ]
+}

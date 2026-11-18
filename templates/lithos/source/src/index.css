@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+:root {
+  --c-accent: #e8702a;
+  --c-accentHover: #d2611f;
+  --c-text: #ffffff;
+  --c-page: #000000;
+  --c-panel: #0a0a0a;
+  --c-button: #ffffff;
+  --c-buttonText: #111827;
+  --f-display: "Playfair Display";
+  --f-body: "Inter";
+  --n-headlineSize: 96;
+}
+
+html,
+body {
+  background: var(--c-page);
+}
+
+* {
+  font-family: var(--f-body), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--f-display), Georgia, serif;
+}
+
+.lithos-page {
+  background: var(--c-page);
+}
+.lithos-text {
+  color: var(--c-text);
+}
+.lithos-btn {
+  background: var(--c-button);
+  color: var(--c-buttonText);
+}
+.lithos-accent {
+  background: var(--c-accent);
+  color: var(--c-text);
+  box-shadow: 0 0 0 0 transparent;
+}
+.lithos-accent:hover {
+  background: var(--c-accentHover);
+  box-shadow: 0 10px 30px -8px color-mix(in srgb, var(--c-accent) 45%, transparent);
+}
+.lithos-panel {
+  background: color-mix(in srgb, var(--c-panel) 95%, transparent);
+  color: var(--c-text);
+}
+.lithos-h1 {
+  font-size: min(calc(var(--n-headlineSize) * 1px), max(44px, calc(var(--n-headlineSize) * 0.1vw)));
+}
+
+@keyframes heroReveal {
+  0% { opacity: 0; transform: translateY(28px); filter: blur(12px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+@keyframes heroFadeUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroZoom {
+  0% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+.hero-anim {
+  opacity: 0;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero-anim.hero-reveal { animation-name: heroReveal; animation-duration: 1.1s; }
+.hero-anim.hero-fade { animation-name: heroFadeUp; animation-duration: 1s; }
+.hero-zoom { animation: heroZoom 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-anim,
+  .hero-zoom { animation: none; opacity: 1; }
+}

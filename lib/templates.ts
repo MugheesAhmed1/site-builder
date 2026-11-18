@@ -146,6 +146,18 @@ export async function templateZip(t: TemplateInfo, c: Content, which: "site" | "
         zip.file(p, await res.arrayBuffer());
       }),
   );
+  // Library blocks travel with the site: the runtime, every block and the library's pictures.
+  if (Array.isArray(c.extras) && c.extras.length) {
+    const libAt = mediaAt + "xp-lib/";
+    const libFiles: string[] = await fetch("/lib/files.json").then((r) => (r.ok ? r.json() : Promise.reject(new Error("Could not read the library"))));
+    await Promise.all(
+      libFiles.map(async (p) => {
+        const res = await fetch(`/lib/${p.split("/").map(encodeURIComponent).join("/")}`);
+        if (!res.ok) throw new Error(`Could not read library file ${p}`);
+        zip.file(libAt + p, await res.arrayBuffer());
+      }),
+    );
+  }
   const { content, files } = extractMedia(c);
   zip.file(contentAt, contentScript(content));
   for (const f of files) zip.file(mediaAt + f.path, f.base64, { base64: true });
