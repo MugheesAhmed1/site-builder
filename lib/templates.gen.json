@@ -1,5 +1,2773 @@
 [
   {
+    "id": "ashgrove",
+    "name": "Ashgrove",
+    "pitch": "A warm, firelit restaurant: embers drifting over a flickering hero, a story told in chapters while the picture changes beside it, a wheel of signature plates that turns as you scroll, a tabbed menu, private dining and a table booking with guests, dates and times.",
+    "kind": "vite",
+    "categories": [
+      "Cinematic",
+      "Scroll",
+      "Interactive",
+      "Editorial"
+    ],
+    "business": [
+      "food",
+      "events",
+      "hotel"
+    ],
+    "sector": "Restaurant, wine bar, bakery or café",
+    "intensity": 7,
+    "heavy": false,
+    "licence": {
+      "kind": "original",
+      "holder": "Site Builder",
+      "note": "Made for the builder as an original template. Pictures are free AI generations (Pollinations) kept in source/public/media.",
+      "added": "2026-11-18"
+    },
+    "remoteAssets": [],
+    "features": [
+      "Ember particles",
+      "Firelight flicker",
+      "Scroll story chapters",
+      "Turning wheel of signature plates",
+      "Tabbed menu",
+      "Private dining enquiry",
+      "Table booking with guests, dates and times",
+      "Hours and directions"
+    ],
+    "schema": [
+      {
+        "group": "Business",
+        "fields": [
+          {
+            "path": "brand.name",
+            "label": "Restaurant name",
+            "type": "text",
+            "hint": "Fills every {name} in the text below."
+          },
+          {
+            "path": "brand.phone",
+            "label": "Phone",
+            "type": "text"
+          },
+          {
+            "path": "brand.email",
+            "label": "Email",
+            "type": "text"
+          },
+          {
+            "path": "brand.address",
+            "label": "Address",
+            "type": "text"
+          },
+          {
+            "path": "brand.mapLink",
+            "label": "Map link",
+            "type": "url"
+          },
+          {
+            "path": "brand.currency",
+            "label": "Currency sign",
+            "type": "text"
+          },
+          {
+            "path": "seo.title",
+            "label": "Page title (search and browser tab)",
+            "type": "text"
+          },
+          {
+            "path": "seo.description",
+            "label": "Short description (search and sharing)",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "Sections",
+        "fields": [
+          {
+            "path": "sections.story",
+            "label": "Show story",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.signature",
+            "label": "Show signature plates",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.menu",
+            "label": "Show menu",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.private",
+            "label": "Show private dining",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.booking",
+            "label": "Show table booking",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.visit",
+            "label": "Show hours and address",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Menu bar",
+        "fields": [
+          {
+            "path": "nav.links",
+            "label": "Menu links",
+            "type": "list",
+            "itemLabel": "Link",
+            "fields": [
+              {
+                "path": "label",
+                "label": "Label",
+                "type": "text"
+              },
+              {
+                "path": "href",
+                "label": "Goes to",
+                "type": "url"
+              }
+            ],
+            "min": 0,
+            "max": 6
+          },
+          {
+            "path": "nav.cta",
+            "label": "Booking button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Opening",
+        "fields": [
+          {
+            "path": "hero.kicker",
+            "label": "Small line above",
+            "type": "text"
+          },
+          {
+            "path": "hero.title",
+            "label": "Headline",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.text",
+            "label": "Intro",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.button",
+            "label": "Main button",
+            "type": "text"
+          },
+          {
+            "path": "hero.secondary",
+            "label": "Second button",
+            "type": "text"
+          },
+          {
+            "path": "hero.image",
+            "label": "Picture",
+            "type": "image"
+          },
+          {
+            "path": "hero.embers",
+            "label": "Number of embers",
+            "type": "number",
+            "min": 0,
+            "max": 200,
+            "step": 5
+          }
+        ]
+      },
+      {
+        "group": "Story",
+        "fields": [
+          {
+            "path": "story.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "story.chapters",
+            "label": "Chapters",
+            "type": "list",
+            "itemLabel": "Chapter",
+            "fields": [
+              {
+                "path": "title",
+                "label": "Title",
+                "type": "text"
+              },
+              {
+                "path": "text",
+                "label": "Text",
+                "type": "textarea"
+              },
+              {
+                "path": "image",
+                "label": "Picture",
+                "type": "image"
+              }
+            ],
+            "min": 1,
+            "max": 8
+          }
+        ]
+      },
+      {
+        "group": "Signature plates",
+        "fields": [
+          {
+            "path": "signature.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "signature.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "signature.items",
+            "label": "Plates",
+            "type": "list",
+            "itemLabel": "Plate",
+            "fields": [
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "note",
+                "label": "With",
+                "type": "text"
+              },
+              {
+                "path": "price",
+                "label": "Price",
+                "type": "text"
+              },
+              {
+                "path": "image",
+                "label": "Round picture, from above",
+                "type": "image"
+              }
+            ],
+            "min": 1,
+            "max": 10
+          }
+        ]
+      },
+      {
+        "group": "Menu",
+        "fields": [
+          {
+            "path": "menu.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "menu.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "menu.note",
+            "label": "Note",
+            "type": "textarea"
+          },
+          {
+            "path": "menu.categories",
+            "label": "Menu tabs",
+            "type": "list",
+            "itemLabel": "Tab",
+            "fields": [
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "dishes",
+                "label": "Dishes (Name | Price | Note, one per line)",
+                "type": "textarea"
+              }
+            ],
+            "min": 1,
+            "max": 8
+          }
+        ]
+      },
+      {
+        "group": "Private dining",
+        "fields": [
+          {
+            "path": "private.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "private.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "private.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "private.points",
+            "label": "Points (one per line)",
+            "type": "textarea"
+          },
+          {
+            "path": "private.button",
+            "label": "Button (emails you)",
+            "type": "text"
+          },
+          {
+            "path": "private.image",
+            "label": "Picture",
+            "type": "image"
+          }
+        ]
+      },
+      {
+        "group": "Table booking",
+        "fields": [
+          {
+            "path": "booking.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "booking.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "booking.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "booking.times",
+            "label": "Times (one per line)",
+            "type": "textarea"
+          },
+          {
+            "path": "booking.maxParty",
+            "label": "Largest party",
+            "type": "number",
+            "min": 1,
+            "max": 30,
+            "step": 1
+          },
+          {
+            "path": "booking.days",
+            "label": "Days ahead to offer",
+            "type": "number",
+            "min": 3,
+            "max": 30,
+            "step": 1
+          },
+          {
+            "path": "booking.closedDays",
+            "label": "Closed days (0 = Sunday … 6 = Saturday, comma separated)",
+            "type": "text"
+          },
+          {
+            "path": "booking.formAction",
+            "label": "Form address (optional)",
+            "type": "url",
+            "hint": "An https form endpoint such as Formspree. Empty: the form only shows the thank-you message."
+          },
+          {
+            "path": "booking.done",
+            "label": "Thank-you message",
+            "type": "textarea",
+            "hint": "{person}, {when} and {party} are filled in."
+          }
+        ]
+      },
+      {
+        "group": "Hours and address",
+        "fields": [
+          {
+            "path": "visit.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "visit.hours",
+            "label": "Hours (Days | Hours, one per line)",
+            "type": "textarea"
+          },
+          {
+            "path": "visit.note",
+            "label": "Getting here",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "Footer",
+        "fields": [
+          {
+            "path": "footer.text",
+            "label": "Line",
+            "type": "text"
+          },
+          {
+            "path": "footer.legal",
+            "label": "Small print",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Colours",
+        "fields": [
+          {
+            "path": "theme.colors.page",
+            "label": "Page",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.surface",
+            "label": "Cards",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.text",
+            "label": "Text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.muted",
+            "label": "Soft text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.accent",
+            "label": "Accent",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.glow",
+            "label": "Glow (embers, prices)",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.line",
+            "label": "Lines",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.onAccent",
+            "label": "Text on accent",
+            "type": "color"
+          }
+        ]
+      },
+      {
+        "group": "Fonts",
+        "fields": [
+          {
+            "path": "theme.fonts.display",
+            "label": "Headings font",
+            "type": "font"
+          },
+          {
+            "path": "theme.fonts.body",
+            "label": "Body font",
+            "type": "font"
+          }
+        ]
+      },
+      {
+        "group": "Motion",
+        "fields": [
+          {
+            "path": "motion.animate",
+            "label": "Animations on",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.embers",
+            "label": "Embers",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.flicker",
+            "label": "Firelight flicker",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.spinPlates",
+            "label": "Plates turn as you scroll",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Library blocks",
+        "fields": [
+          {
+            "path": "extras",
+            "label": "Blocks from the library",
+            "type": "blocks",
+            "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          }
+        ]
+      }
+    ],
+    "content": {
+      "seo": {
+        "title": "{name} | Wood-fire kitchen and wine bar",
+        "description": "Seasonal plates cooked over oak and embers, natural wine and a long table for friends. Book a table tonight."
+      },
+      "brand": {
+        "name": "Ashgrove",
+        "phone": "+44 20 7946 0321",
+        "email": "table@ashgrove.kitchen",
+        "address": "21 Cinder Lane, Shoreditch, London",
+        "mapLink": "https://maps.google.com/?q=Shoreditch+London",
+        "currency": "£"
+      },
+      "nav": {
+        "links": [
+          {
+            "label": "Story",
+            "href": "#story"
+          },
+          {
+            "label": "Menu",
+            "href": "#menu"
+          },
+          {
+            "label": "Private dining",
+            "href": "#private"
+          },
+          {
+            "label": "Find us",
+            "href": "#visit"
+          }
+        ],
+        "cta": "Book a table"
+      },
+      "hero": {
+        "kicker": "Wood-fire kitchen · Since 2014",
+        "title": "Cooked over fire, served with care.",
+        "text": "Seasonal plates from oak and embers, natural wine and a room that glows.",
+        "button": "Book a table",
+        "secondary": "See the menu",
+        "image": "./media/hero.webp",
+        "embers": 70
+      },
+      "story": {
+        "kicker": "Our story",
+        "chapters": [
+          {
+            "title": "One oven, one rule.",
+            "text": "Everything that leaves our kitchen has met the fire. We light the oven at noon with English oak, and it sets the pace for the whole day.",
+            "image": "./media/chef.webp"
+          },
+          {
+            "title": "Close to the farm.",
+            "text": "Our vegetables come from two farms in Kent, our fish from day boats in Cornwall. The menu changes when they do, sometimes twice a week.",
+            "image": "./media/d6.webp"
+          },
+          {
+            "title": "A room to stay in.",
+            "text": "Candles, brick and a long communal table. Come for one plate at the bar or stay for the whole night.",
+            "image": "./media/room.webp"
+          }
+        ]
+      },
+      "signature": {
+        "kicker": "From the fire",
+        "title": "Plates people come back for.",
+        "items": [
+          {
+            "name": "Ember lamb chops",
+            "note": "Salsa verde, charred lemon",
+            "price": "24",
+            "image": "./media/d1.webp"
+          },
+          {
+            "name": "Burrata flatbread",
+            "note": "Blistered tomatoes, oregano",
+            "price": "16",
+            "image": "./media/d2.webp"
+          },
+          {
+            "name": "Charred broccoli",
+            "note": "Tahini, chilli, toasted seeds",
+            "price": "11",
+            "image": "./media/d3.webp"
+          },
+          {
+            "name": "Whole sea bass",
+            "note": "Fennel, brown butter",
+            "price": "29",
+            "image": "./media/d4.webp"
+          },
+          {
+            "name": "Smoked chocolate tart",
+            "note": "Crème fraîche",
+            "price": "9",
+            "image": "./media/d5.webp"
+          },
+          {
+            "name": "Ember carrots",
+            "note": "Yoghurt, dukkah",
+            "price": "10",
+            "image": "./media/d6.webp"
+          }
+        ]
+      },
+      "menu": {
+        "kicker": "The menu",
+        "title": "Tonight's menu.",
+        "note": "Menus change with the season. Tell us about allergies when you book.",
+        "categories": [
+          {
+            "name": "Small plates",
+            "dishes": "Sourdough, cultured butter | 5 | baked every morning\nSmoked almonds | 4 | rosemary salt\nCharred broccoli | 11 | tahini, chilli, toasted seeds\nEmber carrots | 10 | yoghurt, dukkah\nBurrata flatbread | 16 | blistered tomatoes, oregano"
+          },
+          {
+            "name": "From the fire",
+            "dishes": "Ember lamb chops | 24 | salsa verde, charred lemon\nWhole sea bass | 29 | fennel, brown butter\nHalf chicken | 22 | garlic, thyme, crisp potatoes\nAged rib-eye, 400g | 48 | for two, bone marrow butter\nSquash steak | 17 | sage, hazelnut, ricotta"
+          },
+          {
+            "name": "Sweet",
+            "dishes": "Smoked chocolate tart | 9 | crème fraîche\nBurnt honey ice cream | 7 | olive oil, sea salt\nRoasted plums | 8 | almond crumble, custard"
+          },
+          {
+            "name": "Drinks",
+            "dishes": "House natural red | 7 / 32 | glass or bottle\nOrange wine, Georgia | 9 / 42 | skin contact\nSmoked old fashioned | 12 | oak-smoked bourbon\nNo-proof spritz | 7 | rhubarb, tonic"
+          }
+        ]
+      },
+      "private": {
+        "kicker": "Private dining",
+        "title": "The long table is yours.",
+        "text": "Up to 24 guests around our oak table, with a set menu cooked for your night. Birthdays, team dinners, rehearsal suppers.",
+        "points": "Up to 24 guests\nSet menus from £55\nYour own sommelier\nWhole-room hire on Sundays",
+        "button": "Ask about a date",
+        "image": "./media/room.webp"
+      },
+      "booking": {
+        "kicker": "Reservations",
+        "title": "Book a table.",
+        "text": "We hold tables for 15 minutes. For groups over 8, see private dining.",
+        "times": "17:30\n18:00\n18:30\n19:00\n19:30\n20:00\n20:30\n21:00\n21:30",
+        "maxParty": 8,
+        "days": 14,
+        "closedDays": "1",
+        "formAction": "",
+        "done": "See you {when}, {person}. A table for {party} is held under your name."
+      },
+      "visit": {
+        "kicker": "Find us",
+        "hours": "Tuesday – Thursday | 17:30 – 23:00\nFriday – Saturday | 12:00 – 00:00\nSunday | 12:00 – 21:00\nMonday | Closed",
+        "note": "Two minutes from Shoreditch High Street station. Walk-ins welcome at the bar."
+      },
+      "footer": {
+        "text": "Cooked over fire, served with care.",
+        "legal": "© {year} {name}."
+      },
+      "sections": {
+        "story": true,
+        "signature": true,
+        "menu": true,
+        "private": true,
+        "booking": true,
+        "visit": true
+      },
+      "theme": {
+        "colors": {
+          "page": "#14100d",
+          "surface": "#1e1814",
+          "text": "#f1e6d6",
+          "muted": "#a8977f",
+          "accent": "#e2833b",
+          "glow": "#ffb067",
+          "line": "#3a2f27",
+          "onAccent": "#14100d"
+        },
+        "fonts": {
+          "display": "Fraunces",
+          "body": "Work Sans"
+        }
+      },
+      "motion": {
+        "animate": true,
+        "embers": true,
+        "flicker": true,
+        "spinPlates": true
+      },
+      "extras": []
+    },
+    "poster": false,
+    "siteFiles": 13,
+    "sourceFiles": 21
+  },
+  {
+    "id": "brightline",
+    "name": "Brightline",
+    "pitch": "A calm, light dental clinic site: an arch-framed smile that opens as you scroll, floating trust badges, treatments you tap through with prices, a drag-to-compare result, a first-visit journey that lights up step by step, membership plans and a real booking flow with days and time slots.",
+    "kind": "vite",
+    "categories": [
+      "Scroll",
+      "Interactive",
+      "Editorial"
+    ],
+    "business": [
+      "dentist",
+      "health",
+      "hospital"
+    ],
+    "sector": "Family and cosmetic dental clinic",
+    "intensity": 5,
+    "heavy": false,
+    "licence": {
+      "kind": "original",
+      "holder": "Site Builder",
+      "note": "Made for the builder as an original template. Pictures are free AI generations (Pollinations) kept in source/public/media.",
+      "added": "2026-11-18"
+    },
+    "remoteAssets": [],
+    "features": [
+      "Scroll-opening arch hero",
+      "Treatment explorer",
+      "Before and after slider",
+      "Scroll-lit first-visit steps",
+      "Membership plans",
+      "Booking with days and time slots",
+      "FAQ",
+      "Hours and map link"
+    ],
+    "schema": [
+      {
+        "group": "Business",
+        "fields": [
+          {
+            "path": "brand.name",
+            "label": "Business name",
+            "type": "text",
+            "hint": "Fills every {name} in the text below."
+          },
+          {
+            "path": "brand.short",
+            "label": "Short name (logo)",
+            "type": "text"
+          },
+          {
+            "path": "brand.phone",
+            "label": "Phone",
+            "type": "text"
+          },
+          {
+            "path": "brand.email",
+            "label": "Email",
+            "type": "text"
+          },
+          {
+            "path": "brand.address",
+            "label": "Address",
+            "type": "text"
+          },
+          {
+            "path": "brand.mapLink",
+            "label": "Map link",
+            "type": "url"
+          },
+          {
+            "path": "seo.title",
+            "label": "Page title (search and browser tab)",
+            "type": "text"
+          },
+          {
+            "path": "seo.description",
+            "label": "Short description (search and sharing)",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "Sections",
+        "fields": [
+          {
+            "path": "sections.stats",
+            "label": "Show numbers",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.treatments",
+            "label": "Show treatments",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.results",
+            "label": "Show before and after",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.journey",
+            "label": "Show first-visit steps",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.team",
+            "label": "Show team",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.plans",
+            "label": "Show plans",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.reviews",
+            "label": "Show reviews",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.faq",
+            "label": "Show questions",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.visit",
+            "label": "Show hours and location",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Menu",
+        "fields": [
+          {
+            "path": "nav.links",
+            "label": "Menu links",
+            "type": "list",
+            "itemLabel": "Link",
+            "fields": [
+              {
+                "path": "label",
+                "label": "Label",
+                "type": "text"
+              },
+              {
+                "path": "href",
+                "label": "Goes to",
+                "type": "url"
+              }
+            ],
+            "min": 0,
+            "max": 8
+          },
+          {
+            "path": "nav.cta",
+            "label": "Booking button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Opening",
+        "fields": [
+          {
+            "path": "hero.kicker",
+            "label": "Small line above",
+            "type": "text"
+          },
+          {
+            "path": "hero.title",
+            "label": "Headline",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.text",
+            "label": "Intro",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.primary",
+            "label": "Main button",
+            "type": "text"
+          },
+          {
+            "path": "hero.secondary",
+            "label": "Second button",
+            "type": "text"
+          },
+          {
+            "path": "hero.image",
+            "label": "Picture",
+            "type": "image"
+          },
+          {
+            "path": "hero.imageAlt",
+            "label": "Picture description",
+            "type": "text"
+          },
+          {
+            "path": "hero.badge1",
+            "label": "Badge 1 (rating)",
+            "type": "text"
+          },
+          {
+            "path": "hero.badge2",
+            "label": "Badge 2",
+            "type": "text"
+          },
+          {
+            "path": "hero.badge3",
+            "label": "Badge 3",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Numbers",
+        "fields": [
+          {
+            "path": "stats.items",
+            "label": "Numbers",
+            "type": "list",
+            "itemLabel": "Number",
+            "fields": [
+              {
+                "path": "value",
+                "label": "Number",
+                "type": "text",
+                "hint": "Counts up, e.g. 4.9, 12,400+ or 98%"
+              },
+              {
+                "path": "label",
+                "label": "Label",
+                "type": "text"
+              }
+            ],
+            "min": 0,
+            "max": 6
+          }
+        ]
+      },
+      {
+        "group": "Treatments",
+        "fields": [
+          {
+            "path": "treatments.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "treatments.title",
+            "label": "Heading",
+            "type": "textarea"
+          },
+          {
+            "path": "treatments.text",
+            "label": "Intro",
+            "type": "textarea"
+          },
+          {
+            "path": "treatments.items",
+            "label": "Treatments",
+            "type": "list",
+            "itemLabel": "Treatment",
+            "fields": [
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "summary",
+                "label": "One line",
+                "type": "textarea"
+              },
+              {
+                "path": "detail",
+                "label": "What happens",
+                "type": "textarea"
+              },
+              {
+                "path": "price",
+                "label": "Price",
+                "type": "text"
+              },
+              {
+                "path": "time",
+                "label": "How long",
+                "type": "text"
+              },
+              {
+                "path": "image",
+                "label": "Picture",
+                "type": "image"
+              }
+            ],
+            "min": 1,
+            "max": 12
+          }
+        ]
+      },
+      {
+        "group": "Before and after",
+        "fields": [
+          {
+            "path": "results.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "results.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "results.text",
+            "label": "Note",
+            "type": "textarea"
+          },
+          {
+            "path": "results.before",
+            "label": "Before picture",
+            "type": "image"
+          },
+          {
+            "path": "results.after",
+            "label": "After picture",
+            "type": "image"
+          },
+          {
+            "path": "results.tintBefore",
+            "label": "Tint the before picture",
+            "type": "toggle",
+            "hint": "Handy while you only have one picture."
+          },
+          {
+            "path": "results.beforeLabel",
+            "label": "Before label",
+            "type": "text"
+          },
+          {
+            "path": "results.afterLabel",
+            "label": "After label",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "First visit",
+        "fields": [
+          {
+            "path": "journey.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "journey.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "journey.steps",
+            "label": "Steps",
+            "type": "list",
+            "itemLabel": "Step",
+            "fields": [
+              {
+                "path": "title",
+                "label": "Title",
+                "type": "text"
+              },
+              {
+                "path": "text",
+                "label": "Text",
+                "type": "textarea"
+              }
+            ],
+            "min": 1,
+            "max": 8
+          }
+        ]
+      },
+      {
+        "group": "Team",
+        "fields": [
+          {
+            "path": "team.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "team.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "team.members",
+            "label": "People",
+            "type": "list",
+            "itemLabel": "Person",
+            "fields": [
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "role",
+                "label": "Role",
+                "type": "text"
+              },
+              {
+                "path": "bio",
+                "label": "Short bio",
+                "type": "textarea"
+              },
+              {
+                "path": "image",
+                "label": "Photo",
+                "type": "image"
+              }
+            ],
+            "min": 0,
+            "max": 12
+          }
+        ]
+      },
+      {
+        "group": "Plans",
+        "fields": [
+          {
+            "path": "plans.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "plans.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "plans.text",
+            "label": "Intro",
+            "type": "textarea"
+          },
+          {
+            "path": "plans.items",
+            "label": "Plans",
+            "type": "list",
+            "itemLabel": "Plan",
+            "fields": [
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "price",
+                "label": "Price",
+                "type": "text"
+              },
+              {
+                "path": "period",
+                "label": "Per",
+                "type": "text"
+              },
+              {
+                "path": "features",
+                "label": "What's included (one per line)",
+                "type": "textarea"
+              },
+              {
+                "path": "highlight",
+                "label": "Highlight this plan",
+                "type": "toggle"
+              },
+              {
+                "path": "button",
+                "label": "Button",
+                "type": "text"
+              }
+            ],
+            "min": 0,
+            "max": 4
+          }
+        ]
+      },
+      {
+        "group": "Reviews",
+        "fields": [
+          {
+            "path": "reviews.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "reviews.items",
+            "label": "Reviews",
+            "type": "list",
+            "itemLabel": "Review",
+            "fields": [
+              {
+                "path": "quote",
+                "label": "Quote",
+                "type": "textarea"
+              },
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "detail",
+                "label": "Treatment",
+                "type": "text"
+              }
+            ],
+            "min": 0,
+            "max": 12
+          },
+          {
+            "path": "reviews.autoplay",
+            "label": "Move on by itself",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Questions",
+        "fields": [
+          {
+            "path": "faq.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "faq.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "faq.items",
+            "label": "Questions",
+            "type": "list",
+            "itemLabel": "Question",
+            "fields": [
+              {
+                "path": "q",
+                "label": "Question",
+                "type": "text"
+              },
+              {
+                "path": "a",
+                "label": "Answer",
+                "type": "textarea"
+              }
+            ],
+            "min": 0,
+            "max": 16
+          }
+        ]
+      },
+      {
+        "group": "Hours and location",
+        "fields": [
+          {
+            "path": "visit.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "visit.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "visit.hours",
+            "label": "Opening hours (Day | Hours, one per line)",
+            "type": "textarea"
+          },
+          {
+            "path": "visit.note",
+            "label": "Parking and access",
+            "type": "textarea"
+          },
+          {
+            "path": "visit.emergency",
+            "label": "Emergency line (leave empty to hide)",
+            "type": "textarea"
+          },
+          {
+            "path": "visit.image",
+            "label": "Picture",
+            "type": "image"
+          }
+        ]
+      },
+      {
+        "group": "Booking",
+        "fields": [
+          {
+            "path": "booking.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "booking.text",
+            "label": "Intro",
+            "type": "textarea"
+          },
+          {
+            "path": "booking.times",
+            "label": "Time slots (one per line)",
+            "type": "textarea"
+          },
+          {
+            "path": "booking.closedDays",
+            "label": "Closed days (0 = Sunday … 6 = Saturday, comma separated)",
+            "type": "text"
+          },
+          {
+            "path": "booking.days",
+            "label": "Days ahead to offer",
+            "type": "number",
+            "min": 3,
+            "max": 30,
+            "step": 1
+          },
+          {
+            "path": "booking.formAction",
+            "label": "Form address (optional)",
+            "type": "url",
+            "hint": "An https form endpoint such as Formspree. Empty: the form only shows the thank-you message."
+          },
+          {
+            "path": "booking.done",
+            "label": "Thank-you message",
+            "type": "textarea",
+            "hint": "{person} is their first name, {when} the day and time."
+          }
+        ]
+      },
+      {
+        "group": "Footer",
+        "fields": [
+          {
+            "path": "footer.text",
+            "label": "Line",
+            "type": "text"
+          },
+          {
+            "path": "footer.legal",
+            "label": "Small print",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Colours",
+        "fields": [
+          {
+            "path": "theme.colors.page",
+            "label": "Page",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.surface",
+            "label": "Cards",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.text",
+            "label": "Text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.muted",
+            "label": "Soft text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.accent",
+            "label": "Accent",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.accentSoft",
+            "label": "Accent tint",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.highlight",
+            "label": "Highlight (stars, badges)",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.dark",
+            "label": "Dark panels",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.onAccent",
+            "label": "Text on accent",
+            "type": "color"
+          }
+        ]
+      },
+      {
+        "group": "Fonts",
+        "fields": [
+          {
+            "path": "theme.fonts.display",
+            "label": "Headings font",
+            "type": "font"
+          },
+          {
+            "path": "theme.fonts.body",
+            "label": "Body font",
+            "type": "font"
+          }
+        ]
+      },
+      {
+        "group": "Look and motion",
+        "fields": [
+          {
+            "path": "theme.radius",
+            "label": "Corner roundness",
+            "type": "number",
+            "min": 0,
+            "max": 48,
+            "step": 2
+          },
+          {
+            "path": "motion.animate",
+            "label": "Animations on",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.heroScroll",
+            "label": "Opening picture opens as you scroll",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.floatBadges",
+            "label": "Badges float",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.reviewSeconds",
+            "label": "Seconds per review",
+            "type": "number",
+            "min": 2,
+            "max": 15,
+            "step": 1
+          }
+        ]
+      },
+      {
+        "group": "Library blocks",
+        "fields": [
+          {
+            "path": "extras",
+            "label": "Blocks from the library",
+            "type": "blocks",
+            "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          }
+        ]
+      }
+    ],
+    "content": {
+      "seo": {
+        "title": "{name} | Gentle family and cosmetic dentistry",
+        "description": "Calm, modern dental care for the whole family: check-ups, whitening, aligners, implants and same-week emergency visits."
+      },
+      "brand": {
+        "name": "Brightline Dental",
+        "short": "Brightline",
+        "phone": "+1 (555) 014-2290",
+        "email": "hello@brightline.dental",
+        "address": "48 Harbour Street, Suite 2, Westbridge",
+        "mapLink": "https://maps.google.com/?q=48+Harbour+Street"
+      },
+      "nav": {
+        "links": [
+          {
+            "label": "Treatments",
+            "href": "#treatments"
+          },
+          {
+            "label": "Results",
+            "href": "#results"
+          },
+          {
+            "label": "Team",
+            "href": "#team"
+          },
+          {
+            "label": "Plans",
+            "href": "#plans"
+          },
+          {
+            "label": "Visit",
+            "href": "#visit"
+          }
+        ],
+        "cta": "Book a visit"
+      },
+      "hero": {
+        "kicker": "Now welcoming new patients",
+        "title": "Dentistry that feels like a deep breath.",
+        "text": "Unhurried appointments, clear prices and a team that explains every step. Check-ups, whitening, aligners and implants under one calm roof.",
+        "primary": "Book a visit",
+        "secondary": "See treatments",
+        "image": "./media/smile.webp",
+        "imageAlt": "A patient smiling after treatment",
+        "badge1": "4.9 from 1,200+ reviews",
+        "badge2": "Same-week appointments",
+        "badge3": "Pain-free promise"
+      },
+      "stats": {
+        "items": [
+          {
+            "value": "18",
+            "label": "Years caring for Westbridge"
+          },
+          {
+            "value": "12,400+",
+            "label": "Patients who call us their dentist"
+          },
+          {
+            "value": "4.9",
+            "label": "Average rating from verified reviews"
+          },
+          {
+            "value": "98%",
+            "label": "Say their visit was pain-free"
+          }
+        ]
+      },
+      "treatments": {
+        "kicker": "Treatments",
+        "title": "Everything your smile needs, explained plainly.",
+        "text": "Tap a treatment to see what happens, how long it takes and what it costs.",
+        "items": [
+          {
+            "name": "Check-up and clean",
+            "summary": "A thorough exam, gentle scale and polish, and a plan you understand.",
+            "detail": "We check teeth, gums and bite, take low-dose digital X-rays when needed, and finish with a hygienist clean. You leave with a written plan and no surprises.",
+            "price": "From $85",
+            "time": "45 min",
+            "image": "./media/room.webp"
+          },
+          {
+            "name": "Teeth whitening",
+            "summary": "Up to eight shades brighter with custom trays or in-chair whitening.",
+            "detail": "After a quick check we take impressions for custom trays, or whiten in the chair in one visit. Sensitivity-safe gels and a top-up kit included.",
+            "price": "From $320",
+            "time": "1 visit or 2 weeks",
+            "image": "./media/smile.webp"
+          },
+          {
+            "name": "Clear aligners",
+            "summary": "Straighter teeth with near-invisible aligners and a 3D preview first.",
+            "detail": "A 3D scan shows your finished smile before you commit. Most people wear aligners for six to twelve months, with a check-in every eight weeks.",
+            "price": "From $2,400",
+            "time": "6 to 12 months",
+            "image": "./media/dr1.webp"
+          },
+          {
+            "name": "Dental implants",
+            "summary": "Natural-looking replacements for missing teeth, planned with 3D imaging.",
+            "detail": "We plan the implant on a 3D scan, place it under local anaesthetic and fit the crown once it has healed. Payment plans available.",
+            "price": "From $1,900",
+            "time": "3 to 6 months",
+            "image": "./media/dr2.webp"
+          },
+          {
+            "name": "Children's dentistry",
+            "summary": "Friendly first visits that make kids look forward to the next one.",
+            "detail": "Short, playful appointments, fissure sealants and fluoride varnish. Under-12s are seen free with a parent on a family plan.",
+            "price": "Free on family plans",
+            "time": "30 min",
+            "image": "./media/kids.webp"
+          },
+          {
+            "name": "Emergency care",
+            "summary": "Toothache, a chipped tooth or a lost filling, seen the same day.",
+            "detail": "Call before 11am and we will see you that day. We relieve pain first, then talk through options for a lasting fix.",
+            "price": "From $95",
+            "time": "Same day",
+            "image": "./media/dr3.webp"
+          }
+        ]
+      },
+      "results": {
+        "kicker": "Real results",
+        "title": "Drag to see the difference.",
+        "text": "A whitening and bonding treatment, finished in two visits. Results vary from person to person.",
+        "before": "./media/smile.webp",
+        "after": "./media/smile.webp",
+        "tintBefore": true,
+        "beforeLabel": "Before",
+        "afterLabel": "After"
+      },
+      "journey": {
+        "kicker": "Your first visit",
+        "title": "Four calm steps, no surprises.",
+        "steps": [
+          {
+            "title": "Say hello",
+            "text": "Book online or call. We send a short form so we know your history before you arrive."
+          },
+          {
+            "title": "Look and listen",
+            "text": "A full check with digital X-rays and photos you see on screen, and time to ask anything."
+          },
+          {
+            "title": "Your plan, priced",
+            "text": "A written plan with options and prices. Nothing starts until you say yes."
+          },
+          {
+            "title": "Care that lasts",
+            "text": "Treatment at your pace, then reminders for check-ups so small things stay small."
+          }
+        ]
+      },
+      "team": {
+        "kicker": "The team",
+        "title": "People who take their time.",
+        "members": [
+          {
+            "name": "Dr. Amelia Hart",
+            "role": "Principal dentist",
+            "bio": "Twenty years of family and cosmetic dentistry. Known for explaining everything twice.",
+            "image": "./media/dr1.webp"
+          },
+          {
+            "name": "Dr. Sam Okafor",
+            "role": "Implants and oral surgery",
+            "bio": "Plans every implant on a 3D scan and still answers patient calls himself.",
+            "image": "./media/dr2.webp"
+          },
+          {
+            "name": "Priya Nair",
+            "role": "Lead hygienist",
+            "bio": "Gentle cleans and honest advice on brushing that people actually follow.",
+            "image": "./media/dr3.webp"
+          }
+        ]
+      },
+      "plans": {
+        "kicker": "Membership plans",
+        "title": "No insurance? Join a plan.",
+        "text": "Spread the cost of routine care with one monthly payment. Cancel any time.",
+        "items": [
+          {
+            "name": "Essential",
+            "price": "$19",
+            "period": "/month",
+            "features": "Two check-ups a year\nTwo hygienist cleans\n10% off treatments",
+            "highlight": false,
+            "button": "Join Essential"
+          },
+          {
+            "name": "Complete",
+            "price": "$32",
+            "period": "/month",
+            "features": "Everything in Essential\nX-rays included\nOne emergency visit a year\n15% off treatments",
+            "highlight": true,
+            "button": "Join Complete"
+          },
+          {
+            "name": "Family",
+            "price": "$79",
+            "period": "/month",
+            "features": "Two adults on Complete\nUnder-12s seen free\nPriority family bookings",
+            "highlight": false,
+            "button": "Join Family"
+          }
+        ]
+      },
+      "reviews": {
+        "kicker": "Kind words",
+        "items": [
+          {
+            "quote": "I had avoided the dentist for six years. They were patient, explained everything and it did not hurt once.",
+            "name": "Hannah W.",
+            "detail": "Check-up and fillings"
+          },
+          {
+            "quote": "My aligners finished two months early and the 3D preview was exactly what I got.",
+            "name": "Marcus L.",
+            "detail": "Clear aligners"
+          },
+          {
+            "quote": "Our kids actually ask when they can go back. That says everything.",
+            "name": "The Duarte family",
+            "detail": "Family plan"
+          },
+          {
+            "quote": "Called at 9 with a cracked tooth and was out of pain by lunch.",
+            "name": "Ravi P.",
+            "detail": "Emergency visit"
+          }
+        ],
+        "autoplay": true
+      },
+      "faq": {
+        "kicker": "Questions",
+        "title": "Good to know.",
+        "items": [
+          {
+            "q": "I'm nervous about the dentist. Can you help?",
+            "a": "Yes. Tell us when you book. We go slowly, agree a stop signal and offer sedation for longer treatments."
+          },
+          {
+            "q": "Do you take insurance?",
+            "a": "We work with most major insurers and will submit the claim for you. No insurance? Our plans cover routine care for one monthly fee."
+          },
+          {
+            "q": "How much will my treatment cost?",
+            "a": "You get a written, itemised price before anything starts. Payment plans are available for treatments over $500."
+          },
+          {
+            "q": "Can I bring my children?",
+            "a": "Please do. We see children from their first tooth and keep visits short and fun."
+          }
+        ]
+      },
+      "visit": {
+        "kicker": "Visit us",
+        "title": "Easy to reach, easy to park.",
+        "hours": "Mon – Thu | 8:00 – 19:00\nFriday | 8:00 – 17:00\nSaturday | 9:00 – 14:00\nSunday | Closed",
+        "note": "Free parking behind the building. Step-free access and a lift to every floor.",
+        "emergency": "Dental emergency? Call before 11am and we will see you today.",
+        "image": "./media/hero.webp"
+      },
+      "booking": {
+        "title": "Book a visit",
+        "text": "Pick a treatment, a day and a time. We confirm by text within the hour.",
+        "times": "08:30\n09:15\n10:00\n11:30\n13:00\n14:15\n15:30\n17:00",
+        "closedDays": "0",
+        "days": 12,
+        "formAction": "",
+        "done": "Thank you, {person}. We have your request for {when} and will text you to confirm."
+      },
+      "footer": {
+        "text": "Gentle family and cosmetic dentistry in Westbridge.",
+        "legal": "© {year} {name}. All rights reserved."
+      },
+      "sections": {
+        "stats": true,
+        "treatments": true,
+        "results": true,
+        "journey": true,
+        "team": true,
+        "plans": true,
+        "reviews": true,
+        "faq": true,
+        "visit": true
+      },
+      "theme": {
+        "colors": {
+          "page": "#f6f8f6",
+          "surface": "#ffffff",
+          "text": "#0f2a2a",
+          "muted": "#5b706d",
+          "accent": "#1f8a78",
+          "accentSoft": "#d8efe9",
+          "highlight": "#f4c95d",
+          "dark": "#0f2a2a",
+          "onAccent": "#ffffff"
+        },
+        "fonts": {
+          "display": "Instrument Serif",
+          "body": "Manrope"
+        },
+        "radius": 28
+      },
+      "motion": {
+        "animate": true,
+        "heroScroll": true,
+        "floatBadges": true,
+        "reviewSeconds": 6
+      },
+      "extras": []
+    },
+    "poster": false,
+    "siteFiles": 11,
+    "sourceFiles": 19
+  },
+  {
+    "id": "cornerstone",
+    "name": "Cornerstone",
+    "pitch": "A polished estate agent site: a hero picture that opens to full width as you scroll with a search bar on it, listings you filter, sort and save, a home detail view with viewing booking, a live mortgage calculator, areas with a picture that follows the pointer, a selling process, agents and a valuation form.",
+    "kind": "vite",
+    "categories": [
+      "Interactive",
+      "Scroll",
+      "Editorial",
+      "Product"
+    ],
+    "business": [
+      "property",
+      "consulting",
+      "law"
+    ],
+    "sector": "Estate agent, property developer or lettings agency",
+    "intensity": 5,
+    "heavy": false,
+    "licence": {
+      "kind": "original",
+      "holder": "Site Builder",
+      "note": "Made for the builder as an original template. Pictures are free AI generations (Pollinations) kept in source/public/media.",
+      "added": "2026-11-18"
+    },
+    "remoteAssets": [],
+    "features": [
+      "Opening hero with property search",
+      "Filter, sort and save listings",
+      "Home details with viewing booking",
+      "Live mortgage calculator",
+      "Areas with pointer preview",
+      "Selling steps",
+      "Agent cards",
+      "Valuation form"
+    ],
+    "schema": [
+      {
+        "group": "Business",
+        "fields": [
+          {
+            "path": "brand.name",
+            "label": "Agency name",
+            "type": "text",
+            "hint": "Fills every {name} in the text below."
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Line under the name",
+            "type": "text"
+          },
+          {
+            "path": "brand.phone",
+            "label": "Phone",
+            "type": "text"
+          },
+          {
+            "path": "brand.email",
+            "label": "Email",
+            "type": "text"
+          },
+          {
+            "path": "brand.address",
+            "label": "Address",
+            "type": "text"
+          },
+          {
+            "path": "brand.currency",
+            "label": "Currency sign",
+            "type": "text"
+          },
+          {
+            "path": "seo.title",
+            "label": "Page title (search and browser tab)",
+            "type": "text"
+          },
+          {
+            "path": "seo.description",
+            "label": "Short description (search and sharing)",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "Sections",
+        "fields": [
+          {
+            "path": "sections.search",
+            "label": "Show search bar",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.homes",
+            "label": "Show listings",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.mortgage",
+            "label": "Show mortgage calculator",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.areas",
+            "label": "Show areas",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.sell",
+            "label": "Show selling steps",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.agents",
+            "label": "Show agents",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.valuation",
+            "label": "Show valuation form",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Menu",
+        "fields": [
+          {
+            "path": "nav.links",
+            "label": "Menu links",
+            "type": "list",
+            "itemLabel": "Link",
+            "fields": [
+              {
+                "path": "label",
+                "label": "Label",
+                "type": "text"
+              },
+              {
+                "path": "href",
+                "label": "Goes to",
+                "type": "url"
+              }
+            ],
+            "min": 0,
+            "max": 7
+          },
+          {
+            "path": "nav.cta",
+            "label": "Button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Opening",
+        "fields": [
+          {
+            "path": "hero.kicker",
+            "label": "Small line above",
+            "type": "text"
+          },
+          {
+            "path": "hero.title",
+            "label": "Headline",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.text",
+            "label": "Intro",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.image",
+            "label": "Picture",
+            "type": "image"
+          },
+          {
+            "path": "hero.searchPlaceholder",
+            "label": "Search box hint",
+            "type": "text"
+          },
+          {
+            "path": "hero.searchButton",
+            "label": "Search button",
+            "type": "text"
+          },
+          {
+            "path": "hero.anyType",
+            "label": "Any type label",
+            "type": "text"
+          },
+          {
+            "path": "hero.anyPrice",
+            "label": "Any price label",
+            "type": "text"
+          },
+          {
+            "path": "hero.priceSteps",
+            "label": "Price limits to offer (one number per line)",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "Listings",
+        "fields": [
+          {
+            "path": "homes.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "homes.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "homes.allLabel",
+            "label": "All types label",
+            "type": "text"
+          },
+          {
+            "path": "homes.empty",
+            "label": "Nothing found message",
+            "type": "textarea"
+          },
+          {
+            "path": "homes.items",
+            "label": "Homes",
+            "type": "list",
+            "itemLabel": "Home",
+            "fields": [
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "area",
+                "label": "Area",
+                "type": "text"
+              },
+              {
+                "path": "type",
+                "label": "Type (House, Apartment…)",
+                "type": "text"
+              },
+              {
+                "path": "price",
+                "label": "Price",
+                "type": "number",
+                "min": 0,
+                "max": 1000000000,
+                "step": 1000
+              },
+              {
+                "path": "beds",
+                "label": "Bedrooms",
+                "type": "number",
+                "min": 0,
+                "max": 20,
+                "step": 1
+              },
+              {
+                "path": "baths",
+                "label": "Bathrooms",
+                "type": "number",
+                "min": 0,
+                "max": 20,
+                "step": 1
+              },
+              {
+                "path": "size",
+                "label": "Size",
+                "type": "text"
+              },
+              {
+                "path": "status",
+                "label": "Badge (New, Under offer…)",
+                "type": "text"
+              },
+              {
+                "path": "image",
+                "label": "Picture",
+                "type": "image"
+              },
+              {
+                "path": "text",
+                "label": "Description",
+                "type": "textarea"
+              }
+            ],
+            "min": 1,
+            "max": 60
+          }
+        ]
+      },
+      {
+        "group": "Viewing booking",
+        "fields": [
+          {
+            "path": "viewing.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "viewing.button",
+            "label": "Button",
+            "type": "text"
+          },
+          {
+            "path": "viewing.formAction",
+            "label": "Form address (optional)",
+            "type": "url",
+            "hint": "An https form endpoint such as Formspree. Empty: the form only shows the thank-you message."
+          },
+          {
+            "path": "viewing.done",
+            "label": "Thank-you message",
+            "type": "textarea",
+            "hint": "{person}, {agent} and {home} are filled in."
+          }
+        ]
+      },
+      {
+        "group": "Mortgage calculator",
+        "fields": [
+          {
+            "path": "mortgage.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "mortgage.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "mortgage.priceLabel",
+            "label": "Price label",
+            "type": "text"
+          },
+          {
+            "path": "mortgage.depositLabel",
+            "label": "Deposit label",
+            "type": "text"
+          },
+          {
+            "path": "mortgage.rateLabel",
+            "label": "Rate label",
+            "type": "text"
+          },
+          {
+            "path": "mortgage.yearsLabel",
+            "label": "Term label",
+            "type": "text"
+          },
+          {
+            "path": "mortgage.resultLabel",
+            "label": "Result label",
+            "type": "text"
+          },
+          {
+            "path": "mortgage.note",
+            "label": "Note",
+            "type": "textarea"
+          },
+          {
+            "path": "mortgage.rate",
+            "label": "Starting interest rate (%)",
+            "type": "number",
+            "min": 0.5,
+            "max": 12,
+            "step": 0.1
+          }
+        ]
+      },
+      {
+        "group": "Areas",
+        "fields": [
+          {
+            "path": "areas.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "areas.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "areas.items",
+            "label": "Areas",
+            "type": "list",
+            "itemLabel": "Area",
+            "fields": [
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "text",
+                "label": "Line",
+                "type": "text"
+              },
+              {
+                "path": "stat",
+                "label": "Figure",
+                "type": "text"
+              },
+              {
+                "path": "image",
+                "label": "Picture",
+                "type": "image"
+              }
+            ],
+            "min": 0,
+            "max": 12
+          }
+        ]
+      },
+      {
+        "group": "Selling",
+        "fields": [
+          {
+            "path": "sell.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "sell.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "sell.steps",
+            "label": "Steps",
+            "type": "list",
+            "itemLabel": "Step",
+            "fields": [
+              {
+                "path": "title",
+                "label": "Title",
+                "type": "text"
+              },
+              {
+                "path": "text",
+                "label": "Text",
+                "type": "textarea"
+              }
+            ],
+            "min": 0,
+            "max": 8
+          },
+          {
+            "path": "sell.image",
+            "label": "Picture",
+            "type": "image"
+          },
+          {
+            "path": "sell.stat",
+            "label": "Big figure",
+            "type": "text"
+          },
+          {
+            "path": "sell.statLabel",
+            "label": "Figure label",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Agents",
+        "fields": [
+          {
+            "path": "agents.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "agents.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "agents.items",
+            "label": "Agents",
+            "type": "list",
+            "itemLabel": "Agent",
+            "fields": [
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "role",
+                "label": "Role",
+                "type": "text"
+              },
+              {
+                "path": "phone",
+                "label": "Phone",
+                "type": "text"
+              },
+              {
+                "path": "email",
+                "label": "Email",
+                "type": "text"
+              },
+              {
+                "path": "image",
+                "label": "Photo",
+                "type": "image"
+              }
+            ],
+            "min": 0,
+            "max": 12
+          }
+        ]
+      },
+      {
+        "group": "Valuation",
+        "fields": [
+          {
+            "path": "valuation.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "valuation.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "valuation.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "valuation.bedsLabel",
+            "label": "Bedrooms label",
+            "type": "text"
+          },
+          {
+            "path": "valuation.button",
+            "label": "Button",
+            "type": "text"
+          },
+          {
+            "path": "valuation.formAction",
+            "label": "Form address (optional)",
+            "type": "url"
+          },
+          {
+            "path": "valuation.done",
+            "label": "Thank-you message",
+            "type": "textarea",
+            "hint": "{person} is their first name."
+          }
+        ]
+      },
+      {
+        "group": "Footer",
+        "fields": [
+          {
+            "path": "footer.text",
+            "label": "Line",
+            "type": "text"
+          },
+          {
+            "path": "footer.legal",
+            "label": "Small print",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Colours",
+        "fields": [
+          {
+            "path": "theme.colors.page",
+            "label": "Page",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.surface",
+            "label": "Cards",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.text",
+            "label": "Text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.muted",
+            "label": "Soft text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.accent",
+            "label": "Accent",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.dark",
+            "label": "Dark (buttons, valuation)",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.onDark",
+            "label": "Text on dark",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.line",
+            "label": "Lines",
+            "type": "color"
+          }
+        ]
+      },
+      {
+        "group": "Fonts",
+        "fields": [
+          {
+            "path": "theme.fonts.display",
+            "label": "Headings font",
+            "type": "font"
+          },
+          {
+            "path": "theme.fonts.body",
+            "label": "Body font",
+            "type": "font"
+          }
+        ]
+      },
+      {
+        "group": "Motion",
+        "fields": [
+          {
+            "path": "motion.animate",
+            "label": "Animations on",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.heroOpen",
+            "label": "Opening picture widens as you scroll",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.areaPreview",
+            "label": "Area picture follows the pointer",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Library blocks",
+        "fields": [
+          {
+            "path": "extras",
+            "label": "Blocks from the library",
+            "type": "blocks",
+            "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          }
+        ]
+      }
+    ],
+    "content": {
+      "seo": {
+        "title": "{name} | Homes to buy and rent, valued honestly",
+        "description": "Hand-picked homes, honest valuations and agents who answer the phone. Search, save and book a viewing in a minute."
+      },
+      "brand": {
+        "name": "Cornerstone",
+        "tagline": "Estate agents",
+        "phone": "+1 (555) 019-8800",
+        "email": "hello@cornerstone.homes",
+        "address": "200 Market Square, Riverside",
+        "currency": "$"
+      },
+      "nav": {
+        "links": [
+          {
+            "label": "Buy",
+            "href": "#homes"
+          },
+          {
+            "label": "Mortgage",
+            "href": "#mortgage"
+          },
+          {
+            "label": "Areas",
+            "href": "#areas"
+          },
+          {
+            "label": "Sell",
+            "href": "#sell"
+          },
+          {
+            "label": "Agents",
+            "href": "#agents"
+          }
+        ],
+        "cta": "Free valuation"
+      },
+      "hero": {
+        "kicker": "Riverside's independent agent",
+        "title": "Find the place that feels like home.",
+        "text": "Hand-picked homes, honest valuations and agents who pick up the phone.",
+        "image": "./media/hero.webp",
+        "searchPlaceholder": "Area, street or postcode",
+        "searchButton": "Search homes",
+        "anyType": "Any type",
+        "anyPrice": "Any price",
+        "priceSteps": "500000\n750000\n1000000\n1500000\n2500000"
+      },
+      "homes": {
+        "kicker": "Homes for sale",
+        "title": "Fresh to the market.",
+        "allLabel": "All",
+        "empty": "No homes match yet. Try a wider search or ask us to tell you when one does.",
+        "items": [
+          {
+            "name": "White Palm Villa",
+            "area": "Hillcrest",
+            "type": "Villa",
+            "price": 2450000,
+            "beds": 5,
+            "baths": 4,
+            "size": "4,200 sq ft",
+            "status": "New",
+            "image": "./media/p1.webp",
+            "text": "A bright, single-level villa with a heated pool, palms and an open kitchen that runs out to the terrace."
+          },
+          {
+            "name": "Brick Row Townhouse",
+            "area": "Old Town",
+            "type": "House",
+            "price": 890000,
+            "beds": 3,
+            "baths": 2,
+            "size": "1,850 sq ft",
+            "status": "",
+            "image": "./media/p2.webp",
+            "text": "Restored brick, black steel windows and a walled garden, two streets from the market square."
+          },
+          {
+            "name": "Skyline Penthouse",
+            "area": "Riverside",
+            "type": "Apartment",
+            "price": 1650000,
+            "beds": 3,
+            "baths": 3,
+            "size": "2,300 sq ft",
+            "status": "Under offer",
+            "image": "./media/p3.webp",
+            "text": "Top-floor living with a wraparound terrace and sunset views over the river and the city."
+          },
+          {
+            "name": "Linden Family House",
+            "area": "Northwood",
+            "type": "House",
+            "price": 1120000,
+            "beds": 4,
+            "baths": 3,
+            "size": "2,700 sq ft",
+            "status": "",
+            "image": "./media/p4.webp",
+            "text": "Timber-clad and full of light, with a big garden, a playroom and the best school catchment in town."
+          },
+          {
+            "name": "Garden Court Apartment",
+            "area": "Riverside",
+            "type": "Apartment",
+            "price": 540000,
+            "beds": 2,
+            "baths": 1,
+            "size": "980 sq ft",
+            "status": "New",
+            "image": "./media/p5.webp",
+            "text": "A calm two-bed with a planted balcony, concierge and a gym, five minutes from the station."
+          },
+          {
+            "name": "Stone Barn Conversion",
+            "area": "Millbrook",
+            "type": "House",
+            "price": 1340000,
+            "beds": 4,
+            "baths": 3,
+            "size": "3,100 sq ft",
+            "status": "",
+            "image": "./media/p6.webp",
+            "text": "An old stone barn with a glass extension, vaulted ceilings and three acres of meadow."
+          }
+        ]
+      },
+      "viewing": {
+        "title": "Book a viewing",
+        "button": "Request viewing",
+        "formAction": "",
+        "done": "Thanks, {person}. {agent} will call you today to confirm your viewing of {home}."
+      },
+      "mortgage": {
+        "kicker": "Mortgage calculator",
+        "title": "What would it cost a month?",
+        "priceLabel": "Home price",
+        "depositLabel": "Deposit",
+        "rateLabel": "Interest rate",
+        "yearsLabel": "Term (years)",
+        "resultLabel": "a month",
+        "note": "An estimate for planning only, not a mortgage offer.",
+        "rate": 5.2
+      },
+      "areas": {
+        "kicker": "Areas we know",
+        "title": "Every street, every school.",
+        "items": [
+          {
+            "name": "Riverside",
+            "text": "Warehouse lofts and new towers by the water.",
+            "stat": "Avg. $720k",
+            "image": "./media/p3.webp"
+          },
+          {
+            "name": "Old Town",
+            "text": "Brick terraces, markets and cafés.",
+            "stat": "Avg. $860k",
+            "image": "./media/p2.webp"
+          },
+          {
+            "name": "Northwood",
+            "text": "Family houses, parks and top schools.",
+            "stat": "Avg. $1.05m",
+            "image": "./media/p4.webp"
+          },
+          {
+            "name": "Hillcrest",
+            "text": "Big plots, pools and views to the coast.",
+            "stat": "Avg. $2.1m",
+            "image": "./media/p1.webp"
+          },
+          {
+            "name": "Millbrook",
+            "text": "Village life twenty minutes from the city.",
+            "stat": "Avg. $940k",
+            "image": "./media/p6.webp"
+          }
+        ]
+      },
+      "sell": {
+        "kicker": "Selling with us",
+        "title": "Sold in weeks, not months.",
+        "steps": [
+          {
+            "title": "Honest valuation",
+            "text": "A price based on real sales on your street, not a number to win your business."
+          },
+          {
+            "title": "Beautiful listing",
+            "text": "Professional photos, a floor plan and a film, live in five days."
+          },
+          {
+            "title": "Viewings handled",
+            "text": "We host every viewing and send feedback the same evening."
+          },
+          {
+            "title": "Through to keys",
+            "text": "One agent from offer to completion, chasing every step."
+          }
+        ],
+        "image": "./media/interior.webp",
+        "stat": "28 days",
+        "statLabel": "average time to sell"
+      },
+      "agents": {
+        "kicker": "Your agents",
+        "title": "Real people, real answers.",
+        "items": [
+          {
+            "name": "Olivia Grant",
+            "role": "Sales director",
+            "phone": "+1 (555) 019-8801",
+            "email": "olivia@cornerstone.homes",
+            "image": "./media/agent1.webp"
+          },
+          {
+            "name": "Daniel Reyes",
+            "role": "Senior negotiator",
+            "phone": "+1 (555) 019-8802",
+            "email": "daniel@cornerstone.homes",
+            "image": "./media/agent2.webp"
+          }
+        ]
+      },
+      "valuation": {
+        "kicker": "Free valuation",
+        "title": "What's your home worth?",
+        "text": "Tell us a little about it and we'll come back within a day with a real figure.",
+        "bedsLabel": "Bedrooms",
+        "button": "Get my valuation",
+        "formAction": "",
+        "done": "Thank you, {person}. We'll be in touch within one working day."
+      },
+      "footer": {
+        "text": "Independent estate agents in Riverside since 2009.",
+        "legal": "© {year} {name}. Prices and details are a guide only."
+      },
+      "sections": {
+        "search": true,
+        "homes": true,
+        "mortgage": true,
+        "areas": true,
+        "sell": true,
+        "agents": true,
+        "valuation": true
+      },
+      "theme": {
+        "colors": {
+          "page": "#f5f2ec",
+          "surface": "#ffffff",
+          "text": "#14213d",
+          "muted": "#6b7280",
+          "accent": "#c08b5c",
+          "dark": "#14213d",
+          "onDark": "#f5f2ec",
+          "line": "#e4ddd1"
+        },
+        "fonts": {
+          "display": "Playfair Display",
+          "body": "Plus Jakarta Sans"
+        }
+      },
+      "motion": {
+        "animate": true,
+        "heroOpen": true,
+        "areaPreview": true
+      },
+      "extras": []
+    },
+    "poster": false,
+    "siteFiles": 14,
+    "sourceFiles": 22
+  },
+  {
     "id": "distill",
     "name": "Distill",
     "pitch": "A SaaS launch page with one striking idea: a draggable belt of sample web pages slides through a glowing scanner and dissolves into clean code, with a live counter of what was saved. Menus, pricing, demo, trial and sign-in panels included.",
@@ -1587,6 +4355,904 @@
     "poster": true,
     "siteFiles": 4,
     "sourceFiles": 12
+  },
+  {
+    "id": "ironhouse",
+    "name": "Ironhouse",
+    "pitch": "A loud, dark gym site: giant headline lines that split apart as you scroll, a tilted ticker, program cards that stack on each other, a filterable class timetable, monthly or yearly prices that count to the new number, a calorie slider and a free-week sign-up.",
+    "kind": "vite",
+    "categories": [
+      "Scroll",
+      "Interactive",
+      "Editorial",
+      "Playful"
+    ],
+    "business": [
+      "fitness",
+      "health",
+      "events"
+    ],
+    "sector": "Gym, boxing club, fitness or yoga studio",
+    "intensity": 8,
+    "heavy": false,
+    "licence": {
+      "kind": "original",
+      "holder": "Site Builder",
+      "note": "Made for the builder as an original template. Pictures are free AI generations (Pollinations) kept in source/public/media.",
+      "added": "2026-11-18"
+    },
+    "remoteAssets": [],
+    "features": [
+      "Split headline parallax",
+      "Ticker band",
+      "Stacking program cards",
+      "Day and class timetable filter",
+      "Monthly or yearly price switch",
+      "Calorie calculator",
+      "Tilting coach cards",
+      "Free-week sign-up"
+    ],
+    "schema": [
+      {
+        "group": "Business",
+        "fields": [
+          {
+            "path": "brand.name",
+            "label": "Gym name",
+            "type": "text",
+            "hint": "Fills every {name} in the text below."
+          },
+          {
+            "path": "brand.phone",
+            "label": "Phone",
+            "type": "text"
+          },
+          {
+            "path": "brand.email",
+            "label": "Email",
+            "type": "text"
+          },
+          {
+            "path": "brand.address",
+            "label": "Address",
+            "type": "text"
+          },
+          {
+            "path": "brand.mapLink",
+            "label": "Map link",
+            "type": "url"
+          },
+          {
+            "path": "seo.title",
+            "label": "Page title (search and browser tab)",
+            "type": "text"
+          },
+          {
+            "path": "seo.description",
+            "label": "Short description (search and sharing)",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "Sections",
+        "fields": [
+          {
+            "path": "sections.stats",
+            "label": "Show numbers",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.programs",
+            "label": "Show programs",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.timetable",
+            "label": "Show timetable",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.membership",
+            "label": "Show membership",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.calculator",
+            "label": "Show calorie calculator",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.coaches",
+            "label": "Show coaches",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.stories",
+            "label": "Show member stories",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.trial",
+            "label": "Show free-week sign-up",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Menu",
+        "fields": [
+          {
+            "path": "nav.links",
+            "label": "Menu links",
+            "type": "list",
+            "itemLabel": "Link",
+            "fields": [
+              {
+                "path": "label",
+                "label": "Label",
+                "type": "text"
+              },
+              {
+                "path": "href",
+                "label": "Goes to",
+                "type": "url"
+              }
+            ],
+            "min": 0,
+            "max": 6
+          },
+          {
+            "path": "nav.cta",
+            "label": "Button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Opening",
+        "fields": [
+          {
+            "path": "hero.line1",
+            "label": "Big line 1",
+            "type": "text"
+          },
+          {
+            "path": "hero.line2",
+            "label": "Big line 2 (outlined)",
+            "type": "text"
+          },
+          {
+            "path": "hero.text",
+            "label": "Intro",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.button",
+            "label": "Main button",
+            "type": "text"
+          },
+          {
+            "path": "hero.secondary",
+            "label": "Second button",
+            "type": "text"
+          },
+          {
+            "path": "hero.image",
+            "label": "Picture",
+            "type": "image"
+          },
+          {
+            "path": "hero.ticker",
+            "label": "Ticker words (one per line)",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "Numbers",
+        "fields": [
+          {
+            "path": "stats.items",
+            "label": "Numbers",
+            "type": "list",
+            "itemLabel": "Number",
+            "fields": [
+              {
+                "path": "value",
+                "label": "Number",
+                "type": "text",
+                "hint": "Counts up, e.g. 40+ or 1,800"
+              },
+              {
+                "path": "label",
+                "label": "Label",
+                "type": "text"
+              }
+            ],
+            "min": 0,
+            "max": 6
+          }
+        ]
+      },
+      {
+        "group": "Programs",
+        "fields": [
+          {
+            "path": "programs.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "programs.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "programs.items",
+            "label": "Programs",
+            "type": "list",
+            "itemLabel": "Program",
+            "fields": [
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "tag",
+                "label": "Type",
+                "type": "text"
+              },
+              {
+                "path": "text",
+                "label": "Text",
+                "type": "textarea"
+              },
+              {
+                "path": "length",
+                "label": "Length",
+                "type": "text"
+              },
+              {
+                "path": "intensity",
+                "label": "Intensity (0 to 5)",
+                "type": "number",
+                "min": 0,
+                "max": 5,
+                "step": 1
+              },
+              {
+                "path": "image",
+                "label": "Picture",
+                "type": "image"
+              }
+            ],
+            "min": 1,
+            "max": 8
+          }
+        ]
+      },
+      {
+        "group": "Timetable",
+        "fields": [
+          {
+            "path": "timetable.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "timetable.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "timetable.allLabel",
+            "label": "All classes label",
+            "type": "text"
+          },
+          {
+            "path": "timetable.classes",
+            "label": "Classes (Day | Time | Class | Coach, one per line)",
+            "type": "textarea",
+            "hint": "Days as Mon, Tue, Wed, Thu, Fri, Sat, Sun."
+          },
+          {
+            "path": "timetable.button",
+            "label": "Book button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Membership",
+        "fields": [
+          {
+            "path": "membership.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "membership.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "membership.monthlyLabel",
+            "label": "Monthly label",
+            "type": "text"
+          },
+          {
+            "path": "membership.yearlyLabel",
+            "label": "Yearly label",
+            "type": "text"
+          },
+          {
+            "path": "membership.yearlyNote",
+            "label": "Yearly saving note",
+            "type": "text"
+          },
+          {
+            "path": "membership.currency",
+            "label": "Currency sign",
+            "type": "text"
+          },
+          {
+            "path": "membership.plans",
+            "label": "Plans",
+            "type": "list",
+            "itemLabel": "Plan",
+            "fields": [
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "monthly",
+                "label": "Price a month",
+                "type": "number",
+                "min": 0,
+                "max": 100000,
+                "step": 1
+              },
+              {
+                "path": "yearly",
+                "label": "Price a year",
+                "type": "number",
+                "min": 0,
+                "max": 1000000,
+                "step": 1
+              },
+              {
+                "path": "features",
+                "label": "What's included (one per line)",
+                "type": "textarea"
+              },
+              {
+                "path": "highlight",
+                "label": "Highlight this plan",
+                "type": "toggle"
+              }
+            ],
+            "min": 0,
+            "max": 4
+          },
+          {
+            "path": "membership.button",
+            "label": "Button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Calorie calculator",
+        "fields": [
+          {
+            "path": "calculator.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "calculator.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "calculator.weightLabel",
+            "label": "Weight label",
+            "type": "text"
+          },
+          {
+            "path": "calculator.sessionsLabel",
+            "label": "Sessions label",
+            "type": "text"
+          },
+          {
+            "path": "calculator.resultLabel",
+            "label": "Result label",
+            "type": "text"
+          },
+          {
+            "path": "calculator.note",
+            "label": "Note",
+            "type": "textarea"
+          },
+          {
+            "path": "calculator.factor",
+            "label": "Calories per kg per session",
+            "type": "number",
+            "min": 2,
+            "max": 15,
+            "step": 0.5
+          }
+        ]
+      },
+      {
+        "group": "Coaches",
+        "fields": [
+          {
+            "path": "coaches.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "coaches.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "coaches.items",
+            "label": "Coaches",
+            "type": "list",
+            "itemLabel": "Coach",
+            "fields": [
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "role",
+                "label": "Role",
+                "type": "text"
+              },
+              {
+                "path": "bio",
+                "label": "Bio",
+                "type": "textarea"
+              },
+              {
+                "path": "image",
+                "label": "Photo",
+                "type": "image"
+              }
+            ],
+            "min": 0,
+            "max": 12
+          }
+        ]
+      },
+      {
+        "group": "Member stories",
+        "fields": [
+          {
+            "path": "stories.items",
+            "label": "Stories",
+            "type": "list",
+            "itemLabel": "Story",
+            "fields": [
+              {
+                "path": "quote",
+                "label": "Quote",
+                "type": "textarea"
+              },
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              }
+            ],
+            "min": 0,
+            "max": 10
+          }
+        ]
+      },
+      {
+        "group": "Free week",
+        "fields": [
+          {
+            "path": "trial.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "trial.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "trial.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "trial.goals",
+            "label": "Goals to pick from (one per line)",
+            "type": "textarea"
+          },
+          {
+            "path": "trial.button",
+            "label": "Button",
+            "type": "text"
+          },
+          {
+            "path": "trial.formAction",
+            "label": "Form address (optional)",
+            "type": "url",
+            "hint": "An https form endpoint such as Formspree. Empty: the form only shows the thank-you message."
+          },
+          {
+            "path": "trial.done",
+            "label": "Thank-you message",
+            "type": "textarea",
+            "hint": "{person} is their first name."
+          }
+        ]
+      },
+      {
+        "group": "Footer",
+        "fields": [
+          {
+            "path": "footer.text",
+            "label": "Line",
+            "type": "text"
+          },
+          {
+            "path": "footer.legal",
+            "label": "Small print",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Colours",
+        "fields": [
+          {
+            "path": "theme.colors.page",
+            "label": "Page",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.surface",
+            "label": "Cards",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.text",
+            "label": "Text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.muted",
+            "label": "Soft text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.accent",
+            "label": "Accent",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.onAccent",
+            "label": "Text on accent",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.hot",
+            "label": "Hot accent",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.line",
+            "label": "Lines",
+            "type": "color"
+          }
+        ]
+      },
+      {
+        "group": "Fonts",
+        "fields": [
+          {
+            "path": "theme.fonts.display",
+            "label": "Headings font",
+            "type": "font"
+          },
+          {
+            "path": "theme.fonts.body",
+            "label": "Body font",
+            "type": "font"
+          }
+        ]
+      },
+      {
+        "group": "Motion",
+        "fields": [
+          {
+            "path": "motion.animate",
+            "label": "Animations on",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.tickerSpeed",
+            "label": "Ticker seconds per loop",
+            "type": "number",
+            "min": 6,
+            "max": 60,
+            "step": 1
+          },
+          {
+            "path": "motion.stackCards",
+            "label": "Program cards stack as you scroll",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.heroParallax",
+            "label": "Headline splits and picture follows the pointer",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Library blocks",
+        "fields": [
+          {
+            "path": "extras",
+            "label": "Blocks from the library",
+            "type": "blocks",
+            "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          }
+        ]
+      }
+    ],
+    "content": {
+      "seo": {
+        "title": "{name} | Strength, boxing and conditioning gym",
+        "description": "Coached strength, boxing and conditioning classes for every level. Your first week is free."
+      },
+      "brand": {
+        "name": "Ironhouse",
+        "phone": "+1 (555) 017-4400",
+        "email": "train@ironhouse.gym",
+        "address": "Unit 7, Foundry Yard, Eastside",
+        "mapLink": "https://maps.google.com/?q=Foundry+Yard"
+      },
+      "nav": {
+        "links": [
+          {
+            "label": "Programs",
+            "href": "#programs"
+          },
+          {
+            "label": "Timetable",
+            "href": "#timetable"
+          },
+          {
+            "label": "Membership",
+            "href": "#membership"
+          },
+          {
+            "label": "Coaches",
+            "href": "#coaches"
+          }
+        ],
+        "cta": "Free week"
+      },
+      "hero": {
+        "line1": "Built",
+        "line2": "not born",
+        "text": "Coached strength, boxing and conditioning for every level. Turn up, we handle the plan.",
+        "button": "Claim your free week",
+        "secondary": "See the timetable",
+        "image": "./media/hero.webp",
+        "ticker": "Strength\nBoxing\nConditioning\nMobility\nOpen 5am – 11pm\nNo contracts"
+      },
+      "stats": {
+        "items": [
+          {
+            "value": "40+",
+            "label": "Coached classes a week"
+          },
+          {
+            "value": "1,800",
+            "label": "Members training here"
+          },
+          {
+            "value": "12",
+            "label": "Full-time coaches"
+          },
+          {
+            "value": "18h",
+            "label": "Open every day"
+          }
+        ]
+      },
+      "programs": {
+        "kicker": "Programs",
+        "title": "Pick your fight.",
+        "items": [
+          {
+            "name": "Fight Club",
+            "text": "Technique-first boxing. Pads, bags and footwork, no sparring until you want it.",
+            "image": "./media/c1.webp",
+            "length": "60 min",
+            "intensity": 5,
+            "tag": "Boxing"
+          },
+          {
+            "name": "Iron Strength",
+            "text": "Squat, press, pull. Small groups, a coach on every rack and a program that progresses.",
+            "image": "./media/c2.webp",
+            "length": "60 min",
+            "intensity": 4,
+            "tag": "Strength"
+          },
+          {
+            "name": "Engine",
+            "text": "Ropes, sleds and rowers in short, hard intervals. Leave nothing in the tank.",
+            "image": "./media/c3.webp",
+            "length": "45 min",
+            "intensity": 5,
+            "tag": "Conditioning"
+          },
+          {
+            "name": "Reset",
+            "text": "Mobility and breathwork that undo a week at a desk and keep you training for years.",
+            "image": "./media/c4.webp",
+            "length": "40 min",
+            "intensity": 2,
+            "tag": "Mobility"
+          }
+        ]
+      },
+      "timetable": {
+        "kicker": "Timetable",
+        "title": "Find your slot.",
+        "allLabel": "All classes",
+        "classes": "Mon | 06:00 | Iron Strength | Maya\nMon | 07:15 | Engine | Dre\nMon | 12:30 | Reset | Leo\nMon | 18:00 | Fight Club | Dre\nMon | 19:15 | Iron Strength | Maya\nTue | 06:00 | Engine | Leo\nTue | 12:30 | Fight Club | Dre\nTue | 18:00 | Iron Strength | Maya\nTue | 19:15 | Reset | Leo\nWed | 06:00 | Fight Club | Dre\nWed | 07:15 | Iron Strength | Maya\nWed | 18:00 | Engine | Leo\nWed | 19:15 | Fight Club | Dre\nThu | 06:00 | Iron Strength | Maya\nThu | 12:30 | Engine | Leo\nThu | 18:00 | Fight Club | Dre\nThu | 19:15 | Reset | Leo\nFri | 06:00 | Engine | Leo\nFri | 12:30 | Iron Strength | Maya\nFri | 17:30 | Fight Club | Dre\nSat | 09:00 | Engine | Leo\nSat | 10:15 | Fight Club | Dre\nSat | 11:30 | Reset | Leo\nSun | 10:00 | Iron Strength | Maya\nSun | 11:15 | Reset | Leo",
+        "button": "Book"
+      },
+      "membership": {
+        "kicker": "Membership",
+        "title": "No contracts. No nonsense.",
+        "monthlyLabel": "Monthly",
+        "yearlyLabel": "Yearly",
+        "yearlyNote": "2 months free",
+        "currency": "$",
+        "plans": [
+          {
+            "name": "Off-Peak",
+            "monthly": 39,
+            "yearly": 390,
+            "features": "Open gym 10am – 4pm\n2 classes a week\nApp program",
+            "highlight": false
+          },
+          {
+            "name": "Unlimited",
+            "monthly": 79,
+            "yearly": 790,
+            "features": "Open gym all hours\nUnlimited classes\nApp program\nMonthly check-in",
+            "highlight": true
+          },
+          {
+            "name": "Coached 1:1",
+            "monthly": 249,
+            "yearly": 2490,
+            "features": "Everything in Unlimited\n8 personal sessions a month\nNutrition plan",
+            "highlight": false
+          }
+        ],
+        "button": "Start free week"
+      },
+      "calculator": {
+        "kicker": "Burn calculator",
+        "title": "What a week here does.",
+        "weightLabel": "Your weight (kg)",
+        "sessionsLabel": "Sessions a week",
+        "resultLabel": "calories burned a week",
+        "note": "A rough guide based on a hard 60-minute class. Everyone is different.",
+        "factor": 8
+      },
+      "coaches": {
+        "kicker": "Coaches",
+        "title": "In your corner.",
+        "items": [
+          {
+            "name": "Maya Torres",
+            "role": "Head of strength",
+            "bio": "Former national-level powerlifter. Will fix your squat in one session.",
+            "image": "./media/coach1.webp"
+          },
+          {
+            "name": "Dre Mensah",
+            "role": "Boxing coach",
+            "bio": "Twelve years in the ring and the calmest voice in the room.",
+            "image": "./media/coach2.webp"
+          },
+          {
+            "name": "Leo Park",
+            "role": "Conditioning and mobility",
+            "bio": "Builds engines and fixes backs. Loves a sled push a little too much.",
+            "image": "./media/coach3.webp"
+          }
+        ]
+      },
+      "stories": {
+        "items": [
+          {
+            "quote": "Lost 14 kg and found a deadlift I didn't know I had.",
+            "name": "Sam, member 2 years"
+          },
+          {
+            "quote": "The coaches remember your name and your numbers. It feels like a team.",
+            "name": "Priya, member 8 months"
+          },
+          {
+            "quote": "First gym I've stuck with for more than a month. Now it's my favourite hour of the day.",
+            "name": "Jonah, member 1 year"
+          }
+        ]
+      },
+      "trial": {
+        "kicker": "Free week",
+        "title": "Your first week is on us.",
+        "text": "Seven days, any class, any time. No card needed.",
+        "goals": "Get stronger\nLose weight\nLearn to box\nMove better\nJust get started",
+        "button": "Claim free week",
+        "formAction": "",
+        "done": "You're in, {person}. Check your email for your pass and see you on the floor."
+      },
+      "footer": {
+        "text": "Strength, boxing and conditioning. Open 5am – 11pm.",
+        "legal": "© {year} {name}."
+      },
+      "sections": {
+        "stats": true,
+        "programs": true,
+        "timetable": true,
+        "membership": true,
+        "calculator": true,
+        "coaches": true,
+        "stories": true,
+        "trial": true
+      },
+      "theme": {
+        "colors": {
+          "page": "#0b0b0c",
+          "surface": "#161618",
+          "text": "#f2f0ea",
+          "muted": "#8d8b86",
+          "accent": "#d7ff3a",
+          "onAccent": "#0b0b0c",
+          "hot": "#ff4b2b",
+          "line": "#2a2a2d"
+        },
+        "fonts": {
+          "display": "Anton",
+          "body": "Inter"
+        }
+      },
+      "motion": {
+        "animate": true,
+        "tickerSpeed": 22,
+        "stackCards": true,
+        "heroParallax": true
+      },
+      "extras": []
+    },
+    "poster": false,
+    "siteFiles": 12,
+    "sourceFiles": 20
   },
   {
     "id": "jack",
@@ -5776,5 +9442,867 @@
     "poster": false,
     "siteFiles": 10,
     "sourceFiles": 17
+  },
+  {
+    "id": "tidewater",
+    "name": "Tidewater",
+    "pitch": "A cinematic boutique hotel: a full-screen arrival that slips from day to night and settles into a frame as you scroll, a booking bar with dates and guests that prices the stay, rooms that slide sideways, experience panels that open on hover and a guest book that drifts past.",
+    "kind": "vite",
+    "categories": [
+      "Cinematic",
+      "Scroll",
+      "Interactive",
+      "Editorial"
+    ],
+    "business": [
+      "hotel",
+      "events",
+      "food"
+    ],
+    "sector": "Boutique hotel, guesthouse or holiday villa",
+    "intensity": 7,
+    "heavy": false,
+    "licence": {
+      "kind": "original",
+      "holder": "Site Builder",
+      "note": "Made for the builder as an original template. Pictures are free AI generations (Pollinations) kept in source/public/media.",
+      "added": "2026-11-18"
+    },
+    "remoteAssets": [],
+    "features": [
+      "Day to night scroll arrival",
+      "Day and night switch",
+      "Booking bar with live price",
+      "Sideways room gallery",
+      "Room details",
+      "Opening experience panels",
+      "Guest book marquee",
+      "Offers sign-up"
+    ],
+    "schema": [
+      {
+        "group": "Business",
+        "fields": [
+          {
+            "path": "brand.name",
+            "label": "Hotel name",
+            "type": "text",
+            "hint": "Fills every {name} in the text below."
+          },
+          {
+            "path": "brand.place",
+            "label": "Place (under the logo)",
+            "type": "text"
+          },
+          {
+            "path": "brand.phone",
+            "label": "Phone",
+            "type": "text"
+          },
+          {
+            "path": "brand.email",
+            "label": "Email",
+            "type": "text"
+          },
+          {
+            "path": "brand.address",
+            "label": "Address",
+            "type": "text"
+          },
+          {
+            "path": "brand.mapLink",
+            "label": "Map link",
+            "type": "url"
+          },
+          {
+            "path": "brand.currency",
+            "label": "Currency sign",
+            "type": "text"
+          },
+          {
+            "path": "seo.title",
+            "label": "Page title (search and browser tab)",
+            "type": "text"
+          },
+          {
+            "path": "seo.description",
+            "label": "Short description (search and sharing)",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "Sections",
+        "fields": [
+          {
+            "path": "sections.booking",
+            "label": "Show booking bar",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.intro",
+            "label": "Show intro",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.rooms",
+            "label": "Show rooms",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.experiences",
+            "label": "Show experiences",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.amenities",
+            "label": "Show amenities strip",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.reviews",
+            "label": "Show guest book",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.location",
+            "label": "Show location",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.offers",
+            "label": "Show offers sign-up",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Menu",
+        "fields": [
+          {
+            "path": "nav.links",
+            "label": "Menu links",
+            "type": "list",
+            "itemLabel": "Link",
+            "fields": [
+              {
+                "path": "label",
+                "label": "Label",
+                "type": "text"
+              },
+              {
+                "path": "href",
+                "label": "Goes to",
+                "type": "url"
+              }
+            ],
+            "min": 0,
+            "max": 6,
+            "hint": "The first two sit left of the name, the rest on the right."
+          },
+          {
+            "path": "nav.cta",
+            "label": "Booking button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Arrival",
+        "fields": [
+          {
+            "path": "hero.kicker",
+            "label": "Small line above",
+            "type": "text"
+          },
+          {
+            "path": "hero.title",
+            "label": "Headline",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.text",
+            "label": "Intro",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.image",
+            "label": "Day picture",
+            "type": "image"
+          },
+          {
+            "path": "hero.nightImage",
+            "label": "Night picture",
+            "type": "image",
+            "hint": "Fades in as people scroll. Leave empty for day only."
+          },
+          {
+            "path": "hero.imageAlt",
+            "label": "Picture description",
+            "type": "text"
+          },
+          {
+            "path": "hero.dayLabel",
+            "label": "Day switch label",
+            "type": "text"
+          },
+          {
+            "path": "hero.nightLabel",
+            "label": "Night switch label",
+            "type": "text"
+          },
+          {
+            "path": "hero.scrollHint",
+            "label": "Scroll hint",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Booking",
+        "fields": [
+          {
+            "path": "booking.checkIn",
+            "label": "Arrive label",
+            "type": "text"
+          },
+          {
+            "path": "booking.checkOut",
+            "label": "Leave label",
+            "type": "text"
+          },
+          {
+            "path": "booking.guests",
+            "label": "Guests label",
+            "type": "text"
+          },
+          {
+            "path": "booking.room",
+            "label": "Room label",
+            "type": "text"
+          },
+          {
+            "path": "booking.button",
+            "label": "Button",
+            "type": "text"
+          },
+          {
+            "path": "booking.maxGuests",
+            "label": "Most guests",
+            "type": "number",
+            "min": 1,
+            "max": 20,
+            "step": 1
+          },
+          {
+            "path": "booking.taxNote",
+            "label": "Price note",
+            "type": "textarea"
+          },
+          {
+            "path": "booking.formAction",
+            "label": "Form address (optional)",
+            "type": "url",
+            "hint": "An https form endpoint such as Formspree. Empty: the form only shows the thank-you message."
+          },
+          {
+            "path": "booking.done",
+            "label": "Thank-you message",
+            "type": "textarea",
+            "hint": "{person}, {room}, {nights} and {date} are filled in."
+          }
+        ]
+      },
+      {
+        "group": "Intro",
+        "fields": [
+          {
+            "path": "intro.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "intro.text",
+            "label": "Statement (lights up as you scroll)",
+            "type": "textarea"
+          },
+          {
+            "path": "intro.signature",
+            "label": "Signature",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Rooms",
+        "fields": [
+          {
+            "path": "rooms.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "rooms.title",
+            "label": "Heading",
+            "type": "textarea"
+          },
+          {
+            "path": "rooms.hint",
+            "label": "Hint",
+            "type": "textarea"
+          },
+          {
+            "path": "rooms.items",
+            "label": "Rooms",
+            "type": "list",
+            "itemLabel": "Room",
+            "fields": [
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "size",
+                "label": "Size",
+                "type": "text"
+              },
+              {
+                "path": "sleeps",
+                "label": "Sleeps",
+                "type": "number",
+                "min": 1,
+                "max": 12,
+                "step": 1
+              },
+              {
+                "path": "price",
+                "label": "Price per night",
+                "type": "number",
+                "min": 0,
+                "max": 100000,
+                "step": 1
+              },
+              {
+                "path": "image",
+                "label": "Picture",
+                "type": "image"
+              },
+              {
+                "path": "text",
+                "label": "Description",
+                "type": "textarea"
+              },
+              {
+                "path": "features",
+                "label": "Features (one per line)",
+                "type": "textarea"
+              }
+            ],
+            "min": 1,
+            "max": 12
+          }
+        ]
+      },
+      {
+        "group": "Experiences",
+        "fields": [
+          {
+            "path": "experiences.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "experiences.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "experiences.items",
+            "label": "Experiences",
+            "type": "list",
+            "itemLabel": "Experience",
+            "fields": [
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              },
+              {
+                "path": "tag",
+                "label": "Small label",
+                "type": "text"
+              },
+              {
+                "path": "text",
+                "label": "Text",
+                "type": "textarea"
+              },
+              {
+                "path": "image",
+                "label": "Picture",
+                "type": "image"
+              }
+            ],
+            "min": 1,
+            "max": 5
+          }
+        ]
+      },
+      {
+        "group": "Amenities strip",
+        "fields": [
+          {
+            "path": "amenities.items",
+            "label": "Amenities (one per line)",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "Guest book",
+        "fields": [
+          {
+            "path": "reviews.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "reviews.items",
+            "label": "Reviews",
+            "type": "list",
+            "itemLabel": "Review",
+            "fields": [
+              {
+                "path": "quote",
+                "label": "Quote",
+                "type": "textarea"
+              },
+              {
+                "path": "name",
+                "label": "Name",
+                "type": "text"
+              }
+            ],
+            "min": 0,
+            "max": 16
+          },
+          {
+            "path": "reviews.speed",
+            "label": "Seconds per loop (lower is faster)",
+            "type": "number",
+            "min": 10,
+            "max": 120,
+            "step": 5
+          }
+        ]
+      },
+      {
+        "group": "Location",
+        "fields": [
+          {
+            "path": "location.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "location.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "location.distances",
+            "label": "Distances (Place | Time, one per line)",
+            "type": "textarea"
+          },
+          {
+            "path": "location.note",
+            "label": "Note",
+            "type": "textarea"
+          },
+          {
+            "path": "location.image",
+            "label": "Picture",
+            "type": "image"
+          },
+          {
+            "path": "location.button",
+            "label": "Map button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Offers",
+        "fields": [
+          {
+            "path": "offers.kicker",
+            "label": "Small heading",
+            "type": "text"
+          },
+          {
+            "path": "offers.title",
+            "label": "Heading",
+            "type": "text"
+          },
+          {
+            "path": "offers.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "offers.placeholder",
+            "label": "Email placeholder",
+            "type": "text"
+          },
+          {
+            "path": "offers.button",
+            "label": "Button",
+            "type": "text"
+          },
+          {
+            "path": "offers.formAction",
+            "label": "Form address (optional)",
+            "type": "url"
+          },
+          {
+            "path": "offers.done",
+            "label": "Thank-you message",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Footer",
+        "fields": [
+          {
+            "path": "footer.text",
+            "label": "Line",
+            "type": "text"
+          },
+          {
+            "path": "footer.legal",
+            "label": "Small print",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Colours",
+        "fields": [
+          {
+            "path": "theme.colors.page",
+            "label": "Page",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.surface",
+            "label": "Cards",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.text",
+            "label": "Text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.muted",
+            "label": "Soft text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.accent",
+            "label": "Accent",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.sea",
+            "label": "Offers band",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.dark",
+            "label": "Dark (buttons, footer)",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.onDark",
+            "label": "Text on dark",
+            "type": "color"
+          }
+        ]
+      },
+      {
+        "group": "Fonts",
+        "fields": [
+          {
+            "path": "theme.fonts.display",
+            "label": "Headings font",
+            "type": "font"
+          },
+          {
+            "path": "theme.fonts.body",
+            "label": "Body font",
+            "type": "font"
+          }
+        ]
+      },
+      {
+        "group": "Motion",
+        "fields": [
+          {
+            "path": "motion.animate",
+            "label": "Animations on",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.dayToNight",
+            "label": "Day turns to night as you scroll",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.heroZoom",
+            "label": "Arrival picture zooms and frames",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.sidewaysRooms",
+            "label": "Rooms slide sideways on wide screens",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Library blocks",
+        "fields": [
+          {
+            "path": "extras",
+            "label": "Blocks from the library",
+            "type": "blocks",
+            "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          }
+        ]
+      }
+    ],
+    "content": {
+      "seo": {
+        "title": "{name} | A small hotel above the sea",
+        "description": "Twenty-two rooms on a cliff above the bay, with a stone spa, a terrace kitchen and boats to hidden coves."
+      },
+      "brand": {
+        "name": "Tidewater",
+        "place": "Cala Serena, Mallorca",
+        "phone": "+34 971 555 210",
+        "email": "stay@tidewater.house",
+        "address": "Camí del Far 12, Cala Serena, Mallorca",
+        "mapLink": "https://maps.google.com/?q=Cala+Serena+Mallorca",
+        "currency": "€"
+      },
+      "nav": {
+        "links": [
+          {
+            "label": "Rooms",
+            "href": "#rooms"
+          },
+          {
+            "label": "Experiences",
+            "href": "#experiences"
+          },
+          {
+            "label": "Location",
+            "href": "#location"
+          },
+          {
+            "label": "Offers",
+            "href": "#offers"
+          }
+        ],
+        "cta": "Book your stay"
+      },
+      "hero": {
+        "kicker": "A small hotel above the sea",
+        "title": "Stay where the tide sets the time.",
+        "text": "Twenty-two rooms carved into the cliff, a stone spa, long lunches on the terrace and the bay below.",
+        "image": "./media/hero.webp",
+        "nightImage": "./media/night.webp",
+        "imageAlt": "The hotel on the cliff above the bay",
+        "dayLabel": "Day",
+        "nightLabel": "Night",
+        "scrollHint": "Scroll to arrive"
+      },
+      "booking": {
+        "checkIn": "Arrive",
+        "checkOut": "Leave",
+        "guests": "Guests",
+        "room": "Room",
+        "button": "Check availability",
+        "maxGuests": 6,
+        "taxNote": "Includes breakfast and taxes. Pay nothing today; we confirm by email within a few hours.",
+        "formAction": "",
+        "done": "Thank you, {person}. Your {room} is held for {nights} nights from {date}. We will email you within a few hours."
+      },
+      "intro": {
+        "kicker": "The house",
+        "text": "Built from the island's own stone in 1962 and quietly restored, the house keeps its old rhythm: shutters open with the light, lunch runs long, and every room looks out to the water.",
+        "signature": "Elena and Marc, your hosts"
+      },
+      "rooms": {
+        "kicker": "Rooms and suites",
+        "title": "Twenty-two rooms, each facing the water.",
+        "hint": "Scroll sideways through the rooms. Tap one for the details.",
+        "items": [
+          {
+            "name": "Sea View Suite",
+            "size": "48 m²",
+            "sleeps": 2,
+            "price": 420,
+            "image": "./media/room1.webp",
+            "text": "Linen, lime-washed walls and a balcony that opens straight onto the bay. Wake up to boats heading out.",
+            "features": "King bed\nPrivate balcony\nRain shower\nNespresso and minibar"
+          },
+          {
+            "name": "Garden Room",
+            "size": "32 m²",
+            "sleeps": 2,
+            "price": 260,
+            "image": "./media/room2.webp",
+            "text": "Terracotta floors and rattan under the olive trees, a few steps from the pool.",
+            "features": "Queen bed\nGarden terrace\nWalk-in shower\nOlive grove views"
+          },
+          {
+            "name": "Beam Loft",
+            "size": "55 m²",
+            "sleeps": 3,
+            "price": 380,
+            "image": "./media/room3.webp",
+            "text": "The old hayloft under hand-cut beams, with a freestanding bath beneath the skylight.",
+            "features": "King bed and day bed\nFreestanding bath\nSkylight\nSitting area"
+          },
+          {
+            "name": "Cliff Villa",
+            "size": "110 m²",
+            "sleeps": 4,
+            "price": 890,
+            "image": "./media/room4.webp",
+            "text": "Two bedrooms, a stone terrace and a plunge pool on the edge of the cliff. Sunset is yours.",
+            "features": "Two bedrooms\nPrivate plunge pool\nOutdoor dining\nButler on call"
+          }
+        ]
+      },
+      "experiences": {
+        "kicker": "Experiences",
+        "title": "Days that drift.",
+        "items": [
+          {
+            "name": "Stone Spa",
+            "text": "A candlelit pool cut into the rock, treatments with island salt and oils, and nowhere to be.",
+            "image": "./media/spa.webp",
+            "tag": "Open daily 9 – 21"
+          },
+          {
+            "name": "Terrace Kitchen",
+            "text": "Fish from the morning boats, vegetables from our garden and long tables under the lights.",
+            "image": "./media/dining.webp",
+            "tag": "Lunch and dinner"
+          },
+          {
+            "name": "Hidden Coves",
+            "text": "Our wooden boat takes you to coves you can only reach from the water. Snorkels and lunch on board.",
+            "image": "./media/boat.webp",
+            "tag": "Tuesdays and Fridays"
+          }
+        ]
+      },
+      "amenities": {
+        "items": "Breakfast on the terrace\nHeated saltwater pool\nStone spa\nPrivate boat trips\nE-bikes to borrow\nAdults-only quiet hours\nAirport transfers\nFree Wi-Fi everywhere"
+      },
+      "reviews": {
+        "kicker": "From the guest book",
+        "items": [
+          {
+            "quote": "The quietest, most beautiful week we have had in years.",
+            "name": "Sophie & Tom, London"
+          },
+          {
+            "quote": "Woke up to the sea every morning. The breakfast alone is worth the trip.",
+            "name": "Ana R., Lisbon"
+          },
+          {
+            "quote": "Staff who remember how you take your coffee by day two.",
+            "name": "James K., New York"
+          },
+          {
+            "quote": "The boat trip to the coves was the highlight of our honeymoon.",
+            "name": "Mia & Leo, Berlin"
+          },
+          {
+            "quote": "Perfectly small. You feel like a guest in someone's home.",
+            "name": "Clara D., Paris"
+          },
+          {
+            "quote": "We have already booked next summer.",
+            "name": "The Okoye family, Lagos"
+          }
+        ],
+        "speed": 40
+      },
+      "location": {
+        "kicker": "Getting here",
+        "title": "Close to everything, far from it all.",
+        "distances": "Palma airport | 45 min by car\nCala Serena village | 8 min walk\nNearest beach | 3 min walk\nPort de Sóller | 35 min by car",
+        "note": "We collect you from the airport in our own car. Just tell us your flight.",
+        "image": "./media/night.webp",
+        "button": "Open in maps"
+      },
+      "offers": {
+        "kicker": "Offers",
+        "title": "Stay longer, pay less.",
+        "text": "Seven nights for the price of six from October to April, and first word on summer dates.",
+        "placeholder": "Your email",
+        "button": "Send me offers",
+        "formAction": "",
+        "done": "You're on the list. Watch your inbox for the next offer."
+      },
+      "footer": {
+        "text": "A small hotel above the sea.",
+        "legal": "© {year} {name}. All rights reserved."
+      },
+      "sections": {
+        "booking": true,
+        "intro": true,
+        "rooms": true,
+        "experiences": true,
+        "amenities": true,
+        "reviews": true,
+        "location": true,
+        "offers": true
+      },
+      "theme": {
+        "colors": {
+          "page": "#f3ede4",
+          "surface": "#fbf8f3",
+          "text": "#1d2a33",
+          "muted": "#6b7378",
+          "accent": "#b5683c",
+          "sea": "#1f4a5c",
+          "dark": "#12202a",
+          "onDark": "#f3ede4"
+        },
+        "fonts": {
+          "display": "Cormorant Garamond",
+          "body": "DM Sans"
+        }
+      },
+      "motion": {
+        "animate": true,
+        "dayToNight": true,
+        "heroZoom": true,
+        "sidewaysRooms": true
+      },
+      "extras": []
+    },
+    "poster": false,
+    "siteFiles": 13,
+    "sourceFiles": 21
   }
 ]

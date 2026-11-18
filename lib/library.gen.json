@@ -1936,6 +1936,344 @@
   "assets": {
     "media": [
       {
+        "src": "/tpl/ashgrove/site/media/hero.webp",
+        "type": "image",
+        "label": "Picture",
+        "from": [
+          "ashgrove"
+        ],
+        "business": [
+          "food",
+          "events",
+          "hotel"
+        ]
+      },
+      {
+        "src": "/tpl/ashgrove/site/media/chef.webp",
+        "type": "image",
+        "label": "Chapters 1: Picture",
+        "from": [
+          "ashgrove"
+        ],
+        "business": [
+          "food",
+          "events",
+          "hotel"
+        ]
+      },
+      {
+        "src": "/tpl/ashgrove/site/media/d6.webp",
+        "type": "image",
+        "label": "Chapters 2: Picture",
+        "from": [
+          "ashgrove"
+        ],
+        "business": [
+          "food",
+          "events",
+          "hotel"
+        ]
+      },
+      {
+        "src": "/tpl/ashgrove/site/media/room.webp",
+        "type": "image",
+        "label": "Chapters 3: Picture",
+        "from": [
+          "ashgrove"
+        ],
+        "business": [
+          "food",
+          "events",
+          "hotel"
+        ]
+      },
+      {
+        "src": "/tpl/ashgrove/site/media/d1.webp",
+        "type": "image",
+        "label": "Plates 1: Round picture, from above",
+        "from": [
+          "ashgrove"
+        ],
+        "business": [
+          "food",
+          "events",
+          "hotel"
+        ]
+      },
+      {
+        "src": "/tpl/ashgrove/site/media/d2.webp",
+        "type": "image",
+        "label": "Plates 2: Round picture, from above",
+        "from": [
+          "ashgrove"
+        ],
+        "business": [
+          "food",
+          "events",
+          "hotel"
+        ]
+      },
+      {
+        "src": "/tpl/ashgrove/site/media/d3.webp",
+        "type": "image",
+        "label": "Plates 3: Round picture, from above",
+        "from": [
+          "ashgrove"
+        ],
+        "business": [
+          "food",
+          "events",
+          "hotel"
+        ]
+      },
+      {
+        "src": "/tpl/ashgrove/site/media/d4.webp",
+        "type": "image",
+        "label": "Plates 4: Round picture, from above",
+        "from": [
+          "ashgrove"
+        ],
+        "business": [
+          "food",
+          "events",
+          "hotel"
+        ]
+      },
+      {
+        "src": "/tpl/ashgrove/site/media/d5.webp",
+        "type": "image",
+        "label": "Plates 5: Round picture, from above",
+        "from": [
+          "ashgrove"
+        ],
+        "business": [
+          "food",
+          "events",
+          "hotel"
+        ]
+      },
+      {
+        "src": "/tpl/brightline/site/media/smile.webp",
+        "type": "image",
+        "label": "Picture",
+        "from": [
+          "brightline"
+        ],
+        "business": [
+          "dentist",
+          "health",
+          "hospital"
+        ]
+      },
+      {
+        "src": "/tpl/brightline/site/media/room.webp",
+        "type": "image",
+        "label": "Treatments 1: Picture",
+        "from": [
+          "brightline"
+        ],
+        "business": [
+          "dentist",
+          "health",
+          "hospital"
+        ]
+      },
+      {
+        "src": "/tpl/brightline/site/media/dr1.webp",
+        "type": "image",
+        "label": "Treatments 3: Picture",
+        "from": [
+          "brightline"
+        ],
+        "business": [
+          "dentist",
+          "health",
+          "hospital"
+        ]
+      },
+      {
+        "src": "/tpl/brightline/site/media/dr2.webp",
+        "type": "image",
+        "label": "Treatments 4: Picture",
+        "from": [
+          "brightline"
+        ],
+        "business": [
+          "dentist",
+          "health",
+          "hospital"
+        ]
+      },
+      {
+        "src": "/tpl/brightline/site/media/kids.webp",
+        "type": "image",
+        "label": "Treatments 5: Picture",
+        "from": [
+          "brightline"
+        ],
+        "business": [
+          "dentist",
+          "health",
+          "hospital"
+        ]
+      },
+      {
+        "src": "/tpl/brightline/site/media/dr3.webp",
+        "type": "image",
+        "label": "Treatments 6: Picture",
+        "from": [
+          "brightline"
+        ],
+        "business": [
+          "dentist",
+          "health",
+          "hospital"
+        ]
+      },
+      {
+        "src": "/tpl/brightline/site/media/hero.webp",
+        "type": "image",
+        "label": "Picture",
+        "from": [
+          "brightline"
+        ],
+        "business": [
+          "dentist",
+          "health",
+          "hospital"
+        ]
+      },
+      {
+        "src": "/tpl/cornerstone/site/media/hero.webp",
+        "type": "image",
+        "label": "Picture",
+        "from": [
+          "cornerstone"
+        ],
+        "business": [
+          "property",
+          "consulting",
+          "law"
+        ]
+      },
+      {
+        "src": "/tpl/cornerstone/site/media/p1.webp",
+        "type": "image",
+        "label": "Homes 1: Picture",
+        "from": [
+          "cornerstone"
+        ],
+        "business": [
+          "property",
+          "consulting",
+          "law"
+        ]
+      },
+      {
+        "src": "/tpl/cornerstone/site/media/p2.webp",
+        "type": "image",
+        "label": "Homes 2: Picture",
+        "from": [
+          "cornerstone"
+        ],
+        "business": [
+          "property",
+          "consulting",
+          "law"
+        ]
+      },
+      {
+        "src": "/tpl/cornerstone/site/media/p3.webp",
+        "type": "image",
+        "label": "Homes 3: Picture",
+        "from": [
+          "cornerstone"
+        ],
+        "business": [
+          "property",
+          "consulting",
+          "law"
+        ]
+      },
+      {
+        "src": "/tpl/cornerstone/site/media/p4.webp",
+        "type": "image",
+        "label": "Homes 4: Picture",
+        "from": [
+          "cornerstone"
+        ],
+        "business": [
+          "property",
+          "consulting",
+          "law"
+        ]
+      },
+      {
+        "src": "/tpl/cornerstone/site/media/p5.webp",
+        "type": "image",
+        "label": "Homes 5: Picture",
+        "from": [
+          "cornerstone"
+        ],
+        "business": [
+          "property",
+          "consulting",
+          "law"
+        ]
+      },
+      {
+        "src": "/tpl/cornerstone/site/media/p6.webp",
+        "type": "image",
+        "label": "Homes 6: Picture",
+        "from": [
+          "cornerstone"
+        ],
+        "business": [
+          "property",
+          "consulting",
+          "law"
+        ]
+      },
+      {
+        "src": "/tpl/cornerstone/site/media/interior.webp",
+        "type": "image",
+        "label": "Picture",
+        "from": [
+          "cornerstone"
+        ],
+        "business": [
+          "property",
+          "consulting",
+          "law"
+        ]
+      },
+      {
+        "src": "/tpl/cornerstone/site/media/agent1.webp",
+        "type": "image",
+        "label": "Agents 1: Photo",
+        "from": [
+          "cornerstone"
+        ],
+        "business": [
+          "property",
+          "consulting",
+          "law"
+        ]
+      },
+      {
+        "src": "/tpl/cornerstone/site/media/agent2.webp",
+        "type": "image",
+        "label": "Agents 2: Photo",
+        "from": [
+          "cornerstone"
+        ],
+        "business": [
+          "property",
+          "consulting",
+          "law"
+        ]
+      },
+      {
         "src": "/tpl/distill/site/media/home.webp",
         "type": "image",
         "label": "Cards 1: Picture",
@@ -2037,6 +2375,110 @@
           "product",
           "consulting",
           "agency"
+        ]
+      },
+      {
+        "src": "/tpl/ironhouse/site/media/hero.webp",
+        "type": "image",
+        "label": "Picture",
+        "from": [
+          "ironhouse"
+        ],
+        "business": [
+          "fitness",
+          "health",
+          "events"
+        ]
+      },
+      {
+        "src": "/tpl/ironhouse/site/media/c1.webp",
+        "type": "image",
+        "label": "Programs 1: Picture",
+        "from": [
+          "ironhouse"
+        ],
+        "business": [
+          "fitness",
+          "health",
+          "events"
+        ]
+      },
+      {
+        "src": "/tpl/ironhouse/site/media/c2.webp",
+        "type": "image",
+        "label": "Programs 2: Picture",
+        "from": [
+          "ironhouse"
+        ],
+        "business": [
+          "fitness",
+          "health",
+          "events"
+        ]
+      },
+      {
+        "src": "/tpl/ironhouse/site/media/c3.webp",
+        "type": "image",
+        "label": "Programs 3: Picture",
+        "from": [
+          "ironhouse"
+        ],
+        "business": [
+          "fitness",
+          "health",
+          "events"
+        ]
+      },
+      {
+        "src": "/tpl/ironhouse/site/media/c4.webp",
+        "type": "image",
+        "label": "Programs 4: Picture",
+        "from": [
+          "ironhouse"
+        ],
+        "business": [
+          "fitness",
+          "health",
+          "events"
+        ]
+      },
+      {
+        "src": "/tpl/ironhouse/site/media/coach1.webp",
+        "type": "image",
+        "label": "Coaches 1: Photo",
+        "from": [
+          "ironhouse"
+        ],
+        "business": [
+          "fitness",
+          "health",
+          "events"
+        ]
+      },
+      {
+        "src": "/tpl/ironhouse/site/media/coach2.webp",
+        "type": "image",
+        "label": "Coaches 2: Photo",
+        "from": [
+          "ironhouse"
+        ],
+        "business": [
+          "fitness",
+          "health",
+          "events"
+        ]
+      },
+      {
+        "src": "/tpl/ironhouse/site/media/coach3.webp",
+        "type": "image",
+        "label": "Coaches 3: Photo",
+        "from": [
+          "ironhouse"
+        ],
+        "business": [
+          "fitness",
+          "health",
+          "events"
         ]
       },
       {
@@ -2521,6 +2963,123 @@
         ]
       },
       {
+        "src": "/tpl/tidewater/site/media/hero.webp",
+        "type": "image",
+        "label": "Day picture",
+        "from": [
+          "tidewater"
+        ],
+        "business": [
+          "hotel",
+          "events",
+          "food"
+        ]
+      },
+      {
+        "src": "/tpl/tidewater/site/media/night.webp",
+        "type": "image",
+        "label": "Night picture",
+        "from": [
+          "tidewater"
+        ],
+        "business": [
+          "hotel",
+          "events",
+          "food"
+        ]
+      },
+      {
+        "src": "/tpl/tidewater/site/media/room1.webp",
+        "type": "image",
+        "label": "Rooms 1: Picture",
+        "from": [
+          "tidewater"
+        ],
+        "business": [
+          "hotel",
+          "events",
+          "food"
+        ]
+      },
+      {
+        "src": "/tpl/tidewater/site/media/room2.webp",
+        "type": "image",
+        "label": "Rooms 2: Picture",
+        "from": [
+          "tidewater"
+        ],
+        "business": [
+          "hotel",
+          "events",
+          "food"
+        ]
+      },
+      {
+        "src": "/tpl/tidewater/site/media/room3.webp",
+        "type": "image",
+        "label": "Rooms 3: Picture",
+        "from": [
+          "tidewater"
+        ],
+        "business": [
+          "hotel",
+          "events",
+          "food"
+        ]
+      },
+      {
+        "src": "/tpl/tidewater/site/media/room4.webp",
+        "type": "image",
+        "label": "Rooms 4: Picture",
+        "from": [
+          "tidewater"
+        ],
+        "business": [
+          "hotel",
+          "events",
+          "food"
+        ]
+      },
+      {
+        "src": "/tpl/tidewater/site/media/spa.webp",
+        "type": "image",
+        "label": "Experiences 1: Picture",
+        "from": [
+          "tidewater"
+        ],
+        "business": [
+          "hotel",
+          "events",
+          "food"
+        ]
+      },
+      {
+        "src": "/tpl/tidewater/site/media/dining.webp",
+        "type": "image",
+        "label": "Experiences 2: Picture",
+        "from": [
+          "tidewater"
+        ],
+        "business": [
+          "hotel",
+          "events",
+          "food"
+        ]
+      },
+      {
+        "src": "/tpl/tidewater/site/media/boat.webp",
+        "type": "image",
+        "label": "Experiences 3: Picture",
+        "from": [
+          "tidewater"
+        ],
+        "business": [
+          "hotel",
+          "events",
+          "food"
+        ]
+      },
+      {
         "src": "/lib/media/landscape.webp",
         "type": "image",
         "label": "Before picture",
@@ -2614,9 +3173,49 @@
     ],
     "fonts": [
       {
+        "family": "Fraunces",
+        "from": [
+          "ashgrove"
+        ]
+      },
+      {
+        "family": "Work Sans",
+        "from": [
+          "ashgrove"
+        ]
+      },
+      {
+        "family": "Instrument Serif",
+        "from": [
+          "brightline"
+        ]
+      },
+      {
+        "family": "Manrope",
+        "from": [
+          "brightline",
+          "fernhollow",
+          "milo"
+        ]
+      },
+      {
+        "family": "Playfair Display",
+        "from": [
+          "cornerstone",
+          "lithos"
+        ]
+      },
+      {
+        "family": "Plus Jakarta Sans",
+        "from": [
+          "cornerstone"
+        ]
+      },
+      {
         "family": "Inter",
         "from": [
           "distill",
+          "ironhouse",
           "lithos",
           "stride"
         ]
@@ -2640,22 +3239,15 @@
         ]
       },
       {
-        "family": "Manrope",
+        "family": "Anton",
         "from": [
-          "fernhollow",
-          "milo"
+          "ironhouse"
         ]
       },
       {
         "family": "Kanit",
         "from": [
           "jack"
-        ]
-      },
-      {
-        "family": "Playfair Display",
-        "from": [
-          "lithos"
         ]
       },
       {
@@ -2681,9 +3273,64 @@
         "from": [
           "stride"
         ]
+      },
+      {
+        "family": "Cormorant Garamond",
+        "from": [
+          "tidewater"
+        ]
+      },
+      {
+        "family": "DM Sans",
+        "from": [
+          "tidewater"
+        ]
       }
     ],
     "palettes": [
+      {
+        "from": "ashgrove",
+        "name": "Ashgrove",
+        "colors": {
+          "page": "#14100d",
+          "surface": "#1e1814",
+          "text": "#f1e6d6",
+          "muted": "#a8977f",
+          "accent": "#e2833b",
+          "glow": "#ffb067",
+          "line": "#3a2f27",
+          "onAccent": "#14100d"
+        }
+      },
+      {
+        "from": "brightline",
+        "name": "Brightline",
+        "colors": {
+          "page": "#f6f8f6",
+          "surface": "#ffffff",
+          "text": "#0f2a2a",
+          "muted": "#5b706d",
+          "accent": "#1f8a78",
+          "accentSoft": "#d8efe9",
+          "highlight": "#f4c95d",
+          "dark": "#0f2a2a",
+          "onAccent": "#ffffff"
+        }
+      },
+      {
+        "from": "cornerstone",
+        "name": "Cornerstone",
+        "colors": {
+          "page": "#f5f2ec",
+          "surface": "#ffffff",
+          "text": "#14213d",
+          "muted": "#6b7280",
+          "accent": "#c08b5c",
+          "dark": "#14213d",
+          "onDark": "#f5f2ec",
+          "line": "#e4ddd1"
+        }
+      },
       {
         "from": "distill",
         "name": "Distill",
@@ -2708,6 +3355,20 @@
           "buttonText": "#151510",
           "background": "#000000",
           "panel": "#0b0d0b"
+        }
+      },
+      {
+        "from": "ironhouse",
+        "name": "Ironhouse",
+        "colors": {
+          "page": "#0b0b0c",
+          "surface": "#161618",
+          "text": "#f2f0ea",
+          "muted": "#8d8b86",
+          "accent": "#d7ff3a",
+          "onAccent": "#0b0b0c",
+          "hot": "#ff4b2b",
+          "line": "#2a2a2d"
         }
       },
       {
@@ -2777,6 +3438,20 @@
           "ink": "#1c1a1f",
           "cream": "#f0e8e0",
           "dark": "#191a1e"
+        }
+      },
+      {
+        "from": "tidewater",
+        "name": "Tidewater",
+        "colors": {
+          "page": "#f3ede4",
+          "surface": "#fbf8f3",
+          "text": "#1d2a33",
+          "muted": "#6b7378",
+          "accent": "#b5683c",
+          "sea": "#1f4a5c",
+          "dark": "#12202a",
+          "onDark": "#f3ede4"
         }
       }
     ]

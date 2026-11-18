@@ -1,0 +1,142 @@
+{
+  "seo": {
+    "title": "{name} | Homes to buy and rent, valued honestly",
+    "description": "Hand-picked homes, honest valuations and agents who answer the phone. Search, save and book a viewing in a minute."
+  },
+  "brand": {
+    "name": "Cornerstone",
+    "tagline": "Estate agents",
+    "phone": "+1 (555) 019-8800",
+    "email": "hello@cornerstone.homes",
+    "address": "200 Market Square, Riverside",
+    "currency": "$"
+  },
+  "nav": {
+    "links": [
+      { "label": "Buy", "href": "#homes" },
+      { "label": "Mortgage", "href": "#mortgage" },
+      { "label": "Areas", "href": "#areas" },
+      { "label": "Sell", "href": "#sell" },
+      { "label": "Agents", "href": "#agents" }
+    ],
+    "cta": "Free valuation"
+  },
+  "hero": {
+    "kicker": "Riverside's independent agent",
+    "title": "Find the place that feels like home.",
+    "text": "Hand-picked homes, honest valuations and agents who pick up the phone.",
+    "image": "./media/hero.webp",
+    "searchPlaceholder": "Area, street or postcode",
+    "searchButton": "Search homes",
+    "anyType": "Any type",
+    "anyPrice": "Any price",
+    "priceSteps": "500000\n750000\n1000000\n1500000\n2500000"
+  },
+  "homes": {
+    "kicker": "Homes for sale",
+    "title": "Fresh to the market.",
+    "allLabel": "All",
+    "empty": "No homes match yet. Try a wider search or ask us to tell you when one does.",
+    "items": [
+      { "name": "White Palm Villa", "area": "Hillcrest", "type": "Villa", "price": 2450000, "beds": 5, "baths": 4, "size": "4,200 sq ft", "status": "New", "image": "./media/p1.webp", "text": "A bright, single-level villa with a heated pool, palms and an open kitchen that runs out to the terrace." },
+      { "name": "Brick Row Townhouse", "area": "Old Town", "type": "House", "price": 890000, "beds": 3, "baths": 2, "size": "1,850 sq ft", "status": "", "image": "./media/p2.webp", "text": "Restored brick, black steel windows and a walled garden, two streets from the market square." },
+      { "name": "Skyline Penthouse", "area": "Riverside", "type": "Apartment", "price": 1650000, "beds": 3, "baths": 3, "size": "2,300 sq ft", "status": "Under offer", "image": "./media/p3.webp", "text": "Top-floor living with a wraparound terrace and sunset views over the river and the city." },
+      { "name": "Linden Family House", "area": "Northwood", "type": "House", "price": 1120000, "beds": 4, "baths": 3, "size": "2,700 sq ft", "status": "", "image": "./media/p4.webp", "text": "Timber-clad and full of light, with a big garden, a playroom and the best school catchment in town." },
+      { "name": "Garden Court Apartment", "area": "Riverside", "type": "Apartment", "price": 540000, "beds": 2, "baths": 1, "size": "980 sq ft", "status": "New", "image": "./media/p5.webp", "text": "A calm two-bed with a planted balcony, concierge and a gym, five minutes from the station." },
+      { "name": "Stone Barn Conversion", "area": "Millbrook", "type": "House", "price": 1340000, "beds": 4, "baths": 3, "size": "3,100 sq ft", "status": "", "image": "./media/p6.webp", "text": "An old stone barn with a glass extension, vaulted ceilings and three acres of meadow." }
+    ]
+  },
+  "viewing": {
+    "title": "Book a viewing",
+    "button": "Request viewing",
+    "formAction": "",
+    "done": "Thanks, {person}. {agent} will call you today to confirm your viewing of {home}."
+  },
+  "mortgage": {
+    "kicker": "Mortgage calculator",
+    "title": "What would it cost a month?",
+    "priceLabel": "Home price",
+    "depositLabel": "Deposit",
+    "rateLabel": "Interest rate",
+    "yearsLabel": "Term (years)",
+    "resultLabel": "a month",
+    "note": "An estimate for planning only, not a mortgage offer.",
+    "rate": 5.2
+  },
+  "areas": {
+    "kicker": "Areas we know",
+    "title": "Every street, every school.",
+    "items": [
+      { "name": "Riverside", "text": "Warehouse lofts and new towers by the water.", "stat": "Avg. $720k", "image": "./media/p3.webp" },
+      { "name": "Old Town", "text": "Brick terraces, markets and cafés.", "stat": "Avg. $860k", "image": "./media/p2.webp" },
+      { "name": "Northwood", "text": "Family houses, parks and top schools.", "stat": "Avg. $1.05m", "image": "./media/p4.webp" },
+      { "name": "Hillcrest", "text": "Big plots, pools and views to the coast.", "stat": "Avg. $2.1m", "image": "./media/p1.webp" },
+      { "name": "Millbrook", "text": "Village life twenty minutes from the city.", "stat": "Avg. $940k", "image": "./media/p6.webp" }
+    ]
+  },
+  "sell": {
+    "kicker": "Selling with us",
+    "title": "Sold in weeks, not months.",
+    "steps": [
+      { "title": "Honest valuation", "text": "A price based on real sales on your street, not a number to win your business." },
+      { "title": "Beautiful listing", "text": "Professional photos, a floor plan and a film, live in five days." },
+      { "title": "Viewings handled", "text": "We host every viewing and send feedback the same evening." },
+      { "title": "Through to keys", "text": "One agent from offer to completion, chasing every step." }
+    ],
+    "image": "./media/interior.webp",
+    "stat": "28 days",
+    "statLabel": "average time to sell"
+  },
+  "agents": {
+    "kicker": "Your agents",
+    "title": "Real people, real answers.",
+    "items": [
+      { "name": "Olivia Grant", "role": "Sales director", "phone": "+1 (555) 019-8801", "email": "olivia@cornerstone.homes", "image": "./media/agent1.webp" },
+      { "name": "Daniel Reyes", "role": "Senior negotiator", "phone": "+1 (555) 019-8802", "email": "daniel@cornerstone.homes", "image": "./media/agent2.webp" }
+    ]
+  },
+  "valuation": {
+    "kicker": "Free valuation",
+    "title": "What's your home worth?",
+    "text": "Tell us a little about it and we'll come back within a day with a real figure.",
+    "bedsLabel": "Bedrooms",
+    "button": "Get my valuation",
+    "formAction": "",
+    "done": "Thank you, {person}. We'll be in touch within one working day."
+  },
+  "footer": {
+    "text": "Independent estate agents in Riverside since 2009.",
+    "legal": "© {year} {name}. Prices and details are a guide only."
+  },
+  "sections": {
+    "search": true,
+    "homes": true,
+    "mortgage": true,
+    "areas": true,
+    "sell": true,
+    "agents": true,
+    "valuation": true
+  },
+  "theme": {
+    "colors": {
+      "page": "#f5f2ec",
+      "surface": "#ffffff",
+      "text": "#14213d",
+      "muted": "#6b7280",
+      "accent": "#c08b5c",
+      "dark": "#14213d",
+      "onDark": "#f5f2ec",
+      "line": "#e4ddd1"
+    },
+    "fonts": {
+      "display": "Playfair Display",
+      "body": "Plus Jakarta Sans"
+    }
+  },
+  "motion": {
+    "animate": true,
+    "heroOpen": true,
+    "areaPreview": true
+  },
+  "extras": []
+}

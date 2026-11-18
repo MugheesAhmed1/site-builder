@@ -1,0 +1,140 @@
+{
+  "seo": {
+    "title": "{name} | A small hotel above the sea",
+    "description": "Twenty-two rooms on a cliff above the bay, with a stone spa, a terrace kitchen and boats to hidden coves."
+  },
+  "brand": {
+    "name": "Tidewater",
+    "place": "Cala Serena, Mallorca",
+    "phone": "+34 971 555 210",
+    "email": "stay@tidewater.house",
+    "address": "Camí del Far 12, Cala Serena, Mallorca",
+    "mapLink": "https://maps.google.com/?q=Cala+Serena+Mallorca",
+    "currency": "€"
+  },
+  "nav": {
+    "links": [
+      { "label": "Rooms", "href": "#rooms" },
+      { "label": "Experiences", "href": "#experiences" },
+      { "label": "Location", "href": "#location" },
+      { "label": "Offers", "href": "#offers" }
+    ],
+    "cta": "Book your stay"
+  },
+  "hero": {
+    "kicker": "A small hotel above the sea",
+    "title": "Stay where the tide sets the time.",
+    "text": "Twenty-two rooms carved into the cliff, a stone spa, long lunches on the terrace and the bay below.",
+    "image": "./media/hero.webp",
+    "nightImage": "./media/night.webp",
+    "imageAlt": "The hotel on the cliff above the bay",
+    "dayLabel": "Day",
+    "nightLabel": "Night",
+    "scrollHint": "Scroll to arrive"
+  },
+  "booking": {
+    "checkIn": "Arrive",
+    "checkOut": "Leave",
+    "guests": "Guests",
+    "room": "Room",
+    "button": "Check availability",
+    "maxGuests": 6,
+    "taxNote": "Includes breakfast and taxes. Pay nothing today; we confirm by email within a few hours.",
+    "formAction": "",
+    "done": "Thank you, {person}. Your {room} is held for {nights} nights from {date}. We will email you within a few hours."
+  },
+  "intro": {
+    "kicker": "The house",
+    "text": "Built from the island's own stone in 1962 and quietly restored, the house keeps its old rhythm: shutters open with the light, lunch runs long, and every room looks out to the water.",
+    "signature": "Elena and Marc, your hosts"
+  },
+  "rooms": {
+    "kicker": "Rooms and suites",
+    "title": "Twenty-two rooms, each facing the water.",
+    "hint": "Scroll sideways through the rooms. Tap one for the details.",
+    "items": [
+      { "name": "Sea View Suite", "size": "48 m²", "sleeps": 2, "price": 420, "image": "./media/room1.webp", "text": "Linen, lime-washed walls and a balcony that opens straight onto the bay. Wake up to boats heading out.", "features": "King bed\nPrivate balcony\nRain shower\nNespresso and minibar" },
+      { "name": "Garden Room", "size": "32 m²", "sleeps": 2, "price": 260, "image": "./media/room2.webp", "text": "Terracotta floors and rattan under the olive trees, a few steps from the pool.", "features": "Queen bed\nGarden terrace\nWalk-in shower\nOlive grove views" },
+      { "name": "Beam Loft", "size": "55 m²", "sleeps": 3, "price": 380, "image": "./media/room3.webp", "text": "The old hayloft under hand-cut beams, with a freestanding bath beneath the skylight.", "features": "King bed and day bed\nFreestanding bath\nSkylight\nSitting area" },
+      { "name": "Cliff Villa", "size": "110 m²", "sleeps": 4, "price": 890, "image": "./media/room4.webp", "text": "Two bedrooms, a stone terrace and a plunge pool on the edge of the cliff. Sunset is yours.", "features": "Two bedrooms\nPrivate plunge pool\nOutdoor dining\nButler on call" }
+    ]
+  },
+  "experiences": {
+    "kicker": "Experiences",
+    "title": "Days that drift.",
+    "items": [
+      { "name": "Stone Spa", "text": "A candlelit pool cut into the rock, treatments with island salt and oils, and nowhere to be.", "image": "./media/spa.webp", "tag": "Open daily 9 – 21" },
+      { "name": "Terrace Kitchen", "text": "Fish from the morning boats, vegetables from our garden and long tables under the lights.", "image": "./media/dining.webp", "tag": "Lunch and dinner" },
+      { "name": "Hidden Coves", "text": "Our wooden boat takes you to coves you can only reach from the water. Snorkels and lunch on board.", "image": "./media/boat.webp", "tag": "Tuesdays and Fridays" }
+    ]
+  },
+  "amenities": {
+    "items": "Breakfast on the terrace\nHeated saltwater pool\nStone spa\nPrivate boat trips\nE-bikes to borrow\nAdults-only quiet hours\nAirport transfers\nFree Wi-Fi everywhere"
+  },
+  "reviews": {
+    "kicker": "From the guest book",
+    "items": [
+      { "quote": "The quietest, most beautiful week we have had in years.", "name": "Sophie & Tom, London" },
+      { "quote": "Woke up to the sea every morning. The breakfast alone is worth the trip.", "name": "Ana R., Lisbon" },
+      { "quote": "Staff who remember how you take your coffee by day two.", "name": "James K., New York" },
+      { "quote": "The boat trip to the coves was the highlight of our honeymoon.", "name": "Mia & Leo, Berlin" },
+      { "quote": "Perfectly small. You feel like a guest in someone's home.", "name": "Clara D., Paris" },
+      { "quote": "We have already booked next summer.", "name": "The Okoye family, Lagos" }
+    ],
+    "speed": 40
+  },
+  "location": {
+    "kicker": "Getting here",
+    "title": "Close to everything, far from it all.",
+    "distances": "Palma airport | 45 min by car\nCala Serena village | 8 min walk\nNearest beach | 3 min walk\nPort de Sóller | 35 min by car",
+    "note": "We collect you from the airport in our own car. Just tell us your flight.",
+    "image": "./media/night.webp",
+    "button": "Open in maps"
+  },
+  "offers": {
+    "kicker": "Offers",
+    "title": "Stay longer, pay less.",
+    "text": "Seven nights for the price of six from October to April, and first word on summer dates.",
+    "placeholder": "Your email",
+    "button": "Send me offers",
+    "formAction": "",
+    "done": "You're on the list. Watch your inbox for the next offer."
+  },
+  "footer": {
+    "text": "A small hotel above the sea.",
+    "legal": "© {year} {name}. All rights reserved."
+  },
+  "sections": {
+    "booking": true,
+    "intro": true,
+    "rooms": true,
+    "experiences": true,
+    "amenities": true,
+    "reviews": true,
+    "location": true,
+    "offers": true
+  },
+  "theme": {
+    "colors": {
+      "page": "#f3ede4",
+      "surface": "#fbf8f3",
+      "text": "#1d2a33",
+      "muted": "#6b7378",
+      "accent": "#b5683c",
+      "sea": "#1f4a5c",
+      "dark": "#12202a",
+      "onDark": "#f3ede4"
+    },
+    "fonts": {
+      "display": "Cormorant Garamond",
+      "body": "DM Sans"
+    }
+  },
+  "motion": {
+    "animate": true,
+    "dayToNight": true,
+    "heroZoom": true,
+    "sidewaysRooms": true
+  },
+  "extras": []
+}

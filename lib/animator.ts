@@ -94,10 +94,11 @@ function nameFor(query: string, business: string, city: string) {
 
 /** Templates a business suits when no template is filed under it directly, closest feel first. */
 const NEAREST: Record<string, string[]> = {
-  dentist: ["mossline", "distill", "lithos"], hospital: ["mossline", "lithos", "distill"], health: ["mossline", "lithos", "fernhollow"],
-  beauty: ["fernhollow", "jack", "stride"], fitness: ["stride", "jack", "distill"], law: ["distill", "lithos", "mossline"],
-  hotel: ["fernhollow", "milo", "lithos"], property: ["lithos", "mossline", "fernhollow"], trades: ["distill", "jack", "mossline"],
-  auto: ["jack", "distill", "stride"], pets: ["stride", "fernhollow", "jack"], events: ["milo", "jack", "fernhollow"], general: ["distill", "mossline", "jack"],
+  dentist: ["brightline", "cornerstone", "mossline"], hospital: ["brightline", "mossline", "cornerstone"], health: ["brightline", "ironhouse", "tidewater"],
+  beauty: ["brightline", "tidewater", "fernhollow"], fitness: ["ironhouse", "stride", "jack"], law: ["cornerstone", "distill", "lithos"],
+  hotel: ["tidewater", "ashgrove", "fernhollow"], property: ["cornerstone", "tidewater", "lithos"], trades: ["cornerstone", "ironhouse", "distill"],
+  auto: ["ironhouse", "jack", "distill"], pets: ["brightline", "stride", "fernhollow"], events: ["ashgrove", "tidewater", "milo"], food: ["ashgrove", "stride", "tidewater"],
+  general: ["distill", "mossline", "jack"],
 };
 
 export function rankTemplates(business: string, kind: "website" | "portfolio" = "website"): TemplateInfo[] {
@@ -335,7 +336,12 @@ export function buildContent(t: TemplateInfo, plan: MasterPlan, writes: Writes =
 
   // Contact details: the owner's own are never left on someone else's site.
   const walkEmail = (fields: SchemaField[], base: string) => {
-    for (const f of fields) if (f.type === "text" && /email$/i.test(f.path) && typeof getPath(c, base + f.path) === "string") c = setPath(c, base + f.path, emailFor(plan.name));
+    for (const f of fields) {
+      if (f.type === "text" && /email$/i.test(f.path) && typeof getPath(c, base + f.path) === "string") c = setPath(c, base + f.path, emailFor(plan.name));
+      // Lists too (a team's or agents' own addresses).
+      const v = getPath(c, base + f.path);
+      if (f.type === "list" && Array.isArray(v)) v.forEach((_: unknown, i: number) => walkEmail(f.fields || [], `${base}${f.path}.${i}.`));
+    }
   };
   for (const g of t.schema) walkEmail(g.fields, "");
 

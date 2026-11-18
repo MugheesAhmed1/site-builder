@@ -1,0 +1,671 @@
+{
+  "id": "cornerstone",
+  "name": "Cornerstone",
+  "pitch": "A polished estate agent site: a hero picture that opens to full width as you scroll with a search bar on it, listings you filter, sort and save, a home detail view with viewing booking, a live mortgage calculator, areas with a picture that follows the pointer, a selling process, agents and a valuation form.",
+  "kind": "vite",
+  "categories": [
+    "Interactive",
+    "Scroll",
+    "Editorial",
+    "Product"
+  ],
+  "business": [
+    "property",
+    "consulting",
+    "law"
+  ],
+  "sector": "Estate agent, property developer or lettings agency",
+  "intensity": 5,
+  "heavy": false,
+  "licence": {
+    "kind": "original",
+    "holder": "Site Builder",
+    "note": "Made for the builder as an original template. Pictures are free AI generations (Pollinations) kept in source/public/media.",
+    "added": "2026-11-18"
+  },
+  "remoteAssets": [],
+  "features": [
+    "Opening hero with property search",
+    "Filter, sort and save listings",
+    "Home details with viewing booking",
+    "Live mortgage calculator",
+    "Areas with pointer preview",
+    "Selling steps",
+    "Agent cards",
+    "Valuation form"
+  ],
+  "schema": [
+    {
+      "group": "Business",
+      "fields": [
+        {
+          "path": "brand.name",
+          "label": "Agency name",
+          "type": "text",
+          "hint": "Fills every {name} in the text below."
+        },
+        {
+          "path": "brand.tagline",
+          "label": "Line under the name",
+          "type": "text"
+        },
+        {
+          "path": "brand.phone",
+          "label": "Phone",
+          "type": "text"
+        },
+        {
+          "path": "brand.email",
+          "label": "Email",
+          "type": "text"
+        },
+        {
+          "path": "brand.address",
+          "label": "Address",
+          "type": "text"
+        },
+        {
+          "path": "brand.currency",
+          "label": "Currency sign",
+          "type": "text"
+        },
+        {
+          "path": "seo.title",
+          "label": "Page title (search and browser tab)",
+          "type": "text"
+        },
+        {
+          "path": "seo.description",
+          "label": "Short description (search and sharing)",
+          "type": "textarea"
+        }
+      ]
+    },
+    {
+      "group": "Sections",
+      "fields": [
+        {
+          "path": "sections.search",
+          "label": "Show search bar",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.homes",
+          "label": "Show listings",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.mortgage",
+          "label": "Show mortgage calculator",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.areas",
+          "label": "Show areas",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.sell",
+          "label": "Show selling steps",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.agents",
+          "label": "Show agents",
+          "type": "toggle"
+        },
+        {
+          "path": "sections.valuation",
+          "label": "Show valuation form",
+          "type": "toggle"
+        }
+      ]
+    },
+    {
+      "group": "Menu",
+      "fields": [
+        {
+          "path": "nav.links",
+          "label": "Menu links",
+          "type": "list",
+          "itemLabel": "Link",
+          "fields": [
+            {
+              "path": "label",
+              "label": "Label",
+              "type": "text"
+            },
+            {
+              "path": "href",
+              "label": "Goes to",
+              "type": "url"
+            }
+          ],
+          "min": 0,
+          "max": 7
+        },
+        {
+          "path": "nav.cta",
+          "label": "Button",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Opening",
+      "fields": [
+        {
+          "path": "hero.kicker",
+          "label": "Small line above",
+          "type": "text"
+        },
+        {
+          "path": "hero.title",
+          "label": "Headline",
+          "type": "textarea"
+        },
+        {
+          "path": "hero.text",
+          "label": "Intro",
+          "type": "textarea"
+        },
+        {
+          "path": "hero.image",
+          "label": "Picture",
+          "type": "image"
+        },
+        {
+          "path": "hero.searchPlaceholder",
+          "label": "Search box hint",
+          "type": "text"
+        },
+        {
+          "path": "hero.searchButton",
+          "label": "Search button",
+          "type": "text"
+        },
+        {
+          "path": "hero.anyType",
+          "label": "Any type label",
+          "type": "text"
+        },
+        {
+          "path": "hero.anyPrice",
+          "label": "Any price label",
+          "type": "text"
+        },
+        {
+          "path": "hero.priceSteps",
+          "label": "Price limits to offer (one number per line)",
+          "type": "textarea"
+        }
+      ]
+    },
+    {
+      "group": "Listings",
+      "fields": [
+        {
+          "path": "homes.kicker",
+          "label": "Small heading",
+          "type": "text"
+        },
+        {
+          "path": "homes.title",
+          "label": "Heading",
+          "type": "text"
+        },
+        {
+          "path": "homes.allLabel",
+          "label": "All types label",
+          "type": "text"
+        },
+        {
+          "path": "homes.empty",
+          "label": "Nothing found message",
+          "type": "textarea"
+        },
+        {
+          "path": "homes.items",
+          "label": "Homes",
+          "type": "list",
+          "itemLabel": "Home",
+          "fields": [
+            {
+              "path": "name",
+              "label": "Name",
+              "type": "text"
+            },
+            {
+              "path": "area",
+              "label": "Area",
+              "type": "text"
+            },
+            {
+              "path": "type",
+              "label": "Type (House, Apartment…)",
+              "type": "text"
+            },
+            {
+              "path": "price",
+              "label": "Price",
+              "type": "number",
+              "min": 0,
+              "max": 1000000000,
+              "step": 1000
+            },
+            {
+              "path": "beds",
+              "label": "Bedrooms",
+              "type": "number",
+              "min": 0,
+              "max": 20,
+              "step": 1
+            },
+            {
+              "path": "baths",
+              "label": "Bathrooms",
+              "type": "number",
+              "min": 0,
+              "max": 20,
+              "step": 1
+            },
+            {
+              "path": "size",
+              "label": "Size",
+              "type": "text"
+            },
+            {
+              "path": "status",
+              "label": "Badge (New, Under offer…)",
+              "type": "text"
+            },
+            {
+              "path": "image",
+              "label": "Picture",
+              "type": "image"
+            },
+            {
+              "path": "text",
+              "label": "Description",
+              "type": "textarea"
+            }
+          ],
+          "min": 1,
+          "max": 60
+        }
+      ]
+    },
+    {
+      "group": "Viewing booking",
+      "fields": [
+        {
+          "path": "viewing.title",
+          "label": "Heading",
+          "type": "text"
+        },
+        {
+          "path": "viewing.button",
+          "label": "Button",
+          "type": "text"
+        },
+        {
+          "path": "viewing.formAction",
+          "label": "Form address (optional)",
+          "type": "url",
+          "hint": "An https form endpoint such as Formspree. Empty: the form only shows the thank-you message."
+        },
+        {
+          "path": "viewing.done",
+          "label": "Thank-you message",
+          "type": "textarea",
+          "hint": "{person}, {agent} and {home} are filled in."
+        }
+      ]
+    },
+    {
+      "group": "Mortgage calculator",
+      "fields": [
+        {
+          "path": "mortgage.kicker",
+          "label": "Small heading",
+          "type": "text"
+        },
+        {
+          "path": "mortgage.title",
+          "label": "Heading",
+          "type": "text"
+        },
+        {
+          "path": "mortgage.priceLabel",
+          "label": "Price label",
+          "type": "text"
+        },
+        {
+          "path": "mortgage.depositLabel",
+          "label": "Deposit label",
+          "type": "text"
+        },
+        {
+          "path": "mortgage.rateLabel",
+          "label": "Rate label",
+          "type": "text"
+        },
+        {
+          "path": "mortgage.yearsLabel",
+          "label": "Term label",
+          "type": "text"
+        },
+        {
+          "path": "mortgage.resultLabel",
+          "label": "Result label",
+          "type": "text"
+        },
+        {
+          "path": "mortgage.note",
+          "label": "Note",
+          "type": "textarea"
+        },
+        {
+          "path": "mortgage.rate",
+          "label": "Starting interest rate (%)",
+          "type": "number",
+          "min": 0.5,
+          "max": 12,
+          "step": 0.1
+        }
+      ]
+    },
+    {
+      "group": "Areas",
+      "fields": [
+        {
+          "path": "areas.kicker",
+          "label": "Small heading",
+          "type": "text"
+        },
+        {
+          "path": "areas.title",
+          "label": "Heading",
+          "type": "text"
+        },
+        {
+          "path": "areas.items",
+          "label": "Areas",
+          "type": "list",
+          "itemLabel": "Area",
+          "fields": [
+            {
+              "path": "name",
+              "label": "Name",
+              "type": "text"
+            },
+            {
+              "path": "text",
+              "label": "Line",
+              "type": "text"
+            },
+            {
+              "path": "stat",
+              "label": "Figure",
+              "type": "text"
+            },
+            {
+              "path": "image",
+              "label": "Picture",
+              "type": "image"
+            }
+          ],
+          "min": 0,
+          "max": 12
+        }
+      ]
+    },
+    {
+      "group": "Selling",
+      "fields": [
+        {
+          "path": "sell.kicker",
+          "label": "Small heading",
+          "type": "text"
+        },
+        {
+          "path": "sell.title",
+          "label": "Heading",
+          "type": "text"
+        },
+        {
+          "path": "sell.steps",
+          "label": "Steps",
+          "type": "list",
+          "itemLabel": "Step",
+          "fields": [
+            {
+              "path": "title",
+              "label": "Title",
+              "type": "text"
+            },
+            {
+              "path": "text",
+              "label": "Text",
+              "type": "textarea"
+            }
+          ],
+          "min": 0,
+          "max": 8
+        },
+        {
+          "path": "sell.image",
+          "label": "Picture",
+          "type": "image"
+        },
+        {
+          "path": "sell.stat",
+          "label": "Big figure",
+          "type": "text"
+        },
+        {
+          "path": "sell.statLabel",
+          "label": "Figure label",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Agents",
+      "fields": [
+        {
+          "path": "agents.kicker",
+          "label": "Small heading",
+          "type": "text"
+        },
+        {
+          "path": "agents.title",
+          "label": "Heading",
+          "type": "text"
+        },
+        {
+          "path": "agents.items",
+          "label": "Agents",
+          "type": "list",
+          "itemLabel": "Agent",
+          "fields": [
+            {
+              "path": "name",
+              "label": "Name",
+              "type": "text"
+            },
+            {
+              "path": "role",
+              "label": "Role",
+              "type": "text"
+            },
+            {
+              "path": "phone",
+              "label": "Phone",
+              "type": "text"
+            },
+            {
+              "path": "email",
+              "label": "Email",
+              "type": "text"
+            },
+            {
+              "path": "image",
+              "label": "Photo",
+              "type": "image"
+            }
+          ],
+          "min": 0,
+          "max": 12
+        }
+      ]
+    },
+    {
+      "group": "Valuation",
+      "fields": [
+        {
+          "path": "valuation.kicker",
+          "label": "Small heading",
+          "type": "text"
+        },
+        {
+          "path": "valuation.title",
+          "label": "Heading",
+          "type": "text"
+        },
+        {
+          "path": "valuation.text",
+          "label": "Text",
+          "type": "textarea"
+        },
+        {
+          "path": "valuation.bedsLabel",
+          "label": "Bedrooms label",
+          "type": "text"
+        },
+        {
+          "path": "valuation.button",
+          "label": "Button",
+          "type": "text"
+        },
+        {
+          "path": "valuation.formAction",
+          "label": "Form address (optional)",
+          "type": "url"
+        },
+        {
+          "path": "valuation.done",
+          "label": "Thank-you message",
+          "type": "textarea",
+          "hint": "{person} is their first name."
+        }
+      ]
+    },
+    {
+      "group": "Footer",
+      "fields": [
+        {
+          "path": "footer.text",
+          "label": "Line",
+          "type": "text"
+        },
+        {
+          "path": "footer.legal",
+          "label": "Small print",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Colours",
+      "fields": [
+        {
+          "path": "theme.colors.page",
+          "label": "Page",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.surface",
+          "label": "Cards",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.text",
+          "label": "Text",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.muted",
+          "label": "Soft text",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.accent",
+          "label": "Accent",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.dark",
+          "label": "Dark (buttons, valuation)",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.onDark",
+          "label": "Text on dark",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.line",
+          "label": "Lines",
+          "type": "color"
+        }
+      ]
+    },
+    {
+      "group": "Fonts",
+      "fields": [
+        {
+          "path": "theme.fonts.display",
+          "label": "Headings font",
+          "type": "font"
+        },
+        {
+          "path": "theme.fonts.body",
+          "label": "Body font",
+          "type": "font"
+        }
+      ]
+    },
+    {
+      "group": "Motion",
+      "fields": [
+        {
+          "path": "motion.animate",
+          "label": "Animations on",
+          "type": "toggle"
+        },
+        {
+          "path": "motion.heroOpen",
+          "label": "Opening picture widens as you scroll",
+          "type": "toggle"
+        },
+        {
+          "path": "motion.areaPreview",
+          "label": "Area picture follows the pointer",
+          "type": "toggle"
+        }
+      ]
+    },
+    {
+      "group": "Library blocks",
+      "fields": [
+        {
+          "path": "extras",
+          "label": "Blocks from the library",
+          "type": "blocks",
+          "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+        }
+      ]
+    }
+  ]
+}
