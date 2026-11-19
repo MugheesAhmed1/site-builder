@@ -431,3 +431,74 @@
   grid-template-columns: 1fr 1fr;
   gap: 6px 12px;
 }
+
+/* ---------------------------------------------------------------- set up the site (step 4) */
+.setup {
+  display: grid;
+  grid-template-columns: minmax(320px, 440px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  margin-top: 18px;
+}
+.setup-side {
+  display: grid;
+  gap: 12px;
+  position: sticky;
+  top: 76px;
+  max-height: calc(100vh - 190px);
+  overflow: auto;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel);
+}
+.setup-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.setup-tabs button {
+  display: grid;
+  gap: 2px;
+  max-width: 100%;
+  text-align: left;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+.setup-tabs button:hover { background: var(--hover, rgba(127, 127, 127, 0.08)); }
+.setup-tabs button.is-on {
+  border-color: var(--accent, #6d5efc);
+  background: color-mix(in srgb, var(--accent, #6d5efc) 8%, transparent);
+}
+.setup-tabs span { display: none; }
+.setup-tabs strong { font-size: 13px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.setup-panel { border-top: 1px solid var(--line); padding-top: 12px; }
+.setup-checks { display: grid; gap: 6px; }
+.setup-pics { display: grid; gap: 12px; }
+.setup-preview {
+  min-width: 0;
+  height: calc(100vh - 190px);
+  min-height: 520px;
+  position: sticky;
+  top: 76px;
+}
+.prd-page:has(.prd-start.is-wide) { max-width: none; padding-inline: 16px; }
+.prd-start.is-wide { max-width: 1680px; padding-top: 28px; }
+@media (max-width: 900px) {
+  .setup { grid-template-columns: 1fr; }
+  .setup-side { position: static; max-height: none; }
+  .setup-preview { position: static; height: 70vh; min-height: 420px; }
+}
+.prd-kind { display: inline-flex; margin-top: 18px; }
+.setup-title { margin: 0 0 10px; font-weight: 600; font-size: 15px; }
+@media (max-width: 640px) {
+  .prd-bar { flex-wrap: wrap; }
+  .prd-bar > .row { flex-wrap: wrap; width: 100%; }
+  .prd-bar .btn-primary { flex: 1 1 auto; justify-content: center; }
+}

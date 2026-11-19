@@ -1,6 +1,7 @@
 import { classify, extractHints } from "./categories";
 import { cap } from "./text";
-import type { BlockRequirement, DirectorId, HeroAssetType, Layout, SectionAnimation, BackgroundType, Widget } from "@/template/src/content/blocks";
+import type { Profile } from "./types";
+import type { BlockRequirement, DirectorId, ItemStyle, HeroAssetType, Layout, SectionAnimation, BackgroundType, Widget } from "@/template/src/content/blocks";
 import { DIRECTOR_IDS, isDirector } from "@/template/src/director";
 import type { WebsiteContent } from "@/template/src/content/types";
 
@@ -28,6 +29,8 @@ export interface PrdVisual {
   layout?: Layout;
   background?: BackgroundType;
   animation?: SectionAnimation;
+  /** How the section's items are laid out (cards, timeline...). */
+  items?: ItemStyle;
 }
 
 export interface PrdItem {
@@ -50,6 +53,8 @@ export interface PrdSection {
 
 export interface Prd {
   version: 1;
+  /** A business or subject website, or a personal portfolio drafted from a resume. */
+  kind?: "website" | "portfolio";
   /** The person's one line. */
   idea: string;
   title: string;
@@ -151,6 +156,7 @@ function cleanVisual(v: unknown, fallback: PrdVisual): PrdVisual {
     layout: typeof o.layout === "string" && ["fullscreen", "split", "centered", "asymmetric", "editorial"].includes(o.layout) ? (o.layout as Layout) : undefined,
     background: typeof o.background === "string" && ["solid", "gradient", "image", "video", "environment", "particles"].includes(o.background) ? (o.background as BackgroundType) : undefined,
     animation: typeof o.animation === "string" && ["float", "reveal", "orbit", "scroll", "parallax", "morph", "particles"].includes(o.animation) ? (o.animation as SectionAnimation) : undefined,
+    items: typeof o.items === "string" && ["cards", "grid", "list", "timeline", "carousel"].includes(o.items) ? (o.items as ItemStyle) : fallback.items,
   };
 }
 
@@ -205,6 +211,7 @@ export function normalizePrd(raw: unknown, idea: string, source: Prd["source"] =
   const href = str(cta.href, 200);
   return {
     version: 1,
+    kind: o.kind === "portfolio" ? "portfolio" : "website",
     idea: str(o.idea, 300) || idea,
     title: str(o.title, 120) || fallback.title,
     name: str(o.name, 60) || fallback.name,
@@ -282,7 +289,7 @@ export function localDraft(idea0: string): Prd {
   const subject = subjectOf(idea);
   const Subject = cap(subject);
   const director = directorFor(t);
-  const name = hints.name || (educational(idea) ? Subject.split(/\s+/).slice(0, 4).join(" ") : Subject.split(/\s+/).slice(0, 3).map(cap).join(" "));
+  const name = hints.name || (educational(idea) ? Subject.split(/\s+/).slice(0, 4).join(" ") : Subject.replace(/\s+(in|at|near|from)\s+.*$/i, "").split(/\s+/).slice(0, 3).map(cap).join(" "));
   const accent = ACCENTS[[...idea].reduce((a, c) => a + c.charCodeAt(0), 0) % ACCENTS.length];
   const city = hints.city ? " in " + hints.city : "";
   const lead3d = /\b(heart|brain|product|shoe|car|planet|watch|bottle|robot|model|3d|object|device|machine|engine|cell|dna|tooth|sculpture)\b/.test(t);
@@ -409,6 +416,60 @@ export function prdFromText(text: string, fileName = ""): Prd {
   const email = /[\w.+-]+@[\w-]+\.[\w.-]*\w/.exec(text)?.[0] ?? "";
   const phone = /\+?\d[\d\s().-]{7,}\d/.exec(text)?.[0] ?? "";
   return normalizePrd({ ...base, title: idea, idea, sections: sections.length ? sections : base.sections, contact: { ...base.contact, email, phone }, source: "document" }, idea, "document");
+}
+
+// ------------------------------------------------------------------ a resume becomes a portfolio PRD
+
+/** A portfolio PRD from a parsed resume, by rules: only facts from the resume, nothing invented. */
+export function prdFromProfile(p: Profile): Prd {
+  draftN = 0;
+  const name = p.name || "My portfolio";
+  const role = p.headline || p.experience[0]?.role || "";
+  const idea = "Portfolio for " + name + (role ? ", " + role : "");
+  const director: DirectorId = /\b(design|designer|artist|photograph|motion|3d|creative|illustrat)/i.test(role) ? "minimal" : /\b(engineer|developer|data|scien|research|ai|ml)\b/i.test(role) ? "futuristic" : "editorial";
+  const first = (t: string) => (/^.{20,}?[.!?](\s|$)/.exec(t)?.[0] ?? t).trim();
+  const sections: PrdSection[] = [];
+  sections.push(sec(name, "Say who this is and what they do in the first screen.", role ? role + (p.location ? ", " + p.location : "") + "." : first(p.summary), [["content", `State ${name}'s name and role`], ["functional", "A button leads to the contact section"]], { director, secondary: "cinematic", asset: "particles", layout: "fullscreen", background: "particles", animation: "reveal" }));
+  if (p.summary) sections.push(sec("About", "Who they are, in their own words.", p.summary.slice(0, 1100), [["content", "Summarise their background and what they care about"]], { director, layout: "editorial", background: "solid", animation: "reveal" }));
+  if (p.experience.length)
+    sections.push(
+      sec(
+        "Experience",
+        "Where they have worked and what they did there.",
+        "",
+        [["content", "List every role with company and dates"]],
+        { director, layout: "centered", background: "solid", animation: "reveal", items: "timeline" },
+        p.experience.slice(0, 12).map((x) => ({ title: [x.role, x.company].filter(Boolean).join(", "), text: x.bullets.slice(0, 2).join(" ").slice(0, 400), value: [x.start, x.end].filter(Boolean).join(" to ") || undefined })),
+      ),
+    );
+  if (p.projects.length)
+    sections.push(
+      sec("Projects", "Work they want to be known for.", "", [["content", "Show each project with what it was"], ...(p.projects.some((x) => x.link) ? ([["functional", "Each project links to where it lives"]] as [PrdRequirement["kind"], string][]) : [])], { director, layout: "centered", background: "gradient", animation: "parallax", items: "cards" }, p.projects.slice(0, 12).map((x) => ({ title: x.name, text: x.description.slice(0, 400), value: x.tags.slice(0, 3).join(", ") || undefined }))),
+    );
+  if (p.skills.length) sections.push(sec("Skills", "What they are good at.", "", [["content", "List the main skills"]], { director, layout: "centered", background: "solid", animation: "reveal", items: "grid" }, p.skills.slice(0, 12).map((x) => ({ title: x, text: "" }))));
+  const edu = [...p.education.map((x) => ({ title: x.degree || x.school, text: x.degree ? x.school : "", value: x.year || undefined })), ...p.certifications.map((x) => ({ title: x.name, text: x.issuer, value: x.year || undefined }))];
+  if (edu.length) sections.push(sec("Education", "Where they studied and what they are certified in.", "", [["content", "List education and certifications"]], { director, layout: "centered", background: "solid", animation: "reveal", items: "list" }, edu.slice(0, 12)));
+  sections.push(sec("Contact", "Make it easy to get in touch.", "Have a role, a project or a question? Send a message.", [["functional", "A contact form sends a message"], ["content", "Show the email" + (p.phone ? ", phone" : "") + (p.links.length ? " and profile links" : "")]], { director, layout: "split", background: "gradient", animation: "reveal" }));
+  const taken = new Set<string>();
+  for (const x of sections) x.id = sectionId(x.title, taken);
+  return {
+    version: 1,
+    kind: "portfolio",
+    idea,
+    title: name + (role ? ", " + role : ""),
+    name,
+    summary: first(p.summary) || idea,
+    audience: "Recruiters, hiring managers and clients",
+    goals: ["Show who they are in seconds", "Prove the experience", "Get contacted"],
+    tone: "Confident and plain",
+    director,
+    accent: ACCENTS[[...name].reduce((a, c) => a + c.charCodeAt(0), 0) % ACCENTS.length],
+    cta: { label: "Get in touch", href: "#pf-b-" + sections[sections.length - 1].id },
+    contact: { email: p.email, phone: p.phone, address: p.location },
+    sections,
+    status: "draft",
+    source: "document",
+  };
 }
 
 /** Words changed on the page flow back into the PRD, so the PRD stays the single source of truth. */

@@ -12,7 +12,7 @@ export default function DocumentPage() {
   return (
     <>
       <Topbar />
-      <main className="page">
+      <main className="page prd-page">
         <PrdFlow />
       </main>
     </>

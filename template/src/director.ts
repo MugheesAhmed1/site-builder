@@ -259,6 +259,8 @@ export function cleanSpec(v: unknown, fallback: SectionSpec): SectionSpec {
     animation: pick(s.animation, ["float", "reveal", "orbit", "scroll", "parallax", "morph", "particles"], fallback.animation),
     director,
     secondary: isDirector(s.secondary) ? s.secondary : undefined,
+    ...(s.text && typeof s.text === "object" ? { text: { ...s.text } } : fallback.text ? { text: fallback.text } : {}),
+    ...(s.items && typeof s.items === "object" ? { items: { ...s.items } } : fallback.items ? { items: fallback.items } : {}),
   };
 }
 

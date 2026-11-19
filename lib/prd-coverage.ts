@@ -57,6 +57,7 @@ const attrs = (html: string, name: string) => new Set([...html.matchAll(new RegE
 export function markupCoverage(prd: Prd, html: string): Coverage {
   const prds = attrs(html, "data-prd");
   const reqs = attrs(html, "data-req");
+  for (const list of attrs(html, "data-reqs")) for (const id of list.split(/\s+/)) reqs.add(id);
   const sections = prd.sections.map((s) => ({ id: s.id, label: s.title, section: s.id, ok: prds.has(s.id), reason: prds.has(s.id) ? undefined : "not in the page's HTML" }));
   const requirements = prd.sections.flatMap((s) => s.requirements.map((r) => ({ id: r.id, label: r.text, section: s.id, ok: reqs.has(r.id), reason: reqs.has(r.id) ? undefined : "not in the page's HTML" })));
   return finish(sections, requirements);
@@ -81,7 +82,7 @@ export function domCoverage(prd: Prd, root: ParentNode): Coverage {
   });
   const requirements = prd.sections.flatMap((s) =>
     s.requirements.map((r) => {
-      const el = root.querySelector(`[data-req="${CSS.escape(r.id)}"]`);
+      const el = root.querySelector(`[data-req="${CSS.escape(r.id)}"], [data-reqs~="${CSS.escape(r.id)}"]`);
       const ok = shown(el);
       return { id: r.id, label: r.text, section: s.id, ok, reason: ok ? undefined : el ? "hidden on the page" : "not on the page" };
     }),
