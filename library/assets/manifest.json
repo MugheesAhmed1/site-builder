@@ -760,6 +760,111 @@
       "asset": "/assets/3d/product/lamp-iridescent-001.glb"
     },
     {
+      "id": "product-loafers-black-001",
+      "name": "Black Leather Loafers",
+      "type": "3d",
+      "format": "glb",
+      "category": "product",
+      "subcategory": "shoes",
+      "tags": [
+        "shoes",
+        "loafers",
+        "leather",
+        "footwear",
+        "fashion",
+        "women",
+        "ladies",
+        "heels",
+        "formal",
+        "black"
+      ],
+      "style": [
+        "premium",
+        "editorial",
+        "luxury",
+        "realistic",
+        "minimal"
+      ],
+      "materials": [
+        "leather",
+        "rubber"
+      ],
+      "colors": [
+        "black"
+      ],
+      "license": {
+        "type": "owner-supplied",
+        "url": "",
+        "commercialUse": false,
+        "redistribution": false,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Uploaded by the project owner on 2026-11-19 (leather-ladies-shoes.blend with textures.zip). Only the shoe mesh was kept from the .blend; its studio floor, cameras, lights and wireframe copy were dropped. Origin and licence not stated; held until the owner confirms."
+      },
+      "source": {
+        "url": "owner-upload:leather-ladies-shoes.blend with textures.zip",
+        "creator": "Unknown (uploaded by the project owner)",
+        "via": "project thread upload"
+      },
+      "modifications": "Converted from .blend with Blender; 8K textures reduced. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-19",
+      "animationCapabilities": [
+        "rotate",
+        "float",
+        "orbit",
+        "scale",
+        "reveal",
+        "parallax",
+        "scrollRotate",
+        "scrollMove",
+        "hover"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 0.75,
+        "bytes": 783184,
+        "triangles": 27344,
+        "textureResolution": "1k",
+        "materials": 1,
+        "animation": "none",
+        "tier": "medium"
+      },
+      "bounds": {
+        "min": [
+          -0.1509,
+          0,
+          -0.1805
+        ],
+        "max": [
+          0.1509,
+          0.1428,
+          0.1805
+        ],
+        "size": [
+          0.3018,
+          0.1428,
+          0.361
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/product-loafers-black-001.webp",
+      "asset": "/assets/3d/product/product-loafers-black-001.glb"
+    },
+    {
       "id": "shoe-sneaker-001",
       "name": "Sneaker With Colourways",
       "type": "3d",
@@ -2062,6 +2167,118 @@
       "asset": "/assets/3d/vehicle/truck-001.glb"
     },
     {
+      "id": "vehicle-hypercar-black-001",
+      "name": "Black Hypercar",
+      "type": "3d",
+      "format": "glb",
+      "category": "vehicle",
+      "subcategory": "car",
+      "tags": [
+        "car",
+        "hypercar",
+        "supercar",
+        "sports car",
+        "race car",
+        "racing",
+        "automotive",
+        "vehicle",
+        "speed",
+        "luxury",
+        "track"
+      ],
+      "style": [
+        "premium",
+        "cinematic",
+        "realistic",
+        "bold"
+      ],
+      "materials": [
+        "paint",
+        "carbon",
+        "glass",
+        "rubber"
+      ],
+      "colors": [
+        "black",
+        "purple"
+      ],
+      "license": {
+        "type": "CC-BY-4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": true,
+        "evidence": "license.txt in the uploaded mclaren_p1_gtr_2015-gltf.zip: CC-BY-4.0, author LC Design, commercial use allowed, credit required."
+      },
+      "source": {
+        "url": "https://sketchfab.com/3d-models/mclaren-p1-gtr-2015-187bdc110d16417e8a02e71af4ebd8d8",
+        "creator": "LC Design",
+        "title": "McLaren P1 GTR 2015",
+        "via": "project thread upload (Sketchfab download with its license.txt)"
+      },
+      "modifications": "Tyre sidewall texture carrying the tyre maker's logo replaced with plain black (trademarks are not covered by the copyright licence). Listed under a generic name, because the car maker's name is a trademark. Mesh simplified to about 30% of its triangles with meshoptimizer. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-19",
+      "animationCapabilities": [
+        "rotate",
+        "float",
+        "orbit",
+        "scale",
+        "reveal",
+        "parallax",
+        "scrollRotate",
+        "scrollMove",
+        "hover",
+        "assemble"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 1.52,
+        "bytes": 1589808,
+        "triangles": 100517,
+        "textureResolution": "1k",
+        "materials": 29,
+        "animation": "none",
+        "tier": "medium"
+      },
+      "bounds": {
+        "min": [
+          -200.7946,
+          -0.0008,
+          -470.7562
+        ],
+        "max": [
+          200.7946,
+          237.6009,
+          470.7562
+        ],
+        "size": [
+          401.5891,
+          237.6017,
+          941.5123
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_materials_emissive_strength",
+          "KHR_materials_transmission",
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/vehicle-hypercar-black-001.webp",
+      "asset": "/assets/3d/vehicle/vehicle-hypercar-black-001.glb"
+    },
+    {
       "id": "vehicle-mars-rover-001",
       "name": "Mars Rover",
       "type": "3d",
@@ -2163,6 +2380,107 @@
       },
       "preview": "/assets/previews/vehicle-mars-rover-001.webp",
       "asset": "/assets/3d/vehicle/vehicle-mars-rover-001.glb"
+    },
+    {
+      "id": "animal-deer-001",
+      "name": "Red Deer Stag",
+      "type": "3d",
+      "format": "glb",
+      "category": "character",
+      "subcategory": "animal",
+      "tags": [
+        "deer",
+        "stag",
+        "antlers",
+        "animal",
+        "wildlife",
+        "forest",
+        "nature",
+        "outdoor",
+        "hunting",
+        "highlands"
+      ],
+      "style": [
+        "realistic",
+        "natural",
+        "calm"
+      ],
+      "materials": [
+        "fur",
+        "bone"
+      ],
+      "colors": [
+        "brown",
+        "white",
+        "grey"
+      ],
+      "license": {
+        "type": "owner-supplied",
+        "url": "",
+        "commercialUse": false,
+        "redistribution": false,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Uploaded by the project owner on 2026-11-19 (RealisticDeer_FBX.zip with Textures (1).zip). The FBX and the OBJ copy hold the same 16,040-triangle mesh; the FBX was used with the supplied textures. Origin and licence not stated; held until the owner confirms."
+      },
+      "source": {
+        "url": "owner-upload:RealisticDeer_FBX.zip with Textures (1).zip",
+        "creator": "Unknown (uploaded by the project owner)",
+        "via": "project thread upload"
+      },
+      "modifications": "Converted from FBX with Blender and given its supplied textures. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-19",
+      "animationCapabilities": [
+        "reveal",
+        "parallax",
+        "rotate",
+        "scrollMove",
+        "lookAtPointer"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 0.56,
+        "bytes": 591244,
+        "triangles": 16040,
+        "textureResolution": "1k",
+        "materials": 2,
+        "animation": "none",
+        "tier": "low"
+      },
+      "bounds": {
+        "min": [
+          -0.9252,
+          0,
+          -0.5534
+        ],
+        "max": [
+          0.9252,
+          1.8791,
+          0.5534
+        ],
+        "size": [
+          1.8504,
+          1.8791,
+          1.1068
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/animal-deer-001.webp",
+      "asset": "/assets/3d/character/animal-deer-001.glb"
     },
     {
       "id": "animal-fish-001",
@@ -2469,6 +2787,314 @@
       },
       "preview": "/assets/previews/animal-macaw-001.webp",
       "asset": "/assets/3d/character/animal-macaw-001.glb"
+    },
+    {
+      "id": "character-armored-warrior-001",
+      "name": "Armoured Blade Warrior",
+      "type": "3d",
+      "format": "glb",
+      "category": "character",
+      "subcategory": "warrior",
+      "tags": [
+        "warrior",
+        "ninja",
+        "samurai",
+        "armour",
+        "armor",
+        "sword",
+        "katana",
+        "cyborg",
+        "fighter",
+        "gaming",
+        "game",
+        "hero"
+      ],
+      "style": [
+        "realistic",
+        "cinematic",
+        "dark",
+        "futuristic",
+        "bold"
+      ],
+      "materials": [
+        "metal"
+      ],
+      "colors": [
+        "black",
+        "silver",
+        "blue"
+      ],
+      "license": {
+        "type": "owner-supplied",
+        "url": "",
+        "commercialUse": false,
+        "redistribution": false,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Uploaded by the project owner on 2026-11-19 (glb.glb). model.obj and fbx.fbx hold the same 1,994,358-triangle mesh; the GLB was used because it carries the textures. Origin and licence not stated; held until the owner confirms."
+      },
+      "source": {
+        "url": "owner-upload:glb.glb",
+        "creator": "Unknown (uploaded by the project owner)",
+        "via": "project thread upload"
+      },
+      "modifications": "Simplified from about 2 million triangles. Mesh simplified to about 3% of its triangles with meshoptimizer. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-19",
+      "animationCapabilities": [
+        "reveal",
+        "parallax",
+        "rotate",
+        "scrollMove",
+        "lookAtPointer"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 1.42,
+        "bytes": 1486816,
+        "triangles": 59818,
+        "textureResolution": "1k",
+        "materials": 1,
+        "animation": "none",
+        "tier": "medium"
+      },
+      "bounds": {
+        "min": [
+          -0.3489,
+          0,
+          -0.2403
+        ],
+        "max": [
+          0.3489,
+          0.9998,
+          0.2403
+        ],
+        "size": [
+          0.6978,
+          0.9998,
+          0.4805
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/character-armored-warrior-001.webp",
+      "asset": "/assets/3d/character/character-armored-warrior-001.glb"
+    },
+    {
+      "id": "character-astronaut-001",
+      "name": "Little Astronaut",
+      "type": "3d",
+      "format": "glb",
+      "category": "character",
+      "subcategory": "astronaut",
+      "tags": [
+        "astronaut",
+        "space",
+        "spacesuit",
+        "cosmonaut",
+        "mascot",
+        "cute",
+        "kids",
+        "explorer",
+        "character",
+        "pink"
+      ],
+      "style": [
+        "stylized",
+        "playful",
+        "pastel"
+      ],
+      "materials": [
+        "fabric",
+        "glass"
+      ],
+      "colors": [
+        "white",
+        "pink",
+        "blue"
+      ],
+      "license": {
+        "type": "owner-supplied",
+        "url": "",
+        "commercialUse": false,
+        "redistribution": false,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Uploaded by the project owner on 2026-11-19 (tiny_planet_friends_3d-astronaut-3192.glb). Origin and licence not stated; held until the owner confirms."
+      },
+      "source": {
+        "url": "owner-upload:tiny_planet_friends_3d-astronaut-3192.glb",
+        "creator": "Unknown (uploaded by the project owner)",
+        "via": "project thread upload"
+      },
+      "modifications": "Simplified from about 500,000 triangles. Mesh simplified to about 12% of its triangles with meshoptimizer. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-19",
+      "animationCapabilities": [
+        "reveal",
+        "parallax",
+        "rotate",
+        "scrollMove",
+        "lookAtPointer"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 1.73,
+        "bytes": 1817072,
+        "triangles": 59817,
+        "textureResolution": "1k",
+        "materials": 1,
+        "animation": "none",
+        "tier": "medium"
+      },
+      "bounds": {
+        "min": [
+          -0.298,
+          0,
+          -0.2748
+        ],
+        "max": [
+          0.298,
+          1.0289,
+          0.2748
+        ],
+        "size": [
+          0.5959,
+          1.0289,
+          0.5496
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_materials_specular",
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/character-astronaut-001.webp",
+      "asset": "/assets/3d/character/character-astronaut-001.glb"
+    },
+    {
+      "id": "character-dragon-001",
+      "name": "Baby Dragon",
+      "type": "3d",
+      "format": "glb",
+      "category": "character",
+      "subcategory": "creature",
+      "tags": [
+        "dragon",
+        "creature",
+        "fantasy",
+        "mascot",
+        "cute",
+        "monster",
+        "wings",
+        "game",
+        "gaming",
+        "character",
+        "black"
+      ],
+      "style": [
+        "stylized",
+        "playful",
+        "fantasy",
+        "dark"
+      ],
+      "materials": [
+        "scales"
+      ],
+      "colors": [
+        "black",
+        "white"
+      ],
+      "license": {
+        "type": "owner-supplied",
+        "url": "",
+        "commercialUse": false,
+        "redistribution": false,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Uploaded by the project owner on 2026-11-19 (tiny_planet_friends_3d-defective-product-4083.glb). Origin and licence not stated; held until the owner confirms."
+      },
+      "source": {
+        "url": "owner-upload:tiny_planet_friends_3d-defective-product-4083.glb",
+        "creator": "Unknown (uploaded by the project owner)",
+        "via": "project thread upload"
+      },
+      "modifications": "Simplified from about 500,000 triangles. Mesh simplified to about 12% of its triangles with meshoptimizer. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-19",
+      "animationCapabilities": [
+        "reveal",
+        "parallax",
+        "rotate",
+        "scrollMove",
+        "lookAtPointer"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 1.53,
+        "bytes": 1600768,
+        "triangles": 59997,
+        "textureResolution": "1k",
+        "materials": 1,
+        "animation": "none",
+        "tier": "medium"
+      },
+      "bounds": {
+        "min": [
+          -0.4014,
+          0,
+          -0.3784
+        ],
+        "max": [
+          0.4014,
+          0.7964,
+          0.3784
+        ],
+        "size": [
+          0.8029,
+          0.7964,
+          0.7567
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_materials_specular",
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/character-dragon-001.webp",
+      "asset": "/assets/3d/character/character-dragon-001.glb"
     },
     {
       "id": "character-hopper-001",
@@ -2884,7 +3510,7 @@
       },
       "source": {
         "url": "https://github.com/mrdoob/three.js/tree/dev/examples/models/gltf/RobotExpressive",
-        "creator": "Tom\u00e1s Laulh\u00e9 (Quaternius); morph targets by Don McCurdy",
+        "creator": "Tomás Laulhé (Quaternius); morph targets by Don McCurdy",
         "publisher": "three.js examples",
         "via": "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/models/gltf/RobotExpressive/RobotExpressive.glb"
       },
@@ -2981,6 +3607,108 @@
       },
       "preview": "/assets/previews/character-robot-001.webp",
       "asset": "/assets/3d/character/character-robot-001.glb"
+    },
+    {
+      "id": "character-robot-bee-001",
+      "name": "Bee Robot",
+      "type": "3d",
+      "format": "glb",
+      "category": "character",
+      "subcategory": "robot",
+      "tags": [
+        "robot",
+        "bee",
+        "bot",
+        "mascot",
+        "cute",
+        "droid",
+        "tech",
+        "toy",
+        "character",
+        "yellow"
+      ],
+      "style": [
+        "stylized",
+        "playful",
+        "futuristic"
+      ],
+      "materials": [
+        "metal",
+        "glass"
+      ],
+      "colors": [
+        "yellow",
+        "black",
+        "cyan"
+      ],
+      "license": {
+        "type": "owner-supplied",
+        "url": "",
+        "commercialUse": false,
+        "redistribution": false,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Uploaded by the project owner on 2026-11-19 (pixellabs-glb-3347.glb). Origin and licence not stated; held until the owner confirms."
+      },
+      "source": {
+        "url": "owner-upload:pixellabs-glb-3347.glb",
+        "creator": "Unknown (uploaded by the project owner)",
+        "via": "project thread upload"
+      },
+      "modifications": "Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-19",
+      "animationCapabilities": [
+        "reveal",
+        "parallax",
+        "rotate",
+        "scrollMove",
+        "lookAtPointer"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 1.39,
+        "bytes": 1459628,
+        "triangles": 50000,
+        "textureResolution": "1k",
+        "materials": 1,
+        "animation": "none",
+        "tier": "medium"
+      },
+      "bounds": {
+        "min": [
+          -0.2552,
+          0,
+          -0.2553
+        ],
+        "max": [
+          0.2552,
+          1.0189,
+          0.2553
+        ],
+        "size": [
+          0.5104,
+          1.0189,
+          0.5107
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_materials_specular",
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/character-robot-bee-001.webp",
+      "asset": "/assets/3d/character/character-robot-bee-001.glb"
     },
     {
       "id": "character-rogue-001",
