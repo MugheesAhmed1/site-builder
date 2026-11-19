@@ -27,6 +27,8 @@ export function useStartSite() {
   return (o: CreateOptions) => {
     const line = (o.query ?? "").trim() || (o.label ? (o.kind === "portfolio" ? "Portfolio for a " : "Website for a ") + o.label.toLowerCase() : "");
     const look = o.style === "luxury" ? "luxury" : o.style === "playful" ? "playful" : o.style === "minimal" ? "minimal" : o.style === "bold" || o.style === "experimental" ? "futuristic" : o.mode === "cinematic" ? "cinematic" : o.mode === "editorial" ? "editorial" : "";
+    // A portfolio starts from the person's resume.
+    if (o.kind === "portfolio") return router.push("/create?kind=portfolio" + (line ? "&q=" + encodeURIComponent(line) : ""));
     router.push("/create?q=" + encodeURIComponent(line) + (look ? "&director=" + look : ""));
   };
 }

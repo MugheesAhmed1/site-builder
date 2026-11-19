@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { callGemini, geminiKey, limited, parseJson } from "@/lib/gemini";
-import { localDraft, normalizePrd, type Prd } from "@/lib/prd";
+import { localDraft, normalizePrd, prdFromProfile, type Prd } from "@/lib/prd";
+import { parseResume } from "@/lib/resume";
 import { DIRECTOR_IDS } from "@/template/src/director";
 
 // The first step of the PRD journey, on the server so the Gemini key stays here.
@@ -34,6 +35,14 @@ For each section pick a visual direction. Directors: cinematic, luxury, editoria
 Return JSON with exactly these keys:
 {"title":"","name":"<site or business name>","summary":"<2 to 3 sentences>","audience":"","goals":["",""],"tone":"","director":"<the overall director>","accent":"#rrggbb","cta":{"label":"<1 to 3 words>"},"contact":{"email":"","phone":"","address":""},"sections":[${SECTION}]}`;
 
+const RESUME_SYSTEM = `You are a senior product manager and creative director. From a person's resume you write the PRD (product requirements document) for their personal portfolio website. The website will be generated strictly from this PRD: every section becomes a section of the site and every requirement must appear on it.
+${HOUSE}
+Use ONLY facts in the resume: names, roles, companies, dates, projects, skills, schools. Never invent clients, numbers or awards. Keep the person's own wording where it is good.
+Write 5 to 8 sections in page order: an opening screen with their name and role, about, experience (items: one per role, value = dates), projects if any, skills, education if any, and a closing contact section with a contact form requirement. Number requirement ids R1, R2, R3 across the whole PRD.
+Visual "items" can be "cards|grid|list|timeline|carousel": use timeline for experience.
+Return JSON with exactly these keys:
+{"title":"","name":"<the person's name>","summary":"","audience":"","goals":["",""],"tone":"","director":"","accent":"#rrggbb","cta":{"label":""},"contact":{"email":"","phone":"","address":""},"sections":[${SECTION.replace('"animation":', '"items":"cards|grid|list|timeline|carousel","animation":')}]}`;
+
 const SECTION_SYSTEM = `You are a senior product manager. Write ONE more section for an existing website PRD, fitting its story, tone and director.
 ${HOUSE}
 Return JSON with exactly this shape: ${SECTION}`;
@@ -43,7 +52,7 @@ const bad = (error: string, status = 400) => NextResponse.json({ ok: false, erro
 export async function POST(req: Request) {
   const raw = await req.text();
   if (raw.length > MAX_BODY) return bad("Too much at once.", 413);
-  let body: { step?: string; idea?: string; prd?: Prd; title?: string };
+  let body: { step?: string; idea?: string; prd?: Prd; title?: string; text?: string };
   try {
     body = JSON.parse(raw);
   } catch {
@@ -62,6 +71,21 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: true, prd, ai: true, model });
     } catch (e) {
       return NextResponse.json({ ok: true, prd: localDraft(idea), ai: false, note: "Gemini did not answer (" + (e as Error).message + "), so the rules drafted this PRD." });
+    }
+  }
+
+  if (body.step === "resume") {
+    const text = String(body.text || "").slice(0, 20_000);
+    if (text.replace(/\s+/g, " ").trim().length < 60) return bad("There isn't enough text in that resume.");
+    const fallback = prdFromProfile(parseResume(text));
+    if (!apiKey || limited(ip)) return NextResponse.json({ ok: true, prd: fallback, ai: false, note: apiKey ? "Gemini is busy, so the rules drafted this PRD from your resume." : "The rules drafted this PRD from your resume." });
+    try {
+      const { text: out, model } = await callGemini(RESUME_SYSTEM, text, apiKey, { temperature: 0.5, maxTokens: 8192, timeout: 45_000 });
+      const raw = parseJson(out) as Record<string, unknown>;
+      const prd = normalizePrd({ ...raw, kind: "portfolio", idea: fallback.idea, source: "gemini", model, contact: { ...fallback.contact, ...((raw.contact as object) || {}) } }, fallback.idea, "gemini");
+      return NextResponse.json({ ok: true, prd, ai: true, model });
+    } catch (e) {
+      return NextResponse.json({ ok: true, prd: fallback, ai: false, note: "Gemini did not answer (" + (e as Error).message + "), so the rules drafted this PRD from your resume." });
     }
   }
 

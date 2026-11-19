@@ -53,6 +53,29 @@ export interface Background {
   tone?: "auto" | "dark" | "light";
 }
 
+/** How a section's words look. Each value overrides the Director's. */
+export type TextAlign = "start" | "center" | "end";
+export type TextFace = "display" | "serif" | "body" | "mono" | "rounded";
+export interface TextStyle {
+  align?: TextAlign;
+  /** Heading size against the Director's, 0.6 to 1.8. */
+  size?: number;
+  weight?: number;
+  face?: TextFace;
+  width?: "narrow" | "normal" | "wide";
+  caps?: boolean;
+}
+
+/** How a section's list of things (steps, services, roles) is laid out. */
+export type ItemStyle = "cards" | "grid" | "list" | "timeline" | "carousel";
+export interface ItemsStyle {
+  style?: ItemStyle;
+  /** Columns for cards and grid, 1 to 4 (0 is automatic). */
+  columns?: number;
+  /** Show a picture on each item. */
+  images?: boolean;
+}
+
 export interface SectionSpec {
   layout: Layout;
   hero: HeroAsset;
@@ -61,6 +84,8 @@ export interface SectionSpec {
   /** The visual direction; a second one blends in its movement (transitions, camera and intensity). */
   director: DirectorId;
   secondary?: DirectorId;
+  text?: TextStyle;
+  items?: ItemsStyle;
 }
 
 export type Widget = "form" | "faq" | "pricing" | "gallery" | "map" | "search" | "video" | "stats" | "compare" | "explore" | "download" | "button" | "list";
@@ -104,6 +129,26 @@ export interface Block {
   /** The asset kind the PRD asked for when the block was built (so a PRD change can win over it). */
   prdAsset?: HeroAssetType;
 }
+
+export const TEXT_ALIGNS: { id: TextAlign; label: string }[] = [
+  { id: "start", label: "Left" },
+  { id: "center", label: "Centre" },
+  { id: "end", label: "Right" },
+];
+export const TEXT_FACES: { id: TextFace; label: string }[] = [
+  { id: "display", label: "Display" },
+  { id: "serif", label: "Serif" },
+  { id: "body", label: "Sans" },
+  { id: "rounded", label: "Rounded" },
+  { id: "mono", label: "Mono" },
+];
+export const ITEM_STYLES: { id: ItemStyle; label: string }[] = [
+  { id: "cards", label: "Cards" },
+  { id: "grid", label: "Grid" },
+  { id: "list", label: "List" },
+  { id: "timeline", label: "Timeline" },
+  { id: "carousel", label: "Carousel" },
+];
 
 export const LAYOUTS: { id: Layout; label: string }[] = [
   { id: "fullscreen", label: "Fullscreen" },

@@ -11,7 +11,7 @@ export default function Page() {
   return (
     <>
       <Topbar />
-      <main className="page">
+      <main className="page prd-page">
         <PrdFlow />
       </main>
     </>

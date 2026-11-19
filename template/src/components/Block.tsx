@@ -63,6 +63,13 @@ export function sectionTone(spec: SectionSpec, d: DirectorTokens): "dark" | "lig
   return d.tone;
 }
 
+const TEXT_FACE: Record<NonNullable<NonNullable<SectionSpec["text"]>["face"]>, string> = {
+  display: "var(--font-display)",
+  serif: 'ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif',
+  body: "var(--font-body)",
+  rounded: 'ui-rounded, "SF Pro Rounded", "Nunito", var(--font-body)',
+  mono: "var(--font-mono)",
+};
 const FACE: Record<DirectorTokens["type"]["face"], string> = {
   display: "var(--font-display)",
   body: "var(--font-body)",
@@ -89,6 +96,16 @@ function vars(spec: SectionSpec, d: DirectorTokens, tone: string): CSSProperties
     "--xb-env-floor": env.floor,
     "--xb-dim": Math.max(0, Math.min(0.85, bg.dim ?? 0.35)),
   };
+  const t = spec.text;
+  if (t) {
+    if (t.size) v["--xb-scale"] = +(d.type.scale * Math.max(0.6, Math.min(1.8, t.size))).toFixed(3);
+    if (t.weight) v["--xb-weight"] = Math.max(300, Math.min(900, t.weight));
+    if (t.face) v["--xb-face"] = TEXT_FACE[t.face];
+    if (t.width) v["--xb-measure"] = (t.width === "narrow" ? Math.round(d.measure * 0.75) : t.width === "wide" ? Math.round(d.measure * 1.35) : d.measure) + "ch";
+    if (t.caps != null) v["--xb-case"] = t.caps ? "uppercase" : "none";
+  }
+  const cols = spec.items?.columns;
+  if (cols) v["--xb-cols"] = Math.max(1, Math.min(4, cols));
   if (tone === "dark") Object.assign(v, { "--bg": bg.type === "solid" && bg.color ? bg.color : bg.type === "environment" ? env.base : "#0b0d12", "--text": "#f4f5f7", "--muted": "#aab1bd", "--surface": "rgba(255,255,255,0.06)", "--border": "rgba(255,255,255,0.14)" });
   else if (tone === "light") Object.assign(v, { "--bg": bg.type === "solid" && bg.color ? bg.color : bg.type === "environment" ? env.base : "#ffffff", "--text": "#14161a", "--muted": "#5b6270", "--surface": "rgba(0,0,0,0.035)", "--border": "rgba(0,0,0,0.12)" });
   if (bg.type === "solid" && bg.color) v["--bg"] = bg.color;
@@ -582,6 +599,9 @@ function Widget({ r, b, i, k, ctx }: { r: BlockRequirement; b: Block; i: number;
 
 // ------------------------------------------------------------------ the section
 
+const SAYS = /^(state|say|summari[sz]e|introduce|describe|explain|open with|tell)\b/i;
+const LISTS = /^(list|show (each|every|all)|name (each|every|the))\b/i;
+
 export function BlockBody({ b, i, ctx }: { b: Block; i: number; ctx: Ctx }) {
   const d = direct(b.spec.director, b.spec.secondary);
   const tone = sectionTone(b.spec, d);
@@ -590,10 +610,16 @@ export function BlockBody({ b, i, ctx }: { b: Block; i: number; ctx: Ctx }) {
   const env = envId ? ENV_LOOK[envId] : null;
   const enter = ctx.enter === "fade" ? "fade" : b.spec.animation === "reveal" ? "reveal" : d.entrance;
   const c2: Ctx = { ...ctx, enter };
-  const points = b.reqs.filter((r) => r.kind === "content" || !r.widget || r.widget === "list");
   const widgets = b.reqs.filter((r) => r.kind === "functional" && r.widget && r.widget !== "list");
   const usedByWidget = new Set(widgets.map((r) => r.widget));
   const showItems = b.items.length > 0 && !["faq", "pricing", "gallery", "stats", "compare", "search", "explore"].some((w) => usedByWidget.has(w as never));
+  // A content requirement written as an instruction ("State the main promise", "List every role")
+  // is met by the words it asks for, so it is marked on them rather than printed as a bullet.
+  const byCopy = b.body.trim() ? b.reqs.filter((r) => r.kind === "content" && SAYS.test(r.text)) : [];
+  const byItems = showItems ? b.reqs.filter((r) => r.kind === "content" && LISTS.test(r.text)) : [];
+  const met = new Set([...byCopy, ...byItems].map((r) => r.id));
+  const points = b.reqs.filter((r) => !met.has(r.id) && (r.kind === "content" || !r.widget || r.widget === "list"));
+
   const H = b.lead ? "h1" : "h2";
   const kicker = d.type.kicker !== "none" && b.kicker;
   const numbered = d.hierarchy.numbered;
@@ -610,13 +636,15 @@ export function BlockBody({ b, i, ctx }: { b: Block; i: number; ctx: Ctx }) {
       data-bg={b.spec.background.type}
       data-flip={i % 2 ? "" : undefined}
       data-align={d.hierarchy.align}
+      data-talign={b.spec.text?.align || undefined}
+      data-items={b.spec.items?.style || undefined}
       data-tr={d.transition}
       style={vars(b.spec, d, tone)}
     >
       <BackgroundLayer b={b} i={i} ctx={ctx} />
       {b.spec.animation === "particles" && !reduced && <Particles count={80} mode="burst" reduced={ctx.editing} />}
       <div className="xb-grid">
-        <div className="xb-copy">
+        <div className="xb-copy" data-reqs={byCopy.map((r) => r.id).join(" ") || undefined}>
           {(kicker || (numbered && !b.lead)) && (
             <p className={"xb-kicker is-" + (d.type.kicker === "none" ? "plain" : d.type.kicker)} data-enter={enter}>
               {numbered && <span className="xb-num">{String(i + 1).padStart(2, "0")}</span>}
@@ -652,14 +680,16 @@ export function BlockBody({ b, i, ctx }: { b: Block; i: number; ctx: Ctx }) {
       {(showItems || widgets.length > 0) && (
         <div className="xb-more">
           {showItems && (
-            <div className="xb-items">
+            <div className="xb-items" data-reqs={byItems.map((r) => r.id).join(" ") || undefined}>
               {b.items.map((x, n) => (
                 <article key={n} className="xb-item" data-enter={enter} style={{ ["--i" as string]: n }}>
-                  {x.imageUrl && (
+                  {x.imageUrl && b.spec.items?.images !== false ? (
                     <div className="xp-pic" data-img={`blocks.${i}.items.${n}.imageUrl`}>
                       <img src={x.imageUrl} alt={x.title} loading="lazy" decoding="async" />
                     </div>
-                  )}
+                  ) : b.spec.items?.images && ctx.editing ? (
+                    <div className="xp-pic xb-pic-empty" data-img={`blocks.${i}.items.${n}.imageUrl`} aria-hidden="true" />
+                  ) : null}
                   {numbered && <span className="xb-num">{String(n + 1).padStart(2, "0")}</span>}
                   <h3>{x.title}</h3>
                   {x.value && <p className="xb-value">{x.value}</p>}
@@ -670,7 +700,7 @@ export function BlockBody({ b, i, ctx }: { b: Block; i: number; ctx: Ctx }) {
           )}
           {widgets.map((r) => (
             <div key={r.id} className={"xb-widget is-" + r.widget} data-req={r.id} data-req-kind="functional" data-enter={enter}>
-              <p className="xb-widget-label">{r.text}</p>
+              {r.widget !== "button" && <p className="xb-widget-label">{r.text}</p>}
               <Widget r={r} b={b} i={i} k={b.reqs.indexOf(r)} ctx={ctx} />
             </div>
           ))}

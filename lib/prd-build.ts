@@ -47,6 +47,7 @@ export function blockFor(prd: Prd, s: PrdSection, i: number, prev?: Block): Bloc
   const base = directedSpec(s.visual.director || prd.director, { lead: i === 0, index: i, subject: s.visual.subject, heroType: s.visual.asset, secondary: s.visual.secondary });
   if (s.visual.layout) base.layout = s.visual.layout;
   if (s.visual.animation) base.animation = s.visual.animation;
+  if (s.visual.items) base.items = { style: s.visual.items };
   if (s.visual.background) base.background = { ...base.background, type: s.visual.background, environment: base.background.environment ?? direct(base.director).asset.environment };
   const spec = prev ? cleanSpec(prev.spec, base) : base;
   // A different asset kind chosen in the PRD wins over the kept one.

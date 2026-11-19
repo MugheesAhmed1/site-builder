@@ -5,14 +5,14 @@ import Icon from "@/components/Icon";
 import ImageField from "@/components/ImageField";
 import VideoField from "@/components/VideoField";
 import { mediaUrl, putMedia } from "@/lib/media";
-import { ANIMATIONS, BACKGROUNDS, ENVIRONMENTS, HERO_TYPES, ILLUSTRATIONS, LAYOUTS, type Block, type HeroAsset, type SectionSpec } from "@/template/src/content/blocks";
+import { ANIMATIONS, BACKGROUNDS, ENVIRONMENTS, HERO_TYPES, ILLUSTRATIONS, ITEM_STYLES, LAYOUTS, TEXT_ALIGNS, TEXT_FACES, type Block, type HeroAsset, type SectionSpec } from "@/template/src/content/blocks";
 import { DIRECTOR_IDS, DIRECTORS, direct } from "@/template/src/director";
 
 // The parameters a dynamic section is generated from, as controls: layout, hero asset (with
 // upload, link or the asset library for 3D), background, animation and the Director cut. The
 // Sections panel and the on-page inspector both use it, so every part of a section can change.
 
-function Seg<T extends string>({ label, value, options, onChange }: { label: string; value: T; options: { id: T; label: string }[]; onChange: (v: T) => void }) {
+export function Seg<T extends string>({ label, value, options, onChange }: { label: string; value: T; options: { id: T; label: string }[]; onChange: (v: T) => void }) {
   return (
     <div className="pe-field">
       <span className="pe-lbl">{label}</span>
@@ -153,6 +153,10 @@ export default function SectionControls({ block, onChange, compact = false }: { 
   const hero = (patch: Partial<HeroAsset>) => set({ hero: { ...h, ...patch } });
   const back = (patch: Partial<SectionSpec["background"]>) => set({ background: { ...bg, ...patch } });
   const d = direct(s.director, s.secondary);
+  const tx = s.text ?? {};
+  const it = s.items ?? {};
+  const text = (patch: Partial<NonNullable<SectionSpec["text"]>>) => set({ text: { ...tx, ...patch } });
+  const items = (patch: Partial<NonNullable<SectionSpec["items"]>>) => set({ items: { ...it, ...patch } });
   const [library, setLibrary] = useState(false);
   const rot = h.rotation ?? [0, 0, 0];
   const pos = h.position ?? [0, 0];
@@ -167,6 +171,34 @@ export default function SectionControls({ block, onChange, compact = false }: { 
           {d.note} Spacing {d.space}x, {d.type.face} type, {d.transition} transitions, {d.camera.move} camera, intensity {Math.round(d.intensity * 10)} of 10.
         </p>
       </section>
+
+      <section className="sc-group" aria-label="Text">
+        <h4>Text</h4>
+        <Seg label="Alignment" value={tx.align ?? (d.hierarchy.align === "center" ? "center" : "start")} options={TEXT_ALIGNS} onChange={(align) => text({ align })} />
+        <Seg label="Typeface" value={tx.face ?? (d.type.face === "body" ? "body" : d.type.face)} options={TEXT_FACES} onChange={(face) => text({ face })} />
+        <div className="sc-nums">
+          <Num label="Heading size" value={tx.size ?? 1} min={0.6} max={1.8} step={0.05} unit="x" onChange={(size) => text({ size })} />
+          <Num label="Heading weight" value={tx.weight ?? d.type.weight} min={300} max={900} step={100} onChange={(weight) => text({ weight })} />
+        </div>
+        <Seg label="Line width" value={tx.width ?? "normal"} options={[{ id: "narrow", label: "Narrow" }, { id: "normal", label: "Normal" }, { id: "wide", label: "Wide" }]} onChange={(width) => text({ width })} />
+        <Seg label="Heading case" value={(tx.caps ?? d.type.caps) ? "upper" : "normal"} options={[{ id: "normal", label: "As written" }, { id: "upper", label: "Capitals" }]} onChange={(v) => text({ caps: v === "upper" })} />
+        {s.text && (
+          <button type="button" className="pe-link" onClick={() => set({ text: undefined })}>
+            Back to the Director&apos;s type
+          </button>
+        )}
+      </section>
+
+      {block.items.length > 0 && (
+        <section className="sc-group" aria-label="Items">
+          <h4>{block.items.length} items</h4>
+          <Seg label="Show them as" value={it.style ?? "cards"} options={ITEM_STYLES} onChange={(style) => items({ style })} />
+          {(it.style ?? "cards") !== "list" && (it.style ?? "cards") !== "timeline" && (it.style ?? "cards") !== "carousel" && (
+            <Seg label="Columns" value={String(it.columns ?? 0)} options={[{ id: "0", label: "Auto" }, { id: "1", label: "1" }, { id: "2", label: "2" }, { id: "3", label: "3" }, { id: "4", label: "4" }]} onChange={(v) => items({ columns: Number(v) || undefined })} />
+          )}
+          <Seg label="Pictures" value={it.images ? "on" : "off"} options={[{ id: "off", label: "No pictures" }, { id: "on", label: "A picture on each" }]} onChange={(v) => items({ images: v === "on" })} />
+        </section>
+      )}
 
       <section className="sc-group" aria-label="Layout">
         <Seg label="Layout" value={s.layout} options={LAYOUTS} onChange={(layout) => set({ layout })} />
