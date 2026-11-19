@@ -56,6 +56,8 @@ export interface Concept extends ExperienceTemplate {
   /** Below this intensity the concept is too quiet to carry its idea. */
   minIntensity: number;
   flags: { scroll: boolean; object: boolean; webgl: boolean; character: boolean };
+  /** Only chosen when the asset library holds a strong match for the subject (packages/asset-library). */
+  needsAsset?: boolean;
 }
 
 const ORIGINAL = { license: "original", source: "Site Builder (procedural, this repository)" };
@@ -932,6 +934,39 @@ export const CONCEPTS: Concept[] = [
       { title: "Clusters", note: "Points gather into groups", beat: { cam: 0.3, warp: 0, order: 0.4 } },
       { title: "Connections", note: "Lines join the groups", beat: { cam: 0.6, warp: 0, order: 0.7 } },
       { title: "The trend", note: "The structure becomes a rising line at the call to action", beat: { cam: 1, warp: 0, order: 1 }, prefers: ["cta", "contact"] },
+    ],
+  }),
+  C({
+    id: "asset-showcase",
+    name: "Real object showcase",
+    description: "A real 3D model of what the business makes holds the stage under studio light. Scroll turns it, brings the camera close to the details and settles it beside the call to action; the asset library supplies the model and the art direction sets the light.",
+    pitch: "The real thing, in your visitor's hands, turning with every scroll.",
+    modes: ["product", "cinematic"],
+    metaphor: "walk",
+    world: "asset-studio",
+    engine: "showcase",
+    webgl: "asset3d",
+    params: { image: "" },
+    compatibleIndustries: ["product", "shop", "auto", "beauty", "food", "role-designer"],
+    motionIntensity: 7,
+    interactionTypes: ["scroll", "cursor", "click"],
+    performanceTier: "heavy",
+    mobileStrategy: "The model above the words when it is light enough, otherwise its studio still",
+    reducedMotionStrategy: "The studio still of the model, one pose per scene, no movement",
+    heroMechanic: "asset-turn",
+    transitionMechanic: "camera-orbit",
+    visualAnchor: "asset",
+    anchor: { type: "asset", behaviours: ["reactToScroll", "lookAtCursor", "reactToClick"] },
+    interactions: [I("cursor", "asset", "cursor.orbit", "The model turns toward the cursor", "Drag to turn"), I("click", "asset", "click.transform", "The model spins once, or a character waves", "Tap to spin")],
+    keywords: [],
+    minIntensity: 4,
+    needsAsset: true,
+    beats: [
+      { title: "Unveiling", note: "The model rises into the light", beat: { spin: -40, zoom: 0.92, tilt: 0.16, light: 0.6, particles: 0.35, orbit: 0 }, prefers: ["hero"] },
+      { title: "First angle", note: "The model turns to show its side", beat: { spin: 90, zoom: 1, tilt: 0.12, lift: 0.04, light: 0.7, particles: 0.5, orbit: 10, shift: -0.18 } },
+      { title: "In detail", note: "The camera comes close to the details", beat: { spin: 200, zoom: 1.3, tilt: 0.2, light: 0.85, particles: 0.6, orbit: 20, shift: 0.18 } },
+      { title: "Every side", note: "The model turns to its back", beat: { spin: 300, zoom: 1.08, tilt: 0.08, light: 0.75, particles: 0.45, orbit: -10, shift: -0.12 } },
+      { title: "Yours", note: "The model settles facing the visitor beside the call to action", beat: { spin: 360, zoom: 1, tilt: 0, light: 1, particles: 0.3, orbit: 0, shift: 0 }, prefers: ["cta", "contact"] },
     ],
   }),
 ];

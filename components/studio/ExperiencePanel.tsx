@@ -22,6 +22,7 @@ import {
   type BetterId,
 } from "@/packages/experience-core";
 import type { Experience, ExperienceMode } from "@/template/src/experiences/types";
+import { wants3d } from "@/template/src/experiences/assets";
 
 // The Experience control (PRD sections 30 to 33, 49 and 66): what the site is built around,
 // and every way to change it while the business, the words and the brand stay. Each change
@@ -91,7 +92,7 @@ export default function ExperiencePanel({ p, update, compare, onCompare }: { p: 
       <section className="card xpp-now" aria-label="Current experience">
         <div className="xpp-now-head">
           <span className="xpp-kicker">Concept</span>
-          {e.stage.webgl && e.intensity >= 7 && !e.noWebgl && <span className="xpp-badge">3D</span>}
+          {wants3d(e) && <span className="xpp-badge">3D</span>}
         </div>
         <h2>{e.name}</h2>
         <p className="muted">{e.pitch}</p>

@@ -34,3 +34,16 @@ Assets: the pictures and films of every template plus the library's own pictures
 | Studio editor | `BlocksField` and `MediaPicker` in `components/templates/TemplateStudio.tsx` |
 
 `/lib/*` is served with the same frame headers as `/tpl/*`, because blocks load inside the sandboxed template preview.
+
+
+## 3D models and lighting
+
+/library also lists every 3D model and HDR light in the asset library. Each card shows:
+- the still
+- the category and tags
+- the size, triangles and textures
+- the tier, and whether phones get 3D
+- the animations and colourways
+- the licence and creator
+
+"Turn it in 3D" opens the same `asset3d` renderer that the sites use. A slider stands in for the page scroll, and there are pickers for animation and colourway. Owner uploads whose licence is not confirmed are shown, marked, and never used on sites. See docs/ASSETS.md.

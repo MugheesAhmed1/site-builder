@@ -4,6 +4,8 @@ import { getMedia, mediaRefs, swapMedia } from "@/lib/media";
 import { palette, resolveScheme } from "@/template/src/theme.js";
 import { fontsHref } from "@/template/src/content/clean";
 import type { PortfolioContent, Project, WebsiteContent } from "./types";
+import type { Experience } from "@/template/src/experiences/types";
+import { assetFiles, wants3d } from "@/template/src/experiences/assets";
 
 // Two downloads are built here from the same project:
 // - "ready": a finished site (index.html, site.js, site.css, site-data.js and its pictures).
@@ -204,8 +206,41 @@ async function gather(p: Project, put: (path: string, data: Blob | string, base6
   };
   const content = JSON.parse(JSON.stringify(swapMedia(p.content, (r) => vids.get(r) || "")), fix);
   const design = JSON.parse(JSON.stringify(swapMedia(p.design, (r) => vids.get(r) || "")), fix);
-  // The experience (scenes, stage and motion) ships as it is: it holds no pictures or uploads.
-  return { kind: p.kind, design, content, experience: p.experience };
+  // The experience ships as it is, with its library assets copied in beside it.
+  const experience = p.experience ? await packAssets(p.experience, put) : p.experience;
+  return { kind: p.kind, design, content, experience };
+}
+
+/**
+ * The 3D models, HDR lights and stills the experience uses, and nothing else from the library,
+ * copied from the builder into assets/ so the site never fetches a file from anywhere else.
+ * A file that cannot be copied is dropped from the experience, and the stage falls back to the
+ * still, then to the procedural stage, exactly as it would if the file failed to load.
+ */
+export async function packAssets(e: Experience, put: (path: string, data: Blob | string) => void): Promise<Experience> {
+  if (!e.assets?.length) return e;
+  const missing = new Set<string>();
+  for (const path of assetFiles(e)) {
+    const r = /^\/assets\/[a-z0-9/_-]+\.(glb|hdr|webp)$/.test(path) ? await fetch(path).catch(() => null) : null;
+    if (!r || !r.ok) {
+      missing.add(path);
+      continue;
+    }
+    put(path.slice(1), await r.blob());
+  }
+  const assets = e.assets.filter((a) => !missing.has(a.src));
+  const image = typeof e.stage.params.image === "string" && missing.has(e.stage.params.image) ? "" : e.stage.params.image;
+  if (assets.length) put("CREDITS.txt", creditsText(assets));
+  return { ...e, assets, stage: { ...e.stage, params: { ...e.stage.params, image } } };
+}
+
+function creditsText(assets: NonNullable<Experience["assets"]>): string {
+  const owed = assets.filter((a) => a.license.attributionRequired);
+  const free = assets.filter((a) => !a.license.attributionRequired);
+  const lines = ["Credits for the 3D models and lighting on this site", ""];
+  if (owed.length) lines.push("Used under Creative Commons Attribution 4.0 (https://creativecommons.org/licenses/by/4.0/).", "Keep this file with the site: the credit is a condition of the licence.", "", ...owed.map((a) => "- " + a.license.credit), "");
+  if (free.length) lines.push("Free of copyright (CC0 1.0) or original to Site Builder, credited with thanks.", "", ...free.map((a) => "- " + a.license.credit), "");
+  return lines.join("\n");
 }
 
 // The picture the visitor sees first (the hero photo, or a real-life character), so the
@@ -285,8 +320,7 @@ const LOAD_LATER = `(function(){var go=function(){["./site-data.js","./site.js"]
 
 /** PRD sections 17 and 40: a site carries the 3D layer only when its experience uses it. */
 export function uses3d(p: Project) {
-  const e = p.experience;
-  return !!e && !!e.stage.webgl && e.intensity >= 7 && !e.noWebgl;
+  return wants3d(p.experience);
 }
 
 /** The dependency profile of a source download (PRD section 40): three.js and React Three Fiber only for 3D sites. */
@@ -344,6 +378,8 @@ WHAT IS IN HERE
   robots.txt      tells search engines they may list the site
   images, media, scenes   your pictures, videos and the opening scene
   fonts           the typefaces, so the site never waits on another server
+  assets          the 3D models and lighting this page uses (only those)
+  CREDITS.txt     who made them and under which licence: keep it with the site
 `;
 
 export async function buildZip(p: Project, kind: DownloadKind = "ready"): Promise<{ blob: Blob; name: string }> {

@@ -21,7 +21,8 @@ vi.stubGlobal("fetch", async (u: string, init?: RequestInit) => {
   }
 });
 
-export const EXAMPLES: { id: string; query: string; answers?: Record<string, string> }[] = [
+export const EXAMPLES: { id: string; query: string; answers?: Record<string, string>; style?: "luxury" }[] = [
+  { id: "eyewear", style: "luxury", query: "Website for my premium eyewear brand called Noir Optics in Lahore", answers: { what: "Handmade sunglasses and optical frames", about: "Every frame is cut from one sheet of acetate, polished by hand for three days and fitted with lenses that block all UVA and UVB." } },
   { id: "florist", query: "Website for my flower shop called Petal & Stem in London", answers: { what: "Seasonal bouquets and wedding flowers", about: "Two sisters, one tiny shop and flowers cut that morning. We design every bouquet by hand and deliver across London the same day." } },
   { id: "saas", query: "Website for my startup Ledgerly, invoicing software for freelancers", answers: { what: "Invoicing and payments for freelancers", about: "Ledgerly sends the invoice, chases the payment and files the tax note, so you can get back to the work you are paid for." } },
   { id: "cafe", query: "Website for my coffee shop called Morning Ritual in Lisbon", answers: { what: "Specialty coffee and fresh pastries", about: "A small roastery cafe in Alfama. We roast twice a week and bake every morning." } },
@@ -42,7 +43,7 @@ it("builds every example", async () => {
   rmSync(root, { recursive: true, force: true });
   const only = (process.env.ONLY || "").split(",").filter(Boolean);
   for (const ex of EXAMPLES.filter((e) => !only.length || only.includes(e.id))) {
-    let p = createProject({ query: ex.query });
+    let p = createProject({ query: ex.query, style: ex.style });
     if (ex.answers) p = applyDetails(p, { answers: { ...p.answers, ...ex.answers } });
     const { blob } = await buildZip(p, "ready");
     const zip = await JSZip.loadAsync(await blob.arrayBuffer());

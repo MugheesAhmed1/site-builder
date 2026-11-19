@@ -3,7 +3,7 @@
 // date it was added and what we changed. The quality engine refuses an export that would ship
 // anything not on this list, or anything whose licence does not allow redistribution.
 
-export type LicenceId = "MIT" | "Apache-2.0" | "BSD-3-Clause" | "ISC" | "Zlib" | "OFL-1.1" | "original" | "MIT+Commons-Clause" | "GSAP-Standard" | "owner-supplied";
+export type LicenceId = "MIT" | "Apache-2.0" | "BSD-3-Clause" | "ISC" | "Zlib" | "OFL-1.1" | "original" | "MIT+Commons-Clause" | "GSAP-Standard" | "owner-supplied" | "CC0-1.0" | "CC-BY-4.0";
 
 export interface LicenceEntry {
   id: string;
@@ -21,7 +21,7 @@ export interface LicenceEntry {
 }
 
 /** Licences that allow copying into a site someone else owns and sells from. */
-export const OPEN_LICENCES: LicenceId[] = ["MIT", "Apache-2.0", "BSD-3-Clause", "ISC", "Zlib", "OFL-1.1", "original", "owner-supplied"];
+export const OPEN_LICENCES: LicenceId[] = ["MIT", "Apache-2.0", "BSD-3-Clause", "ISC", "Zlib", "OFL-1.1", "original", "owner-supplied", "CC0-1.0", "CC-BY-4.0"];
 
 export const LICENCES: LicenceEntry[] = [
   { id: "react", name: "React and React DOM", source: "https://github.com/facebook/react", author: "Meta Platforms and contributors", license: "MIT", version: "19.x", added: "2026-11-01", modifications: "None", redistributable: true, covers: ["react"] },
@@ -41,6 +41,11 @@ export const LICENCES: LicenceEntry[] = [
   // Each one carries its holder and note in templates/<id>/template.json; its own libraries must be open licences.
   { id: "imported-templates", name: "Imported whole-project templates", source: "templates/<id> in this repository", author: "Each template's owner (see its template.json)", license: "owner-supplied", version: "per template", added: "2026-11-18", modifications: "Unused dependencies dropped; words and pictures replaced only by the person using it", redistributable: true, covers: ["template"] },
   { id: "builder-templates", name: "Original builder templates (Brightline, Tidewater, Ironhouse, Ashgrove, Cornerstone)", source: "templates/<id> in this repository", author: "Site Builder", license: "original", version: "1", added: "2026-11-18", modifications: "Original code. Default pictures are free AI generations (Pollinations) kept in each template's source/public/media.", redistributable: true, covers: ["builder-template"] },
+  // The 3D asset library (docs/ASSETS.md): each file has its own licence record in
+  // library/assets/manifest.json and is checked again on its own by the asset gate.
+  { id: "asset-library-cc0", name: "3D models and HDR lights under CC0 (Khronos samples, KayKit, Kenney, Poly Haven and others)", source: "library/assets/manifest.json (each asset's source URL)", author: "Each asset's creator (see the manifest)", license: "CC0-1.0", version: "per asset", added: "2026-11-19", modifications: "Compressed (quantized meshes, WebP textures), centred; logos replaced with a plain colour where noted", redistributable: true, covers: ["asset-library"] },
+  { id: "asset-library-ccby", name: "3D models under CC BY 4.0 (credited in every site that uses them)", source: "library/assets/manifest.json (each asset's source URL)", author: "Each asset's creator (see the manifest)", license: "CC-BY-4.0", version: "per asset", added: "2026-11-19", modifications: "Compressed and centred; changes listed per asset and in the site's CREDITS.txt", redistributable: true, covers: ["asset-library-attribution"] },
+  { id: "asset-engines", name: "Asset stage (asset3d renderer and showcase still engine)", source: "This repository, template/src/scenes/webgl/asset.ts and engines/showcase.ts", author: "Site Builder", license: "original", version: "1", added: "2026-11-19", modifications: "Original", redistributable: true, covers: ["asset-stage"] },
   // Kept out of generated sites on purpose.
   { id: "gsap", name: "GSAP and ScrollTrigger", source: "https://gsap.com", author: "GreenSock (Webflow)", license: "GSAP-Standard", version: "-", added: "2026-11-17", modifications: "Not used. Its licence is not an open licence and it restricts use in website-building tools.", redistributable: false, covers: ["gsap", "scrolltrigger"] },
   { id: "react-bits", name: "React Bits", source: "https://reactbits.dev", author: "David Haz", license: "MIT+Commons-Clause", version: "-", added: "2026-11-16", modifications: "Not used. Commons Clause forbids selling it as part of a product. Original equivalents only.", redistributable: false, covers: ["react-bits"] },

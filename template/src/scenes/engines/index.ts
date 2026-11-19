@@ -15,6 +15,7 @@ import { morph } from "./morph";
 import { orbit } from "./orbit";
 import { playground } from "./playground";
 import { progress } from "./progress";
+import { showcase } from "./showcase";
 
 // Every 2D stage engine. Canvas engines draw a frame; DOM engines move their own elements
 // (text, documents and interface panels stay crisp and selectable that way).
@@ -31,6 +32,7 @@ export const ENGINES: Record<StageEngine2D, StageEngineDef> = {
   character: { kind: "canvas", draw: character },
   progress: { kind: "canvas", draw: progress },
   orbit: { kind: "canvas", draw: orbit },
+  showcase: { kind: "canvas", draw: showcase },
   interface: { kind: "dom", Component: Interface },
   ledger: { kind: "dom", Component: Ledger },
   kinetic: { kind: "dom", Component: Kinetic },

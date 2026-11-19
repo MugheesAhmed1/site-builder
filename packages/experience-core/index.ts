@@ -7,6 +7,7 @@ import { motionLanguageFor, understand, type BriefInput, type StyleChoice } from
 import { storyboard } from "./storyboard";
 import { applyBetter, type BetterId } from "./better";
 import { budgetFor, channelsFor, fallbacksFor, selectSystems, tierOf, useWebgl } from "./systems";
+import { artDirectionFor, assetDirectionFor, assetPlanFor, budgetOf, choreograph, resolvePlan, type ResolvedPlan } from "@/packages/asset-library";
 
 // The experience concept engine (PRD sections 2, 7 and 78, P0 items 1 to 9). One call runs the
 // whole pipeline: understand, creative direction (three directions, the strongest chosen),
@@ -42,6 +43,21 @@ export interface GenerateOptions {
   hidden?: string[];
   /** Make it better fixes to keep applying. */
   better?: string[];
+  /** False keeps the asset library out (no real 3D model is chosen for the subject). */
+  assets?: boolean;
+}
+
+const CHARACTER_WORDS = /\b(mascot|robot|character|avatar|toy|game|gaming)\b/;
+
+/**
+ * Whether the asset library holds the subject strongly enough to build the experience around
+ * the real object: a website, an exact match on what the business makes, and a product or
+ * vehicle (or a character when the person asked for one). Everything else keeps its concept.
+ */
+function heroCarries(r: ResolvedPlan, wantCharacter: boolean): boolean {
+  const h = r.hero;
+  if (!h?.asset || !h.exact || h.score < 0.55) return false;
+  return wantCharacter ? h.asset.category === "character" : h.asset.category === "product" || h.asset.category === "vehicle";
 }
 
 const clampLevel = (n: number) => Math.max(1, Math.min(10, Math.round(n)));
@@ -63,7 +79,17 @@ export function generateExperience(input: BriefInput, o: GenerateOptions = {}): 
   const preset = o.preset ? presetById(o.preset) : undefined;
   const only = pack ? [pack.concept] : o.concept ? [o.concept] : preset?.concepts;
   const { directions, chosen } = directionsFor({ ...brief, wantMode: o.mode ?? preset?.mode ?? brief.wantMode }, { seed, only, avoid: o.avoid, intensity: o.intensity ?? preset?.intensity });
-  const concept = conceptById(o.concept ?? chosen?.concept ?? "") ?? conceptById(chosen?.concept ?? "") ?? CONCEPTS[0];
+  // Art direction, then the asset plan and its resolution (docs/ASSETS.md). The AI and the
+  // rules ask for concepts ("premium black sunglasses"); the resolver picks the local file.
+  const art = artDirectionFor({ personality: brief.personality, style: o.style ?? brief.style, intensity: o.intensity ?? preset?.intensity ?? 7, interactionLevel: 6, focus: brief.focus, keywords: brief.keywords });
+  const wantCharacter = CHARACTER_WORDS.test(brief.focus.join(" "));
+  const requests = assetPlanFor(art, brief.focus, wantCharacter);
+  const free = !o.concept && !preset && !pack && (!o.mode || o.mode === "product" || o.mode === "cinematic");
+  let resolved = o.assets === false ? null : resolvePlan(requests, art, budgetOf("heavy"));
+  const showcase = !!resolved && input.kind === "website" && ((free && heroCarries(resolved, wantCharacter)) || (o.concept === "asset-showcase" && !!resolved.hero?.asset));
+  if (o.concept === "asset-showcase" && !showcase) resolved = null;
+  let concept = conceptById(showcase ? "asset-showcase" : o.concept === "asset-showcase" ? "product-orbit" : o.concept ?? chosen?.concept ?? "") ?? conceptById(chosen?.concept ?? "") ?? CONCEPTS[0];
+  if (concept.needsAsset && !showcase) concept = conceptById("product-orbit") ?? CONCEPTS[0];
   const level = intensityFor(concept, { ...o, intensity: o.intensity ?? preset?.intensity });
   const channels = channelsFor(level, o.channels);
   const webgl = useWebgl(concept, level, o.allow3d !== false);
@@ -73,9 +99,17 @@ export function generateExperience(input: BriefInput, o: GenerateOptions = {}): 
   const world = o.world && environmentById(o.world) ? o.world : concept.world;
   const env = environmentById(world);
   const params: Params = { ...concept.params, ...(world !== concept.world && env && env.engine === concept.engine ? env.params : {}), ...(pack?.params ?? {}), ...(o.params ?? {}) };
-  const scenes = storyboard({ concept, kind: input.kind, content: input.content, intensity: level, language, channels, webgl, hidden: o.hidden });
+  const artDirection = { ...art, motionIntensity: level, interactionIntensity: Math.min(10, Math.round((channels.cursor + channels.click + channels.hover) * 1.1)) };
+  const heroModel = showcase ? resolved!.assets.find((a) => a.role === "hero-product" || a.role === "hero-character") : undefined;
+  const hdri = showcase ? resolved!.assets.find((a) => a.kind === "hdri") : undefined;
+  // The still stands in wherever 3D does not run (phones, reduced motion, slow devices).
+  if (showcase) params.image = resolved!.hero?.preview ?? "";
+  const drafted = storyboard({ concept, kind: input.kind, content: input.content, intensity: level, language, channels, webgl, hidden: o.hidden });
+  const scenes = showcase ? choreograph(drafted, heroModel, artDirection) : drafted;
   for (const s of scenes) if (s.environment) s.environment.id = world;
-  const { technologies, profile } = selectSystems(concept, level, webgl, smooth, sound);
+  const systems = selectSystems(concept, level, webgl, smooth, sound);
+  const profile = systems.profile;
+  const technologies = showcase ? [...systems.technologies, "asset-stage", "asset-library", ...(resolved!.assets.some((a) => a.license.attributionRequired) ? ["asset-library-attribution"] : [])] : systems.technologies;
   const tier = tierOf(concept, webgl, level);
   const cursorOn = channels.cursor > 0;
   const mode = (o.mode && concept.modes.includes(o.mode) ? o.mode : directions.find((d) => d.concept === concept.id)?.mode) ?? concept.modes[0];
@@ -113,6 +147,11 @@ export function generateExperience(input: BriefInput, o: GenerateOptions = {}): 
     noWebgl: o.allow3d === false || undefined,
     control: o.control ?? "smart",
     better: o.better?.length ? o.better : undefined,
+    style: o.style,
+    artDirection,
+    assetPlan: resolved?.plan,
+    assets: showcase ? resolved!.assets : undefined,
+    assetDirection: showcase ? assetDirectionFor(artDirection, heroModel, hdri) : undefined,
   });
 }
 
@@ -133,6 +172,8 @@ export function optionsOf(e: Experience): GenerateOptions {
     channels: custom ? e.channels : undefined,
     hidden: e.scenes.filter((s) => s.hidden).map((s) => s.section),
     better: e.better,
+    assets: e.assetPlan ? undefined : false,
+    style: e.style,
   };
 }
 
@@ -262,6 +303,6 @@ export function suggestions(input: BriefInput, seed: number, limit = 6) {
   const brief = understand(input);
   const { directions } = directionsFor(brief, { seed });
   const first = new Set(directions.map((d) => d.concept));
-  const rest = CONCEPTS.filter((c) => !first.has(c.id)).slice(0, Math.max(0, limit - first.size));
+  const rest = CONCEPTS.filter((c) => !first.has(c.id) && !c.needsAsset).slice(0, Math.max(0, limit - first.size));
   return [...directions.map((d) => conceptById(d.concept)!), ...rest];
 }

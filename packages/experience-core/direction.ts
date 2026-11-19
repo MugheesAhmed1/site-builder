@@ -68,8 +68,8 @@ export interface Directions {
 }
 
 export function directionsFor(b: Brief, o: DirectionOptions): Directions {
-  let pool = CONCEPTS.filter((c) => (!o.only || o.only.includes(c.id)) && !(o.avoid ?? []).includes(c.id));
-  if (!pool.length) pool = CONCEPTS.filter((c) => !(o.avoid ?? []).includes(c.id));
+  let pool = CONCEPTS.filter((c) => (o.only ? o.only.includes(c.id) : !c.needsAsset) && !(o.avoid ?? []).includes(c.id));
+  if (!pool.length) pool = CONCEPTS.filter((c) => !c.needsAsset && !(o.avoid ?? []).includes(c.id));
   const ranked = pool.map((c) => ({ c, score: scoreConcept(c, b, o) })).sort((x, y) => y.score - x.score);
   const want = b.wantMode;
   // The strongest fit leads, in its own first mode (or the mode the person asked for).

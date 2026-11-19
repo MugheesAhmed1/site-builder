@@ -30,9 +30,11 @@ export function selectSystems(c: Concept, level: number, webgl: boolean, smooth:
   return { technologies: Array.from(t), profile };
 }
 
-/** Whether the 3D version of a concept is used: only when it has one, the intensity calls for it (7 and up) and the person has not turned it off. */
+/** Whether the 3D version of a concept is used: only when it has one, the intensity calls for it and the person has not turned it off. */
 export function useWebgl(c: Concept, level: number, allow = true): boolean {
-  return !!c.webgl && level >= 7 && allow;
+  // A real model (asset3d) is the point of its concept, so it runs from the concept's floor;
+  // the procedural 3D stages are an extra that starts at 7.
+  return !!c.webgl && level >= (c.webgl === "asset3d" ? 4 : 7) && allow;
 }
 
 export function tierOf(c: Concept, webgl: boolean, level: number): PerformanceTier {

@@ -3,6 +3,7 @@ import { buildContent, catalog, cleanWords, localPlan, localTexts, normalizePlan
 import { callGemini, geminiKey, limited, parseJson } from "@/lib/gemini";
 import { CATEGORIES } from "@/lib/categories";
 import { templateById } from "@/lib/templates";
+import { resolveArtPlan } from "@/lib/animator-art";
 
 // The animator engine's two AI steps (lib/animator.ts), on the server so the Gemini key stays here.
 //   POST { step: "plan", query }          -> { plan }      the master prompt and its choices
@@ -29,7 +30,10 @@ Expand short place names (isb is Islamabad, lhr is Lahore, khi is Karachi). If t
 Choose the template whose feel suits the business best even if it was made for another trade: every word, colour and font in it will be rewritten.
 Choose 2 to 5 blocks in page order that help this business (for a clinic: before and after, counting numbers, a numbered list for the visit, a contact form). Use effects only when the motion is lively or bold.
 Return JSON with exactly these keys:
-{"kind":"website|portfolio","business":"<one business id>","name":"","city":"","audience":"","tone":"","accent":"#rrggbb","fonts":{"display":"<Google Fonts family>","body":"<Google Fonts family>"},"motion":"calm|lively|bold","template":"<template id>","blocks":["<block id>"],"prompt":"<the master prompt: 8 to 14 lines covering who the business is, audience, offer, voice, the story the page tells from top to bottom, the look (colour, type, imagery), motion, and the call to action>"}`;
+{"kind":"website|portfolio","business":"<one business id>","name":"","city":"","audience":"","tone":"","accent":"#rrggbb","fonts":{"display":"<Google Fonts family>","body":"<Google Fonts family>"},"motion":"calm|lively|bold","template":"<template id>","blocks":["<block id>"],"prompt":"<the master prompt: 8 to 14 lines covering who the business is, audience, offer, voice, the story the page tells from top to bottom, the look (colour, type, imagery), motion, and the call to action>",
+"artDirection":{"visualStyle":"<e.g. luxury editorial>","mood":"<one or two words>","density":"minimal|balanced|rich","depth":<1-10>,"lighting":"studio|cinematic|natural|night|interior|urban","typography":"editorial-serif|grotesk|mono-tech|rounded","composition":"hero-object|split|centered|immersive","styleTags":["<3 to 5 of: luxury, premium, minimal, editorial, realistic, stylized, low-poly, playful, cinematic, futuristic, warm, natural, classic, vintage>"],"preferredVisuals":["<3 or 4>"],"avoid":["<2 or 3>"]},
+"assets":[{"role":"hero-product|hero-character|supporting|lighting","query":"<what the visitor should see, described in words, e.g. premium black sunglasses>","style":["<style tags>"],"colors":["<colour words>"]}]}
+Art direction comes first and every visual follows it. In "assets" describe concepts only (one hero, a lighting mood such as "studio softbox", optionally one supporting object). NEVER write a file name, a path, a URL or a brand: the studio's own library resolves each description to a licensed local file.`;
 
 const WRITE_SYSTEM = `You are a senior copywriter writing every word of one website, following a master prompt.
 ${HOUSE}
@@ -56,14 +60,15 @@ export async function POST(req: Request) {
     const query = String(body.query || "").trim().slice(0, 300);
     if (query.length < 3) return bad("Say what the business is, for example: dentist clinic in isb.");
     const fallback = localPlan(query);
-    if (!apiKey) return NextResponse.json({ ok: true, plan: fallback, note: "no-key" });
-    if (limited(ip)) return NextResponse.json({ ok: true, plan: fallback, note: "busy" });
+    const withAssets = (p: MasterPlan): MasterPlan => (p.art && p.assets ? { ...p, resolved: resolveArtPlan({ art: p.art, assets: p.assets }) } : p);
+    if (!apiKey) return NextResponse.json({ ok: true, plan: withAssets(fallback), note: "no-key" });
+    if (limited(ip)) return NextResponse.json({ ok: true, plan: withAssets(fallback), note: "busy" });
     try {
       const { text, model } = await callGemini(PLAN_SYSTEM, `Query: ${JSON.stringify(query)}\n\nWhat the rules already understood (improve on it): ${JSON.stringify({ business: fallback.business, kind: fallback.kind, city: fallback.city, name: fallback.name })}\n\nBusiness ids: ${JSON.stringify(catalogIds())}\n\nStudio catalogue:\n${JSON.stringify(catalog())}`, apiKey, { temperature: 0.9, maxTokens: 3000, timeout: 25_000 });
       const plan = normalizePlan({ ...(parseJson(text) as Record<string, unknown>), source: "gemini", model }, fallback);
-      return NextResponse.json({ ok: true, plan });
+      return NextResponse.json({ ok: true, plan: withAssets(plan) });
     } catch {
-      return NextResponse.json({ ok: true, plan: fallback, note: "model-failed" });
+      return NextResponse.json({ ok: true, plan: withAssets(fallback), note: "model-failed" });
     }
   }
 

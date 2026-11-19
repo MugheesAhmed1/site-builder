@@ -1,6 +1,7 @@
 import type { Experience } from "@/template/src/experiences/types";
 import { primitive } from "@/template/src/motion/primitives";
 import { licenceProblems } from "./licences";
+import { assetLicenceProblems, assetPerformance } from "./assets";
 
 // The quality engine (PRD sections 53, 54 and 72, P0 item 10). Two layers:
 // - experienceQA: the ten Experience QA questions, answered from the Experience JSON. A site
@@ -11,6 +12,7 @@ import { licenceProblems } from "./licences";
 //   runtime checks: scripts/experience-qa.mjs runs them in a real browser on the examples.
 
 export { LICENCES, licenceProblems, OPEN_LICENCES } from "./licences";
+export { assetLicenceProblems, assetPerformance, ASSET_BUDGET } from "./assets";
 
 export interface Check {
   id: string;
@@ -73,7 +75,8 @@ export function qualityGates(g: GateInput): Check[] {
   const e = g.experience;
   const qa = experienceQA(e);
   const motion = qa.filter((c) => !c.runtime);
-  const licence = licenceProblems(e.technologies);
+  const licence = [...licenceProblems(e.technologies), ...assetLicenceProblems(e)];
+  const assetPerf = assetPerformance(e);
   const minContrast = g.contrast.length ? Math.min(...g.contrast) : 21;
   const noAlt = g.images.filter((i) => i.src && !i.alt.trim());
   return [
@@ -84,6 +87,7 @@ export function qualityGates(g: GateInput): Check[] {
     { id: "console", question: "Console", pass: true, detail: "Checked in a real browser", runtime: true },
     { id: "mobile", question: "Mobile", pass: qa.find((c) => c.id === "mobile")!.pass, detail: e.fallbacks.mobile },
     { id: "reduced-motion", question: "Reduced motion", pass: qa.find((c) => c.id === "reduced-motion")!.pass, detail: e.fallbacks.reducedMotion },
-    { id: "licensing", question: "Asset licensing", pass: licence.length === 0, detail: licence.join("; ") || "Every library and asset is on the licence register and may ship" },
+    { id: "licensing", question: "Asset licensing", pass: licence.length === 0, detail: licence.join("; ") || (e.assets?.length ? "Every library, 3D model and light is on the licence register and may ship, credits included" : "Every library and asset is on the licence register and may ship") },
+    { id: "asset-performance", question: "3D asset weight", pass: assetPerf.pass, detail: assetPerf.detail },
   ];
 }

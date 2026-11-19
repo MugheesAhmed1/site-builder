@@ -3,7 +3,7 @@ import { createElement, useEffect, useMemo } from "react";
 import { Color, PerspectiveCamera, PMREMGenerator, Scene, setConsoleFunction, WebGLRenderer, type Texture } from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import type { Frame, Palette } from "../frame";
-import type { Params, StageEngine3D } from "../../experiences/types";
+import type { AssetDirection, ExperienceAsset, Params, StageEngine3D } from "../../experiences/types";
 
 // The 3D layer (PRD sections 17, 18 and 37): three.js through React Three Fiber, loaded on demand after the page
 // is usable, and only where the intensity, the device and the visitor allow it. Each engine
@@ -14,12 +14,19 @@ export interface Init3D {
   pal: Palette;
   labels: string[];
   mobile: boolean;
+  /** The resolved assets and their direction, for the asset stage (asset3d). */
+  assets?: ExperienceAsset[];
+  direction?: AssetDirection;
 }
 
 export interface View3D {
   frame(f: Frame): void;
   resize(w: number, h: number, dpr: number): void;
   dispose(): void;
+  /** Engines that load files say when they are ready; until then the 2D stage stays on screen. */
+  ready?(): boolean;
+  /** A load that failed (a missing file): the stage drops back to 2D. */
+  failed?(): boolean;
 }
 
 export type Mount3D = (canvas: HTMLCanvasElement, engine: StageEngine3D, init: Init3D) => View3D | null;
