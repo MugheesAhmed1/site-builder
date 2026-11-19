@@ -1,5 +1,6 @@
 export const EDIT_ICONS: Record<string, string>;
 export const EDIT_ICON_IDS: string[];
+export const EDIT_ANIMS: string[];
 export function iconSvg(id: string, size?: number): string;
 export function editKey(el: Element | null, root: Element | null): string;
 export function editFind(root: Element | null, key: string): HTMLElement | null;

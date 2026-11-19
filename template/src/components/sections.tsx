@@ -2,6 +2,9 @@ import { type CSSProperties, type ReactNode } from "react";
 import type { PortfolioContent, WebsiteContent } from "../content/types";
 import { digits, initials } from "../content/clean";
 import { Headline } from "./Text";
+import { BlockBody } from "./Block";
+import type { Block } from "../content/blocks";
+import { blockOf } from "../content/sections";
 
 // The content of each scene. A scene is the moment; these are the words, pictures and
 // details it presents. Every block carries data-enter so the scene's entrance primitive
@@ -568,8 +571,28 @@ export const SECTION_NAV: Record<string, string> = {
   contact: "Contact",
 };
 
+/** The menu label of a section: the standard ones by name, a PRD block by its kicker or heading. */
+export function navLabel(id: string, c: any): string {
+  const hit = blockOf(c || {}, id);
+  if (hit) {
+    if (hit.b.lead) return "";
+    const t = String(hit.b.heading || hit.b.kicker || "").replace(/[,.:;!?].*$/, "").trim();
+    if (t.length <= 18) return t;
+    const words = t.split(/\s+/);
+    let out = "";
+    for (const w of words) {
+      if ((out + " " + w).trim().length > 18) break;
+      out = (out + " " + w).trim();
+    }
+    return (out || words[0]).replace(/\s+(a|an|the|and|of|to|in|for|with|your|our|how|what)$/i, "");
+  }
+  return SECTION_NAV[id] || "";
+}
+
 export function SectionBody({ id, ctx }: { id: string; ctx: Ctx }) {
   const c = ctx.c as PortfolioContent;
+  const hit = blockOf(ctx.c || {}, id);
+  if (hit) return <BlockBody b={hit.b as Block} i={hit.i} ctx={ctx} />;
   switch (id) {
     case "hero":
       return <Hero ctx={ctx} />;

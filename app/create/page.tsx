@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
 import Topbar from "@/components/Topbar";
-import Animator from "@/components/create/Animator";
+import PrdFlow from "@/components/prd/PrdFlow";
 
 export const metadata: Metadata = {
-  title: "Create a site from one line",
-  description: "Type what the business is, such as dentist clinic in isb. The animator engine writes a master prompt, picks a template and blocks, and builds a moving site you can change and download.",
+  title: "Create a site from a PRD",
+  description: "Say in one line what you are making. Gemini drafts the product requirements document, you edit it, and the site is built with every section and requirement in it.",
 };
 
 export default function Page() {
   return (
     <>
       <Topbar />
-      <main className="page an-page">
-        <Animator />
+      <main className="page">
+        <PrdFlow />
       </main>
     </>
   );

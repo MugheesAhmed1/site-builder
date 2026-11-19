@@ -35,7 +35,7 @@ function SectionRow({
   empty: boolean;
   hidden: boolean;
   onHide?: () => void;
-  onOff: () => void;
+  onOff?: () => void;
   onMove: (d: number) => void;
   first: boolean;
   last: boolean;
@@ -99,17 +99,23 @@ function SectionRow({
       >
         <Icon name="down" size={15} />
       </button>
-      <button
-        type="button"
-        className="pn-switch is-on"
-        role="switch"
-        aria-checked="true"
-        aria-label={`Remove ${label} from the page`}
-        title="Remove from the page"
-        onClick={onOff}
-      >
-        <span />
-      </button>
+      {onOff ? (
+        <button
+          type="button"
+          className="pn-switch is-on"
+          role="switch"
+          aria-checked="true"
+          aria-label={`Remove ${label} from the page`}
+          title="Remove from the page"
+          onClick={onOff}
+        >
+          <span />
+        </button>
+      ) : (
+        <span className="small muted" title="This section is in your PRD. Remove it from the PRD to take it off the site.">
+          PRD
+        </span>
+      )}
     </Reorder.Item>
   );
 }
@@ -126,6 +132,10 @@ export default function PagePanel({
   if (!c) return null;
   const labels = p.kind === "portfolio" ? PORTFOLIO_SECTIONS : WEBSITE_SECTIONS;
   const sections = c.sections as string[];
+  // Sections that carry the PRD cannot be removed or hidden here: the PRD says they are on the site.
+  const blocks = ((c as { blocks?: { id: string; heading: string }[] }).blocks ?? []);
+  const blockLabel = (sid: string) => blocks.find((b) => "b-" + b.id === sid)?.heading;
+  const inPrd = (sid: string) => !!p.prd && sid.startsWith("b-") && p.prd.sections.some((s) => "b-" + s.id === sid);
   const off = Object.keys(labels).filter((s) => !sections.includes(s));
   const setContent = (content: SiteContent) =>
     update((prev) => ({ ...prev, content }));
@@ -211,16 +221,16 @@ export default function PagePanel({
                 <SectionRow
                   key={sid}
                   id={sid}
-                  label={labels[sid] ?? sid}
+                  label={labels[sid] ?? blockLabel(sid) ?? sid}
                   empty={isEmpty(sid)}
                   hidden={hiddenSet.has(sid)}
                   onHide={
-                    withScene.has(sid) ? () => toggleHidden(sid) : undefined
+                    withScene.has(sid) && !(inPrd(sid) && !hiddenSet.has(sid)) ? () => toggleHidden(sid) : undefined
                   }
                   first={i === 0}
                   last={i === sections.length - 1}
                   onMove={(d) => move(i, d)}
-                  onOff={() => setSections(sections.filter((x) => x !== sid))}
+                  onOff={inPrd(sid) ? undefined : () => setSections(sections.filter((x) => x !== sid))}
                 />
               ))}
             </Reorder.Group>

@@ -1,5 +1,7 @@
 "use client";
 
+import type { Block } from "@/template/src/content/blocks";
+
 import { useEffect, useRef, useState } from "react";
 import Icon from "@/components/Icon";
 import Inspector, { type Picked } from "@/components/Inspector";
@@ -224,7 +226,9 @@ export default function Preview({
         if (under.length >= 5) break;
       }
     }
-    return { key: editKey(el, r), label: nameOf(el), tag, media, hasText: !!own || !!contentPath, ownText: own, contentPath, imgPath: videoPath ? "" : imgPath, videoPath, isLink: tag === "a", isScene, chain, under };
+    const blockEl = el.closest("[data-block]") as HTMLElement | null;
+    const part = el.closest(".xb-asset") ? "asset" : el.closest(".xb-bg") || el === blockEl ? "background" : "";
+    return { key: editKey(el, r), label: nameOf(el), tag, media, hasText: !!own || !!contentPath, ownText: own, contentPath, imgPath: videoPath ? "" : imgPath, videoPath, isLink: tag === "a", isScene: isScene && !el.closest(".xb"), chain, under, block: blockEl?.dataset.block || "", blockPart: part };
   };
 
   // What a click means: the picture slot, the whole vector, or the words (walking up from a
@@ -276,6 +280,8 @@ export default function Preview({
     const d = el ? describe(el, at) : null;
     pickEl.current = d ? el : null;
     setPicked(d);
+    // The Sections panel follows the section the click was in.
+    if (d?.block) window.dispatchEvent(new CustomEvent("xp-pick-block", { detail: d.block }));
     if (d) setPanel(true);
   };
   const selectKey = (key: string) => {
@@ -420,6 +426,9 @@ export default function Preview({
   }, [note]);
 
   const edits = design.edits || {};
+  const blockList = ((content as { blocks?: Block[] }).blocks ?? []) as Block[];
+  const blockIndex = picked?.block ? blockList.findIndex((b) => b.id === picked.block) : -1;
+  const pickedBlock = blockIndex >= 0 ? blockList[blockIndex] : undefined;
   const contentValue = picked ? String(getAt(content, parsePath(picked.videoPath || picked.imgPath || picked.contentPath || "~")) ?? "") : "";
   const [labels, setLabels] = useState<{ key: string; label: string; missing: boolean }[]>([]);
   const editSig = Object.keys(edits).join("\n");
@@ -548,6 +557,8 @@ export default function Preview({
             editLabels={labels}
             onEdit={setEdit}
             onContent={(path, v) => setValue(parsePath(path), v)}
+            block={pickedBlock}
+            onSpec={pickedBlock ? (spec) => setValue(["blocks", blockIndex, "spec"] as Path, spec) : undefined}
             onDesign={setDesign}
             onSelect={selectKey}
             onClose={() => {

@@ -1,3 +1,5 @@
+import type { Block } from "./blocks";
+
 // The content model (PRD section 45): every word, picture and contact detail of a site,
 // kept apart from how it is presented. The builder writes it; the renderer only reads it.
 
@@ -71,7 +73,9 @@ export interface WebsiteContent {
   cta: { heading: string; text: string; button: string };
   visit: { address: string; hours: { days: string; time: string }[]; mapUrl: string };
   contact: { heading: string; blurb: string; email: string; phone: string; whatsapp: string; instagram: string; facebook: string; linkedin: string };
-  sections: WebsiteSectionId[];
+  /** Dynamic sections made from an approved PRD (content/blocks.ts); their section ids are "b-<id>". */
+  blocks?: Block[];
+  sections: (WebsiteSectionId | `b-${string}`)[];
 }
 
 export type SiteContent = PortfolioContent | WebsiteContent;

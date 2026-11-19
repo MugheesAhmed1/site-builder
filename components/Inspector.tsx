@@ -7,6 +7,12 @@ import VideoField from "@/components/VideoField";
 import { EDIT_ICON_IDS, iconSvg } from "@/template/src/edits.js";
 import { palette } from "@/template/src/theme.js";
 import type { Design, ElementEdit, PageColors } from "@/lib/types";
+import SectionControls from "@/components/prd/SectionControls";
+import type { Block, SectionSpec } from "@/template/src/content/blocks";
+import { EDIT_ANIMS } from "@/template/src/edits.js";
+
+const ANIM_LABEL: Record<string, string> = { none: "None", fade: "Fade", slide: "Slide", reveal: "Reveal", parallax: "Parallax", scroll: "Scroll-driven", rotate3d: "3D rotation", custom: "Custom timeline" };
+const FONTS: [string, string][] = [["", "As designed"], ["display", "Headings font"], ["body", "Body font"], ["serif", "Serif"], ["mono", "Mono"], ["rounded", "Rounded"]];
 
 // The panel beside the preview while editing on the page. It shows what can change on the
 // thing that was clicked: its words, link, picture, icon, colours, background, size, shape
@@ -26,6 +32,8 @@ export interface Picked {
   isScene: boolean;
   chain: { key: string; label: string }[]; // this element, then what it sits inside
   under: { key: string; label: string }[]; // other things stacked under the click
+  block?: string; // the PRD section (dynamic block) it sits in, if any
+  blockPart?: "asset" | "background" | ""; // clicked on that section's asset or background
 }
 
 
@@ -220,6 +228,8 @@ export default function Inspector({
   onSelect,
   onClose,
   onResetAll,
+  block,
+  onSpec,
 }: {
   picked: Picked | null;
   design: Design;
@@ -233,6 +243,8 @@ export default function Inspector({
   onSelect: (key: string) => void;
   onClose: () => void;
   onResetAll: () => void;
+  block?: Block;
+  onSpec?: (spec: SectionSpec) => void;
 }) {
   const pal = palette(design, scheme) as PageColors;
   const brand = [pal.accent, pal.text, pal.bg, pal.surface];
@@ -355,6 +367,11 @@ export default function Inspector({
         </nav>
       )}
       <div className="pe-body" ref={body}>
+        {block && onSpec && (
+          <Group title={"Section: " + block.heading} open={!!p.blockPart}>
+            <SectionControls block={block} onChange={onSpec} compact />
+          </Group>
+        )}
         {p.videoPath && (
           <Group title="Video">
             <VideoField value={contentValue} onChange={(v) => onContent(p.videoPath, v)} />
@@ -438,6 +455,63 @@ export default function Inspector({
               ))}
             </div>
             <Range label="Letter spacing" value={e.spacing ?? 0} min={-0.05} max={0.3} step={0.01} unit="em" onChange={(v) => set({ spacing: v || undefined })} reset={0} />
+            <label className="pe-field">
+              <span className="pe-lbl">Font</span>
+              <select value={e.font || ""} onChange={(ev) => set({ font: ev.target.value || undefined })}>
+                {FONTS.map(([id, label]) => (
+                  <option key={id} value={id}>
+                    {label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <Range label="Weight" value={e.weight ?? 400} min={100} max={900} step={100} onChange={(v) => set({ weight: v })} />
+            {e.weight != null && (
+              <button type="button" className="pe-link" onClick={() => onEdit(p.key, { weight: undefined })}>
+                Weight as designed
+              </button>
+            )}
+            <Range label="Line height" value={e.lineHeight ?? 1.5} min={0.9} max={2.4} step={0.05} onChange={(v) => set({ lineHeight: v })} />
+          </Group>
+        )}
+        {can && (p.imgPath || p.tag === "img" || p.videoPath) && (
+          <Group title="Crop and zoom" open={e.focusX != null || e.zoom != null}>
+            <Range label="Crop across" value={e.focusX ?? 50} min={0} max={100} step={1} unit="" onChange={(v) => set({ focusX: v })} reset={50} />
+            <Range label="Crop up or down" value={e.focusY ?? 50} min={0} max={100} step={1} unit="" onChange={(v) => set({ focusY: v })} reset={50} />
+            <Range label="Zoom" value={e.zoom ?? 1} min={1} max={3} step={0.05} unit="%" onChange={(v) => set({ zoom: v })} reset={1} />
+          </Group>
+        )}
+        {can && (
+          <Group title="Position" open={!!(e.x || e.y)}>
+            <Range label="Move across" value={e.x ?? 0} min={-400} max={400} step={2} unit="px" onChange={(v) => set({ x: v || undefined })} reset={0} />
+            <Range label="Move up or down" value={e.y ?? 0} min={-400} max={400} step={2} unit="px" onChange={(v) => set({ y: v || undefined })} reset={0} />
+          </Group>
+        )}
+        {can && (
+          <Group title="Animation" open={!!e.anim}>
+            <div className="seg pe-seg" role="group" aria-label="Animation">
+              {EDIT_ANIMS.map((a) => (
+                <button type="button" key={a} className={(e.anim || "none") === a ? "is-on" : ""} aria-pressed={(e.anim || "none") === a} onClick={() => set({ anim: a === "none" ? undefined : (a as ElementEdit["anim"]) })}>
+                  {ANIM_LABEL[a]}
+                </button>
+              ))}
+            </div>
+            {e.anim && e.anim !== "parallax" && e.anim !== "scroll" && (
+              <div className="pe-anim-grid">
+                <Range label="Delay" value={e.timeline?.delay ?? 0} min={0} max={3} step={0.05} unit="s" onChange={(v) => set({ timeline: { ...e.timeline, delay: v } })} />
+                <Range label="Duration" value={e.timeline?.duration ?? 0.9} min={0.1} max={4} step={0.05} unit="s" onChange={(v) => set({ timeline: { ...e.timeline, duration: v } })} />
+                {e.anim === "custom" && (
+                  <>
+                    <Range label="From across" value={e.timeline?.x ?? 0} min={-300} max={300} step={5} unit="px" onChange={(v) => set({ timeline: { ...e.timeline, x: v } })} />
+                    <Range label="From up or down" value={e.timeline?.y ?? 40} min={-300} max={300} step={5} unit="px" onChange={(v) => set({ timeline: { ...e.timeline, y: v } })} />
+                    <Range label="From size" value={e.timeline?.scale ?? 0.9} min={0} max={2} step={0.05} unit="%" onChange={(v) => set({ timeline: { ...e.timeline, scale: v } })} />
+                    <Range label="From turn" value={e.timeline?.rotate ?? 0} min={-180} max={180} step={5} unit="°" onChange={(v) => set({ timeline: { ...e.timeline, rotate: v } })} />
+                    <Range label="From see-through" value={e.timeline?.opacity ?? 0} min={0} max={1} step={0.05} unit="%" onChange={(v) => set({ timeline: { ...e.timeline, opacity: v } })} />
+                  </>
+                )}
+              </div>
+            )}
+            <p className="small muted">Plays on your site as it scrolls into view. Leave Edit on page to watch it.</p>
           </Group>
         )}
         {can && p.media && (

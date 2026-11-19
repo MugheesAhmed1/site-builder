@@ -1,6 +1,6 @@
 # Animator engine
 
-One line in, a moving site out. At `/create`, a person types what the business is ("dentist clinic in isb") and the engine builds a whole site from the templates and the shared library, ready to change in the template studio or download.
+One line in, a moving site out. At `/create/template` (since the PRD journey, `/create` is the PRD flow, see PRD-JOURNEY.md), a person types what the business is ("dentist clinic in isb") and the engine builds a whole site from the templates and the shared library, ready to change in the template studio or download.
 
 ## Steps
 
@@ -20,7 +20,7 @@ The person can edit the master prompt and rewrite from it, switch template (the 
 | Engine: plan, slots, colour shift, build | `lib/animator.ts` |
 | Gemini calls, shared with `/api/refine` | `lib/gemini.ts` |
 | API | `app/api/animate/route.ts` |
-| Page | `app/create/page.tsx`, `components/create/Animator.tsx` |
+| Page | `app/create/template/page.tsx`, `components/create/Animator.tsx` |
 
 
 ## Art direction and 3D assets

@@ -31,6 +31,8 @@ const no3d = {
   enforce: "pre",
   resolveId(id, importer) {
     if (id === "./webgl" && importer && /scenes[\\/]Stage\.tsx$/.test(importer)) return "\0xp-webgl";
+    // A section's own 3D model view (components/Block.tsx) also comes from site-3d.js.
+    if (id === "../scenes/webgl/model" && importer && /components[\\/]Block\.tsx$/.test(importer)) return "\0xp-webgl";
   },
   load(id) {
     if (id === "\0xp-webgl") return "export default null;";

@@ -6,6 +6,8 @@ import { downloadZip, saveBlob, siteName, slug as slugOf } from "@/lib/export";
 import { readiness, type PanelId } from "@/lib/flow";
 import type { Project } from "@/lib/types";
 import { qualityGates } from "@/packages/quality-engine";
+import { checkCoverage } from "@/lib/prd-coverage";
+import type { WebsiteContent } from "@/template/src/content/types";
 import { contrast, palette } from "@/template/src/theme.js";
 
 // Publish: a launch check, the quality gates (PRD section 54), the download, and the short
@@ -34,7 +36,11 @@ function gatesFor(p: Project) {
     return [contrast(c.text, c.bg), contrast(c.muted, c.bg), contrast(c.onAccent, c.accent)];
   });
   const meta = (p.content as { meta?: { title?: string; description?: string } }).meta ?? {};
-  return qualityGates({ experience: p.experience, meta, contrast: ratios, images: pictures(p.content) });
+  const gates = qualityGates({ experience: p.experience, meta, contrast: ratios, images: pictures(p.content) });
+  if (!p.prd) return gates;
+  // The PRD gate: every section and requirement of the approved PRD is on the site.
+  const cov = checkCoverage(p.prd, p.content as WebsiteContent, p.experience);
+  return [{ id: "prd", question: "PRD coverage", pass: cov.ok, detail: cov.ok ? `All ${cov.sections.length} sections and ${cov.requirements.length} requirements of the PRD are on the site` : cov.problems.slice(0, 3).join("; ") }, ...gates];
 }
 
 export default function PublishPanel({ p, onDownloaded, go }: { p: Project; onDownloaded: () => void; go: (panel: PanelId) => void }) {

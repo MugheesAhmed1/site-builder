@@ -5,8 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import Icon from "@/components/Icon";
 import { CATEGORIES } from "@/lib/categories";
 import { ROLES } from "@/lib/fit";
-import { createProject, readRequest, studioPath, type CreateOptions } from "@/lib/project";
-import { saveProject } from "@/lib/store";
+import { readRequest, type CreateOptions } from "@/lib/project";
 import type { SiteKind } from "@/lib/types";
 
 // The one-line prompt: say what you want, see what we understood, start. Used on the home
@@ -21,14 +20,14 @@ export const EXAMPLES = [
   "I'm a UX designer and want to show my work",
 ];
 
-// Make the project, save it and open the studio. Everything that starts a site goes
-// through here, so a tile, a concept and a typed line all behave the same.
+// Every site now starts from a PRD: a typed line, a tile or a concept all open the PRD
+// journey at /create with that line, where Gemini drafts the PRD for the person to edit.
 export function useStartSite() {
   const router = useRouter();
   return (o: CreateOptions) => {
-    const p = createProject(o);
-    saveProject(p);
-    router.push(studioPath(p));
+    const line = (o.query ?? "").trim() || (o.label ? (o.kind === "portfolio" ? "Portfolio for a " : "Website for a ") + o.label.toLowerCase() : "");
+    const look = o.style === "luxury" ? "luxury" : o.style === "playful" ? "playful" : o.style === "minimal" ? "minimal" : o.style === "bold" || o.style === "experimental" ? "futuristic" : o.mode === "cinematic" ? "cinematic" : o.mode === "editorial" ? "editorial" : "";
+    router.push("/create?q=" + encodeURIComponent(line) + (look ? "&director=" + look : ""));
   };
 }
 
