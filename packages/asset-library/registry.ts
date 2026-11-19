@@ -31,7 +31,8 @@ export interface AssetRecord {
   clips?: { name: string; duration: number }[];
   performance: { fileSizeMB: number; bytes: number; triangles: number; textureResolution: string; materials: number; animation: string; tier: "low" | "medium" | "high" };
   license: AssetLicense;
-  source: { url: string; creator: string; publisher?: string; via?: string };
+  /** title: the work's own title where it differs from our listing name (CC BY credits name it). */
+  source: { url: string; creator: string; publisher?: string; via?: string; title?: string };
   modifications?: string;
   added?: string;
   bounds?: { min: number[]; max: number[]; size: number[] };
@@ -74,5 +75,5 @@ export const isShippable = (a: AssetRecord) => licenseProblems(a).length === 0;
 /** The credit line an asset owes (CC BY) or deserves (CC0). */
 export function creditOf(a: AssetRecord): string {
   const lic = a.license.type === "original" ? "original work" : a.license.type.replace("-1.0", " 1.0").replace("-4.0", " 4.0").replace(/-/g, " ");
-  return `"${a.name}" by ${a.source.creator}${a.source.publisher && a.source.publisher !== a.source.creator ? ` (${a.source.publisher})` : ""}, ${lic}, ${a.source.url}${a.modifications && a.modifications !== "Original" ? `. Changes: ${a.modifications}` : ""}`;
+  return `"${a.source.title ?? a.name}" by ${a.source.creator}${a.source.publisher && a.source.publisher !== a.source.creator ? ` (${a.source.publisher})` : ""}, ${lic}, ${a.source.url}${a.modifications && a.modifications !== "Original" ? `. Changes: ${a.modifications}` : ""}`;
 }

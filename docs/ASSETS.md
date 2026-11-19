@@ -25,13 +25,13 @@ Each record carries:
 - **Performance:** bytes, triangles, texture resolution, material count and a tier of low, medium or high.
 - **Bounds and preview path.**
 
-The library holds 88 assets in 9 categories, about 41 MB in total:
+The library holds 95 assets in 9 categories, about 48 MB in total:
 
 | Category | Count |
 | --- | --- |
-| Products | 12 |
-| Vehicles | 8 |
-| Characters | 8 |
+| Products | 13 |
+| Vehicles | 9 |
+| Characters | 13 |
 | Nature | 7 |
 | Architecture | 8 |
 | Environments | 6 |
@@ -41,9 +41,14 @@ The library holds 88 assets in 9 categories, about 41 MB in total:
 
 By licence:
 - **CC0 1.0:** 65 assets (Khronos glTF Sample Assets, KayKit, Kenney, Poly Haven).
-- **CC BY 4.0:** 13 assets (Khronos glTF Sample Assets). These are credited in every site that uses them.
+- **CC BY 4.0:** 14 assets (13 from Khronos glTF Sample Assets, plus the Black Hypercar by LC Design, from the owner's upload with its Sketchfab licence file). These are credited in every site that uses them.
 - **Original:** 8 assets, the abstract models made in code by `scripts/assets/abstract.mjs`.
 - **Owner-made:** 2 assets, uploaded in the project (Mars Rover and Macaw). The owner made them with ChatGPT and confirmed on 2026-11-19 that they are their own work, so they are recorded as `original` and ship like the other originals. The macaw has no animation clips.
+- **Owner uploads, licence to confirm:** 6 assets from the second upload on 2026-11-19 (Red Deer Stag, Black Leather Loafers, Armoured Blade Warrior, Bee Robot, Little Astronaut, Baby Dragon). Nothing in the files says who made them or on what terms, so they show in /library marked "licence to confirm" and the licence gate keeps them off generated sites. When the owner confirms, switch each record in `scripts/assets/sources.mjs` to a confirmed licence and re-run the ingest.
+
+### Owner uploads: picking one copy
+
+The second batch came with the same models in several formats. Each was converted with Blender (the `bpy` Python package), compared by triangle count and texture, and only the best copy was added: the deer FBX (the OBJ copy is the same mesh), `glb.glb` for the warrior (`model.obj` and `fbx.fbx` are the same 2-million-triangle mesh), and only the shoe mesh from the `.blend` (its studio floor, cameras and lights were dropped). The German Shepherd was skipped because neither copy came with its textures, and `halden.zip` is a website project, not a model. The McLaren upload carried its own CC BY 4.0 `license.txt`: it ships under the generic name Black Hypercar, with the tyre maker's logo painted out of the tyre texture, and its credit names the original work.
 
 ### Licence rules
 
