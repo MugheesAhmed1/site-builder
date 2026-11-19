@@ -92,3 +92,13 @@ Runtime code lives under `template/src` in the folder layout PRD section 50 asks
 - **The 3D layer runs on React Three Fiber (PRD section 78, P0).** R3F owns the renderer, the canvas size, the pixel ratio and the camera. The stage keeps one loop for the whole page and advances R3F from it (`frameloop: "never"`), so 2D and 3D share pacing and the slow-frame fallback. Each engine builds its scene once and renders from a `useFrame` callback. Drei is not used: nothing in the four engines needs it, and leaving it out keeps `site-3d.js` to about 190 KB gzipped. `site-3d.js` uses the page's own React (`window.__xpReact`) rather than shipping a second copy. Four engines exist: `product3d` (tooth or bottle), `blob3d` (liquid, silk, glass, chrome), `space3d` (stars and planets) and `gallery3d` (a corridor of framed work).
 - **When 3D runs.** Intensity 7 or more, a concept with `stage.webgl`, a fine pointer, not a low-power device, a viewport 760 px or wider and WebGL2. If a 3D frame keeps costing more than 14 ms the view is dropped and the 2D engine takes over. Downloaded source only lists `three@0.185.0` and `@react-three/fiber@9.8.2` in `package.json` when the site uses 3D.
 - **Imported whole-project templates sit beside the Experience JSON, not inside it** (docs/TEMPLATES.md). A project someone hands over (Mossline, Fernhollow) keeps its own code and engine; turning it into scenes for `Site.tsx` would lose what makes it worth handing over. It joins the same Experience Gallery (a Templates category and the categories it declares), the licence register (`owner-supplied`, with its libraries checked for open licences at build) and the same download promise (a ready-to-host site or the source). Its words and pictures are slots replaced with the escaping each file needs, live in a sandboxed preview at `/templates/<id>`.
+
+
+## 3D assets (docs/ASSETS.md)
+
+- `library/assets/manifest.json` and `public/assets/` hold the licence-checked library: 3D models, HDR lights and their stills.
+- `packages/asset-library` holds the registry, the licence gate, the resolver, art direction, the asset plan and the scene choreography.
+- `asset-showcase` is the concept that carries a real model. It uses the `showcase` 2D engine (the still) and the `asset3d` R3F engine in `template/src/scenes/webgl/asset.ts`, both inside the existing Stage.
+- The Experience JSON gains `style`, `artDirection`, `assetPlan`, `assets` and `assetDirection`.
+- Downloads copy only the files the experience uses (`packAssets` in `lib/export.ts`), plus `CREDITS.txt`.
+- The quality engine checks asset licences and asset weight before export.

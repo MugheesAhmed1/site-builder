@@ -70,6 +70,7 @@ export const ENVIRONMENTS: Environment[] = [
   E("digital", "Digital world", "scifi", "cosmos", { style: "data" }, ["Data nodes pulse along a grid", "The camera dives through the data", "The grid warps around the cursor", "A node connects to its neighbours", "The grid reforms as the next scene", "Fewer nodes"]),
   E("gallery", "Gallery", "abstract", "kinetic", { style: "gallery" }, ["Frames hang in soft light", "The camera walks the gallery", "Frames turn toward the cursor", "A frame opens", "The gallery ends on the contact wall", "Frames in a single row"]),
   E("showroom", "Showroom", "abstract", "morph", { subject: "product" }, ["The product rests under a spotlight", "The product turns and opens as the page scrolls", "The product follows the cursor", "The product spins", "The product settles beside the call to action", "Product smaller"]),
+  E("asset-studio", "Studio light", "abstract", "showcase", {}, ["The model rests in studio light", "The model turns and the camera moves close as the page scrolls", "The model leans toward the cursor", "The model spins", "The model settles beside the call to action", "One model, lighter light"], "asset3d"),
   E("playroom", "Playroom", "abstract", "character", { world: "room", creature: "buddy" }, ["The buddy blinks and bobs", "The buddy walks along with the page", "The buddy watches the cursor", "The buddy jumps", "The buddy waves at the call to action", "Buddy smaller, tap to play"]),
 ];
 

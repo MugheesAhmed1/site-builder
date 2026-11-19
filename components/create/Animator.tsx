@@ -6,6 +6,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { buildContent, localPlan, rankTemplates, type MasterPlan } from "@/lib/animator";
 import { blockById } from "@/lib/library-blocks";
 import { previewSrc, saveContent, templateById, templateZip, zipName, type Content } from "@/lib/templates";
+import { useStartSite } from "@/components/PromptBox";
+import { artSummary } from "@/lib/animator-art";
 
 // The animator engine's face (lib/animator.ts): one line in, a master prompt, then a whole
 // moving site built from a template and library blocks, which opens in the studio for any change.
@@ -25,6 +27,7 @@ async function post<T>(body: unknown): Promise<T> {
 
 export default function Animator() {
   const router = useRouter();
+  const start = useStartSite();
   const [query, setQuery] = useState("");
   const [phase, setPhase] = useState<Phase>("idle");
   const [step, setStep] = useState(0);
@@ -268,6 +271,42 @@ export default function Animator() {
                     Type: {plan.fonts.display}
                     {plan.fonts.body && plan.fonts.body !== plan.fonts.display ? ` and ${plan.fonts.body}` : ""}
                   </p>
+                )}
+                {plan.art && (
+                  <div className="lab-field">
+                    <span>Art direction</span>
+                    <p className="small">{artSummary(plan.art)}</p>
+                  </div>
+                )}
+                {!!plan.resolved?.length && (
+                  <div className="lab-field">
+                    <span>3D assets from the library</span>
+                    <ul className="an-assets">
+                      {plan.resolved.map((r) => (
+                        <li key={r.role + r.query} title={r.reason}>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          {r.preview ? <img src={r.preview} alt="" width={56} height={56} /> : <span className="an-asset-none" aria-hidden="true" />}
+                          <span className="small">
+                            <strong>{r.role.replace("-", " ")}</strong>: {r.name || "drawn by the procedural stage"}
+                            <br />
+                            <span className="muted">
+                              asked for "{r.query}" · {r.role === "lighting" ? "HDR light" : r.representation === "3d" ? "real 3D" : r.representation === "optimized-3d" ? "lighter 3D" : r.representation === "2d" ? "still image" : "procedural"} · {r.cost} · {r.license}
+                            </span>
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    {plan.kind === "website" && plan.resolved.some((r) => r.role.startsWith("hero") && (r.representation === "3d" || r.representation === "optimized-3d")) && (
+                      <button
+                        type="button"
+                        className="btn btn-sm"
+                        disabled={busy}
+                        onClick={() => start({ query: plan.query, style: plan.art?.styleTags.includes("luxury") ? "luxury" : plan.art?.styleTags.includes("playful") ? "playful" : undefined })}
+                      >
+                        Build it as a 3D experience instead
+                      </button>
+                    )}
+                  </div>
                 )}
                 {note && <p className="small tpl-warn">{note}</p>}
                 <div className="an-actions">

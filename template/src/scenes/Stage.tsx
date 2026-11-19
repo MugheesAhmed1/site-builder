@@ -1,4 +1,5 @@
 import { useEffect, useRef, type ComponentType } from "react";
+import { phoneMay3d, wants3d } from "../experiences/assets";
 import type { Experience } from "../experiences/types";
 import type { Conductor } from "../motion/scroll";
 import { deviceCaps, tone } from "../motion/runtime";
@@ -82,8 +83,9 @@ export function Stage({
   const wrap = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const glCanvas = useRef<HTMLCanvasElement>(null);
-  // PRD sections 17 and 18: real 3D only from intensity 7, where the concept has it and the person allows it.
-  const want3d = !!e.stage.webgl && e.intensity >= 7 && !e.noWebgl;
+  // PRD sections 17 and 18: real 3D only from intensity 7 (4 for an asset stage, whose model is the
+  // subject), where the concept has it and the person allows it.
+  const want3d = wants3d(e);
   const bus = useRef<Bus>({ frame: null, on: new Set() }).current;
   const def = ENGINES[e.stage.engine];
   const live = useRef({ e, pal, labels, reduced, editing, sound, scenes });
@@ -117,6 +119,8 @@ export function Stage({
     let presence = 1;
     let drawn = false;
     let view: View3D | null = null;
+    let shown3d = false;
+    let warm = 0;
     let gone = false;
     const g = canvas.current?.getContext("2d", { alpha: true }) ?? null;
 
@@ -220,12 +224,22 @@ export function Stage({
         seed: e.seed,
       };
       bus.frame = frame;
-      if (view) {
+      if (view && view.failed?.()) {
+        // A model that cannot load (a missing file): the 2D stage carries on (PRD section 39).
+        view.dispose();
+        view = null;
+        el.removeAttribute("data-gl");
+      }
+      const live3d = !!view && (view.ready?.() ?? true);
+      if (live3d && !shown3d && g) (shown3d = true), g.clearRect(0, 0, w, h);
+      if (view && live3d) {
         const t1 = performance.now();
         // An object behind the words steps back, as the 2D anchor does; whole worlds stay.
-        if (glCanvas.current && (e.stage.webgl === "product3d" || e.stage.webgl === "blob3d")) glCanvas.current.style.opacity = (0.35 + presence * 0.65).toFixed(3);
+        if (glCanvas.current && (e.stage.webgl === "product3d" || e.stage.webgl === "blob3d" || e.stage.webgl === "asset3d")) glCanvas.current.style.opacity = (0.35 + presence * 0.65).toFixed(3);
         view.frame(frame);
-        if (performance.now() - t1 > 14) cost++;
+        // The first frames compile shaders and upload textures: they do not count against the device.
+        if (warm < 30) warm++;
+        else if (performance.now() - t1 > 14) cost++;
         else cost = Math.max(0, cost - 0.25);
         if (cost > 2) {
           // The device cannot keep the 3D stage smooth: back to the 2D engine (PRD section 39).
@@ -235,6 +249,7 @@ export function Stage({
           el.removeAttribute("data-gl");
         }
       } else if (def?.kind === "canvas" && g) {
+        // Until a loading 3D view is ready, the 2D stage stays on screen.
         g.setTransform(dpr, 0, 0, dpr, 0, 0);
         g.clearRect(0, 0, w, h);
         const t1 = performance.now();
@@ -260,10 +275,12 @@ export function Stage({
       t0 = last = performance.now();
       raf = requestAnimationFrame(loop);
       const { e, reduced, pal, labels } = live.current;
-      if (want3d && e.stage.webgl && !reduced && caps.finePointer && !caps.lowPower && w >= 760 && glCanvas.current && webgl2())
+      // Computers with a fine pointer get 3D; a phone only for an asset stage whose model is light.
+      const device = (caps.finePointer && w >= 760) || phoneMay3d(e);
+      if (want3d && e.stage.webgl && !reduced && device && !caps.lowPower && glCanvas.current && webgl2())
         load3d().then((mount) => {
           if (gone || !mount || !glCanvas.current) return;
-          view = mount(glCanvas.current, e.stage.webgl!, { params: e.stage.params, pal, labels, mobile: w < 760 });
+          view = mount(glCanvas.current, e.stage.webgl!, { params: e.stage.params, pal, labels, mobile: w < 760, assets: e.assets, direction: e.assetDirection });
           if (!view) return;
           view.resize(w, h, Math.min(dpr, 1.5));
           el.setAttribute("data-gl", "");

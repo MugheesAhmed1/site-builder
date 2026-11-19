@@ -315,6 +315,13 @@
   max-width: 1180px;
   padding-left: 48%;
 }
+/* A real object beside the words is the subject, not a backdrop: the wash stays on the words' side. */
+.xp-root:has(.xp-stage-showcase) .is-left > .xp-pin > .xp-veil::before {
+  right: calc(48% - 44px);
+}
+.xp-root:has(.xp-stage-showcase) .is-right > .xp-pin > .xp-veil::before {
+  left: calc(48% - 44px);
+}
 .is-center > .xp-pin > .xp-veil {
   max-width: 820px;
   text-align: center;

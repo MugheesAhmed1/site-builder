@@ -1,4 +1,5 @@
 import type { Mount3D } from "./core";
+import { asset3d } from "./asset";
 import { blob3d } from "./blob";
 import { gallery3d } from "./gallery";
 import { product3d } from "./product";
@@ -13,6 +14,7 @@ const mount: Mount3D = (canvas, engine, init) => {
     if (engine === "blob3d") return blob3d(canvas, init);
     if (engine === "space3d") return space3d(canvas, init);
     if (engine === "gallery3d") return gallery3d(canvas, init);
+    if (engine === "asset3d") return asset3d(canvas, init);
   } catch (e) {
     console.warn("3D stage", e);
   }

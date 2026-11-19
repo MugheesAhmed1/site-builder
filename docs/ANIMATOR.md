@@ -21,3 +21,8 @@ The person can edit the master prompt and rewrite from it, switch template (the 
 | Gemini calls, shared with `/api/refine` | `lib/gemini.ts` |
 | API | `app/api/animate/route.ts` |
 | Page | `app/create/page.tsx`, `components/create/Animator.tsx` |
+
+
+## Art direction and 3D assets
+
+The plan step also returns an art direction and an asset plan. Gemini or the rules describe the visuals in words, and never as file names or URLs. The server resolves each one against the asset library (docs/ASSETS.md), and the panel shows what was found, its cost and its licence. "Build it as a 3D experience instead" opens a studio project built around the resolved model.

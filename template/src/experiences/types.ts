@@ -65,8 +65,9 @@ export type StageEngine2D =
   | "playground"
   | "character"
   | "progress"
-  | "liquid";
-export type StageEngine3D = "product3d" | "gallery3d" | "space3d" | "blob3d";
+  | "liquid"
+  | "showcase";
+export type StageEngine3D = "product3d" | "gallery3d" | "space3d" | "blob3d" | "asset3d";
 export type StageEngine = StageEngine2D | StageEngine3D;
 
 export type Param = number | string | boolean;
@@ -204,6 +205,101 @@ export interface Direction {
   score: number;
 }
 
+// ------------------------------------------------------------------ assets (docs/ASSETS.md)
+
+/**
+ * The art direction of a site: the deliberate look the asset choice, lighting, motion, type,
+ * composition and colour all follow. Written by packages/asset-library/art-direction.ts (rules,
+ * optionally refined by Gemini in the animator) and kept with the experience.
+ */
+export interface ArtDirection {
+  visualStyle: string;
+  mood: string;
+  density: "minimal" | "balanced" | "rich";
+  /** 1 flat to 10 deep layered space. */
+  depth: number;
+  motionIntensity: number;
+  interactionIntensity: number;
+  preferredVisuals: string[];
+  avoid: string[];
+  /** Asset style words the resolver prefers (luxury, minimal, playful, realistic ...). */
+  styleTags: string[];
+  lighting: "studio" | "cinematic" | "natural" | "night" | "interior" | "urban";
+  typography: "editorial-serif" | "grotesk" | "rounded" | "mono-tech";
+  composition: "hero-object" | "split" | "centered" | "immersive";
+  /** "gemini" when the model wrote it, "rules" otherwise. */
+  source: "rules" | "gemini";
+}
+
+/** One visual the experience needs, as a concept. The AI never names a file. */
+export interface AssetRequest {
+  role: "hero-product" | "hero-character" | "supporting" | "environment" | "lighting";
+  query: string;
+  type: "3d" | "2d" | "hdri";
+  category?: string;
+  style?: string[];
+  colors?: string[];
+  required: boolean;
+}
+
+export interface AssetPlan {
+  assets: AssetRequest[];
+  /** How each request was answered (filled in by the resolver). */
+  resolved: AssetResolutionNote[];
+}
+
+export interface AssetResolutionNote {
+  role: AssetRequest["role"];
+  query: string;
+  /** The asset chosen, or "" when the request fell back to the procedural stage. */
+  id: string;
+  score: number;
+  reason: string;
+  /** What will actually be drawn: 3d, optimized 3d (a lighter asset), 2d (its still), procedural. */
+  representation: "3d" | "optimized-3d" | "2d" | "procedural";
+  license: string;
+  cost: string;
+}
+
+/**
+ * A resolved asset as the renderer reads it (the Experience JSON never holds a third-party URL:
+ * src is a path inside the site, copied into every export that uses it).
+ */
+export interface ExperienceAsset {
+  role: AssetRequest["role"];
+  id: string;
+  name: string;
+  /** "/assets/3d/<category>/<id>.glb" (or "/assets/hdr/<id>.hdr" for lighting). */
+  src: string;
+  /** The still used when 3D cannot run (2D fallback) and in the library. */
+  preview: string;
+  kind: "model" | "hdri";
+  /** Largest side of the model in its own units, so any model is framed the same way. */
+  size: number;
+  pivot: "center" | "bottom";
+  /** Clips the file really has (idle, walk, run, jump, dance, wave ...). */
+  clips: string[];
+  /** Material variants (KHR_materials_variants) the file really has. */
+  variants: string[];
+  capabilities: string[];
+  /** What the AI asked for, kept so a later change can re-resolve. */
+  query: string;
+  /** Light enough (low tier) to run in 3D on a phone. */
+  mobile: boolean;
+  tier: "low" | "medium" | "high";
+  bytes: number;
+  license: { type: string; attributionRequired: boolean; credit: string };
+}
+
+/** Scene composition for asset stages (the AI describes what happens, the renderer decides how). */
+export interface AssetDirection {
+  camera: { position: [number, number, number]; fov: number };
+  lighting: { type: ArtDirection["lighting"]; intensity: number; hdri?: string };
+  animation: { enter: "scale-reveal" | "rise" | "fade"; idle: "slow-float" | "turntable" | "still" | "clip"; scroll: "rotate-360" | "orbit" | "travel" | "drift" | "none" };
+  /** Soft particles around the object. */
+  particles: boolean;
+}
+
 export interface Experience {
   version: 2;
   seed: number;
@@ -247,4 +343,14 @@ export interface Experience {
   control: "smart" | "creative" | "custom";
   /** Make it better (PRD section 66): the fixes applied, re-applied whenever the scenes are rebuilt. */
   better?: string[];
+  /** The style chip the person started from, kept so a rebuild keeps the same art direction. */
+  style?: "minimal" | "bold" | "playful" | "luxury" | "experimental";
+  /** The art direction every visual decision follows (docs/ASSETS.md). */
+  artDirection?: ArtDirection;
+  /** The visuals the experience asked for, and how each was resolved. */
+  assetPlan?: AssetPlan;
+  /** Assets the page actually draws; only these are copied into a download. */
+  assets?: ExperienceAsset[];
+  /** How the asset stage is composed and animated. */
+  assetDirection?: AssetDirection;
 }

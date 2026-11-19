@@ -15,6 +15,8 @@ import { CATEGORIES, categoryById, classify, extractHints } from "./categories";
 import { BLOCKS, blockById, mediaFor } from "./library-blocks";
 import { clone, getPath, setPath, type Content, type SchemaField } from "./template-schema.mjs";
 import { TEMPLATES, templateById, type TemplateInfo } from "./templates";
+import { localArtPlan, normalizeArtPlan, type ResolvedNote } from "./animator-art";
+import type { ArtDirection, AssetRequest } from "@/template/src/experiences/types";
 
 export type Motion = "calm" | "lively" | "bold";
 
@@ -38,6 +40,12 @@ export interface MasterPlan {
   motion: Motion;
   source: "gemini" | "local";
   model?: string;
+  /** The look every visual decision follows (docs/ASSETS.md). */
+  art?: ArtDirection;
+  /** The visuals the site needs, as concepts; never file names. */
+  assets?: AssetRequest[];
+  /** What the resolver found for each request (filled in on the server). */
+  resolved?: ResolvedNote[];
 }
 
 /** One piece of text the engine may rewrite: a key, what it is, and the template's example. */
@@ -173,6 +181,9 @@ export function localPlan(query: string): MasterPlan {
     motion,
     source: "local",
   };
+  const ap = localArtPlan(q, kind, business, motion);
+  plan.art = ap.art;
+  plan.assets = ap.assets;
   plan.prompt = masterPromptText(plan);
   return plan;
 }
@@ -189,6 +200,8 @@ export function masterPromptText(p: MasterPlan) {
     `Look: accent ${p.accent}${p.fonts.display ? `, ${p.fonts.display} for headings and ${p.fonts.body || p.fonts.display} for text` : ""}.`,
     `Motion: ${p.motion === "calm" ? "calm, slow reveals that never distract" : p.motion === "bold" ? "bold, with a custom cursor and strong scroll moments" : "lively reveals and a scroll progress line"}.`,
     `Built on the ${t?.name || p.template} template${p.blocks.length ? `, adding ${p.blocks.map((b) => blockById(b)?.name || b).join(", ")}` : ""}.`,
+    ...(p.art ? [`Art direction: ${p.art.visualStyle}, ${p.art.mood}, ${p.art.lighting} light; wants ${p.art.preferredVisuals.slice(0, 3).join(", ")}; avoids ${p.art.avoid.slice(0, 2).join(", ")}.`] : []),
+    ...(p.assets?.length ? [`Visuals: ${p.assets.map((a) => `${a.role.replace("-", " ")}: ${a.query}`).join("; ")}.`] : []),
   ].join("\n");
 }
 
@@ -218,6 +231,10 @@ export function normalizePlan(raw: Partial<MasterPlan> & Record<string, unknown>
     source: raw.source === "gemini" ? "gemini" : fallback.source,
     model: typeof raw.model === "string" ? raw.model : undefined,
   };
+  const fallbackArt = fallback.art && fallback.assets ? { art: fallback.art, assets: fallback.assets } : localArtPlan(fallback.query, p.kind, business, motion);
+  const ap = normalizeArtPlan(raw.artDirection ?? raw.art, raw.assets, fallbackArt);
+  p.art = ap.art;
+  p.assets = ap.assets;
   if (!p.prompt) p.prompt = masterPromptText(p);
   return p;
 }

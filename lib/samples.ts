@@ -14,6 +14,7 @@ export interface Sample {
   answers?: Record<string, string>;
   resume?: boolean;
   atmos?: string; // the scene that suits the site, when the default would not
+  style?: "minimal" | "bold" | "playful" | "luxury" | "experimental";
 }
 
 export const SAMPLES: Sample[] = [
@@ -48,6 +49,23 @@ export const SAMPLES: Sample[] = [
       testimonials: "My daughter asks when she can go back. | Sana M.\nPainless, on time and fairly priced. | Omar H.",
     },
   },
+  {
+    // The 3D asset demo (docs/ASSETS.md): the library's sunglasses as the hero, turned by scroll
+    // under studio light, with soft particles and the call to action beside it.
+    id: "eyewear",
+    tab: "Eyewear",
+    style: "luxury",
+    query: "Website for my premium eyewear brand called Noir Optics in Lahore",
+    answers: {
+      what: "Handmade sunglasses and optical frames",
+      audience: "people who want frames that last",
+      about: "Every frame is cut from one sheet of acetate, polished by hand for three days and fitted with lenses that block all UVA and UVB. We make a few hundred pairs a season, and repair every pair we sell, for life.",
+      highlights: "3 | days of hand polishing\n100% | UV protection\nLife | repairs on every pair",
+      address: "Studio 4, MM Alam Road, Gulberg, Lahore",
+      phone: "+92 300 0000000",
+      testimonials: "The first sunglasses I have not lost, because I do not want to. | Hira S.\nLight, sharp and they fit from day one. | Danish A.",
+    },
+  },
   { id: "pm", tab: "Product manager", query: "Portfolio for me, I'm a product manager", resume: true },
   {
     id: "agency",
@@ -66,7 +84,7 @@ export const SAMPLES: Sample[] = [
 ];
 
 export function buildSample(s: Sample): Project {
-  let p = createProject({ query: s.query, atmos: s.atmos });
+  let p = createProject({ query: s.query, atmos: s.atmos, style: s.style });
   if (s.answers) p = applyDetails(p, { answers: { ...p.answers, ...s.answers } });
   if (s.resume) {
     const profile = parseResume(SAMPLE_RESUME);

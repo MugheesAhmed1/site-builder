@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>html,body{margin:0;background:transparent}canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+</head>
+<body>
+<script type="module">
+// Thumbnail harness for scripts/assets/previews.mjs: frames one asset at a three-quarter angle
+// under a neutral studio light (or its own HDR) and reports when the frame is drawn.
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { HDRLoader } from "three/addons/loaders/HDRLoader.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+const q = new URLSearchParams(location.search);
+const S = +(q.get("size") || 512);
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setSize(S, S);
+renderer.setPixelRatio(1);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(30, 1, 0.01, 1000);
+const pm = new THREE.PMREMGenerator(renderer);
+window.__done = false;
+window.__error = "";
+try {
+  if (q.get("hdr")) {
+    const tex = await new HDRLoader().loadAsync(q.get("hdr"));
+    tex.mapping = THREE.EquirectangularReflectionMapping;
+    scene.background = tex;
+    scene.environment = pm.fromEquirectangular(tex).texture;
+    scene.backgroundBlurriness = 0;
+    const balls = [
+      new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 1, roughness: 0.02 }),
+      new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 0, roughness: 0.35 }),
+    ];
+    balls.forEach((m, i) => {
+      const b = new THREE.Mesh(new THREE.SphereGeometry(0.5, 64, 32), m);
+      b.position.set(i ? 0.62 : -0.62, 0, 0);
+      scene.add(b);
+    });
+    camera.fov = 55;
+    camera.position.set(0, 0.25, 2.6);
+    camera.lookAt(0, 0, 0);
+    camera.updateProjectionMatrix();
+  } else {
+    scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture;
+    const key = new THREE.DirectionalLight(0xffffff, 1.2);
+    key.position.set(3, 5, 4);
+    scene.add(key);
+    const gltf = await new GLTFLoader().loadAsync(q.get("glb"));
+    const root = gltf.scene;
+    // A pose instead of a T-pose: the idle clip's first moment.
+    const clip = gltf.animations.find((a) => a.name === "idle") ?? null;
+    if (clip) {
+      const mixer = new THREE.AnimationMixer(root);
+      mixer.clipAction(clip).play();
+      mixer.update(clip.duration * 0.3);
+    }
+    root.traverse((o) => { if (o.isPoints) { o.material.size = 4; o.material.sizeAttenuation = false; } });
+    scene.add(root);
+    root.updateMatrixWorld(true);
+    const box = new THREE.Box3().setFromObject(root);
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
+    const radius = size.length() / 2 || 1;
+    const yaw = +(q.get("yaw") || 0.65);
+    const pitch = +(q.get("pitch") || 0.32);
+    const dist = radius / Math.sin((camera.fov * Math.PI) / 360) * 1.02;
+    camera.position.set(center.x + Math.sin(yaw) * Math.cos(pitch) * dist, center.y + Math.sin(pitch) * dist, center.z + Math.cos(yaw) * Math.cos(pitch) * dist);
+    camera.near = dist / 100;
+    camera.far = dist * 10;
+    camera.lookAt(center);
+    camera.updateProjectionMatrix();
+    // A soft contact shadow under things that stand.
+    if (q.get("ground") === "1") {
+      const c = document.createElement("canvas");
+      c.width = c.height = 128;
+      const g = c.getContext("2d");
+      const r = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+      r.addColorStop(0, "rgba(0,0,0,0.35)");
+      r.addColorStop(1, "rgba(0,0,0,0)");
+      g.fillStyle = r;
+      g.fillRect(0, 0, 128, 128);
+      const s = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false }));
+      s.rotation.x = -Math.PI / 2;
+      s.position.set(center.x, box.min.y + 0.001, center.z);
+      s.scale.setScalar(Math.max(size.x, size.z) * 1.15);
+      scene.add(s);
+    }
+    window.__info = { size: size.toArray(), clips: gltf.animations.map((a) => a.name) };
+  }
+  renderer.render(scene, camera);
+  await new Promise((r) => setTimeout(r, 50));
+  renderer.render(scene, camera);
+} catch (e) {
+  window.__error = String(e && e.stack || e);
+}
+window.__done = true;
+</script>
+</body>
+</html>
