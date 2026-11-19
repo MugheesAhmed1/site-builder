@@ -185,7 +185,7 @@ export default function ExperienceLab() {
           Build a site with this
         </button>
         <Link className="small" href="/#gallery">
-          Back to the Experience Gallery
+          Back to the gallery
         </Link>
       </aside>
       <section className="lab-view" aria-label="Result">
