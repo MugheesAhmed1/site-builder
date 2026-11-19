@@ -62,7 +62,7 @@ describe("3D layer and dependency profiles (PRD 17, 18, 40)", () => {
     expect(uses3d(lo)).toBe(false);
     expect(uses3d(hi)).toBe(!!hi.experience.stage.webgl);
     const flat = sourceFiles(TEMPLATE_FILES, false);
-    expect(Object.keys(flat).filter((k) => k.startsWith("src/scenes/webgl/"))).toEqual(["src/scenes/webgl/index.ts"]);
+    expect(Object.keys(flat).filter((k) => k.startsWith("src/scenes/webgl/"))).toEqual(["src/scenes/webgl/index.ts", "src/scenes/webgl/model.ts"]);
     expect(JSON.parse(flat["package.json"]).dependencies.three).toBeUndefined();
     const deep = sourceFiles(TEMPLATE_FILES, true);
     expect(deep["src/scenes/webgl/product.ts"]).toBeTruthy();

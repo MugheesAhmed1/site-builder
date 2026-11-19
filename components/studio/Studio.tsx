@@ -14,7 +14,11 @@ import MotionPanel from "@/components/studio/MotionPanel";
 import PagePanel from "@/components/studio/PagePanel";
 import PublishPanel from "@/components/studio/PublishPanel";
 import RefinePanel from "@/components/studio/RefinePanel";
-import { PANELS, describe, nextPanel, panelById, readiness, type PanelId } from "@/lib/flow";
+import { describe, nextPanel, panelById, panelsFor, readiness, type Panel, type PanelId } from "@/lib/flow";
+import PrdPanel from "@/components/studio/PrdPanel";
+import SectionsPanel from "@/components/studio/SectionsPanel";
+import { syncPrd } from "@/lib/prd";
+import type { WebsiteContent } from "@/template/src/content/types";
 import { briefInput, withExperience } from "@/lib/experience";
 import { designFor } from "@/lib/project";
 import { changeWorld } from "@/packages/experience-core";
@@ -39,14 +43,14 @@ const MATERIALS = [
   { world: "fluid", label: "Smoke" },
 ];
 
-function useHashPanel(): [PanelId, (p: PanelId) => void] {
-  const [panel, setPanel] = useState<PanelId>("content");
+function useHashPanel(list: Panel[]): [PanelId, (p: PanelId) => void] {
+  const [panel, setPanel] = useState<PanelId>(list[0].id);
   useEffect(() => {
-    const read = () => setPanel(panelById(window.location.hash.slice(1)).id);
+    const read = () => setPanel(panelById(window.location.hash.slice(1), list).id);
     read();
     window.addEventListener("hashchange", read);
     return () => window.removeEventListener("hashchange", read);
-  }, []);
+  }, [list]);
   const go = useCallback((p: PanelId) => {
     setPanel(p);
     history.replaceState(null, "", "#" + p);
@@ -73,7 +77,8 @@ function Missing() {
 
 export default function Studio({ id }: { id: string }) {
   const { project: p, loaded, update, undo, redo, canUndo, canRedo, saveState } = useProject(id);
-  const [panel, go] = useHashPanel();
+  const list = useMemo(() => panelsFor(p), [!!p?.prd]); // eslint-disable-line react-hooks/exhaustive-deps
+  const [panel, go] = useHashPanel(list);
   const [view, setView] = useState<"edit" | "preview">("edit"); // phones show one at a time
   const [focus, setFocus] = useState(false); // desktop: the preview alone
   const [compare, setCompare] = useState<Experience | null>(null); // an earlier experience shown in the preview
@@ -82,7 +87,7 @@ export default function Studio({ id }: { id: string }) {
   // Opening a panel counts as having looked at it (the launch check uses this).
   useEffect(() => {
     if (!p) return;
-    const step = panelById(panel).step;
+    const step = panelById(panel, list).step;
     if (step !== "deploy" && p.steps[step] !== "approved") update((prev) => ({ ...prev, steps: { ...prev.steps, [step]: "approved" } }), true);
     body.current?.scrollTo({ top: 0 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -111,11 +116,12 @@ export default function Studio({ id }: { id: string }) {
   if (!p || !p.content || !personal) return <Missing />;
 
   const content = p.content;
-  const info = panelById(panel);
-  const next = nextPanel(panel);
+  const info = panelById(panel, list);
+  const next = nextPanel(panel, list);
   const state = readiness(p);
   const patchDesign = (patch: Partial<Design>) => update((prev) => ({ ...prev, design: { ...prev.design, ...patch } }));
-  const setContent = (c: SiteContent) => update((prev) => ({ ...prev, content: c }));
+  // On a PRD site, words changed on the page are written back into the PRD.
+  const setContent = (c: SiteContent) => update((prev) => ({ ...prev, content: c, prd: prev.prd && (c as WebsiteContent).blocks ? syncPrd(prev.prd, c as WebsiteContent) : prev.prd }));
   const hero = content.hero as { imageUrl?: string; photoUrl?: string; videoUrl?: string };
   const d = p.design;
   const replayKey = [d.anim, d.hover, d.intro ? "i" : "", d.tilt === false ? "t" : "", d.loader ?? "", d.showpiece ?? "", d.heroStyle].join("|");
@@ -160,7 +166,7 @@ export default function Studio({ id }: { id: string }) {
 
       <div className="studio-body">
         <nav className="studio-rail" aria-label="Studio panels">
-          {PANELS.map((x) => {
+          {list.map((x) => {
             const seen = x.step === "deploy" ? state.published : p.steps[x.step] === "approved";
             return (
               <button key={x.id} type="button" className={"studio-tab" + (panel === x.id ? " is-on" : "")} aria-current={panel === x.id ? "page" : undefined} onClick={() => (go(x.id), setView("edit"))}>
@@ -192,6 +198,10 @@ export default function Studio({ id }: { id: string }) {
                   <h1>{info.title}</h1>
                   <p className="muted">{info.intro}</p>
                 </header>
+
+                {panel === "prd" && p.prd && <PrdPanel p={p} update={update} />}
+
+                {panel === "sections" && <SectionsPanel p={p} update={update} />}
 
                 {panel === "content" && (
                   <>

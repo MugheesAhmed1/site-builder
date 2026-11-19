@@ -6,7 +6,9 @@ import { Conductor } from "./motion/scroll";
 import { deviceCaps, useMagnetic, useReducedMotion, useReveal, useRipple, useSystemDark } from "./motion/runtime";
 import { Stage } from "./scenes/Stage";
 import type { Palette } from "./scenes/frame";
-import { SECTION_NAV, SectionBody, type Ctx } from "./components/sections";
+import { SectionBody, navLabel, type Ctx } from "./components/sections";
+import { blockOf } from "./content/sections";
+import { direct } from "./director";
 import { contrast, palette, resolveScheme } from "./theme.js";
 import { useEdits } from "./edits.js";
 
@@ -156,6 +158,8 @@ export default function Site({ kind, design, content, experience, preview = fals
   const sections = useMemo(() => visibleSections(kind, c, preview), [kind, c, preview]);
   const e = useMemo(() => experience ?? basicExperience(sections), [experience, sections]);
   const scenes = useMemo(() => sceneList(e, sections), [e, sections]);
+  // A site made from a PRD paints each section's own world, so the shared stage stays off.
+  const led = sections.length > 0 && sections[0].startsWith("b-");
 
   const scheme = forced ?? ((design.mode === "auto" && prefersDark(e)) || needsDark(e) ? "dark" : resolveScheme(design, systemDark));
   const p = palette(design, scheme);
@@ -235,8 +239,10 @@ export default function Site({ kind, design, content, experience, preview = fals
   }, [preview, reduced, e.smooth]);
 
   const [sound, setSound] = useState(false);
-  const nav = sections.filter((s) => SECTION_NAV[s]).slice(0, 5);
-  const ctaLabel = (kind === "website" ? c.hero?.primaryCta : c.cta?.button) || "Get in touch";
+  const nav = sections.filter((s) => navLabel(s, c)).slice(0, 5);
+  const lead = (c.blocks || []).find((b: any) => b?.lead);
+  const ctaLabel = (lead ? lead.cta?.label : kind === "website" ? c.hero?.primaryCta : c.cta?.button) || "Get in touch";
+  const ctaHref = lead?.cta?.href || "#pf-contact";
   const radius = Number(design.radius ?? 14);
   const style = {
     "--bg": p.bg,
@@ -268,7 +274,9 @@ export default function Site({ kind, design, content, experience, preview = fals
     >
       {!design.fontsLocal && design.fonts && <link rel="stylesheet" href={fontsHref(design.fonts)} />}
       <div ref={page} className="xp-page">
-        <Stage experience={e} scenes={scenes} pal={pal} labels={labels} conductor={conductor} reduced={reduced} lowPower={simulate === "low"} editing={editing} sound={sound} />
+{!led && (
+          <Stage experience={e} scenes={scenes} pal={pal} labels={labels} conductor={conductor} reduced={reduced} lowPower={simulate === "low"} editing={editing} sound={sound} />
+        )}
         <header className="xp-nav">
           <a className="xp-brand" href="#pf-top">
             {brand}
@@ -277,12 +285,12 @@ export default function Site({ kind, design, content, experience, preview = fals
             <ul className="xp-links">
               {nav.map((s) => (
                 <li key={s}>
-                  <a href={"#pf-" + s}>{SECTION_NAV[s]}</a>
+                  <a href={"#pf-" + s}>{navLabel(s, c)}</a>
                 </li>
               ))}
             </ul>
           </nav>
-          <a className="xp-btn xp-btn-main xp-btn-small" href="#pf-contact">
+          <a className="xp-btn xp-btn-main xp-btn-small" href={ctaHref}>
             {ctaLabel}
           </a>
           <details className="xp-menu">
@@ -293,7 +301,7 @@ export default function Site({ kind, design, content, experience, preview = fals
             <ul>
               {nav.map((s) => (
                 <li key={s}>
-                  <a href={"#pf-" + s}>{SECTION_NAV[s]}</a>
+                  <a href={"#pf-" + s}>{navLabel(s, c)}</a>
                 </li>
               ))}
             </ul>
@@ -302,15 +310,18 @@ export default function Site({ kind, design, content, experience, preview = fals
         <main className="xp-scenes">
           {scenes.map((s, i) => {
             const ctx: Ctx = { kind, c, preview, editing, enter: enterOf(s), text: s.text };
-            const pinned = (s.kind === "hero" || s.kind === "cta") && s.duration > 1 && !reduced;
+            const blk = blockOf(c, s.section);
+            const pinned = !blk && (s.kind === "hero" || s.kind === "cta") && s.duration > 1 && !reduced;
+            // A PRD block takes its transition from its Director; the last section has none.
+            const tr = blk ? (i < scenes.length - 1 ? direct(blk.b.spec?.director, blk.b.spec?.secondary).transition : undefined) : s.transitions[0]?.primitive.replace(/^transition\./, "");
             return (
               <section
                 key={s.id}
-                id={s.section === "hero" ? "pf-top" : "pf-" + s.section}
-                className={"xp-scene is-" + s.composition + " xp-kind-" + s.kind + (pinned ? " is-pinned" : "")}
+                id={s.section === "hero" || (blk && i === 0) ? "pf-top" : "pf-" + s.section}
+                className={"xp-scene is-" + (blk ? "wide xp-block" : s.composition) + " xp-kind-" + s.kind + (pinned ? " is-pinned" : "")}
                 data-scene={i}
                 data-section={s.section}
-                data-tr={s.transitions[0]?.primitive.replace(/^transition\./, "") || undefined}
+                data-tr={tr && tr !== "none" ? tr : undefined}
                 style={{ ["--dur" as string]: pinned ? s.duration : 1 }}
                 aria-label={s.section === "hero" ? undefined : s.title}
               >

@@ -185,8 +185,9 @@ async function gather(p: Project, put: (path: string, data: Blob | string, base6
   for (const ref of mediaRefs([p.content, p.design.video])) {
     const b = await getMedia(ref);
     if (!b) continue;
-    const ext = /webm/.test(b.type) ? "webm" : /quicktime/.test(b.type) ? "mov" : "mp4";
-    const name = `media/video-${++vn}.${ext}`;
+    const model = /gltf|glb|octet/.test(b.type);
+    const ext = model ? "glb" : /webm/.test(b.type) ? "webm" : /quicktime/.test(b.type) ? "mov" : "mp4";
+    const name = model ? `models/model-${++vn}.glb` : `media/video-${++vn}.${ext}`;
     put(name, b);
     vids.set(ref, prefix + name);
   }
@@ -201,14 +202,44 @@ async function gather(p: Project, put: (path: string, data: Blob | string, base6
       put(name, m[2], true);
       return prefix + name;
     }
-    if (prefix === "./" && /^\/(real|images|media|scenes)\//.test(v)) return "." + v;
+    const glb = v.match(/^data:(?:model\/gltf-binary|application\/octet-stream);base64,(.+)$/);
+    if (glb) {
+      const name = `models/upload-${++n}.glb`;
+      put(name, glb[1], true);
+      return prefix + name;
+    }
+    if (prefix === "./" && /^\/(real|images|media|scenes|models|assets)\//.test(v)) return "." + v;
     return v;
   };
   const content = JSON.parse(JSON.stringify(swapMedia(p.content, (r) => vids.get(r) || "")), fix);
   const design = JSON.parse(JSON.stringify(swapMedia(p.design, (r) => vids.get(r) || "")), fix);
-  // The experience ships as it is, with its library assets copied in beside it.
-  const experience = p.experience ? await packAssets(p.experience, put) : p.experience;
+  // The experience ships as it is, with its library assets copied in beside it. Library models
+  // that PRD sections show (content.blocks) are copied the same way and credited with them.
+  const extra = await blockAssets(p);
+  let experience = p.experience;
+  if (experience && (experience.assets?.length || extra.length)) {
+    const own = new Set((experience.assets ?? []).map((a) => a.id));
+    const packed = await packAssets({ ...experience, assets: [...(experience.assets ?? []), ...extra.filter((a) => !own.has(a.id))] }, put);
+    experience = { ...packed, assets: (packed.assets ?? []).filter((a) => own.has(a.id)) };
+  }
   return { kind: p.kind, design, content, experience };
+}
+
+/** The library models PRD sections show, as experience assets (for copying and credits). */
+async function blockAssets(p: Project): Promise<NonNullable<Experience["assets"]>> {
+  const ids = [...new Set(((p.content as WebsiteContent | null)?.blocks ?? []).map((b) => (b.spec?.hero?.type === "glb" ? b.spec.hero.assetId : "")).filter(Boolean))] as string[];
+  if (!ids.length) return [];
+  const [{ assetById, isShippable }, { toExperienceAsset }] = await Promise.all([import("@/packages/asset-library/registry"), import("@/packages/asset-library/plan")]);
+  return ids.map((id) => assetById(id)).filter((a): a is NonNullable<typeof a> => !!a && isShippable(a)).map((a) => toExperienceAsset(a, "supporting", a.name));
+}
+
+/** Every PRD section and requirement must be on the site before it can be downloaded. */
+export async function assertPrdCoverage(p: Project, html?: string) {
+  if (!p.prd) return;
+  const { checkCoverage, markupCoverage } = await import("./prd-coverage");
+  const cov = checkCoverage(p.prd, p.content as WebsiteContent, p.experience);
+  const out = cov.ok && html ? markupCoverage(p.prd, html) : cov;
+  if (!out.ok) throw new Error("This site leaves out part of its PRD, so it cannot be downloaded yet: " + out.problems.slice(0, 4).join("; ") + (out.problems.length > 4 ? "; and more" : "") + ". Rebuild it from the PRD panel, or change the PRD.");
 }
 
 /**
@@ -320,7 +351,13 @@ const LOAD_LATER = `(function(){var go=function(){["./site-data.js","./site.js"]
 
 /** PRD sections 17 and 40: a site carries the 3D layer only when its experience uses it. */
 export function uses3d(p: Project) {
-  return wants3d(p.experience);
+  return wants3d(p.experience) || usesModels(p);
+}
+
+/** A PRD section that shows a 3D GLB needs the 3D layer too. */
+export function usesModels(p: Project) {
+  const blocks = (p.content as { blocks?: { spec?: { hero?: { type?: string } } }[] } | null)?.blocks ?? [];
+  return blocks.some((b) => b?.spec?.hero?.type === "glb");
 }
 
 /** The dependency profile of a source download (PRD section 40): three.js and React Three Fiber only for 3D sites. */
@@ -331,6 +368,7 @@ export function sourceFiles(files: Record<string, string>, three: boolean): Reco
     out[path] = text;
   }
   if (!three) out["src/scenes/webgl/index.ts"] = "// This site does not use the 3D layer, so three.js is not a dependency.\nexport default null;\n";
+  if (!three) out["src/scenes/webgl/model.ts"] = "// This site shows no 3D models, so three.js is not a dependency.\nexport type ModelOptions = any;\nexport type ModelView = any;\nexport default null;\n";
   if (three && out["package.json"]) {
     const pkg = JSON.parse(out["package.json"]);
     pkg.dependencies = { ...pkg.dependencies, three: "0.185.0", "@react-three/fiber": "9.8.2" };
@@ -384,6 +422,7 @@ WHAT IS IN HERE
 
 export async function buildZip(p: Project, kind: DownloadKind = "ready"): Promise<{ blob: Blob; name: string }> {
   if (!p.content) throw new Error("Finish the site step first.");
+  await assertPrdCoverage(p);
   // The zip library and the template source are only needed at this moment, so they load
   // here instead of with every page.
   const { default: JSZip } = await import("jszip");
@@ -425,6 +464,7 @@ export async function buildZip(p: Project, kind: DownloadKind = "ready"): Promis
     // The finished page as HTML; the plain first view is only the fallback.
     const { prerender, BOOT_SCRIPT } = await import("./prerender");
     const page = prerender(data);
+    if (page) await assertPrdCoverage(p, page);
     folder.file("site.js", js);
     folder.file("site.css", css);
     if (js3d) folder.file("site-3d.js", js3d);

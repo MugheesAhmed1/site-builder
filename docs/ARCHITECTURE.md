@@ -17,6 +17,10 @@ Every project now carries two separate pieces of data (PRD section 45):
 
 The studio preview and both downloads render the same Experience JSON through the same renderer (PRD section 43).
 
+## The PRD journey (2026-11-19)
+
+Sites now start from a PRD the person edits: one line, a Gemini draft, edits, then submit. Each PRD section becomes a dynamic section (`content.blocks`, section id `b-<id>`) shaped by layout, hero asset, background, animation and a Director; every requirement is rendered with `data-req` and a coverage check blocks the build, the publish and the export if one is missing. See [PRD-JOURNEY.md](PRD-JOURNEY.md).
+
 ## Where things live
 
 PRD section 67 recommends `/apps` and `/packages`. The builder stays at the repository root because Vercel deploys it from there; the engines are split as follows.

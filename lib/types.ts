@@ -1,4 +1,5 @@
 import type { Experience } from "@/template/src/experiences/types";
+import type { Prd } from "./prd";
 
 // The shapes everything in the app passes around. No AI is involved anywhere:
 // questions are fixed lists, content is composed by rules, design systems are generated.
@@ -126,6 +127,15 @@ export interface ElementEdit {
   fit?: "cover" | "contain";
   icon?: string; // an icon from the built-in set, in place of an icon or vector
   iconSrc?: string; // or an uploaded one
+  font?: string; // "display", "body", "mono", "serif", "rounded" or a font family name
+  lineHeight?: number;
+  x?: number; // moved from where it was designed, in pixels
+  y?: number;
+  focusX?: number; // pictures: which part shows when cropped, 0 to 100
+  focusY?: number;
+  zoom?: number; // pictures: zoom inside the frame, 1 to 4
+  anim?: "none" | "fade" | "slide" | "reveal" | "parallax" | "scroll" | "rotate3d" | "custom";
+  timeline?: { delay?: number; duration?: number; x?: number; y?: number; scale?: number; rotate?: number; opacity?: number };
   tint?: number; // hue shift in degrees, recolours pictures, vectors and live scenes
   sat?: number;
   bright?: number;
@@ -200,5 +210,7 @@ export interface Project {
   experience?: Experience;
   /** Earlier experiences, for compare and restore (PRD sections 32 and 49). */
   experiences?: { at: string; label: string; experience: Experience }[];
+  /** The PRD the site is built from (lib/prd.ts). Sites made before the PRD journey have none. */
+  prd?: Prd;
   history: { at: string; label: string; content: SiteContent }[];
 }

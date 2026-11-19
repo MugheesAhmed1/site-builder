@@ -198,6 +198,17 @@ const num = (v, a, b, fb) => {
   return Number.isFinite(n) ? Math.min(b, Math.max(a, n)) : fb;
 };
 
+const FONT_STACKS = {
+  display: "var(--font-display)",
+  body: "var(--font-body)",
+  mono: "var(--font-mono)",
+  serif: 'ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif',
+  rounded: 'ui-rounded, "SF Pro Rounded", "Nunito", var(--font-body)',
+};
+
+/** Element animations: entrances play when the element scrolls into view, scroll ones follow the section. */
+export const EDIT_ANIMS = ["none", "fade", "slide", "reveal", "parallax", "scroll", "rotate3d", "custom"];
+
 /** The CSS declarations for one element's edit. `kind` is "text", "media" (img, svg, canvas, video) or "box". */
 export function editCss(e, kind = "box") {
   if (!e || typeof e !== "object") return "";
@@ -236,6 +247,14 @@ export function editCss(e, kind = "box") {
   if (e.pad != null) out.push(`padding:${num(e.pad, 0, 200, 0)}px!important`);
   if (e.opacity != null && Number(e.opacity) !== 1) out.push(`opacity:${num(e.opacity, 0, 1, 1)}!important`);
   if (e.fit && /^(cover|contain)$/.test(e.fit)) out.push(`object-fit:${e.fit}!important`);
+  if (e.font) {
+    const f = FONT_STACKS[e.font] || (/^[A-Za-z0-9 ]{2,40}$/.test(e.font) ? `"${e.font}", var(--font-body)` : "");
+    if (f) out.push(`font-family:${f}!important`);
+  }
+  if (e.lineHeight != null) out.push(`line-height:${num(e.lineHeight, 0.8, 2.6, 1.5)}!important`);
+  if (e.x || e.y) out.push(`translate:${num(e.x, -800, 800, 0)}px ${num(e.y, -800, 800, 0)}px!important`);
+  if (media && (e.focusX != null || e.focusY != null)) out.push(`object-position:${num(e.focusX, 0, 100, 50)}% ${num(e.focusY, 0, 100, 50)}%!important`);
+  if (media && e.zoom != null && Number(e.zoom) !== 1) out.push(`scale:${num(e.zoom, 1, 4, 1)}!important`);
   const f = [];
   if (e.tint) f.push(`hue-rotate(${num(e.tint, -180, 180, 0)}deg)`);
   if (e.sat != null && Number(e.sat) !== 1) f.push(`saturate(${num(e.sat, 0, 3, 1)})`);
@@ -251,8 +270,9 @@ export function isEmptyEdit(e) {
   return !Object.keys(e).some((k) => {
     const v = e[k];
     if (v == null || v === "" || v === false) return false;
-    if ((k === "size" || k === "opacity" || k === "sat" || k === "bright") && Number(v) === 1) return false;
-    if ((k === "tint" || k === "blur" || k === "bgDim") && Number(v) === 0) return false;
+    if ((k === "size" || k === "opacity" || k === "sat" || k === "bright" || k === "zoom") && Number(v) === 1) return false;
+    if ((k === "tint" || k === "blur" || k === "bgDim" || k === "x" || k === "y") && Number(v) === 0) return false;
+    if (k === "timeline" && (!v || typeof v !== "object" || !Object.keys(v).length)) return false;
     return true;
   });
 }
@@ -342,6 +362,21 @@ export function createEdits(root) {
   root.setAttribute("data-pe-root", id);
   const memos = new Map(); // element -> what we changed on it
   let css = "";
+  // Entrance animations set on single elements start when the element comes into view.
+  const scroller = root.closest ? root.closest("[data-scroll-root]") : null;
+  const io =
+    typeof IntersectionObserver !== "undefined"
+      ? new IntersectionObserver(
+          (es) => {
+            for (const x of es)
+              if (x.isIntersecting) {
+                x.target.setAttribute("data-pe-in", "");
+                io.unobserve(x.target);
+              }
+          },
+          { root: scroller, threshold: 0.12 },
+        )
+      : null;
 
   const apply = (edits) => {
     const entries = Object.entries(edits || {}).filter(([, e]) => !isEmptyEdit(e));
@@ -434,6 +469,29 @@ export function createEdits(root) {
 
       el.setAttribute("data-pe", String(i));
       const me = `[data-pe-root="${id}"] [data-pe="${i}"],[data-pe-root="${id}"][data-pe="${i}"]`;
+      // Element animation: an attribute the site's CSS plays, with the custom timeline as variables.
+      const anim = typeof e.anim === "string" && EDIT_ANIMS.includes(e.anim) && e.anim !== "none" ? e.anim : "";
+      if (anim) {
+        el.setAttribute("data-pe-anim", anim);
+        const t = (e.timeline && typeof e.timeline === "object" ? e.timeline : {});
+        el.style.setProperty("--pe-delay", num(t.delay, 0, 10, 0) + "s");
+        el.style.setProperty("--pe-dur", num(t.duration, 0.1, 10, 0.9) + "s");
+        el.style.setProperty("--pe-fx", num(t.x, -600, 600, anim === "slide" ? -48 : 0) + "px");
+        el.style.setProperty("--pe-fy", num(t.y, -600, 600, anim === "custom" ? 40 : 0) + "px");
+        el.style.setProperty("--pe-fs0", String(num(t.scale, 0, 3, anim === "custom" ? 0.9 : 1)));
+        el.style.setProperty("--pe-fr", num(t.rotate, -360, 360, 0) + "deg");
+        el.style.setProperty("--pe-fo", String(num(t.opacity, 0, 1, 0)));
+        memo.anim = 1;
+        if (io && !el.hasAttribute("data-pe-in")) io.observe(el);
+      } else if (memo.anim) {
+        el.removeAttribute("data-pe-anim");
+        el.removeAttribute("data-pe-in");
+        memo.anim = 0;
+      }
+      if (kind !== "media" && (e.focusX != null || e.focusY != null || (e.zoom != null && Number(e.zoom) !== 1))) {
+        const crop = editCss({ focusX: e.focusX, focusY: e.focusY, zoom: e.zoom }, "media");
+        if (crop) rules.push(`[data-pe-root="${id}"] [data-pe="${i}"] img,[data-pe-root="${id}"] [data-pe="${i}"] video{${crop}}`);
+      }
       // In the builder a hidden element stays as a ghost so it can be brought back.
       const shown = e.hide && editing ? { ...e, hide: false } : e;
       const body = editCss(shown, kind);
@@ -449,6 +507,10 @@ export function createEdits(root) {
     for (const [el, memo] of memos) {
       if (seen.has(el)) continue;
       restore(el, memo, { text: 1, src: 1, href: 1, icon: 1 });
+      if (memo.anim) {
+        el.removeAttribute("data-pe-anim");
+        el.removeAttribute("data-pe-in");
+      }
       if (el.style) {
         el.style.removeProperty("--pe-fs");
         el.style.removeProperty("--pe-w");
@@ -461,6 +523,7 @@ export function createEdits(root) {
   };
 
   const destroy = () => {
+    io?.disconnect();
     apply({});
     style.remove();
     root.removeAttribute("data-pe-root");

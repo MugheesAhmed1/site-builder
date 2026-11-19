@@ -6,7 +6,7 @@ import type { PortfolioContent, Project, StepId, WebsiteContent } from "./types"
 // screen. This file describes the panels, the suggested order through them, and the launch
 // check that says what is still worth doing before the site goes online.
 
-export type PanelId = "content" | "experience" | "design" | "motion" | "page" | "publish";
+export type PanelId = "prd" | "sections" | "content" | "experience" | "design" | "motion" | "page" | "publish";
 
 export interface Panel {
   id: PanelId;
@@ -27,17 +27,30 @@ export const PANELS: Panel[] = [
   { id: "publish", step: "deploy", title: "Publish", short: "Publish", icon: "rocket", intro: "Quality checks, then download the finished site or its complete source. It is yours: plain files, no account, no monthly fee." },
 ];
 
+// A site built from a PRD (the PRD journey): the PRD and its sections come first; the old
+// Content and Experience controls give way to them, because the words come from the PRD and
+// each section has its own Director.
+export const PRD_PANELS: Panel[] = [
+  { id: "prd", step: "questions", title: "PRD", short: "PRD", icon: "doc", intro: "The product requirements document your site is built from. Change any section, word or requirement, then rebuild: your choices for each section are kept, and every requirement must stay on the site." },
+  { id: "sections", step: "cast", title: "Sections", short: "Sections", icon: "layout", intro: "Each section is generated from its parameters: layout, hero asset, background, animation and Director cut. Pick a section and change any of them, upload your own picture, video or 3D model, or take one from the asset library." },
+  ...PANELS.filter((p) => p.id === "design" || p.id === "motion" || p.id === "page" || p.id === "publish"),
+];
+
+export function panelsFor(p: { prd?: unknown } | null | undefined): Panel[] {
+  return p?.prd ? PRD_PANELS : PANELS;
+}
+
 // Links saved before the studio had five controls still open the right place.
 const OLD: Record<string, PanelId> = { details: "content", refine: "content", scenes: "experience" };
 
-export function panelById(id: string | null | undefined): Panel {
+export function panelById(id: string | null | undefined, list: Panel[] = PANELS): Panel {
   const want = (id && OLD[id]) || id;
-  return PANELS.find((p) => p.id === want) ?? PANELS[0];
+  return list.find((p) => p.id === want) ?? list[0];
 }
 
-export function nextPanel(id: PanelId): Panel | null {
-  const i = PANELS.findIndex((p) => p.id === id);
-  return PANELS[i + 1] ?? null;
+export function nextPanel(id: PanelId, list: Panel[] = PANELS): Panel | null {
+  const i = list.findIndex((p) => p.id === id);
+  return list[i + 1] ?? null;
 }
 
 export interface Check {
@@ -52,6 +65,16 @@ export interface Check {
 export function launchChecks(p: Project): Check[] {
   const out: Check[] = [];
   const c = p.content;
+  if (p.prd) {
+    const prd = p.prd;
+    const blocks = (c as WebsiteContent | null)?.blocks ?? [];
+    out.push({ id: "prd", label: "Submit the PRD", done: prd.status === "submitted", panel: "prd", must: true });
+    out.push({ id: "reach", label: "An email, phone or address in the PRD", done: !!(prd.contact.email || prd.contact.phone || prd.contact.address), panel: "prd", must: false });
+    out.push({ id: "media", label: "Your own pictures and models", done: blocks.every((b) => !["image", "video", "glb"].includes(b.spec.hero.type) || !!b.spec.hero.src), panel: "sections", must: false });
+    out.push({ id: "look", label: "Look over the design", done: p.steps.design === "approved", panel: "design", must: false });
+    out.push({ id: "download", label: "Download the site", done: p.steps.deploy === "approved", panel: "publish", must: false });
+    return out;
+  }
   if (p.kind === "portfolio") {
     const inp = p.input;
     const pc = c as PortfolioContent | null;
