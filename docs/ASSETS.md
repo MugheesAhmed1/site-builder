@@ -43,7 +43,7 @@ By licence:
 - **CC0 1.0:** 65 assets (Khronos glTF Sample Assets, KayKit, Kenney, Poly Haven).
 - **CC BY 4.0:** 13 assets (Khronos glTF Sample Assets). These are credited in every site that uses them.
 - **Original:** 8 assets, the abstract models made in code by `scripts/assets/abstract.mjs`.
-- **Owner-supplied:** 2 assets, uploaded in the project (Mars Rover and Macaw). Their origin and licence are not confirmed. The licence gate keeps them out of generated sites, and /library marks them "licence to confirm".
+- **Owner-made:** 2 assets, uploaded in the project (Mars Rover and Macaw). The owner made them with ChatGPT and confirmed on 2026-11-19 that they are their own work, so they are recorded as `original` and ship like the other originals. The macaw has no animation clips.
 
 ### Licence rules
 
@@ -265,7 +265,7 @@ The licence register (`licences.ts`) covers the CC0 and CC BY library and the as
 
 - **`tests/assets.test.ts`:**
   - every GLB is parsed: header, chunks, triangles, clips, size and no external files
-  - the licence gate (NC, personal-use, unknown and missing source are all refused, and owner uploads are held)
+  - the licence gate (NC, personal-use, unknown and missing source are all refused, and unconfirmed owner uploads are held)
   - the resolver: semantic queries, missing assets, the low budget and lighter models
   - the eyewear demo's Experience JSON and quality gates
   - other businesses keep their concepts
