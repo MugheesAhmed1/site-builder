@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it, vi } from "vitest";
-import { ASSETS, assetById, budgetOf, isShippable, licenseProblems, resolveAsset, toExperienceAsset, type AssetRecord } from "@/packages/asset-library";
+import { ASSETS, assetById, budgetOf, creditOf, isShippable, licenseProblems, resolveAsset, toExperienceAsset, type AssetRecord } from "@/packages/asset-library";
 import { assetFiles, assetUrl, heroAsset, phoneMay3d, wants3d } from "@/template/src/experiences/assets";
 import { assetLicenceProblems, qualityGates } from "@/packages/quality-engine";
 import { normalizeArtPlan, localArtPlan } from "@/lib/animator-art";
@@ -87,7 +87,7 @@ describe("asset library files", () => {
 
   it("keeps the library a reasonable size", () => {
     const total = ASSETS.reduce((n, a) => n + a.performance.bytes, 0);
-    expect(total).toBeLessThan(45e6);
+    expect(total).toBeLessThan(55e6);
     for (const a of ASSETS) expect(a.performance.bytes, a.id).toBeLessThan(5.2e6);
   });
 
@@ -99,6 +99,19 @@ describe("asset library files", () => {
     const unconfirmed = { ...assetById("animal-macaw-001")!, license: { ...assetById("animal-macaw-001")!.license, type: "owner-supplied", commercialUse: false, redistribution: false } };
     expect(isShippable(unconfirmed)).toBe(false);
     for (const a of ASSETS.filter((x) => x.license.type === "CC-BY-4.0")) expect(a.license.attributionRequired, a.id).toBe(true);
+  });
+});
+
+describe("second owner batch", () => {
+  it("adds the credited car and holds the uploads with no stated licence", () => {
+    const car = assetById("vehicle-hypercar-black-001")!;
+    expect(isShippable(car)).toBe(true);
+    expect(creditOf(car)).toMatch(/^"McLaren P1 GTR 2015" by LC Design, CC BY 4\.0/);
+    expect(resolveAsset({ query: "black racing hypercar" }).id).toBe("vehicle-hypercar-black-001");
+    for (const id of ["animal-deer-001", "product-loafers-black-001", "character-armored-warrior-001", "character-robot-bee-001", "character-astronaut-001", "character-dragon-001"]) {
+      expect(isShippable(assetById(id)!), id).toBe(false);
+      expect(resolveAsset({ query: assetById(id)!.name }).id, id).not.toBe(id);
+    }
   });
 });
 
