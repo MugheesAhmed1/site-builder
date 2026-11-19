@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { TemplateCard } from "@/components/home/ExperienceGallery";
 import { CATEGORIES } from "@/lib/categories";
@@ -46,9 +45,6 @@ export default function TemplateIndex() {
           <TemplateCard key={t.id} t={t} />
         ))}
       </div>
-      <p className="xg-lab">
-        Looking for something lighter? <Link href="/#gallery">See all live experiences</Link>
-      </p>
     </div>
   );
 }

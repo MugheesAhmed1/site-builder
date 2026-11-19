@@ -8,11 +8,11 @@ import HomeNav from "@/components/home/HomeNav";
 import { ReadDemo, ShuffleDemo, type Swatch } from "@/components/home/HowDemos";
 import LiveDemo from "@/components/home/LiveDemo";
 import { LIBRARY } from "@/lib/designs";
-import { CONCEPTS, PRESETS } from "@/packages/experience-core";
+import { TEMPLATES } from "@/lib/templates";
 import { palette } from "@/template/src/theme.js";
 
 // The home page (PRD sections 61 and 62). It demonstrates the product: the opening runs the
-// same live stage a generated site runs, and the Experience Gallery shows every concept live.
+// same live stage a generated site runs, and the gallery shows every full template live.
 // It is rendered on the server and only the pieces that move or react are client components.
 
 function swatch(d: (typeof LIBRARY)[number]): Swatch {
@@ -43,11 +43,11 @@ export default function Home() {
 
         <section className="hsec" id="gallery" aria-labelledby="gallery-title">
           <header className="hsec-head">
-            <span className="hsec-kicker mono">Experience Gallery</span>
+            <span className="hsec-kicker mono">Template Gallery</span>
             <h2 id="gallery-title">
-              {CONCEPTS.length} experiences. <em className="serif-i">Every one is live.</em>
+              {TEMPLATES.length} full templates. <em className="serif-i">Every one is live.</em>
             </h2>
-            <p>Not screenshots: each card runs the experience itself. Scroll to play its story, hover or tap to take control. Start a site from any of them, or from one of {PRESETS.length} presets inside the studio.</p>
+            <p>Not screenshots: each card runs the whole site itself. Hover or tap to play it, then open one and change every part of it for your project.</p>
           </header>
           <LazyGallery />
         </section>
@@ -215,7 +215,7 @@ export default function Home() {
         <div className="hfoot-top">
           <p>Site Builder turns one line into an interactive website you own. Describe your idea, shape the experience, make it yours.</p>
           <nav aria-label="Footer">
-            <a href="#gallery">Experiences</a>
+            <a href="#gallery">Templates</a>
             <Link href="/lab">Experience Lab</Link>
             <a href="#demo">Examples</a>
             <a href="#how">How it works</a>

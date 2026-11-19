@@ -22,7 +22,7 @@ export default function HomeNav() {
       <div className="hnav-pill">
         <Logo />
         <nav className="hnav-links" aria-label="Main">
-          <a href="#gallery">Experiences</a>
+          <a href="#gallery">Templates</a>
           <Link href="/lab">Lab</Link>
           <a href="#demo">Examples</a>
           <a href="#how">How it works</a>

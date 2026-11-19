@@ -82,7 +82,7 @@ export default function HomeHero() {
         </div>
         <div className="hh-ctas">
           <a className="btn hh-ghost" href="#gallery">
-            Explore experiences
+            Explore templates
           </a>
           <a className="btn hh-ghost" href="/create">
             Create from one line with AI
