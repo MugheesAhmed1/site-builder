@@ -93,9 +93,11 @@ describe("asset library files", () => {
 
   it("ships only CC0, CC BY 4.0 and original assets; uploads with an unknown licence are held back", () => {
     for (const a of ASSETS.filter(isShippable)) expect(["CC0-1.0", "CC-BY-4.0", "original"]).toContain(a.license.type);
-    const held = ASSETS.filter((a) => !isShippable(a));
-    expect(held.map((a) => a.id).sort()).toEqual(["animal-macaw-001", "vehicle-mars-rover-001"]);
-    for (const a of held) expect(a.license.type).toBe("owner-supplied");
+    for (const a of ASSETS.filter((x) => !isShippable(x))) expect(a.license.type).toBe("owner-supplied");
+    // The owner's own uploads (made with ChatGPT, confirmed 2026-11-19) are original work and ship.
+    for (const id of ["animal-macaw-001", "vehicle-mars-rover-001"]) expect(isShippable(assetById(id)!), id).toBe(true);
+    const unconfirmed = { ...assetById("animal-macaw-001")!, license: { ...assetById("animal-macaw-001")!.license, type: "owner-supplied", commercialUse: false, redistribution: false } };
+    expect(isShippable(unconfirmed)).toBe(false);
     for (const a of ASSETS.filter((x) => x.license.type === "CC-BY-4.0")) expect(a.license.attributionRequired, a.id).toBe(true);
   });
 });
@@ -117,9 +119,9 @@ describe("licence gate", () => {
     expect(r.representation).toBe("procedural");
   });
 
-  it("never resolves the uploads that wait for a licence", () => {
-    expect(resolveAsset({ query: "macaw parrot bird" }).id).not.toBe("animal-macaw-001");
-    expect(resolveAsset({ query: "mars rover" }).id).not.toBe("vehicle-mars-rover-001");
+  it("resolves the owner's own uploads now their licence is confirmed", () => {
+    expect(resolveAsset({ query: "macaw parrot bird" }).id).toBe("animal-macaw-001");
+    expect(resolveAsset({ query: "mars rover" }).id).toBe("vehicle-mars-rover-001");
   });
 });
 
@@ -297,8 +299,10 @@ describe("export", () => {
 
   it("refuses an export whose assets are not in the library or not licensed", async () => {
     const e = (await eyewear()).experience!;
-    const macaw = toExperienceAsset(assetById("animal-macaw-001")!, "hero-character", "macaw");
-    expect(assetLicenceProblems({ ...e, assets: [macaw] }).join()).toMatch(/owner-supplied|commercial use/);
+    const own = assetById("animal-macaw-001")!;
+    const macaw = { ...toExperienceAsset(own, "hero-character", "macaw"), id: "unlisted-upload-001" };
+    expect(assetLicenceProblems({ ...e, assets: [macaw] }).join()).toMatch(/not in the asset library/);
+    expect(assetLicenceProblems({ ...e, assets: [toExperienceAsset(own, "hero-character", "macaw")] })).toEqual([]);
     const outside = { ...e.assets![0], src: "https://example.com/model.glb" };
     expect(assetLicenceProblems({ ...e, assets: [outside] }).join()).toMatch(/outside the site|not its library file/);
     const gates = qualityGates({ experience: { ...e, assets: [macaw] }, meta: { title: "T", description: "A description that is long enough to pass the search check easily." }, contrast: [7], images: [] });

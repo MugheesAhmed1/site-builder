@@ -2093,17 +2093,17 @@
         "orange"
       ],
       "license": {
-        "type": "owner-supplied",
+        "type": "original",
         "url": "",
-        "commercialUse": false,
-        "redistribution": false,
+        "commercialUse": true,
+        "redistribution": true,
         "modification": true,
         "attributionRequired": false,
-        "evidence": "Uploaded by the project owner on 2026-11-19 (mars_rover_premium.glb). Origin and licence not stated; awaiting confirmation."
+        "evidence": "Made by the project owner with ChatGPT and uploaded on 2026-11-19 (mars_rover_premium.glb); the owner confirmed on 2026-11-19 that it is their own work, free to use."
       },
       "source": {
         "url": "owner-upload:mars_rover_premium.glb",
-        "creator": "Unknown (uploaded by the project owner)",
+        "creator": "Project owner (made with ChatGPT)",
         "via": "project thread upload"
       },
       "modifications": "Stood upright (the file is Z-up). Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
@@ -2404,17 +2404,17 @@
         "yellow"
       ],
       "license": {
-        "type": "owner-supplied",
+        "type": "original",
         "url": "",
-        "commercialUse": false,
-        "redistribution": false,
+        "commercialUse": true,
+        "redistribution": true,
         "modification": true,
         "attributionRequired": false,
-        "evidence": "Uploaded by the project owner on 2026-11-19 (premium_macaw_animation_ready.glb). Origin and licence not stated; awaiting confirmation."
+        "evidence": "Made by the project owner with ChatGPT and uploaded on 2026-11-19 (premium_macaw_animation_ready.glb); the owner confirmed on 2026-11-19 that it is their own work, free to use."
       },
       "source": {
         "url": "owner-upload:premium_macaw_animation_ready.glb",
-        "creator": "Unknown (uploaded by the project owner)",
+        "creator": "Project owner (made with ChatGPT)",
         "via": "project thread upload"
       },
       "modifications": "Stood upright (the file is Z-up) and turned to face the camera. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
@@ -2884,7 +2884,7 @@
       },
       "source": {
         "url": "https://github.com/mrdoob/three.js/tree/dev/examples/models/gltf/RobotExpressive",
-        "creator": "Tomás Laulhé (Quaternius); morph targets by Don McCurdy",
+        "creator": "Tom\u00e1s Laulh\u00e9 (Quaternius); morph targets by Don McCurdy",
         "publisher": "three.js examples",
         "via": "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/models/gltf/RobotExpressive/RobotExpressive.glb"
       },
