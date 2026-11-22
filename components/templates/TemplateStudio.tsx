@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { businessLabel, changes, loadContent, previewSrc, saveContent, templateZip, zipName, type Content, type SchemaField, type TemplateInfo } from "@/lib/templates";
+import { createContext, useContext, useEffect, useMemo, useRef, useState, useId } from "react";
+import { businessLabel, changes, keepContent, openContent, previewSrc, templateZip, zipName, type Content, type SchemaField, type TemplateInfo } from "@/lib/templates";
+import ModelField from "@/components/character/ModelField";
+import { rolesOf } from "@/lib/character/apply";
 import { BLOCKS, LIBRARY_FONTS, blockById, mediaFor, type LibraryMedia } from "@/lib/library-blocks";
 import { clone, getPath, setPath } from "@/lib/template-schema.mjs";
 
@@ -76,7 +78,7 @@ function blankItem(f: SchemaField, sample: Record<string, unknown> | undefined) 
 }
 
 function Field({ f, value, set, sample, onError }: { f: SchemaField; value: any; set: (v: unknown) => void; sample?: any; onError: (m: string) => void }) {
-  const id = useMemo(() => "f-" + Math.random().toString(36).slice(2, 9), []);
+  const id = "f-" + useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const ctx = useContext(Ctx);
   const [picking, setPicking] = useState(false);
   const hint = f.hint && <small className="muted">{f.hint}</small>;
@@ -425,13 +427,22 @@ export default function TemplateStudio({ t }: { t: TemplateInfo }) {
   const [error, setError] = useState("");
   const [kept, setKept] = useState(true);
   const frame = useRef<HTMLIFrameElement>(null);
+  const [searchFrom, setSearchFrom] = useState("");
+  useEffect(() => setSearchFrom(new URLSearchParams(location.search).get("from") || ""), []);
   const box = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
 
   useEffect(() => {
-    setContent(loadContent(t));
+    let live = true;
     if (window.innerWidth < 760) setDevice("phone");
-    setReady(true);
+    openContent(t).then((c) => {
+      if (!live) return;
+      setContent(c);
+      setReady(true);
+    });
+    return () => {
+      live = false;
+    };
   }, [t]);
 
   const now = useRef(content);
@@ -453,8 +464,8 @@ export default function TemplateStudio({ t }: { t: TemplateInfo }) {
   useEffect(() => {
     if (!ready) return;
     const id = setTimeout(() => {
-      setKept(saveContent(t.id, content));
       send();
+      keepContent(t.id, content).then(setKept);
     }, 160);
     return () => clearTimeout(id);
   }, [content, ready, t.id]);
@@ -488,6 +499,7 @@ export default function TemplateStudio({ t }: { t: TemplateInfo }) {
   }
 
   const changed = ready ? changes(t, content) : 0;
+  const roles = useMemo(() => rolesOf(t), [t]);
 
   return (
     <div className="lab tpl">
@@ -527,6 +539,11 @@ export default function TemplateStudio({ t }: { t: TemplateInfo }) {
           )}
         </p>
         {!kept && <p className="tpl-warn small">Your uploads are too big for this browser to remember. They stay until you leave the page, and the downloads include them.</p>}
+        {searchFrom === "journey" && (
+          <p className="tpl-note small">
+            Your site, built around your character. Change anything below; every colour, word, picture and the model itself is here. <Link href="/create">Back to the journey</Link>
+          </p>
+        )}
         {error && (
           <p className="tpl-warn" role="alert">
             {error}{" "}
@@ -547,9 +564,13 @@ export default function TemplateStudio({ t }: { t: TemplateInfo }) {
           <details key={g.group} className="tpl-group" open={gi < 2}>
             <summary>{g.group}</summary>
             <div className="tpl-group-body">
-              {g.fields.map((f) => (
-                <Field key={f.path} f={f} value={getPath(content, f.path)} sample={getPath(t.content, f.path)} onError={setError} set={(v) => setContent((c) => setPath(c, f.path, v))} />
-              ))}
+              {g.fields.map((f) =>
+                f.type === "model" ? (
+                  <ModelField key={f.path} content={content} roles={roles} words={[...t.categories, ...t.business]} business={t.business[0]} setContent={setContent} onError={setError} />
+                ) : (
+                  <Field key={f.path} f={f} value={getPath(content, f.path)} sample={getPath(t.content, f.path)} onError={setError} set={(v) => setContent((c) => setPath(c, f.path, v))} />
+                ),
+              )}
             </div>
           </details>
         ))}

@@ -18,9 +18,31 @@ export function limited(ip: string): boolean {
   return list.length > 12;
 }
 
-export async function callGemini(system: string, user: string, apiKey: string, opts: { temperature?: number; maxTokens?: number; timeout?: number } = {}): Promise<{ text: string; model: string }> {
+/** Part of a message: words, or a picture sent inline (base64, no data: prefix). */
+export type GeminiPart = { text: string } | { inlineData: { mimeType: string; data: string } };
+/** A turn of a conversation, oldest first; "model" turns are the AI's own earlier answers. */
+export interface GeminiTurn {
+  role: "user" | "model";
+  parts: GeminiPart[];
+}
+
+/**
+ * Models that read pictures well, best first. The full Flash models see shapes and proportions
+ * better than the lite ones, so picture work (the sculptor) tries them first.
+ */
+export const VISION_MODELS = [process.env.GEMINI_VISION_MODEL, "gemini-flash-latest", "gemini-3.5-flash", "gemini-2.5-flash", "gemini-flash-lite-latest"].filter(Boolean) as string[];
+
+/** A picture as an inline part, from a data: address. Null when it is not a picture. */
+export function imagePart(dataUrl: string): GeminiPart | null {
+  const m = /^data:(image\/(?:png|jpeg|webp));base64,([A-Za-z0-9+/=]+)$/.exec(dataUrl);
+  return m ? { inlineData: { mimeType: m[1], data: m[2] } } : null;
+}
+
+export async function callGemini(system: string, user: string | GeminiPart[] | GeminiTurn[], apiKey: string, opts: { temperature?: number; maxTokens?: number; timeout?: number; models?: string[]; json?: boolean } = {}): Promise<{ text: string; model: string }> {
   let last = "No model answered";
-  for (const model of MODELS) {
+  const contents: GeminiTurn[] =
+    typeof user === "string" ? [{ role: "user", parts: [{ text: user }] }] : user.length && "role" in user[0] ? (user as GeminiTurn[]) : [{ role: "user", parts: user as GeminiPart[] }];
+  for (const model of opts.models ?? MODELS) {
     const ctl = new AbortController();
     const timer = setTimeout(() => ctl.abort(), opts.timeout ?? 18_000);
     try {
@@ -30,14 +52,14 @@ export async function callGemini(system: string, user: string, apiKey: string, o
         headers: { "content-type": "application/json", "x-goog-api-key": apiKey },
         body: JSON.stringify({
           systemInstruction: { parts: [{ text: system }] },
-          contents: [{ role: "user", parts: [{ text: user }] }],
-          generationConfig: { responseMimeType: "application/json", temperature: opts.temperature ?? 0.7, maxOutputTokens: opts.maxTokens ?? 4096 },
+          contents,
+          generationConfig: { ...(opts.json === false ? {} : { responseMimeType: "application/json" }), temperature: opts.temperature ?? 0.7, maxOutputTokens: opts.maxTokens ?? 4096 },
         }),
       });
       if (!res.ok) {
         last = `${model}: ${res.status}`;
-        if (res.status === 400 || res.status === 401 || res.status === 403) break; // a key problem: other models will say the same
-        continue;
+        if (res.status === 401 || res.status === 403) break; // a key problem: other models will say the same
+        continue; // 400 can mean this model does not exist or take pictures: try the next one
       }
       const data = (await res.json()) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
       const text = data.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";

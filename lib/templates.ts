@@ -86,6 +86,31 @@ function merge(base: unknown, saved: unknown): unknown {
   return typeof saved === typeof base ? saved : base;
 }
 
+/**
+ * Saves content with big uploads (3D models, photos) moved to IndexedDB, so they survive a reload
+ * too. False when the browser could not keep it.
+ */
+export async function keepContent(id: string, c: Content): Promise<boolean> {
+  if (saveContent(id, c)) return true;
+  try {
+    const { dehydrate } = await import("./blobstore");
+    return saveContent(id, await dehydrate(c, `tpl:${id}`));
+  } catch {
+    return false;
+  }
+}
+
+/** The person's content with their big uploads back from IndexedDB. */
+export async function openContent(t: TemplateInfo): Promise<Content> {
+  const c = loadContent(t);
+  try {
+    const { hydrate } = await import("./blobstore");
+    return await hydrate(c);
+  } catch {
+    return c;
+  }
+}
+
 /** False when the browser could not keep it (usually big uploads). */
 export function saveContent(id: string, c: Content): boolean {
   try {

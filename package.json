@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/bundle-template.mjs && node scripts/build-site-kit.mjs && node scripts/build-templates.mjs && node scripts/build-library.mjs",
+    "predev": "node scripts/vendor-mediapipe.mjs && node scripts/bundle-template.mjs && node scripts/build-site-kit.mjs && node scripts/build-templates.mjs && node scripts/build-library.mjs",
     "dev": "next dev",
-    "prebuild": "node scripts/bundle-template.mjs && node scripts/build-site-kit.mjs && node scripts/build-templates.mjs && node scripts/build-library.mjs",
+    "prebuild": "node scripts/vendor-mediapipe.mjs && node scripts/bundle-template.mjs && node scripts/build-site-kit.mjs && node scripts/build-templates.mjs && node scripts/build-library.mjs",
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
@@ -15,6 +15,7 @@
     "import-template": "node scripts/import-template.mjs"
   },
   "dependencies": {
+    "@mediapipe/tasks-vision": "1.2.3",
     "@react-three/fiber": "9.8.2",
     "jszip": "^3.10.2",
     "lenis": "1.1.13",
