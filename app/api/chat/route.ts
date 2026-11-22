@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { callGemini, geminiKey, limited, parseJson, type GeminiTurn } from "@/lib/gemini";
 import { CATEGORIES } from "@/lib/categories";
-import { MAX_QUESTIONS, answer, charactersFor, normalizeBrief, ruleStep, sectionsFor, startBrief, summary, type Brief, type BriefField, type ChatStep, type ChatTurn } from "@/lib/journey/brief";
+import { MAX_QUESTIONS, answer, charactersFor, nameGiven, normalizeBrief, ruleStep, sectionsFor, startBrief, summary, type Brief, type BriefField, type ChatStep, type ChatTurn } from "@/lib/journey/brief";
 
 // Step 2 of the journey (docs/CHARACTER-JOURNEY.md): the interview, on the server so the Gemini
 // key stays here.
@@ -21,7 +21,7 @@ Rules:
 - Ask at most ${MAX_QUESTIONS} questions in total. Never ask for something the person already said.
 - Each question is one or two short sentences, warm and plain. React to their last answer in a few words first.
 - Every question offers 3 to 6 short answers to tap ("chips"), written for THIS idea. The person can also type their own.
-- Cover, in a sensible order: the name (if missing), who it is for, how it should feel, what the site must have (multi: true, chips are sections or features), and always, as the last or second last question, the 3D character the whole site is built around.
+- Cover, in a sensible order: the name (if missing, or if a note says it is only a guess), who it is for, how it should feel, what the site must have (multi: true, chips are sections or features), and always, as the last or second last question, the 3D character the whole site is built around.
 - The character question: the site stars one 3D model on a coloured gradient, and every colour and font follows it. Offer characters that suit the idea (for a dentist: a friendly robot, a smiling kid, a giant tooth; for a portfolio: "Me, from my photo", an astronaut; for a product: "Our product, from a photo"). Chips may only name everyday things, animals, vehicles, characters such as a robot, astronaut, dragon, warrior, kid, fox, or "Me, from my photo" / "Our logo, from a picture" / "Our product, from a photo". Never a brand or a copyrighted character.
 - If the brief has "star", the person already chose the character (brief.character) before the chat: never ask about the character, and name it in the summary.
 - Colours: by default they come from the character; ask only if useful, offering "From the character" first.
@@ -90,8 +90,11 @@ export async function POST(req: Request) {
   if (!apiKey) return NextResponse.json({ ok: true, step: rules, note: "no-key" });
   if (limited(ip)) return NextResponse.json({ ok: true, step: rules, note: "busy" });
 
+  // A name the studio only guessed from the description ("Fantasy Game Studio") is not theirs yet.
+  const guessed = brief.name && !nameGiven(brief) && !turns.some((t) => t.role === "ai" && t.field === "name");
+  const note = guessed ? `\n\nNote: the name ${JSON.stringify(brief.name)} is only a guess from the description. Do not call it that yet: ask what it is called, offering the guess as one of the chips.` : "";
   const contents: GeminiTurn[] = [
-    { role: "user", parts: [{ text: `What I want to build: ${JSON.stringify(idea)}\n\nWhat the studio already understood (business ids: ${CATEGORIES.map((c) => c.id).join(", ")}):\n${JSON.stringify(brief)}` }] },
+    { role: "user", parts: [{ text: `What I want to build: ${JSON.stringify(idea)}\n\nWhat the studio already understood (business ids: ${CATEGORIES.map((c) => c.id).join(", ")}):\n${JSON.stringify(brief)}${note}` }] },
     ...turns.map((t): GeminiTurn => ({ role: t.role === "ai" ? "model" : "user", parts: [{ text: t.role === "ai" ? JSON.stringify({ reply: t.text, chips: t.chips ?? [], field: t.field ?? "" }) : t.text }] })),
   ];
   if (contents[contents.length - 1].role !== "user") contents.push({ role: "user", parts: [{ text: "Start the interview." }] });
