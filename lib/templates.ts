@@ -77,6 +77,10 @@ function merge(base: unknown, saved: unknown): unknown {
     if (!Array.isArray(saved)) return clone(base);
     // A list of colours keeps whatever the person saved; a list of items takes each item's shape from the first.
     const shape = base[0];
+    // Library blocks differ from one to the next and every template starts with none: each is kept
+    // as saved (the page fills in a block's own defaults). So is any list the template starts empty.
+    if (shape === undefined || (shape && typeof shape === "object" && "block" in shape))
+      return saved.filter((x) => x !== null && x !== undefined && (typeof x !== "object" || !("block" in (x as object)) || typeof (x as { block: unknown }).block === "string")).map((x) => clone(x));
     return saved.map((x) => (shape && typeof shape === "object" ? merge(shape, x) : typeof x === typeof shape ? x : shape));
   }
   if (base && typeof base === "object") {

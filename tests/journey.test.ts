@@ -185,3 +185,89 @@ describe("the interview, by the rules", () => {
     expect(normalizeBrief("garbage", base)).toEqual(base);
   });
 });
+
+describe("a saved site comes back whole", () => {
+  it("keeps every library section the person added, with its own settings", async () => {
+    const { TEMPLATES, loadContent } = await import("@/lib/templates");
+    const store = new Map<string, string>();
+    (globalThis as { localStorage?: unknown }).localStorage = {
+      getItem: (k: string) => store.get(k) ?? null,
+      setItem: (k: string, v: string) => void store.set(k, v),
+      removeItem: (k: string) => void store.delete(k),
+    };
+    try {
+      const t = TEMPLATES.find((x) => x.id === "orbit") || TEMPLATES[0];
+      const extras = [
+        { block: "pricing-plans", props: { heading: "Plans" } },
+        { block: "count-up-stats", props: { heading: "Numbers", items: [{ value: 9 }] } },
+      ];
+      store.set(`xp-template:v2:${t.id}`, JSON.stringify({ ...t.content, extras: [...extras, null, { block: 7 }] }));
+      const c = loadContent(t);
+      expect(c.extras).toEqual(extras);
+      expect(c.brand).toEqual(t.content.brand);
+    } finally {
+      delete (globalThis as { localStorage?: unknown }).localStorage;
+    }
+  });
+});
+
+describe("words by rules, in the right voice", () => {
+  it("reads the role a portfolio is for", async () => {
+    const { roleOf, article, portfolioBusiness } = await import("@/lib/voice");
+    expect(roleOf("Portfolio for a 3D motion designer called Sara Khan")).toBe("3D motion designer");
+    expect(roleOf("My personal portfolio as a UX designer")).toBe("UX designer");
+    expect(roleOf("Personal website for a frontend developer in Lahore")).toBe("frontend developer");
+    expect(roleOf("3D artist portfolio")).toBe("3D artist");
+    expect(roleOf("Sara's photography portfolio")).toBe("photographer");
+    expect(roleOf("portfolio")).toBe("");
+    expect(article("UX designer")).toBe("a");
+    expect(article("illustrator")).toBe("an");
+    expect(article("3D artist")).toBe("a");
+    expect(article("SEO expert")).toBe("an");
+    expect(portfolioBusiness("3D motion designer")).toBe("photo");
+    expect(portfolioBusiness("frontend developer")).toBe("consulting");
+    expect(portfolioBusiness("YouTuber")).toBe("creator");
+  });
+
+  it("asks a portfolio for the person's name instead of guessing one", () => {
+    const b = startBrief("Portfolio for a 3D motion designer");
+    expect(b.kind).toBe("portfolio");
+    expect(b.name).toBe("");
+    expect(b.what).toBe("3D motion designer");
+    expect(b.cta).toBe("Work with me");
+    expect(ruleStep(b, []).field).toBe("name");
+    expect(startBrief("Portfolio for a 3D motion designer called Sara Khan").name).toBe("Sara Khan");
+  });
+
+  it("writes a portfolio in the first person and a business in its own words", async () => {
+    const { planFromBrief, rulesTexts } = await import("@/lib/journey/plan");
+    const { templateById } = await import("@/lib/templates");
+    const orbit = templateById("orbit")!;
+    const d = { id: "x", name: "x", note: "", accent: "#7f5d4a", accent2: "#c49a7a", tintHue: 30, tint: 0.2, mode: "dark", gradient: { style: "glow", angle: 160, light: ["#fff", "#eee", "#ddd"], dark: ["#111", "#222", "#333"] }, fonts: { pair: "x", display: "Fredoka", body: "Nunito" }, radius: "soft", motion: "calm" } as never;
+    const sara = { ...startBrief("Portfolio for a 3D motion designer called Sara Khan"), tone: "Playful" };
+    const words = rulesTexts(orbit, planFromBrief(sara, orbit, d));
+    expect(words["hero.title"]).toBe("Sara Khan, 3D motion designer.");
+    expect(words["hero.text"]).toMatch(/^I'm a 3D motion designer\./);
+    expect(words["about.title"]).toBe("Hi, I'm Sara");
+    expect(words["nav.links.0.label"]).toBe("Work");
+    expect(Object.values(words).join(" ")).not.toMatch(/videos every week|small studio|\bwe\b/i);
+
+    const crumb = startBrief("A cosy bakery in Lahore called Crumb");
+    const w2 = rulesTexts(orbit, planFromBrief(crumb, orbit, d));
+    expect(w2["features.kicker"]).toBe("How it works");
+    expect(w2["about.text"]).toMatch(/^Crumb is a /);
+    expect(w2["contact.title"]).toBe("Visit or write to Crumb");
+    expect(w2["hero.title"]).toMatch(/^[A-Z]/);
+    expect(w2["hero.tags"]).not.toMatch(/Design|Story/);
+    expect(words["hero.tags"]).toBe("3D animation, Motion design, Product visuals");
+  });
+});
+
+describe("one person's voice", () => {
+  it("turns a company's line into the first person", async () => {
+    const { firstPerson } = await import("@/lib/voice");
+    expect(firstPerson("Tell us a little about what you need and we will get back to you within a day.")).toBe("Tell me a little about what you need and I will get back to you within a day.");
+    expect(firstPerson("We're a small team. Our work is ours. Talk to us.")).toBe("I'm a small team. My work is mine. Talk to me.");
+    expect(firstPerson("Made in the US")).toBe("Made in the US");
+  });
+});

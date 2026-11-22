@@ -16,6 +16,7 @@ import { BLOCKS, blockById, mediaFor } from "./library-blocks";
 import { clone, getPath, setPath, type Content, type SchemaField } from "./template-schema.mjs";
 import { TEMPLATES, templateById, type TemplateInfo } from "./templates";
 import { localArtPlan, normalizeArtPlan, type ResolvedNote } from "./animator-art";
+import { article, firstPerson, portfolioBusiness, roleOf, voiceFor, type VoiceInput } from "./voice";
 import type { ArtDirection, AssetRequest } from "@/template/src/experiences/types";
 
 export type Motion = "calm" | "lively" | "bold";
@@ -38,6 +39,8 @@ export interface MasterPlan {
   accent: string;
   fonts: { display: string; body: string };
   motion: Motion;
+  /** The main action the person chose ("Book a visit"); the category's when empty. */
+  cta?: string;
   source: "gemini" | "local";
   model?: string;
   /** The look every visual decision follows (docs/ASSETS.md). */
@@ -76,6 +79,9 @@ export function cityOf(query: string): string {
 }
 
 const title = (s: string) => s.replace(/\b[a-z]/g, (c) => c.toUpperCase());
+const upperFirst = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+/** "Takeaway" mid-sentence is "takeaway"; "UX" and "iPhone" stay as they are. */
+const lowerFirst = (s: string) => (/^[A-Z][a-z]/.test(s) ? s.charAt(0).toLowerCase() + s.slice(1) : s);
 
 /** What the business is, in the person's words: "dentist clinic in isb" gives "dentist clinic". */
 function whatOf(query: string) {
@@ -88,9 +94,11 @@ function whatOf(query: string) {
     .trim();
 }
 
-function nameFor(query: string, business: string, city: string) {
+function nameFor(query: string, business: string, city: string, portfolio = false) {
   const named = extractHints(query).name;
   if (named) return named;
+  // A person's own site carries their name, which the line did not give: a placeholder, not a guess.
+  if (portfolio) return "Your Name";
   const what = whatOf(query) || categoryById(business).label.split(/[ ,]/)[0].toLowerCase();
   const nouns: Record<string, string> = { dentist: "Dental Studio", hospital: "Health Centre", health: "Care Clinic", beauty: "Beauty Studio", fitness: "Fitness Club", food: "Kitchen", law: "Law Chambers", school: "Academy", hotel: "House", property: "Estates", trades: "Works", auto: "Motors", pets: "Pet Care", shop: "Store", agency: "Studio", consulting: "Partners", photo: "Studio", creator: "Studio", events: "Events", nonprofit: "Foundation", product: "Labs" };
   const noun = nouns[business];
@@ -157,14 +165,20 @@ export function localPlan(query: string): MasterPlan {
   const q = query.trim().slice(0, 300);
   const c = classify(q);
   const kind = c.kind === "portfolio" ? "portfolio" : "website";
-  const business = c.category === "portfolio" ? "creator" : c.category;
+  const role = kind === "portfolio" ? roleOf(q) : "";
+  const business = c.category === "portfolio" ? portfolioBusiness(role) : c.category;
   const city = cityOf(q);
-  const name = nameFor(q, business, city);
+  const name = nameFor(q, business, city, kind === "portfolio");
   const cat = categoryById(business);
   const motion = MOTION[business] || "lively";
   const template = rankTemplates(business, kind)[0].id;
   const tone = TONES[business] || "clear, warm and confident";
-  const audience = city ? `people in and around ${city} looking for a ${whatOf(q) || cat.label.toLowerCase()}` : `people looking for a ${whatOf(q) || cat.label.toLowerCase()}`;
+  const looking = whatOf(q) || cat.label.toLowerCase();
+  const audience = role
+    ? `clients and teams looking for ${article(role)} ${role}`
+    : city
+      ? `people in and around ${city} looking for ${article(looking)} ${looking}`
+      : `people looking for ${article(looking)} ${looking}`;
   const plan: MasterPlan = {
     query: q,
     kind,
@@ -188,15 +202,21 @@ export function localPlan(query: string): MasterPlan {
   return plan;
 }
 
+/** "a 3D motion designer", "a dentist clinic": what the plan is for, with its article. */
+function whatIn(p: MasterPlan) {
+  const w = (p.kind === "portfolio" ? roleOf(p.query) : "") || whatOf(p.query) || categoryById(p.business).label.toLowerCase();
+  return `${article(w)} ${w}`;
+}
+
 export function masterPromptText(p: MasterPlan) {
   const cat = categoryById(p.business);
   const t = templateById(p.template);
   return [
-    `Create a ${p.kind === "portfolio" ? "portfolio" : "website"} for ${p.name}, a ${whatOf(p.query) || cat.label.toLowerCase()}${p.city ? ` in ${p.city}` : ""}.`,
+    `Create a ${p.kind === "portfolio" ? "portfolio" : "website"} for ${p.name}, ${whatIn(p)}${p.city ? ` in ${p.city}` : ""}.`,
     `Audience: ${p.audience}.`,
     `Voice: ${p.tone}. Plain, specific words; no invented prices, awards, years or claims.`,
     `What it offers: ${cat.services.join(", ")}.`,
-    `First impression: ${cat.kicker.toLowerCase()}; the main action is "${cat.primaryCta}".`,
+    p.kind === "portfolio" ? `First impression: a person and their craft, in the first person; the main action is "${p.cta || "Work with me"}".` : `First impression: ${cat.kicker.toLowerCase()}; the main action is "${p.cta || cat.primaryCta}".`,
     `Look: accent ${p.accent}${p.fonts.display ? `, ${p.fonts.display} for headings and ${p.fonts.body || p.fonts.display} for text` : ""}.`,
     `Motion: ${p.motion === "calm" ? "calm, slow reveals that never distract" : p.motion === "bold" ? "bold, with a custom cursor and strong scroll moments" : "lively reveals and a scroll progress line"}.`,
     `Built on the ${t?.name || p.template} template${p.blocks.length ? `, adding ${p.blocks.map((b) => blockById(b)?.name || b).join(", ")}` : ""}.`,
@@ -228,6 +248,7 @@ export function normalizePlan(raw: Partial<MasterPlan> & Record<string, unknown>
     accent: typeof raw.accent === "string" && /^#[0-9a-f]{6}$/i.test(raw.accent) ? raw.accent : fallback.accent,
     fonts: { display: font(fonts.display), body: font(fonts.body) },
     motion,
+    cta: str(raw.cta, 30) || fallback.cta,
     source: raw.source === "gemini" ? "gemini" : fallback.source,
     model: typeof raw.model === "string" ? raw.model : undefined,
   };
@@ -389,13 +410,17 @@ export function buildContent(t: TemplateInfo, plan: MasterPlan, writes: Writes =
  */
 export function localTexts(t: TemplateInfo, plan: MasterPlan): Record<string, string> {
   const cat = categoryById(plan.business);
-  const what = whatOf(plan.query) || cat.label.toLowerCase();
+  const portfolio = plan.kind === "portfolio";
+  const role = portfolio ? roleOf(plan.query) : "";
+  const what = role || whatOf(plan.query) || cat.label.toLowerCase();
+  const cta = plan.cta || (portfolio ? "Work with me" : cat.primaryCta);
   const fill = (s: string) => s.replace(/\{name\}/g, plan.name).replace(/\{city\}/g, plan.city || "your area").replace(/\{what\}/g, what).replace(/\{audience\}/g, "you");
-  const headline = fill(cat.headlines.find((h) => plan.city || !h.includes("{city}")) || cat.headlines[0]);
-  const sub = `${cat.kicker}${plan.city ? ` in ${plan.city}` : ""}. ${cat.services.slice(0, 3).join(", ")}.`;
+  const headline = upperFirst(fill(cat.headlines.find((h) => plan.city || !h.includes("{city}")) || cat.headlines[0]));
+  const sub = `${cat.kicker}${plan.city ? ` in ${plan.city}` : ""}. ${cat.services.slice(0, 3).map((x, i) => (i ? lowerFirst(x) : x)).join(", ")}.`;
   const out: Record<string, string> = {};
   let service = 0;
-  for (const s of slotsOf(t, buildContent(t, plan))) {
+  const slots = slotsOf(t, buildContent(t, plan));
+  for (const s of slots) {
     const k = s.key;
     if (k === "seo.title") out[k] = `${plan.name}${plan.city ? ` | ${title(what)} in ${plan.city}` : ""}`;
     else if (k === "seo.description") out[k] = `${plan.name}: ${sub}`;
@@ -403,9 +428,21 @@ export function localTexts(t: TemplateInfo, plan: MasterPlan): Record<string, st
     else if (/^hero\.line2$/.test(k)) out[k] = "";
     else if (/^hero\.(?:text|sub|caption1?|description|intro)$/.test(k)) out[k] = sub;
     else if (/^hero\.(?:kicker|eyebrow|label)$/.test(k)) out[k] = cat.kicker;
-    else if (/^hero\.(?:button|cta)$/.test(k)) out[k] = cat.primaryCta;
+    else if (/^hero\.(?:button|cta)$/.test(k)) out[k] = Object.values(out).includes(cta) ? "Learn more" : cta;
     else if (/^services\.items\.\d+\.title$/.test(k) && service < cat.services.length) out[k] = cat.services[service++];
     else if (/^(?:brand\.)?tagline$/.test(k)) out[k] = cat.kicker;
+  }
+  // A person's portfolio speaks in the first person about their craft, in every template. A business
+  // rewrites the shared slots only on a template made for another kind of business, whose own
+  // words would describe someone else.
+  const voice: VoiceInput = { kind: plan.kind, name: plan.name, what, city: plan.city, audience: plan.audience, cta: portfolio ? cta : plan.cta || "", kicker: cat.kicker, services: cat.services, process: cat.process, physical: cat.physical };
+  const foreign = !t.business.includes(plan.business);
+  for (const s of slots) {
+    if (!portfolio && !foreign && s.key !== "nav.cta") continue;
+    const w = voiceFor(s.key, s.example, voice);
+    if (w !== undefined) out[s.key] = w;
+    // Every other line of a portfolio, the library sections' too, speaks as the person.
+    else if (portfolio && !(s.key in out) && firstPerson(s.example) !== s.example) out[s.key] = firstPerson(s.example);
   }
   // A line left empty (hero.line2) stays out of the way only if it was optional; keep text there.
   for (const [k, v] of Object.entries(out)) if (!v) delete out[k];

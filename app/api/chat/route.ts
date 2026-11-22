@@ -28,7 +28,7 @@ Rules:
 - No em dashes, no emoji, no markdown.
 - When the brief has name, audience, tone, sections and character, set done to true and make "reply" a two sentence summary of the site to be built that ends by asking them to pick the character below.
 Return JSON exactly like:
-{"reply":"<reaction and question, or the summary>","chips":["<3 to 6 answers>"],"field":"<${FIELDS.join("|")}>","multi":false,"done":false,"brief":{"kind":"website|portfolio","business":"<one business id>","name":"","what":"<what it is or offers, a few words>","audience":"","tone":"","sections":[""],"character":"<the character in words>","colors":"","city":"","email":"","cta":"<main action, 1 to 4 words>"}}`;
+{"reply":"<reaction and question, or the summary>","chips":["<3 to 6 answers>"],"field":"<${FIELDS.join("|")}>","multi":false,"done":false,"brief":{"kind":"website|portfolio","business":"<one business id>","name":"","what":"<what it is or offers, a few words; for a portfolio, the person's role, like 3D motion designer>","audience":"","tone":"","sections":[""],"character":"<the character in words>","colors":"","city":"","email":"","cta":"<main action, 1 to 4 words>"}}`;
 
 const bad = (error: string, status = 400) => NextResponse.json({ ok: false, error }, { status });
 

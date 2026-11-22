@@ -2937,6 +2937,23 @@
         ]
       },
       {
+        "src": "/assets/previews/character-astronaut-001.webp",
+        "type": "image",
+        "label": "Its picture (shown while it loads)",
+        "from": [
+          "orbit"
+        ],
+        "business": [
+          "general",
+          "product",
+          "agency",
+          "creator",
+          "shop",
+          "school",
+          "events"
+        ]
+      },
+      {
         "src": "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261116_131908_b6239896-c077-450c-ad91-575153973fcf.mp4",
         "type": "video",
         "label": "Film",
@@ -3195,7 +3212,8 @@
         "from": [
           "brightline",
           "fernhollow",
-          "milo"
+          "milo",
+          "orbit"
         ]
       },
       {
@@ -3260,6 +3278,12 @@
         "family": "JetBrains Mono",
         "from": [
           "mossline"
+        ]
+      },
+      {
+        "family": "Unbounded",
+        "from": [
+          "orbit"
         ]
       },
       {
@@ -3429,6 +3453,21 @@
           "accent2": "#a9dd3a",
           "positive": "#4f8a12",
           "deep": "#1b3122"
+        }
+      },
+      {
+        "from": "orbit",
+        "name": "Orbit",
+        "colors": {
+          "page": "#0d0b17",
+          "surface": "#161327",
+          "surface2": "#1f1b36",
+          "ink": "#f4f1ff",
+          "muted": "#aaa3c7",
+          "line": "#2b2645",
+          "accent": "#8b6cff",
+          "accent2": "#4fd1c5",
+          "onAccent": "#0d0b17"
         }
       },
       {

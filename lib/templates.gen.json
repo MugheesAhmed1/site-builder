@@ -1038,7 +1038,7 @@
         "imageTone": "dark"
       }
     },
-    "poster": false,
+    "poster": true,
     "siteFiles": 13,
     "sourceFiles": 23
   },
@@ -2449,7 +2449,7 @@
         "imageTone": "dark"
       }
     },
-    "poster": false,
+    "poster": true,
     "siteFiles": 11,
     "sourceFiles": 21
   },
@@ -3710,7 +3710,7 @@
         "imageTone": "dark"
       }
     },
-    "poster": false,
+    "poster": true,
     "siteFiles": 14,
     "sourceFiles": 24
   },
@@ -4836,7 +4836,7 @@
         "imageTone": "dark"
       }
     },
-    "poster": false,
+    "poster": true,
     "siteFiles": 12,
     "sourceFiles": 22
   },
@@ -7141,7 +7141,7 @@
         "imageTone": "dark"
       }
     },
-    "poster": false,
+    "poster": true,
     "siteFiles": 12,
     "sourceFiles": 22
   },
@@ -8254,7 +8254,7 @@
         "imageTone": "dark"
       }
     },
-    "poster": false,
+    "poster": true,
     "siteFiles": 28,
     "sourceFiles": 50
   },
@@ -9472,7 +9472,7 @@
         "imageTone": "dark"
       }
     },
-    "poster": false,
+    "poster": true,
     "siteFiles": 10,
     "sourceFiles": 21
   },
@@ -10782,7 +10782,7 @@
         "imageTone": "dark"
       }
     },
-    "poster": false,
+    "poster": true,
     "siteFiles": 5,
     "sourceFiles": 33
   },
@@ -11935,9 +11935,829 @@
         "imageTone": "dark"
       }
     },
-    "poster": false,
+    "poster": true,
     "siteFiles": 7,
     "sourceFiles": 7
+  },
+  {
+    "id": "orbit",
+    "name": "Orbit",
+    "pitch": "A character-first canvas: your 3D model centre stage on its own gradient, rings orbiting it, then the sections you choose from the library.",
+    "kind": "static",
+    "categories": [
+      "3D",
+      "Interactive",
+      "Scroll",
+      "Product"
+    ],
+    "business": [
+      "general",
+      "product",
+      "agency",
+      "creator",
+      "shop",
+      "school",
+      "events"
+    ],
+    "sector": "Any business or person: the new template the journey builds around a character",
+    "intensity": 6,
+    "heavy": false,
+    "licence": {
+      "kind": "original",
+      "holder": "Site Builder",
+      "note": "Made for the builder as its blank, character-first canvas.",
+      "added": "2026-11-22"
+    },
+    "remoteAssets": [],
+    "features": [
+      "3D character hero",
+      "Orbiting rings",
+      "Scroll reveals",
+      "Library sections",
+      "Light or dark"
+    ],
+    "roles": {
+      "mode": "dark",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "stage": "dark",
+      "colors": {
+        "page": "page",
+        "surface": "surface",
+        "surface2": "surface2",
+        "ink": "ink",
+        "muted": "muted",
+        "line": "line",
+        "accent": "accent",
+        "accent2": "accent2",
+        "onAccent": "onAccent"
+      },
+      "fonts": {
+        "display": "display",
+        "body": "body"
+      },
+      "radius": "radius"
+    },
+    "schema": [
+      {
+        "group": "Business",
+        "fields": [
+          {
+            "path": "brand.name",
+            "label": "Name",
+            "type": "text",
+            "hint": "Fills every {name} in the text below."
+          },
+          {
+            "path": "seo.title",
+            "label": "Page title (search and browser tab)",
+            "type": "text"
+          },
+          {
+            "path": "seo.description",
+            "label": "Short description (search and sharing)",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "3D character",
+        "fields": [
+          {
+            "path": "character.src",
+            "label": "3D model",
+            "type": "model",
+            "hint": "Pick one from the library, upload a GLB, or make one from a photo. Empty: no character."
+          },
+          {
+            "path": "character.poster",
+            "label": "Its picture (shown while it loads)",
+            "type": "image"
+          },
+          {
+            "path": "character.name",
+            "label": "Its name",
+            "type": "text"
+          },
+          {
+            "path": "character.motion",
+            "label": "Idle motion",
+            "type": "select",
+            "options": [
+              {
+                "value": "float",
+                "label": "Floats gently"
+              },
+              {
+                "value": "sway",
+                "label": "Sways side to side"
+              },
+              {
+                "value": "spin",
+                "label": "Turns slowly"
+              },
+              {
+                "value": "still",
+                "label": "Holds still"
+              }
+            ]
+          },
+          {
+            "path": "character.clip",
+            "label": "Its own animation",
+            "type": "text",
+            "hint": "A clip name from the model. Empty plays its idle; none plays nothing."
+          },
+          {
+            "path": "character.react",
+            "label": "Visitors can",
+            "type": "select",
+            "options": [
+              {
+                "value": "both",
+                "label": "Drag it, tap it, and it looks at the pointer"
+              },
+              {
+                "value": "follow",
+                "label": "It looks at the pointer"
+              },
+              {
+                "value": "drag",
+                "label": "Drag it round and tap it"
+              },
+              {
+                "value": "none",
+                "label": "Nothing: it stays put"
+              }
+            ]
+          },
+          {
+            "path": "character.scroll",
+            "label": "As the page scrolls",
+            "type": "select",
+            "options": [
+              {
+                "value": "turn",
+                "label": "It turns"
+              },
+              {
+                "value": "rise",
+                "label": "It rises and shrinks away"
+              },
+              {
+                "value": "zoom",
+                "label": "It comes closer"
+              },
+              {
+                "value": "none",
+                "label": "Nothing"
+              }
+            ]
+          },
+          {
+            "path": "character.scale",
+            "label": "Size",
+            "type": "number",
+            "min": 0.4,
+            "max": 1.8,
+            "step": 0.05
+          },
+          {
+            "path": "character.turn",
+            "label": "Turn (degrees)",
+            "type": "number",
+            "min": -180,
+            "max": 180,
+            "step": 1
+          },
+          {
+            "path": "character.tilt",
+            "label": "Tilt (degrees)",
+            "type": "number",
+            "min": -40,
+            "max": 40,
+            "step": 1
+          },
+          {
+            "path": "character.lift",
+            "label": "Up or down in its space",
+            "type": "number",
+            "min": -1,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "path": "character.speed",
+            "label": "Motion speed",
+            "type": "number",
+            "min": 0.2,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "path": "character.finish",
+            "label": "Finish",
+            "type": "select",
+            "options": [
+              {
+                "value": "original",
+                "label": "As made"
+              },
+              {
+                "value": "paint",
+                "label": "Painted in the colour below"
+              },
+              {
+                "value": "clay",
+                "label": "Soft clay in the colour below"
+              },
+              {
+                "value": "chrome",
+                "label": "Chrome, tinted"
+              }
+            ]
+          },
+          {
+            "path": "character.paint",
+            "label": "Paint colour",
+            "type": "color"
+          },
+          {
+            "path": "character.parts",
+            "label": "Parts to paint",
+            "type": "text",
+            "hint": "Material names, comma separated. Empty paints the whole model."
+          },
+          {
+            "path": "character.screen",
+            "label": "Screens that show your gradient",
+            "type": "text",
+            "hint": "Material names, comma separated (a phone's screen, a sign)."
+          },
+          {
+            "path": "character.shadow",
+            "label": "Soft shadow under it",
+            "type": "toggle"
+          },
+          {
+            "path": "character.echo",
+            "label": "Show it again near the end of the page",
+            "type": "toggle"
+          },
+          {
+            "path": "character.credit",
+            "label": "Credit line for the model",
+            "type": "text",
+            "hint": "Shown small near the end of the page. Models under CC BY need it; it is filled in for you."
+          }
+        ]
+      },
+      {
+        "group": "Character background",
+        "fields": [
+          {
+            "path": "design.stops",
+            "label": "Gradient colours (base, glow, second)",
+            "type": "colors",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "path": "design.style",
+            "label": "Gradient style",
+            "type": "select",
+            "options": [
+              {
+                "value": "glow",
+                "label": "Glow behind the character"
+              },
+              {
+                "value": "aurora",
+                "label": "Aurora (moves slowly)"
+              },
+              {
+                "value": "radial",
+                "label": "Spotlight"
+              },
+              {
+                "value": "linear",
+                "label": "Straight blend"
+              },
+              {
+                "value": "solid",
+                "label": "One colour"
+              }
+            ]
+          },
+          {
+            "path": "design.angle",
+            "label": "Gradient angle",
+            "type": "number",
+            "min": 0,
+            "max": 360,
+            "step": 5
+          },
+          {
+            "path": "design.light",
+            "label": "Light on the character",
+            "type": "color"
+          },
+          {
+            "path": "design.image",
+            "label": "Background picture instead of the gradient",
+            "type": "image"
+          },
+          {
+            "path": "design.imageTone",
+            "label": "That picture is mostly",
+            "type": "select",
+            "options": [
+              {
+                "value": "dark",
+                "label": "Dark (light words on it)"
+              },
+              {
+                "value": "light",
+                "label": "Light (dark words on it)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Sections",
+        "fields": [
+          {
+            "path": "sections.intro",
+            "label": "Statement",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.features",
+            "label": "Feature cards",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.about",
+            "label": "About, with the character again",
+            "type": "toggle"
+          },
+          {
+            "path": "sections.contact",
+            "label": "Contact box (a contact form from the library takes its place)",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Menu",
+        "fields": [
+          {
+            "path": "nav.links",
+            "label": "Links",
+            "type": "list",
+            "itemLabel": "Link",
+            "max": 6,
+            "fields": [
+              {
+                "path": "label",
+                "label": "Label",
+                "type": "text"
+              },
+              {
+                "path": "href",
+                "label": "Goes to",
+                "type": "text",
+                "hint": "#features, #about, #contact or a web address"
+              }
+            ]
+          },
+          {
+            "path": "nav.cta",
+            "label": "Button",
+            "type": "text"
+          },
+          {
+            "path": "nav.ctaHref",
+            "label": "Button goes to",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Opening",
+        "fields": [
+          {
+            "path": "hero.kicker",
+            "label": "Small line above",
+            "type": "text"
+          },
+          {
+            "path": "hero.title",
+            "label": "Headline",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero.cta",
+            "label": "Main button",
+            "type": "text"
+          },
+          {
+            "path": "hero.ctaHref",
+            "label": "Main button goes to",
+            "type": "text"
+          },
+          {
+            "path": "hero.cta2",
+            "label": "Second button",
+            "type": "text"
+          },
+          {
+            "path": "hero.cta2Href",
+            "label": "Second button goes to",
+            "type": "text"
+          },
+          {
+            "path": "hero.tags",
+            "label": "Words orbiting the character",
+            "type": "text",
+            "hint": "Up to four, separated by commas."
+          }
+        ]
+      },
+      {
+        "group": "Statement",
+        "fields": [
+          {
+            "path": "intro.text",
+            "label": "Statement",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "Feature cards",
+        "fields": [
+          {
+            "path": "features.kicker",
+            "label": "Small line above",
+            "type": "text"
+          },
+          {
+            "path": "features.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "features.items",
+            "label": "Cards",
+            "type": "list",
+            "itemLabel": "Card",
+            "max": 6,
+            "fields": [
+              {
+                "path": "title",
+                "label": "Title",
+                "type": "text"
+              },
+              {
+                "path": "text",
+                "label": "Text",
+                "type": "textarea"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "group": "About",
+        "fields": [
+          {
+            "path": "about.kicker",
+            "label": "Small line above",
+            "type": "text"
+          },
+          {
+            "path": "about.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "about.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "about.quote",
+            "label": "Quote",
+            "type": "textarea"
+          },
+          {
+            "path": "about.by",
+            "label": "Quote by",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Contact",
+        "fields": [
+          {
+            "path": "contact.title",
+            "label": "Title",
+            "type": "text"
+          },
+          {
+            "path": "contact.text",
+            "label": "Text",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "text"
+          },
+          {
+            "path": "contact.phone",
+            "label": "Phone",
+            "type": "text"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "text"
+          },
+          {
+            "path": "contact.button",
+            "label": "Button",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Footer",
+        "fields": [
+          {
+            "path": "footer.note",
+            "label": "Small print",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "group": "Colours",
+        "fields": [
+          {
+            "path": "theme.colors.page",
+            "label": "Background",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.surface",
+            "label": "Cards",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.surface2",
+            "label": "Raised cards",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.ink",
+            "label": "Text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.muted",
+            "label": "Soft text",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.line",
+            "label": "Lines",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.accent",
+            "label": "Accent",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.accent2",
+            "label": "Second accent",
+            "type": "color"
+          },
+          {
+            "path": "theme.colors.onAccent",
+            "label": "Text on the accent",
+            "type": "color"
+          }
+        ]
+      },
+      {
+        "group": "Fonts and shape",
+        "fields": [
+          {
+            "path": "theme.fonts.display",
+            "label": "Headings",
+            "type": "font"
+          },
+          {
+            "path": "theme.fonts.body",
+            "label": "Text",
+            "type": "font"
+          },
+          {
+            "path": "theme.radius",
+            "label": "Corner rounding (px)",
+            "type": "number",
+            "min": 0,
+            "max": 32,
+            "step": 1
+          }
+        ]
+      },
+      {
+        "group": "Motion",
+        "fields": [
+          {
+            "path": "motion.orbits",
+            "label": "Rings orbit the character",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.reveal",
+            "label": "Sections rise in as you scroll",
+            "type": "toggle"
+          },
+          {
+            "path": "motion.marquee",
+            "label": "Moving word band",
+            "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "Library sections",
+        "fields": [
+          {
+            "path": "extras",
+            "label": "Sections from the library",
+            "type": "blocks",
+            "hint": "Add any section, effect or scene from the shared library. They sit after the about section; a contact form among them replaces the contact box at the end."
+          }
+        ]
+      }
+    ],
+    "content": {
+      "seo": {
+        "title": "{name} | Built around one bright idea",
+        "description": "{name}: a studio built around one bright idea, with a 3D character at its heart."
+      },
+      "brand": {
+        "name": "Orbit"
+      },
+      "sections": {
+        "intro": true,
+        "features": true,
+        "about": true,
+        "contact": true
+      },
+      "nav": {
+        "links": [
+          {
+            "label": "What we do",
+            "href": "#features"
+          },
+          {
+            "label": "About",
+            "href": "#about"
+          },
+          {
+            "label": "Contact",
+            "href": "#contact"
+          }
+        ],
+        "cta": "Get in touch",
+        "ctaHref": "#contact"
+      },
+      "hero": {
+        "kicker": "A new kind of studio",
+        "title": "Built around\none bright idea.",
+        "text": "Everything here, every colour, word and motion, follows the character in the middle. Change it, and the whole site follows.",
+        "cta": "Start a project",
+        "ctaHref": "#contact",
+        "cta2": "See what we do",
+        "cta2Href": "#features",
+        "tags": "Design, Motion, 3D, Story"
+      },
+      "intro": {
+        "text": "We make things people remember: clear ideas, told with a little wonder, built to work on every screen."
+      },
+      "features": {
+        "kicker": "What we do",
+        "title": "Three things, done properly",
+        "items": [
+          {
+            "title": "Ideas",
+            "text": "We start with what makes you different and say it in plain words."
+          },
+          {
+            "title": "Design",
+            "text": "Colour, type and motion drawn from one character, so it all belongs together."
+          },
+          {
+            "title": "Launch",
+            "text": "Fast, accessible pages that look sharp on every phone and screen."
+          }
+        ]
+      },
+      "about": {
+        "kicker": "About",
+        "title": "Small team, big curiosity",
+        "text": "{name} is a small studio that likes hard problems and simple answers. We work closely with a few clients at a time.",
+        "quote": "They took a fuzzy idea and made it feel obvious.",
+        "by": "A happy client"
+      },
+      "contact": {
+        "title": "Let's make something together",
+        "text": "Tell us about your idea. We answer every message within a day.",
+        "email": "hello@orbit.studio",
+        "phone": "",
+        "address": "",
+        "button": "Write to us"
+      },
+      "footer": {
+        "note": "© {year} {name}"
+      },
+      "theme": {
+        "colors": {
+          "page": "#0d0b17",
+          "surface": "#161327",
+          "surface2": "#1f1b36",
+          "ink": "#f4f1ff",
+          "muted": "#aaa3c7",
+          "line": "#2b2645",
+          "accent": "#8b6cff",
+          "accent2": "#4fd1c5",
+          "onAccent": "#0d0b17"
+        },
+        "fonts": {
+          "display": "Unbounded",
+          "body": "Manrope"
+        },
+        "radius": 18
+      },
+      "motion": {
+        "orbits": true,
+        "reveal": true,
+        "marquee": true
+      },
+      "character": {
+        "src": "/assets/3d/character/character-astronaut-001.glb",
+        "poster": "/assets/previews/character-astronaut-001.webp",
+        "name": "Little Astronaut",
+        "motion": "float",
+        "clip": "",
+        "react": "both",
+        "scroll": "turn",
+        "scale": 1,
+        "turn": -18,
+        "tilt": 0,
+        "lift": 0,
+        "speed": 1,
+        "finish": "original",
+        "paint": "#8b6cff",
+        "parts": "",
+        "screen": "",
+        "shadow": true,
+        "echo": true,
+        "credit": ""
+      },
+      "design": {
+        "stops": [
+          "#120d26",
+          "#6d4dff",
+          "#1d1640"
+        ],
+        "style": "glow",
+        "angle": 160,
+        "light": "#8b6cff",
+        "image": "",
+        "imageTone": "dark"
+      },
+      "extras": []
+    },
+    "poster": true,
+    "siteFiles": 2,
+    "sourceFiles": 2
   },
   {
     "id": "stride",
@@ -12904,7 +13724,7 @@
         "imageTone": "dark"
       }
     },
-    "poster": false,
+    "poster": true,
     "siteFiles": 10,
     "sourceFiles": 19
   },
@@ -14081,7 +14901,7 @@
         "imageTone": "dark"
       }
     },
-    "poster": false,
+    "poster": true,
     "siteFiles": 13,
     "sourceFiles": 23
   }
