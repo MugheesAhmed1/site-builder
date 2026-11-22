@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { cleanMask, hasCutout, maskFromAlpha, maskShare, reliefMesh, subjectMask, type PixelImage } from "@/lib/character/relief";
 import { MAX_PARTS, normalizeSpec, SAMPLE_SPEC, specBounds } from "@/lib/character/sculpt";
-import { answer, MAX_QUESTIONS, normalizeBrief, ruleStep, startBrief, summary, type ChatTurn } from "@/lib/journey/brief";
+import { answer, MAX_QUESTIONS, normalizeBrief, ruleStep, startBrief, summary, type Brief, type ChatTurn } from "@/lib/journey/brief";
 
 /** A w x h picture: `paint(x, y)` gives each pixel's RGBA. */
 function picture(w: number, h: number, paint: (x: number, y: number) => [number, number, number, number?]): PixelImage {
@@ -186,10 +186,10 @@ describe("the interview, by the rules", () => {
   });
 
   it("keeps a character chosen on the home page and does not ask for one", () => {
-    const b = { ...startBrief("A fantasy game studio"), star: "character-dragon-001", character: "the baby dragon" };
+    const b: Brief = { ...startBrief("A fantasy game studio"), star: "character-dragon-001", character: "the baby dragon" };
     const fields: string[] = [];
     const turns: ChatTurn[] = [{ role: "me", text: b.idea }];
-    let brief = b;
+    let brief: Brief = b;
     let step = ruleStep(brief, turns);
     while (!step.done) {
       fields.push(step.field!);

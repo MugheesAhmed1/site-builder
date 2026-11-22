@@ -1,7 +1,9 @@
 /* The home page around one character (components/home/HomeCharacter.tsx). The page's accent, its
    second colour, its stage and the tint of its background are registered colours, so when the
-   character changes they glide to the new ones instead of jumping. Motion: ease-out, 0.9 s for the
-   page's colours (a rare, deliberate moment), UI under 300 ms, reduced motion respected. */
+   character changes they glide to the new ones instead of jumping. Only the opening and the menu
+   glide (animating a colour on the page root would restyle the whole page every frame); the rest of
+   the page, out of view while the opening turns, takes the new colours at once. Motion: ease-out,
+   0.9 s for the colours (a rare, deliberate moment), UI under 300 ms, reduced motion respected. */
 
 @property --hc-a { syntax: "<color>"; inherits: true; initial-value: #dab765; }
 @property --hc-a2 { syntax: "<color>"; inherits: true; initial-value: #bbdb8c; }
@@ -9,6 +11,7 @@
 @property --hc-s1 { syntax: "<color>"; inherits: true; initial-value: #160e00; }
 @property --hc-s2 { syntax: "<color>"; inherits: true; initial-value: #6d540f; }
 @property --hc-s3 { syntax: "<color>"; inherits: true; initial-value: #25330a; }
+@property --hc-on { syntax: "<color>"; inherits: true; initial-value: #100d06; }
 
 .hc {
   --hc-a: #dab765;
@@ -18,8 +21,12 @@
   --hc-s1: #160e00;
   --hc-s2: #6d540f;
   --hc-s3: #25330a;
-  /* The page's own tokens follow the character: its page colour, panels and lines lifted from
-     it, greys warmed or cooled by its accent. Mixed in oklab, so a near-black never swings hue. */
+  background: var(--bg);
+}
+/* The page's own tokens follow the character: its page colour, panels and lines lifted from it,
+   greys warmed or cooled by its accent. Mixed in oklab, so a near-black never swings hue. They are
+   worked out again inside the opening and the menu, from the colours gliding there. */
+.hc, .hc .ch, .hc .hnav {
   --accent: var(--hc-a);
   --accent-2: var(--hc-a2);
   --accent-ink: var(--hc-on);
@@ -32,11 +39,10 @@
   --line-strong: color-mix(in oklab, var(--hc-a) 16%, color-mix(in oklab, var(--hc-bg), white 24%));
   --muted: color-mix(in oklab, oklch(0.8 0 0), var(--hc-a) 8%);
   --faint: color-mix(in oklab, oklch(0.64 0 0), var(--hc-a) 8%);
-  background: var(--bg);
-  transition: --hc-a 0.9s var(--ease-out, ease), --hc-a2 0.9s var(--ease-out, ease), --hc-bg 0.9s var(--ease-out, ease), --hc-s1 0.9s ease, --hc-s2 0.9s ease, --hc-s3 0.9s ease;
 }
+.hc .ch, .hc .hnav { transition: --hc-a 0.9s var(--ease-out, ease), --hc-a2 0.9s var(--ease-out, ease), --hc-bg 0.9s var(--ease-out, ease), --hc-on 0.9s ease, --hc-s1 0.9s ease, --hc-s2 0.9s ease, --hc-s3 0.9s ease; }
 @media (prefers-reduced-motion: reduce) {
-  .hc { transition: none; }
+  .hc .ch, .hc .hnav { transition: none; }
 }
 
 /* ------------------------------------------------------------------ the opening */
