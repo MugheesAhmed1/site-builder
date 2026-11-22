@@ -75,6 +75,7 @@ export default function AssetLibrary({ cards }: { cards: AssetCard[] }) {
               <option value="CC0-1.0">CC0 (no credit needed)</option>
               <option value="CC-BY-4.0">CC BY 4.0 (credited)</option>
               <option value="original">Original</option>
+              <option value="owner-cleared">Your uploads (cleared)</option>
               <option value="owner-supplied">Your uploads (licence to confirm)</option>
             </select>
           </label>
@@ -137,7 +138,7 @@ export default function AssetLibrary({ cards }: { cards: AssetCard[] }) {
                       {c.license === "original" ? "Original" : c.license.replace("-1.0", "").replace("-4.0", " 4.0").replace("-", " ")}
                     </a>
                   ) : (
-                    c.license.replace("-", " ")
+                    c.license === "owner-cleared" ? "Your upload, cleared" : c.license.replace("-", " ")
                   )}{" "}
                   by {c.creator}
                   {c.attribution ? ", credited in the site" : ""}

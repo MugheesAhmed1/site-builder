@@ -25,17 +25,17 @@ Each record carries:
 - **Performance:** bytes, triangles, texture resolution, material count and a tier of low, medium or high.
 - **Bounds and preview path.**
 
-The library holds 95 assets in 9 categories, about 48 MB in total:
+The library holds 112 assets in 9 categories, about 68 MB in total (2026-11-22):
 
 | Category | Count |
 | --- | --- |
-| Products | 13 |
-| Vehicles | 9 |
-| Characters | 13 |
-| Nature | 7 |
+| Products | 17 |
+| Vehicles | 12 |
+| Characters | 16 |
+| Nature | 10 |
 | Architecture | 8 |
-| Environments | 6 |
-| Props | 24 |
+| Environments | 7 |
+| Props | 27 |
 | Abstract | 8 |
 | HDR lights | 7 |
 
@@ -44,7 +44,8 @@ By licence:
 - **CC BY 4.0:** 14 assets (13 from Khronos glTF Sample Assets, plus the Black Hypercar by LC Design, from the owner's upload with its Sketchfab licence file). These are credited in every site that uses them.
 - **Original:** 8 assets, the abstract models made in code by `scripts/assets/abstract.mjs`.
 - **Owner-made:** 2 assets, uploaded in the project (Mars Rover and Macaw). The owner made them with ChatGPT and confirmed on 2026-11-19 that they are their own work, so they are recorded as `original` and ship like the other originals. The macaw has no animation clips.
-- **Owner uploads, licence to confirm:** 6 assets from the second upload on 2026-11-19 (Red Deer Stag, Black Leather Loafers, Armoured Blade Warrior, Bee Robot, Little Astronaut, Baby Dragon). Nothing in the files says who made them or on what terms, so they show in /library marked "licence to confirm" and the licence gate keeps them off generated sites. When the owner confirms, switch each record in `scripts/assets/sources.mjs` to a confirmed licence and re-run the ingest.
+- **Owner uploads, cleared (`owner-cleared`):** on 2026-11-22 the owner confirmed that every GLB they supplied is licence free and cleared for commercial use. That switched on the six held from 2026-11-19 (Red Deer Stag, Black Leather Loafers, Armoured Blade Warrior, Bee Robot, Little Astronaut, Baby Dragon) and covers the third batch of 17 added on 2026-11-22: Myna Bird, Pink Winged Dragon, Animated Kid (idle, walk, run and sit clips merged from separate files), Pink Backpack, Gift Box, Hardcover Book, Blueprints, Drink Cans, Superyacht, Pulsing Xenia Coral, Swivel Lounge Chair, Foldable Phone (open and close clip), White Track Coupe, Formula Racer, Cozy Bedroom Diorama, Planet Earth and Amber Planet. Trademarks are not the owner's to clear, so maker logos, sponsor liveries, tyre lettering and a streaming brand's screen were painted out or removed, and every model has a generic name. Files whose own licence forbids commercial use (cirque_de_gavarnie) or that show a copyrighted character (Frieren) stay out.
+- **Recolourable materials:** a few models name the material a site may recolour: `paint` (Formula Racer), `clay` (Animated Kid) and `screen` (Foldable Phone, bedroom TV). The manifest records them as `display.tint` and `display.screen`, and the character engine tints them with the site's accent or shows the site's gradient on the screen.
 
 ### Owner uploads: picking one copy
 

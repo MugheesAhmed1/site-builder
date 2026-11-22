@@ -87,12 +87,12 @@ describe("asset library files", () => {
 
   it("keeps the library a reasonable size", () => {
     const total = ASSETS.reduce((n, a) => n + a.performance.bytes, 0);
-    expect(total).toBeLessThan(55e6);
+    expect(total).toBeLessThan(75e6);
     for (const a of ASSETS) expect(a.performance.bytes, a.id).toBeLessThan(5.2e6);
   });
 
-  it("ships only CC0, CC BY 4.0 and original assets; uploads with an unknown licence are held back", () => {
-    for (const a of ASSETS.filter(isShippable)) expect(["CC0-1.0", "CC-BY-4.0", "original"]).toContain(a.license.type);
+  it("ships only CC0, CC BY 4.0, original and owner-cleared assets; uploads with an unknown licence are held back", () => {
+    for (const a of ASSETS.filter(isShippable)) expect(["CC0-1.0", "CC-BY-4.0", "original", "owner-cleared"]).toContain(a.license.type);
     for (const a of ASSETS.filter((x) => !isShippable(x))) expect(a.license.type).toBe("owner-supplied");
     // The owner's own uploads (made with ChatGPT, confirmed 2026-11-19) are original work and ship.
     for (const id of ["animal-macaw-001", "vehicle-mars-rover-001"]) expect(isShippable(assetById(id)!), id).toBe(true);
@@ -102,16 +102,31 @@ describe("asset library files", () => {
   });
 });
 
-describe("second owner batch", () => {
-  it("adds the credited car and holds the uploads with no stated licence", () => {
+describe("owner batches", () => {
+  it("adds the credited car, and ships the uploads the owner cleared on 2026-11-22", () => {
     const car = assetById("vehicle-hypercar-black-001")!;
     expect(isShippable(car)).toBe(true);
     expect(creditOf(car)).toMatch(/^"McLaren P1 GTR 2015" by LC Design, CC BY 4\.0/);
     expect(resolveAsset({ query: "black racing hypercar" }).id).toBe("vehicle-hypercar-black-001");
     for (const id of ["animal-deer-001", "product-loafers-black-001", "character-armored-warrior-001", "character-robot-bee-001", "character-astronaut-001", "character-dragon-001"]) {
-      expect(isShippable(assetById(id)!), id).toBe(false);
-      expect(resolveAsset({ query: assetById(id)!.name }).id, id).not.toBe(id);
+      const a = assetById(id)!;
+      expect(a.license.type, id).toBe("owner-cleared");
+      expect(isShippable(a), id).toBe(true);
     }
+  });
+
+  it("adds the third batch with brand marks removed and generic names", () => {
+    const ids = ["animal-myna-001", "character-dragon-pink-001", "character-kid-001", "product-backpack-001", "prop-giftbox-001", "prop-book-001", "prop-blueprints-001", "product-cans-001", "vehicle-yacht-001", "nature-coral-xenia-001", "chair-swivel-001", "product-phone-fold-001", "vehicle-coupe-white-001", "vehicle-formula-001", "environment-bedroom-001", "nature-earth-001", "nature-planet-amber-001"];
+    for (const id of ids) {
+      const a = assetById(id)!;
+      expect(a, id).toBeTruthy();
+      expect(isShippable(a), id).toBe(true);
+      expect(a.name, id).not.toMatch(/apple|iphone|nissan|gt-?r|mclaren|netflix|marlboro/i);
+    }
+    expect(assetById("character-kid-001")!.clips.map((c) => c.name)).toEqual(["idle", "walk", "run", "sit"]);
+    expect(assetById("product-phone-fold-001")!.clips.map((c) => c.name)).toEqual(["open-close"]);
+    expect(resolveAsset({ query: "foldable phone app" }).id).toBe("product-phone-fold-001");
+    expect(resolveAsset({ query: "planet earth globe" }).id).toBe("nature-earth-001");
   });
 });
 

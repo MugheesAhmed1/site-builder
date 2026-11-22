@@ -48,7 +48,7 @@ export function assetById(id: string): AssetRecord | undefined {
 }
 
 /** Licences an asset may carry into a site someone else owns and sells from. */
-export const SHIPPABLE_LICENSES = ["CC0-1.0", "CC-BY-4.0", "original"];
+export const SHIPPABLE_LICENSES = ["CC0-1.0", "CC-BY-4.0", "original", "owner-cleared"];
 
 /**
  * The licence gate. An asset ships only when every one of these is recorded and allows it;
