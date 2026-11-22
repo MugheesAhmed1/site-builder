@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-11-19",
+  "generated": "2026-11-22",
   "note": "Built by scripts/assets/ingest.mjs from scripts/assets/sources.mjs. Do not edit by hand.",
   "assets": [
     {
@@ -329,6 +329,110 @@
       },
       "preview": "/assets/previews/chair-sheen-001.webp",
       "asset": "/assets/3d/product/chair-sheen-001.glb"
+    },
+    {
+      "id": "chair-swivel-001",
+      "name": "Swivel Lounge Chair",
+      "type": "3d",
+      "format": "glb",
+      "category": "product",
+      "subcategory": "furniture",
+      "tags": [
+        "chair",
+        "armchair",
+        "swivel chair",
+        "lounge chair",
+        "furniture",
+        "interior",
+        "office",
+        "home",
+        "modern",
+        "design"
+      ],
+      "style": [
+        "minimal",
+        "modern",
+        "realistic",
+        "scandinavian"
+      ],
+      "materials": [
+        "fabric",
+        "metal"
+      ],
+      "colors": [
+        "grey"
+      ],
+      "license": {
+        "type": "owner-cleared",
+        "url": "",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Supplied by the project owner (Chair_9.rar / glb/model.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
+      },
+      "source": {
+        "url": "owner-upload:More glb files.zip / Chair_9 (glb)",
+        "creator": "Supplied by the project owner",
+        "via": "project thread upload, 2026-11-22"
+      },
+      "modifications": "Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-22",
+      "animationCapabilities": [
+        "rotate",
+        "float",
+        "orbit",
+        "scale",
+        "reveal",
+        "parallax",
+        "scrollRotate",
+        "scrollMove",
+        "hover"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 1.02,
+        "bytes": 1070500,
+        "triangles": 47180,
+        "textureResolution": "1k",
+        "materials": 1,
+        "animation": "none",
+        "tier": "medium"
+      },
+      "bounds": {
+        "min": [
+          -0.3949,
+          0,
+          -0.3678
+        ],
+        "max": [
+          0.3949,
+          0.7285,
+          0.3678
+        ],
+        "size": [
+          0.7898,
+          0.7285,
+          0.7357
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/chair-swivel-001.webp",
+      "asset": "/assets/3d/product/chair-swivel-001.glb"
     },
     {
       "id": "eyewear-black-001",
@@ -760,6 +864,213 @@
       "asset": "/assets/3d/product/lamp-iridescent-001.glb"
     },
     {
+      "id": "product-backpack-001",
+      "name": "Pink Backpack",
+      "type": "3d",
+      "format": "glb",
+      "category": "product",
+      "subcategory": "bag",
+      "tags": [
+        "backpack",
+        "bag",
+        "school bag",
+        "rucksack",
+        "travel",
+        "school",
+        "student",
+        "fashion",
+        "accessory",
+        "pink",
+        "kids"
+      ],
+      "style": [
+        "stylized",
+        "playful",
+        "pastel",
+        "realistic"
+      ],
+      "materials": [
+        "fabric",
+        "metal"
+      ],
+      "colors": [
+        "pink"
+      ],
+      "license": {
+        "type": "owner-cleared",
+        "url": "",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Supplied by the project owner (Backpack.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
+      },
+      "source": {
+        "url": "owner-upload:More glb files.zip / Backpack.glb",
+        "creator": "Supplied by the project owner",
+        "via": "project thread upload, 2026-11-22"
+      },
+      "modifications": "Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-22",
+      "animationCapabilities": [
+        "rotate",
+        "float",
+        "orbit",
+        "scale",
+        "reveal",
+        "parallax",
+        "scrollRotate",
+        "scrollMove",
+        "hover"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 0.76,
+        "bytes": 800508,
+        "triangles": 37680,
+        "textureResolution": "1k",
+        "materials": 1,
+        "animation": "none",
+        "tier": "medium"
+      },
+      "bounds": {
+        "min": [
+          -0.4647,
+          0,
+          -0.4988
+        ],
+        "max": [
+          0.4647,
+          1.1171,
+          0.4988
+        ],
+        "size": [
+          0.9294,
+          1.1171,
+          0.9977
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/product-backpack-001.webp",
+      "asset": "/assets/3d/product/product-backpack-001.glb"
+    },
+    {
+      "id": "product-cans-001",
+      "name": "Drink Cans",
+      "type": "3d",
+      "format": "glb",
+      "category": "product",
+      "subcategory": "drinks",
+      "tags": [
+        "can",
+        "cans",
+        "soda",
+        "drink",
+        "beverage",
+        "energy drink",
+        "juice",
+        "packaging",
+        "aluminium",
+        "brand"
+      ],
+      "style": [
+        "minimal",
+        "realistic",
+        "clean"
+      ],
+      "materials": [
+        "metal"
+      ],
+      "colors": [
+        "silver",
+        "white"
+      ],
+      "license": {
+        "type": "owner-cleared",
+        "url": "",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Supplied by the project owner (Can+Bottle.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
+      },
+      "source": {
+        "url": "owner-upload:More glb files.zip / Can+Bottle.glb",
+        "creator": "Supplied by the project owner",
+        "via": "project thread upload, 2026-11-22"
+      },
+      "modifications": "The studio floor plane was removed. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-22",
+      "animationCapabilities": [
+        "rotate",
+        "float",
+        "orbit",
+        "scale",
+        "reveal",
+        "parallax",
+        "scrollRotate",
+        "scrollMove",
+        "hover"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 0.06,
+        "bytes": 63516,
+        "triangles": 21080,
+        "textureResolution": "none",
+        "materials": 2,
+        "animation": "none",
+        "tier": "medium"
+      },
+      "bounds": {
+        "min": [
+          -1.0431,
+          0,
+          -6.3128
+        ],
+        "max": [
+          1.0431,
+          4.026,
+          6.3127
+        ],
+        "size": [
+          2.0862,
+          4.026,
+          12.6255
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/product-cans-001.webp",
+      "asset": "/assets/3d/product/product-cans-001.glb"
+    },
+    {
       "id": "product-loafers-black-001",
       "name": "Black Leather Loafers",
       "type": "3d",
@@ -793,17 +1104,17 @@
         "black"
       ],
       "license": {
-        "type": "owner-supplied",
+        "type": "owner-cleared",
         "url": "",
-        "commercialUse": false,
-        "redistribution": false,
+        "commercialUse": true,
+        "redistribution": true,
         "modification": true,
         "attributionRequired": false,
-        "evidence": "Uploaded by the project owner on 2026-11-19 (leather-ladies-shoes.blend with textures.zip). Only the shoe mesh was kept from the .blend; its studio floor, cameras, lights and wireframe copy were dropped. Origin and licence not stated; held until the owner confirms."
+        "evidence": "Uploaded by the project owner on 2026-11-19 (leather-ladies-shoes.blend with textures.zip). Only the shoe mesh was kept from the .blend; its studio floor, cameras, lights and wireframe copy were dropped. The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
       },
       "source": {
         "url": "owner-upload:leather-ladies-shoes.blend with textures.zip",
-        "creator": "Unknown (uploaded by the project owner)",
+        "creator": "Supplied by the project owner",
         "via": "project thread upload"
       },
       "modifications": "Converted from .blend with Blender; 8K textures reduced. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
@@ -863,6 +1174,124 @@
       },
       "preview": "/assets/previews/product-loafers-black-001.webp",
       "asset": "/assets/3d/product/product-loafers-black-001.glb"
+    },
+    {
+      "id": "product-phone-fold-001",
+      "name": "Foldable Phone",
+      "type": "3d",
+      "format": "glb",
+      "category": "product",
+      "subcategory": "phone",
+      "tags": [
+        "phone",
+        "smartphone",
+        "foldable phone",
+        "mobile",
+        "device",
+        "tech",
+        "app",
+        "gadget",
+        "electronics",
+        "fold",
+        "startup"
+      ],
+      "style": [
+        "premium",
+        "minimal",
+        "futuristic",
+        "realistic"
+      ],
+      "materials": [
+        "ceramic",
+        "titanium",
+        "glass"
+      ],
+      "colors": [
+        "white",
+        "silver"
+      ],
+      "license": {
+        "type": "owner-cleared",
+        "url": "",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Supplied by the project owner (iPhone_Duo_GLB.zip / iphone-duo-rigged.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
+      },
+      "source": {
+        "url": "owner-upload:More glb files.zip / iphone-duo-rigged.glb",
+        "creator": "Supplied by the project owner",
+        "via": "project thread upload, 2026-11-22"
+      },
+      "modifications": "The maker's logo mesh was removed, the wallpaper on both screens replaced with a plain dark screen (a site can show its own gradient there), and metadata naming the maker dropped. Listed under a generic name. Kept only the listed animation clips, renamed to plain names. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-22",
+      "animationCapabilities": [
+        "rotate",
+        "float",
+        "orbit",
+        "scale",
+        "reveal",
+        "parallax",
+        "scrollRotate",
+        "scrollMove",
+        "hover",
+        "open-close",
+        "assemble"
+      ],
+      "clips": [
+        {
+          "name": "open-close",
+          "duration": 8
+        }
+      ],
+      "performance": {
+        "fileSizeMB": 2.48,
+        "bytes": 2599100,
+        "triangles": 79063,
+        "textureResolution": "1k",
+        "materials": 30,
+        "animation": "skeletal",
+        "tier": "high"
+      },
+      "bounds": {
+        "min": [
+          -1.0002,
+          -1.0002,
+          -0.22
+        ],
+        "max": [
+          0.9998,
+          0.9998,
+          0.2256
+        ],
+        "size": [
+          2,
+          2,
+          0.4456
+        ]
+      },
+      "display": {
+        "pivot": "center",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": true,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_materials_clearcoat",
+          "KHR_materials_ior",
+          "KHR_materials_transmission",
+          "KHR_mesh_quantization"
+        ],
+        "screen": "screen"
+      },
+      "preview": "/assets/previews/product-phone-fold-001.webp",
+      "asset": "/assets/3d/product/product-phone-fold-001.glb"
     },
     {
       "id": "shoe-sneaker-001",
@@ -2167,6 +2596,229 @@
       "asset": "/assets/3d/vehicle/truck-001.glb"
     },
     {
+      "id": "vehicle-coupe-white-001",
+      "name": "White Track Coupe",
+      "type": "3d",
+      "format": "glb",
+      "category": "vehicle",
+      "subcategory": "car",
+      "tags": [
+        "car",
+        "sports car",
+        "coupe",
+        "track car",
+        "race car",
+        "racing",
+        "automotive",
+        "vehicle",
+        "speed",
+        "tuning",
+        "white",
+        "garage"
+      ],
+      "style": [
+        "bold",
+        "realistic",
+        "cinematic"
+      ],
+      "materials": [
+        "paint",
+        "carbon",
+        "glass",
+        "rubber"
+      ],
+      "colors": [
+        "white",
+        "red",
+        "black"
+      ],
+      "license": {
+        "type": "owner-cleared",
+        "url": "",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Supplied by the project owner (GTR+35.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
+      },
+      "source": {
+        "url": "owner-upload:More glb files.zip / GTR+35.glb",
+        "creator": "Supplied by the project owner",
+        "via": "project thread upload, 2026-11-22"
+      },
+      "modifications": "Badge meshes, the number plate and the tyre maker's lettering painted plain; simplified from about 2 million triangles. Listed under a generic name, because the maker's name is a trademark. Mesh simplified to about 6% of its triangles with meshoptimizer. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-22",
+      "animationCapabilities": [
+        "rotate",
+        "float",
+        "orbit",
+        "scale",
+        "reveal",
+        "parallax",
+        "scrollRotate",
+        "scrollMove",
+        "hover",
+        "assemble"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 2.27,
+        "bytes": 2378568,
+        "triangles": 132822,
+        "textureResolution": "512",
+        "materials": 20,
+        "animation": "none",
+        "tier": "high"
+      },
+      "bounds": {
+        "min": [
+          -1.0818,
+          0,
+          -2.3885
+        ],
+        "max": [
+          1.0818,
+          1.3878,
+          2.3885
+        ],
+        "size": [
+          2.1636,
+          1.3878,
+          4.777
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_materials_clearcoat",
+          "KHR_materials_emissive_strength",
+          "KHR_materials_ior",
+          "KHR_materials_specular",
+          "KHR_materials_transmission",
+          "KHR_mesh_quantization",
+          "KHR_texture_transform"
+        ]
+      },
+      "preview": "/assets/previews/vehicle-coupe-white-001.webp",
+      "asset": "/assets/3d/vehicle/vehicle-coupe-white-001.glb"
+    },
+    {
+      "id": "vehicle-formula-001",
+      "name": "Formula Racer",
+      "type": "3d",
+      "format": "glb",
+      "category": "vehicle",
+      "subcategory": "race car",
+      "tags": [
+        "formula",
+        "race car",
+        "racing",
+        "motorsport",
+        "single seater",
+        "speed",
+        "track",
+        "car",
+        "vehicle",
+        "sport"
+      ],
+      "style": [
+        "bold",
+        "realistic",
+        "cinematic"
+      ],
+      "materials": [
+        "paint",
+        "carbon",
+        "rubber"
+      ],
+      "colors": [
+        "white",
+        "black"
+      ],
+      "license": {
+        "type": "owner-cleared",
+        "url": "",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Supplied by the project owner (mclaren_mp45_2k.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
+      },
+      "source": {
+        "url": "owner-upload:More glb files.zip / mclaren_mp45_2k.glb",
+        "creator": "Supplied by the project owner",
+        "via": "project thread upload, 2026-11-22"
+      },
+      "modifications": "Every sponsor livery, tyre lettering and team mark painted out to plain colours; the body material renamed paint so a site can colour it. Listed under a generic name. Mesh simplified to about 40% of its triangles with meshoptimizer. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-22",
+      "animationCapabilities": [
+        "rotate",
+        "float",
+        "orbit",
+        "scale",
+        "reveal",
+        "parallax",
+        "scrollRotate",
+        "scrollMove",
+        "hover",
+        "assemble"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 2.15,
+        "bytes": 2252208,
+        "triangles": 132976,
+        "textureResolution": "none",
+        "materials": 4,
+        "animation": "none",
+        "tier": "high"
+      },
+      "bounds": {
+        "min": [
+          -1.0598,
+          0,
+          -2.1773
+        ],
+        "max": [
+          1.0598,
+          0.9574,
+          2.1773
+        ],
+        "size": [
+          2.1195,
+          0.9574,
+          4.3547
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "KHR_materials_emissive_strength",
+          "KHR_mesh_quantization"
+        ],
+        "tint": "paint"
+      },
+      "preview": "/assets/previews/vehicle-formula-001.webp",
+      "asset": "/assets/3d/vehicle/vehicle-formula-001.glb"
+    },
+    {
       "id": "vehicle-hypercar-black-001",
       "name": "Black Hypercar",
       "type": "3d",
@@ -2382,6 +3034,116 @@
       "asset": "/assets/3d/vehicle/vehicle-mars-rover-001.glb"
     },
     {
+      "id": "vehicle-yacht-001",
+      "name": "Superyacht",
+      "type": "3d",
+      "format": "glb",
+      "category": "vehicle",
+      "subcategory": "boat",
+      "tags": [
+        "yacht",
+        "superyacht",
+        "boat",
+        "ship",
+        "luxury",
+        "marine",
+        "sea",
+        "ocean",
+        "charter",
+        "travel",
+        "cruise"
+      ],
+      "style": [
+        "luxury",
+        "premium",
+        "realistic",
+        "cinematic"
+      ],
+      "materials": [
+        "paint",
+        "glass",
+        "wood",
+        "chrome"
+      ],
+      "colors": [
+        "white",
+        "silver"
+      ],
+      "license": {
+        "type": "owner-cleared",
+        "url": "",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Supplied by the project owner (Superyacht.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
+      },
+      "source": {
+        "url": "owner-upload:More glb files.zip / Superyacht.glb",
+        "creator": "Supplied by the project owner",
+        "via": "project thread upload, 2026-11-22"
+      },
+      "modifications": "Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-22",
+      "animationCapabilities": [
+        "rotate",
+        "float",
+        "orbit",
+        "scale",
+        "reveal",
+        "parallax",
+        "scrollRotate",
+        "scrollMove",
+        "hover",
+        "assemble"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 1.94,
+        "bytes": 2032512,
+        "triangles": 71982,
+        "textureResolution": "1k",
+        "materials": 12,
+        "animation": "none",
+        "tier": "medium"
+      },
+      "bounds": {
+        "min": [
+          -60.0988,
+          0,
+          -13.191
+        ],
+        "max": [
+          60.0988,
+          31.8649,
+          13.191
+        ],
+        "size": [
+          120.1975,
+          31.8649,
+          26.3821
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_materials_specular",
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/vehicle-yacht-001.webp",
+      "asset": "/assets/3d/vehicle/vehicle-yacht-001.glb"
+    },
+    {
       "id": "animal-deer-001",
       "name": "Red Deer Stag",
       "type": "3d",
@@ -2415,17 +3177,17 @@
         "grey"
       ],
       "license": {
-        "type": "owner-supplied",
+        "type": "owner-cleared",
         "url": "",
-        "commercialUse": false,
-        "redistribution": false,
+        "commercialUse": true,
+        "redistribution": true,
         "modification": true,
         "attributionRequired": false,
-        "evidence": "Uploaded by the project owner on 2026-11-19 (RealisticDeer_FBX.zip with Textures (1).zip). The FBX and the OBJ copy hold the same 16,040-triangle mesh; the FBX was used with the supplied textures. Origin and licence not stated; held until the owner confirms."
+        "evidence": "Uploaded by the project owner on 2026-11-19 (RealisticDeer_FBX.zip with Textures (1).zip). The FBX and the OBJ copy hold the same 16,040-triangle mesh; the FBX was used with the supplied textures. The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
       },
       "source": {
         "url": "owner-upload:RealisticDeer_FBX.zip with Textures (1).zip",
-        "creator": "Unknown (uploaded by the project owner)",
+        "creator": "Supplied by the project owner",
         "via": "project thread upload"
       },
       "modifications": "Converted from FBX with Blender and given its supplied textures. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
@@ -2789,6 +3551,108 @@
       "asset": "/assets/3d/character/animal-macaw-001.glb"
     },
     {
+      "id": "animal-myna-001",
+      "name": "Myna Bird",
+      "type": "3d",
+      "format": "glb",
+      "category": "character",
+      "subcategory": "bird",
+      "tags": [
+        "myna",
+        "bird",
+        "songbird",
+        "starling",
+        "animal",
+        "wildlife",
+        "flying",
+        "nature",
+        "pet",
+        "garden"
+      ],
+      "style": [
+        "realistic",
+        "natural",
+        "calm"
+      ],
+      "materials": [
+        "feathers"
+      ],
+      "colors": [
+        "brown",
+        "black",
+        "yellow",
+        "white"
+      ],
+      "license": {
+        "type": "owner-cleared",
+        "url": "",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Supplied by the project owner (Myna Bird_GLB.zip / Myna Bird.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
+      },
+      "source": {
+        "url": "owner-upload:More glb files.zip / Myna Bird.glb",
+        "creator": "Supplied by the project owner",
+        "via": "project thread upload, 2026-11-22"
+      },
+      "modifications": "Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-22",
+      "animationCapabilities": [
+        "reveal",
+        "parallax",
+        "rotate",
+        "scrollMove",
+        "lookAtPointer"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 0.67,
+        "bytes": 697676,
+        "triangles": 19418,
+        "textureResolution": "1k",
+        "materials": 1,
+        "animation": "none",
+        "tier": "medium"
+      },
+      "bounds": {
+        "min": [
+          -0.15,
+          -0.1424,
+          -0.1453
+        ],
+        "max": [
+          0.15,
+          0.1424,
+          0.1453
+        ],
+        "size": [
+          0.3,
+          0.2847,
+          0.2906
+        ]
+      },
+      "display": {
+        "pivot": "center",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_materials_specular",
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/animal-myna-001.webp",
+      "asset": "/assets/3d/character/animal-myna-001.glb"
+    },
+    {
       "id": "character-armored-warrior-001",
       "name": "Armoured Blade Warrior",
       "type": "3d",
@@ -2825,17 +3689,17 @@
         "blue"
       ],
       "license": {
-        "type": "owner-supplied",
+        "type": "owner-cleared",
         "url": "",
-        "commercialUse": false,
-        "redistribution": false,
+        "commercialUse": true,
+        "redistribution": true,
         "modification": true,
         "attributionRequired": false,
-        "evidence": "Uploaded by the project owner on 2026-11-19 (glb.glb). model.obj and fbx.fbx hold the same 1,994,358-triangle mesh; the GLB was used because it carries the textures. Origin and licence not stated; held until the owner confirms."
+        "evidence": "Uploaded by the project owner on 2026-11-19 (glb.glb). model.obj and fbx.fbx hold the same 1,994,358-triangle mesh; the GLB was used because it carries the textures. The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
       },
       "source": {
         "url": "owner-upload:glb.glb",
-        "creator": "Unknown (uploaded by the project owner)",
+        "creator": "Supplied by the project owner",
         "via": "project thread upload"
       },
       "modifications": "Simplified from about 2 million triangles. Mesh simplified to about 3% of its triangles with meshoptimizer. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
@@ -2926,17 +3790,17 @@
         "blue"
       ],
       "license": {
-        "type": "owner-supplied",
+        "type": "owner-cleared",
         "url": "",
-        "commercialUse": false,
-        "redistribution": false,
+        "commercialUse": true,
+        "redistribution": true,
         "modification": true,
         "attributionRequired": false,
-        "evidence": "Uploaded by the project owner on 2026-11-19 (tiny_planet_friends_3d-astronaut-3192.glb). Origin and licence not stated; held until the owner confirms."
+        "evidence": "Uploaded by the project owner on 2026-11-19 (tiny_planet_friends_3d-astronaut-3192.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
       },
       "source": {
         "url": "owner-upload:tiny_planet_friends_3d-astronaut-3192.glb",
-        "creator": "Unknown (uploaded by the project owner)",
+        "creator": "Supplied by the project owner",
         "via": "project thread upload"
       },
       "modifications": "Simplified from about 500,000 triangles. Mesh simplified to about 12% of its triangles with meshoptimizer. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
@@ -3028,17 +3892,17 @@
         "white"
       ],
       "license": {
-        "type": "owner-supplied",
+        "type": "owner-cleared",
         "url": "",
-        "commercialUse": false,
-        "redistribution": false,
+        "commercialUse": true,
+        "redistribution": true,
         "modification": true,
         "attributionRequired": false,
-        "evidence": "Uploaded by the project owner on 2026-11-19 (tiny_planet_friends_3d-defective-product-4083.glb). Origin and licence not stated; held until the owner confirms."
+        "evidence": "Uploaded by the project owner on 2026-11-19 (tiny_planet_friends_3d-defective-product-4083.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
       },
       "source": {
         "url": "owner-upload:tiny_planet_friends_3d-defective-product-4083.glb",
-        "creator": "Unknown (uploaded by the project owner)",
+        "creator": "Supplied by the project owner",
         "via": "project thread upload"
       },
       "modifications": "Simplified from about 500,000 triangles. Mesh simplified to about 12% of its triangles with meshoptimizer. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
@@ -3095,6 +3959,110 @@
       },
       "preview": "/assets/previews/character-dragon-001.webp",
       "asset": "/assets/3d/character/character-dragon-001.glb"
+    },
+    {
+      "id": "character-dragon-pink-001",
+      "name": "Pink Winged Dragon",
+      "type": "3d",
+      "format": "glb",
+      "category": "character",
+      "subcategory": "creature",
+      "tags": [
+        "dragon",
+        "pink dragon",
+        "fantasy",
+        "creature",
+        "wings",
+        "mythical",
+        "magic",
+        "game",
+        "gaming",
+        "kids",
+        "purple",
+        "mascot"
+      ],
+      "style": [
+        "stylized",
+        "fantasy",
+        "playful",
+        "realistic"
+      ],
+      "materials": [
+        "scales"
+      ],
+      "colors": [
+        "pink",
+        "purple",
+        "teal"
+      ],
+      "license": {
+        "type": "owner-cleared",
+        "url": "",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Supplied by the project owner (model.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
+      },
+      "source": {
+        "url": "owner-upload:More glb files.zip / model.glb",
+        "creator": "Supplied by the project owner",
+        "via": "project thread upload, 2026-11-22"
+      },
+      "modifications": "Simplified from about 1.5 million triangles. Mesh simplified to about 5% of its triangles with meshoptimizer. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-22",
+      "animationCapabilities": [
+        "reveal",
+        "parallax",
+        "rotate",
+        "scrollMove",
+        "lookAtPointer"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 2.45,
+        "bytes": 2572156,
+        "triangles": 67488,
+        "textureResolution": "1k",
+        "materials": 1,
+        "animation": "none",
+        "tier": "high"
+      },
+      "bounds": {
+        "min": [
+          -0.5275,
+          -0.3123,
+          -0.3037
+        ],
+        "max": [
+          0.5275,
+          0.3123,
+          0.3037
+        ],
+        "size": [
+          1.055,
+          0.6246,
+          0.6073
+        ]
+      },
+      "display": {
+        "pivot": "center",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_materials_specular",
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/character-dragon-pink-001.webp",
+      "asset": "/assets/3d/character/character-dragon-pink-001.glb"
     },
     {
       "id": "character-hopper-001",
@@ -3209,6 +4177,128 @@
       },
       "preview": "/assets/previews/character-hopper-001.webp",
       "asset": "/assets/3d/character/character-hopper-001.glb"
+    },
+    {
+      "id": "character-kid-001",
+      "name": "Animated Kid",
+      "type": "3d",
+      "format": "glb",
+      "category": "character",
+      "subcategory": "person",
+      "tags": [
+        "kid",
+        "child",
+        "boy",
+        "person",
+        "human",
+        "people",
+        "student",
+        "school",
+        "family",
+        "avatar",
+        "character",
+        "walking"
+      ],
+      "style": [
+        "stylized",
+        "minimal",
+        "clay",
+        "playful"
+      ],
+      "materials": [
+        "clay"
+      ],
+      "colors": [
+        "white"
+      ],
+      "license": {
+        "type": "owner-cleared",
+        "url": "",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Supplied by the project owner (T-Pose.glb and glb with animations.zip). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
+      },
+      "source": {
+        "url": "owner-upload:More glb files.zip / T-Pose.glb, Breathing Idle.glb, Walking.glb, Running.glb, Sitting.glb",
+        "creator": "Supplied by the project owner",
+        "via": "project thread upload, 2026-11-22"
+      },
+      "modifications": "The separate idle, walk, run and sit clips were merged into one rigged model; the plain material renamed clay so a site can tint it. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-22",
+      "animationCapabilities": [
+        "reveal",
+        "parallax",
+        "rotate",
+        "scrollMove",
+        "lookAtPointer",
+        "idle",
+        "walk",
+        "run",
+        "sit"
+      ],
+      "clips": [
+        {
+          "name": "idle",
+          "duration": 9.97
+        },
+        {
+          "name": "walk",
+          "duration": 1.07
+        },
+        {
+          "name": "run",
+          "duration": 0.67
+        },
+        {
+          "name": "sit",
+          "duration": 4.47
+        }
+      ],
+      "performance": {
+        "fileSizeMB": 1.38,
+        "bytes": 1451664,
+        "triangles": 55120,
+        "textureResolution": "none",
+        "materials": 1,
+        "animation": "skeletal",
+        "tier": "medium"
+      },
+      "bounds": {
+        "min": [
+          -0.008,
+          -0.0001,
+          -0.0099
+        ],
+        "max": [
+          0.008,
+          0.0045,
+          0.0101
+        ],
+        "size": [
+          0.0161,
+          0.0046,
+          0.02
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": true,
+        "morphs": false,
+        "extensions": [
+          "KHR_mesh_quantization"
+        ],
+        "tint": "clay"
+      },
+      "preview": "/assets/previews/character-kid-001.webp",
+      "asset": "/assets/3d/character/character-kid-001.glb"
     },
     {
       "id": "character-knight-001",
@@ -3642,17 +4732,17 @@
         "cyan"
       ],
       "license": {
-        "type": "owner-supplied",
+        "type": "owner-cleared",
         "url": "",
-        "commercialUse": false,
-        "redistribution": false,
+        "commercialUse": true,
+        "redistribution": true,
         "modification": true,
         "attributionRequired": false,
-        "evidence": "Uploaded by the project owner on 2026-11-19 (pixellabs-glb-3347.glb). Origin and licence not stated; held until the owner confirms."
+        "evidence": "Uploaded by the project owner on 2026-11-19 (pixellabs-glb-3347.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
       },
       "source": {
         "url": "owner-upload:pixellabs-glb-3347.glb",
-        "creator": "Unknown (uploaded by the project owner)",
+        "creator": "Supplied by the project owner",
         "via": "project thread upload"
       },
       "modifications": "Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
@@ -4132,6 +5222,306 @@
       "asset": "/assets/3d/nature/flowers-vase-001.glb"
     },
     {
+      "id": "nature-coral-xenia-001",
+      "name": "Pulsing Xenia Coral",
+      "type": "3d",
+      "format": "glb",
+      "category": "nature",
+      "subcategory": "coral",
+      "tags": [
+        "coral",
+        "reef",
+        "xenia",
+        "ocean",
+        "sea",
+        "marine",
+        "aquarium",
+        "underwater",
+        "biology",
+        "nature"
+      ],
+      "style": [
+        "natural",
+        "realistic",
+        "calm"
+      ],
+      "materials": [
+        "organic"
+      ],
+      "colors": [
+        "white",
+        "cream"
+      ],
+      "license": {
+        "type": "owner-cleared",
+        "url": "",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Supplied by the project owner (08_Pulsing_Xenia.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
+      },
+      "source": {
+        "url": "owner-upload:More glb files.zip / 08_Pulsing_Xenia.glb",
+        "creator": "Supplied by the project owner",
+        "via": "project thread upload, 2026-11-22"
+      },
+      "modifications": "Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-22",
+      "animationCapabilities": [
+        "rotate",
+        "float",
+        "reveal",
+        "parallax",
+        "scale",
+        "scrollMove"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 0.39,
+        "bytes": 412424,
+        "triangles": 2602,
+        "textureResolution": "1k",
+        "materials": 1,
+        "animation": "none",
+        "tier": "low"
+      },
+      "bounds": {
+        "min": [
+          -0.1142,
+          0,
+          -0.1052
+        ],
+        "max": [
+          0.1142,
+          0.2411,
+          0.1052
+        ],
+        "size": [
+          0.2283,
+          0.2411,
+          0.2105
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/nature-coral-xenia-001.webp",
+      "asset": "/assets/3d/nature/nature-coral-xenia-001.glb"
+    },
+    {
+      "id": "nature-earth-001",
+      "name": "Planet Earth",
+      "type": "3d",
+      "format": "glb",
+      "category": "nature",
+      "subcategory": "planet",
+      "tags": [
+        "earth",
+        "planet",
+        "globe",
+        "world",
+        "space",
+        "climate",
+        "travel",
+        "global",
+        "map",
+        "nature",
+        "environment"
+      ],
+      "style": [
+        "realistic",
+        "cinematic",
+        "natural"
+      ],
+      "materials": [
+        "terrain"
+      ],
+      "colors": [
+        "blue",
+        "green",
+        "white"
+      ],
+      "license": {
+        "type": "owner-cleared",
+        "url": "",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Supplied by the project owner (earth-00-glb.rar / earth-00.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
+      },
+      "source": {
+        "url": "owner-upload:glb files 2.zip / earth-00.glb",
+        "creator": "Supplied by the project owner",
+        "via": "project thread upload, 2026-11-22"
+      },
+      "modifications": "The untextured cloud and atmosphere shells and their clips were removed (they rendered as white spheres); the surface no longer glows white; its land and ocean mask was coloured green and blue; 16K textures reduced to 2K. Mesh simplified to about 5% of its triangles with meshoptimizer. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-22",
+      "animationCapabilities": [
+        "rotate",
+        "float",
+        "reveal",
+        "parallax",
+        "scale",
+        "scrollMove"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 0.68,
+        "bytes": 718232,
+        "triangles": 36044,
+        "textureResolution": "2k",
+        "materials": 1,
+        "animation": "none",
+        "tier": "medium"
+      },
+      "bounds": {
+        "min": [
+          -594.0816,
+          -610.5332,
+          -593.2006
+        ],
+        "max": [
+          594.139,
+          610.505,
+          593.1576
+        ],
+        "size": [
+          1188.2206,
+          1221.0382,
+          1186.3582
+        ]
+      },
+      "display": {
+        "pivot": "center",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/nature-earth-001.webp",
+      "asset": "/assets/3d/nature/nature-earth-001.glb"
+    },
+    {
+      "id": "nature-planet-amber-001",
+      "name": "Amber Planet",
+      "type": "3d",
+      "format": "glb",
+      "category": "nature",
+      "subcategory": "planet",
+      "tags": [
+        "planet",
+        "sphere",
+        "space",
+        "orb",
+        "sun",
+        "cosmic",
+        "warm",
+        "minimal",
+        "moon"
+      ],
+      "style": [
+        "minimal",
+        "stylized",
+        "warm"
+      ],
+      "materials": [
+        "matte"
+      ],
+      "colors": [
+        "amber",
+        "orange"
+      ],
+      "license": {
+        "type": "owner-cleared",
+        "url": "",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Supplied by the project owner (Планета36.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
+      },
+      "source": {
+        "url": "owner-upload:glb files 2.zip / Планета36.glb",
+        "creator": "Supplied by the project owner",
+        "via": "project thread upload, 2026-11-22"
+      },
+      "modifications": "Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-22",
+      "animationCapabilities": [
+        "rotate",
+        "float",
+        "reveal",
+        "parallax",
+        "scale",
+        "scrollMove"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 0.23,
+        "bytes": 237840,
+        "triangles": 31744,
+        "textureResolution": "none",
+        "materials": 2,
+        "animation": "none",
+        "tier": "medium"
+      },
+      "bounds": {
+        "min": [
+          -2.7072,
+          -2.7364,
+          -2.7072
+        ],
+        "max": [
+          2.7072,
+          2.7364,
+          2.7072
+        ],
+        "size": [
+          5.4145,
+          5.4727,
+          5.4145
+        ]
+      },
+      "display": {
+        "pivot": "center",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/nature-planet-amber-001.webp",
+      "asset": "/assets/3d/nature/nature-planet-amber-001.glb"
+    },
+    {
       "id": "plant-potted-001",
       "name": "Potted Plant",
       "type": "3d",
@@ -4242,7 +5632,7 @@
     },
     {
       "id": "rocks-001",
-      "name": "Rock Cluster",
+      "name": "Desert Rocks",
       "type": "3d",
       "format": "glb",
       "category": "nature",
@@ -5421,6 +6811,113 @@
       },
       "preview": "/assets/previews/cafe-table-001.webp",
       "asset": "/assets/3d/environment/cafe-table-001.glb"
+    },
+    {
+      "id": "environment-bedroom-001",
+      "name": "Cozy Bedroom Diorama",
+      "type": "3d",
+      "format": "glb",
+      "category": "environment",
+      "subcategory": "room",
+      "tags": [
+        "bedroom",
+        "room",
+        "diorama",
+        "interior",
+        "home",
+        "cozy",
+        "isometric",
+        "student",
+        "gaming",
+        "work from home",
+        "lifestyle",
+        "desk"
+      ],
+      "style": [
+        "stylized",
+        "playful",
+        "warm",
+        "isometric"
+      ],
+      "materials": [
+        "wood",
+        "fabric",
+        "plastic"
+      ],
+      "colors": [
+        "navy",
+        "white",
+        "red"
+      ],
+      "license": {
+        "type": "owner-cleared",
+        "url": "",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Supplied by the project owner (room+glb.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
+      },
+      "source": {
+        "url": "owner-upload:glb files 2.zip / room+glb.glb",
+        "creator": "Supplied by the project owner",
+        "via": "project thread upload, 2026-11-22"
+      },
+      "modifications": "The TV screen (named after a streaming brand) painted a plain dark screen; simplified. Mesh simplified to about 25% of its triangles with meshoptimizer. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-22",
+      "animationCapabilities": [
+        "cameraDrift",
+        "parallax",
+        "reveal",
+        "lightingTransition",
+        "rotate",
+        "assemble"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 3.57,
+        "bytes": 3740568,
+        "triangles": 183820,
+        "textureResolution": "1k",
+        "materials": 21,
+        "animation": "none",
+        "tier": "high"
+      },
+      "bounds": {
+        "min": [
+          -3.8759,
+          0,
+          -3.8759
+        ],
+        "max": [
+          3.8759,
+          7.7518,
+          3.8759
+        ],
+        "size": [
+          7.7518,
+          7.7518,
+          7.7518
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_mesh_quantization"
+        ],
+        "screen": "screen"
+      },
+      "preview": "/assets/previews/environment-bedroom-001.webp",
+      "asset": "/assets/3d/environment/environment-bedroom-001.glb"
     },
     {
       "id": "kitchen-table-001",
@@ -7641,6 +9138,319 @@
       },
       "preview": "/assets/previews/pot-stew-001.webp",
       "asset": "/assets/3d/prop/pot-stew-001.glb"
+    },
+    {
+      "id": "prop-blueprints-001",
+      "name": "Blueprints",
+      "type": "3d",
+      "format": "glb",
+      "category": "prop",
+      "subcategory": "document",
+      "tags": [
+        "blueprint",
+        "blueprints",
+        "plans",
+        "architecture",
+        "construction",
+        "engineering",
+        "builder",
+        "architect",
+        "drawing",
+        "property",
+        "trades"
+      ],
+      "style": [
+        "technical",
+        "realistic"
+      ],
+      "materials": [
+        "paper"
+      ],
+      "colors": [
+        "blue",
+        "white"
+      ],
+      "license": {
+        "type": "owner-cleared",
+        "url": "",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Supplied by the project owner (Blueprints.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
+      },
+      "source": {
+        "url": "owner-upload:More glb files.zip / Blueprints.glb",
+        "creator": "Supplied by the project owner",
+        "via": "project thread upload, 2026-11-22"
+      },
+      "modifications": "Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-22",
+      "animationCapabilities": [
+        "rotate",
+        "float",
+        "orbit",
+        "scale",
+        "reveal",
+        "parallax",
+        "scrollRotate",
+        "scrollMove",
+        "hover"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 0.11,
+        "bytes": 115856,
+        "triangles": 730,
+        "textureResolution": "1k",
+        "materials": 1,
+        "animation": "none",
+        "tier": "low"
+      },
+      "bounds": {
+        "min": [
+          -1.1017,
+          0,
+          -0.5306
+        ],
+        "max": [
+          1.1017,
+          0.2553,
+          0.5306
+        ],
+        "size": [
+          2.2033,
+          0.2553,
+          1.0612
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/prop-blueprints-001.webp",
+      "asset": "/assets/3d/prop/prop-blueprints-001.glb"
+    },
+    {
+      "id": "prop-book-001",
+      "name": "Hardcover Book",
+      "type": "3d",
+      "format": "glb",
+      "category": "prop",
+      "subcategory": "book",
+      "tags": [
+        "book",
+        "hardcover",
+        "magazine",
+        "reading",
+        "author",
+        "publishing",
+        "library",
+        "education",
+        "interior",
+        "lifestyle",
+        "writer"
+      ],
+      "style": [
+        "minimal",
+        "editorial",
+        "realistic",
+        "warm"
+      ],
+      "materials": [
+        "paper"
+      ],
+      "colors": [
+        "beige",
+        "white"
+      ],
+      "license": {
+        "type": "owner-cleared",
+        "url": "",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Supplied by the project owner (Book_GLB.zip / Book.glb). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
+      },
+      "source": {
+        "url": "owner-upload:More glb files.zip / Book.glb",
+        "creator": "Supplied by the project owner",
+        "via": "project thread upload, 2026-11-22"
+      },
+      "modifications": "Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-22",
+      "animationCapabilities": [
+        "rotate",
+        "float",
+        "orbit",
+        "scale",
+        "reveal",
+        "parallax",
+        "scrollRotate",
+        "scrollMove",
+        "hover"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 0.05,
+        "bytes": 53060,
+        "triangles": 196,
+        "textureResolution": "1k",
+        "materials": 1,
+        "animation": "none",
+        "tier": "low"
+      },
+      "bounds": {
+        "min": [
+          -0.0665,
+          -0.1,
+          -0.0151
+        ],
+        "max": [
+          0.0665,
+          0.1,
+          0.0151
+        ],
+        "size": [
+          0.133,
+          0.2,
+          0.0302
+        ]
+      },
+      "display": {
+        "pivot": "center",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "EXT_texture_webp",
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/prop-book-001.webp",
+      "asset": "/assets/3d/prop/prop-book-001.glb"
+    },
+    {
+      "id": "prop-giftbox-001",
+      "name": "Gift Box",
+      "type": "3d",
+      "format": "glb",
+      "category": "prop",
+      "subcategory": "gift",
+      "tags": [
+        "gift",
+        "gift box",
+        "present",
+        "birthday",
+        "celebration",
+        "party",
+        "wedding",
+        "shop",
+        "sale",
+        "pink",
+        "surprise"
+      ],
+      "style": [
+        "stylized",
+        "playful",
+        "pastel"
+      ],
+      "materials": [
+        "paper",
+        "ribbon"
+      ],
+      "colors": [
+        "pink",
+        "yellow"
+      ],
+      "license": {
+        "type": "owner-cleared",
+        "url": "",
+        "commercialUse": true,
+        "redistribution": true,
+        "modification": true,
+        "attributionRequired": false,
+        "evidence": "Supplied by the project owner (GiftBox_gltf.gltf). The owner confirmed on 2026-11-22 that every GLB they supplied is licence free and cleared for commercial use."
+      },
+      "source": {
+        "url": "owner-upload:More glb files.zip / GiftBox_gltf.gltf",
+        "creator": "Supplied by the project owner",
+        "via": "project thread upload, 2026-11-22"
+      },
+      "modifications": "Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "added": "2026-11-22",
+      "animationCapabilities": [
+        "rotate",
+        "float",
+        "orbit",
+        "scale",
+        "reveal",
+        "parallax",
+        "scrollRotate",
+        "scrollMove",
+        "hover",
+        "assemble"
+      ],
+      "clips": [],
+      "performance": {
+        "fileSizeMB": 0.19,
+        "bytes": 196812,
+        "triangles": 12960,
+        "textureResolution": "none",
+        "materials": 4,
+        "animation": "none",
+        "tier": "low"
+      },
+      "bounds": {
+        "min": [
+          -1.1362,
+          -0.0001,
+          -1.1362
+        ],
+        "max": [
+          1.1362,
+          2.6591,
+          1.1362
+        ],
+        "size": [
+          2.2723,
+          2.6592,
+          2.2723
+        ]
+      },
+      "display": {
+        "pivot": "bottom",
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "variants": [],
+        "skinned": false,
+        "morphs": false,
+        "extensions": [
+          "KHR_mesh_quantization"
+        ]
+      },
+      "preview": "/assets/previews/prop-giftbox-001.webp",
+      "asset": "/assets/3d/prop/prop-giftbox-001.glb"
     },
     {
       "id": "shield-001",

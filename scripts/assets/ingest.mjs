@@ -101,6 +101,83 @@ async function processModel(e) {
   if (!existsSync(file)) throw new Error("missing source " + file);
   const doc = await io.read(file);
   const root = doc.getRoot();
+  // Owner files sometimes carry a studio floor, a brand mark as its own mesh, or metadata that
+  // names a brand: those go first.
+  for (const name of e.removeNodes ?? []) {
+    const nodes = root.listNodes().filter((n) => n.getName() === name);
+    if (!nodes.length) throw new Error(`${e.id}: no node ${name} to remove`);
+    for (const n of nodes) n.dispose();
+  }
+  for (const name of e.removeMaterialPrims ?? []) {
+    let hit = 0;
+    for (const mesh of root.listMeshes())
+      for (const prim of mesh.listPrimitives())
+        if (prim.getMaterial()?.getName() === name) {
+          mesh.removePrimitive(prim);
+          prim.dispose();
+          hit++;
+        }
+    if (!hit) throw new Error(`${e.id}: no primitives use ${name}`);
+  }
+  if (e.stripExtras) for (const sc of root.listScenes()) sc.setExtras({});
+  // A mask texture (black and white) recoloured between two colours, for a file whose colours
+  // lived in its authoring tool's shader nodes rather than in the texture.
+  for (const g of e.gradientMap ?? []) {
+    const mat = root.listMaterials().find((m) => m.getName() === g.material);
+    const tex = mat?.getBaseColorTexture();
+    if (!tex) throw new Error(`${e.id}: no base colour texture on ${g.material} to recolour`);
+    const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+    const [a, b] = [hex(g.dark), hex(g.light)];
+    const { data, info } = await sharp(Buffer.from(tex.getImage())).resize(g.size ?? 2048).greyscale().raw().toBuffer({ resolveWithObject: true });
+    const out = Buffer.alloc(info.width * info.height * 3);
+    for (let i = 0; i < info.width * info.height; i++) {
+      const t = data[i * info.channels] / 255;
+      for (let c = 0; c < 3; c++) out[i * 3 + c] = Math.round(a[c] + (b[c] - a[c]) * t);
+    }
+    tex.setImage(new Uint8Array(await sharp(out, { raw: { width: info.width, height: info.height, channels: 3 } }).png().toBuffer())).setMimeType("image/png");
+    mat.setMetallicRoughnessTexture(null);
+    mat.setMetallicFactor(0);
+    mat.setRoughnessFactor(g.roughness ?? 0.7);
+  }
+  for (const o of e.materialOverrides ?? []) {
+    const mats = root.listMaterials().filter((m) => m.getName() === o.material);
+    if (!mats.length) throw new Error(`${e.id}: no material ${o.material} to override`);
+    for (const m of mats) {
+      if (o.color) m.setBaseColorFactor(o.color.length === 4 ? o.color : [...o.color, 1]);
+      if (o.noTexture) {
+        m.setBaseColorTexture(null);
+        m.setEmissiveTexture(null);
+        m.setEmissiveFactor([0, 0, 0]);
+      }
+      if (o.emissive) m.setEmissiveFactor(o.emissive);
+      if (o.alpha) m.setAlphaMode(o.alpha);
+      if (typeof o.metallic === "number") m.setMetallicFactor(o.metallic);
+      if (typeof o.roughness === "number") m.setRoughnessFactor(o.roughness);
+    }
+  }
+  if (e.dropClips) for (const a of root.listAnimations()) a.dispose();
+  // Clips that came as separate files (Mixamo exports one clip per file) join the base model,
+  // matched to its bones by name.
+  for (const mc of e.mergeClips ?? []) {
+    const other = await io.read(join(SRC, mc.file));
+    const byName = new Map(root.listNodes().map((n) => [n.getName(), n]));
+    for (const anim of other.getRoot().listAnimations()) {
+      const into = doc.createAnimation(mc.name);
+      const copied = new Map();
+      const acc = (a) => {
+        if (!copied.has(a)) copied.set(a, doc.createAccessor().setType(a.getType()).setArray(a.getArray().slice()).setNormalized(a.getNormalized()));
+        return copied.get(a);
+      };
+      for (const ch of anim.listChannels()) {
+        const target = byName.get(ch.getTargetNode()?.getName());
+        if (!target) continue;
+        const s0 = ch.getSampler();
+        const s1 = doc.createAnimationSampler().setInput(acc(s0.getInput())).setOutput(acc(s0.getOutput())).setInterpolation(s0.getInterpolation());
+        into.addSampler(s1).addChannel(doc.createAnimationChannel().setTargetNode(target).setTargetPath(ch.getTargetPath()).setSampler(s1));
+      }
+      break;
+    }
+  }
   // Logos out.
   for (const d of e.delogo ?? []) {
     const mats = root.listMaterials().filter((m) => m.getName() === d.material);
@@ -114,6 +191,11 @@ async function processModel(e) {
       m.setNormalTexture(null);
       m.setOcclusionTexture(null);
     }
+  }
+  for (const [from, to] of Object.entries(e.renameMaterials ?? {})) {
+    const mats = root.listMaterials().filter((m) => m.getName() === from);
+    if (!mats.length) throw new Error(`${e.id}: no material ${from} to rename`);
+    for (const m of mats) m.setName(to);
   }
   // Clips: keep the useful ones under plain names.
   if (e.clips) {
@@ -143,7 +225,7 @@ async function processModel(e) {
   }
   // Heavy scans are simplified (meshoptimizer, error-bounded) before anything else; every mesh is
   // quantized (KHR_mesh_quantization), which three.js reads natively, so no decoder ships.
-  if (e.simplify) await doc.transform(F.weld(), F.simplify({ simplifier: MeshoptSimplifier, ratio: e.simplify, error: 0.0015 }));
+  if (e.simplify) await doc.transform(F.weld(), F.simplify({ simplifier: MeshoptSimplifier, ratio: e.simplify, error: e.simplifyError ?? 0.0015 }));
   await doc.transform(
     F.dedup(),
     F.prune({ keepLeaves: false }),
@@ -176,7 +258,10 @@ const today = new Date().toISOString().slice(0, 10);
 
 for (const e of SOURCES) {
   if (only.length && !only.includes(e.id)) {
-    if (keep.has(e.id)) assets.push(keep.get(e.id));
+    // Not rebuilt, but its record follows the source list: a licence cleared, a name or tags
+    // changed there show up without reprocessing the file.
+    const k = keep.get(e.id);
+    if (k) assets.push({ ...k, name: e.name, subcategory: e.subcategory, tags: e.tags, style: e.style, materials: e.materials ?? k.materials, colors: e.colors ?? k.colors, license: e.license, source: e.source, display: { ...k.display, ...(e.tint ? { tint: e.tint } : {}), ...(e.screen ? { screen: e.screen } : {}) } });
     continue;
   }
   const base = {
@@ -213,7 +298,7 @@ for (const e of SOURCES) {
     clips: metrics.clips,
     performance: { fileSizeMB: +(metrics.bytes / 1048576).toFixed(2), bytes: metrics.bytes, triangles: metrics.triangles, textureResolution: metrics.textureResolution, materials: metrics.materials, animation: anim, tier: tierOf(metrics.bytes, metrics.triangles) },
     bounds: metrics.bounds,
-    display: { pivot: e.pivot === "bottom" ? "bottom" : "center", rotation: e.rotation ?? [0, 0, 0], variants: metrics.variants, skinned: metrics.skinned, morphs: metrics.morphs, extensions: metrics.extensions },
+    display: { pivot: e.pivot === "bottom" ? "bottom" : "center", rotation: e.rotation ?? [0, 0, 0], variants: metrics.variants, skinned: metrics.skinned, morphs: metrics.morphs, extensions: metrics.extensions, ...(e.tint ? { tint: e.tint } : {}), ...(e.screen ? { screen: e.screen } : {}) },
     preview: `/assets/previews/${e.id}.webp`,
     asset: path,
   });

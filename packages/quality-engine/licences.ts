@@ -3,7 +3,7 @@
 // date it was added and what we changed. The quality engine refuses an export that would ship
 // anything not on this list, or anything whose licence does not allow redistribution.
 
-export type LicenceId = "MIT" | "Apache-2.0" | "BSD-3-Clause" | "ISC" | "Zlib" | "OFL-1.1" | "original" | "MIT+Commons-Clause" | "GSAP-Standard" | "owner-supplied" | "CC0-1.0" | "CC-BY-4.0";
+export type LicenceId = "MIT" | "Apache-2.0" | "BSD-3-Clause" | "ISC" | "Zlib" | "OFL-1.1" | "original" | "MIT+Commons-Clause" | "GSAP-Standard" | "owner-supplied" | "owner-cleared" | "CC0-1.0" | "CC-BY-4.0";
 
 export interface LicenceEntry {
   id: string;
@@ -21,7 +21,7 @@ export interface LicenceEntry {
 }
 
 /** Licences that allow copying into a site someone else owns and sells from. */
-export const OPEN_LICENCES: LicenceId[] = ["MIT", "Apache-2.0", "BSD-3-Clause", "ISC", "Zlib", "OFL-1.1", "original", "owner-supplied", "CC0-1.0", "CC-BY-4.0"];
+export const OPEN_LICENCES: LicenceId[] = ["MIT", "Apache-2.0", "BSD-3-Clause", "ISC", "Zlib", "OFL-1.1", "original", "owner-supplied", "owner-cleared", "CC0-1.0", "CC-BY-4.0"];
 
 export const LICENCES: LicenceEntry[] = [
   { id: "react", name: "React and React DOM", source: "https://github.com/facebook/react", author: "Meta Platforms and contributors", license: "MIT", version: "19.x", added: "2026-11-01", modifications: "None", redistributable: true, covers: ["react"] },
