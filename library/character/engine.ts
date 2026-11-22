@@ -10,7 +10,6 @@ import {
   AnimationMixer,
   Box3,
   CanvasTexture,
-  Clock,
   Color,
   DirectionalLight,
   Group,
@@ -571,7 +570,14 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
 
   let visible = true;
   let raf = 0;
-  const clock = new Clock();
+  // Seconds since the last frame (three's Clock is deprecated; this is all the loop needs).
+  let last = performance.now();
+  const delta = () => {
+    const now = performance.now();
+    const d = (now - last) / 1000;
+    last = now;
+    return d;
+  };
   let slow = 0;
   let frames = 0;
 
@@ -583,7 +589,7 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
 
   const drawNow = () => {
     if (gone) return;
-    const dt = Math.min(0.05, clock.getDelta());
+    const dt = Math.min(0.05, delta());
     const speed = clamp(o.speed ?? 1, 0.2, 2);
     if (!reduced) t += dt * speed;
     const sp = o.scroll === "none" || reduced ? 0 : scrollProgress();
@@ -666,7 +672,7 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
   };
   const wake = () => {
     if (!raf && visible && !gone) {
-      clock.getDelta();
+      delta();
       raf = win.requestAnimationFrame(loop);
     }
   };

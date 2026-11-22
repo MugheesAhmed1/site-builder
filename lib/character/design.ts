@@ -259,8 +259,16 @@ function make(id: string, name: string, note: string, p: CharacterPalette, accen
  */
 export function designOptions(p: CharacterPalette, words: string[], fallbackAccent = "#6d5dfc"): DesignSystem[] {
   const pal = p.neutral ? { ...p, accent: fallbackAccent, second: adjust(fallbackAccent, (x) => ({ h: (x.h + 40) % 360, l: Math.min(0.85, x.l + 0.12) })) } : p;
-  const fonts = rankFonts(words)[0];
-  const base = { mode: "auto" as const, fonts: { pair: fonts.id, display: fonts.display, body: fonts.body }, radius: radiusFor(words), motion: motionFor(words) };
+  // Each direction has its own type: the best match for the words, then the best match among
+  // airy, loud and calm pairs, so choosing a design system is choosing a font style too.
+  const ranked = rankFonts(words);
+  const prefer = (ids: string[], not: FontPair[]) => ranked.find((f) => ids.includes(f.id) && !not.includes(f)) || ranked.find((f) => !not.includes(f)) || ranked[0];
+  const own = ranked[0];
+  const airy = prefer(["geometric", "soft-serif", "editorial", "modern", "rounded", "minimal"], [own]);
+  const loud = prefer(["bold", "future", "expressive", "playful"], [own, airy]);
+  const calm = prefer(["luxury", "soft-serif", "minimal", "classic", "editorial"], [own, airy, loud]);
+  const type = (f: FontPair) => ({ pair: f.id, display: f.display, body: f.body });
+  const base = { mode: "auto" as const, fonts: type(own), radius: radiusFor(words), motion: motionFor(words) };
   const a = toLch(pal.accent);
   // A vivid accent: the same hue at full strength; its partner sits across the wheel.
   const vivid = fromLch(Math.min(0.72, Math.max(0.58, a.l)), Math.max(0.17, a.c * 1.25), a.h);
@@ -272,9 +280,9 @@ export function designOptions(p: CharacterPalette, words: string[], fallbackAcce
   return [
     make("character", "From your character", "Its own colours: the accent, a second colour for highlights and a glow behind it.", pal, pal.accent, second, "deep", base, "glow"),
     make("night", "Night stage", "A deep backdrop in the character's hue, so it glows like a product shot.", pal, pal.accent, second, "deep", { ...base, mode: "dark" }, "radial", 0.75),
-    make("daylight", "Daylight", "Airy and light, the character's colours as soft pastels.", pal, pal.accent, second, "air", { ...base, mode: "light" }, "aurora", 0.45),
-    make("vivid", "Vivid", "The accent at full strength with a bold partner across the colour wheel.", pal, vivid, vivid2, "vivid", { ...base, motion: base.motion === "calm" ? "lively" : base.motion }, "aurora", 0.6),
-    make("quiet", "Quiet", "Near monochrome: the character's hue, held back, for a calm and premium feel.", pal, quiet, quiet2, "quiet", { ...base, motion: "calm", radius: base.radius === "round" ? "soft" : base.radius }, "linear", 0.35),
+    make("daylight", "Daylight", "Airy and light, the character's colours as soft pastels.", pal, pal.accent, second, "air", { ...base, mode: "light", fonts: type(airy) }, "aurora", 0.45),
+    make("vivid", "Vivid", "The accent at full strength with a bold partner across the colour wheel.", pal, vivid, vivid2, "vivid", { ...base, fonts: type(loud), motion: base.motion === "calm" ? "lively" : base.motion }, "aurora", 0.6),
+    make("quiet", "Quiet", "Near monochrome: the character's hue, held back, for a calm and premium feel.", pal, quiet, quiet2, "quiet", { ...base, fonts: type(calm), motion: "calm", radius: base.radius === "round" ? "soft" : base.radius }, "linear", 0.35),
   ];
 }
 

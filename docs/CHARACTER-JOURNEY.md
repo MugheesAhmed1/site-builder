@@ -4,15 +4,18 @@ Every site now starts from one 3D character, and every part of the site follows 
 gradient behind it, the colours, the type, the motion and the words. This journey replaces the PRD
 journey ([PRD-JOURNEY.md](PRD-JOURNEY.md)) at `/create`, strictly in this order:
 
-1. **One line**: what they want to build. The home page's prompt box sends people here with `?q=`.
+1. **One line**: what they want to build. The home page sends people here with `?q=`, and with
+   `?star=<library model id>` when they picked a character there: it is put in place once per line
+   (`Saved.star`), the interview skips the character question, and the design step opens with it.
 2. **The AI interview** (`components/journey/Interview.tsx`, `POST /api/chat`): one short question
    at a time with answers to tap, at most six: the name, who it is for, the feel, the sections, the
    3D character (always) and colour wishes. A live brief sits beside the chat.
 3. **Character and design system** (`components/journey/DesignStep.tsx`): pick the character from
    the asset library, upload a GLB, or make one from a photo (below). Its colours are read from its
    still, and five design systems are drawn from them: from the character, night stage, daylight,
-   vivid and quiet (`lib/character/match.ts`, `lib/character/design.ts`). Each passes WCAG contrast
-   checks. Accent, type pair, light or dark, background style, corners and motion can be tuned, with
+   vivid and quiet (`lib/character/match.ts`, `lib/character/design.ts`), each with its own font
+   pair (the best match for the words, then the best airy, loud and calm pairs). Each passes WCAG
+   contrast checks. Accent, type pair, light or dark, background style, corners and motion can be tuned, with
    a live mock of the site beside the controls.
 4. **The template library, shown as their own site** (`components/journey/TemplateStep.tsx`): every
    template with their words, their design system and their character, best matches first, with a
@@ -67,6 +70,24 @@ the stage swaps to stay readable (contrast is tested for every template and ever
 The finished model goes back into the journey like any library model, and its colours drive the
 design systems.
 
+## The home page
+
+The marketing page (`app/page.tsx`, `components/home/`) is built the way the sites are: one 3D
+character is the star and the whole page takes its colours from it. `HomeCharacter.tsx` reads each
+showcase character's still with the journey's own code (`paletteFromPixels`, `designOptions`,
+`tokens`), and writes the first design system into registered CSS colours on the page root
+(`--hc-a`, `--hc-a2`, `--hc-bg`, `--hc-s1..3`), so accent, panels, lines, the stage gradient and
+the closing card glide to the new character in 0.9 s. The opening turns to the next character every
+6.5 s while it is on screen and nobody has chosen (never with reduced motion or Save-Data), loads
+three.js only once the page is idle (on phones after the first touch), and shows the model's still
+until then. Sections: the opening with a picker and the live design tokens, how it works (six
+steps, a sticky screen on wide screens and a picture per step on phones, all drawn with the current
+character), photo to 3D (a real run of the pipeline: `public/home/portrait.webp` is a free AI
+picture made for the Cornerstone template, its cut-out and the standee GLB made from it), the 3D
+library river (`ModelMarquee.tsx`; tapping any model makes it the page's star), the live template
+gallery, what you keep, questions and the closing call. The requirements-document start of the PRD
+journey is gone: `/document` redirects to `/create`.
+
 ## Where things live
 
 | Part | Code |
@@ -79,6 +100,7 @@ design systems.
 | Words by rules | `lib/animator.ts` (`localTexts`), `lib/voice.ts` |
 | Photo to 3D | `lib/character/{cutout,relief,photo,sculpt}.ts`, `components/character/PhotoTo3D.tsx`, `app/api/sculpt/route.ts` |
 | The new template | `templates/orbit/` |
+| The home page | `app/page.tsx`, `components/home/{HomeCharacter,HomeJourney,PhotoStory,ModelMarquee}.tsx`, `components/home/showcase.ts`, `components/home/home-character.css`, `public/home/` |
 
 ## Tests
 

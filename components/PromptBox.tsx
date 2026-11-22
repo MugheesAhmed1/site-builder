@@ -20,16 +20,16 @@ export const EXAMPLES = [
   "I'm a UX designer and want to show my work",
 ];
 
-// Every site now starts from a PRD: a typed line, a tile or a concept all open the PRD
-// journey at /create with that line, where Gemini drafts the PRD for the person to edit.
+// Every site starts the same way: a typed line, a tile or a concept opens the journey at
+// /create with that line, where a short chat asks about it before the character is chosen.
 export function useStartSite() {
   const router = useRouter();
   return (o: CreateOptions) => {
     const line = (o.query ?? "").trim() || (o.label ? (o.kind === "portfolio" ? "Portfolio for a " : "Website for a ") + o.label.toLowerCase() : "");
-    const look = o.style === "luxury" ? "luxury" : o.style === "playful" ? "playful" : o.style === "minimal" ? "minimal" : o.style === "bold" || o.style === "experimental" ? "futuristic" : o.mode === "cinematic" ? "cinematic" : o.mode === "editorial" ? "editorial" : "";
-    // A portfolio starts from the person's resume.
-    if (o.kind === "portfolio") return router.push("/create?kind=portfolio" + (line ? "&q=" + encodeURIComponent(line) : ""));
-    router.push("/create?q=" + encodeURIComponent(line) + (look ? "&director=" + look : ""));
+    // Every start goes through the journey (docs/CHARACTER-JOURNEY.md): the line, then its questions.
+    const portfolio = o.kind === "portfolio" && !/portfolio|résumé|resume|\bcv\b/i.test(line);
+    const q = portfolio ? (line ? "Portfolio: " + line : "My portfolio") : line;
+    router.push(q ? "/create?q=" + encodeURIComponent(q) : "/create");
   };
 }
 

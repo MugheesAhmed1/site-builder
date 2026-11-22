@@ -58,7 +58,7 @@ export default function Topbar({ children }: { children?: React.ReactNode }) {
             <Link href="/library" aria-current={path === "/library" ? "page" : undefined}>
               Library
             </Link>
-            <Link href="/#how">How it works</Link>
+            <Link href="/#journey">How it works</Link>
           </nav>
         </div>
         <div className="row">

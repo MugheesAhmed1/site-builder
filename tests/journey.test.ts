@@ -184,6 +184,37 @@ describe("the interview, by the rules", () => {
     expect(b.email).toBe("");
     expect(normalizeBrief("garbage", base)).toEqual(base);
   });
+
+  it("keeps a character chosen on the home page and does not ask for one", () => {
+    const b = { ...startBrief("A fantasy game studio"), star: "character-dragon-001", character: "the baby dragon" };
+    const fields: string[] = [];
+    const turns: ChatTurn[] = [{ role: "me", text: b.idea }];
+    let brief = b;
+    let step = ruleStep(brief, turns);
+    while (!step.done) {
+      fields.push(step.field!);
+      turns.push({ role: "ai", text: step.reply, chips: step.chips, field: step.field, multi: step.multi });
+      turns.push({ role: "me", text: step.chips[0] });
+      brief = answer(step.brief, step.field, step.chips[0]);
+      step = ruleStep(brief, turns);
+    }
+    expect(fields).not.toContain("character");
+    expect(step.reply).toMatch(/starring the baby dragon\. Your character is ready below/);
+    // The AI's own idea of a character never replaces it; the star survives the server's round trip.
+    expect(normalizeBrief({ character: "a friendly robot" }, b).character).toBe("the baby dragon");
+    expect(normalizeBrief({ ...b }, startBrief(b.idea)).star).toBe("character-dragon-001");
+    expect(normalizeBrief({ star: "<script>" }, startBrief(b.idea)).star).toBeUndefined();
+    // Naming another character in the chat after all: theirs wins.
+    const changed = answer(b, "character", "A knight");
+    expect(changed.character).toBe("A knight");
+    expect(changed.star).toBeUndefined();
+  });
+
+  it("asks for the name unless the line gave one", () => {
+    const first = (idea: string) => ruleStep(startBrief(idea), [{ role: "me", text: idea }]).field;
+    expect(first("A fantasy game studio")).toBe("name");
+    expect(first("A burger joint in Lahore called Smash")).not.toBe("name");
+  });
 });
 
 describe("a saved site comes back whole", () => {

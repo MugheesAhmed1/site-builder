@@ -23,6 +23,7 @@ Rules:
 - Every question offers 3 to 6 short answers to tap ("chips"), written for THIS idea. The person can also type their own.
 - Cover, in a sensible order: the name (if missing), who it is for, how it should feel, what the site must have (multi: true, chips are sections or features), and always, as the last or second last question, the 3D character the whole site is built around.
 - The character question: the site stars one 3D model on a coloured gradient, and every colour and font follows it. Offer characters that suit the idea (for a dentist: a friendly robot, a smiling kid, a giant tooth; for a portfolio: "Me, from my photo", an astronaut; for a product: "Our product, from a photo"). Chips may only name everyday things, animals, vehicles, characters such as a robot, astronaut, dragon, warrior, kid, fox, or "Me, from my photo" / "Our logo, from a picture" / "Our product, from a photo". Never a brand or a copyrighted character.
+- If the brief has "star", the person already chose the character (brief.character) before the chat: never ask about the character, and name it in the summary.
 - Colours: by default they come from the character; ask only if useful, offering "From the character" first.
 - Update the brief from every answer: keep what is known, add what was said. Never invent facts (prices, awards, years).
 - No em dashes, no emoji, no markdown.
@@ -60,6 +61,8 @@ function checked(raw: Record<string, unknown>, base: Brief, turns: ChatTurn[]): 
   const field = FIELDS.includes(raw.field as BriefField) ? (raw.field as BriefField) : undefined;
   const chips = (Array.isArray(raw.chips) ? raw.chips : []).map((c) => String(c).replace(/\s+/g, " ").trim().slice(0, 48)).filter(Boolean).slice(0, 6);
   if (!field || chips.length < 2) return null;
+  // The character was chosen before the chat: the rules take the next question instead.
+  if (field === "character" && brief.star) return null;
   return { reply, chips, field, multi: raw.multi === true || field === "sections", brief, done: false, source: "gemini" };
 }
 

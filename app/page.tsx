@@ -1,137 +1,97 @@
 import Link from "next/link";
 import Icon from "@/components/Icon";
-import DocBand from "@/components/DocBand";
-import DesignWall from "@/components/home/DesignWall";
-import { LazyGallery } from "@/components/home/LazySections";
-import HomeHero from "@/components/home/HomeHero";
+import { CharacterHero, HomeCharacterProvider } from "@/components/home/HomeCharacter";
+import HomeJourney from "@/components/home/HomeJourney";
 import HomeNav from "@/components/home/HomeNav";
-import { ReadDemo, ShuffleDemo, type Swatch } from "@/components/home/HowDemos";
-import LiveDemo from "@/components/home/LiveDemo";
-import { LIBRARY } from "@/lib/designs";
+import { LazyGallery } from "@/components/home/LazySections";
+import ModelMarquee from "@/components/home/ModelMarquee";
+import PhotoStory from "@/components/home/PhotoStory";
+import type { Showcase } from "@/components/home/showcase";
 import { TEMPLATES } from "@/lib/templates";
-import { palette } from "@/template/src/theme.js";
+import { ASSETS, isShippable, type AssetRecord } from "@/packages/asset-library";
 
-// The home page (PRD sections 61 and 62). It demonstrates the product: the opening runs the
-// same live stage a generated site runs, and the gallery shows every full template live.
-// It is rendered on the server and only the pieces that move or react are client components.
+// The home page (docs/CHARACTER-JOURNEY.md). It is built the way the sites it makes are built:
+// one 3D character is the star, and the whole page takes its colours from it. Pick another
+// character, in the opening or from the library further down, and the page follows. Everything
+// that is only words is rendered on the server; the pieces that move or react are client parts.
 
-function swatch(d: (typeof LIBRARY)[number]): Swatch {
-  const dark = d.mode === "dark";
-  const p = palette(d, dark ? "dark" : "light");
-  return { id: d.id, preset: d.preset, display: d.fonts.display, body: d.fonts.body, radius: d.radius, dark, bg: p.bg, text: p.text, border: p.border, accent: p.accent, onAccent: p.onAccent };
-}
+const MODELS = ASSETS.filter((a) => a.type === "3d" && isShippable(a));
+
+/** The business a model most suits, so its design draws the same trade colour the journey would. */
+const BUSINESS: Record<string, string> = { character: "agency", vehicle: "product", product: "shop", prop: "shop", nature: "hotel", architecture: "agency", environment: "hotel", abstract: "agency" };
+
+// Two rows for the library river: models that need no credit line, characters and products first.
+// (The racer is left out: its livery is too close to a real team's.)
+const RIVER = MODELS.filter((a) => !a.license.attributionRequired && a.id !== "vehicle-formula-001" && ["character", "vehicle", "product", "prop", "nature", "abstract"].includes(a.category));
+const PICKED = ["character", "abstract", "vehicle", "product", "nature", "prop"].flatMap((cat) => RIVER.filter((a) => a.category === cat));
+const asShowcase = (a: AssetRecord): Showcase => ({ id: a.id, name: a.name, asset: a.asset, preview: a.preview, line: "", business: BUSINESS[a.category] || "agency", words: [...a.style, ...a.tags.slice(0, 4)] });
+const ROWS = [PICKED.filter((_, n) => n % 2 === 0).slice(0, 22).map(asShowcase), PICKED.filter((_, n) => n % 2 === 1).slice(0, 22).map(asShowcase)];
 
 const FAQ = [
-  ["Is it really free?", "Yes. There is no account, no trial and no monthly fee. The site you download is plain files that you own, and the free plans of hosts such as Netlify, Cloudflare Pages and GitHub Pages are enough to put it online."],
-  ["How is my site made?", "You describe what you are building. The builder works out the business, writes the first version of every section, and designs an interactive experience around it: a concept, a world, how visitors play with it and how it moves. Then you shape anything you like."],
-  ["Where does my information go?", "Your sites are saved inside this browser, and a résumé or document you drop in is read here too. The only thing that ever leaves is the words you choose to polish, and never links, emails, phone numbers or prices. Use Save a backup to move a site to another device."],
-  ["What exactly do I get?", "A zip with the finished site: one page, its pictures, a browser icon, a share picture and search tags. Unzip it and it opens. Developers can also download the same site as a React and Vite project."],
-  ["Can I change it later?", "Open it again here, change anything, and download again. You can also edit every word and colour in a text editor: they live in one readable file inside the download."],
-  ["Will all that motion slow my site down?", "No. The words arrive first as plain HTML and the experience starts once the page is quiet. It draws fewer pixels and frames on phones, steps down on its own if a device struggles, loads 3D only on computers that can draw it, and holds still for people who turn motion down."],
-  ["Will it work on phones and for screen readers?", "Every site is responsive, passes WCAG AA colour contrast, respects reduced motion and ships with the tags search engines and link previews look for."],
+  ["Is it really free?", "Yes. There is no account, no trial and no monthly fee. The questions are asked by free AI models, the 3D models are cleared for commercial use, and the site you download is plain files you own. The free plans of hosts such as Netlify, Cloudflare Pages and GitHub Pages are enough to put it online."],
+  ["How does it work?", "Say in one line what you are building. A short chat asks who it is for, how it should feel and what it needs. You pick the star, a 3D character from the library or one made from your photo, and its colours become five design systems to choose from. Then you see every template as your site, choose one or start a new one, and change anything before you download."],
+  ["Can I use my own photo or 3D model?", "Yes. Upload a GLB model, or a photo of yourself, your product, your pet or your logo. The photo is cut out right in your browser and made into a standee or a soft 3D shape. If you choose AI sculpt, the cut-out is sent to a free AI vision model that reads it into parts to build in 3D."],
+  ["Where does my information go?", "Your sites, pictures and models are saved in this browser. The line you type and your answers go to a free AI model so it can ask its questions and write your words; if it is busy, simple rules in your browser do it instead. A photo stays on your device unless you choose AI sculpt. To move sites to another device, back them up from Your sites."],
+  ["What exactly do I get?", "A zip with the finished site: the page, its 3D model and pictures, a browser icon, a share picture and search tags. Unzip it and it opens. You can also download the source, with every word, colour and setting in one readable file."],
+  ["Will the 3D slow my site down?", "No. The words and a still picture of the model arrive first, and three.js loads once the page is quiet. It draws fewer pixels on small screens, pauses when the model is off screen, and holds still for people who turn motion down."],
+  ["Will it work on phones and for screen readers?", "Every site is responsive, checks its colours for WCAG AA contrast in light and dark, respects reduced motion, describes its 3D model for screen readers and ships with the tags search engines and link previews look for."],
 ];
 
 export default function Home() {
-  // A spread across the library: every 37th system gives a mix of moods, light and dark.
-  const spread = LIBRARY.filter((_, i) => i % 37 === 3).slice(0, 12).map(swatch);
-
   return (
-    <div className="home-root">
+    <HomeCharacterProvider className="home-root">
       <HomeNav />
       <main>
-        <HomeHero />
+        <CharacterHero />
+
+        <section className="hsec" id="journey" aria-labelledby="journey-title">
+          <header className="hsec-head">
+            <span className="hsec-kicker mono">How it works</span>
+            <h2 id="journey-title">
+              One line in. <em className="serif-i">A site built around its star.</em>
+            </h2>
+            <p>Six steps, the same ones you will take. The pictures use the character above, so pick another one and they change with it.</p>
+          </header>
+          <HomeJourney />
+        </section>
+
+        <section className="hsec" id="photo" aria-labelledby="photo-title">
+          <header className="hsec-head">
+            <span className="hsec-kicker mono">Photo to 3D</span>
+            <h2 id="photo-title">
+              Or make the star <em className="serif-i">from your photo.</em>
+            </h2>
+            <p>For a portfolio, the star can be you. Upload a picture and it is cut out right in your browser, made into a 3D model, and the whole site is designed around it.</p>
+          </header>
+          <PhotoStory />
+        </section>
+
+        <section className="hsec" id="models" aria-labelledby="models-title">
+          <header className="hsec-head">
+            <span className="hsec-kicker mono">3D library</span>
+            <h2 id="models-title">
+              {MODELS.length} models, <em className="serif-i">ready to star.</em>
+            </h2>
+            <p>Characters, animals, vehicles, products and props, each one checked and cleared for commercial use, with credits added for you where a licence asks. Tap one to make it this page&apos;s star.</p>
+          </header>
+          <ModelMarquee rows={ROWS} />
+          <p className="hm-more">
+            <Link href="/library">
+              Browse the whole library
+              <Icon name="arrow" size={16} />
+            </Link>
+          </p>
+        </section>
 
         <section className="hsec" id="gallery" aria-labelledby="gallery-title">
           <header className="hsec-head">
-            <span className="hsec-kicker mono">Template Gallery</span>
+            <span className="hsec-kicker mono">Template library</span>
             <h2 id="gallery-title">
-              {TEMPLATES.length} full templates. <em className="serif-i">Every one is live.</em>
+              {TEMPLATES.length} templates. <em className="serif-i">Every one runs live.</em>
             </h2>
-            <p>Not screenshots: each card runs the whole site itself. Hover or tap to play it, then open one and change every part of it for your project.</p>
+            <p>Not screenshots: each card runs the whole site. In the journey every one is shown with your words, your colours and your character, or you start a new one built around it.</p>
           </header>
           <LazyGallery />
-        </section>
-
-        <section className="hsec" id="demo" aria-labelledby="demo-title">
-          <header className="hsec-head">
-            <h2 id="demo-title">
-              One line in. <em className="serif-i">A whole site</em> out.
-            </h2>
-            <p>Each one is a real site the builder made from the line above it, running live. Scroll inside, switch to phone, try dark.</p>
-          </header>
-          <LiveDemo />
-        </section>
-
-        <section className="hsec" id="how" aria-labelledby="how-title">
-          <header className="hsec-head">
-            <h2 id="how-title">
-              Three moves, <em className="serif-i">no blank page.</em>
-            </h2>
-            <p>You never start from an empty canvas. The site exists from the first second, and everything after that is choosing.</p>
-          </header>
-          <ol className="how">
-            <li className="how-step">
-              <div className="how-text">
-                <span className="how-n mono">1</span>
-                <h3>Say it</h3>
-                <p>Type what you would tell a friend. Simple rules work out whether it is a business or a person, which kind, and pick up a name and a city.</p>
-              </div>
-              <ReadDemo />
-            </li>
-            <li className="how-step">
-              <div className="how-text">
-                <span className="how-n mono">2</span>
-                <h3>Shape it</h3>
-                <p>Your site opens complete: words, design and an experience made for it. Remix it in plain words, press Surprise me for a new direction, tune each kind of motion, click any word to change it.</p>
-              </div>
-              <ShuffleDemo designs={spread} />
-            </li>
-            <li className="how-step">
-              <div className="how-text">
-                <span className="how-n mono">3</span>
-                <h3>Own it</h3>
-                <p>Download one folder and drop it onto a free host. No account here, no lock-in, no monthly bill. The files are yours for good.</p>
-              </div>
-              <div className="how-demo">
-                <ul className="how-files mono">
-                  <li>
-                    <span>index.html</span>
-                    <span>your page</span>
-                  </li>
-                  <li>
-                    <span>site-data.js</span>
-                    <span>every word and colour</span>
-                  </li>
-                  <li>
-                    <span>site.js · site.css</span>
-                    <span>motion and style</span>
-                  </li>
-                  <li>
-                    <span>images/</span>
-                    <span>your pictures</span>
-                  </li>
-                  <li>
-                    <span>favicon · share.png</span>
-                    <span>icon and link preview</span>
-                  </li>
-                </ul>
-              </div>
-            </li>
-          </ol>
-        </section>
-
-        <section className="hsec" id="designs" aria-labelledby="designs-title">
-          <header className="hsec-head">
-            <h2 id="designs-title">
-              {LIBRARY.length} design systems. <em className="serif-i">One is made for you.</em>
-            </h2>
-            <p>Each pairs real typefaces with one accent, tinted neutrals, a corner shape and a layout, in light and dark, with contrast checked. Yours is seeded from your name and tone, then you can shuffle, remix one part or lock what you like.</p>
-          </header>
-          <DesignWall designs={spread} />
-        </section>
-
-        <section className="hsec" aria-label="Start from a document">
-          <DocBand />
         </section>
 
         <section className="hsec" id="yours" aria-labelledby="yours-title">
@@ -142,19 +102,19 @@ export default function Home() {
           </header>
           <ul className="bento">
             <li className="bento-a">
-              <Icon name="shield" size={22} />
-              <h3>Private by design</h3>
-              <p>Your sites live in this browser. There is no account and no tracking of what you build.</p>
+              <Icon name="sparkle" size={22} />
+              <h3>One character, one site</h3>
+              <p>Accent, stage, type, corners and motion are all drawn from the model, so nothing on the page fights it. Every pairing is checked for contrast.</p>
             </li>
             <li className="bento-b">
-              <Icon name="bolt" size={22} />
-              <h3>Complete from the first second</h3>
-              <p>No blank canvas and no lorem ipsum. Copy, design, motion, call to action, contact and a phone version are there at once, and you approve every change.</p>
+              <Icon name="shield" size={22} />
+              <h3>Private by design</h3>
+              <p>Your sites, photos and models live in this browser. There is no account and no tracking of what you build.</p>
             </li>
             <li className="bento-c">
               <Icon name="edit" size={22} />
-              <h3>Click anything to change it</h3>
-              <p>Edit words and pictures right on the page. Change an answer later and the page follows, keeping what you rewrote by hand.</p>
+              <h3>Change anything</h3>
+              <p>Every word, picture, colour, section and the 3D model itself can be changed in the studio, and you see it at once.</p>
             </li>
             <li className="bento-d">
               <Icon name="globe" size={22} />
@@ -164,12 +124,12 @@ export default function Home() {
             <li className="bento-e">
               <Icon name="heart" size={22} />
               <h3>Works for everyone</h3>
-              <p>Responsive, centred and keyboard friendly, AA contrast in light and dark, and a still version for people who turn motion down.</p>
+              <p>Responsive and keyboard friendly, AA contrast in light and dark, and a still picture of the model for people who turn motion down.</p>
             </li>
             <li className="bento-f">
               <Icon name="code" size={22} />
-              <h3>Source included</h3>
-              <p>Prefer code? Take the same site as a React and Vite project, with every setting in one JSON file.</p>
+              <h3>Yours to keep</h3>
+              <p>Download the finished site, or its source with every setting in one JSON file. No lock-in and no monthly bill.</p>
             </li>
           </ul>
         </section>
@@ -195,12 +155,12 @@ export default function Home() {
           <div className="endcta-glow" aria-hidden="true" />
           <div className="endcta-card">
             <h2 id="end-title">
-              Build a website <em className="serif-i">that moves.</em>
+              Build a website <em className="serif-i">around your character.</em>
             </h2>
-            <p>It takes less time than reading this page did.</p>
+            <p>One line is all it takes to start.</p>
             <div className="row wrap" style={{ justifyContent: "center" }}>
               <a href="#start" className="btn btn-primary">
-                Create your website
+                Start with one line
                 <Icon name="arrow" size={16} />
               </a>
               <Link href="/sites" className="btn endcta-ghost">
@@ -213,12 +173,13 @@ export default function Home() {
 
       <footer className="hfoot">
         <div className="hfoot-top">
-          <p>Site Builder turns one line into an interactive website you own. Describe your idea, shape the experience, make it yours.</p>
+          <p>Site Builder makes a website around a 3D character. Say what you are building, pick the star, and every part of the site follows it.</p>
           <nav aria-label="Footer">
-            <a href="#gallery">Templates</a>
+            <a href="#journey">How it works</a>
+            <a href="#photo">Photo to 3D</a>
+            <Link href="/library">3D library</Link>
+            <Link href="/templates">Templates</Link>
             <Link href="/lab">Experience Lab</Link>
-            <a href="#demo">Examples</a>
-            <a href="#how">How it works</a>
             <a href="#faq">Questions</a>
             <Link href="/sites">Your sites</Link>
           </nav>
@@ -226,8 +187,10 @@ export default function Home() {
         <p className="hfoot-word" aria-hidden="true">
           Site Builder
         </p>
-        <p className="hfoot-fine">Every experience is original code. 3D by three.js and React Three Fiber (MIT). Motion by Motion and Lenis (MIT).</p>
+        <p className="hfoot-fine">
+          Every template and experience is original code. 3D by three.js and React Three Fiber (MIT). Photo cut-outs by MediaPipe (Apache-2.0). Photo to 3D follows the img2threejs method (Apache-2.0). Motion by Motion and Lenis (MIT). The portrait above is an AI picture made for this site.
+        </p>
       </footer>
-    </div>
+    </HomeCharacterProvider>
   );
 }
