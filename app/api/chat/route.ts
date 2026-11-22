@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { callGemini, geminiKey, limited, parseJson, type GeminiTurn } from "@/lib/gemini";
 import { CATEGORIES } from "@/lib/categories";
-import { MAX_QUESTIONS, answer, charactersFor, nameGiven, normalizeBrief, ruleStep, sectionsFor, startBrief, summary, type Brief, type BriefField, type ChatStep, type ChatTurn } from "@/lib/journey/brief";
+import { MAX_QUESTIONS, answer, charactersFor, closeSummary, nameGiven, normalizeBrief, ruleStep, sectionsFor, startBrief, summary, type Brief, type BriefField, type ChatStep, type ChatTurn } from "@/lib/journey/brief";
 
 // Step 2 of the journey (docs/CHARACTER-JOURNEY.md): the interview, on the server so the Gemini
 // key stays here.
@@ -27,7 +27,7 @@ Rules:
 - Colours: by default they come from the character; ask only if useful, offering "From the character" first.
 - Update the brief from every answer: keep what is known, add what was said. Never invent facts (prices, awards, years).
 - No em dashes, no emoji, no markdown.
-- When the brief has name, audience, tone, sections and character, set done to true and make "reply" a two sentence summary of the site to be built that ends by asking them to pick the character below.
+- When the brief has name, audience, tone, sections and character, set done to true and make "reply" a one or two sentence summary of the site to be built: its name, who it is for, how it feels and its star. Do not end with a question; the studio adds the next step itself.
 Return JSON exactly like:
 {"reply":"<reaction and question, or the summary>","chips":["<3 to 6 answers>"],"field":"<${FIELDS.join("|")}>","multi":false,"done":false,"brief":{"kind":"website|portfolio","business":"<one business id>","name":"","what":"<what it is or offers, a few words; for a portfolio, the person's role, like 3D motion designer>","audience":"","tone":"","sections":[""],"character":"<the character in words>","colors":"","city":"","email":"","cta":"<main action, 1 to 4 words>"}}`;
 
@@ -56,7 +56,7 @@ function checked(raw: Record<string, unknown>, base: Brief, turns: ChatTurn[]): 
   if (done) {
     if (!brief.character) brief.character = charactersFor(brief)[0];
     if (!brief.sections.length) brief.sections = sectionsFor(brief).slice(0, 4);
-    return { reply: raw.done === true ? reply : summary(brief), chips: [], brief, done: true, source: "gemini" };
+    return { reply: raw.done === true ? closeSummary(reply, brief) : summary(brief), chips: [], brief, done: true, source: "gemini" };
   }
   const field = FIELDS.includes(raw.field as BriefField) ? (raw.field as BriefField) : undefined;
   const chips = (Array.isArray(raw.chips) ? raw.chips : []).map((c) => String(c).replace(/\s+/g, " ").trim().slice(0, 48)).filter(Boolean).slice(0, 6);
