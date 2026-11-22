@@ -123,8 +123,8 @@ describe("owner batches", () => {
       expect(isShippable(a), id).toBe(true);
       expect(a.name, id).not.toMatch(/apple|iphone|nissan|gt-?r|mclaren|netflix|marlboro/i);
     }
-    expect(assetById("character-kid-001")!.clips.map((c) => c.name)).toEqual(["idle", "walk", "run", "sit"]);
-    expect(assetById("product-phone-fold-001")!.clips.map((c) => c.name)).toEqual(["open-close"]);
+    expect((assetById("character-kid-001")!.clips ?? []).map((c) => c.name)).toEqual(["idle", "walk", "run", "sit"]);
+    expect((assetById("product-phone-fold-001")!.clips ?? []).map((c) => c.name)).toEqual(["open-close"]);
     expect(resolveAsset({ query: "foldable phone app" }).id).toBe("product-phone-fold-001");
     expect(resolveAsset({ query: "planet earth globe" }).id).toBe("nature-earth-001");
   });
