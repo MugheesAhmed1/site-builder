@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { cleanMask, hasCutout, maskFromAlpha, maskShare, reliefMesh, subjectMask, type PixelImage } from "@/lib/character/relief";
 import { MAX_PARTS, normalizeSpec, SAMPLE_SPEC, specBounds } from "@/lib/character/sculpt";
-import { answer, MAX_QUESTIONS, normalizeBrief, ruleStep, startBrief, summary, type Brief, type ChatTurn } from "@/lib/journey/brief";
+import { answer, MAX_QUESTIONS, nameGiven, normalizeBrief, ruleStep, startBrief, summary, type Brief, type ChatTurn } from "@/lib/journey/brief";
 
 /** A w x h picture: `paint(x, y)` gives each pixel's RGBA. */
 function picture(w: number, h: number, paint: (x: number, y: number) => [number, number, number, number?]): PixelImage {
@@ -214,6 +214,24 @@ describe("the interview, by the rules", () => {
     const first = (idea: string) => ruleStep(startBrief(idea), [{ role: "me", text: idea }]).field;
     expect(first("A fantasy game studio")).toBe("name");
     expect(first("A burger joint in Lahore called Smash")).not.toBe("name");
+  });
+
+  it("words the name question for where it comes in the chat", () => {
+    expect(nameGiven(startBrief("A burger joint in Lahore called Smash"))).toBe(true);
+    expect(nameGiven(startBrief("A fantasy game studio"))).toBe(false);
+    const later: ChatTurn[] = [
+      { role: "ai", text: "How should it feel?", field: "tone" },
+      { role: "me", text: "Playful" },
+    ];
+    const b = startBrief("A fantasy game studio");
+    expect(ruleStep(b, []).reply).toBe("Great idea. What is it called?");
+    const mid = ruleStep({ ...b, tone: "Playful" }, later);
+    expect(mid.field).toBe("name");
+    expect(mid.reply).not.toMatch(/great idea/i);
+    expect(mid.reply).toMatch(/And what is it called\?$/);
+    const p = startBrief("A portfolio for a 3D motion designer");
+    expect(ruleStep(p, []).reply).toMatch(/^Let's start with you\./);
+    expect(ruleStep({ ...p, tone: "Playful" }, later).reply).not.toMatch(/let's start/i);
   });
 });
 

@@ -74,6 +74,8 @@
 .ch-model { position: absolute; inset: 9%; }
 .ch-model .cv-host, .ch-view { position: absolute; inset: 0; width: 100%; height: 100%; }
 .ch-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 30px 40px rgb(0 0 0 / 0.45)); animation: ch-float 5s ease-in-out infinite; }
+/* The stills the 3D view shows while three.js loads look the same as the one before it. */
+.ch-view .cv-wait, .ch-view .xp-char-poster { filter: drop-shadow(0 30px 40px rgb(0 0 0 / 0.45)); animation: ch-float 5s ease-in-out infinite; }
 @keyframes ch-float { 50% { translate: 0 -10px; } }
 .ch-rings { position: absolute; inset: 0; pointer-events: none; }
 .ch-rings i { position: absolute; inset: 0; margin: auto; width: 96%; height: 34%; border-radius: 50%; border: 1px solid color-mix(in oklab, var(--hc-a) 34%, transparent); top: 30%; transform: rotate(-14deg); animation: ch-ring 14s linear infinite; }
@@ -136,12 +138,16 @@
   .ch-t > b { width: 28px; height: 28px; border-radius: 9px; }
   .ch-t > span { text-align: left; }
   .ch-t code { font-size: 12px; }
-  .ch-t-type code { max-width: 15ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
+  /* Accent and motion share a row; the type pair gets one of its own, so its full name fits. */
+  .ch-t-accent { order: 1; }
+  .ch-t-motion { order: 2; }
+  .ch-t-type { order: 3; }
+  .ch-t-type code { max-width: calc(100vw - 110px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
   .ch-go { padding: 0 16px; }
   .ch-follow { font-size: 13px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ch-rings i, .ch-t, .ch-poster, .ch-t-motion > b i { animation: none; }
+  .ch-rings i, .ch-t, .ch-poster, .ch-view .cv-wait, .ch-view .xp-char-poster, .ch-t-motion > b i { animation: none; }
 }
 
 /* ------------------------------------------------------------------ how it works */

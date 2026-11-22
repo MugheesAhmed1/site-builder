@@ -167,21 +167,32 @@ const COLOR_CHIPS = ["From the character", "Warm and earthy", "Cool blues", "Bla
 
 interface RuleQuestion {
   field: BriefField;
-  ask: (b: Brief) => string;
+  /** The question; `first` when nothing has been answered yet, so it can open the chat. */
+  ask: (b: Brief, first: boolean) => string;
   chips: (b: Brief) => string[];
   multi?: boolean;
   /** Skip when the line already answered it. */
   skip?: (b: Brief, asked: Set<BriefField>) => boolean;
 }
 
+/** True when the line itself named the business or person; a name only guessed from the description is not. */
+export function nameGiven(b: Brief): boolean {
+  return !!b.name && !!extractHints(b.idea).name && b.idea.toLowerCase().includes(b.name.toLowerCase());
+}
+
 const RULES: RuleQuestion[] = [
   {
     field: "name",
-    ask: (b) => (b.kind === "portfolio" ? "Let's start with you. What's your name, as it should appear on the site?" : "Great idea. What is it called?"),
+    ask: (b, first) =>
+      b.kind === "portfolio"
+        ? `${first ? "Let's start with you. " : ""}What's your name, as it should appear on the site?`
+        : first
+          ? "Great idea. What is it called?"
+          : "And what is it called?",
     chips: (b) => [b.name, "Not decided yet"].filter(Boolean),
     // Asked unless the line itself named it ("called Crumb", "my bakery Crumb House"): a name
     // the rules only guessed from the description ("Fantasy Game Studio") is offered as a chip.
-    skip: (b) => !!b.name && !!extractHints(b.idea).name && b.idea.toLowerCase().includes(b.name.toLowerCase()),
+    skip: (b) => nameGiven(b),
   },
   {
     field: "audience",
@@ -238,7 +249,7 @@ export function ruleStep(brief: Brief, turns: ChatTurn[]): ChatStep {
   if (!next || asked.size >= MAX_QUESTIONS) {
     return { reply: summary(brief), chips: [], brief, done: true, source: "rules" };
   }
-  return { reply: nod + next.ask(brief), chips: next.chips(brief).slice(0, 6), field: next.field, multi: next.multi, brief, done: false, source: "rules" };
+  return { reply: nod + next.ask(brief, !lastAnswer), chips: next.chips(brief).slice(0, 6), field: next.field, multi: next.multi, brief, done: false, source: "rules" };
 }
 
 const NODS = ["Got it.", "Nice.", "Good choice.", "Perfect.", "Noted."];

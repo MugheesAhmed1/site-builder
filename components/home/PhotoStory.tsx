@@ -1,14 +1,12 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
+import CharacterView from "@/components/character/CharacterView";
 import { gradientCss } from "@/lib/character/design";
 
 // Photo to 3D, shown with a real run of the builder's own pipeline: a portrait (a free AI
 // picture made for the Cornerstone template), its cut-out from MediaPipe's MagicTouch model on the
 // device, and the standee the journey made from it. The 3D loads only when the section is near.
-
-const CharacterView = dynamic(() => import("@/components/character/CharacterView"), { ssr: false });
 
 /** The portrait's own stage, as the journey drew it from the photo's colours. */
 const STOPS = ["#1a0d08", "#7f5d4a", "#433025"];

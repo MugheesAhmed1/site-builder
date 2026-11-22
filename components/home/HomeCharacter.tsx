@@ -2,9 +2,9 @@
 
 import "./home-character.css";
 
-import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import CharacterView from "@/components/character/CharacterView";
 import Icon from "@/components/Icon";
 import { designOptions, moodWords, tokens, tradeAccent, type DesignSystem, type Tokens } from "@/lib/character/design";
 import { paletteFromPixels } from "@/lib/character/palette";
@@ -14,9 +14,8 @@ import { FIRST, SHOWCASE, type Showcase } from "./showcase";
 // site that follows it. The page itself does what a generated site does: when the character
 // changes, its colours are read from the model's still (the journey's own code), a design system
 // is drawn from them, and the page's accent, stage and tint move to it. Three.js loads only after
-// the page is usable; until then the model's still stands in.
-
-const CharacterView = dynamic(() => import("@/components/character/CharacterView"), { ssr: false });
+// the page is usable; until then the model's still stands in (CharacterView keeps it up until
+// three.js has drawn the model, so the stage is never empty).
 
 export interface Look {
   /** The design system the journey would offer first, and all five it draws. */
