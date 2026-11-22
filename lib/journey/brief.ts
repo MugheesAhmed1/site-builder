@@ -255,11 +255,30 @@ export function ruleStep(brief: Brief, turns: ChatTurn[]): ChatStep {
 const NODS = ["Got it.", "Nice.", "Good choice.", "Perfect.", "Noted."];
 const pickNod = (s: string) => NODS[s.length % NODS.length];
 
+/** What happens after the chat, said the same way whoever wrote the summary. */
+export function nextLine(b: Brief): string {
+  return b.star ? "Your character is ready below: keep it or change it, then we choose the colours and type from it." : "Pick the character below, then we choose the colours and type from it.";
+}
+
 /** The closing line: what the site will be, in one breath. */
 export function summary(b: Brief): string {
   const who = b.kind === "portfolio" ? `a portfolio for ${b.name || "you"}` : `a site for ${b.name || "your business"}`;
   const feel = b.tone ? `, ${b.tone.toLowerCase()}` : "";
   const star = b.character ? `, starring ${b.character.replace(/^(a|an|the)\s+/i, (m) => m.toLowerCase())}` : "";
-  const next = b.star ? "Your character is ready below: keep it or change it, then we choose the colours and type from it." : "Pick the character below, then we choose the colours and type from it.";
-  return `Here is the plan: ${who}${feel}${star}. ${next}`;
+  return `Here is the plan: ${who}${feel}${star}. ${nextLine(b)}`;
+}
+
+/**
+ * The AI's summary, ending on the studio's own next step: a closing question ("Shall we get this
+ * online?") is dropped, since the chat is over and nothing can answer it. Only a question, or
+ * nothing, falls back to the rules' summary.
+ */
+export function closeSummary(reply: string, b: Brief): string {
+  const asks = /\?["')\]]*$/;
+  let kept = reply.trim();
+  // Drop closing questions one sentence at a time, leaving the rest exactly as written.
+  for (let n = 0; n < 3 && asks.test(kept); n++) kept = kept.replace(/(^|[.!?]["')\]]*\s)[^.!?]*\?["')\]]*$/, "$1").trim();
+  if (!kept || asks.test(kept)) return summary(b);
+  if (!/[.!]["')\]]*$/.test(kept)) kept += ".";
+  return /\bbelow\b/i.test(kept) ? kept : `${kept} ${nextLine(b)}`;
 }

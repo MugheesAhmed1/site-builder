@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { cleanMask, hasCutout, maskFromAlpha, maskShare, reliefMesh, subjectMask, type PixelImage } from "@/lib/character/relief";
 import { MAX_PARTS, normalizeSpec, SAMPLE_SPEC, specBounds } from "@/lib/character/sculpt";
-import { answer, MAX_QUESTIONS, nameGiven, normalizeBrief, ruleStep, startBrief, summary, type Brief, type ChatTurn } from "@/lib/journey/brief";
+import { answer, closeSummary, MAX_QUESTIONS, nameGiven, nextLine, normalizeBrief, ruleStep, startBrief, summary, type Brief, type ChatTurn } from "@/lib/journey/brief";
 
 /** A w x h picture: `paint(x, y)` gives each pixel's RGBA. */
 function picture(w: number, h: number, paint: (x: number, y: number) => [number, number, number, number?]): PixelImage {
@@ -214,6 +214,17 @@ describe("the interview, by the rules", () => {
     const first = (idea: string) => ruleStep(startBrief(idea), [{ role: "me", text: idea }]).field;
     expect(first("A fantasy game studio")).toBe("name");
     expect(first("A burger joint in Lahore called Smash")).not.toBe("name");
+  });
+
+  it("ends the AI's summary on the next step, not on a question nobody can answer", () => {
+    const starred: Brief = { ...startBrief("A fantasy game studio"), star: "character-dragon-001", character: "the baby dragon" };
+    const plain = startBrief("A bakery in Lahore");
+    expect(closeSummary("Your studio site for gamers stars the baby dragon. Shall we get this epic world online?", starred)).toBe(`Your studio site for gamers stars the baby dragon. ${nextLine(starred)}`);
+    expect(closeSummary("Prices from 3.5 dollars, warm and friendly. Ready? Shall we?", plain)).toBe(`Prices from 3.5 dollars, warm and friendly. ${nextLine(plain)}`);
+    expect(closeSummary("A warm bakery site. Pick the character below.", plain)).toBe("A warm bakery site. Pick the character below.");
+    expect(closeSummary("A warm bakery site starring the robot", plain)).toBe(`A warm bakery site starring the robot. ${nextLine(plain)}`);
+    expect(closeSummary("Shall we start?", plain)).toBe(summary(plain));
+    expect(closeSummary("  ", plain)).toBe(summary(plain));
   });
 
   it("words the name question for where it comes in the chat", () => {
