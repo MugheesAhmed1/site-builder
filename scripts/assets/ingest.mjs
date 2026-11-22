@@ -172,7 +172,26 @@ async function processModel(e) {
         const target = byName.get(ch.getTargetNode()?.getName());
         if (!target) continue;
         const s0 = ch.getSampler();
-        const s1 = doc.createAnimationSampler().setInput(acc(s0.getInput())).setOutput(acc(s0.getOutput())).setInterpolation(s0.getInterpolation());
+        const out = acc(s0.getOutput());
+        // Each file places its root bone in its own space (one clip's hips sit 90 cm away from the
+        // model's): the root's track is moved so its first pose matches the model's rest pose,
+        // keeping its motion.
+        if (e.rebaseRoot && ch.getTargetPath() === "translation" && target.getName() === e.rebaseRoot) {
+          const a = out.getArray().slice();
+          const rest = target.getTranslation();
+          const d = [a[0] - rest[0], a[1] - rest[1], a[2] - rest[2]];
+          for (let i = 0; i < a.length; i += 3) for (let k = 0; k < 3; k++) a[i + k] -= d[k];
+          // A walk or a run made "in place": the travel from first to last pose is taken out,
+          // the bounce in between is kept, so the character walks on the spot.
+          if (mc.inPlace) {
+            const n = a.length / 3;
+            const last = [a[a.length - 3], a[a.length - 2], a[a.length - 1]];
+            const first = [a[0], a[1], a[2]];
+            for (let i = 0; i < n; i++) for (let k = 0; k < 3; k++) a[i * 3 + k] -= ((last[k] - first[k]) * i) / Math.max(1, n - 1);
+          }
+          out.setArray(a);
+        }
+        const s1 = doc.createAnimationSampler().setInput(acc(s0.getInput())).setOutput(out).setInterpolation(s0.getInterpolation());
         into.addSampler(s1).addChannel(doc.createAnimationChannel().setTargetNode(target).setTargetPath(ch.getTargetPath()).setSampler(s1));
       }
       break;

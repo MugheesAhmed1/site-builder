@@ -1,0 +1,106 @@
+/* The 3D character in a template (Site Builder, docs/CHARACTER-JOURNEY.md). Shared by every
+   template: edit templates/_kit/character.css, not a copy. */
+
+/* Rules sit inside :where() so a template's own classes always win. */
+:where(.xp-stage) {
+  isolation: isolate;
+  background-repeat: no-repeat;
+}
+
+.xp-stage--aurora {
+  background-size: 160% 160%, 140% 140%, 140% 140%, 100% 100%;
+  animation: xp-aurora 22s ease-in-out infinite alternate;
+}
+
+@keyframes xp-aurora {
+  0% { background-position: 0% 0%, 0% 100%, 100% 0%, 0 0; }
+  100% { background-position: 60% 40%, 30% 70%, 70% 30%, 0 0; }
+}
+
+/* The stage is the other way from the one the words were made for: they take --xp-ink. */
+.xp-flip {
+  --c-text: var(--xp-ink);
+  --c-ink: var(--xp-ink);
+  --c-onDark: var(--xp-ink);
+  --c-headingTo: var(--xp-ink);
+  --c-muted: var(--xp-ink2);
+  --c-ink2: var(--xp-ink2);
+  --c-body: var(--xp-ink2);
+  --c-headingFrom: var(--xp-ink2);
+  color: var(--xp-ink);
+}
+
+:where(.xp-slot) {
+  position: relative;
+  display: block;
+  min-width: 0;
+  min-height: 0;
+}
+
+.xp-slot > img.xp-char-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* A soft halo of the glow colour behind the model, so it reads on any background picture. */
+.xp-slot--hero::before,
+.xp-slot--echo::before {
+  content: '';
+  position: absolute;
+  inset: 12% 14% 8%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--xp-g2, #7c5cff) 55%, transparent), transparent);
+  filter: blur(18px);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.xp-slot > canvas,
+.xp-slot > img {
+  z-index: 1;
+}
+
+/* The model's credit line (CC BY models need one), small, under the model. */
+.xp-slot > .xp-credit {
+  position: absolute;
+  left: 50%;
+  bottom: -1.9em;
+  transform: translateX(-50%);
+  z-index: 2;
+  max-width: 96%;
+  font: 500 10.5px/1.3 system-ui, sans-serif;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.6;
+  color: inherit;
+  pointer-events: auto;
+}
+.xp-slot--hero > .xp-credit {
+  bottom: 0.4em;
+}
+
+/* A section that shows the character again near the end of the page. */
+:where(.xp-echo) {
+  display: grid;
+  place-items: center;
+  padding: clamp(8px, 2vw, 24px) 0 clamp(28px, 4vw, 40px);
+}
+
+:where(.xp-echo .xp-slot) {
+  width: min(340px, 72vw);
+  aspect-ratio: 1 / 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xp-stage--aurora {
+    animation: none;
+  }
+}

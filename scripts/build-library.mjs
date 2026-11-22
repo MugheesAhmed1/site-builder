@@ -7,6 +7,7 @@
 //   public/lib/preview.html     one block on its own, for the library page and the studio
 //   public/lib/source/          each block's source and what it imports, for "Download source"
 //   public/lib/files.json       the runtime's files, which go into a downloaded site as xp-lib/
+//   public/lib/xp-character.js  the 3D character runtime, added to a download that has a character
 //
 // Every block's settings must match its schema, as for templates, so every part stays editable.
 // The registry also gathers every picture, film, font and palette the templates use into one
@@ -91,6 +92,34 @@ await build({
 if (existsSync(join(LIB, "media"))) cpSync(join(LIB, "media"), join(OUT, "media"), { recursive: true });
 const runtimeFiles = listFiles(OUT);
 writeFileSync(join(OUT, "files.json"), JSON.stringify(runtimeFiles) + "\n");
+
+// The character runtime (library/character, docs/CHARACTER-JOURNEY.md): one file with three.js
+// inside, loaded only by pages that have a 3D character. Downloads add it on its own. esbuild
+// bundles it (tree-shaken three.js, about 670 KB, 170 KB over the wire).
+await (await import("esbuild")).build({
+  entryPoints: [join(LIB, "character", "runtime.ts")],
+  bundle: true,
+  format: "esm",
+  target: "es2020",
+  minify: true,
+  legalComments: "none",
+  charset: "utf8",
+  define: { "process.env.NODE_ENV": '"production"' },
+  outfile: join(OUT, "xp-character.js"),
+  logLevel: "warning",
+});
+writeFileSync(join(OUT, "character-files.json"), JSON.stringify(["xp-character.js"]) + "\n");
+
+// Vite leaves library builds unminified (to keep them tree-shakable); these are finished files
+// that pages load as they are, so every script is minified here. About half the bytes.
+{
+  const { transform } = await import("esbuild");
+  for (const f of listFiles(OUT).filter((p) => p.endsWith(".js") && !p.startsWith("source/") && p !== "xp-character.js")) {
+    const file = join(OUT, f);
+    const out = await transform(readFileSync(file, "utf8"), { minify: true, format: "esm", target: "es2020", legalComments: "none", charset: "utf8" });
+    writeFileSync(file, out.code);
+  }
+}
 
 // One block on its own: #b=<id> shows its defaults, #xp=<content> any settings.
 writeFileSync(

@@ -29,6 +29,23 @@
     "Layer list panel",
     "Sign-up form"
   ],
+  "roles": {
+    "mode": "dark",
+    "stage": "dark",
+    "colors": {
+      "accent": "accent",
+      "accentHover": "accentDeep",
+      "text": "ink",
+      "page": "page",
+      "panel": "surface",
+      "button": "light",
+      "buttonText": "onLight"
+    },
+    "fonts": {
+      "display": "display",
+      "body": "body"
+    }
+  },
   "schema": [
     {
       "group": "Business",

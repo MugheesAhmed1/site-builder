@@ -9,6 +9,7 @@ import { ProjectModal } from './components/ProjectModal';
 import { ContactModal } from './components/ContactModal';
 import { type ProjectItem } from './data/portfolio';
 import { fill, on, useTheme, useXP } from './xp';
+import { CharacterSlot, hasEcho } from './character';
 
 export default function App() {
   const data = useXP();
@@ -32,6 +33,11 @@ export default function App() {
         {on('services', data) && <ServicesSection />}
         {on('projects', data) && <ProjectsSection onSelectProject={(project) => setSelectedProject(project)} />}
         <div data-xp-extras="" />
+        {hasEcho(data) && (
+          <div className="xp-echo" style={{ background: 'var(--c-page)' }}>
+            <CharacterSlot data={data} slot="echo" />
+          </div>
+        )}
         {data.footer && <footer className="px-6 md:px-10 py-10 text-xs uppercase tracking-widest opacity-60 text-center">{fill(data.footer, data)}</footer>}
       </main>
 

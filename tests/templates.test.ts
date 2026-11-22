@@ -2,7 +2,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import JSZip from "jszip";
 import { describe, expect, it } from "vitest";
-import { contentScript, countChanges, extractMedia, getPath, schemaProblems, setPath, type SchemaGroup } from "@/lib/template-schema.mjs";
+import { contentScript, countChanges, extractMedia, getPath, schemaProblems, setPath, withCharacter, type SchemaGroup } from "@/lib/template-schema.mjs";
 import { TEMPLATES } from "@/lib/templates";
 import { CATEGORIES } from "@/lib/categories";
 import { cleanEntryName, detectKind, draftContent, pruneDependencies, readArchive } from "@/scripts/import-template.mjs";
@@ -95,7 +95,8 @@ describe("registered templates", () => {
   for (const t of TEMPLATES) {
     it(`${t.id}: every value has a field, and it is filed under real business types`, () => {
       const dir = join(process.cwd(), "templates", t.id);
-      const c = JSON.parse(readFileSync(join(dir, "content.json"), "utf8"));
+      // The character's settings join every template's own content.json at build time.
+      const c = withCharacter(t.schema, JSON.parse(readFileSync(join(dir, "content.json"), "utf8")), t.roles).content;
       expect(schemaProblems(t.schema, c)).toEqual([]);
       expect(t.content).toEqual(c);
       expect(t.business.length).toBeGreaterThan(0);

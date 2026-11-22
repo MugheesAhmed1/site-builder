@@ -131,3 +131,21 @@ body {
   opacity: 1;
   transform: none;
 }
+
+/* The 3D character on its gradient, under the title, between the two notes. */
+.lithos-char {
+  position: absolute !important;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 34%;
+  bottom: 4%;
+  width: min(42vw, 560px);
+  z-index: 20;
+}
+@media (max-width: 639px) {
+  .lithos-char {
+    top: 27%;
+    bottom: 220px;
+    width: 92vw;
+  }
+}

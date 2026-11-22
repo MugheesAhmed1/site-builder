@@ -33,6 +33,26 @@
     "FAQ",
     "Hours and map link"
   ],
+  "roles": {
+    "mode": "light",
+    "stage": "light",
+    "colors": {
+      "page": "page",
+      "surface": "surface",
+      "text": "ink",
+      "muted": "muted",
+      "accent": "accent",
+      "accentSoft": "soft",
+      "highlight": "fill2",
+      "dark": "dark",
+      "onAccent": "onAccent"
+    },
+    "fonts": {
+      "display": "display",
+      "body": "body"
+    },
+    "radius": "radius"
+  },
   "schema": [
     {
       "group": "Business",

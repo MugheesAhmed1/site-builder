@@ -98,6 +98,15 @@
 
     /* Layers */
     .layer{position:absolute;inset:0;pointer-events:none}
+    .ms-char{position:absolute;left:50%;transform:translateX(-50%);top:30vh;bottom:9vh;width:min(46vw,560px);pointer-events:auto}
+    :where(.xp-slot){position:relative;display:block}
+    .stage.has-char .hud{left:74%;top:44%}
+    .stage.xp-flip{--ink:var(--xp-ink);--ink2:var(--xp-ink2);color:var(--xp-ink)}
+    .xp-slot>.xp-credit{position:absolute;left:50%;bottom:-1.9em;transform:translateX(-50%);font:500 10.5px/1.3 system-ui,sans-serif;white-space:nowrap;opacity:.6}
+    .xp-slot--hero>.xp-credit{bottom:.4em}
+    .xp-slot>img.xp-char-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}
+    .xp-echo{display:grid;place-items:center;padding:24px 0}
+    :where(.xp-echo .xp-slot){width:min(340px,72vw);aspect-ratio:1/1}
     .layer>*{pointer-events:auto}
 
     /* L0 Hero headline */
@@ -226,6 +235,8 @@
       .hero-copy h1{font-size:clamp(44px,6vw,96px)}
       .hud{left:50%;top:66%}
       .cap{left:18px;right:18px;bottom:70px}
+      .ms-char{width:92vw;top:32vh;bottom:22vh}
+      .stage.has-char .hud{display:none}
       .hint{right:18px;bottom:24px}
       .cred{left:18px;top:11vh;max-width:80vw}
       .card{left:18px;top:auto;bottom:6vh;width:210px}
@@ -262,6 +273,29 @@
       const num = (v, d) => (typeof v === "number" && isFinite(v) ? v : d);
       const on = (k) => !D.sections || D.sections[k] !== false;
       const words = (s) => fill(s).trim().split(/\s+/).filter(Boolean);
+      // The 3D character (docs/CHARACTER-JOURNEY.md): xp-content.js loads xp-lib/xp-character.js,
+      // which draws the model into [data-xp-character]; its gradient replaces the valley picture.
+      const model = (u) => { const v = String(u || "").trim(); return /^(https:|data:(model\/gltf-binary|application\/octet-stream);base64,|\.\/|\/)/i.test(v) ? v : ""; };
+      const hasChar = () => !!model(D.character && D.character.src);
+      const mixc = (a, b, p) => `color-mix(in oklab, ${a} ${p}%, ${b})`;
+      function gradient(d) {
+        d = d || {};
+        const st = Array.isArray(d.stops) ? d.stops : [];
+        const g1 = st[0] || "#111111", g2 = st[1] || g1, g3 = st[2] || g1, a = num(d.angle, 160), at = [50, 62];
+        if (d.style === "solid") return g1;
+        if (d.style === "linear") return `linear-gradient(${a}deg, ${g1} 0%, ${g2} 55%, ${g3} 100%)`;
+        if (d.style === "radial") return `radial-gradient(circle at ${at[0]}% ${at[1]}%, ${g2} 0%, ${mixc(g2, g1, 45)} 32%, ${g1} 72%)`;
+        if (d.style === "aurora") return `radial-gradient(60% 70% at ${at[0]}% ${at[1]}%, ${mixc(g2, "transparent", 80)} 0%, transparent 62%), radial-gradient(45% 55% at 14% 86%, ${g3} 0%, transparent 70%), radial-gradient(40% 50% at 92% 8%, ${mixc(mixc(g2, g3, 50), "transparent", 60)} 0%, transparent 70%), linear-gradient(${a}deg, ${g1} 0%, ${mixc(g1, g3, 50)} 100%)`;
+        return `radial-gradient(52% 62% at ${at[0]}% ${at[1]}%, ${g2} 0%, ${mixc(g2, g1, 40)} 38%, transparent 72%), linear-gradient(${a}deg, ${g1} 0%, ${mixc(g1, g3, 35)} 100%)`;
+      }
+      // Light or dark stage: words sit mostly on the base colour. Mossline's words are dark, so a dark
+      // stage turns them light (xp-flip), tinted with the base.
+      const lumOf = (h) => /^#[0-9a-f]{6}$/i.test(h || "") ? [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4)).reduce((a, c, i) => a + c * [0.2126, 0.7152, 0.0722][i], 0) : 0;
+      const stageTone = () => { const d = D.design || {}, st = Array.isArray(d.stops) ? d.stops : []; if (url(d.image)) return d.imageTone === "light" ? "light" : "dark"; return lumOf(st[0]) * 0.8 + lumOf(st[2] || st[0]) * 0.2 < 0.179 ? "dark" : "light"; };
+      const toneCss = () => { const d = D.design || {}, st = Array.isArray(d.stops) ? d.stops : [], g1 = /^#[0-9a-f]{6}$/i.test(st[0] || "") ? st[0] : "#111111", dk = stageTone() === "dark"; return `--xp-ink:${dk ? mixc(g1, "#ffffff", 6) : mixc(g1, "#0c0c11", 14)};--xp-ink2:${dk ? mixc(g1, "#e4e4ea", 22) : mixc(g1, "#33333c", 26)}`; };
+      const stageCss = () => { const d = D.design || {}, st = Array.isArray(d.stops) ? d.stops : [], img = url(d.image); return `--xp-g1:${st[0] || "#111"};--xp-g2:${st[1] || "#333"};--xp-g3:${st[2] || "#222"};background:${img ? `url('${cssUrl(img)}') center/cover` : gradient(d)}`; };
+      const creditFor = (slot) => { const c = String((D.character && D.character.credit) || "").trim(); return c && (slot === "echo" || (slot === "hero" && D.character.echo === false)) ? `<small class="xp-credit">${esc(c)}</small>` : ""; };
+      const charSlot = (slot, cls) => hasChar() ? `<div class="xp-slot xp-slot--${slot} ${cls}" data-xp-character="${slot}" role="img" aria-label="${esc((D.character && D.character.name) || "3D character")}">${url(D.character.poster) ? `<img class="xp-char-poster" src="${esc(url(D.character.poster))}" alt="" draggable="false">` : ""}${creditFor(slot)}</div>` : "";
 
       const fonts = new Set();
       function theme() {
@@ -301,22 +335,23 @@
   </nav>
 
   <section id="story" style="height:${Math.max(250, Math.min(1200, num(m.storyLength, 640)))}vh">
-    <div class="stage">
-      <div class="cam">
-        <canvas id="cv"></canvas>
-        ${url(h.image) ? `<img class="plate" src="${esc(url(h.image))}" alt="${esc(h.imageAlt)}">` : ""}
-        <div class="mist"></div>
+    <div class="stage${hasChar() ? ` has-char xp-tone-${stageTone()}${stageTone() === "dark" ? " xp-flip" : ""}` : ""}"${hasChar() ? ` style="${esc(toneCss())}"` : ""}>
+      <div class="cam"${hasChar() ? ` style="${esc(stageCss())}"` : ""}>
+        <canvas id="cv"${hasChar() ? ' hidden' : ""}></canvas>
+        ${url(h.image) && !hasChar() ? `<img class="plate" src="${esc(url(h.image))}" alt="${esc(h.imageAlt)}">` : ""}
+        ${hasChar() ? "" : `<div class="mist"></div>`}
       </div>
-      ${url(h.video) ? `<video id="push" src="${esc(url(h.video))}" muted playsinline preload="auto" crossorigin="anonymous"></video>` : ""}
+      ${url(h.video) && !hasChar() ? `<video id="push" src="${esc(url(h.video))}" muted playsinline preload="auto" crossorigin="anonymous"></video>` : ""}
       ${m.fog === false ? "" : `<div class="fog"><div class="f0"></div><div class="f1"></div><div class="f2"></div></div>`}
       <div class="layer L0">
         <div class="hero-copy">
           ${h.chip ? `<span class="chip">${esc(h.chip)}</span>` : ""}
           <h1><span class="line"><span>${esc(h.title)}</span></span></h1>
         </div>
+        ${charSlot("hero", "ms-char")}
       </div>
-      <div class="cam camF">${url(h.frontImage) ? `<img src="${esc(url(h.frontImage))}" alt="">` : ""}</div>
-      ${rock && m.rocks !== false ? `<div class="rock rk1${whole}" data-x="-.3" data-y="-.6" data-d="1.3"><div class="bob"><img src="${esc(rock)}" alt=""></div></div><div class="rock rk3${whole}" data-x="1" data-y=".55" data-d="1.8"><div class="bob"><img src="${esc(rock)}" alt=""></div></div>` : ""}
+      <div class="cam camF">${url(h.frontImage) && !hasChar() ? `<img src="${esc(url(h.frontImage))}" alt="">` : ""}</div>
+      ${rock && m.rocks !== false && !hasChar() ? `<div class="rock rk1${whole}" data-x="-.3" data-y="-.6" data-d="1.3"><div class="bob"><img src="${esc(rock)}" alt=""></div></div><div class="rock rk3${whole}" data-x="1" data-y=".55" data-d="1.8"><div class="bob"><img src="${esc(rock)}" alt=""></div></div>` : ""}
       <div class="layer L1">
         <div class="hud">
           <div class="xhair"></div>
@@ -352,6 +387,7 @@
       ${on("stats") && stats ? `<div class="stats">${stats}</div>` : ""}
     </section>` : on("stats") && stats ? `<div class="stats" style="padding-top:60px;border-top:0">${stats}</div>` : ""}
     <div data-xp-extras></div>
+    ${hasChar() && !(D.character && D.character.echo === false) ? `<div class="xp-echo ms-echo">${charSlot("echo", "")}</div>` : ""}
     ${on("contact") ? `<section id="contact"><div class="ct"><div>${ct.chip ? `<span class="chip">${esc(ct.chip)}</span>` : ""}<h2>${br(ct.title)}</h2></div><div class="ct-actions"><p>${br(ct.text)}</p>${ct.email ? `<a class="btn" href="mailto:${esc(ct.email)}">${esc(ct.button || ct.email)}<span class="sq">›</span></a>` : ""}<div class="ct-lines">${[ct.email, ct.phone, ct.address].filter(Boolean).map(br).join("<br>")}</div></div></div></section>` : ""}
     <footer>${esc(ct.footer)}</footer>
   </div>`;

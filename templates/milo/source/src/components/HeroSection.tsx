@@ -4,6 +4,7 @@ import { useReducedMotionPreference } from '../hooks/usePortfolioHooks';
 import { MOTION_EASE } from '../utils/webgl';
 import { SectionLabel } from './SectionLabel';
 import { fill, useXP } from '../xp';
+import { CharacterSlot, hasCharacter, stageClass, stageStyle, toneClass, toneStyle } from '../character';
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -20,13 +21,25 @@ export function HeroSection() {
   const contentOpacity = useTransform(scrollYProgress, [0, 0.72], [1, 0]);
   const contentScale = useTransform(scrollYProgress, [0, 0.85], [1, 0.92]);
   const indicatorOpacity = useTransform(scrollYProgress, [0, 0.25], [1, 0]);
+  const char = hasCharacter(data);
+  // With a 3D character the title steps down so the character has room under it.
+  const big = char ? 'text-[clamp(3.2rem,16vw,6rem)] md:text-[clamp(4rem,10vw,9.5rem)]' : 'text-[clamp(4rem,23vw,8rem)] md:text-[clamp(5rem,19vw,18rem)]';
 
   return (
     <section
       id="surface"
       ref={sectionRef}
-      className="relative z-10 min-h-[100svh] w-full flex flex-col items-center justify-center px-5 sm:px-8 pt-20 pb-28 select-none"
+      className={`relative z-10 min-h-[100svh] w-full flex flex-col items-center justify-center px-5 sm:px-8 pt-20 pb-28 select-none${char ? ` ${toneClass(data, 'dark')}` : ''}`}
+      style={char ? toneStyle(data) : undefined}
     >
+      {/* The character's gradient, fading into the ocean below it. */}
+      {char && (
+        <div
+          aria-hidden="true"
+          className={`absolute inset-0 -z-10 pointer-events-none ${stageClass(data)}`}
+          style={{ ...stageStyle(data, [50, 80]), maskImage: 'linear-gradient(180deg, #000 58%, transparent 100%)', WebkitMaskImage: 'linear-gradient(180deg, #000 58%, transparent 100%)' }}
+        />
+      )}
       <motion.div
         style={
           reducedMotion
@@ -60,7 +73,7 @@ export function HeroSection() {
             initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 50 }}
             animate={reducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
             transition={{ duration: 0.95, delay: reducedMotion ? 0 : 0.3, ease: MOTION_EASE }}
-            className="block text-[var(--c-text)] text-[clamp(4rem,23vw,8rem)] md:text-[clamp(5rem,19vw,18rem)] leading-[0.86] tracking-[-0.055em]"
+            className={`block text-[var(--c-text)] ${big} leading-[0.86] tracking-[-0.055em]`}
           >
             {fill(h.line1, data)}
           </motion.span>
@@ -68,7 +81,7 @@ export function HeroSection() {
             initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 80 }}
             animate={reducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
             transition={{ duration: 1.0, delay: reducedMotion ? 0 : 0.4, ease: MOTION_EASE }}
-            className="block cyan-text-gradient text-[clamp(4rem,23vw,8rem)] md:text-[clamp(5rem,19vw,18rem)] leading-[0.86] tracking-[-0.055em]"
+            className={`block cyan-text-gradient ${big} leading-[0.86] tracking-[-0.055em]`}
           >
             {fill(h.line2, data)}
           </motion.span>
@@ -82,6 +95,7 @@ export function HeroSection() {
         >
           {fill(h.text, data)}
         </motion.p>
+        {char && <CharacterSlot data={data} className="mt-4 sm:mt-6 w-[min(560px,88vw)] h-[36svh] min-h-[260px]" />}
       </motion.div>
 
       <motion.div

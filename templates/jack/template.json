@@ -62,6 +62,27 @@
     "Stacking project cards",
     "Contact form"
   ],
+  "roles": {
+    "mode": "dark",
+    "stage": "dark",
+    "colors": {
+      "page": "page",
+      "text": "ink",
+      "surface": "surface",
+      "light": "light",
+      "lightText": "onLight",
+      "headingFrom": "muted",
+      "headingTo": "ink2",
+      "grad1": "g1",
+      "grad2": "accent",
+      "grad3": "accent2",
+      "grad4": "g2",
+      "buttonText": "onDark"
+    },
+    "fonts": {
+      "display": "display"
+    }
+  },
   "schema": [
     {
       "group": "Business",

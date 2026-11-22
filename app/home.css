@@ -423,7 +423,7 @@ details.tpl-group[open] > summary::before { content: "− "; }
 .tpl-swatches { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .tpl-swatch { position: relative; }
 .tpl-x { position: absolute; right: -6px; top: -6px; width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--line-strong); background: var(--panel); color: var(--text); font-size: 12px; line-height: 1; cursor: pointer; padding: 0; }
-.tpl-media .tpl-thumb { width: 100%; max-height: 140px; object-fit: cover; border-radius: 10px; border: 1px solid var(--line); background: var(--sunk); }
+.tpl-media .tpl-thumb { width: 100%; max-height: 140px; object-fit: contain; border-radius: 10px; border: 1px solid var(--line); background: var(--sunk); }
 .tpl-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .tpl-row label.btn { cursor: pointer; }
 .tpl-list { gap: 8px; }

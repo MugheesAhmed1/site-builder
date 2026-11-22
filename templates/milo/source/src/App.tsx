@@ -12,6 +12,7 @@ import { ScrollProgress } from './components/ScrollProgress';
 import { ServicesSection } from './components/ServicesSection';
 import { Project } from './data/portfolioData';
 import { on, useTheme, useXP } from './xp';
+import { CharacterSlot, hasEcho } from './character';
 
 const OceanScene = lazy(() =>
   import('./components/OceanScene').then((mod) => ({ default: mod.OceanScene }))
@@ -47,6 +48,11 @@ export default function App() {
         )}
         {on('projects', data) && <ProjectsSection onSelectProject={setSelectedProject} />}
         <div data-xp-extras="" className="relative z-30 bg-[var(--c-page)]" />
+        {hasEcho(data) && (
+          <div className="xp-echo relative z-30 bg-[var(--c-page)]">
+            <CharacterSlot data={data} slot="echo" />
+          </div>
+        )}
         {on('contact', data) && (
           <ContactSection
             inquiryContext={inquiryContext}

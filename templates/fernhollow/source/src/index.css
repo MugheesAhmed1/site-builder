@@ -151,6 +151,21 @@ nav button:not(.pill):hover {
   transition: opacity 0.55s ease, transform 0.55s ease;
 }
 
+/* The 3D character stands in the valley, under the words. The hero keeps the valley behind
+   it, so only the character's colours (not its gradient) are used here. */
+.hero.has-char {
+  top: 52%;
+  background: none !important;
+}
+.fh-char {
+  width: min(56vw, 560px);
+  height: min(40vh, 420px);
+  margin-top: calc(10 * var(--u));
+  pointer-events: auto;
+}
+.fh-echo .xp-slot {
+  width: min(200px, 50vw);
+}
 .hero.dimmed {
   opacity: 0;
   pointer-events: none;

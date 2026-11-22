@@ -15,7 +15,7 @@ import react from "@vitejs/plugin-react";
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { contentScript, schemaProblems } from "../lib/template-schema.mjs";
+import { contentScript, schemaProblems, withCharacter } from "../lib/template-schema.mjs";
 
 const ROOT = fileURLToPath(new URL("../", import.meta.url));
 const TEMPLATES = join(ROOT, "templates");
@@ -24,11 +24,17 @@ const REGISTRY = join(ROOT, "lib", "templates.gen.json");
 const KIT = join(TEMPLATES, "_kit");
 
 // Shared template files (templates/_kit) are kept identical in every template that uses them.
+// The character kit (character.tsx, character.css) goes into every template that has a src folder.
+const ALWAYS = new Set(["character.tsx", "character.css"]);
 function syncKit(src) {
   if (!existsSync(KIT)) return;
   for (const f of readdirSync(KIT)) {
     const to = join(src, "src", f);
-    if (!existsSync(to)) continue;
+    if (!existsSync(to) && !(ALWAYS.has(f) && existsSync(join(src, "src")))) continue;
+    if (!existsSync(to)) {
+      writeFileSync(to, readFileSync(join(KIT, f), "utf8"));
+      continue;
+    }
     const want = readFileSync(join(KIT, f), "utf8");
     if (readFileSync(to, "utf8") !== want) writeFileSync(to, want);
   }
@@ -36,7 +42,8 @@ function syncKit(src) {
 // The business types a template can be filed under: the builder's own categories (lib/categories.ts).
 const BUSINESS = new Set([...readFileSync(join(ROOT, "lib", "categories.ts"), "utf8").matchAll(/^\s{4}id: "([a-z-]+)",$/gm)].map((m) => m[1]));
 // Preview mode: the studio sends new content by message, and the address can carry the first copy.
-const PREVIEW = `<script>window.__XP_PREVIEW__=true;window.__XP_LIB__="/lib/xp-library.js";try{var m=/[#&]xp=([^&]*)/.exec(location.hash);if(m)window.__XP_HASH__=JSON.parse(decodeURIComponent(m[1]))}catch(e){}</script>`;
+// "lite=1" (the journey's template library) shows a character's picture instead of drawing it.
+const PREVIEW = `<script>window.__XP_PREVIEW__=true;window.__XP_LIB__="/lib/xp-library.js";window.__XP_CHAR__="/lib/xp-character.js";try{var m=/[#&]xp=([^&]*)/.exec(location.hash);if(m)window.__XP_HASH__=JSON.parse(decodeURIComponent(m[1]));if(/[#&]lite=1/.test(location.hash))window.__XP_LITE__=true}catch(e){}</script>`;
 
 function listFiles(dir, base = dir) {
   const out = [];
@@ -58,6 +65,28 @@ function validManifest(m, id) {
   for (const b of m.business || []) if (!BUSINESS.has(b)) errs.push(`business type "${b}" is not one of lib/categories.ts (${[...BUSINESS].join(", ")})`);
   if (!m.sector) errs.push("sector (one line on the kind of business it was made for) is missing");
   if ("slots" in m) errs.push("slots are no longer used: describe the content with a schema (docs/TEMPLATES.md)");
+  return errs;
+}
+
+// A design system reaches a template through its roles (docs/CHARACTER-JOURNEY.md): the part each
+// theme colour plays (page, text, accent…), which font slot takes the display or body typeface,
+// and whether the character's stage is dark or light. Every colour and font needs one.
+const ROLES = new Set(["page", "surface", "surface2", "ink", "ink2", "muted", "line", "accent", "accentDeep", "accent2", "soft", "onAccent", "dark", "onDark", "light", "onLight", "fill", "fill2", "tint", "deep", "faint", "g1", "g2", "g3", "keep"]);
+function roleProblems(r, content) {
+  if (!r) return ["roles are missing: give every theme colour and font a part (docs/CHARACTER-JOURNEY.md)"];
+  const errs = [];
+  const modes = ["light", "dark"];
+  if (!modes.includes(r.mode)) errs.push(`mode must be light or dark`);
+  if (!modes.includes(r.stage)) errs.push(`stage must be light or dark`);
+  for (const m of r.modes || []) if (!modes.includes(m)) errs.push(`modes may only hold light and dark`);
+  const colors = content?.theme?.colors || {};
+  for (const k of Object.keys(colors)) if (!r.colors || !(k in r.colors)) errs.push(`colour "${k}" has no role`);
+  for (const [k, v] of Object.entries(r.colors || {})) {
+    if (!(k in colors)) errs.push(`role for "${k}", which is not a theme colour`);
+    if (!ROLES.has(v)) errs.push(`"${k}" has an unknown role "${v}"`);
+  }
+  for (const k of Object.keys(content?.theme?.fonts || {})) if (!r.fonts || !["display", "body", "keep"].includes(r.fonts[k])) errs.push(`font "${k}" needs display, body or keep`);
+  if (r.radius && typeof content?.theme?.[r.radius] !== "number") errs.push(`radius names "${r.radius}", which is not a theme number`);
   return errs;
 }
 
@@ -93,7 +122,14 @@ async function buildOne(id) {
   syncKit(src);
   const depErrs = checkDependencies(src);
   if (depErrs.length) throw new Error(`templates/${id} dependencies:\n  ${depErrs.join("\n  ")}`);
-  const content = JSON.parse(readFileSync(join(dir, "content.json"), "utf8"));
+  // Every template can carry a 3D character on its gradient (docs/CHARACTER-JOURNEY.md): the
+  // character's settings join its schema and content here, so content.json stays the template's own.
+  const own = JSON.parse(readFileSync(join(dir, "content.json"), "utf8"));
+  const roleErrs = roleProblems(m.roles, own);
+  if (roleErrs.length) throw new Error(`templates/${id}/template.json roles:\n  ${roleErrs.join("\n  ")}`);
+  const merged = m.character === false ? { schema: m.schema, content: own } : withCharacter(m.schema, own, m.roles);
+  m.schema = merged.schema;
+  const content = merged.content;
   const schemaErrs = schemaProblems(m.schema, content);
   if (schemaErrs.length) throw new Error(`templates/${id} schema and content.json:\n  ${schemaErrs.join("\n  ")}`);
   const index0 = readFileSync(join(src, "index.html"), "utf8");
@@ -143,9 +179,13 @@ async function buildOne(id) {
 
 const ids = existsSync(TEMPLATES) ? readdirSync(TEMPLATES).filter((f) => existsSync(join(TEMPLATES, f, "template.json"))).sort() : [];
 mkdirSync(OUT, { recursive: true });
+// XP_ONLY=id,id rebuilds just those while working on them; the others keep their last build.
+const only = (process.env.XP_ONLY || "").split(",").map((x) => x.trim()).filter(Boolean);
+const previous = only.length && existsSync(REGISTRY) ? JSON.parse(readFileSync(REGISTRY, "utf8")) : [];
 const registry = [];
 for (const id of ids) {
-  const entry = await buildOne(id);
+  const kept = only.length && !only.includes(id) ? previous.find((t) => t.id === id) : null;
+  const entry = kept || (await buildOne(id));
   if (entry) registry.push(entry);
 }
 const json = JSON.stringify(registry, null, 2) + "\n";

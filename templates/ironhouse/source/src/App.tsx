@@ -4,6 +4,7 @@ import { ArrowRight, ArrowUpRight, Check, Menu, X } from './icons';
 import { Clock, Flame, Mail, Phone, Pin } from './glyphs';
 import { Counter, Reveal, Words, items, useSender } from './ui';
 import { fill, lines, on, safeHref, safeSrc, useTheme, useXP, type XP } from './xp';
+import { CharacterSlot, hasCharacter, hasEcho, stageClass, stageStyle, toneClass, toneStyle } from './character';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const clamp = (v: number, a = 0, b = 1) => Math.max(a, Math.min(b, v));
@@ -32,6 +33,11 @@ export default function App() {
         {on('stories', data) && <Stories data={data} />}
         {on('trial', data) && <Trial data={data} picked={picked} />}
         <div data-xp-extras="" />
+        {hasEcho(data) && (
+          <div className="xp-echo">
+            <CharacterSlot data={data} slot="echo" />
+          </div>
+        )}
         <Footer data={data} />
       </div>
     </MotionConfig>
@@ -111,21 +117,24 @@ function Hero({ data, onTrial }: { data: XP; onTrial: () => void }) {
   // The picture leans a little toward the pointer.
   const mx = useSpring(useMotionValue(0), { stiffness: 60, damping: 20 });
   const my = useSpring(useMotionValue(0), { stiffness: 60, damping: 20 });
+  const char = hasCharacter(data);
   return (
     <section
-      className="ih-hero"
+      className={'ih-hero' + (char ? ` has-char ${toneClass(data, 'dark')}` : '')}
       id="top"
       ref={ref}
+      style={char ? toneStyle(data) : undefined}
       onPointerMove={(e) => {
         if (!par || e.pointerType !== 'mouse') return;
         mx.set((e.clientX / window.innerWidth - 0.5) * -24);
         my.set((e.clientY / window.innerHeight - 0.5) * -16);
       }}
     >
-      <motion.div className="ih-hero-img" style={{ y: imgY, scale: imgScale }}>
-        {safeSrc(h.image) && <motion.img src={safeSrc(h.image)} alt="" style={{ x: mx, y: my }} />}
+      <motion.div className={'ih-hero-img' + (char ? ` ${stageClass(data)}` : '')} style={char ? { ...stageStyle(data, [70, 38]) } : { y: imgY, scale: imgScale }}>
+        {!char && safeSrc(h.image) && <motion.img src={safeSrc(h.image)} alt="" style={{ x: mx, y: my }} />}
       </motion.div>
       <div className="ih-hero-shade" />
+      {char && <CharacterSlot data={data} className="ih-char" />}
       <div className="ih-hero-type ih-display" aria-label={`${f(h.line1)} ${f(h.line2)}`}>
         <motion.div style={{ x: x1 }} aria-hidden="true">
           <motion.span initial={{ y: '100%' }} animate={{ y: 0 }} transition={{ duration: 1, ease: EASE }} className="ih-solid">

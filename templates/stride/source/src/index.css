@@ -1656,3 +1656,31 @@ body.dragging {
     transition: opacity 0.6s ease, color 0.3s ease;
   }
 }
+
+/* The 3D character on its gradient, between the flavours and the inside story. */
+.stride-char-band {
+  position: relative;
+  min-height: 92svh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  justify-items: center;
+  padding: clamp(48px, 9vh, 96px) 16px clamp(24px, 4vh, 40px);
+  overflow: hidden;
+}
+.stride-char-word {
+  margin: 0;
+  font-size: clamp(56px, 13vw, 210px);
+  line-height: 0.85;
+  letter-spacing: -0.01em;
+  color: var(--cream, #f0e8e0);
+  text-align: center;
+}
+.stride-char {
+  width: min(760px, 94vw);
+  min-height: 52svh;
+  height: 100%;
+}
+.stride-echo {
+  background: var(--ink, #1c1a1f);
+  padding: 24px 0 40px;
+}

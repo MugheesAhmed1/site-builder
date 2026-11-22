@@ -34,6 +34,24 @@
     "Guest book marquee",
     "Offers sign-up"
   ],
+  "roles": {
+    "mode": "light",
+    "stage": "dark",
+    "colors": {
+      "page": "page",
+      "surface": "surface",
+      "text": "ink",
+      "muted": "muted",
+      "accent": "accent",
+      "sea": "deep",
+      "dark": "dark",
+      "onDark": "onDark"
+    },
+    "fonts": {
+      "display": "display",
+      "body": "body"
+    }
+  },
   "schema": [
     {
       "group": "Business",

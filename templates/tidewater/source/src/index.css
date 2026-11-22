@@ -261,6 +261,35 @@ a {
   line-height: 1.7;
   opacity: 0.92;
 }
+/* The 3D character on its gradient: the words move up and it stands below them. */
+.tw-hero.has-char .tw-hero-stick {
+  place-items: start center;
+}
+.tw-hero.has-char .tw-hero-copy {
+  padding-top: clamp(92px, 14vh, 150px);
+}
+.tw-hero.has-char .tw-hero-title {
+  font-size: clamp(42px, 6.4vw, 104px);
+}
+.tw-hero.has-char .tw-hero-text {
+  margin-top: 18px;
+}
+/* Someone picked a light gradient: the words turn dark. */
+.tw-hero.xp-tone-light .tw-hero-copy,
+.tw-hero.xp-tone-light .tw-on-dark {
+  color: var(--c-text);
+}
+.tw-hero.xp-tone-light .tw-hero-title {
+  text-shadow: none;
+}
+.tw-char {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 1%;
+  height: 52%;
+  width: min(640px, 94vw);
+}
 .tw-daynight {
   position: absolute;
   z-index: 3;
