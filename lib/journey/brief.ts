@@ -2,8 +2,9 @@
 // into a brief through a short chat: one question at a time, each with answers to tap. Gemini runs
 // the chat on the server (/api/chat) when it has a key; these rules run it otherwise, and also fill
 // any gap in Gemini's answer, so the interview always finishes. Shared by the server and the browser.
-import { categoryById, CATEGORIES } from "../categories";
+import { categoryById, CATEGORIES, extractHints } from "../categories";
 import { localPlan } from "../animator";
+import { roleOf } from "../voice";
 
 export interface Brief {
   idea: string;
@@ -72,12 +73,14 @@ const list = (v: unknown, max = 10) =>
 /** The brief as the rules first understand the line. */
 export function startBrief(idea: string): Brief {
   const p = localPlan(idea);
+  const portfolio = p.kind === "portfolio";
   return {
     idea: clean(idea, 300),
     kind: p.kind,
     business: p.business,
-    name: p.name,
-    what: categoryById(p.business).label,
+    // A portfolio carries the person's own name: asked for, never guessed from the line.
+    name: portfolio ? extractHints(idea).name || "" : p.name,
+    what: portfolio ? roleOf(idea) || "Creative" : categoryById(p.business).label,
     audience: p.audience,
     tone: "",
     sections: [],
@@ -85,7 +88,7 @@ export function startBrief(idea: string): Brief {
     colors: "",
     city: p.city,
     email: "",
-    cta: categoryById(p.business).primaryCta,
+    cta: portfolio ? "Work with me" : categoryById(p.business).primaryCta,
   };
 }
 
@@ -169,7 +172,7 @@ interface RuleQuestion {
 const RULES: RuleQuestion[] = [
   {
     field: "name",
-    ask: (b) => (b.kind === "portfolio" ? "Let's start with you. What name should the site carry?" : "Great idea. What is it called?"),
+    ask: (b) => (b.kind === "portfolio" ? "Let's start with you. What's your name, as it should appear on the site?" : "Great idea. What is it called?"),
     chips: (b) => [b.name, "Not decided yet"].filter(Boolean),
     skip: (b) => !!b.name && b.idea.toLowerCase().includes(b.name.toLowerCase()),
   },

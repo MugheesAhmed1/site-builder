@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { contrast, ensureContrast, luminance } from "@/lib/character/color";
 import { paletteFromPixels, paletteFromWords } from "@/lib/character/palette";
 import { designOptions, readable, tokens } from "@/lib/character/design";
-import { applyDesign, characterFrom, composeContent, guessRoles, modeFor, rolesOf, stageStops } from "@/lib/character/apply";
+import { applyDesign, characterFrom, composeContent, guessRoles, modeFor, rolesOf, stageFor, stageStops } from "@/lib/character/apply";
 import { characterDefaults, defaultStops, schemaProblems, withCharacter } from "@/lib/template-schema.mjs";
 import { TEMPLATES } from "@/lib/templates";
 import { ASSETS } from "@/packages/asset-library";
@@ -80,9 +80,10 @@ describe("design into templates", () => {
         const ink = role("ink");
         const page = role("page");
         if (ink && page) expect(contrast(c.theme.colors[ink], c.theme.colors[page]), `${t.id} ${d.id}`).toBeGreaterThanOrEqual(4.5);
+        // the stage keeps the template's tone, or follows the mode where the template shows both
         const stage = luminance(c.design.stops[0]);
-        if (t.roles.stage === "dark") expect(stage).toBeLessThan(0.179);
-        else expect(stage).toBeGreaterThan(0.179);
+        if (stageFor(d, t.roles) === "dark") expect(stage, `${t.id} ${d.id}`).toBeLessThan(0.179);
+        else expect(stage, `${t.id} ${d.id}`).toBeGreaterThan(0.179);
         expect(c.design.stops).toEqual(stageStops(d, t.roles));
         // the template keeps its own mode unless it can show both
         expect(modeFor(d, t.roles)).toBe((t.roles.modes || [t.roles.mode]).includes(d.mode === "auto" ? t.roles.mode : d.mode) ? (d.mode === "auto" ? t.roles.mode : d.mode) : t.roles.mode);

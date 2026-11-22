@@ -17,9 +17,13 @@ Every project now carries two separate pieces of data (PRD section 45):
 
 The studio preview and both downloads render the same Experience JSON through the same renderer (PRD section 43).
 
-## The PRD journey (2026-11-19)
+## The character journey (2026-11-22)
 
-Sites now start from a PRD the person edits: one line, a Gemini draft, edits, then submit. Each PRD section becomes a dynamic section (`content.blocks`, section id `b-<id>`) shaped by layout, hero asset, background, animation and a Director; every requirement is rendered with `data-req` and a coverage check blocks the build, the publish and the export if one is missing. See [PRD-JOURNEY.md](PRD-JOURNEY.md).
+`/create` now runs the character journey: one line, a short AI interview, a 3D character (from the library, a GLB, or a photo) with five design systems drawn from its colours, the template library shown as the person's own site (or a new Orbit template built from library sections), then the studio. Every template takes the character, its colours and its type through the `roles` in its `template.json`. See [CHARACTER-JOURNEY.md](CHARACTER-JOURNEY.md).
+
+## The PRD journey (2026-11-19, replaced at /create on 2026-11-22)
+
+Sites used to start from a PRD the person edits: one line, a Gemini draft, edits, then submit. Each PRD section becomes a dynamic section (`content.blocks`, section id `b-<id>`) shaped by layout, hero asset, background, animation and a Director; every requirement is rendered with `data-req` and a coverage check blocks the build, the publish and the export if one is missing. See [PRD-JOURNEY.md](PRD-JOURNEY.md).
 
 ## Where things live
 

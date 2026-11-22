@@ -1,0 +1,116 @@
+{
+  "id": "orbit",
+  "name": "Orbit",
+  "pitch": "A character-first canvas: your 3D model centre stage on its own gradient, rings orbiting it, then the sections you choose from the library.",
+  "kind": "static",
+  "categories": ["3D", "Interactive", "Scroll", "Product"],
+  "business": ["general", "product", "agency", "creator", "shop", "school", "events"],
+  "sector": "Any business or person: the new template the journey builds around a character",
+  "intensity": 6,
+  "heavy": false,
+  "licence": { "kind": "original", "holder": "Site Builder", "note": "Made for the builder as its blank, character-first canvas.", "added": "2026-11-22" },
+  "remoteAssets": [],
+  "features": ["3D character hero", "Orbiting rings", "Scroll reveals", "Library sections", "Light or dark"],
+  "roles": {
+    "mode": "dark",
+    "modes": ["light", "dark"],
+    "stage": "dark",
+    "colors": {
+      "page": "page",
+      "surface": "surface",
+      "surface2": "surface2",
+      "ink": "ink",
+      "muted": "muted",
+      "line": "line",
+      "accent": "accent",
+      "accent2": "accent2",
+      "onAccent": "onAccent"
+    },
+    "fonts": { "display": "display", "body": "body" },
+    "radius": "radius"
+  },
+  "schema": [
+    { "group": "Business", "fields": [
+      { "path": "brand.name", "label": "Name", "type": "text", "hint": "Fills every {name} in the text below." },
+      { "path": "seo.title", "label": "Page title (search and browser tab)", "type": "text" },
+      { "path": "seo.description", "label": "Short description (search and sharing)", "type": "textarea" }
+    ] },
+    { "group": "Sections", "fields": [
+      { "path": "sections.intro", "label": "Statement", "type": "toggle" },
+      { "path": "sections.features", "label": "Feature cards", "type": "toggle" },
+      { "path": "sections.about", "label": "About, with the character again", "type": "toggle" },
+      { "path": "sections.contact", "label": "Contact box (a contact form from the library takes its place)", "type": "toggle" }
+    ] },
+    { "group": "Menu", "fields": [
+      { "path": "nav.links", "label": "Links", "type": "list", "itemLabel": "Link", "max": 6, "fields": [
+        { "path": "label", "label": "Label", "type": "text" },
+        { "path": "href", "label": "Goes to", "type": "text", "hint": "#features, #about, #contact or a web address" }
+      ] },
+      { "path": "nav.cta", "label": "Button", "type": "text" },
+      { "path": "nav.ctaHref", "label": "Button goes to", "type": "text" }
+    ] },
+    { "group": "Opening", "fields": [
+      { "path": "hero.kicker", "label": "Small line above", "type": "text" },
+      { "path": "hero.title", "label": "Headline", "type": "textarea" },
+      { "path": "hero.text", "label": "Text", "type": "textarea" },
+      { "path": "hero.cta", "label": "Main button", "type": "text" },
+      { "path": "hero.ctaHref", "label": "Main button goes to", "type": "text" },
+      { "path": "hero.cta2", "label": "Second button", "type": "text" },
+      { "path": "hero.cta2Href", "label": "Second button goes to", "type": "text" },
+      { "path": "hero.tags", "label": "Words orbiting the character", "type": "text", "hint": "Up to four, separated by commas." }
+    ] },
+    { "group": "Statement", "fields": [
+      { "path": "intro.text", "label": "Statement", "type": "textarea" }
+    ] },
+    { "group": "Feature cards", "fields": [
+      { "path": "features.kicker", "label": "Small line above", "type": "text" },
+      { "path": "features.title", "label": "Title", "type": "text" },
+      { "path": "features.items", "label": "Cards", "type": "list", "itemLabel": "Card", "max": 6, "fields": [
+        { "path": "title", "label": "Title", "type": "text" },
+        { "path": "text", "label": "Text", "type": "textarea" }
+      ] }
+    ] },
+    { "group": "About", "fields": [
+      { "path": "about.kicker", "label": "Small line above", "type": "text" },
+      { "path": "about.title", "label": "Title", "type": "text" },
+      { "path": "about.text", "label": "Text", "type": "textarea" },
+      { "path": "about.quote", "label": "Quote", "type": "textarea" },
+      { "path": "about.by", "label": "Quote by", "type": "text" }
+    ] },
+    { "group": "Contact", "fields": [
+      { "path": "contact.title", "label": "Title", "type": "text" },
+      { "path": "contact.text", "label": "Text", "type": "textarea" },
+      { "path": "contact.email", "label": "Email", "type": "text" },
+      { "path": "contact.phone", "label": "Phone", "type": "text" },
+      { "path": "contact.address", "label": "Address", "type": "text" },
+      { "path": "contact.button", "label": "Button", "type": "text" }
+    ] },
+    { "group": "Footer", "fields": [
+      { "path": "footer.note", "label": "Small print", "type": "text" }
+    ] },
+    { "group": "Colours", "fields": [
+      { "path": "theme.colors.page", "label": "Background", "type": "color" },
+      { "path": "theme.colors.surface", "label": "Cards", "type": "color" },
+      { "path": "theme.colors.surface2", "label": "Raised cards", "type": "color" },
+      { "path": "theme.colors.ink", "label": "Text", "type": "color" },
+      { "path": "theme.colors.muted", "label": "Soft text", "type": "color" },
+      { "path": "theme.colors.line", "label": "Lines", "type": "color" },
+      { "path": "theme.colors.accent", "label": "Accent", "type": "color" },
+      { "path": "theme.colors.accent2", "label": "Second accent", "type": "color" },
+      { "path": "theme.colors.onAccent", "label": "Text on the accent", "type": "color" }
+    ] },
+    { "group": "Fonts and shape", "fields": [
+      { "path": "theme.fonts.display", "label": "Headings", "type": "font" },
+      { "path": "theme.fonts.body", "label": "Text", "type": "font" },
+      { "path": "theme.radius", "label": "Corner rounding (px)", "type": "number", "min": 0, "max": 32, "step": 1 }
+    ] },
+    { "group": "Motion", "fields": [
+      { "path": "motion.orbits", "label": "Rings orbit the character", "type": "toggle" },
+      { "path": "motion.reveal", "label": "Sections rise in as you scroll", "type": "toggle" },
+      { "path": "motion.marquee", "label": "Moving word band", "type": "toggle" }
+    ] },
+    { "group": "Library sections", "fields": [
+      { "path": "extras", "label": "Sections from the library", "type": "blocks", "hint": "Add any section, effect or scene from the shared library. They sit after the about section; a contact form among them replaces the contact box at the end." }
+    ] }
+  ]
+}

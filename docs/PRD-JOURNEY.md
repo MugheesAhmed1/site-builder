@@ -1,5 +1,7 @@
 # The PRD journey
 
+> Replaced at `/create` on 2026-11-22 by the character journey ([CHARACTER-JOURNEY.md](CHARACTER-JOURNEY.md)). The PRD code stays for the document flow.
+
 Every site now starts from a PRD (product requirements document). The person owns the PRD and
 everything built from it.
 

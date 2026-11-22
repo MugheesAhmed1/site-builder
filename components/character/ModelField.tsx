@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import ModelPicker, { modelInfo } from "./ModelPicker";
 import PhotoTo3D from "./PhotoTo3D";
 import { designsFor, withModel } from "@/lib/character/match";
-import { applyDesign, type ModelInfo, type TemplateRoles } from "@/lib/character/apply";
+import { applyDesign, stageStops, type ModelInfo, type TemplateRoles } from "@/lib/character/apply";
 import { gradientCss, type DesignSystem } from "@/lib/character/design";
 import type { Content } from "@/lib/template-schema.mjs";
 import type { CharacterPalette } from "@/lib/character/palette";
@@ -124,7 +124,7 @@ export default function ModelField({ content, roles, words, business, setContent
           <div className="mf-swatches">
             {designs.map((d) => (
               <button key={d.id} type="button" className="mf-swatch" title={`${d.name}: ${d.note}`} onClick={() => setContent((c) => applyDesign(c, roles, d))}>
-                <span style={{ background: gradientCss(roles.stage === "dark" ? d.gradient.dark : d.gradient.light, d.gradient.style, d.gradient.angle, [50, 50]) }} />
+                <span style={{ background: gradientCss(stageStops(d, roles), d.gradient.style, d.gradient.angle, [50, 50]) }} />
                 <i style={{ background: d.accent }} />
                 <em>{d.name}</em>
               </button>

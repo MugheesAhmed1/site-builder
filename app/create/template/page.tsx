@@ -1,22 +1,6 @@
-import type { Metadata } from "next";
-import Topbar from "@/components/Topbar";
-import Animator from "@/components/create/Animator";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Start from a whole template",
-  description: "The animator engine: one line picks one of the whole-project templates and rewrites every word of it.",
-  robots: { index: false },
-};
-
-// The template animator (docs/ANIMATOR.md). New sites start from a PRD at /create; this stays
-// for people who want one of the whole-project templates as it is.
+// The old template animator now lives inside the journey's template step.
 export default function Page() {
-  return (
-    <>
-      <Topbar />
-      <main className="page an-page">
-        <Animator />
-      </main>
-    </>
-  );
+  redirect("/create");
 }

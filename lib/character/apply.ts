@@ -5,6 +5,7 @@
 // font slots, the gradient into the stage the character stands on, and the character itself into
 // content.character. Colours a template has no part for stay as they are.
 import { adjust, fromLch, mix, toLch } from "./color";
+import { blockById } from "../library-blocks";
 import { RADIUS_PX, isDark, modeIn, tokens, type DesignSystem, type Mode, type Tokens } from "./design";
 
 /** The part a template colour plays. */
@@ -92,8 +93,11 @@ export function modeFor(d: DesignSystem, r: TemplateRoles): Mode {
   return (r.modes?.length ? r.modes : [r.mode]).includes(want) ? want : r.mode;
 }
 
+/** The stage's tone: the template's own, or the page's mode for a template that takes both. */
+export const stageFor = (d: DesignSystem, r: TemplateRoles): Mode => ((r.modes?.length ?? 0) > 1 ? modeFor(d, r) : r.stage);
+
 /** The stage gradient a template gets from a design system. */
-export const stageStops = (d: DesignSystem, r: TemplateRoles): [string, string, string] => [...(r.stage === "dark" ? d.gradient.dark : d.gradient.light)] as [string, string, string];
+export const stageStops = (d: DesignSystem, r: TemplateRoles): [string, string, string] => [...(stageFor(d, r) === "dark" ? d.gradient.dark : d.gradient.light)] as [string, string, string];
 
 /** One colour for a part, in a mode. */
 export function colorFor(role: Role, k: Tokens, d: DesignSystem, stops: [string, string, string]): string | undefined {
@@ -153,10 +157,37 @@ export function applyDesign(content: Content, roles: TemplateRoles, d: DesignSys
     next.theme.fonts = fonts;
   }
   if (roles.radius && typeof next.theme[roles.radius] === "number") next.theme[roles.radius] = RADIUS_PX[d.radius];
-  next.design = { ...(next.design || {}), stops, style: d.gradient.style, angle: d.gradient.angle, light: roles.stage === "dark" ? adjust(d.accent2, (x) => ({ l: Math.max(x.l, 0.78) })) : adjust(d.accent2, (x) => ({ l: Math.min(Math.max(x.l, 0.62), 0.8) })), image: "" };
+  next.design = { ...(next.design || {}), stops, style: d.gradient.style, angle: d.gradient.angle, light: stageFor(d, roles) === "dark" ? adjust(d.accent2, (x) => ({ l: Math.max(x.l, 0.78) })) : adjust(d.accent2, (x) => ({ l: Math.min(Math.max(x.l, 0.62), 0.8) })), image: "" };
   const pace = PACE[d.motion] || PACE.calm;
   next.character = { ...(next.character || {}), paint: d.accent, speed: pace.speed, motion: next.character?.motion === "spin" || next.character?.motion === "still" ? next.character.motion : pace.motion };
+  if (Array.isArray(next.extras)) next.extras = next.extras.map((x: Content, i: number) => blockInDesign(x, k, i));
   return next;
+}
+
+/** Library blocks take the design too: their backgrounds, text and accents by what each colour is for. */
+const BLOCK_ROLE: Record<string, (k: Tokens, i: number) => string> = {
+  background: (k, i) => (i % 2 ? k.surface : k.page),
+  text: (k) => k.ink,
+  accent: (k) => k.accent,
+  buttonText: (k) => k.onAccent,
+  card: (k) => k.surface2,
+  cardText: (k) => k.ink,
+  color: (k) => k.accent,
+  from: (k) => k.accent,
+  via: (k) => k.accent2,
+  to: (k) => k.accentDeep,
+  glow: (k) => k.accent2,
+};
+
+function blockInDesign(x: Content, k: Tokens, i: number): Content {
+  const b = blockById(x?.block);
+  if (!b) return x;
+  const props: Content = { ...(b.defaults as Content), ...(x.props || {}) };
+  for (const f of b.fields) {
+    const role = f.type === "color" ? BLOCK_ROLE[f.path] : undefined;
+    if (role && typeof props[f.path] === "string") props[f.path] = role(k, i);
+  }
+  return { ...x, props };
 }
 
 /** What content.character needs from a library model. */
