@@ -35,6 +35,24 @@
       "Table booking with guests, dates and times",
       "Hours and directions"
     ],
+    "roles": {
+      "mode": "dark",
+      "stage": "dark",
+      "colors": {
+        "page": "page",
+        "surface": "surface",
+        "text": "ink",
+        "muted": "muted",
+        "accent": "accent",
+        "glow": "accent2",
+        "line": "line",
+        "onAccent": "onAccent"
+      },
+      "fonts": {
+        "display": "display",
+        "body": "body"
+      }
+    },
     "schema": [
       {
         "group": "Business",
@@ -79,6 +97,270 @@
             "path": "seo.description",
             "label": "Short description (search and sharing)",
             "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "3D character",
+        "fields": [
+          {
+            "path": "character.src",
+            "label": "3D model",
+            "type": "model",
+            "hint": "Pick one from the library, upload a GLB, or make one from a photo. Empty: no character."
+          },
+          {
+            "path": "character.poster",
+            "label": "Its picture (shown while it loads)",
+            "type": "image"
+          },
+          {
+            "path": "character.name",
+            "label": "Its name",
+            "type": "text"
+          },
+          {
+            "path": "character.motion",
+            "label": "Idle motion",
+            "type": "select",
+            "options": [
+              {
+                "value": "float",
+                "label": "Floats gently"
+              },
+              {
+                "value": "sway",
+                "label": "Sways side to side"
+              },
+              {
+                "value": "spin",
+                "label": "Turns slowly"
+              },
+              {
+                "value": "still",
+                "label": "Holds still"
+              }
+            ]
+          },
+          {
+            "path": "character.clip",
+            "label": "Its own animation",
+            "type": "text",
+            "hint": "A clip name from the model. Empty plays its idle; none plays nothing."
+          },
+          {
+            "path": "character.react",
+            "label": "Visitors can",
+            "type": "select",
+            "options": [
+              {
+                "value": "both",
+                "label": "Drag it, tap it, and it looks at the pointer"
+              },
+              {
+                "value": "follow",
+                "label": "It looks at the pointer"
+              },
+              {
+                "value": "drag",
+                "label": "Drag it round and tap it"
+              },
+              {
+                "value": "none",
+                "label": "Nothing: it stays put"
+              }
+            ]
+          },
+          {
+            "path": "character.scroll",
+            "label": "As the page scrolls",
+            "type": "select",
+            "options": [
+              {
+                "value": "turn",
+                "label": "It turns"
+              },
+              {
+                "value": "rise",
+                "label": "It rises and shrinks away"
+              },
+              {
+                "value": "zoom",
+                "label": "It comes closer"
+              },
+              {
+                "value": "none",
+                "label": "Nothing"
+              }
+            ]
+          },
+          {
+            "path": "character.scale",
+            "label": "Size",
+            "type": "number",
+            "min": 0.4,
+            "max": 1.8,
+            "step": 0.05
+          },
+          {
+            "path": "character.turn",
+            "label": "Turn (degrees)",
+            "type": "number",
+            "min": -180,
+            "max": 180,
+            "step": 1
+          },
+          {
+            "path": "character.tilt",
+            "label": "Tilt (degrees)",
+            "type": "number",
+            "min": -40,
+            "max": 40,
+            "step": 1
+          },
+          {
+            "path": "character.lift",
+            "label": "Up or down in its space",
+            "type": "number",
+            "min": -1,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "path": "character.speed",
+            "label": "Motion speed",
+            "type": "number",
+            "min": 0.2,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "path": "character.finish",
+            "label": "Finish",
+            "type": "select",
+            "options": [
+              {
+                "value": "original",
+                "label": "As made"
+              },
+              {
+                "value": "paint",
+                "label": "Painted in the colour below"
+              },
+              {
+                "value": "clay",
+                "label": "Soft clay in the colour below"
+              },
+              {
+                "value": "chrome",
+                "label": "Chrome, tinted"
+              }
+            ]
+          },
+          {
+            "path": "character.paint",
+            "label": "Paint colour",
+            "type": "color"
+          },
+          {
+            "path": "character.parts",
+            "label": "Parts to paint",
+            "type": "text",
+            "hint": "Material names, comma separated. Empty paints the whole model."
+          },
+          {
+            "path": "character.screen",
+            "label": "Screens that show your gradient",
+            "type": "text",
+            "hint": "Material names, comma separated (a phone's screen, a sign)."
+          },
+          {
+            "path": "character.shadow",
+            "label": "Soft shadow under it",
+            "type": "toggle"
+          },
+          {
+            "path": "character.echo",
+            "label": "Show it again near the end of the page",
+            "type": "toggle"
+          },
+          {
+            "path": "character.credit",
+            "label": "Credit line for the model",
+            "type": "text",
+            "hint": "Shown small near the end of the page. Models under CC BY need it; it is filled in for you."
+          }
+        ]
+      },
+      {
+        "group": "Character background",
+        "fields": [
+          {
+            "path": "design.stops",
+            "label": "Gradient colours (base, glow, second)",
+            "type": "colors",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "path": "design.style",
+            "label": "Gradient style",
+            "type": "select",
+            "options": [
+              {
+                "value": "glow",
+                "label": "Glow behind the character"
+              },
+              {
+                "value": "aurora",
+                "label": "Aurora (moves slowly)"
+              },
+              {
+                "value": "radial",
+                "label": "Spotlight"
+              },
+              {
+                "value": "linear",
+                "label": "Straight blend"
+              },
+              {
+                "value": "solid",
+                "label": "One colour"
+              }
+            ]
+          },
+          {
+            "path": "design.angle",
+            "label": "Gradient angle",
+            "type": "number",
+            "min": 0,
+            "max": 360,
+            "step": 5
+          },
+          {
+            "path": "design.light",
+            "label": "Light on the character",
+            "type": "color"
+          },
+          {
+            "path": "design.image",
+            "label": "Background picture instead of the gradient",
+            "type": "image"
+          },
+          {
+            "path": "design.imageTone",
+            "label": "That picture is mostly",
+            "type": "select",
+            "options": [
+              {
+                "value": "dark",
+                "label": "Dark (light words on it)"
+              },
+              {
+                "value": "light",
+                "label": "Light (dark words on it)"
+              }
+            ]
           }
         ]
       },
@@ -721,11 +1003,44 @@
         "flicker": true,
         "spinPlates": true
       },
-      "extras": []
+      "extras": [],
+      "character": {
+        "src": "",
+        "poster": "",
+        "name": "",
+        "motion": "float",
+        "clip": "",
+        "react": "both",
+        "scroll": "turn",
+        "scale": 1,
+        "turn": -18,
+        "tilt": 0,
+        "lift": 0,
+        "speed": 1,
+        "finish": "original",
+        "paint": "#e2833b",
+        "parts": "",
+        "screen": "",
+        "shadow": true,
+        "echo": true,
+        "credit": ""
+      },
+      "design": {
+        "stops": [
+          "#14100d",
+          "#e2833b",
+          "#1e1814"
+        ],
+        "style": "glow",
+        "angle": 160,
+        "light": "#e2833b",
+        "image": "",
+        "imageTone": "dark"
+      }
     },
     "poster": false,
     "siteFiles": 13,
-    "sourceFiles": 21
+    "sourceFiles": 23
   },
   {
     "id": "brightline",
@@ -762,6 +1077,26 @@
       "FAQ",
       "Hours and map link"
     ],
+    "roles": {
+      "mode": "light",
+      "stage": "light",
+      "colors": {
+        "page": "page",
+        "surface": "surface",
+        "text": "ink",
+        "muted": "muted",
+        "accent": "accent",
+        "accentSoft": "soft",
+        "highlight": "fill2",
+        "dark": "dark",
+        "onAccent": "onAccent"
+      },
+      "fonts": {
+        "display": "display",
+        "body": "body"
+      },
+      "radius": "radius"
+    },
     "schema": [
       {
         "group": "Business",
@@ -806,6 +1141,270 @@
             "path": "seo.description",
             "label": "Short description (search and sharing)",
             "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "3D character",
+        "fields": [
+          {
+            "path": "character.src",
+            "label": "3D model",
+            "type": "model",
+            "hint": "Pick one from the library, upload a GLB, or make one from a photo. Empty: no character."
+          },
+          {
+            "path": "character.poster",
+            "label": "Its picture (shown while it loads)",
+            "type": "image"
+          },
+          {
+            "path": "character.name",
+            "label": "Its name",
+            "type": "text"
+          },
+          {
+            "path": "character.motion",
+            "label": "Idle motion",
+            "type": "select",
+            "options": [
+              {
+                "value": "float",
+                "label": "Floats gently"
+              },
+              {
+                "value": "sway",
+                "label": "Sways side to side"
+              },
+              {
+                "value": "spin",
+                "label": "Turns slowly"
+              },
+              {
+                "value": "still",
+                "label": "Holds still"
+              }
+            ]
+          },
+          {
+            "path": "character.clip",
+            "label": "Its own animation",
+            "type": "text",
+            "hint": "A clip name from the model. Empty plays its idle; none plays nothing."
+          },
+          {
+            "path": "character.react",
+            "label": "Visitors can",
+            "type": "select",
+            "options": [
+              {
+                "value": "both",
+                "label": "Drag it, tap it, and it looks at the pointer"
+              },
+              {
+                "value": "follow",
+                "label": "It looks at the pointer"
+              },
+              {
+                "value": "drag",
+                "label": "Drag it round and tap it"
+              },
+              {
+                "value": "none",
+                "label": "Nothing: it stays put"
+              }
+            ]
+          },
+          {
+            "path": "character.scroll",
+            "label": "As the page scrolls",
+            "type": "select",
+            "options": [
+              {
+                "value": "turn",
+                "label": "It turns"
+              },
+              {
+                "value": "rise",
+                "label": "It rises and shrinks away"
+              },
+              {
+                "value": "zoom",
+                "label": "It comes closer"
+              },
+              {
+                "value": "none",
+                "label": "Nothing"
+              }
+            ]
+          },
+          {
+            "path": "character.scale",
+            "label": "Size",
+            "type": "number",
+            "min": 0.4,
+            "max": 1.8,
+            "step": 0.05
+          },
+          {
+            "path": "character.turn",
+            "label": "Turn (degrees)",
+            "type": "number",
+            "min": -180,
+            "max": 180,
+            "step": 1
+          },
+          {
+            "path": "character.tilt",
+            "label": "Tilt (degrees)",
+            "type": "number",
+            "min": -40,
+            "max": 40,
+            "step": 1
+          },
+          {
+            "path": "character.lift",
+            "label": "Up or down in its space",
+            "type": "number",
+            "min": -1,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "path": "character.speed",
+            "label": "Motion speed",
+            "type": "number",
+            "min": 0.2,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "path": "character.finish",
+            "label": "Finish",
+            "type": "select",
+            "options": [
+              {
+                "value": "original",
+                "label": "As made"
+              },
+              {
+                "value": "paint",
+                "label": "Painted in the colour below"
+              },
+              {
+                "value": "clay",
+                "label": "Soft clay in the colour below"
+              },
+              {
+                "value": "chrome",
+                "label": "Chrome, tinted"
+              }
+            ]
+          },
+          {
+            "path": "character.paint",
+            "label": "Paint colour",
+            "type": "color"
+          },
+          {
+            "path": "character.parts",
+            "label": "Parts to paint",
+            "type": "text",
+            "hint": "Material names, comma separated. Empty paints the whole model."
+          },
+          {
+            "path": "character.screen",
+            "label": "Screens that show your gradient",
+            "type": "text",
+            "hint": "Material names, comma separated (a phone's screen, a sign)."
+          },
+          {
+            "path": "character.shadow",
+            "label": "Soft shadow under it",
+            "type": "toggle"
+          },
+          {
+            "path": "character.echo",
+            "label": "Show it again near the end of the page",
+            "type": "toggle"
+          },
+          {
+            "path": "character.credit",
+            "label": "Credit line for the model",
+            "type": "text",
+            "hint": "Shown small near the end of the page. Models under CC BY need it; it is filled in for you."
+          }
+        ]
+      },
+      {
+        "group": "Character background",
+        "fields": [
+          {
+            "path": "design.stops",
+            "label": "Gradient colours (base, glow, second)",
+            "type": "colors",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "path": "design.style",
+            "label": "Gradient style",
+            "type": "select",
+            "options": [
+              {
+                "value": "glow",
+                "label": "Glow behind the character"
+              },
+              {
+                "value": "aurora",
+                "label": "Aurora (moves slowly)"
+              },
+              {
+                "value": "radial",
+                "label": "Spotlight"
+              },
+              {
+                "value": "linear",
+                "label": "Straight blend"
+              },
+              {
+                "value": "solid",
+                "label": "One colour"
+              }
+            ]
+          },
+          {
+            "path": "design.angle",
+            "label": "Gradient angle",
+            "type": "number",
+            "min": 0,
+            "max": 360,
+            "step": 5
+          },
+          {
+            "path": "design.light",
+            "label": "Light on the character",
+            "type": "color"
+          },
+          {
+            "path": "design.image",
+            "label": "Background picture instead of the gradient",
+            "type": "image"
+          },
+          {
+            "path": "design.imageTone",
+            "label": "That picture is mostly",
+            "type": "select",
+            "options": [
+              {
+                "value": "dark",
+                "label": "Dark (light words on it)"
+              },
+              {
+                "value": "light",
+                "label": "Light (dark words on it)"
+              }
+            ]
           }
         ]
       },
@@ -1815,11 +2414,44 @@
         "floatBadges": true,
         "reviewSeconds": 6
       },
-      "extras": []
+      "extras": [],
+      "character": {
+        "src": "",
+        "poster": "",
+        "name": "",
+        "motion": "float",
+        "clip": "",
+        "react": "both",
+        "scroll": "turn",
+        "scale": 1,
+        "turn": -18,
+        "tilt": 0,
+        "lift": 0,
+        "speed": 1,
+        "finish": "original",
+        "paint": "#1f8a78",
+        "parts": "",
+        "screen": "",
+        "shadow": true,
+        "echo": true,
+        "credit": ""
+      },
+      "design": {
+        "stops": [
+          "#f6f8f6",
+          "#1f8a78",
+          "#ffffff"
+        ],
+        "style": "glow",
+        "angle": 160,
+        "light": "#1f8a78",
+        "image": "",
+        "imageTone": "dark"
+      }
     },
     "poster": false,
     "siteFiles": 11,
-    "sourceFiles": 19
+    "sourceFiles": 21
   },
   {
     "id": "cornerstone",
@@ -1857,6 +2489,24 @@
       "Agent cards",
       "Valuation form"
     ],
+    "roles": {
+      "mode": "light",
+      "stage": "light",
+      "colors": {
+        "page": "page",
+        "surface": "surface",
+        "text": "ink",
+        "muted": "muted",
+        "accent": "accent",
+        "dark": "dark",
+        "onDark": "onDark",
+        "line": "line"
+      },
+      "fonts": {
+        "display": "display",
+        "body": "body"
+      }
+    },
     "schema": [
       {
         "group": "Business",
@@ -1901,6 +2551,270 @@
             "path": "seo.description",
             "label": "Short description (search and sharing)",
             "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "3D character",
+        "fields": [
+          {
+            "path": "character.src",
+            "label": "3D model",
+            "type": "model",
+            "hint": "Pick one from the library, upload a GLB, or make one from a photo. Empty: no character."
+          },
+          {
+            "path": "character.poster",
+            "label": "Its picture (shown while it loads)",
+            "type": "image"
+          },
+          {
+            "path": "character.name",
+            "label": "Its name",
+            "type": "text"
+          },
+          {
+            "path": "character.motion",
+            "label": "Idle motion",
+            "type": "select",
+            "options": [
+              {
+                "value": "float",
+                "label": "Floats gently"
+              },
+              {
+                "value": "sway",
+                "label": "Sways side to side"
+              },
+              {
+                "value": "spin",
+                "label": "Turns slowly"
+              },
+              {
+                "value": "still",
+                "label": "Holds still"
+              }
+            ]
+          },
+          {
+            "path": "character.clip",
+            "label": "Its own animation",
+            "type": "text",
+            "hint": "A clip name from the model. Empty plays its idle; none plays nothing."
+          },
+          {
+            "path": "character.react",
+            "label": "Visitors can",
+            "type": "select",
+            "options": [
+              {
+                "value": "both",
+                "label": "Drag it, tap it, and it looks at the pointer"
+              },
+              {
+                "value": "follow",
+                "label": "It looks at the pointer"
+              },
+              {
+                "value": "drag",
+                "label": "Drag it round and tap it"
+              },
+              {
+                "value": "none",
+                "label": "Nothing: it stays put"
+              }
+            ]
+          },
+          {
+            "path": "character.scroll",
+            "label": "As the page scrolls",
+            "type": "select",
+            "options": [
+              {
+                "value": "turn",
+                "label": "It turns"
+              },
+              {
+                "value": "rise",
+                "label": "It rises and shrinks away"
+              },
+              {
+                "value": "zoom",
+                "label": "It comes closer"
+              },
+              {
+                "value": "none",
+                "label": "Nothing"
+              }
+            ]
+          },
+          {
+            "path": "character.scale",
+            "label": "Size",
+            "type": "number",
+            "min": 0.4,
+            "max": 1.8,
+            "step": 0.05
+          },
+          {
+            "path": "character.turn",
+            "label": "Turn (degrees)",
+            "type": "number",
+            "min": -180,
+            "max": 180,
+            "step": 1
+          },
+          {
+            "path": "character.tilt",
+            "label": "Tilt (degrees)",
+            "type": "number",
+            "min": -40,
+            "max": 40,
+            "step": 1
+          },
+          {
+            "path": "character.lift",
+            "label": "Up or down in its space",
+            "type": "number",
+            "min": -1,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "path": "character.speed",
+            "label": "Motion speed",
+            "type": "number",
+            "min": 0.2,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "path": "character.finish",
+            "label": "Finish",
+            "type": "select",
+            "options": [
+              {
+                "value": "original",
+                "label": "As made"
+              },
+              {
+                "value": "paint",
+                "label": "Painted in the colour below"
+              },
+              {
+                "value": "clay",
+                "label": "Soft clay in the colour below"
+              },
+              {
+                "value": "chrome",
+                "label": "Chrome, tinted"
+              }
+            ]
+          },
+          {
+            "path": "character.paint",
+            "label": "Paint colour",
+            "type": "color"
+          },
+          {
+            "path": "character.parts",
+            "label": "Parts to paint",
+            "type": "text",
+            "hint": "Material names, comma separated. Empty paints the whole model."
+          },
+          {
+            "path": "character.screen",
+            "label": "Screens that show your gradient",
+            "type": "text",
+            "hint": "Material names, comma separated (a phone's screen, a sign)."
+          },
+          {
+            "path": "character.shadow",
+            "label": "Soft shadow under it",
+            "type": "toggle"
+          },
+          {
+            "path": "character.echo",
+            "label": "Show it again near the end of the page",
+            "type": "toggle"
+          },
+          {
+            "path": "character.credit",
+            "label": "Credit line for the model",
+            "type": "text",
+            "hint": "Shown small near the end of the page. Models under CC BY need it; it is filled in for you."
+          }
+        ]
+      },
+      {
+        "group": "Character background",
+        "fields": [
+          {
+            "path": "design.stops",
+            "label": "Gradient colours (base, glow, second)",
+            "type": "colors",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "path": "design.style",
+            "label": "Gradient style",
+            "type": "select",
+            "options": [
+              {
+                "value": "glow",
+                "label": "Glow behind the character"
+              },
+              {
+                "value": "aurora",
+                "label": "Aurora (moves slowly)"
+              },
+              {
+                "value": "radial",
+                "label": "Spotlight"
+              },
+              {
+                "value": "linear",
+                "label": "Straight blend"
+              },
+              {
+                "value": "solid",
+                "label": "One colour"
+              }
+            ]
+          },
+          {
+            "path": "design.angle",
+            "label": "Gradient angle",
+            "type": "number",
+            "min": 0,
+            "max": 360,
+            "step": 5
+          },
+          {
+            "path": "design.light",
+            "label": "Light on the character",
+            "type": "color"
+          },
+          {
+            "path": "design.image",
+            "label": "Background picture instead of the gradient",
+            "type": "image"
+          },
+          {
+            "path": "design.imageTone",
+            "label": "That picture is mostly",
+            "type": "select",
+            "options": [
+              {
+                "value": "dark",
+                "label": "Dark (light words on it)"
+              },
+              {
+                "value": "light",
+                "label": "Light (dark words on it)"
+              }
+            ]
           }
         ]
       },
@@ -2761,11 +3675,44 @@
         "heroOpen": true,
         "areaPreview": true
       },
-      "extras": []
+      "extras": [],
+      "character": {
+        "src": "",
+        "poster": "",
+        "name": "",
+        "motion": "float",
+        "clip": "",
+        "react": "both",
+        "scroll": "turn",
+        "scale": 1,
+        "turn": -18,
+        "tilt": 0,
+        "lift": 0,
+        "speed": 1,
+        "finish": "original",
+        "paint": "#c08b5c",
+        "parts": "",
+        "screen": "",
+        "shadow": true,
+        "echo": true,
+        "credit": ""
+      },
+      "design": {
+        "stops": [
+          "#f5f2ec",
+          "#c08b5c",
+          "#ffffff"
+        ],
+        "style": "glow",
+        "angle": 160,
+        "light": "#c08b5c",
+        "image": "",
+        "imageTone": "dark"
+      }
     },
     "poster": false,
     "siteFiles": 14,
-    "sourceFiles": 22
+    "sourceFiles": 24
   },
   {
     "id": "distill",
@@ -2799,6 +3746,27 @@
       "Dropdown menus",
       "Pricing, demo, trial and sign-in panels"
     ],
+    "roles": {
+      "mode": "light",
+      "stage": "light",
+      "colors": {
+        "bg": "page",
+        "ink": "ink",
+        "body": "ink2",
+        "muted": "muted",
+        "code": "muted",
+        "comment": "faint",
+        "hot": "accent",
+        "hotSoft": "soft",
+        "hotDeep": "accentDeep",
+        "buttonText": "onAccent"
+      },
+      "fonts": {
+        "sans": "body",
+        "serif": "display",
+        "mono": "keep"
+      }
+    },
     "schema": [
       {
         "group": "Business",
@@ -2823,6 +3791,270 @@
             "path": "brand.showMark",
             "label": "Show the drop logo",
             "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "3D character",
+        "fields": [
+          {
+            "path": "character.src",
+            "label": "3D model",
+            "type": "model",
+            "hint": "Pick one from the library, upload a GLB, or make one from a photo. Empty: no character."
+          },
+          {
+            "path": "character.poster",
+            "label": "Its picture (shown while it loads)",
+            "type": "image"
+          },
+          {
+            "path": "character.name",
+            "label": "Its name",
+            "type": "text"
+          },
+          {
+            "path": "character.motion",
+            "label": "Idle motion",
+            "type": "select",
+            "options": [
+              {
+                "value": "float",
+                "label": "Floats gently"
+              },
+              {
+                "value": "sway",
+                "label": "Sways side to side"
+              },
+              {
+                "value": "spin",
+                "label": "Turns slowly"
+              },
+              {
+                "value": "still",
+                "label": "Holds still"
+              }
+            ]
+          },
+          {
+            "path": "character.clip",
+            "label": "Its own animation",
+            "type": "text",
+            "hint": "A clip name from the model. Empty plays its idle; none plays nothing."
+          },
+          {
+            "path": "character.react",
+            "label": "Visitors can",
+            "type": "select",
+            "options": [
+              {
+                "value": "both",
+                "label": "Drag it, tap it, and it looks at the pointer"
+              },
+              {
+                "value": "follow",
+                "label": "It looks at the pointer"
+              },
+              {
+                "value": "drag",
+                "label": "Drag it round and tap it"
+              },
+              {
+                "value": "none",
+                "label": "Nothing: it stays put"
+              }
+            ]
+          },
+          {
+            "path": "character.scroll",
+            "label": "As the page scrolls",
+            "type": "select",
+            "options": [
+              {
+                "value": "turn",
+                "label": "It turns"
+              },
+              {
+                "value": "rise",
+                "label": "It rises and shrinks away"
+              },
+              {
+                "value": "zoom",
+                "label": "It comes closer"
+              },
+              {
+                "value": "none",
+                "label": "Nothing"
+              }
+            ]
+          },
+          {
+            "path": "character.scale",
+            "label": "Size",
+            "type": "number",
+            "min": 0.4,
+            "max": 1.8,
+            "step": 0.05
+          },
+          {
+            "path": "character.turn",
+            "label": "Turn (degrees)",
+            "type": "number",
+            "min": -180,
+            "max": 180,
+            "step": 1
+          },
+          {
+            "path": "character.tilt",
+            "label": "Tilt (degrees)",
+            "type": "number",
+            "min": -40,
+            "max": 40,
+            "step": 1
+          },
+          {
+            "path": "character.lift",
+            "label": "Up or down in its space",
+            "type": "number",
+            "min": -1,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "path": "character.speed",
+            "label": "Motion speed",
+            "type": "number",
+            "min": 0.2,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "path": "character.finish",
+            "label": "Finish",
+            "type": "select",
+            "options": [
+              {
+                "value": "original",
+                "label": "As made"
+              },
+              {
+                "value": "paint",
+                "label": "Painted in the colour below"
+              },
+              {
+                "value": "clay",
+                "label": "Soft clay in the colour below"
+              },
+              {
+                "value": "chrome",
+                "label": "Chrome, tinted"
+              }
+            ]
+          },
+          {
+            "path": "character.paint",
+            "label": "Paint colour",
+            "type": "color"
+          },
+          {
+            "path": "character.parts",
+            "label": "Parts to paint",
+            "type": "text",
+            "hint": "Material names, comma separated. Empty paints the whole model."
+          },
+          {
+            "path": "character.screen",
+            "label": "Screens that show your gradient",
+            "type": "text",
+            "hint": "Material names, comma separated (a phone's screen, a sign)."
+          },
+          {
+            "path": "character.shadow",
+            "label": "Soft shadow under it",
+            "type": "toggle"
+          },
+          {
+            "path": "character.echo",
+            "label": "Show it again near the end of the page",
+            "type": "toggle"
+          },
+          {
+            "path": "character.credit",
+            "label": "Credit line for the model",
+            "type": "text",
+            "hint": "Shown small near the end of the page. Models under CC BY need it; it is filled in for you."
+          }
+        ]
+      },
+      {
+        "group": "Character background",
+        "fields": [
+          {
+            "path": "design.stops",
+            "label": "Gradient colours (base, glow, second)",
+            "type": "colors",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "path": "design.style",
+            "label": "Gradient style",
+            "type": "select",
+            "options": [
+              {
+                "value": "glow",
+                "label": "Glow behind the character"
+              },
+              {
+                "value": "aurora",
+                "label": "Aurora (moves slowly)"
+              },
+              {
+                "value": "radial",
+                "label": "Spotlight"
+              },
+              {
+                "value": "linear",
+                "label": "Straight blend"
+              },
+              {
+                "value": "solid",
+                "label": "One colour"
+              }
+            ]
+          },
+          {
+            "path": "design.angle",
+            "label": "Gradient angle",
+            "type": "number",
+            "min": 0,
+            "max": 360,
+            "step": 5
+          },
+          {
+            "path": "design.light",
+            "label": "Light on the character",
+            "type": "color"
+          },
+          {
+            "path": "design.image",
+            "label": "Background picture instead of the gradient",
+            "type": "image"
+          },
+          {
+            "path": "design.imageTone",
+            "label": "That picture is mostly",
+            "type": "select",
+            "options": [
+              {
+                "value": "dark",
+                "label": "Dark (light words on it)"
+              },
+              {
+                "value": "light",
+                "label": "Light (dark words on it)"
+              }
+            ]
           }
         ]
       },
@@ -3569,11 +4801,44 @@
         "sparks": true,
         "particles": true
       },
-      "extras": []
+      "extras": [],
+      "character": {
+        "src": "",
+        "poster": "",
+        "name": "",
+        "motion": "float",
+        "clip": "",
+        "react": "both",
+        "scroll": "turn",
+        "scale": 1,
+        "turn": -18,
+        "tilt": 0,
+        "lift": 0,
+        "speed": 1,
+        "finish": "original",
+        "paint": "#ff5a1f",
+        "parts": "",
+        "screen": "",
+        "shadow": true,
+        "echo": true,
+        "credit": ""
+      },
+      "design": {
+        "stops": [
+          "#eef0f2",
+          "#ff5a1f",
+          "#eef0f2"
+        ],
+        "style": "glow",
+        "angle": 160,
+        "light": "#ff5a1f",
+        "image": "",
+        "imageTone": "dark"
+      }
     },
     "poster": false,
     "siteFiles": 12,
-    "sourceFiles": 20
+    "sourceFiles": 22
   },
   {
     "id": "fernhollow",
@@ -3609,6 +4874,20 @@
       "Work and journal drawer",
       "Contact form"
     ],
+    "roles": {
+      "mode": "dark",
+      "stage": "dark",
+      "colors": {
+        "text": "ink",
+        "buttonText": "page",
+        "background": "page",
+        "panel": "surface"
+      },
+      "fonts": {
+        "display": "display",
+        "body": "body"
+      }
+    },
     "schema": [
       {
         "group": "Business",
@@ -3628,6 +4907,270 @@
             "path": "seo.description",
             "label": "Short description (search and sharing)",
             "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "3D character",
+        "fields": [
+          {
+            "path": "character.src",
+            "label": "3D model",
+            "type": "model",
+            "hint": "Pick one from the library, upload a GLB, or make one from a photo. Empty: no character."
+          },
+          {
+            "path": "character.poster",
+            "label": "Its picture (shown while it loads)",
+            "type": "image"
+          },
+          {
+            "path": "character.name",
+            "label": "Its name",
+            "type": "text"
+          },
+          {
+            "path": "character.motion",
+            "label": "Idle motion",
+            "type": "select",
+            "options": [
+              {
+                "value": "float",
+                "label": "Floats gently"
+              },
+              {
+                "value": "sway",
+                "label": "Sways side to side"
+              },
+              {
+                "value": "spin",
+                "label": "Turns slowly"
+              },
+              {
+                "value": "still",
+                "label": "Holds still"
+              }
+            ]
+          },
+          {
+            "path": "character.clip",
+            "label": "Its own animation",
+            "type": "text",
+            "hint": "A clip name from the model. Empty plays its idle; none plays nothing."
+          },
+          {
+            "path": "character.react",
+            "label": "Visitors can",
+            "type": "select",
+            "options": [
+              {
+                "value": "both",
+                "label": "Drag it, tap it, and it looks at the pointer"
+              },
+              {
+                "value": "follow",
+                "label": "It looks at the pointer"
+              },
+              {
+                "value": "drag",
+                "label": "Drag it round and tap it"
+              },
+              {
+                "value": "none",
+                "label": "Nothing: it stays put"
+              }
+            ]
+          },
+          {
+            "path": "character.scroll",
+            "label": "As the page scrolls",
+            "type": "select",
+            "options": [
+              {
+                "value": "turn",
+                "label": "It turns"
+              },
+              {
+                "value": "rise",
+                "label": "It rises and shrinks away"
+              },
+              {
+                "value": "zoom",
+                "label": "It comes closer"
+              },
+              {
+                "value": "none",
+                "label": "Nothing"
+              }
+            ]
+          },
+          {
+            "path": "character.scale",
+            "label": "Size",
+            "type": "number",
+            "min": 0.4,
+            "max": 1.8,
+            "step": 0.05
+          },
+          {
+            "path": "character.turn",
+            "label": "Turn (degrees)",
+            "type": "number",
+            "min": -180,
+            "max": 180,
+            "step": 1
+          },
+          {
+            "path": "character.tilt",
+            "label": "Tilt (degrees)",
+            "type": "number",
+            "min": -40,
+            "max": 40,
+            "step": 1
+          },
+          {
+            "path": "character.lift",
+            "label": "Up or down in its space",
+            "type": "number",
+            "min": -1,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "path": "character.speed",
+            "label": "Motion speed",
+            "type": "number",
+            "min": 0.2,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "path": "character.finish",
+            "label": "Finish",
+            "type": "select",
+            "options": [
+              {
+                "value": "original",
+                "label": "As made"
+              },
+              {
+                "value": "paint",
+                "label": "Painted in the colour below"
+              },
+              {
+                "value": "clay",
+                "label": "Soft clay in the colour below"
+              },
+              {
+                "value": "chrome",
+                "label": "Chrome, tinted"
+              }
+            ]
+          },
+          {
+            "path": "character.paint",
+            "label": "Paint colour",
+            "type": "color"
+          },
+          {
+            "path": "character.parts",
+            "label": "Parts to paint",
+            "type": "text",
+            "hint": "Material names, comma separated. Empty paints the whole model."
+          },
+          {
+            "path": "character.screen",
+            "label": "Screens that show your gradient",
+            "type": "text",
+            "hint": "Material names, comma separated (a phone's screen, a sign)."
+          },
+          {
+            "path": "character.shadow",
+            "label": "Soft shadow under it",
+            "type": "toggle"
+          },
+          {
+            "path": "character.echo",
+            "label": "Show it again near the end of the page",
+            "type": "toggle"
+          },
+          {
+            "path": "character.credit",
+            "label": "Credit line for the model",
+            "type": "text",
+            "hint": "Shown small near the end of the page. Models under CC BY need it; it is filled in for you."
+          }
+        ]
+      },
+      {
+        "group": "Character background",
+        "fields": [
+          {
+            "path": "design.stops",
+            "label": "Gradient colours (base, glow, second)",
+            "type": "colors",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "path": "design.style",
+            "label": "Gradient style",
+            "type": "select",
+            "options": [
+              {
+                "value": "glow",
+                "label": "Glow behind the character"
+              },
+              {
+                "value": "aurora",
+                "label": "Aurora (moves slowly)"
+              },
+              {
+                "value": "radial",
+                "label": "Spotlight"
+              },
+              {
+                "value": "linear",
+                "label": "Straight blend"
+              },
+              {
+                "value": "solid",
+                "label": "One colour"
+              }
+            ]
+          },
+          {
+            "path": "design.angle",
+            "label": "Gradient angle",
+            "type": "number",
+            "min": 0,
+            "max": 360,
+            "step": 5
+          },
+          {
+            "path": "design.light",
+            "label": "Light on the character",
+            "type": "color"
+          },
+          {
+            "path": "design.image",
+            "label": "Background picture instead of the gradient",
+            "type": "image"
+          },
+          {
+            "path": "design.imageTone",
+            "label": "That picture is mostly",
+            "type": "select",
+            "options": [
+              {
+                "value": "dark",
+                "label": "Dark (light words on it)"
+              },
+              {
+                "value": "light",
+                "label": "Light (dark words on it)"
+              }
+            ]
           }
         ]
       },
@@ -4350,11 +5893,44 @@
         "mood": "night",
         "wind": 0.35
       },
-      "extras": []
+      "extras": [],
+      "character": {
+        "src": "",
+        "poster": "",
+        "name": "",
+        "motion": "float",
+        "clip": "",
+        "react": "both",
+        "scroll": "turn",
+        "scale": 1,
+        "turn": -18,
+        "tilt": 0,
+        "lift": 0,
+        "speed": 1,
+        "finish": "original",
+        "paint": "#7c5cff",
+        "parts": "",
+        "screen": "",
+        "shadow": true,
+        "echo": true,
+        "credit": ""
+      },
+      "design": {
+        "stops": [
+          "#000000",
+          "#7c5cff",
+          "#0b0d0b"
+        ],
+        "style": "glow",
+        "angle": 160,
+        "light": "#7c5cff",
+        "image": "",
+        "imageTone": "dark"
+      }
     },
     "poster": true,
     "siteFiles": 4,
-    "sourceFiles": 12
+    "sourceFiles": 14
   },
   {
     "id": "ironhouse",
@@ -4392,6 +5968,24 @@
       "Tilting coach cards",
       "Free-week sign-up"
     ],
+    "roles": {
+      "mode": "dark",
+      "stage": "dark",
+      "colors": {
+        "page": "page",
+        "surface": "surface",
+        "text": "ink",
+        "muted": "muted",
+        "accent": "accent",
+        "onAccent": "onAccent",
+        "hot": "accent2",
+        "line": "line"
+      },
+      "fonts": {
+        "display": "display",
+        "body": "body"
+      }
+    },
     "schema": [
       {
         "group": "Business",
@@ -4431,6 +6025,270 @@
             "path": "seo.description",
             "label": "Short description (search and sharing)",
             "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "3D character",
+        "fields": [
+          {
+            "path": "character.src",
+            "label": "3D model",
+            "type": "model",
+            "hint": "Pick one from the library, upload a GLB, or make one from a photo. Empty: no character."
+          },
+          {
+            "path": "character.poster",
+            "label": "Its picture (shown while it loads)",
+            "type": "image"
+          },
+          {
+            "path": "character.name",
+            "label": "Its name",
+            "type": "text"
+          },
+          {
+            "path": "character.motion",
+            "label": "Idle motion",
+            "type": "select",
+            "options": [
+              {
+                "value": "float",
+                "label": "Floats gently"
+              },
+              {
+                "value": "sway",
+                "label": "Sways side to side"
+              },
+              {
+                "value": "spin",
+                "label": "Turns slowly"
+              },
+              {
+                "value": "still",
+                "label": "Holds still"
+              }
+            ]
+          },
+          {
+            "path": "character.clip",
+            "label": "Its own animation",
+            "type": "text",
+            "hint": "A clip name from the model. Empty plays its idle; none plays nothing."
+          },
+          {
+            "path": "character.react",
+            "label": "Visitors can",
+            "type": "select",
+            "options": [
+              {
+                "value": "both",
+                "label": "Drag it, tap it, and it looks at the pointer"
+              },
+              {
+                "value": "follow",
+                "label": "It looks at the pointer"
+              },
+              {
+                "value": "drag",
+                "label": "Drag it round and tap it"
+              },
+              {
+                "value": "none",
+                "label": "Nothing: it stays put"
+              }
+            ]
+          },
+          {
+            "path": "character.scroll",
+            "label": "As the page scrolls",
+            "type": "select",
+            "options": [
+              {
+                "value": "turn",
+                "label": "It turns"
+              },
+              {
+                "value": "rise",
+                "label": "It rises and shrinks away"
+              },
+              {
+                "value": "zoom",
+                "label": "It comes closer"
+              },
+              {
+                "value": "none",
+                "label": "Nothing"
+              }
+            ]
+          },
+          {
+            "path": "character.scale",
+            "label": "Size",
+            "type": "number",
+            "min": 0.4,
+            "max": 1.8,
+            "step": 0.05
+          },
+          {
+            "path": "character.turn",
+            "label": "Turn (degrees)",
+            "type": "number",
+            "min": -180,
+            "max": 180,
+            "step": 1
+          },
+          {
+            "path": "character.tilt",
+            "label": "Tilt (degrees)",
+            "type": "number",
+            "min": -40,
+            "max": 40,
+            "step": 1
+          },
+          {
+            "path": "character.lift",
+            "label": "Up or down in its space",
+            "type": "number",
+            "min": -1,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "path": "character.speed",
+            "label": "Motion speed",
+            "type": "number",
+            "min": 0.2,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "path": "character.finish",
+            "label": "Finish",
+            "type": "select",
+            "options": [
+              {
+                "value": "original",
+                "label": "As made"
+              },
+              {
+                "value": "paint",
+                "label": "Painted in the colour below"
+              },
+              {
+                "value": "clay",
+                "label": "Soft clay in the colour below"
+              },
+              {
+                "value": "chrome",
+                "label": "Chrome, tinted"
+              }
+            ]
+          },
+          {
+            "path": "character.paint",
+            "label": "Paint colour",
+            "type": "color"
+          },
+          {
+            "path": "character.parts",
+            "label": "Parts to paint",
+            "type": "text",
+            "hint": "Material names, comma separated. Empty paints the whole model."
+          },
+          {
+            "path": "character.screen",
+            "label": "Screens that show your gradient",
+            "type": "text",
+            "hint": "Material names, comma separated (a phone's screen, a sign)."
+          },
+          {
+            "path": "character.shadow",
+            "label": "Soft shadow under it",
+            "type": "toggle"
+          },
+          {
+            "path": "character.echo",
+            "label": "Show it again near the end of the page",
+            "type": "toggle"
+          },
+          {
+            "path": "character.credit",
+            "label": "Credit line for the model",
+            "type": "text",
+            "hint": "Shown small near the end of the page. Models under CC BY need it; it is filled in for you."
+          }
+        ]
+      },
+      {
+        "group": "Character background",
+        "fields": [
+          {
+            "path": "design.stops",
+            "label": "Gradient colours (base, glow, second)",
+            "type": "colors",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "path": "design.style",
+            "label": "Gradient style",
+            "type": "select",
+            "options": [
+              {
+                "value": "glow",
+                "label": "Glow behind the character"
+              },
+              {
+                "value": "aurora",
+                "label": "Aurora (moves slowly)"
+              },
+              {
+                "value": "radial",
+                "label": "Spotlight"
+              },
+              {
+                "value": "linear",
+                "label": "Straight blend"
+              },
+              {
+                "value": "solid",
+                "label": "One colour"
+              }
+            ]
+          },
+          {
+            "path": "design.angle",
+            "label": "Gradient angle",
+            "type": "number",
+            "min": 0,
+            "max": 360,
+            "step": 5
+          },
+          {
+            "path": "design.light",
+            "label": "Light on the character",
+            "type": "color"
+          },
+          {
+            "path": "design.image",
+            "label": "Background picture instead of the gradient",
+            "type": "image"
+          },
+          {
+            "path": "design.imageTone",
+            "label": "That picture is mostly",
+            "type": "select",
+            "options": [
+              {
+                "value": "dark",
+                "label": "Dark (light words on it)"
+              },
+              {
+                "value": "light",
+                "label": "Light (dark words on it)"
+              }
+            ]
           }
         ]
       },
@@ -5248,11 +7106,44 @@
         "stackCards": true,
         "heroParallax": true
       },
-      "extras": []
+      "extras": [],
+      "character": {
+        "src": "",
+        "poster": "",
+        "name": "",
+        "motion": "float",
+        "clip": "",
+        "react": "both",
+        "scroll": "turn",
+        "scale": 1,
+        "turn": -18,
+        "tilt": 0,
+        "lift": 0,
+        "speed": 1,
+        "finish": "original",
+        "paint": "#d7ff3a",
+        "parts": "",
+        "screen": "",
+        "shadow": true,
+        "echo": true,
+        "credit": ""
+      },
+      "design": {
+        "stops": [
+          "#0b0b0c",
+          "#d7ff3a",
+          "#161618"
+        ],
+        "style": "glow",
+        "angle": 160,
+        "light": "#d7ff3a",
+        "image": "",
+        "imageTone": "dark"
+      }
     },
     "poster": false,
     "siteFiles": 12,
-    "sourceFiles": 20
+    "sourceFiles": 22
   },
   {
     "id": "jack",
@@ -5318,6 +7209,27 @@
       "Stacking project cards",
       "Contact form"
     ],
+    "roles": {
+      "mode": "dark",
+      "stage": "dark",
+      "colors": {
+        "page": "page",
+        "text": "ink",
+        "surface": "surface",
+        "light": "light",
+        "lightText": "onLight",
+        "headingFrom": "muted",
+        "headingTo": "ink2",
+        "grad1": "g1",
+        "grad2": "accent",
+        "grad3": "accent2",
+        "grad4": "g2",
+        "buttonText": "onDark"
+      },
+      "fonts": {
+        "display": "display"
+      }
+    },
     "schema": [
       {
         "group": "Business",
@@ -5337,6 +7249,270 @@
             "path": "seo.description",
             "label": "Short description (search and sharing)",
             "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "3D character",
+        "fields": [
+          {
+            "path": "character.src",
+            "label": "3D model",
+            "type": "model",
+            "hint": "Pick one from the library, upload a GLB, or make one from a photo. Empty: no character."
+          },
+          {
+            "path": "character.poster",
+            "label": "Its picture (shown while it loads)",
+            "type": "image"
+          },
+          {
+            "path": "character.name",
+            "label": "Its name",
+            "type": "text"
+          },
+          {
+            "path": "character.motion",
+            "label": "Idle motion",
+            "type": "select",
+            "options": [
+              {
+                "value": "float",
+                "label": "Floats gently"
+              },
+              {
+                "value": "sway",
+                "label": "Sways side to side"
+              },
+              {
+                "value": "spin",
+                "label": "Turns slowly"
+              },
+              {
+                "value": "still",
+                "label": "Holds still"
+              }
+            ]
+          },
+          {
+            "path": "character.clip",
+            "label": "Its own animation",
+            "type": "text",
+            "hint": "A clip name from the model. Empty plays its idle; none plays nothing."
+          },
+          {
+            "path": "character.react",
+            "label": "Visitors can",
+            "type": "select",
+            "options": [
+              {
+                "value": "both",
+                "label": "Drag it, tap it, and it looks at the pointer"
+              },
+              {
+                "value": "follow",
+                "label": "It looks at the pointer"
+              },
+              {
+                "value": "drag",
+                "label": "Drag it round and tap it"
+              },
+              {
+                "value": "none",
+                "label": "Nothing: it stays put"
+              }
+            ]
+          },
+          {
+            "path": "character.scroll",
+            "label": "As the page scrolls",
+            "type": "select",
+            "options": [
+              {
+                "value": "turn",
+                "label": "It turns"
+              },
+              {
+                "value": "rise",
+                "label": "It rises and shrinks away"
+              },
+              {
+                "value": "zoom",
+                "label": "It comes closer"
+              },
+              {
+                "value": "none",
+                "label": "Nothing"
+              }
+            ]
+          },
+          {
+            "path": "character.scale",
+            "label": "Size",
+            "type": "number",
+            "min": 0.4,
+            "max": 1.8,
+            "step": 0.05
+          },
+          {
+            "path": "character.turn",
+            "label": "Turn (degrees)",
+            "type": "number",
+            "min": -180,
+            "max": 180,
+            "step": 1
+          },
+          {
+            "path": "character.tilt",
+            "label": "Tilt (degrees)",
+            "type": "number",
+            "min": -40,
+            "max": 40,
+            "step": 1
+          },
+          {
+            "path": "character.lift",
+            "label": "Up or down in its space",
+            "type": "number",
+            "min": -1,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "path": "character.speed",
+            "label": "Motion speed",
+            "type": "number",
+            "min": 0.2,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "path": "character.finish",
+            "label": "Finish",
+            "type": "select",
+            "options": [
+              {
+                "value": "original",
+                "label": "As made"
+              },
+              {
+                "value": "paint",
+                "label": "Painted in the colour below"
+              },
+              {
+                "value": "clay",
+                "label": "Soft clay in the colour below"
+              },
+              {
+                "value": "chrome",
+                "label": "Chrome, tinted"
+              }
+            ]
+          },
+          {
+            "path": "character.paint",
+            "label": "Paint colour",
+            "type": "color"
+          },
+          {
+            "path": "character.parts",
+            "label": "Parts to paint",
+            "type": "text",
+            "hint": "Material names, comma separated. Empty paints the whole model."
+          },
+          {
+            "path": "character.screen",
+            "label": "Screens that show your gradient",
+            "type": "text",
+            "hint": "Material names, comma separated (a phone's screen, a sign)."
+          },
+          {
+            "path": "character.shadow",
+            "label": "Soft shadow under it",
+            "type": "toggle"
+          },
+          {
+            "path": "character.echo",
+            "label": "Show it again near the end of the page",
+            "type": "toggle"
+          },
+          {
+            "path": "character.credit",
+            "label": "Credit line for the model",
+            "type": "text",
+            "hint": "Shown small near the end of the page. Models under CC BY need it; it is filled in for you."
+          }
+        ]
+      },
+      {
+        "group": "Character background",
+        "fields": [
+          {
+            "path": "design.stops",
+            "label": "Gradient colours (base, glow, second)",
+            "type": "colors",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "path": "design.style",
+            "label": "Gradient style",
+            "type": "select",
+            "options": [
+              {
+                "value": "glow",
+                "label": "Glow behind the character"
+              },
+              {
+                "value": "aurora",
+                "label": "Aurora (moves slowly)"
+              },
+              {
+                "value": "radial",
+                "label": "Spotlight"
+              },
+              {
+                "value": "linear",
+                "label": "Straight blend"
+              },
+              {
+                "value": "solid",
+                "label": "One colour"
+              }
+            ]
+          },
+          {
+            "path": "design.angle",
+            "label": "Gradient angle",
+            "type": "number",
+            "min": 0,
+            "max": 360,
+            "step": 5
+          },
+          {
+            "path": "design.light",
+            "label": "Light on the character",
+            "type": "color"
+          },
+          {
+            "path": "design.image",
+            "label": "Background picture instead of the gradient",
+            "type": "image"
+          },
+          {
+            "path": "design.imageTone",
+            "label": "That picture is mostly",
+            "type": "select",
+            "options": [
+              {
+                "value": "dark",
+                "label": "Dark (light words on it)"
+              },
+              {
+                "value": "light",
+                "label": "Light (dark words on it)"
+              }
+            ]
           }
         ]
       },
@@ -6043,11 +8219,44 @@
         "magnet": 3,
         "cardStack": true
       },
-      "extras": []
+      "extras": [],
+      "character": {
+        "src": "",
+        "poster": "",
+        "name": "",
+        "motion": "float",
+        "clip": "",
+        "react": "both",
+        "scroll": "turn",
+        "scale": 1,
+        "turn": -18,
+        "tilt": 0,
+        "lift": 0,
+        "speed": 1,
+        "finish": "original",
+        "paint": "#b600a8",
+        "parts": "",
+        "screen": "",
+        "shadow": true,
+        "echo": true,
+        "credit": ""
+      },
+      "design": {
+        "stops": [
+          "#0c0c0c",
+          "#b600a8",
+          "#141414"
+        ],
+        "style": "glow",
+        "angle": 160,
+        "light": "#b600a8",
+        "image": "",
+        "imageTone": "dark"
+      }
     },
     "poster": false,
     "siteFiles": 28,
-    "sourceFiles": 48
+    "sourceFiles": 50
   },
   {
     "id": "lithos",
@@ -6080,6 +8289,23 @@
       "Layer list panel",
       "Sign-up form"
     ],
+    "roles": {
+      "mode": "dark",
+      "stage": "dark",
+      "colors": {
+        "accent": "accent",
+        "accentHover": "accentDeep",
+        "text": "ink",
+        "page": "page",
+        "panel": "surface",
+        "button": "light",
+        "buttonText": "onLight"
+      },
+      "fonts": {
+        "display": "display",
+        "body": "body"
+      }
+    },
     "schema": [
       {
         "group": "Business",
@@ -6104,6 +8330,270 @@
             "path": "brand.showMark",
             "label": "Show the logo mark",
             "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "3D character",
+        "fields": [
+          {
+            "path": "character.src",
+            "label": "3D model",
+            "type": "model",
+            "hint": "Pick one from the library, upload a GLB, or make one from a photo. Empty: no character."
+          },
+          {
+            "path": "character.poster",
+            "label": "Its picture (shown while it loads)",
+            "type": "image"
+          },
+          {
+            "path": "character.name",
+            "label": "Its name",
+            "type": "text"
+          },
+          {
+            "path": "character.motion",
+            "label": "Idle motion",
+            "type": "select",
+            "options": [
+              {
+                "value": "float",
+                "label": "Floats gently"
+              },
+              {
+                "value": "sway",
+                "label": "Sways side to side"
+              },
+              {
+                "value": "spin",
+                "label": "Turns slowly"
+              },
+              {
+                "value": "still",
+                "label": "Holds still"
+              }
+            ]
+          },
+          {
+            "path": "character.clip",
+            "label": "Its own animation",
+            "type": "text",
+            "hint": "A clip name from the model. Empty plays its idle; none plays nothing."
+          },
+          {
+            "path": "character.react",
+            "label": "Visitors can",
+            "type": "select",
+            "options": [
+              {
+                "value": "both",
+                "label": "Drag it, tap it, and it looks at the pointer"
+              },
+              {
+                "value": "follow",
+                "label": "It looks at the pointer"
+              },
+              {
+                "value": "drag",
+                "label": "Drag it round and tap it"
+              },
+              {
+                "value": "none",
+                "label": "Nothing: it stays put"
+              }
+            ]
+          },
+          {
+            "path": "character.scroll",
+            "label": "As the page scrolls",
+            "type": "select",
+            "options": [
+              {
+                "value": "turn",
+                "label": "It turns"
+              },
+              {
+                "value": "rise",
+                "label": "It rises and shrinks away"
+              },
+              {
+                "value": "zoom",
+                "label": "It comes closer"
+              },
+              {
+                "value": "none",
+                "label": "Nothing"
+              }
+            ]
+          },
+          {
+            "path": "character.scale",
+            "label": "Size",
+            "type": "number",
+            "min": 0.4,
+            "max": 1.8,
+            "step": 0.05
+          },
+          {
+            "path": "character.turn",
+            "label": "Turn (degrees)",
+            "type": "number",
+            "min": -180,
+            "max": 180,
+            "step": 1
+          },
+          {
+            "path": "character.tilt",
+            "label": "Tilt (degrees)",
+            "type": "number",
+            "min": -40,
+            "max": 40,
+            "step": 1
+          },
+          {
+            "path": "character.lift",
+            "label": "Up or down in its space",
+            "type": "number",
+            "min": -1,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "path": "character.speed",
+            "label": "Motion speed",
+            "type": "number",
+            "min": 0.2,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "path": "character.finish",
+            "label": "Finish",
+            "type": "select",
+            "options": [
+              {
+                "value": "original",
+                "label": "As made"
+              },
+              {
+                "value": "paint",
+                "label": "Painted in the colour below"
+              },
+              {
+                "value": "clay",
+                "label": "Soft clay in the colour below"
+              },
+              {
+                "value": "chrome",
+                "label": "Chrome, tinted"
+              }
+            ]
+          },
+          {
+            "path": "character.paint",
+            "label": "Paint colour",
+            "type": "color"
+          },
+          {
+            "path": "character.parts",
+            "label": "Parts to paint",
+            "type": "text",
+            "hint": "Material names, comma separated. Empty paints the whole model."
+          },
+          {
+            "path": "character.screen",
+            "label": "Screens that show your gradient",
+            "type": "text",
+            "hint": "Material names, comma separated (a phone's screen, a sign)."
+          },
+          {
+            "path": "character.shadow",
+            "label": "Soft shadow under it",
+            "type": "toggle"
+          },
+          {
+            "path": "character.echo",
+            "label": "Show it again near the end of the page",
+            "type": "toggle"
+          },
+          {
+            "path": "character.credit",
+            "label": "Credit line for the model",
+            "type": "text",
+            "hint": "Shown small near the end of the page. Models under CC BY need it; it is filled in for you."
+          }
+        ]
+      },
+      {
+        "group": "Character background",
+        "fields": [
+          {
+            "path": "design.stops",
+            "label": "Gradient colours (base, glow, second)",
+            "type": "colors",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "path": "design.style",
+            "label": "Gradient style",
+            "type": "select",
+            "options": [
+              {
+                "value": "glow",
+                "label": "Glow behind the character"
+              },
+              {
+                "value": "aurora",
+                "label": "Aurora (moves slowly)"
+              },
+              {
+                "value": "radial",
+                "label": "Spotlight"
+              },
+              {
+                "value": "linear",
+                "label": "Straight blend"
+              },
+              {
+                "value": "solid",
+                "label": "One colour"
+              }
+            ]
+          },
+          {
+            "path": "design.angle",
+            "label": "Gradient angle",
+            "type": "number",
+            "min": 0,
+            "max": 360,
+            "step": 5
+          },
+          {
+            "path": "design.light",
+            "label": "Light on the character",
+            "type": "color"
+          },
+          {
+            "path": "design.image",
+            "label": "Background picture instead of the gradient",
+            "type": "image"
+          },
+          {
+            "path": "design.imageTone",
+            "label": "That picture is mostly",
+            "type": "select",
+            "options": [
+              {
+                "value": "dark",
+                "label": "Dark (light words on it)"
+              },
+              {
+                "value": "light",
+                "label": "Light (dark words on it)"
+              }
+            ]
           }
         ]
       },
@@ -6947,11 +9437,44 @@
         "zoomIn": true,
         "entrance": true
       },
-      "extras": []
+      "extras": [],
+      "character": {
+        "src": "",
+        "poster": "",
+        "name": "",
+        "motion": "float",
+        "clip": "",
+        "react": "both",
+        "scroll": "turn",
+        "scale": 1,
+        "turn": -18,
+        "tilt": 0,
+        "lift": 0,
+        "speed": 1,
+        "finish": "original",
+        "paint": "#e8702a",
+        "parts": "",
+        "screen": "",
+        "shadow": true,
+        "echo": true,
+        "credit": ""
+      },
+      "design": {
+        "stops": [
+          "#000000",
+          "#e8702a",
+          "#0a0a0a"
+        ],
+        "style": "glow",
+        "angle": 160,
+        "light": "#e8702a",
+        "image": "",
+        "imageTone": "dark"
+      }
     },
     "poster": false,
     "siteFiles": 10,
-    "sourceFiles": 19
+    "sourceFiles": 21
   },
   {
     "id": "milo",
@@ -6989,6 +9512,24 @@
       "Magnetic button",
       "Commission form"
     ],
+    "roles": {
+      "mode": "dark",
+      "stage": "dark",
+      "colors": {
+        "page": "page",
+        "surface": "surface",
+        "deep": "surface2",
+        "text": "ink",
+        "accent": "accent",
+        "accent2": "accent2",
+        "highlight": "tint",
+        "light": "light",
+        "lightText": "onLight"
+      },
+      "fonts": {
+        "body": "body"
+      }
+    },
     "schema": [
       {
         "group": "Business",
@@ -7025,6 +9566,270 @@
             "label": "Email",
             "type": "text",
             "hint": "Shown in contact and used for the form when no form service is set."
+          }
+        ]
+      },
+      {
+        "group": "3D character",
+        "fields": [
+          {
+            "path": "character.src",
+            "label": "3D model",
+            "type": "model",
+            "hint": "Pick one from the library, upload a GLB, or make one from a photo. Empty: no character."
+          },
+          {
+            "path": "character.poster",
+            "label": "Its picture (shown while it loads)",
+            "type": "image"
+          },
+          {
+            "path": "character.name",
+            "label": "Its name",
+            "type": "text"
+          },
+          {
+            "path": "character.motion",
+            "label": "Idle motion",
+            "type": "select",
+            "options": [
+              {
+                "value": "float",
+                "label": "Floats gently"
+              },
+              {
+                "value": "sway",
+                "label": "Sways side to side"
+              },
+              {
+                "value": "spin",
+                "label": "Turns slowly"
+              },
+              {
+                "value": "still",
+                "label": "Holds still"
+              }
+            ]
+          },
+          {
+            "path": "character.clip",
+            "label": "Its own animation",
+            "type": "text",
+            "hint": "A clip name from the model. Empty plays its idle; none plays nothing."
+          },
+          {
+            "path": "character.react",
+            "label": "Visitors can",
+            "type": "select",
+            "options": [
+              {
+                "value": "both",
+                "label": "Drag it, tap it, and it looks at the pointer"
+              },
+              {
+                "value": "follow",
+                "label": "It looks at the pointer"
+              },
+              {
+                "value": "drag",
+                "label": "Drag it round and tap it"
+              },
+              {
+                "value": "none",
+                "label": "Nothing: it stays put"
+              }
+            ]
+          },
+          {
+            "path": "character.scroll",
+            "label": "As the page scrolls",
+            "type": "select",
+            "options": [
+              {
+                "value": "turn",
+                "label": "It turns"
+              },
+              {
+                "value": "rise",
+                "label": "It rises and shrinks away"
+              },
+              {
+                "value": "zoom",
+                "label": "It comes closer"
+              },
+              {
+                "value": "none",
+                "label": "Nothing"
+              }
+            ]
+          },
+          {
+            "path": "character.scale",
+            "label": "Size",
+            "type": "number",
+            "min": 0.4,
+            "max": 1.8,
+            "step": 0.05
+          },
+          {
+            "path": "character.turn",
+            "label": "Turn (degrees)",
+            "type": "number",
+            "min": -180,
+            "max": 180,
+            "step": 1
+          },
+          {
+            "path": "character.tilt",
+            "label": "Tilt (degrees)",
+            "type": "number",
+            "min": -40,
+            "max": 40,
+            "step": 1
+          },
+          {
+            "path": "character.lift",
+            "label": "Up or down in its space",
+            "type": "number",
+            "min": -1,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "path": "character.speed",
+            "label": "Motion speed",
+            "type": "number",
+            "min": 0.2,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "path": "character.finish",
+            "label": "Finish",
+            "type": "select",
+            "options": [
+              {
+                "value": "original",
+                "label": "As made"
+              },
+              {
+                "value": "paint",
+                "label": "Painted in the colour below"
+              },
+              {
+                "value": "clay",
+                "label": "Soft clay in the colour below"
+              },
+              {
+                "value": "chrome",
+                "label": "Chrome, tinted"
+              }
+            ]
+          },
+          {
+            "path": "character.paint",
+            "label": "Paint colour",
+            "type": "color"
+          },
+          {
+            "path": "character.parts",
+            "label": "Parts to paint",
+            "type": "text",
+            "hint": "Material names, comma separated. Empty paints the whole model."
+          },
+          {
+            "path": "character.screen",
+            "label": "Screens that show your gradient",
+            "type": "text",
+            "hint": "Material names, comma separated (a phone's screen, a sign)."
+          },
+          {
+            "path": "character.shadow",
+            "label": "Soft shadow under it",
+            "type": "toggle"
+          },
+          {
+            "path": "character.echo",
+            "label": "Show it again near the end of the page",
+            "type": "toggle"
+          },
+          {
+            "path": "character.credit",
+            "label": "Credit line for the model",
+            "type": "text",
+            "hint": "Shown small near the end of the page. Models under CC BY need it; it is filled in for you."
+          }
+        ]
+      },
+      {
+        "group": "Character background",
+        "fields": [
+          {
+            "path": "design.stops",
+            "label": "Gradient colours (base, glow, second)",
+            "type": "colors",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "path": "design.style",
+            "label": "Gradient style",
+            "type": "select",
+            "options": [
+              {
+                "value": "glow",
+                "label": "Glow behind the character"
+              },
+              {
+                "value": "aurora",
+                "label": "Aurora (moves slowly)"
+              },
+              {
+                "value": "radial",
+                "label": "Spotlight"
+              },
+              {
+                "value": "linear",
+                "label": "Straight blend"
+              },
+              {
+                "value": "solid",
+                "label": "One colour"
+              }
+            ]
+          },
+          {
+            "path": "design.angle",
+            "label": "Gradient angle",
+            "type": "number",
+            "min": 0,
+            "max": 360,
+            "step": 5
+          },
+          {
+            "path": "design.light",
+            "label": "Light on the character",
+            "type": "color"
+          },
+          {
+            "path": "design.image",
+            "label": "Background picture instead of the gradient",
+            "type": "image"
+          },
+          {
+            "path": "design.imageTone",
+            "label": "That picture is mostly",
+            "type": "select",
+            "options": [
+              {
+                "value": "dark",
+                "label": "Dark (light words on it)"
+              },
+              {
+                "value": "light",
+                "label": "Light (dark words on it)"
+              }
+            ]
           }
         ]
       },
@@ -7942,11 +10747,44 @@
         "cursor": true,
         "progress": true
       },
-      "extras": []
+      "extras": [],
+      "character": {
+        "src": "",
+        "poster": "",
+        "name": "",
+        "motion": "float",
+        "clip": "",
+        "react": "both",
+        "scroll": "turn",
+        "scale": 1,
+        "turn": -18,
+        "tilt": 0,
+        "lift": 0,
+        "speed": 1,
+        "finish": "original",
+        "paint": "#63e6ff",
+        "parts": "",
+        "screen": "",
+        "shadow": true,
+        "echo": true,
+        "credit": ""
+      },
+      "design": {
+        "stops": [
+          "#082838",
+          "#63e6ff",
+          "#041319"
+        ],
+        "style": "glow",
+        "angle": 160,
+        "light": "#63e6ff",
+        "image": "",
+        "imageTone": "dark"
+      }
     },
     "poster": false,
     "siteFiles": 5,
-    "sourceFiles": 31
+    "sourceFiles": 33
   },
   {
     "id": "mossline",
@@ -7982,6 +10820,25 @@
       "Counting stats",
       "Contact section"
     ],
+    "roles": {
+      "mode": "light",
+      "stage": "light",
+      "colors": {
+        "ink": "ink",
+        "ink2": "ink2",
+        "mist": "page",
+        "paper": "surface",
+        "accent": "fill",
+        "accent2": "fill2",
+        "positive": "accentDeep",
+        "deep": "dark"
+      },
+      "fonts": {
+        "sans": "body",
+        "mono": "keep"
+      },
+      "radius": "radius"
+    },
     "schema": [
       {
         "group": "Business",
@@ -8006,6 +10863,270 @@
             "path": "seo.description",
             "label": "Short description (search and sharing)",
             "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "3D character",
+        "fields": [
+          {
+            "path": "character.src",
+            "label": "3D model",
+            "type": "model",
+            "hint": "Pick one from the library, upload a GLB, or make one from a photo. Empty: no character."
+          },
+          {
+            "path": "character.poster",
+            "label": "Its picture (shown while it loads)",
+            "type": "image"
+          },
+          {
+            "path": "character.name",
+            "label": "Its name",
+            "type": "text"
+          },
+          {
+            "path": "character.motion",
+            "label": "Idle motion",
+            "type": "select",
+            "options": [
+              {
+                "value": "float",
+                "label": "Floats gently"
+              },
+              {
+                "value": "sway",
+                "label": "Sways side to side"
+              },
+              {
+                "value": "spin",
+                "label": "Turns slowly"
+              },
+              {
+                "value": "still",
+                "label": "Holds still"
+              }
+            ]
+          },
+          {
+            "path": "character.clip",
+            "label": "Its own animation",
+            "type": "text",
+            "hint": "A clip name from the model. Empty plays its idle; none plays nothing."
+          },
+          {
+            "path": "character.react",
+            "label": "Visitors can",
+            "type": "select",
+            "options": [
+              {
+                "value": "both",
+                "label": "Drag it, tap it, and it looks at the pointer"
+              },
+              {
+                "value": "follow",
+                "label": "It looks at the pointer"
+              },
+              {
+                "value": "drag",
+                "label": "Drag it round and tap it"
+              },
+              {
+                "value": "none",
+                "label": "Nothing: it stays put"
+              }
+            ]
+          },
+          {
+            "path": "character.scroll",
+            "label": "As the page scrolls",
+            "type": "select",
+            "options": [
+              {
+                "value": "turn",
+                "label": "It turns"
+              },
+              {
+                "value": "rise",
+                "label": "It rises and shrinks away"
+              },
+              {
+                "value": "zoom",
+                "label": "It comes closer"
+              },
+              {
+                "value": "none",
+                "label": "Nothing"
+              }
+            ]
+          },
+          {
+            "path": "character.scale",
+            "label": "Size",
+            "type": "number",
+            "min": 0.4,
+            "max": 1.8,
+            "step": 0.05
+          },
+          {
+            "path": "character.turn",
+            "label": "Turn (degrees)",
+            "type": "number",
+            "min": -180,
+            "max": 180,
+            "step": 1
+          },
+          {
+            "path": "character.tilt",
+            "label": "Tilt (degrees)",
+            "type": "number",
+            "min": -40,
+            "max": 40,
+            "step": 1
+          },
+          {
+            "path": "character.lift",
+            "label": "Up or down in its space",
+            "type": "number",
+            "min": -1,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "path": "character.speed",
+            "label": "Motion speed",
+            "type": "number",
+            "min": 0.2,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "path": "character.finish",
+            "label": "Finish",
+            "type": "select",
+            "options": [
+              {
+                "value": "original",
+                "label": "As made"
+              },
+              {
+                "value": "paint",
+                "label": "Painted in the colour below"
+              },
+              {
+                "value": "clay",
+                "label": "Soft clay in the colour below"
+              },
+              {
+                "value": "chrome",
+                "label": "Chrome, tinted"
+              }
+            ]
+          },
+          {
+            "path": "character.paint",
+            "label": "Paint colour",
+            "type": "color"
+          },
+          {
+            "path": "character.parts",
+            "label": "Parts to paint",
+            "type": "text",
+            "hint": "Material names, comma separated. Empty paints the whole model."
+          },
+          {
+            "path": "character.screen",
+            "label": "Screens that show your gradient",
+            "type": "text",
+            "hint": "Material names, comma separated (a phone's screen, a sign)."
+          },
+          {
+            "path": "character.shadow",
+            "label": "Soft shadow under it",
+            "type": "toggle"
+          },
+          {
+            "path": "character.echo",
+            "label": "Show it again near the end of the page",
+            "type": "toggle"
+          },
+          {
+            "path": "character.credit",
+            "label": "Credit line for the model",
+            "type": "text",
+            "hint": "Shown small near the end of the page. Models under CC BY need it; it is filled in for you."
+          }
+        ]
+      },
+      {
+        "group": "Character background",
+        "fields": [
+          {
+            "path": "design.stops",
+            "label": "Gradient colours (base, glow, second)",
+            "type": "colors",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "path": "design.style",
+            "label": "Gradient style",
+            "type": "select",
+            "options": [
+              {
+                "value": "glow",
+                "label": "Glow behind the character"
+              },
+              {
+                "value": "aurora",
+                "label": "Aurora (moves slowly)"
+              },
+              {
+                "value": "radial",
+                "label": "Spotlight"
+              },
+              {
+                "value": "linear",
+                "label": "Straight blend"
+              },
+              {
+                "value": "solid",
+                "label": "One colour"
+              }
+            ]
+          },
+          {
+            "path": "design.angle",
+            "label": "Gradient angle",
+            "type": "number",
+            "min": 0,
+            "max": 360,
+            "step": 5
+          },
+          {
+            "path": "design.light",
+            "label": "Light on the character",
+            "type": "color"
+          },
+          {
+            "path": "design.image",
+            "label": "Background picture instead of the gradient",
+            "type": "image"
+          },
+          {
+            "path": "design.imageTone",
+            "label": "That picture is mostly",
+            "type": "select",
+            "options": [
+              {
+                "value": "dark",
+                "label": "Dark (light words on it)"
+              },
+              {
+                "value": "light",
+                "label": "Light (dark words on it)"
+              }
+            ]
           }
         ]
       },
@@ -8779,7 +11900,40 @@
         "countUp": true,
         "pulse": true
       },
-      "extras": []
+      "extras": [],
+      "character": {
+        "src": "",
+        "poster": "",
+        "name": "",
+        "motion": "float",
+        "clip": "",
+        "react": "both",
+        "scroll": "turn",
+        "scale": 1,
+        "turn": -18,
+        "tilt": 0,
+        "lift": 0,
+        "speed": 1,
+        "finish": "original",
+        "paint": "#c6f35c",
+        "parts": "",
+        "screen": "",
+        "shadow": true,
+        "echo": true,
+        "credit": ""
+      },
+      "design": {
+        "stops": [
+          "#ffffff",
+          "#c6f35c",
+          "#e7ebe8"
+        ],
+        "style": "glow",
+        "angle": 160,
+        "light": "#c6f35c",
+        "image": "",
+        "imageTone": "dark"
+      }
     },
     "poster": false,
     "siteFiles": 7,
@@ -8823,6 +11977,20 @@
       "Build a 3 pack",
       "Early-access sign-up"
     ],
+    "roles": {
+      "mode": "light",
+      "stage": "light",
+      "colors": {
+        "ink": "ink",
+        "cream": "light",
+        "dark": "dark"
+      },
+      "fonts": {
+        "display": "display",
+        "body": "body",
+        "mono": "keep"
+      }
+    },
     "schema": [
       {
         "group": "Business",
@@ -8847,6 +12015,270 @@
             "path": "brand.showMark",
             "label": "Show the mountain logo",
             "type": "toggle"
+          }
+        ]
+      },
+      {
+        "group": "3D character",
+        "fields": [
+          {
+            "path": "character.src",
+            "label": "3D model",
+            "type": "model",
+            "hint": "Pick one from the library, upload a GLB, or make one from a photo. Empty: no character."
+          },
+          {
+            "path": "character.poster",
+            "label": "Its picture (shown while it loads)",
+            "type": "image"
+          },
+          {
+            "path": "character.name",
+            "label": "Its name",
+            "type": "text"
+          },
+          {
+            "path": "character.motion",
+            "label": "Idle motion",
+            "type": "select",
+            "options": [
+              {
+                "value": "float",
+                "label": "Floats gently"
+              },
+              {
+                "value": "sway",
+                "label": "Sways side to side"
+              },
+              {
+                "value": "spin",
+                "label": "Turns slowly"
+              },
+              {
+                "value": "still",
+                "label": "Holds still"
+              }
+            ]
+          },
+          {
+            "path": "character.clip",
+            "label": "Its own animation",
+            "type": "text",
+            "hint": "A clip name from the model. Empty plays its idle; none plays nothing."
+          },
+          {
+            "path": "character.react",
+            "label": "Visitors can",
+            "type": "select",
+            "options": [
+              {
+                "value": "both",
+                "label": "Drag it, tap it, and it looks at the pointer"
+              },
+              {
+                "value": "follow",
+                "label": "It looks at the pointer"
+              },
+              {
+                "value": "drag",
+                "label": "Drag it round and tap it"
+              },
+              {
+                "value": "none",
+                "label": "Nothing: it stays put"
+              }
+            ]
+          },
+          {
+            "path": "character.scroll",
+            "label": "As the page scrolls",
+            "type": "select",
+            "options": [
+              {
+                "value": "turn",
+                "label": "It turns"
+              },
+              {
+                "value": "rise",
+                "label": "It rises and shrinks away"
+              },
+              {
+                "value": "zoom",
+                "label": "It comes closer"
+              },
+              {
+                "value": "none",
+                "label": "Nothing"
+              }
+            ]
+          },
+          {
+            "path": "character.scale",
+            "label": "Size",
+            "type": "number",
+            "min": 0.4,
+            "max": 1.8,
+            "step": 0.05
+          },
+          {
+            "path": "character.turn",
+            "label": "Turn (degrees)",
+            "type": "number",
+            "min": -180,
+            "max": 180,
+            "step": 1
+          },
+          {
+            "path": "character.tilt",
+            "label": "Tilt (degrees)",
+            "type": "number",
+            "min": -40,
+            "max": 40,
+            "step": 1
+          },
+          {
+            "path": "character.lift",
+            "label": "Up or down in its space",
+            "type": "number",
+            "min": -1,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "path": "character.speed",
+            "label": "Motion speed",
+            "type": "number",
+            "min": 0.2,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "path": "character.finish",
+            "label": "Finish",
+            "type": "select",
+            "options": [
+              {
+                "value": "original",
+                "label": "As made"
+              },
+              {
+                "value": "paint",
+                "label": "Painted in the colour below"
+              },
+              {
+                "value": "clay",
+                "label": "Soft clay in the colour below"
+              },
+              {
+                "value": "chrome",
+                "label": "Chrome, tinted"
+              }
+            ]
+          },
+          {
+            "path": "character.paint",
+            "label": "Paint colour",
+            "type": "color"
+          },
+          {
+            "path": "character.parts",
+            "label": "Parts to paint",
+            "type": "text",
+            "hint": "Material names, comma separated. Empty paints the whole model."
+          },
+          {
+            "path": "character.screen",
+            "label": "Screens that show your gradient",
+            "type": "text",
+            "hint": "Material names, comma separated (a phone's screen, a sign)."
+          },
+          {
+            "path": "character.shadow",
+            "label": "Soft shadow under it",
+            "type": "toggle"
+          },
+          {
+            "path": "character.echo",
+            "label": "Show it again near the end of the page",
+            "type": "toggle"
+          },
+          {
+            "path": "character.credit",
+            "label": "Credit line for the model",
+            "type": "text",
+            "hint": "Shown small near the end of the page. Models under CC BY need it; it is filled in for you."
+          }
+        ]
+      },
+      {
+        "group": "Character background",
+        "fields": [
+          {
+            "path": "design.stops",
+            "label": "Gradient colours (base, glow, second)",
+            "type": "colors",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "path": "design.style",
+            "label": "Gradient style",
+            "type": "select",
+            "options": [
+              {
+                "value": "glow",
+                "label": "Glow behind the character"
+              },
+              {
+                "value": "aurora",
+                "label": "Aurora (moves slowly)"
+              },
+              {
+                "value": "radial",
+                "label": "Spotlight"
+              },
+              {
+                "value": "linear",
+                "label": "Straight blend"
+              },
+              {
+                "value": "solid",
+                "label": "One colour"
+              }
+            ]
+          },
+          {
+            "path": "design.angle",
+            "label": "Gradient angle",
+            "type": "number",
+            "min": 0,
+            "max": 360,
+            "step": 5
+          },
+          {
+            "path": "design.light",
+            "label": "Light on the character",
+            "type": "color"
+          },
+          {
+            "path": "design.image",
+            "label": "Background picture instead of the gradient",
+            "type": "image"
+          },
+          {
+            "path": "design.imageTone",
+            "label": "That picture is mostly",
+            "type": "select",
+            "options": [
+              {
+                "value": "dark",
+                "label": "Dark (light words on it)"
+              },
+              {
+                "value": "light",
+                "label": "Light (dark words on it)"
+              }
+            ]
           }
         ]
       },
@@ -9437,11 +12869,44 @@
       "motion": {
         "autoplay": true
       },
-      "extras": []
+      "extras": [],
+      "character": {
+        "src": "",
+        "poster": "",
+        "name": "",
+        "motion": "float",
+        "clip": "",
+        "react": "both",
+        "scroll": "turn",
+        "scale": 1,
+        "turn": -18,
+        "tilt": 0,
+        "lift": 0,
+        "speed": 1,
+        "finish": "original",
+        "paint": "#7c5cff",
+        "parts": "",
+        "screen": "",
+        "shadow": true,
+        "echo": true,
+        "credit": ""
+      },
+      "design": {
+        "stops": [
+          "#f0e8e0",
+          "#7c5cff",
+          "#f0e8e0"
+        ],
+        "style": "glow",
+        "angle": 160,
+        "light": "#7c5cff",
+        "image": "",
+        "imageTone": "dark"
+      }
     },
     "poster": false,
     "siteFiles": 10,
-    "sourceFiles": 17
+    "sourceFiles": 19
   },
   {
     "id": "tidewater",
@@ -9479,6 +12944,24 @@
       "Guest book marquee",
       "Offers sign-up"
     ],
+    "roles": {
+      "mode": "light",
+      "stage": "dark",
+      "colors": {
+        "page": "page",
+        "surface": "surface",
+        "text": "ink",
+        "muted": "muted",
+        "accent": "accent",
+        "sea": "deep",
+        "dark": "dark",
+        "onDark": "onDark"
+      },
+      "fonts": {
+        "display": "display",
+        "body": "body"
+      }
+    },
     "schema": [
       {
         "group": "Business",
@@ -9528,6 +13011,270 @@
             "path": "seo.description",
             "label": "Short description (search and sharing)",
             "type": "textarea"
+          }
+        ]
+      },
+      {
+        "group": "3D character",
+        "fields": [
+          {
+            "path": "character.src",
+            "label": "3D model",
+            "type": "model",
+            "hint": "Pick one from the library, upload a GLB, or make one from a photo. Empty: no character."
+          },
+          {
+            "path": "character.poster",
+            "label": "Its picture (shown while it loads)",
+            "type": "image"
+          },
+          {
+            "path": "character.name",
+            "label": "Its name",
+            "type": "text"
+          },
+          {
+            "path": "character.motion",
+            "label": "Idle motion",
+            "type": "select",
+            "options": [
+              {
+                "value": "float",
+                "label": "Floats gently"
+              },
+              {
+                "value": "sway",
+                "label": "Sways side to side"
+              },
+              {
+                "value": "spin",
+                "label": "Turns slowly"
+              },
+              {
+                "value": "still",
+                "label": "Holds still"
+              }
+            ]
+          },
+          {
+            "path": "character.clip",
+            "label": "Its own animation",
+            "type": "text",
+            "hint": "A clip name from the model. Empty plays its idle; none plays nothing."
+          },
+          {
+            "path": "character.react",
+            "label": "Visitors can",
+            "type": "select",
+            "options": [
+              {
+                "value": "both",
+                "label": "Drag it, tap it, and it looks at the pointer"
+              },
+              {
+                "value": "follow",
+                "label": "It looks at the pointer"
+              },
+              {
+                "value": "drag",
+                "label": "Drag it round and tap it"
+              },
+              {
+                "value": "none",
+                "label": "Nothing: it stays put"
+              }
+            ]
+          },
+          {
+            "path": "character.scroll",
+            "label": "As the page scrolls",
+            "type": "select",
+            "options": [
+              {
+                "value": "turn",
+                "label": "It turns"
+              },
+              {
+                "value": "rise",
+                "label": "It rises and shrinks away"
+              },
+              {
+                "value": "zoom",
+                "label": "It comes closer"
+              },
+              {
+                "value": "none",
+                "label": "Nothing"
+              }
+            ]
+          },
+          {
+            "path": "character.scale",
+            "label": "Size",
+            "type": "number",
+            "min": 0.4,
+            "max": 1.8,
+            "step": 0.05
+          },
+          {
+            "path": "character.turn",
+            "label": "Turn (degrees)",
+            "type": "number",
+            "min": -180,
+            "max": 180,
+            "step": 1
+          },
+          {
+            "path": "character.tilt",
+            "label": "Tilt (degrees)",
+            "type": "number",
+            "min": -40,
+            "max": 40,
+            "step": 1
+          },
+          {
+            "path": "character.lift",
+            "label": "Up or down in its space",
+            "type": "number",
+            "min": -1,
+            "max": 1,
+            "step": 0.05
+          },
+          {
+            "path": "character.speed",
+            "label": "Motion speed",
+            "type": "number",
+            "min": 0.2,
+            "max": 2,
+            "step": 0.1
+          },
+          {
+            "path": "character.finish",
+            "label": "Finish",
+            "type": "select",
+            "options": [
+              {
+                "value": "original",
+                "label": "As made"
+              },
+              {
+                "value": "paint",
+                "label": "Painted in the colour below"
+              },
+              {
+                "value": "clay",
+                "label": "Soft clay in the colour below"
+              },
+              {
+                "value": "chrome",
+                "label": "Chrome, tinted"
+              }
+            ]
+          },
+          {
+            "path": "character.paint",
+            "label": "Paint colour",
+            "type": "color"
+          },
+          {
+            "path": "character.parts",
+            "label": "Parts to paint",
+            "type": "text",
+            "hint": "Material names, comma separated. Empty paints the whole model."
+          },
+          {
+            "path": "character.screen",
+            "label": "Screens that show your gradient",
+            "type": "text",
+            "hint": "Material names, comma separated (a phone's screen, a sign)."
+          },
+          {
+            "path": "character.shadow",
+            "label": "Soft shadow under it",
+            "type": "toggle"
+          },
+          {
+            "path": "character.echo",
+            "label": "Show it again near the end of the page",
+            "type": "toggle"
+          },
+          {
+            "path": "character.credit",
+            "label": "Credit line for the model",
+            "type": "text",
+            "hint": "Shown small near the end of the page. Models under CC BY need it; it is filled in for you."
+          }
+        ]
+      },
+      {
+        "group": "Character background",
+        "fields": [
+          {
+            "path": "design.stops",
+            "label": "Gradient colours (base, glow, second)",
+            "type": "colors",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "path": "design.style",
+            "label": "Gradient style",
+            "type": "select",
+            "options": [
+              {
+                "value": "glow",
+                "label": "Glow behind the character"
+              },
+              {
+                "value": "aurora",
+                "label": "Aurora (moves slowly)"
+              },
+              {
+                "value": "radial",
+                "label": "Spotlight"
+              },
+              {
+                "value": "linear",
+                "label": "Straight blend"
+              },
+              {
+                "value": "solid",
+                "label": "One colour"
+              }
+            ]
+          },
+          {
+            "path": "design.angle",
+            "label": "Gradient angle",
+            "type": "number",
+            "min": 0,
+            "max": 360,
+            "step": 5
+          },
+          {
+            "path": "design.light",
+            "label": "Light on the character",
+            "type": "color"
+          },
+          {
+            "path": "design.image",
+            "label": "Background picture instead of the gradient",
+            "type": "image"
+          },
+          {
+            "path": "design.imageTone",
+            "label": "That picture is mostly",
+            "type": "select",
+            "options": [
+              {
+                "value": "dark",
+                "label": "Dark (light words on it)"
+              },
+              {
+                "value": "light",
+                "label": "Light (dark words on it)"
+              }
+            ]
           }
         ]
       },
@@ -10299,10 +14046,43 @@
         "heroZoom": true,
         "sidewaysRooms": true
       },
-      "extras": []
+      "extras": [],
+      "character": {
+        "src": "",
+        "poster": "",
+        "name": "",
+        "motion": "float",
+        "clip": "",
+        "react": "both",
+        "scroll": "turn",
+        "scale": 1,
+        "turn": -18,
+        "tilt": 0,
+        "lift": 0,
+        "speed": 1,
+        "finish": "original",
+        "paint": "#b5683c",
+        "parts": "",
+        "screen": "",
+        "shadow": true,
+        "echo": true,
+        "credit": ""
+      },
+      "design": {
+        "stops": [
+          "#12202a",
+          "#b5683c",
+          "#1f4a5c"
+        ],
+        "style": "glow",
+        "angle": 160,
+        "light": "#b5683c",
+        "image": "",
+        "imageTone": "dark"
+      }
     },
     "poster": false,
     "siteFiles": 13,
-    "sourceFiles": 21
+    "sourceFiles": 23
   }
 ]

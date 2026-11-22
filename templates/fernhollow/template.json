@@ -32,6 +32,20 @@
     "Work and journal drawer",
     "Contact form"
   ],
+  "roles": {
+    "mode": "dark",
+    "stage": "dark",
+    "colors": {
+      "text": "ink",
+      "buttonText": "page",
+      "background": "page",
+      "panel": "surface"
+    },
+    "fonts": {
+      "display": "display",
+      "body": "body"
+    }
+  },
   "schema": [
     {
       "group": "Business",

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AudioEngine } from './valley/AudioEngine';
 import { ValleyEngine } from './valley/ValleyEngine';
 import { applyTheme, fill, safeHref, useContent, type XP } from './xp';
+import { CharacterSlot, hasCharacter, hasEcho, stageClass, stageStyle } from './character';
 
 type SectionKey = 'work' | 'about' | 'journal' | 'contact' | null;
 
@@ -193,7 +194,7 @@ export default function App() {
           </nav>
         </header>
 
-        <section className={`hero ${activeSection ? 'dimmed' : ''}`}>
+        <section className={`hero ${activeSection ? 'dimmed' : ''}${hasCharacter(data) ? ` has-char ${stageClass(data, 'dark')}` : ''}`} style={hasCharacter(data) ? stageStyle(data) : undefined}>
           <h1>{f(hero.title)}</h1>
           <p className="cap">
             {f(hero.caption1)}
@@ -219,6 +220,7 @@ export default function App() {
               </svg>
             </a>
           )}
+          <CharacterSlot data={data} className="fh-char" />
         </section>
 
         {activeSection && (
@@ -322,6 +324,11 @@ export default function App() {
                       </button>
                     </form>
                   )}
+                </div>
+              )}
+              {hasEcho(data) && (
+                <div className="xp-echo fh-echo">
+                  <CharacterSlot data={data} slot="echo" />
                 </div>
               )}
               {/* Blocks added from the library show at the end of every drawer. */}

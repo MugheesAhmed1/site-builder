@@ -1,4 +1,5 @@
 import { fill, on, safeSrc, useXP, type XP } from '../xp';
+import { CharacterSlot, hasCharacter, stageClass, stageStyle } from '../character';
 import { ContactButton } from './ContactButton';
 import { FadeIn } from './FadeIn';
 import { Magnet } from './Magnet';
@@ -14,10 +15,11 @@ export function HeroSection({ onOpenContact }: HeroSectionProps) {
   const nav: XP = data.nav || {};
   const hero: XP = data.hero || {};
   const strength = Number(data.motion?.magnet) || 3;
+  const char = hasCharacter(data);
   return (
     <section
-      className={`${hero.blend ? 'xp-blend ' : ''}relative h-screen w-full flex flex-col justify-between bg-[var(--c-page)]`}
-      style={{ overflowX: 'clip' }}
+      className={`${hero.blend ? 'xp-blend ' : ''}relative h-screen w-full flex flex-col justify-between bg-[var(--c-page)]${char ? ` ${stageClass(data, 'dark')}` : ''}`}
+      style={char ? { overflowX: 'clip', ...stageStyle(data, [50, 66]) } : { overflowX: 'clip' }}
     >
       {/* Top Navbar */}
       <FadeIn delay={0} y={-20} className="relative z-20">
@@ -54,8 +56,14 @@ export function HeroSection({ onOpenContact }: HeroSectionProps) {
         </FadeIn>
       </div>
 
+      {/* The 3D character in place of the portrait */}
+      {char && (
+        <div className="absolute left-1/2 -translate-x-1/2 z-10 w-[300px] sm:w-[400px] md:w-[480px] lg:w-[560px] aspect-square top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0">
+          <CharacterSlot data={data} className="w-full h-full" />
+        </div>
+      )}
       {/* Centered Magnetic Portrait */}
-      <div className="absolute left-1/2 -translate-x-1/2 z-10 w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0 pointer-events-auto">
+      {!char && <div className="absolute left-1/2 -translate-x-1/2 z-10 w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0 pointer-events-auto">
         <FadeIn delay={0.6} y={30}>
           <Magnet
             padding={150}
@@ -73,7 +81,7 @@ export function HeroSection({ onOpenContact }: HeroSectionProps) {
             />
           </Magnet>
         </FadeIn>
-      </div>
+      </div>}
 
       {/* Bottom Bar */}
       <div className="mt-auto w-full flex justify-between items-end px-6 md:px-10 pb-7 sm:pb-8 md:pb-10 relative z-20 gap-4">

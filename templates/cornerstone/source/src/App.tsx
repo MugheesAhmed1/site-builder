@@ -4,6 +4,7 @@ import { ArrowRight, ArrowUpRight, Check, Menu, X } from './icons';
 import { Area, Bath, Bed, Heart, Mail, Phone, Pin } from './glyphs';
 import { Modal, Reveal, Words, items, nextDays, useSender } from './ui';
 import { fill, lines, on, safeHref, safeSrc, useTheme, useXP, type XP } from './xp';
+import { CharacterSlot, hasCharacter, hasEcho, stageClass, stageStyle } from './character';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const clamp = (v: number, a = 0, b = 1) => Math.max(a, Math.min(b, v));
@@ -70,6 +71,11 @@ export default function App() {
         {on('agents', data) && <Agents data={data} />}
         {on('valuation', data) && <Valuation data={data} />}
         <div data-xp-extras="" />
+        {hasEcho(data) && (
+          <div className="xp-echo">
+            <CharacterSlot data={data} slot="echo" />
+          </div>
+        )}
         <Footer data={data} />
         <HomeModal data={data} index={open} onClose={() => setOpen(null)} saved={saved} onSave={toggleSave} />
       </div>
@@ -163,8 +169,9 @@ function Hero({ data, onSearch }: { data: XP; onSearch: (f: Filters) => void }) 
   const [q, setQ] = useState('');
   const [type, setType] = useState('');
   const [max, setMax] = useState(0);
+  const char = hasCharacter(data);
   return (
-    <section className="cs-hero" id="top" ref={ref}>
+    <section className={'cs-hero' + (char ? ` has-char ${stageClass(data, 'light')}` : '')} id="top" ref={ref} style={char ? stageStyle(data, [76, 26]) : undefined}>
       <div className="cs-hero-copy">
         {h.kicker && (
           <motion.p className="cs-kicker" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
@@ -179,6 +186,7 @@ function Hero({ data, onSearch }: { data: XP; onSearch: (f: Filters) => void }) 
             {f(h.text)}
           </motion.p>
         )}
+        {char && <CharacterSlot data={data} className="cs-char" />}
       </div>
       <motion.div className="cs-hero-media" style={{ clipPath: clip }}>
         {safeSrc(h.image) && <motion.img src={safeSrc(h.image)} alt="" style={{ y: imgY }} />}

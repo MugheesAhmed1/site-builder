@@ -4,6 +4,7 @@ import { ArrowRight, ArrowUpRight, Check, Menu, X } from './icons';
 import { Area, Calendar, Minus, Pin, Plus, Users } from './glyphs';
 import { Modal, Reveal, Words, items, useSender } from './ui';
 import { fill, lines, on, pairs, safeHref, safeSrc, useTheme, useXP, type XP } from './xp';
+import { CharacterSlot, hasCharacter, hasEcho, stageClass, stageStyle, stageTone } from './character';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const clamp = (v: number, a = 0, b = 1) => Math.max(a, Math.min(b, v));
@@ -49,6 +50,11 @@ export default function App() {
         {on('location', data) && <Location data={data} />}
         {on('offers', data) && <Offers data={data} />}
         <div data-xp-extras="" />
+        {hasEcho(data) && (
+          <div className="xp-echo">
+            <CharacterSlot data={data} slot="echo" />
+          </div>
+        )}
         <Footer data={data} />
         <RoomModal data={data} index={roomOpen} onClose={() => setRoomOpen(null)} onBook={(room) => check({ room })} />
         <Availability data={data} open={askOpen} stay={stay} setStay={setStay} onClose={() => setAskOpen(false)} />
@@ -137,16 +143,20 @@ function Hero({ data }: { data: XP }) {
   const nightAuto = useTransform(scrollYProgress, (p) => (m.dayToNight !== false ? clamp((p - 0.3) / 0.5) : 0));
   const titleOpacity = useTransform(scrollYProgress, (p) => 1 - clamp((p - 0.45) / 0.3));
   const titleY = useTransform(scrollYProgress, (p) => p * -140);
-  const nightSrc = safeSrc(h.nightImage);
+  const char = hasCharacter(data);
+  const nightSrc = char ? '' : safeSrc(h.nightImage);
   return (
-    <section className="tw-hero" id="top" ref={ref}>
+    <section className={'tw-hero' + (char ? ` has-char xp-tone-${stageTone(data)}` : '')} id="top" ref={ref}>
       <div className="tw-hero-stick">
-        <motion.div className="tw-hero-frame" style={{ clipPath: clip }}>
-          <motion.div className="tw-hero-imgs" style={{ scale }}>
-            {safeSrc(h.image) && <img src={safeSrc(h.image)} alt={f(h.imageAlt)} />}
-            {nightSrc && <motion.img src={nightSrc} alt="" className="tw-night" style={{ opacity: mode === 'auto' ? nightAuto : mode === 'night' ? 1 : 0 }} />}
-          </motion.div>
-          <div className="tw-hero-shade" />
+        <motion.div className={'tw-hero-frame' + (char ? ` ${stageClass(data)}` : '')} style={char ? { clipPath: clip, ...stageStyle(data, [50, 70]) } : { clipPath: clip }}>
+          {!char && (
+            <motion.div className="tw-hero-imgs" style={{ scale }}>
+              {safeSrc(h.image) && <img src={safeSrc(h.image)} alt={f(h.imageAlt)} />}
+              {nightSrc && <motion.img src={nightSrc} alt="" className="tw-night" style={{ opacity: mode === 'auto' ? nightAuto : mode === 'night' ? 1 : 0 }} />}
+            </motion.div>
+          )}
+          {!char && <div className="tw-hero-shade" />}
+          {char && <CharacterSlot data={data} className="tw-char" />}
         </motion.div>
         <motion.div className="tw-hero-copy" style={{ opacity: titleOpacity, y: titleY }}>
           {h.kicker && (
@@ -173,7 +183,7 @@ function Hero({ data }: { data: XP }) {
             </button>
           </div>
         )}
-        {h.scrollHint && (
+        {h.scrollHint && !char && (
           <motion.div className="tw-scroll-hint" style={{ opacity: titleOpacity }}>
             <span>{f(h.scrollHint)}</span>
             <i aria-hidden="true" />

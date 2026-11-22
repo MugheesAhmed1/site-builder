@@ -19,6 +19,7 @@ import {
   FONTS,
 } from './strideData';
 import { fill, lines, safeHref, useXP } from './xp';
+import { CharacterSlot, hasCharacter, stageClass, stageStyle } from './character';
 
 /** Set once the opening has played, so the preview does not replay it after each edit. */
 let introPlayed = false;
@@ -2056,6 +2057,16 @@ export default function App() {
             <span className="lbl">{f(data.hero?.autoplay)}</span>
           </button>
         </section>
+
+        {/* The 3D character on its gradient, between the flavours and the inside story. */}
+        {hasCharacter(data) && (
+          <section className={`stride-char-band ${stageClass(data, 'light')}`} style={stageStyle(data, [50, 60])} aria-label={f(data.character?.name) || f(data.brand?.name)}>
+            <p className="disp stride-char-word" aria-hidden="true">
+              {f(data.brand?.name).toUpperCase()}
+            </p>
+            <CharacterSlot data={data} className="stride-char" />
+          </section>
+        )}
 
         {/* SECTION 2: INSIDE (Pinned) */}
         <section id="inside" ref={insideRef}>

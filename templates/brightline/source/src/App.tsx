@@ -4,6 +4,7 @@ import { ArrowRight, ArrowUpRight, Check, ChevronLeft, ChevronRight, Menu, X } f
 import { Clock, Mail, Phone, Pin, Plus, Shield, Star } from './glyphs';
 import { Counter, Modal, Reveal, Words, items, nextDays, useSender } from './ui';
 import { fill, lines, on, pairs, safeHref, safeSrc, useTheme, useXP, type XP } from './xp';
+import { CharacterSlot, hasCharacter, hasEcho, stageClass, stageStyle } from './character';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -29,6 +30,11 @@ export default function App() {
         {on('faq', data) && <Faq data={data} />}
         {on('visit', data) && <Visit data={data} onBook={() => book()} />}
         <div data-xp-extras="" />
+        {hasEcho(data) && (
+          <div className="xp-echo">
+            <CharacterSlot data={data} slot="echo" />
+          </div>
+        )}
         <Footer data={data} />
         <Booking data={data} open={booking.open} treatment={booking.treatment} onClose={() => setBooking({ open: false })} />
       </div>
@@ -111,6 +117,7 @@ function Hero({ data, onBook }: { data: XP; onBook: () => void }) {
   const textY = useTransform(scrollYProgress, (p) => (scrolly ? p * -80 : 0));
   const float = data.motion?.floatBadges !== false;
   const badges = [h.badge1, h.badge2, h.badge3].filter(Boolean);
+  const char = hasCharacter(data);
   return (
     <section className="bl-hero" id="top" ref={ref}>
       <motion.div className="bl-hero-copy" style={{ y: textY }}>
@@ -139,8 +146,14 @@ function Hero({ data, onBook }: { data: XP; onBook: () => void }) {
         </motion.div>
       </motion.div>
       <div className="bl-hero-art">
-        <motion.div className="bl-arch" style={{ borderRadius: arch }} initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, ease: EASE }}>
-          {safeSrc(h.image) && <motion.img src={safeSrc(h.image)} alt={f(h.imageAlt)} style={{ y: imgY, scale: imgScale }} />}
+        <motion.div
+          className={'bl-arch' + (char ? ` ${stageClass(data)} bl-arch-char` : '')}
+          style={{ borderRadius: arch, ...(char ? stageStyle(data, [50, 58]) : {}) }}
+          initial={{ opacity: 0, scale: 0.94 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease: EASE }}
+        >
+          {char ? <CharacterSlot data={data} className="bl-char" /> : safeSrc(h.image) && <motion.img src={safeSrc(h.image)} alt={f(h.imageAlt)} style={{ y: imgY, scale: imgScale }} />}
         </motion.div>
         <div className="bl-ring" aria-hidden="true" />
         {badges.map((b, i) => (

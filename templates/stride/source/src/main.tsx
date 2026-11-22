@@ -4,7 +4,9 @@ import App from './App.tsx';
 import { SHEET_URL, setContent, setSheetUrl } from './strideData';
 import { drawSheet } from './sheetArt';
 import { useTheme, useXP } from './xp';
+import { CharacterSlot, hasEcho } from './character';
 import './index.css';
+import './character.css';
 
 /**
  * The page runs a 3D engine and timelines that read the flavours, steps and pack once when they
@@ -54,6 +56,11 @@ function Root() {
   return (
     <>
       <App key={engineKey} />
+      {hasEcho(data) && (
+        <div className="xp-echo stride-echo">
+          <CharacterSlot data={data} slot="echo" />
+        </div>
+      )}
       <div data-xp-extras="" className="xp-extras" />
     </>
   );

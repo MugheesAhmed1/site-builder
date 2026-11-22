@@ -281,6 +281,14 @@ a {
   height: 112%;
   object-fit: cover;
 }
+/* The 3D character in the arch, on its gradient. */
+.bl-arch-char .bl-char {
+  position: absolute;
+  inset: 9% 3% 2%;
+}
+.bl-arch-char .bl-char img {
+  height: 100%;
+}
 .bl-ring {
   position: absolute;
   inset: -4% 0 auto auto;

@@ -36,6 +36,20 @@
     "Build a 3 pack",
     "Early-access sign-up"
   ],
+  "roles": {
+    "mode": "light",
+    "stage": "light",
+    "colors": {
+      "ink": "ink",
+      "cream": "light",
+      "dark": "dark"
+    },
+    "fonts": {
+      "display": "display",
+      "body": "body",
+      "mono": "keep"
+    }
+  },
   "schema": [
     {
       "group": "Business",

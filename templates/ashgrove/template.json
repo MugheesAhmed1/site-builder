@@ -34,6 +34,24 @@
     "Table booking with guests, dates and times",
     "Hours and directions"
   ],
+  "roles": {
+    "mode": "dark",
+    "stage": "dark",
+    "colors": {
+      "page": "page",
+      "surface": "surface",
+      "text": "ink",
+      "muted": "muted",
+      "accent": "accent",
+      "glow": "accent2",
+      "line": "line",
+      "onAccent": "onAccent"
+    },
+    "fonts": {
+      "display": "display",
+      "body": "body"
+    }
+  },
   "schema": [
     {
       "group": "Business",

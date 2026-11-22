@@ -303,6 +303,48 @@ body {
   }
 }
 
+/* The 3D character on its gradient, a third column beside the words. */
+.distill-hero.has-char {
+  grid-template-columns: 1fr 27vw 17vw;
+  gap: 3vw;
+}
+.distill-hero.has-char .distill-copy {
+  max-width: 27vw;
+}
+.distill-char-stage {
+  position: relative;
+  height: clamp(150px, 26vh, 260px);
+  margin-top: -14px;
+  border-radius: 22px;
+  overflow: hidden;
+}
+.distill-char {
+  position: absolute;
+  inset: 4% 4% 2%;
+}
+.distill-echo {
+  background: var(--bg);
+  padding: 32px 0 40px;
+}
+@media (max-width: 767px) {
+  .distill-hero.has-char {
+    grid-template-columns: 1fr;
+    padding-right: 140px;
+  }
+  .distill-hero.has-char .distill-copy {
+    max-width: none;
+  }
+  .distill-char-stage {
+    position: absolute;
+    right: 16px;
+    top: 14px;
+    width: 116px;
+    height: 116px;
+    margin: 0;
+    border-radius: 18px;
+  }
+}
+
 /* Conveyor Belt */
 .belt {
   position: absolute;

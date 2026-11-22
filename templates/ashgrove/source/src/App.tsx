@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Menu, X } from './icons';
 import { Clock, Mail, Minus, Phone, Pin, Plus } from './glyphs';
 import { Reveal, Words, items, nextDays, useSender } from './ui';
 import { fill, lines, on, pairs, safeHref, safeSrc, useTheme, useXP, type XP } from './xp';
+import { CharacterSlot, hasCharacter, hasEcho, stageClass, stageStyle, toneClass, toneStyle } from './character';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const clamp = (v: number, a = 0, b = 1) => Math.max(a, Math.min(b, v));
@@ -23,6 +24,11 @@ export default function App() {
         {on('booking', data) && <Booking data={data} />}
         {on('visit', data) && <Visit data={data} />}
         <div data-xp-extras="" />
+        {hasEcho(data) && (
+          <div className="xp-echo">
+            <CharacterSlot data={data} slot="echo" />
+          </div>
+        )}
         <Footer data={data} />
       </div>
     </MotionConfig>
@@ -147,13 +153,15 @@ function Hero({ data }: { data: XP }) {
   const y = useTransform(scrollYProgress, (p) => `${p * 30}%`);
   const fade = useTransform(scrollYProgress, (p) => 1 - clamp(p * 1.6));
   const glow = String(data.theme?.colors?.glow || '#ffb067');
+  const char = hasCharacter(data);
   return (
-    <section className="ag-hero" id="top" ref={ref}>
-      <motion.div className="ag-hero-img" style={{ y }}>
-        {safeSrc(h.image) && <img src={safeSrc(h.image)} alt="" className={m.flicker !== false ? 'is-flicker' : ''} />}
+    <section className={'ag-hero' + (char ? ` has-char ${toneClass(data, 'dark')}` : '')} id="top" ref={ref} style={char ? toneStyle(data) : undefined}>
+      <motion.div className={'ag-hero-img' + (char ? ` ${stageClass(data)}` : '')} style={char ? { y, ...stageStyle(data, [74, 46]) } : { y }}>
+        {!char && safeSrc(h.image) && <img src={safeSrc(h.image)} alt="" className={m.flicker !== false ? 'is-flicker' : ''} />}
       </motion.div>
       <div className="ag-hero-shade" />
       {m.embers !== false && <Embers count={Number(h.embers) || 0} color={glow} />}
+      {char && <CharacterSlot data={data} className="ag-char" />}
       <motion.div className="ag-hero-copy" style={{ opacity: fade }}>
         {h.kicker && (
           <motion.p className="ag-kicker" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2 }}>

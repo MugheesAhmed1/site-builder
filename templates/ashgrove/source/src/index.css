@@ -261,6 +261,44 @@ a {
   margin-top: 32px;
 }
 
+/* The 3D character on its gradient, beside the words. */
+.ag-hero.has-char .ag-hero-shade {
+  background: linear-gradient(180deg, transparent 58%, var(--c-page) 100%);
+}
+.ag-char {
+  position: absolute;
+  right: 3%;
+  top: 11%;
+  bottom: 6%;
+  width: 47%;
+  z-index: 1;
+}
+.ag-hero.has-char .ag-hero-copy {
+  max-width: min(900px, 50%);
+  z-index: 2;
+}
+@media (max-width: 960px) {
+  .ag-hero.has-char {
+    height: auto;
+    min-height: 100svh;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-end;
+    padding-top: 76px;
+  }
+  .ag-char {
+    position: relative;
+    inset: auto;
+    width: auto;
+    flex: 1 1 auto;
+    min-height: 38svh;
+    margin-bottom: 12px;
+  }
+  .ag-hero.has-char .ag-hero-copy {
+    max-width: 100%;
+  }
+}
+
 /* Story */
 .ag-story {
   display: grid;

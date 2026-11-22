@@ -34,6 +34,24 @@
     "Agent cards",
     "Valuation form"
   ],
+  "roles": {
+    "mode": "light",
+    "stage": "light",
+    "colors": {
+      "page": "page",
+      "surface": "surface",
+      "text": "ink",
+      "muted": "muted",
+      "accent": "accent",
+      "dark": "dark",
+      "onDark": "onDark",
+      "line": "line"
+    },
+    "fonts": {
+      "display": "display",
+      "body": "body"
+    }
+  },
   "schema": [
     {
       "group": "Business",

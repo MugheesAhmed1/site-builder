@@ -4,7 +4,8 @@
 // schema lists a field for every value, so a person can change any part of it for their project.
 import registry from "./templates.gen.json";
 import { categoryLabel } from "./fit";
-import { clone, contentScript, countChanges, extractMedia, type Content, type SchemaField, type SchemaGroup } from "./template-schema.mjs";
+import { clone, contentScript, countChanges, extractMedia, getPath, setPath, type Content, type SchemaField, type SchemaGroup } from "./template-schema.mjs";
+import type { TemplateRoles } from "./character/apply";
 
 export type { Content, SchemaField, SchemaGroup };
 
@@ -20,6 +21,8 @@ export interface TemplateInfo {
   /** One line on the kind of business it was made for. */
   sector: string;
   features?: string[];
+  /** The part each theme colour and font plays, its mode and its stage tone (docs/CHARACTER-JOURNEY.md). */
+  roles: TemplateRoles;
   intensity: number;
   /** Real WebGL or similar: the gallery shows a still until someone asks for it to play. */
   heavy: boolean;
@@ -126,7 +129,10 @@ function readme(t: TemplateInfo, c: Content, which: "site" | "source") {
   const remoteText = remote.length
     ? `\n\nSome pictures or video load from other hosts:\n\n${remote.map((u) => `- ${u}`).join("\n")}\n\nCopy them into media/ and change their addresses in ${where} before launch, so the site does not depend on those hosts.`
     : "";
-  return `# ${name}\n\nMade with Site Builder from the ${t.name} template.\n\n${run}\n\n## Changing it\n\nEvery word, picture, video, link, colour, font, section and motion setting is in **${where}**. Change a value there and reload; no code change is needed. Your uploads are in media/.${remoteText}\n\nTemplate: ${t.name}, supplied by ${t.licence.holder}. ${t.licence.note}\n`;
+  const char = typeof c?.character?.src === "string" && c.character.src.trim()
+    ? `\n\n## The 3D character\n\n${c.character.name ? `${c.character.name} is` : "The character is"} a GLB model in media/, drawn by xp-lib/xp-character.js (three.js, MIT). Its pose, motion, finish and the gradient behind it are under \`character\` and \`design\` in ${where}. Swap the model by changing \`character.src\` to another .glb file.`
+    : "";
+  return `# ${name}\n\nMade with Site Builder from the ${t.name} template.\n\n${run}\n\n## Changing it\n\nEvery word, picture, video, link, colour, font, section and motion setting is in **${where}**. Change a value there and reload; no code change is needed. Your uploads are in media/.${char}${remoteText}\n\nTemplate: ${t.name}, supplied by ${t.licence.holder}. ${t.licence.note}\n`;
 }
 
 /** A zip of the built site or of the source, with the person's content in place. */
@@ -146,10 +152,14 @@ export async function templateZip(t: TemplateInfo, c: Content, which: "site" | "
         zip.file(p, await res.arrayBuffer());
       }),
   );
-  // Library blocks travel with the site: the runtime, every block and the library's pictures.
-  if (Array.isArray(c.extras) && c.extras.length) {
+  // Library blocks and the 3D character travel with the site: their runtimes, every block and
+  // the library's pictures.
+  const hasBlocks = Array.isArray(c.extras) && c.extras.length > 0;
+  const hasChar = typeof c?.character?.src === "string" && c.character.src.trim() !== "";
+  if (hasBlocks || hasChar) {
     const libAt = mediaAt + "xp-lib/";
-    const libFiles: string[] = await fetch("/lib/files.json").then((r) => (r.ok ? r.json() : Promise.reject(new Error("Could not read the library"))));
+    const list = async (u: string): Promise<string[]> => fetch(u).then((r) => (r.ok ? r.json() : Promise.reject(new Error("Could not read the library"))));
+    const libFiles = [...(hasBlocks ? await list("/lib/files.json") : []), ...(hasChar ? await list("/lib/character-files.json") : [])];
     await Promise.all(
       libFiles.map(async (p) => {
         const res = await fetch(`/lib/${p.split("/").map(encodeURIComponent).join("/")}`);
@@ -158,7 +168,18 @@ export async function templateZip(t: TemplateInfo, c: Content, which: "site" | "
       }),
     );
   }
-  const { content, files } = extractMedia(c);
+  // A model or picture picked from the builder's own library is copied into media/.
+  let own = c;
+  for (const path of ["character.src", "character.poster", "design.image"]) {
+    const v = getPath(own, path);
+    if (typeof v !== "string" || !/^\/(assets|lib|tpl)\/[\w./-]+$/.test(v)) continue;
+    const res = await fetch(v);
+    if (!res.ok) throw new Error(`Could not read ${v}`);
+    const name = `media/${v.split("/").pop()}`;
+    zip.file(mediaAt + name, await res.arrayBuffer());
+    own = setPath(own, path, `./${name}`);
+  }
+  const { content, files } = extractMedia(own);
   zip.file(contentAt, contentScript(content));
   for (const f of files) zip.file(mediaAt + f.path, f.base64, { base64: true });
   zip.file(which === "site" ? "README.txt" : "README.md", readme(t, c, which));

@@ -30,6 +30,27 @@
     "Dropdown menus",
     "Pricing, demo, trial and sign-in panels"
   ],
+  "roles": {
+    "mode": "light",
+    "stage": "light",
+    "colors": {
+      "bg": "page",
+      "ink": "ink",
+      "body": "ink2",
+      "muted": "muted",
+      "code": "muted",
+      "comment": "faint",
+      "hot": "accent",
+      "hotSoft": "soft",
+      "hotDeep": "accentDeep",
+      "buttonText": "onAccent"
+    },
+    "fonts": {
+      "sans": "body",
+      "serif": "display",
+      "mono": "keep"
+    }
+  },
   "schema": [
     {
       "group": "Business",

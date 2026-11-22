@@ -23,6 +23,9 @@ const nextConfig = {
       { source: "/tpl/:path*", headers: framed },
       // Shared library blocks load inside those same frames.
       { source: "/lib/:path*", headers: framed },
+      // 3D models and their pictures load inside those frames too (the character runtime), and
+      // never change under the same name.
+      { source: "/assets/:path*", headers: [{ key: "Access-Control-Allow-Origin", value: "*" }, { key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" }] },
       // Pictures and the site kit never change under the same name, so browsers can keep them.
       { source: "/real/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }] },
       { source: "/scenes/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" }] },

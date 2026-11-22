@@ -4,6 +4,7 @@ import { RevealLayer } from './components/RevealLayer';
 import { LithosModal, type ModalMode } from './components/LithosModal';
 import { LithosSections } from './components/LithosSections';
 import { fill, safeHref, safeSrc, useTheme, useXP, type XP } from './xp';
+import { CharacterSlot, hasCharacter, hasEcho, stageClass, stageStyle } from './character';
 
 export default function App() {
   const data = useXP();
@@ -87,6 +88,7 @@ export default function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, [links.map((l) => l.href).join('|')]);
 
+  const char = hasCharacter(data);
   return (
     <div className="min-h-screen tracking-[-0.02em] lithos-page" id="top">
       <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between p-4 sm:p-5">
@@ -160,8 +162,9 @@ export default function App() {
         </div>
       )}
 
-      <section className="relative w-full overflow-hidden h-screen bg-black" style={{ height: '100dvh' }}>
-        {safeSrc(hero.image) && (
+      <section className={`relative w-full overflow-hidden h-screen bg-black${char ? ` ${stageClass(data, 'dark')}` : ''}`} style={char ? { height: '100dvh', ...stageStyle(data, [50, 62]) } : { height: '100dvh' }}>
+        {char && <CharacterSlot data={data} className="lithos-char" />}
+        {!char && safeSrc(hero.image) && (
           <div
             className={`absolute inset-0 bg-center bg-cover bg-no-repeat z-10 ${motion.zoomIn === false ? '' : 'hero-zoom'}`}
             style={{ backgroundImage: `url("${safeSrc(hero.image)}")` }}
@@ -170,7 +173,7 @@ export default function App() {
           />
         )}
 
-        {safeSrc(hero.revealImage) && <RevealLayer image={safeSrc(hero.revealImage)} cursorX={cursorPos.x} cursorY={cursorPos.y} radius={Number(motion.spotlight) || 260} />}
+        {!char && safeSrc(hero.revealImage) && <RevealLayer image={safeSrc(hero.revealImage)} cursorX={cursorPos.x} cursorY={cursorPos.y} radius={Number(motion.spotlight) || 260} />}
 
         <div className="absolute top-[14%] left-0 right-0 flex flex-col items-center text-center px-5 pointer-events-none z-50">
           <h1 className="lithos-text leading-[0.95] lithos-h1">
@@ -207,6 +210,11 @@ export default function App() {
       <LithosSections data={data} onSignup={() => setModalMode('signup')} />
 
       <div data-xp-extras="" />
+      {hasEcho(data) && (
+        <div className="xp-echo" style={{ background: 'var(--c-page)' }}>
+          <CharacterSlot data={data} slot="echo" />
+        </div>
+      )}
 
       <LithosModal mode={modalMode} onClose={() => setModalMode(null)} />
     </div>

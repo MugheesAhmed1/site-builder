@@ -32,6 +32,25 @@
     "Counting stats",
     "Contact section"
   ],
+  "roles": {
+    "mode": "light",
+    "stage": "light",
+    "colors": {
+      "ink": "ink",
+      "ink2": "ink2",
+      "mist": "page",
+      "paper": "surface",
+      "accent": "fill",
+      "accent2": "fill2",
+      "positive": "accentDeep",
+      "deep": "dark"
+    },
+    "fonts": {
+      "sans": "body",
+      "mono": "keep"
+    },
+    "radius": "radius"
+  },
   "schema": [
     {
       "group": "Business",

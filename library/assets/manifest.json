@@ -4225,7 +4225,7 @@
         "creator": "Supplied by the project owner",
         "via": "project thread upload, 2026-11-22"
       },
-      "modifications": "The separate idle, walk, run and sit clips were merged into one rigged model; the plain material renamed clay so a site can tint it. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
+      "modifications": "The separate idle, walk, run and sit clips were merged into one rigged model, each clip's hips moved to the model's rest position; the plain material renamed clay so a site can tint it. Textures converted to WebP; meshes quantized; pivot centred; packed as one GLB.",
       "added": "2026-11-22",
       "animationCapabilities": [
         "reveal",

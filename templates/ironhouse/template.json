@@ -34,6 +34,24 @@
     "Tilting coach cards",
     "Free-week sign-up"
   ],
+  "roles": {
+    "mode": "dark",
+    "stage": "dark",
+    "colors": {
+      "page": "page",
+      "surface": "surface",
+      "text": "ink",
+      "muted": "muted",
+      "accent": "accent",
+      "onAccent": "onAccent",
+      "hot": "accent2",
+      "line": "line"
+    },
+    "fonts": {
+      "display": "display",
+      "body": "body"
+    }
+  },
   "schema": [
     {
       "group": "Business",

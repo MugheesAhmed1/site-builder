@@ -290,6 +290,29 @@ a {
   object-fit: cover;
   margin-top: -6%;
 }
+/* The 3D character on its gradient, beside the headline; the house picture stays below. */
+.cs-hero.has-char .cs-hero-copy {
+  grid-template-columns: 1.25fr 1fr;
+  align-items: center;
+}
+.cs-hero.has-char .cs-hero-copy > :not(.cs-char) {
+  grid-column: 1;
+}
+.cs-char {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  height: clamp(300px, 48vh, 500px);
+}
+@media (max-width: 960px) {
+  .cs-hero.has-char .cs-hero-copy {
+    grid-template-columns: 1fr;
+  }
+  .cs-char {
+    grid-column: 1;
+    grid-row: auto;
+    height: 40svh;
+  }
+}
 .cs-search {
   position: absolute;
   left: 16px;

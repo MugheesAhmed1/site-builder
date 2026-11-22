@@ -3,6 +3,7 @@ import { X, Check, ArrowUpRight } from './icons';
 import { cardsOf, type KesslerCardData } from './data/kesslerCards';
 import { KesslerCardContent } from './components/KesslerCards';
 import { fill, lines, pairs, safeHref, useTheme, useXP, type XP } from './xp';
+import { CharacterSlot, hasCharacter, hasEcho, stageClass, stageStyle } from './character';
 
 /** Seven shades from the hot colour to near white, for the dissolving particles. */
 function particlePalette(hot: string): string[] {
@@ -574,7 +575,7 @@ export default function App() {
       </header>
 
       {/* Two-Column Hero */}
-      <section className="distill-hero" aria-label="Introduction">
+      <section className={'distill-hero' + (hasCharacter(data) ? ' has-char' : '')} aria-label="Introduction">
         <div>
           <p className="distill-eyebrow">{f(data.hero?.eyebrow)}</p>
           <h1 className="distill-headline">
@@ -595,6 +596,11 @@ export default function App() {
             {f(data.hero?.button)}
           </button>
         </div>
+        {hasCharacter(data) && (
+          <div className={`distill-char-stage ${stageClass(data)}`} style={stageStyle(data, [50, 52])}>
+            <CharacterSlot data={data} className="distill-char" />
+          </div>
+        )}
       </section>
 
       {/* Floating Token Reduction Counter */}
@@ -958,6 +964,11 @@ export default function App() {
         </div>
       )}
     </main>
+    {hasEcho(data) && (
+      <div className="xp-echo distill-echo">
+        <CharacterSlot data={data} slot="echo" />
+      </div>
+    )}
     <div data-xp-extras="" />
     </>
   );
