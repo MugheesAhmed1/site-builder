@@ -109,9 +109,9 @@ export default function SitesDashboard() {
             <p className="muted">Saved in this browser only. Nothing is uploaded, so keep a backup of anything you care about.</p>
           </div>
           <div className="row wrap">
-            <Link className="btn btn-sm" href="/document">
-              <Icon name="doc" size={15} />
-              Start from a document
+            <Link className="btn btn-sm" href="/create">
+              <Icon name="sparkle" size={15} />
+              Create a site
             </Link>
             <button type="button" className="btn btn-sm" onClick={() => fileRef.current?.click()}>
               <Icon name="upload" size={15} />

@@ -1,20 +1,7 @@
-import type { Metadata } from "next";
-import Topbar from "@/components/Topbar";
-import PrdFlow from "@/components/prd/PrdFlow";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Turn a requirements document into a website",
-  description: "Upload your PRD, BRD or brief. Edit it as a PRD, then the site is built with every section and requirement in it.",
-};
-
-// Requirements document to website: the same PRD journey, starting from an uploaded document.
+// The requirements-document start belonged to the PRD journey, which the character journey
+// replaced (docs/CHARACTER-JOURNEY.md). Every site now starts from one line at /create.
 export default function DocumentPage() {
-  return (
-    <>
-      <Topbar />
-      <main className="page prd-page">
-        <PrdFlow />
-      </main>
-    </>
-  );
+  redirect("/create");
 }

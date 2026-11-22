@@ -27,6 +27,8 @@ export interface Brief {
   email: string;
   /** The main action: "Book a visit". */
   cta: string;
+  /** A library model they chose before the chat (its id, from the home page): the character is settled. */
+  star?: string;
 }
 
 /** Fields a question can fill. */
@@ -98,6 +100,8 @@ export function normalizeBrief(raw: unknown, base: Brief): Brief {
   const pick = (k: keyof Brief, max = 160) => (typeof r[k] === "string" && clean(r[k], max) ? clean(r[k], max) : (base[k] as string));
   const business = typeof r.business === "string" && CATEGORIES.some((c) => c.id === r.business) ? (r.business as string) : base.business;
   const email = typeof r.email === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(r.email.trim()) ? r.email.trim() : base.email;
+  // A character chosen before the chat stays chosen, whatever the AI suggests.
+  const star = base.star || (typeof r.star === "string" && /^[a-z0-9-]{3,80}$/.test(r.star) ? r.star : "");
   return {
     idea: base.idea,
     kind: r.kind === "portfolio" || r.kind === "website" ? r.kind : base.kind,
@@ -107,11 +111,12 @@ export function normalizeBrief(raw: unknown, base: Brief): Brief {
     audience: pick("audience", 160),
     tone: pick("tone", 80),
     sections: Array.isArray(r.sections) || typeof r.sections === "string" ? (list(r.sections).length ? list(r.sections) : base.sections) : base.sections,
-    character: pick("character", 120),
+    character: base.star && base.character ? base.character : pick("character", 120),
     colors: pick("colors", 80),
     city: pick("city", 40),
     email,
     cta: pick("cta", 30),
+    ...(star ? { star } : {}),
   };
 }
 
@@ -174,7 +179,9 @@ const RULES: RuleQuestion[] = [
     field: "name",
     ask: (b) => (b.kind === "portfolio" ? "Let's start with you. What's your name, as it should appear on the site?" : "Great idea. What is it called?"),
     chips: (b) => [b.name, "Not decided yet"].filter(Boolean),
-    skip: (b) => !!b.name && b.idea.toLowerCase().includes(b.name.toLowerCase()),
+    // Asked unless the line itself named it ("called Crumb", "my bakery Crumb House"): a name
+    // the rules only guessed from the description ("Fantasy Game Studio") is offered as a chip.
+    skip: (b) => !!b.name && !!extractHints(b.idea).name && b.idea.toLowerCase().includes(b.name.toLowerCase()),
   },
   {
     field: "audience",
@@ -196,6 +203,7 @@ const RULES: RuleQuestion[] = [
     field: "character",
     ask: () => "Now the star of the site: a 3D character every part of it is built around. What should it be?",
     chips: (b) => charactersFor(b),
+    skip: (b) => !!b.star && !!b.character,
   },
   {
     field: "colors",
@@ -212,6 +220,12 @@ export function answer(b: Brief, field: BriefField | undefined, text: string): B
   if (field === "name" && /^not decided/i.test(t)) return b;
   if (field === "colors" && /^from the character/i.test(t)) return { ...b, colors: "" };
   if (field === "email") return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(t) ? { ...b, email: t } : b;
+  if (field === "character" && b.star) {
+    // They named another character after all: theirs wins over the one picked on the way in.
+    const rest: Brief = { ...b, character: t };
+    delete rest.star;
+    return rest;
+  }
   return { ...b, [field]: t };
 }
 
@@ -234,6 +248,7 @@ const pickNod = (s: string) => NODS[s.length % NODS.length];
 export function summary(b: Brief): string {
   const who = b.kind === "portfolio" ? `a portfolio for ${b.name || "you"}` : `a site for ${b.name || "your business"}`;
   const feel = b.tone ? `, ${b.tone.toLowerCase()}` : "";
-  const star = b.character ? ` starring ${b.character.replace(/^(a|an|the)\s+/i, (m) => m.toLowerCase())}` : "";
-  return `Here is the plan: ${who}${feel}${star}. Pick the character below, then we choose the colours and type from it.`;
+  const star = b.character ? `, starring ${b.character.replace(/^(a|an|the)\s+/i, (m) => m.toLowerCase())}` : "";
+  const next = b.star ? "Your character is ready below: keep it or change it, then we choose the colours and type from it." : "Pick the character below, then we choose the colours and type from it.";
+  return `Here is the plan: ${who}${feel}${star}. ${next}`;
 }

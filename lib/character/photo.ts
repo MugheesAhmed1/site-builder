@@ -168,7 +168,8 @@ export async function reliefFromPicture(pic: Picture, style: ReliefStyle = "puff
   const { small, mask } = cut ?? (await findSubject(pic));
   const mesh = reliefMesh(small.pixels, { style, mask });
   if (!mesh) throw new Error("No clear subject was found in that picture. Try one where it stands out from a plain background, or a PNG with the background removed.");
-  const root = buildRelief(mesh, small.canvas);
+  // The mesh's UVs span the whole picture, so the sharper full-size copy maps onto it the same way.
+  const root = buildRelief(mesh, pic.canvas);
   const glb = await exportGlb(root);
   const poster = renderStill(root, { turn: -16 });
   return { src: glbDataUrl(glb), poster, name: nameOf(name), palette: paletteFromPixels(maskedPixels(small.pixels, mask)), method: "relief" };

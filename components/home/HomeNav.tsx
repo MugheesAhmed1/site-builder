@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import { Logo } from "@/components/Topbar";
 import { listProjects } from "@/lib/store";
 
-// The home page menu: a glass pill that floats over the live stage and tightens once the
-// page scrolls. It shows "Your sites" with a count when this browser has any.
+// The home page menu: a glass pill that floats over the opening and tightens once the page
+// scrolls. It shows "Your sites" with a count when this browser has any. Its accent is the
+// character's, like the rest of the page.
 export default function HomeNav() {
   const [scrolled, setScrolled] = useState(false);
   const [count, setCount] = useState(0);
@@ -22,10 +23,10 @@ export default function HomeNav() {
       <div className="hnav-pill">
         <Logo />
         <nav className="hnav-links" aria-label="Main">
+          <a href="#journey">How it works</a>
+          <a href="#photo">Photo to 3D</a>
+          <a href="#models">3D library</a>
           <a href="#gallery">Templates</a>
-          <Link href="/lab">Lab</Link>
-          <a href="#demo">Examples</a>
-          <a href="#how">How it works</a>
           <a href="#faq">Questions</a>
         </nav>
         <div className="hnav-end">

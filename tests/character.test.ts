@@ -46,6 +46,8 @@ describe("character colours", () => {
     for (const p of [paletteFromPixels(pixels([226, 112, 44], [40, 70, 160]))!, paletteFromPixels(pixels([240, 240, 240], [30, 30, 30]))!, paletteFromWords(["pink", "dragon", "playful"])]) {
       const opts = designOptions(p, ["playful", "cute"]);
       expect(opts).toHaveLength(5);
+      // Choosing a direction is choosing a font style too.
+      expect(new Set(opts.map((d) => d.fonts.display)).size).toBeGreaterThanOrEqual(4);
       for (const d of opts) {
         for (const mode of ["light", "dark"] as const) {
           const r = readable(tokens(d, mode));

@@ -5,6 +5,7 @@ import "@/components/character/character.css";
 
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { MODELS, modelInfo } from "@/components/character/ModelPicker";
 import Interview from "./Interview";
 import DesignStep from "./DesignStep";
 import TemplateStep, { NEW_TEMPLATE } from "./TemplateStep";
@@ -39,6 +40,8 @@ interface Saved {
   tweak: Tweak;
   tid: string;
   blocks: string[] | null;
+  /** The library model the home page handed over (?star=), once it has been put in place. */
+  star?: string;
 }
 
 const KEY = "xp-journey:v1";
@@ -64,11 +67,14 @@ export default function Journey() {
   const top = useRef<HTMLDivElement>(null);
   const set = (p: Partial<Saved>) => setS((x) => ({ ...x, ...p }));
 
-  // Pick up where they were, or start from a line passed in (?q=… from the home page).
+  // Pick up where they were, or start from a line passed in (?q=… from the home page), with the
+  // character they chose there (?star=<library model id>) already in place.
   useEffect(() => {
     let live = true;
     (async () => {
-      const q = new URLSearchParams(location.search).get("q")?.trim() || "";
+      const params = new URLSearchParams(location.search);
+      const q = params.get("q")?.trim() || "";
+      const chosen = params.get("star") ? MODELS.find((m) => m.id === params.get("star")) : undefined;
       let saved: Saved | null = null;
       try {
         const raw = JSON.parse(localStorage.getItem(KEY) || "null");
@@ -80,11 +86,15 @@ export default function Journey() {
         /* a bad copy: start again */
       }
       if (!live) return;
+      // The character is put in place once per line: a reload keeps any change they made after.
+      const star = chosen ? { model: modelInfo(chosen), palette: null, star: chosen.id } : {};
+      const starred = (b: Brief): Brief => (chosen ? { ...b, star: chosen.id, character: "the " + chosen.name.toLowerCase() } : b);
       if (q && (!saved || saved.idea !== q)) {
-        setS({ ...EMPTY, idea: q, step: "chat", brief: startBrief(q) });
+        setS({ ...EMPTY, idea: q, step: "chat", brief: starred(startBrief(q)), ...star });
         setLine(q);
       } else if (saved) {
-        setS(saved);
+        // The same line again with another character: keep their answers, swap the star.
+        setS(chosen && saved.star !== chosen.id ? { ...saved, ...star, designId: "", brief: saved.brief && starred(saved.brief) } : saved);
         setLine(saved.idea);
       }
       setLoaded(true);

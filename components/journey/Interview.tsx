@@ -37,7 +37,8 @@ export default function Interview({ idea, brief, turns, done, onChange, onNext }
   useEffect(() => {
     if (started.current || turns.length) return;
     started.current = true;
-    void step(null, []);
+    // The brief so far goes too: it may already hold a character chosen on the home page.
+    void step(brief, []);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
