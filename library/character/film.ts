@@ -99,6 +99,8 @@ export interface Track {
   sample(t: number): TrackKey;
   /** True when the track opens the page: it brings its own opening shot and outlined word. */
   opening: boolean;
+  /** Added to the camera's moment while the opening plays by itself (below 0), before the page's own scroll. */
+  shift?: () => number;
 }
 
 interface Box {
@@ -591,7 +593,7 @@ export function createFilm(doc: Document, hero: HTMLElement, init: FilmOptions =
     if (track && A.key && B.key && A !== B && y >= A.at) {
       scripted = true;
       trackT = clamp((y - A.at) / (H / 100), 0, track.len);
-      return keyVals(track.sample(trackT));
+      return keyVals(track.sample(trackT + (track.shift ? track.shift() : 0)));
     }
     const p = A === B ? 0 : clamp((y - A.at) / Math.max(1, B.at - A.at));
     // Hold each shot a while, then move.
