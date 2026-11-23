@@ -1,20 +1,36 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cornerstone</title>
-    <meta name="description" content="" />
-    <meta property="og:title" content="" />
-    <meta property="og:description" content="" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <script src="./xp-content.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="en" data-nav="bar" data-foot="cols">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cornerstone</title>
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+  <script src="./xp-content.js"></script>
+  <link rel="stylesheet" href="./film-shell.css">
+  <style>
+    /* Cornerstone: an estate agent told around one house (docs/FILM-TEMPLATES.md). The story is
+       drawn by xp-lib/xp-character.js from content.film; this page brings its cream and navy, its
+       classic serif and the menu. Every colour, font and word comes from xp-content.js. */
+    :root{
+      --c-page:#f5f2ec;--c-surface:#ffffff;--c-text:#14213d;--c-muted:#6b7280;--c-accent:#c08b5c;--c-dark:#14213d;--c-onDark:#f5f2ec;--c-line:#e4ddd1;
+      --f-display:"Playfair Display";--f-body:"Plus Jakarta Sans";
+      --bg:var(--c-page);--surface:var(--c-surface);--ink:var(--c-text);--mut:var(--c-muted);--line:var(--c-line);--acc:var(--c-accent);--onacc:var(--c-dark);
+      --r:10px;--stage:#f5f2ec;--xp-ink:#14213d;--xp-ink2:#4a5372;
+      --brand-case:none;
+      --mark:polygon(50% 0,100% 44%,100% 100%,0 100%,0 44%);
+    }
+    /* the story, dressed classic: a serif at medium weight, small corners, plain white cards */
+    .xp-track{--xp-tt:none;--xp-tw:600;--xp-tls:-.015em;--xp-tlh:1.06;--xp-ts:1.06;--xp-els:.24em;--xp-r:.9;--xp-card:rgba(255,255,255,.8)}
+    .nav .brand{font-weight:700;letter-spacing:.02em;font-size:clamp(20px,2.2vw,28px)}
+    .nav .brand i{width:20px;height:18px}
+    .nav a.l{font-weight:500}
+  </style>
+</head>
+<body>
+  <div id="xp-root"></div>
+  <script src="./film-shell.js"></script>
+</body>
 </html>

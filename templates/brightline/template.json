@@ -1,11 +1,12 @@
 {
   "id": "brightline",
   "name": "Brightline",
-  "pitch": "A calm, light dental clinic site: an arch-framed smile that opens as you scroll, floating trust badges, treatments you tap through with prices, a drag-to-compare result, a first-visit journey that lights up step by step, membership plans and a real booking flow with days and time slots.",
-  "kind": "vite",
+  "pitch": "A calm dental clinic told around one friendly figure: it floats up out of the light as you scroll, then turns while the numbers, treatments, the first-visit steps, the team, the plans and the way in come to it, one quiet scene at a time.",
+  "kind": "static",
   "categories": [
+    "Cinematic",
     "Scroll",
-    "Interactive",
+    "3D",
     "Editorial"
   ],
   "business": [
@@ -14,24 +15,22 @@
     "hospital"
   ],
   "sector": "Family and cosmetic dental clinic",
-  "intensity": 5,
-  "heavy": false,
+  "intensity": 6,
+  "heavy": true,
   "licence": {
     "kind": "original",
     "holder": "Site Builder",
-    "note": "Made for the builder as an original template. Pictures are free AI generations (Pollinations) kept in source/public/media.",
+    "note": "Made for the builder as an original template. The story is told around a licensed 3D model from the builder's asset library (character-kid-001, supplied by the project owner) by the shared film engine (docs/FILM-TEMPLATES.md). Pictures are free AI generations (Pollinations) kept in source/media.",
     "added": "2026-11-18"
   },
   "remoteAssets": [],
   "features": [
-    "Scroll-opening arch hero",
-    "Treatment explorer",
-    "Before and after slider",
-    "Scroll-lit first-visit steps",
-    "Membership plans",
-    "Booking with days and time slots",
-    "FAQ",
-    "Hours and map link"
+    "One friendly figure at the centre of the whole page",
+    "Bubbles drifting up round it",
+    "The camera rises as you scroll",
+    "Treatments, team and membership plans told around it",
+    "First-visit steps and common questions",
+    "Hours, address and a way to book"
   ],
   "roles": {
     "mode": "light",
@@ -59,94 +58,18 @@
       "fields": [
         {
           "path": "brand.name",
-          "label": "Business name",
-          "type": "text",
-          "hint": "Fills every {name} in the text below."
-        },
-        {
-          "path": "brand.short",
-          "label": "Short name (logo)",
+          "label": "Name",
           "type": "text"
-        },
-        {
-          "path": "brand.phone",
-          "label": "Phone",
-          "type": "text"
-        },
-        {
-          "path": "brand.email",
-          "label": "Email",
-          "type": "text"
-        },
-        {
-          "path": "brand.address",
-          "label": "Address",
-          "type": "text"
-        },
-        {
-          "path": "brand.mapLink",
-          "label": "Map link",
-          "type": "url"
         },
         {
           "path": "seo.title",
-          "label": "Page title (search and browser tab)",
+          "label": "Page title",
           "type": "text"
         },
         {
           "path": "seo.description",
-          "label": "Short description (search and sharing)",
+          "label": "Page description",
           "type": "textarea"
-        }
-      ]
-    },
-    {
-      "group": "Sections",
-      "fields": [
-        {
-          "path": "sections.stats",
-          "label": "Show numbers",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.treatments",
-          "label": "Show treatments",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.results",
-          "label": "Show before and after",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.journey",
-          "label": "Show first-visit steps",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.team",
-          "label": "Show team",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.plans",
-          "label": "Show plans",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.reviews",
-          "label": "Show reviews",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.faq",
-          "label": "Show questions",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.visit",
-          "label": "Show hours and location",
-          "type": "toggle"
         }
       ]
     },
@@ -155,9 +78,11 @@
       "fields": [
         {
           "path": "nav.links",
-          "label": "Menu links",
+          "label": "Links (they scroll to the scene of that name)",
           "type": "list",
-          "itemLabel": "Link",
+          "min": 0,
+          "max": 6,
+          "itemLabel": "label",
           "fields": [
             {
               "path": "label",
@@ -167,498 +92,19 @@
             {
               "path": "href",
               "label": "Goes to",
-              "type": "url"
+              "type": "text"
             }
-          ],
-          "min": 0,
-          "max": 8
+          ]
         },
         {
           "path": "nav.cta",
-          "label": "Booking button",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "Opening",
-      "fields": [
-        {
-          "path": "hero.kicker",
-          "label": "Small line above",
+          "label": "Button",
           "type": "text"
         },
         {
-          "path": "hero.title",
-          "label": "Headline",
-          "type": "textarea"
-        },
-        {
-          "path": "hero.text",
-          "label": "Intro",
-          "type": "textarea"
-        },
-        {
-          "path": "hero.primary",
-          "label": "Main button",
+          "path": "nav.ctaHref",
+          "label": "Button goes to",
           "type": "text"
-        },
-        {
-          "path": "hero.secondary",
-          "label": "Second button",
-          "type": "text"
-        },
-        {
-          "path": "hero.image",
-          "label": "Picture",
-          "type": "image"
-        },
-        {
-          "path": "hero.imageAlt",
-          "label": "Picture description",
-          "type": "text"
-        },
-        {
-          "path": "hero.badge1",
-          "label": "Badge 1 (rating)",
-          "type": "text"
-        },
-        {
-          "path": "hero.badge2",
-          "label": "Badge 2",
-          "type": "text"
-        },
-        {
-          "path": "hero.badge3",
-          "label": "Badge 3",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "Numbers",
-      "fields": [
-        {
-          "path": "stats.items",
-          "label": "Numbers",
-          "type": "list",
-          "itemLabel": "Number",
-          "fields": [
-            {
-              "path": "value",
-              "label": "Number",
-              "type": "text",
-              "hint": "Counts up, e.g. 4.9, 12,400+ or 98%"
-            },
-            {
-              "path": "label",
-              "label": "Label",
-              "type": "text"
-            }
-          ],
-          "min": 0,
-          "max": 6
-        }
-      ]
-    },
-    {
-      "group": "Treatments",
-      "fields": [
-        {
-          "path": "treatments.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "treatments.title",
-          "label": "Heading",
-          "type": "textarea"
-        },
-        {
-          "path": "treatments.text",
-          "label": "Intro",
-          "type": "textarea"
-        },
-        {
-          "path": "treatments.items",
-          "label": "Treatments",
-          "type": "list",
-          "itemLabel": "Treatment",
-          "fields": [
-            {
-              "path": "name",
-              "label": "Name",
-              "type": "text"
-            },
-            {
-              "path": "summary",
-              "label": "One line",
-              "type": "textarea"
-            },
-            {
-              "path": "detail",
-              "label": "What happens",
-              "type": "textarea"
-            },
-            {
-              "path": "price",
-              "label": "Price",
-              "type": "text"
-            },
-            {
-              "path": "time",
-              "label": "How long",
-              "type": "text"
-            },
-            {
-              "path": "image",
-              "label": "Picture",
-              "type": "image"
-            }
-          ],
-          "min": 1,
-          "max": 12
-        }
-      ]
-    },
-    {
-      "group": "Before and after",
-      "fields": [
-        {
-          "path": "results.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "results.title",
-          "label": "Heading",
-          "type": "text"
-        },
-        {
-          "path": "results.text",
-          "label": "Note",
-          "type": "textarea"
-        },
-        {
-          "path": "results.before",
-          "label": "Before picture",
-          "type": "image"
-        },
-        {
-          "path": "results.after",
-          "label": "After picture",
-          "type": "image"
-        },
-        {
-          "path": "results.tintBefore",
-          "label": "Tint the before picture",
-          "type": "toggle",
-          "hint": "Handy while you only have one picture."
-        },
-        {
-          "path": "results.beforeLabel",
-          "label": "Before label",
-          "type": "text"
-        },
-        {
-          "path": "results.afterLabel",
-          "label": "After label",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "First visit",
-      "fields": [
-        {
-          "path": "journey.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "journey.title",
-          "label": "Heading",
-          "type": "text"
-        },
-        {
-          "path": "journey.steps",
-          "label": "Steps",
-          "type": "list",
-          "itemLabel": "Step",
-          "fields": [
-            {
-              "path": "title",
-              "label": "Title",
-              "type": "text"
-            },
-            {
-              "path": "text",
-              "label": "Text",
-              "type": "textarea"
-            }
-          ],
-          "min": 1,
-          "max": 8
-        }
-      ]
-    },
-    {
-      "group": "Team",
-      "fields": [
-        {
-          "path": "team.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "team.title",
-          "label": "Heading",
-          "type": "text"
-        },
-        {
-          "path": "team.members",
-          "label": "People",
-          "type": "list",
-          "itemLabel": "Person",
-          "fields": [
-            {
-              "path": "name",
-              "label": "Name",
-              "type": "text"
-            },
-            {
-              "path": "role",
-              "label": "Role",
-              "type": "text"
-            },
-            {
-              "path": "bio",
-              "label": "Short bio",
-              "type": "textarea"
-            },
-            {
-              "path": "image",
-              "label": "Photo",
-              "type": "image"
-            }
-          ],
-          "min": 0,
-          "max": 12
-        }
-      ]
-    },
-    {
-      "group": "Plans",
-      "fields": [
-        {
-          "path": "plans.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "plans.title",
-          "label": "Heading",
-          "type": "text"
-        },
-        {
-          "path": "plans.text",
-          "label": "Intro",
-          "type": "textarea"
-        },
-        {
-          "path": "plans.items",
-          "label": "Plans",
-          "type": "list",
-          "itemLabel": "Plan",
-          "fields": [
-            {
-              "path": "name",
-              "label": "Name",
-              "type": "text"
-            },
-            {
-              "path": "price",
-              "label": "Price",
-              "type": "text"
-            },
-            {
-              "path": "period",
-              "label": "Per",
-              "type": "text"
-            },
-            {
-              "path": "features",
-              "label": "What's included (one per line)",
-              "type": "textarea"
-            },
-            {
-              "path": "highlight",
-              "label": "Highlight this plan",
-              "type": "toggle"
-            },
-            {
-              "path": "button",
-              "label": "Button",
-              "type": "text"
-            }
-          ],
-          "min": 0,
-          "max": 4
-        }
-      ]
-    },
-    {
-      "group": "Reviews",
-      "fields": [
-        {
-          "path": "reviews.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "reviews.items",
-          "label": "Reviews",
-          "type": "list",
-          "itemLabel": "Review",
-          "fields": [
-            {
-              "path": "quote",
-              "label": "Quote",
-              "type": "textarea"
-            },
-            {
-              "path": "name",
-              "label": "Name",
-              "type": "text"
-            },
-            {
-              "path": "detail",
-              "label": "Treatment",
-              "type": "text"
-            }
-          ],
-          "min": 0,
-          "max": 12
-        },
-        {
-          "path": "reviews.autoplay",
-          "label": "Move on by itself",
-          "type": "toggle"
-        }
-      ]
-    },
-    {
-      "group": "Questions",
-      "fields": [
-        {
-          "path": "faq.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "faq.title",
-          "label": "Heading",
-          "type": "text"
-        },
-        {
-          "path": "faq.items",
-          "label": "Questions",
-          "type": "list",
-          "itemLabel": "Question",
-          "fields": [
-            {
-              "path": "q",
-              "label": "Question",
-              "type": "text"
-            },
-            {
-              "path": "a",
-              "label": "Answer",
-              "type": "textarea"
-            }
-          ],
-          "min": 0,
-          "max": 16
-        }
-      ]
-    },
-    {
-      "group": "Hours and location",
-      "fields": [
-        {
-          "path": "visit.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "visit.title",
-          "label": "Heading",
-          "type": "text"
-        },
-        {
-          "path": "visit.hours",
-          "label": "Opening hours (Day | Hours, one per line)",
-          "type": "textarea"
-        },
-        {
-          "path": "visit.note",
-          "label": "Parking and access",
-          "type": "textarea"
-        },
-        {
-          "path": "visit.emergency",
-          "label": "Emergency line (leave empty to hide)",
-          "type": "textarea"
-        },
-        {
-          "path": "visit.image",
-          "label": "Picture",
-          "type": "image"
-        }
-      ]
-    },
-    {
-      "group": "Booking",
-      "fields": [
-        {
-          "path": "booking.title",
-          "label": "Heading",
-          "type": "text"
-        },
-        {
-          "path": "booking.text",
-          "label": "Intro",
-          "type": "textarea"
-        },
-        {
-          "path": "booking.times",
-          "label": "Time slots (one per line)",
-          "type": "textarea"
-        },
-        {
-          "path": "booking.closedDays",
-          "label": "Closed days (0 = Sunday … 6 = Saturday, comma separated)",
-          "type": "text"
-        },
-        {
-          "path": "booking.days",
-          "label": "Days ahead to offer",
-          "type": "number",
-          "min": 3,
-          "max": 30,
-          "step": 1
-        },
-        {
-          "path": "booking.formAction",
-          "label": "Form address (optional)",
-          "type": "url",
-          "hint": "An https form endpoint such as Formspree. Empty: the form only shows the thank-you message."
-        },
-        {
-          "path": "booking.done",
-          "label": "Thank-you message",
-          "type": "textarea",
-          "hint": "{person} is their first name, {when} the day and time."
         }
       ]
     },
@@ -666,13 +112,13 @@
       "group": "Footer",
       "fields": [
         {
-          "path": "footer.text",
-          "label": "Line",
+          "path": "footer.note",
+          "label": "Small print",
           "type": "text"
         },
         {
-          "path": "footer.legal",
-          "label": "Small print",
+          "path": "footer.email",
+          "label": "Email",
           "type": "text"
         }
       ]
@@ -697,7 +143,7 @@
         },
         {
           "path": "theme.colors.muted",
-          "label": "Soft text",
+          "label": "Quiet text",
           "type": "color"
         },
         {
@@ -707,85 +153,56 @@
         },
         {
           "path": "theme.colors.accentSoft",
-          "label": "Accent tint",
+          "label": "Soft accent",
           "type": "color"
         },
         {
           "path": "theme.colors.highlight",
-          "label": "Highlight (stars, badges)",
+          "label": "Highlight",
           "type": "color"
         },
         {
           "path": "theme.colors.dark",
-          "label": "Dark panels",
+          "label": "Dark",
           "type": "color"
         },
         {
           "path": "theme.colors.onAccent",
-          "label": "Text on accent",
+          "label": "Text on the accent",
           "type": "color"
         }
       ]
     },
     {
-      "group": "Fonts",
+      "group": "Fonts and shape",
       "fields": [
         {
           "path": "theme.fonts.display",
-          "label": "Headings font",
+          "label": "Headline font",
           "type": "font"
         },
         {
           "path": "theme.fonts.body",
           "label": "Body font",
           "type": "font"
-        }
-      ]
-    },
-    {
-      "group": "Look and motion",
-      "fields": [
+        },
         {
           "path": "theme.radius",
           "label": "Corner roundness",
           "type": "number",
           "min": 0,
-          "max": 48,
-          "step": 2
-        },
-        {
-          "path": "motion.animate",
-          "label": "Animations on",
-          "type": "toggle"
-        },
-        {
-          "path": "motion.heroScroll",
-          "label": "Opening picture opens as you scroll",
-          "type": "toggle"
-        },
-        {
-          "path": "motion.floatBadges",
-          "label": "Badges float",
-          "type": "toggle"
-        },
-        {
-          "path": "motion.reviewSeconds",
-          "label": "Seconds per review",
-          "type": "number",
-          "min": 2,
-          "max": 15,
+          "max": 40,
           "step": 1
         }
       ]
     },
     {
-      "group": "Library blocks",
+      "group": "Library sections",
       "fields": [
         {
           "path": "extras",
-          "label": "Blocks from the library",
-          "type": "blocks",
-          "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          "label": "Sections from the library (added after the story)",
+          "type": "blocks"
         }
       ]
     }

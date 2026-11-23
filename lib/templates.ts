@@ -4,7 +4,7 @@
 // schema lists a field for every value, so a person can change any part of it for their project.
 import registry from "./templates.gen.json";
 import { categoryLabel } from "./fit";
-import { clone, contentScript, countChanges, extractMedia, getPath, setPath, type Content, type SchemaField, type SchemaGroup } from "./template-schema.mjs";
+import { clone, contentScript, countChanges, extractMedia, getPath, hasPlan, setPath, type Content, type SchemaField, type SchemaGroup } from "./template-schema.mjs";
 import type { TemplateRoles } from "./character/apply";
 
 export type { Content, SchemaField, SchemaGroup };
@@ -64,12 +64,28 @@ const STORE = (id: string) => `xp-template:v2:${id}`;
 /** The person's content, or the defaults. Values the template no longer has are dropped. */
 export function loadContent(t: TemplateInfo): Content {
   try {
-    const saved = JSON.parse(localStorage.getItem(STORE(t.id)) || "null");
-    if (saved && typeof saved === "object") return withTheStory(merge(t.content, saved) as Content, saved);
+    const stored = JSON.parse(localStorage.getItem(STORE(t.id)) || "null");
+    if (stored && typeof stored === "object") {
+      const saved = upgradeSaved(t, stored);
+      return withTheStory(merge(t.content, saved) as Content, saved);
+    }
   } catch {
     /* private mode or a bad copy: start from the defaults */
   }
   return clone(t.content);
+}
+
+/**
+ * A site saved before its template told its own story (content.film.order, docs/FILM-TEMPLATES.md)
+ * has the old, fixed story's words and, often, no model. It takes the template's story and its
+ * figure as a new site would; its colours, name and anything else it kept stay.
+ */
+function upgradeSaved(t: TemplateInfo, saved: Record<string, any>): Record<string, any> {
+  if (!hasPlan(t.content)) return saved;
+  const out = { ...saved };
+  if (out.film && typeof out.film === "object" && !("order" in out.film)) delete out.film;
+  if (out.character && typeof out.character === "object" && !String(out.character.src || "").trim()) delete out.character;
+  return out;
 }
 
 /**

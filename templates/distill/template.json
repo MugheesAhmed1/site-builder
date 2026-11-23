@@ -1,11 +1,12 @@
 {
   "id": "distill",
   "name": "Distill",
-  "pitch": "A SaaS launch page with one striking idea: a draggable belt of sample web pages slides through a glowing scanner and dissolves into clean code, with a live counter of what was saved. Menus, pricing, demo, trial and sign-in panels included.",
-  "kind": "vite",
+  "pitch": "A SaaS launch page told around one machine reader: it spins into place, then shows its front and its back as the numbers, how it works, a belt of pages that shrink, the product, the prices and the way to start come to it, with sparks in the air.",
+  "kind": "static",
   "categories": [
-    "Interactive",
+    "Cinematic",
     "Product",
+    "3D",
     "Experimental"
   ],
   "business": [
@@ -14,21 +15,22 @@
     "agency"
   ],
   "sector": "AI and web infrastructure SaaS (edge service that serves clean pages to AI agents)",
-  "intensity": 6,
-  "heavy": false,
+  "intensity": 7,
+  "heavy": true,
   "licence": {
     "kind": "owner",
     "holder": "Mughees",
-    "note": "Supplied by its owner as a whole project for use as a builder template.",
+    "note": "Supplied by its owner as a whole project for use as a builder template. Rebuilt on the shared film engine (docs/FILM-TEMPLATES.md) around a licensed 3D model from the builder's asset library (character-robot-001, CC0 Quaternius); the owner's words and pictures are kept in source/media.",
     "added": "2026-11-18"
   },
   "remoteAssets": [],
   "features": [
-    "Draggable before-and-after belt",
-    "Particle scanner",
-    "Live savings counter",
-    "Dropdown menus",
-    "Pricing, demo, trial and sign-in panels"
+    "One robot reader at the centre of the whole page",
+    "Front, back, front: the camera flips from scene to scene",
+    "Sparks in the air",
+    "How it works, the pages it shrinks and the token savings",
+    "Pricing tiers",
+    "Start a free trial or book a demo"
   ],
   "roles": {
     "mode": "light",
@@ -57,24 +59,18 @@
       "fields": [
         {
           "path": "brand.name",
-          "label": "Product name",
-          "type": "text",
-          "hint": "Fills every {name} in the text below."
+          "label": "Name",
+          "type": "text"
         },
         {
           "path": "seo.title",
-          "label": "Page title (search and browser tab)",
+          "label": "Page title",
           "type": "text"
         },
         {
           "path": "seo.description",
-          "label": "Short description (search and sharing)",
+          "label": "Page description",
           "type": "textarea"
-        },
-        {
-          "path": "brand.showMark",
-          "label": "Show the drop logo",
-          "type": "toggle"
         }
       ]
     },
@@ -82,10 +78,12 @@
       "group": "Menu",
       "fields": [
         {
-          "path": "nav.menus",
-          "label": "Dropdown menus",
+          "path": "nav.links",
+          "label": "Links (they scroll to the scene of that name)",
           "type": "list",
-          "itemLabel": "Menu",
+          "min": 0,
+          "max": 6,
+          "itemLabel": "label",
           "fields": [
             {
               "path": "label",
@@ -93,396 +91,36 @@
               "type": "text"
             },
             {
-              "path": "items",
-              "label": "Items (one per line: title | description)",
-              "type": "textarea"
+              "path": "href",
+              "label": "Goes to",
+              "type": "text"
             }
-          ],
-          "min": 0,
-          "max": 5
+          ]
         },
         {
-          "path": "nav.pricing",
-          "label": "Pricing link (empty hides it)",
-          "type": "text"
-        },
-        {
-          "path": "nav.signin",
-          "label": "Sign-in button (empty hides it)",
-          "type": "text"
-        },
-        {
-          "path": "nav.trial",
-          "label": "Trial button (empty hides it)",
-          "type": "text"
-        },
-        {
-          "path": "nav.demo",
-          "label": "Demo button (empty hides it)",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "Opening",
-      "fields": [
-        {
-          "path": "hero.eyebrow",
-          "label": "Small label",
-          "type": "text"
-        },
-        {
-          "path": "hero.line1",
-          "label": "Headline",
-          "type": "text"
-        },
-        {
-          "path": "hero.line2",
-          "label": "Headline, second line (italic)",
-          "type": "text"
-        },
-        {
-          "path": "hero.text",
-          "label": "Text",
-          "type": "textarea"
-        },
-        {
-          "path": "hero.button",
+          "path": "nav.cta",
           "label": "Button",
           "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "Counter",
-      "fields": [
-        {
-          "path": "badge.label",
-          "label": "Label",
-          "type": "text"
         },
         {
-          "path": "badge.less",
-          "label": "After the percentage",
+          "path": "nav.ctaHref",
+          "label": "Button goes to",
           "type": "text"
         }
       ]
     },
     {
-      "group": "Belt of sample pages",
+      "group": "Footer",
       "fields": [
         {
-          "path": "belt.site",
-          "label": "Sample site name",
-          "type": "text",
-          "hint": "Shown on every card; {site} in the card text becomes it."
-        },
-        {
-          "path": "belt.label",
-          "label": "Description (for screen readers)",
+          "path": "footer.note",
+          "label": "Small print",
           "type": "text"
         },
         {
-          "path": "belt.cards",
-          "label": "Cards",
-          "type": "list",
-          "itemLabel": "Card",
-          "fields": [
-            {
-              "path": "layout",
-              "label": "Layout",
-              "type": "select",
-              "options": [
-                {
-                  "value": "home",
-                  "label": "Home: picture with big numbers"
-                },
-                {
-                  "value": "price",
-                  "label": "Price: warm gradient with a price list"
-                },
-                {
-                  "value": "case",
-                  "label": "Story: blurred picture, headline and three numbers"
-                },
-                {
-                  "value": "vision",
-                  "label": "Vision: two pictures and a quote"
-                },
-                {
-                  "value": "alloy",
-                  "label": "Product: picture, headline and specs"
-                },
-                {
-                  "value": "journal",
-                  "label": "Journal: three article cards"
-                }
-              ]
-            },
-            {
-              "path": "menu",
-              "label": "Card menu (comma separated)",
-              "type": "text"
-            },
-            {
-              "path": "active",
-              "label": "Highlighted menu item",
-              "type": "text"
-            },
-            {
-              "path": "kicker",
-              "label": "Small label",
-              "type": "text"
-            },
-            {
-              "path": "title",
-              "label": "Headline (a price like $2,400 in the price layout)",
-              "type": "textarea"
-            },
-            {
-              "path": "emphasis",
-              "label": "Italic words after it (vision and product)",
-              "type": "text"
-            },
-            {
-              "path": "text",
-              "label": "Small text (vision)",
-              "type": "textarea"
-            },
-            {
-              "path": "rows",
-              "label": "Rows (one per line: left | right)",
-              "type": "textarea",
-              "hint": "Numbers and labels, prices, specs or article label | title, depending on the layout."
-            },
-            {
-              "path": "button",
-              "label": "Button (price layout)",
-              "type": "text"
-            },
-            {
-              "path": "image",
-              "label": "Picture",
-              "type": "image"
-            },
-            {
-              "path": "image2",
-              "label": "Second picture (vision, journal)",
-              "type": "image"
-            },
-            {
-              "path": "image3",
-              "label": "Third picture (journal)",
-              "type": "image"
-            },
-            {
-              "path": "address",
-              "label": "Page address shown in the code",
-              "type": "text"
-            },
-            {
-              "path": "original",
-              "label": "Size before (tokens)",
-              "type": "number",
-              "min": 0,
-              "max": 1000000,
-              "step": 1
-            },
-            {
-              "path": "distilled",
-              "label": "Size after (tokens)",
-              "type": "number",
-              "min": 0,
-              "max": 1000000,
-              "step": 1
-            },
-            {
-              "path": "html",
-              "label": "Clean code shown after the scanner",
-              "type": "textarea"
-            }
-          ],
-          "min": 1,
-          "max": 10
-        }
-      ]
-    },
-    {
-      "group": "Pricing panel",
-      "fields": [
-        {
-          "path": "pricing.eyebrow",
-          "label": "Small label",
+          "path": "footer.email",
+          "label": "Email",
           "type": "text"
-        },
-        {
-          "path": "pricing.title",
-          "label": "Title",
-          "type": "text"
-        },
-        {
-          "path": "pricing.tiers",
-          "label": "Plans (one per line: name | price | detail)",
-          "type": "textarea"
-        },
-        {
-          "path": "pricing.button",
-          "label": "Button",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "How it works panel",
-      "fields": [
-        {
-          "path": "explore.eyebrow",
-          "label": "Small label",
-          "type": "text"
-        },
-        {
-          "path": "explore.title",
-          "label": "Title",
-          "type": "text"
-        },
-        {
-          "path": "explore.text",
-          "label": "Text",
-          "type": "textarea"
-        },
-        {
-          "path": "explore.facts",
-          "label": "Facts (one per line)",
-          "type": "textarea"
-        },
-        {
-          "path": "explore.button",
-          "label": "Button",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "Demo, trial and sign-in forms",
-      "fields": [
-        {
-          "path": "forms.demoEyebrow",
-          "label": "Demo label",
-          "type": "text"
-        },
-        {
-          "path": "forms.demoTitle",
-          "label": "Demo title",
-          "type": "text"
-        },
-        {
-          "path": "forms.demoButton",
-          "label": "Demo button",
-          "type": "text"
-        },
-        {
-          "path": "forms.trialEyebrow",
-          "label": "Trial label",
-          "type": "text"
-        },
-        {
-          "path": "forms.trialTitle",
-          "label": "Trial title",
-          "type": "text"
-        },
-        {
-          "path": "forms.trialButton",
-          "label": "Trial button",
-          "type": "text"
-        },
-        {
-          "path": "forms.signinEyebrow",
-          "label": "Sign-in label",
-          "type": "text"
-        },
-        {
-          "path": "forms.signinTitle",
-          "label": "Sign-in title",
-          "type": "text"
-        },
-        {
-          "path": "forms.signinButton",
-          "label": "Sign-in button",
-          "type": "text"
-        },
-        {
-          "path": "forms.signinLink",
-          "label": "Sign-in page (optional)",
-          "type": "url",
-          "hint": "When set, signing in goes to your real app."
-        },
-        {
-          "path": "forms.emailLabel",
-          "label": "Email label",
-          "type": "text"
-        },
-        {
-          "path": "forms.emailPlaceholder",
-          "label": "Email hint",
-          "type": "text"
-        },
-        {
-          "path": "forms.domainLabel",
-          "label": "Domain label",
-          "type": "text"
-        },
-        {
-          "path": "forms.domainPlaceholder",
-          "label": "Domain hint",
-          "type": "text"
-        },
-        {
-          "path": "forms.thanksTitle",
-          "label": "Thank-you title",
-          "type": "text"
-        },
-        {
-          "path": "forms.thanksText",
-          "label": "Thank-you text",
-          "type": "textarea",
-          "hint": "{email} and {domain} are filled in."
-        },
-        {
-          "path": "forms.domainFallback",
-          "label": "When no domain is given",
-          "type": "text"
-        },
-        {
-          "path": "forms.signinThanksTitle",
-          "label": "Sign-in thank-you title",
-          "type": "text"
-        },
-        {
-          "path": "forms.signinThanksText",
-          "label": "Sign-in thank-you text",
-          "type": "textarea"
-        },
-        {
-          "path": "forms.back",
-          "label": "Close button",
-          "type": "text"
-        },
-        {
-          "path": "forms.error",
-          "label": "Error message",
-          "type": "text"
-        },
-        {
-          "path": "forms.email",
-          "label": "Send requests to (email)",
-          "type": "text",
-          "hint": "Opens the visitor's email app with the request filled in."
-        },
-        {
-          "path": "forms.formAction",
-          "label": "Or post to a form service (https)",
-          "type": "url",
-          "hint": "For example a Formspree or Basin endpoint. Wins over email."
         }
       ]
     },
@@ -496,12 +134,12 @@
         },
         {
           "path": "theme.colors.ink",
-          "label": "Headings",
+          "label": "Text",
           "type": "color"
         },
         {
           "path": "theme.colors.body",
-          "label": "Text",
+          "label": "Body text",
           "type": "color"
         },
         {
@@ -511,95 +149,63 @@
         },
         {
           "path": "theme.colors.code",
-          "label": "Code",
+          "label": "Code text",
           "type": "color"
         },
         {
           "path": "theme.colors.comment",
-          "label": "Code comments",
+          "label": "Faint text",
           "type": "color"
         },
         {
           "path": "theme.colors.hot",
-          "label": "Scanner and buttons",
+          "label": "Hot colour",
           "type": "color"
         },
         {
           "path": "theme.colors.hotSoft",
-          "label": "Scanner, soft",
+          "label": "Soft hot colour",
           "type": "color"
         },
         {
           "path": "theme.colors.hotDeep",
-          "label": "Scanner, deep",
+          "label": "Deep hot colour",
           "type": "color"
         },
         {
           "path": "theme.colors.buttonText",
-          "label": "Button text",
+          "label": "Text on buttons",
           "type": "color"
         }
       ]
     },
     {
-      "group": "Fonts",
+      "group": "Fonts and shape",
       "fields": [
         {
           "path": "theme.fonts.sans",
-          "label": "Text",
+          "label": "Body font",
           "type": "font"
         },
         {
           "path": "theme.fonts.serif",
-          "label": "Headlines",
+          "label": "Headline font",
           "type": "font"
         },
         {
           "path": "theme.fonts.mono",
-          "label": "Code",
+          "label": "Small print font",
           "type": "font"
         }
       ]
     },
     {
-      "group": "Motion",
-      "fields": [
-        {
-          "path": "motion.speed",
-          "label": "Belt speed",
-          "type": "number",
-          "min": 0,
-          "max": 0.3,
-          "step": 0.005
-        },
-        {
-          "path": "motion.hoverSlow",
-          "label": "Slow down on hover",
-          "type": "number",
-          "min": 0,
-          "max": 1,
-          "step": 0.05
-        },
-        {
-          "path": "motion.particles",
-          "label": "Dissolving particles",
-          "type": "toggle"
-        },
-        {
-          "path": "motion.sparks",
-          "label": "Sparks",
-          "type": "toggle"
-        }
-      ]
-    },
-    {
-      "group": "Library blocks",
+      "group": "Library sections",
       "fields": [
         {
           "path": "extras",
-          "label": "Blocks from the library",
-          "type": "blocks",
-          "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          "label": "Sections from the library (added after the story)",
+          "type": "blocks"
         }
       ]
     }

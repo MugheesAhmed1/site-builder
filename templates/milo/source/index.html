@@ -1,30 +1,36 @@
 <!doctype html>
-<html lang="en" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Milo — 3D Artist &amp; Digital Worlds</title>
-    <meta
-      name="description"
-      content="Immersive 3D creative portfolio for Milo, a digital artist and 3D world builder crafting cinematic underwater environments, visual identities, and interactive digital experiences."
-    />
-    <meta property="og:title" content="Milo — 3D Artist &amp; Digital Worlds" />
-    <meta
-      property="og:description"
-      content="Immersive 3D creative portfolio for Milo, a digital artist and 3D world builder crafting cinematic underwater environments, visual identities, and interactive digital experiences."
-    />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <script src="./xp-content.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="en" data-nav="bar" data-foot="line">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Milo</title>
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+  <script src="./xp-content.js"></script>
+  <link rel="stylesheet" href="./film-shell.css">
+  <style>
+    /* Milo: an ocean portfolio told around one living thing that sinks as you scroll (docs/FILM-TEMPLATES.md).
+       The story is drawn by xp-lib/xp-character.js from content.film; this page brings the deep water,
+       the wide capitals and the menu. Every colour, font and word comes from xp-content.js. */
+    :root{
+      --c-page:#02070A;--c-surface:#041319;--c-deep:#082838;--c-text:#F2FBFF;--c-accent:#63E6FF;--c-accent2:#4BA3FF;--c-highlight:#D9F7FF;--c-light:#F2FBFF;--c-lightText:#02070A;
+      --f-display:"Syne";--f-body:"Manrope";
+      --bg:var(--c-page);--surface:var(--c-surface);--ink:var(--c-text);--mut:color-mix(in oklab,var(--c-text) 62%,var(--c-page));--line:color-mix(in oklab,var(--c-text) 15%,transparent);--acc:var(--c-accent);--onacc:var(--c-lightText);
+      --r:22px;--stage:#02070A;--xp-ink:#F2FBFF;--xp-ink2:#a9c4cf;
+      --brand-case:uppercase;
+      --mark:polygon(50% 100%,39% 72%,0 28%,31% 36%,50% 0,69% 36%,100% 28%,61% 72%);
+    }
+    /* the story, dressed for the deep: wide capitals, glass the colour of the water, one cold light */
+    .xp-track{--xp-tt:uppercase;--xp-tw:700;--xp-tls:-.015em;--xp-tlh:1;--xp-ts:.86;--xp-els:.3em;--xp-r:1.6;--xp-card:rgba(99,230,255,.06)}
+    .nav .brand{font-weight:700;letter-spacing:.2em;font-size:clamp(15px,1.5vw,19px)}
+    .nav a.l{letter-spacing:.16em;text-transform:uppercase;font-size:12px;font-weight:600}
+    .nav .brand i{width:20px;height:18px}
+  </style>
+</head>
+<body>
+  <div id="xp-root"></div>
+  <script src="./film-shell.js"></script>
+</body>
 </html>

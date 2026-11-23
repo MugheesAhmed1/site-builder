@@ -1,30 +1,39 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Distill — Built for people. Read by machines.</title>
-    <meta
-      name="description"
-      content="Distill detects AI agents at the edge and serves them a clean, token-light version of every page, without changing a pixel of what people see."
-    />
-    <meta property="og:title" content="Distill — Built for people. Read by machines." />
-    <meta
-      property="og:description"
-      content="Distill detects AI agents at the edge and serves them a clean, token-light version of every page, without changing a pixel of what people see."
-    />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <script src="./xp-content.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap"
-    />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="en" data-nav="bar" data-foot="line">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Distill</title>
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+  <script src="./xp-content.js"></script>
+  <link rel="stylesheet" href="./film-shell.css">
+  <style>
+    /* Distill: a SaaS launch page told around one machine reader (docs/FILM-TEMPLATES.md). The
+       story is drawn by xp-lib/xp-character.js from content.film; this page brings its pale grey
+       and hot orange, its serif headlines, its monospace small print and the menu. Every colour,
+       font and word comes from xp-content.js. */
+    :root{
+      --c-bg:#EEF0F2;--c-ink:#0F1115;--c-body:#2A2E35;--c-muted:#8B9098;--c-code:#7A7F88;--c-comment:#B3B8BF;--c-hot:#FF5A1F;--c-hotSoft:#FFE1D3;--c-hotDeep:#D9430F;--c-buttonText:#FFFFFF;
+      --f-sans:"Inter";--f-serif:"Newsreader";--f-mono:"IBM Plex Mono";
+      --f-display:var(--f-serif);--f-body:var(--f-sans);
+      --bg:var(--c-bg);--surface:color-mix(in oklab,var(--c-bg) 60%,#fff);--ink:var(--c-ink);--mut:var(--c-body);--line:color-mix(in oklab,var(--c-ink) 14%,transparent);--acc:var(--c-hot);--onacc:var(--c-buttonText);
+      --r:8px;--stage:#EEF0F2;--xp-ink:#0F1115;--xp-ink2:#2A2E35;
+      --brand-case:none;
+      --mark:polygon(0 0,100% 0,100% 100%,0 100%,0 62%,48% 62%,48% 38%,0 38%);
+    }
+    /* the story, dressed technical: a serif headline with the odd monospace label, square-ish cards */
+    .xp-track{--xp-tt:none;--xp-tw:500;--xp-tls:-.022em;--xp-tlh:1.02;--xp-ts:1.12;--xp-els:.16em;--xp-r:.7;--xp-card:rgba(255,255,255,.66)}
+    .xp-track .xp-eyebrow,.xp-track .xp-stat .lb,.xp-track .xp-plan .pr small,.xp-track .xp-fact .tx i,.xp-track .xp-step .no{font-family:var(--f-mono),ui-monospace,SFMono-Regular,Menlo,monospace}
+    .nav .brand{font-family:var(--f-mono),ui-monospace,monospace;font-weight:600;letter-spacing:.04em;font-size:clamp(17px,1.9vw,22px)}
+    .nav .brand i{width:16px;height:16px}
+    .nav a.l{font-family:var(--f-mono),ui-monospace,monospace;font-size:13px;font-weight:500}
+  </style>
+</head>
+<body>
+  <div id="xp-root"></div>
+  <script src="./film-shell.js"></script>
+</body>
 </html>

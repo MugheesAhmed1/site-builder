@@ -1,20 +1,36 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tidewater</title>
-    <meta name="description" content="" />
-    <meta property="og:title" content="" />
-    <meta property="og:description" content="" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <script src="./xp-content.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="en" data-nav="split" data-foot="cols">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tidewater</title>
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+  <script src="./xp-content.js"></script>
+  <link rel="stylesheet" href="./film-shell.css">
+  <style>
+    /* Tidewater: a small hotel by the sea told around one boat (docs/FILM-TEMPLATES.md). The story
+       is drawn by xp-lib/xp-character.js from content.film; this page brings its sand and
+       terracotta, its tall serif and the menu. Every colour, font and word comes from xp-content.js. */
+    :root{
+      --c-page:#f3ede4;--c-surface:#fbf8f3;--c-text:#1d2a33;--c-muted:#6b7378;--c-accent:#b5683c;--c-sea:#1f4a5c;--c-dark:#12202a;--c-onDark:#f3ede4;
+      --f-display:"Cormorant Garamond";--f-body:"DM Sans";
+      --bg:var(--c-page);--surface:var(--c-surface);--ink:var(--c-text);--mut:var(--c-muted);--line:color-mix(in oklab,var(--c-text) 14%,transparent);--acc:var(--c-sea);--onacc:var(--c-onDark);
+      --r:6px;--stage:#f3ede4;--xp-ink:#1d2a33;--xp-ink2:#4b5961;
+      --brand-case:none;
+      --mark:polygon(0 62%,22% 50%,40% 62%,60% 50%,78% 62%,100% 50%,100% 100%,0 100%);
+    }
+    /* the story, dressed for the shore: a tall serif at medium weight, quiet corners, linen glass */
+    .xp-track{--xp-tt:none;--xp-tw:500;--xp-tls:-.018em;--xp-tlh:.98;--xp-ts:1.36;--xp-els:.26em;--xp-r:.5;--xp-card:rgba(251,248,243,.8)}
+    .nav .brand{font-weight:600;letter-spacing:.01em;font-size:clamp(21px,2.4vw,30px)}
+    .nav .brand i{width:20px;height:16px}
+    .nav a.l{font-weight:500}
+  </style>
+</head>
+<body>
+  <div id="xp-root"></div>
+  <script src="./film-shell.js"></script>
+</body>
 </html>

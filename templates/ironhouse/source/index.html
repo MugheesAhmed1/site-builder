@@ -1,20 +1,38 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ironhouse</title>
-    <meta name="description" content="" />
-    <meta property="og:title" content="" />
-    <meta property="og:description" content="" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <script src="./xp-content.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="en" data-nav="bar" data-foot="line">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ironhouse</title>
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+  <script src="./xp-content.js"></script>
+  <link rel="stylesheet" href="./film-shell.css">
+  <style>
+    /* Ironhouse: a loud gym told around one suit of iron (docs/FILM-TEMPLATES.md). The story is
+       drawn by xp-lib/xp-character.js from content.film; this page brings its black and acid
+       yellow, its heavy capitals and the menu. Every colour, font and word comes from xp-content.js. */
+    :root{
+      --c-page:#0b0b0c;--c-surface:#161618;--c-text:#f2f0ea;--c-muted:#8d8b86;--c-accent:#d7ff3a;--c-onAccent:#0b0b0c;--c-hot:#ff4b2b;--c-line:#2a2a2d;
+      --f-display:"Anton";--f-body:"Inter";
+      --bg:var(--c-page);--surface:var(--c-surface);--ink:var(--c-text);--mut:var(--c-muted);--line:var(--c-line);--acc:var(--c-accent);--onacc:var(--c-onAccent);
+      --r:6px;--stage:#0b0b0c;--xp-ink:#f2f0ea;--xp-ink2:#b4b2ab;
+      --brand-case:uppercase;
+      --mark:polygon(0 0,100% 0,100% 30%,70% 30%,70% 70%,100% 70%,100% 100%,0 100%,0 70%,30% 70%,30% 30%,0 30%);
+    }
+    /* the story, dressed loud: heavy capitals set tight, sharp corners, dark steel cards */
+    .xp-track{--xp-tt:uppercase;--xp-tw:400;--xp-tls:.01em;--xp-tlh:.95;--xp-ts:1.18;--xp-els:.3em;--xp-r:.45;--xp-card:rgba(242,240,234,.05)}
+    .xp-track .xp-stat .n,.xp-track .xp-plan .pr em{font-weight:400}
+    .nav .brand{font-weight:400;letter-spacing:.14em;font-size:clamp(18px,2vw,26px)}
+    .nav .brand i{width:16px;height:16px}
+    .nav a.l{letter-spacing:.12em;text-transform:uppercase;font-size:12.5px;font-weight:600}
+    .btn{border-radius:4px}
+  </style>
+</head>
+<body>
+  <div id="xp-root"></div>
+  <script src="./film-shell.js"></script>
+</body>
 </html>

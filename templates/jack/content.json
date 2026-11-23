@@ -3,170 +3,113 @@
     "title": "{name} — 3D Creator",
     "description": "Portfolio of {name}, a 3D creator specialising in 3D modeling, photorealistic rendering, motion design, branding and web design."
   },
-  "brand": {
-    "name": "Jack"
-  },
+  "brand": { "name": "Jack" },
   "nav": {
-    "about": "About",
-    "services": "Price",
-    "projects": "Projects",
-    "contact": "Contact"
-  },
-  "sections": {
-    "marquee": true,
-    "about": true,
-    "services": true,
-    "projects": true
-  },
-  "hero": {
-    "title": "Hi, i'm {name}",
-    "tagline": "a 3d creator driven by crafting striking and unforgettable projects",
-    "portrait": "./media/portrait.webp",
-    "portraitAlt": "Portrait of {name}",
-    "blend": true
-  },
-  "buttons": {
-    "contact": "Contact Me",
-    "project": "Live Project",
-    "visit": "Visit project"
-  },
-  "marquee": {
-    "label": "3D and motion showcase reel",
-    "row1": [
-      {
-        "image": "./media/reel-1.webp"
-      },
-      {
-        "image": "./media/reel-2.webp"
-      },
-      {
-        "image": "./media/reel-3.webp"
-      },
-      {
-        "image": "./media/reel-4.webp"
-      },
-      {
-        "image": "./media/reel-5.webp"
-      }
+    "links": [
+      { "label": "About", "href": "#facts-about" },
+      { "label": "Price", "href": "#steps-services" },
+      { "label": "Projects", "href": "#gallery-projects" }
     ],
-    "row2": [
-      {
-        "image": "./media/reel-6.webp"
-      },
-      {
-        "image": "./media/reel-7.webp"
-      },
-      {
-        "image": "./media/reel-8.webp"
-      },
-      {
-        "image": "./media/reel-9.webp"
-      },
-      {
-        "image": "./media/reel-10.webp"
-      }
-    ]
+    "cta": "Contact",
+    "ctaHref": "#start"
   },
-  "about": {
-    "title": "About me",
-    "text": "With more than five years of experience in design, i focus on branding, web design, and user experience, i truly enjoy working with businesses that aim to stand out and present their best image. Let's build something incredible together!",
-    "decor1": "./media/decor1.webp",
-    "decor2": "./media/decor2.webp",
-    "decor3": "./media/decor3.webp",
-    "decor4": "./media/decor4.webp",
-    "blend": true
+  "film": {
+    "on": true,
+    "order": "hero gallery-reel facts-about steps-services gallery-projects visit-contact finale",
+    "logic": "orbit",
+    "look": "stars",
+    "opening": "spin",
+    "motion": "pop",
+    "hero": {
+      "title": "Hi, I’m\n{name}",
+      "text": "a 3d creator driven by crafting striking and unforgettable projects",
+      "cta": "Contact me",
+      "ctaHref": "#start",
+      "comp": "center",
+      "plate": "./media/project-1c.webp"
+    },
+    "gallery-reel": {
+      "on": true,
+      "eyebrow": "Showcase reel",
+      "title": "Made in 3D",
+      "text": "",
+      "items": [
+        { "image": "./media/reel-1.webp", "title": "Sculpt study", "text": "Soft forms, glossy light" },
+        { "image": "./media/reel-6.webp", "title": "Sneaker", "text": "Product lookdev" },
+        { "image": "./media/reel-4.webp", "title": "Headphones", "text": "Studio render" },
+        { "image": "./media/reel-9.webp", "title": "Perfume", "text": "Glass and liquid" },
+        { "image": "./media/reel-3.webp", "title": "Island", "text": "A tiny world" }
+      ],
+      "comp": "stage",
+      "plate": ""
+    },
+    "facts-about": {
+      "on": true,
+      "eyebrow": "About me",
+      "title": "Design with\nan edge",
+      "text": "I enjoy working with businesses that aim to stand out and show their best image. Let’s build something incredible together.",
+      "items": [
+        { "icon": "star", "label": "Experience", "value": "More than five years in design" },
+        { "icon": "layers", "label": "Focus", "value": "Branding, web design and user experience" },
+        { "icon": "heart", "label": "Best with", "value": "Businesses that want to stand out" }
+      ],
+      "comp": "side",
+      "plate": ""
+    },
+    "steps-services": {
+      "on": true,
+      "eyebrow": "Services",
+      "title": "What I\nmake",
+      "text": "",
+      "items": [
+        { "title": "3D modeling", "text": "Detailed objects, characters and environments, made for games, products and visualization." },
+        { "title": "Rendering", "text": "Photoreal renders with custom lighting, textures and materials that bring a concept to life." },
+        { "title": "Motion design", "text": "Animation and motion graphics that add energy and story to brands and products." },
+        { "title": "Branding", "text": "Cohesive visual identities, from logos to full brand systems, with a memorable presence." },
+        { "title": "Web design", "text": "Clean, modern, conversion-focused sites with care for layout, type and user experience." }
+      ],
+      "comp": "flip",
+      "plate": ""
+    },
+    "gallery-projects": {
+      "on": true,
+      "eyebrow": "Projects",
+      "title": "Selected work",
+      "text": "",
+      "items": [
+        { "image": "./media/project-1b.webp", "title": "Nextlevel Studio", "text": "Client, 2026. Spatial scenes and an interactive web experience." },
+        { "image": "./media/project-2b.webp", "title": "Aura Brand Identity", "text": "Personal, 2026. Glass shaders, packaging renders, motion type." },
+        { "image": "./media/project-3a.webp", "title": "Solaris Digital", "text": "Client, 2026. Architectural lighting and a kinetic 3D web flagship." }
+      ],
+      "comp": "stage",
+      "plate": ""
+    },
+    "visit-contact": {
+      "on": true,
+      "eyebrow": "Start a project",
+      "title": "Let’s\ncollaborate",
+      "text": "Tell me about your timeline, creative goals and deliverables.",
+      "cta": "Send a brief",
+      "ctaHref": "mailto:hello@example.com?subject=Project%20brief",
+      "items": [
+        { "icon": "mail", "label": "Email", "value": "hello@example.com" },
+        { "icon": "clock", "label": "Reply", "value": "Within two working days" },
+        { "icon": "globe", "label": "Based", "value": "Remote, working worldwide" }
+      ],
+      "comp": "side",
+      "plate": ""
+    },
+    "finale": {
+      "on": true,
+      "title": "Let’s make\nsomething unforgettable",
+      "text": "New projects are open. Say hello.",
+      "cta": "Contact me",
+      "ctaHref": "mailto:hello@example.com?subject=Project%20brief",
+      "comp": "center",
+      "plate": ""
+    }
   },
-  "services": {
-    "title": "Services",
-    "items": [
-      {
-        "number": "01",
-        "name": "3D Modeling",
-        "description": "Creation of detailed objects, characters, or environments tailored to specific client needs, ideal for games, products, and visualizations."
-      },
-      {
-        "number": "02",
-        "name": "Rendering",
-        "description": "High-quality, photorealistic renders that showcase designs with custom lighting, textures, and materials to bring concepts to life."
-      },
-      {
-        "number": "03",
-        "name": "Motion Design",
-        "description": "Dynamic animations and motion graphics that add energy and storytelling to brands, products, and digital experiences."
-      },
-      {
-        "number": "04",
-        "name": "Branding",
-        "description": "Crafting cohesive visual identities -- from logos to full brand systems -- that communicate a clear and memorable presence."
-      },
-      {
-        "number": "05",
-        "name": "Web Design",
-        "description": "Designing clean, modern, and conversion-focused websites with attention to layout, typography, and user experience."
-      }
-    ]
-  },
-  "projects": {
-    "title": "Project",
-    "items": [
-      {
-        "number": "01",
-        "name": "Nextlevel Studio",
-        "category": "Client",
-        "year": "2026",
-        "summary": "Complete 3D visual direction, custom spatial scenes, and interactive web experience crafted to position Nextlevel Studio as a standout digital production house.",
-        "deliverables": "3D Environment Modeling, Octane Rendering, Interactive Web UI",
-        "image1": "./media/project-1a.webp",
-        "image2": "./media/project-1b.webp",
-        "image3": "./media/project-1c.webp",
-        "link": ""
-      },
-      {
-        "number": "02",
-        "name": "Aura Brand Identity",
-        "category": "Personal",
-        "year": "2026",
-        "summary": "Sculptural material exploration and brand identity system blending iridescent glass shaders, bespoke packaging renders, and editorial motion typography.",
-        "deliverables": "Brand Identity System, Shader & Material Lookdev, Motion Graphics",
-        "image1": "./media/project-2a.webp",
-        "image2": "./media/project-2b.webp",
-        "image3": "./media/project-2c.webp",
-        "link": ""
-      },
-      {
-        "number": "03",
-        "name": "Solaris Digital",
-        "category": "Client",
-        "year": "2026",
-        "summary": "Photorealistic architectural lighting studies and high-conversion web flagship designed around kinetic 3D hero visuals and precision grid geometry.",
-        "deliverables": "3D Product Visualization, Web Design, Art Direction",
-        "image1": "./media/project-3a.webp",
-        "image2": "./media/project-3b.webp",
-        "image3": "./media/project-3c.webp",
-        "link": ""
-      }
-    ]
-  },
-  "contact": {
-    "kicker": "Start a Project",
-    "title": "Let's Collaborate",
-    "nameLabel": "Your Name",
-    "namePlaceholder": "Alex Mercer",
-    "emailLabel": "Email Address",
-    "emailPlaceholder": "alex@studio.com",
-    "serviceLabel": "Service Focus",
-    "briefLabel": "Project Brief",
-    "briefPlaceholder": "Tell me about your timeline, creative goals, and deliverables...",
-    "prefill": "Hi {name}, I loved {project} and would like to discuss a similar 3D / design project.",
-    "button": "Send Message",
-    "thanksTitle": "Inquiry Sent",
-    "thanksText": "Thanks {visitor}. Your {service} brief has been received and {name} will get back to you at {email}.",
-    "done": "Done",
-    "error": "The message could not be sent. Please try again.",
-    "email": "hello@example.com",
-    "formAction": ""
-  },
-  "footer": "",
+  "footer": { "note": "© {year} {name}. 3D creator.", "email": "hello@example.com" },
   "theme": {
     "colors": {
       "page": "#0c0c0c",
@@ -182,15 +125,17 @@
       "grad4": "#be4c00",
       "buttonText": "#ffffff"
     },
-    "fonts": {
-      "display": "Kanit"
-    }
+    "fonts": { "display": "Kanit" },
+    "radius": 14
   },
-  "motion": {
-    "animate": true,
-    "marqueeSpeed": 0.3,
-    "magnet": 3,
-    "cardStack": true
+  "character": {
+    "src": "/assets/3d/abstract/abstract-torus-knot-001.glb",
+    "poster": "/assets/previews/abstract-torus-knot-001.webp",
+    "name": "Knot study",
+    "wordmark": "JACK",
+    "turn": -20,
+    "echo": false
   },
+  "design": { "stops": ["#0c0c0c", "#b600a8", "#18011f"], "style": "glow", "angle": 160 },
   "extras": []
 }

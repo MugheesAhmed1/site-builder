@@ -34,3 +34,18 @@ export function characterDefaults(colors?: Record<string, string>, tone?: "dark"
 export function filmDefaults(): Content;
 /** A template's schema and content with the character's groups and defaults in place. */
 export function withCharacter(schema: SchemaGroup[], content: Content, roles?: { stage?: "dark" | "light" }): { schema: SchemaGroup[]; content: Content };
+/** A template's own story (docs/FILM-TEMPLATES.md): the scenes, layouts, camera logics and moods plan.ts plays. */
+export const SCENE_TYPES: string[];
+export const SCENE_COMPS: Record<string, string[]>;
+export const SCENE_LOGICS: string[];
+export const SCENE_LOOKS: string[];
+export const SCENE_OPENINGS: string[];
+export const SCENE_MOTIONS: string[];
+export const SCENE_CAPS: Record<string, number>;
+export function sceneType(id: string): string | null;
+export function sceneOrder(film: Content | undefined): string[];
+export function hasPlan(content: Content | undefined): boolean;
+/** The editing fields for a template's own plan of scenes. */
+export function filmSchema(film: Content): SchemaGroup[];
+/** A plan with every value its fields edit filled in (what a template's content.json leaves out starts empty). */
+export function normalizeFilm(film: Content): Content;

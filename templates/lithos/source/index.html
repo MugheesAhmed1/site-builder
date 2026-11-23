@@ -1,18 +1,36 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lithos</title>
-    <meta name="description" content="" />
-    <meta property="og:title" content="" />
-    <meta property="og:description" content="" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <script src="./xp-content.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="en" data-nav="split" data-foot="cols">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lithos</title>
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+  <script src="./xp-content.js"></script>
+  <link rel="stylesheet" href="./film-shell.css">
+  <style>
+    /* Lithos: a geology course told around one heap of rock (docs/FILM-TEMPLATES.md). The story
+       is drawn by xp-lib/xp-character.js from content.film; this page brings its black and burnt
+       orange, its serif headlines and the menu. Every colour, font and word comes from xp-content.js. */
+    :root{
+      --c-accent:#e8702a;--c-accentHover:#d2611f;--c-text:#ffffff;--c-page:#000000;--c-panel:#0a0a0a;--c-button:#ffffff;--c-buttonText:#111827;
+      --f-display:"Playfair Display";--f-body:"Inter";
+      --bg:var(--c-page);--surface:var(--c-panel);--ink:var(--c-text);--mut:color-mix(in oklab,var(--c-text) 62%,var(--c-page));--line:color-mix(in oklab,var(--c-text) 16%,transparent);--acc:var(--c-accent);--onacc:var(--c-page);
+      --r:8px;--stage:#000000;--xp-ink:#ffffff;--xp-ink2:#c4bdb6;
+      --brand-case:uppercase;
+      --mark:polygon(0 100%,0 62%,22% 40%,36% 54%,58% 18%,80% 46%,100% 30%,100% 100%);
+    }
+    /* the story, dressed like a field guide: a serif at an easy weight, tight corners, warm stone cards */
+    .xp-track{--xp-tt:none;--xp-tw:500;--xp-tls:-.015em;--xp-tlh:1.04;--xp-ts:1.12;--xp-els:.3em;--xp-r:.8;--xp-card:rgba(255,236,220,.06)}
+    .nav .brand{font-weight:600;letter-spacing:.2em;font-size:clamp(15px,1.6vw,20px)}
+    .nav .brand i{width:20px;height:14px}
+    .nav a.l{letter-spacing:.04em;font-weight:500}
+  </style>
+</head>
+<body>
+  <div id="xp-root"></div>
+  <script src="./film-shell.js"></script>
+</body>
 </html>

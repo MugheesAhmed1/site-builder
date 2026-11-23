@@ -9,19 +9,13 @@
 // finale) that take their words from content.film and their colours from the character's own
 // gradient, so one story fits any model and any template.
 import type { Film, Track, TrackKey } from "./film";
+import { BASE, HEX, NOW, clamp, esc, flag, icon, lines, sampler, smooth, str, visibility } from "./scene-kit";
+import type { Data, ElSpec, SceneInfo, Script, Slot, Variant } from "./scene-kit";
+import { mountAir, type Air } from "./air";
+import { buildPlan, filmPlan, type FilmPlan } from "./plan";
 
-type Data = Record<string, any>;
-
-const clamp = (v: number, a = 0, b = 1) => Math.max(a, Math.min(b, v));
-const smooth = (a: number, b: number, x: number) => {
-  const t = clamp((x - a) / (b - a));
-  return t * t * (3 - 2 * t);
-};
-const str = (v: unknown, d = "") => (typeof v === "string" ? v : d);
-const flag = (v: unknown, d: boolean) => (typeof v === "boolean" ? v : d);
-const ESC: Record<string, string> = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
-const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ESC[c]);
-const HEX = /^#[0-9a-f]{6}$/i;
+export { ICON_NAMES, icon, sampler, visibility } from "./scene-kit";
+export type { ElSpec, SceneInfo, Script, Variant } from "./scene-kit";
 
 // ---------------------------------------------------------------- content
 
@@ -70,96 +64,14 @@ export function filmContent(data: Data, name = ""): FilmContent {
 
 // ---------------------------------------------------------------- the script
 
-export interface Variant {
-  /** A phone-shaped screen: one column. */
-  narrow: boolean;
-  /** A wide, low model (a car, a boat) rather than a tall one (a person, a bird). */
-  flat: boolean;
-}
 
-export interface ElSpec {
-  id: string;
-  kind: string;
-  html: string;
-  /** Where its anchor point sits, as fractions of the screen. */
-  x: number;
-  y: number;
-  /** Which part of the element sits on that point (0 left or top, 0.5 middle, 1 right or bottom). */
-  ax?: number;
-  ay?: number;
-  /** Width in units (see Unit): empty means as wide as its words. */
-  w?: number;
-  /** Fades in from t0 to t1, out from t2 to t3 (hundredths of a screen of scrolling). */
-  fade: [number, number, number, number];
-  /** Sits below another element (its id) with this gap in units, whatever height its words make. */
-  after?: string;
-  gap?: number;
-  /** Rises this many units into place. */
-  rise?: number;
-  /** Drifts this fraction of the screen's height upward over a screen of scrolling. */
-  drift?: number;
-}
 
-export interface SceneInfo {
-  id: string;
-  slug: string;
-  at: number;
-  len: number;
-}
-
-export interface Script {
-  len: number;
-  keys: TrackKey[];
-  els: ElSpec[];
-  scenes: SceneInfo[];
-}
-
-type Slot = [number, number, number, number];
-
-const BASE: TrackKey = { lift: 0, t: 0, cx: 0.5, cy: 0.5, w: 0.5, h: 0.5, yaw: 0, elev: 8, align: 0, presence: 1, ring: 0, floor: 1, dust: 0.5, halo: 0, word: 0, glow: 0, pulse: 1 };
 
 /** Scene lengths, in hundredths of a screen of scrolling. */
 const LEN = { hero: 150, specs: 125, ring: 195, paint: 150, voices: 140, finale: 100 };
 
-/** The never-fading start: an element already there when the page opens. */
-const NOW = -100;
 
-function lines(s: string): string {
-  return s
-    .split(/\n+/)
-    .filter(Boolean)
-    .map((l) => `<span class="l">${esc(l)}</span>`)
-    .join("");
-}
 
-const PATHS: Record<string, string> = {
-  bolt: "M13 2 4 14h7l-1 8 9-12h-7z",
-  gauge: "M12 14l4-4M3.5 17a9 9 0 1 1 17 0",
-  clock: "M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z",
-  battery: "M3 8h15v8H3zM18 11h3v2h-3z",
-  seat: "M8 4v8a3 3 0 0 0 3 3h6M8 12H5v5h13v3",
-  wind: "M3 8h11a3 3 0 1 0-3-3M3 12h16a3 3 0 1 1-3 3M3 16h8",
-  weight: "M6 20h12l-1.5-11h-9zM9.5 9a2.5 2.5 0 1 1 5 0",
-  shield: "M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z",
-  star: "M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z",
-  heart: "M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.6-7 10-7 10z",
-  wave: "M3 12c2-4 4-4 6 0s4 4 6 0 4-4 6 0",
-  leaf: "M5 19c0-8 5-14 14-14 0 9-6 14-14 14zM5 19l7-7",
-  spark: "M12 3v5M12 16v5M3 12h5M16 12h5M6 6l3 3M15 15l3 3M18 6l-3 3M9 15l-3 3",
-  globe: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18",
-  check: "M5 12.5l4.5 4.5L19 7.5",
-  pulse: "M3 12h4l2-6 4 12 2-6h6",
-  down: "M12 4v11M7 11l5 5 5-5M5 20h14",
-  range: "M3 15l12-12 6 6L9 21zM8 10l2 2M11 7l2 2M5 13l2 2",
-  layers: "M12 3l9 5-9 5-9-5zM3 13l9 5 9-5",
-  chip: "M7 7h10v10H7zM9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4",
-  sun: "M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19",
-  flame: "M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 2 1 2 0-3 1-5 2-8z",
-  pin: "M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11zM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z",
-  clockfast: "M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0zM2 5l3-2M22 5l-3-2",
-};
-export const ICON_NAMES = Object.keys(PATHS);
-export const icon = (name: string) => `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="${PATHS[name] || PATHS.spark}"/></svg>`;
 
 /** Where the cards go: a column of up to three on each side, evenly spread. */
 function cardSlots(n: number): { side: "l" | "r"; y: number }[] {
@@ -388,60 +300,6 @@ export function buildScript(c: FilmContent, v: Variant, opening: boolean): Scrip
   return { len: Math.max(at, 1), keys, els, scenes };
 }
 
-// ---------------------------------------------------------------- sampling the keys
-
-/** A smooth curve through the keys that never overshoots one (a monotone cubic, per value). */
-export function sampler(keys: TrackKey[]): (t: number) => TrackKey {
-  const names = Object.keys(BASE).filter((n) => n !== "t") as (keyof TrackKey)[];
-  const n = keys.length;
-  const tang: Record<string, number[]> = {};
-  for (const name of names) {
-    const d: number[] = [];
-    const m = new Array(n).fill(0);
-    for (let i = 0; i < n - 1; i++) d.push((keys[i + 1][name] - keys[i][name]) / Math.max(1e-6, keys[i + 1].t - keys[i].t));
-    for (let i = 1; i < n - 1; i++) {
-      if (d[i - 1] * d[i] <= 0) m[i] = 0;
-      else {
-        const h0 = keys[i].t - keys[i - 1].t;
-        const h1 = keys[i + 1].t - keys[i].t;
-        const w1 = 2 * h1 + h0;
-        const w2 = h1 + 2 * h0;
-        m[i] = (w1 + w2) / (w1 / d[i - 1] + w2 / d[i]);
-      }
-    }
-    if (n > 1) {
-      m[0] = d[0];
-      m[n - 1] = d[n - 2];
-    }
-    tang[name] = m;
-  }
-  return (t: number) => {
-    if (n === 1 || t <= keys[0].t) return keys[0];
-    if (t >= keys[n - 1].t) return keys[n - 1];
-    let i = 0;
-    while (i < n - 2 && keys[i + 1].t <= t) i++;
-    const a = keys[i];
-    const b = keys[i + 1];
-    const h = b.t - a.t;
-    const s = (t - a.t) / h;
-    const s2 = s * s;
-    const s3 = s2 * s;
-    const out = { t } as TrackKey;
-    for (const name of names) {
-      const m = tang[name];
-      (out as unknown as Record<string, number>)[name] = (2 * s3 - 3 * s2 + 1) * a[name] + (s3 - 2 * s2 + s) * h * m[i] + (-2 * s3 + 3 * s2) * b[name] + (s3 - s2) * h * m[i + 1];
-    }
-    return out;
-  };
-}
-
-/** How visible an element is at a moment: 0 to 1, in then out. */
-export function visibility(f: [number, number, number, number], t: number): { vis: number; arrive: number; leave: number } {
-  const arrive = f[1] <= f[0] ? (t >= f[0] ? 1 : 0) : smooth(f[0], f[1], t);
-  const leave = f[3] <= f[2] ? (t >= f[2] ? 0 : 1) : 1 - smooth(f[2], f[3], t);
-  return { vis: arrive * leave, arrive, leave };
-}
-
 // ---------------------------------------------------------------- the page
 
 const STYLE = `.xp-track{position:relative;--u:9.6px;--xp-t-ink:#f3f3f6;--xp-t-ink2:rgba(255,255,255,.66);--xp-t-line:rgba(255,255,255,.12);--xp-t-glass:rgba(255,255,255,.05);--xp-t-bg:#0b0b0e;--xp-t-accent:#8b6cff;color:var(--xp-t-ink);font-family:var(--f-body,system-ui),system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
@@ -463,7 +321,7 @@ const STYLE = `.xp-track{position:relative;--u:9.6px;--xp-t-ink:#f3f3f6;--xp-t-i
 .xp-btn:focus-visible,.xp-sw:focus-visible{outline:2px solid var(--xp-t-ink);outline-offset:3px}
 .xp-cue{display:grid;justify-items:center;gap:8px;font-size:max(9px,calc(.8*var(--u)));letter-spacing:.3em;text-transform:uppercase;color:var(--xp-t-ink2)}
 .xp-cue i{width:1px;height:calc(3.2*var(--u));background:linear-gradient(var(--xp-t-ink2),transparent)}
-.xp-chip{display:inline-flex;align-items:center;gap:max(7px,calc(.8*var(--u)));height:max(32px,calc(3.7*var(--u)));padding:0 max(13px,calc(1.4*var(--u))) 0 max(11px,calc(1.1*var(--u)));border-radius:999px;background:var(--xp-t-glass);border:1px solid var(--xp-t-line);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);white-space:nowrap;font-size:max(11.5px,calc(1.18*var(--u)))}
+.xp-chip{display:inline-flex;align-items:center;gap:max(7px,calc(.8*var(--u)));min-height:max(32px,calc(3.7*var(--u)));padding:max(4px,calc(.4*var(--u))) max(13px,calc(1.4*var(--u))) max(4px,calc(.4*var(--u))) max(11px,calc(1.1*var(--u)));border-radius:999px;background:var(--xp-t-glass);border:1px solid var(--xp-t-line);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);max-width:min(90vw,calc(48*var(--u)));font-size:max(11.5px,calc(1.18*var(--u)))}
 .xp-chip svg{width:1.35em;height:1.35em;flex:none;opacity:.7}
 .xp-chip b{font-weight:700}
 .xp-chip i{font-style:normal;color:var(--xp-t-ink2)}
@@ -484,6 +342,81 @@ const STYLE = `.xp-track{position:relative;--u:9.6px;--xp-t-ink:#f3f3f6;--xp-t-i
 .xp-quote .who{display:block;margin-top:max(12px,calc(1.4*var(--u)));font-size:max(12px,calc(1.3*var(--u)));color:var(--xp-t-ink2)}
 .xp-quote .who b{color:var(--xp-t-ink);font-weight:700}
 @media (prefers-reduced-motion:reduce){.xp-btn,.xp-sw{transition:none}}`;
+
+/**
+ * What a template's own story adds (plan.ts): the scenes beyond the six fixed ones. A template's
+ * stylesheet can restyle all of it through these variables: --xp-tt (case of titles), --xp-tw
+ * (their weight), --xp-tls (letter spacing), --xp-tlh (line height), --xp-ts (title size, as a
+ * multiple of the usual one: 1.2 for a narrow face), --xp-els (eyebrow spacing), --xp-r (corner
+ * radius, in units) and --xp-card (a card's fill).
+ */
+const PLAN_STYLE = `.xp-air{position:absolute;inset:0;pointer-events:none}
+.xp-plate{background-size:cover;background-position:center;background-repeat:no-repeat;opacity:0}
+.xp-planned .xp-title{font-size:max(24px,calc(var(--xp-tf,4.6)*var(--xp-ts,1)*var(--u)));max-width:calc(var(--w,36)*var(--u)*max(1,var(--xp-ts,1)));text-transform:var(--xp-tt,uppercase);font-weight:var(--xp-tw,800);letter-spacing:var(--xp-tls,-.012em);line-height:var(--xp-tlh,.97);text-wrap:balance}
+.xp-planned .xp-head{text-transform:var(--xp-tt,uppercase);font-weight:var(--xp-tw,800);letter-spacing:var(--xp-tls,-.005em)}
+.xp-planned .xp-quote p{text-transform:var(--xp-tt,uppercase);font-weight:var(--xp-tw,700);letter-spacing:var(--xp-tls,-.005em)}
+.xp-planned .xp-text{text-wrap:pretty}
+.xp-planned .xp-eyebrow{letter-spacing:var(--xp-els,.26em)}
+.xp-planned .xp-card,.xp-planned .xp-plan,.xp-planned .xp-person,.xp-planned .xp-ask,.xp-planned .xp-pic .img{border-radius:max(12px,calc(var(--xp-r,1.7)*var(--u)))}
+.xp-planned .xp-card,.xp-planned .xp-plan,.xp-planned .xp-person,.xp-planned .xp-ask{background:var(--xp-card,var(--xp-t-glass))}
+.xp-planned .xp-chip{border-radius:max(12px,calc(var(--xp-r,1.7)*var(--u)*1.2))}
+.xp-planned .xp-btn{border-radius:max(10px,calc(var(--xp-r,1.7)*var(--u)*2.4))}
+.xp-c{text-align:center}
+.xp-stack{display:grid;justify-items:center;gap:max(10px,calc(1.3*var(--u)));width:min(calc(var(--w,36)*var(--u)),calc(100vw - 28px))}
+.xp-stack .xp-title{max-width:100%}
+.xp-stack .xp-text{max-width:100%;margin:0}
+.xp-stack .xp-cta{margin-top:max(4px,calc(.5*var(--u)))}
+.xp-r{text-align:right}
+.xp-title.xp-c,.xp-text.xp-c{margin-inline:auto}
+.xp-stat{width:calc(var(--w,20)*var(--u));display:grid;gap:max(4px,calc(.5*var(--u)));padding-top:max(10px,calc(1.2*var(--u)));border-top:2px solid var(--xp-t-accent)}
+.xp-stat .n{font-family:var(--f-display,var(--f-body)),system-ui,sans-serif;font-weight:var(--xp-tw,800);font-size:max(36px,calc(6.6*var(--u)));line-height:.95;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.xp-stat .lb{font-size:max(11px,calc(1.2*var(--u)));letter-spacing:.14em;text-transform:uppercase;color:var(--xp-t-ink2);font-weight:600}
+.xp-stat.xp-c,.xp-stat.xp-r{border-top-color:var(--xp-t-accent)}
+.xp-stat.xp-r{text-align:right}
+.xp-step{width:calc(var(--w,31)*var(--u));display:grid;gap:max(6px,calc(.7*var(--u)));padding-left:max(14px,calc(1.7*var(--u)));border-left:2px solid var(--xp-t-accent)}
+.xp-step .no{font-size:max(12px,calc(1.3*var(--u)));letter-spacing:.2em;color:var(--xp-t-accent);font-weight:700}
+.xp-step b{font-family:var(--f-display,var(--f-body)),system-ui,sans-serif;font-size:max(22px,calc(3*var(--u)));line-height:1.04;font-weight:var(--xp-tw,800);text-transform:var(--xp-tt,uppercase);letter-spacing:var(--xp-tls,-.005em)}
+.xp-step .tx{font-size:max(13px,calc(1.55*var(--u)));line-height:1.45;color:var(--xp-t-ink2)}
+.xp-ask{width:calc(var(--w,31)*var(--u));display:grid;gap:max(8px,calc(.9*var(--u)));padding:max(16px,calc(2*var(--u)));border:1px solid var(--xp-t-line);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.xp-ask .q{font-family:var(--f-display,var(--f-body)),system-ui,sans-serif;font-size:max(19px,calc(2.5*var(--u)));line-height:1.1;font-weight:var(--xp-tw,700);text-transform:var(--xp-tt,uppercase)}
+.xp-ask .tx{font-size:max(13px,calc(1.5*var(--u)));line-height:1.5;color:var(--xp-t-ink2)}
+.xp-node{display:flex;align-items:center;color:var(--xp-t-ink2)}
+.xp-node i{display:grid;place-items:center;width:max(28px,calc(3.2*var(--u)));height:max(28px,calc(3.2*var(--u)));border-radius:50%;border:1.5px solid var(--xp-t-line);font-style:normal;font-size:max(11px,calc(1.2*var(--u)));font-weight:700;background:var(--xp-t-glass);transition:background-color .35s ease,color .35s ease,border-color .35s ease,transform .35s ease}
+.xp-node::after{content:"";width:max(8px,calc(1.2*var(--u)));height:1.5px;background:var(--xp-t-line)}
+.xp-node.xp-last::after{display:none}
+.xp-node.is-on i{background:var(--xp-t-accent);border-color:var(--xp-t-accent);color:var(--xp-t-bg);transform:scale(1.08)}
+.xp-fact{width:calc(var(--w,34)*var(--u));display:flex;align-items:center;gap:max(12px,calc(1.3*var(--u)));padding:max(6px,calc(.7*var(--u))) 0;border-bottom:1px solid var(--xp-t-line)}
+.xp-fact .ic{display:grid;place-items:center;flex:none;width:max(32px,calc(3.4*var(--u)));height:max(32px,calc(3.4*var(--u)));border-radius:50%;border:1px solid var(--xp-t-line);color:var(--xp-t-accent)}
+.xp-fact .ic svg{width:52%;height:52%}
+.xp-fact .tx{display:grid;gap:2px}
+.xp-fact .tx i{font-style:normal;font-size:max(10px,calc(1*var(--u)));letter-spacing:.16em;text-transform:uppercase;color:var(--xp-t-ink2);font-weight:600}
+.xp-fact .tx b{font-size:max(14px,calc(1.5*var(--u)));font-weight:600;line-height:1.25}
+.xp-pic{width:calc(var(--w,17.5)*var(--u));display:grid;gap:max(6px,calc(.7*var(--u)));align-content:start}
+.xp-pic .img{display:block;aspect-ratio:4/3;overflow:hidden;background:var(--xp-t-glass);border:1px solid var(--xp-t-line)}
+.xp-pic .img img{display:block;width:100%;height:100%;object-fit:cover}
+.xp-pic b{font-size:max(13px,calc(1.5*var(--u)));font-weight:700;line-height:1.2;margin-top:max(2px,calc(.3*var(--u)))}
+.xp-pic .tx{font-size:max(11.5px,calc(1.2*var(--u)));line-height:1.4;color:var(--xp-t-ink2)}
+.xp-person{width:calc(var(--w,20)*var(--u));display:grid;gap:max(4px,calc(.5*var(--u)));justify-items:start;padding:max(14px,calc(1.8*var(--u)));border:1px solid var(--xp-t-line);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.xp-person .av{display:grid;place-items:center;width:max(44px,calc(5*var(--u)));height:max(44px,calc(5*var(--u)));border-radius:50%;overflow:hidden;background:var(--xp-t-accent);color:var(--xp-t-bg);margin-bottom:max(6px,calc(.8*var(--u)))}
+.xp-person .av img{width:100%;height:100%;object-fit:cover}
+.xp-person .av i{font-style:normal;font-weight:800;font-size:max(18px,calc(2.1*var(--u)))}
+.xp-person b{font-size:max(14px,calc(1.6*var(--u)));font-weight:700;line-height:1.2}
+.xp-person .rl{font-style:normal;font-size:max(11px,calc(1.1*var(--u)));letter-spacing:.1em;text-transform:uppercase;color:var(--xp-t-accent);font-weight:600}
+.xp-person .tx{font-size:max(12px,calc(1.24*var(--u)));line-height:1.45;color:var(--xp-t-ink2);margin-top:max(2px,calc(.3*var(--u)))}
+.xp-plan{width:calc(var(--w,23)*var(--u));display:grid;gap:max(7px,calc(.8*var(--u)));align-content:start;padding:max(16px,calc(2*var(--u)));border:1px solid var(--xp-t-line);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.xp-plan.xp-is-featured{border-color:var(--xp-t-accent);box-shadow:0 0 0 1px var(--xp-t-accent),0 24px 60px -24px var(--xp-t-accent)}
+.xp-plan .tag{position:absolute;top:calc(-1 * max(10px,calc(1.1*var(--u))));left:max(14px,calc(1.6*var(--u)));padding:max(3px,calc(.35*var(--u))) max(10px,calc(1.1*var(--u)));border-radius:999px;background:var(--xp-t-accent);color:var(--xp-t-bg);font-size:max(10px,calc(1*var(--u)));font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.xp-plan .nm{font-family:var(--f-display,var(--f-body)),system-ui,sans-serif;font-size:max(17px,calc(2.1*var(--u)));font-weight:var(--xp-tw,700);text-transform:var(--xp-tt,uppercase);line-height:1.1}
+.xp-plan .pr{display:flex;align-items:baseline;gap:6px}
+.xp-plan .pr em{font-style:normal;font-family:var(--f-display,var(--f-body)),system-ui,sans-serif;font-size:max(30px,calc(4.4*var(--u)));font-weight:800;line-height:1;letter-spacing:-.02em}
+.xp-plan .pr small{font-size:max(11px,calc(1.15*var(--u)));color:var(--xp-t-ink2)}
+.xp-plan .tx{font-size:max(12px,calc(1.3*var(--u)));line-height:1.45;color:var(--xp-t-ink2)}
+.xp-plan ul{list-style:none;margin:max(2px,calc(.3*var(--u))) 0 max(4px,calc(.5*var(--u)));padding:0;display:grid;gap:max(5px,calc(.6*var(--u)))}
+.xp-plan li{display:flex;gap:max(8px,calc(.9*var(--u)));align-items:flex-start;font-size:max(12px,calc(1.25*var(--u)));line-height:1.35}
+.xp-plan li svg{flex:none;width:1.25em;height:1.25em;color:var(--xp-t-accent);margin-top:.05em}
+.xp-plan .xp-btn{justify-self:start;margin-top:max(2px,calc(.3*var(--u)))}
+.xp-quote.xp-c{text-align:center}
+@media (prefers-reduced-motion:reduce){.xp-node i{transition:none}}`;
 
 export interface Scenes {
   readonly track: HTMLElement;
@@ -521,13 +454,22 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
   if (!doc.getElementById("xp-scenes-style")) {
     const st = doc.createElement("style");
     st.id = "xp-scenes-style";
-    st.textContent = STYLE;
-    doc.head.appendChild(st);
+    st.textContent = STYLE + "\n" + PLAN_STYLE;
+    // First in the head, so a template's own stylesheet restyles the story when it wants to.
+    doc.head.insertBefore(st, doc.head.firstChild);
   }
   const brand = () => str(data.brand?.name) || str(data.character?.name);
   let content = filmContent(data, brand());
+  // A template that writes its own story (content.film.order) is played from its plan; any other
+  // page gets the one fixed story.
+  const planOf = (): FilmPlan | null => {
+    const p = filmPlan(data, brand());
+    return p && p.scenes.length ? p : null;
+  };
+  let plan: FilmPlan | null = planOf();
+  const scriptFor = (v: Variant) => (plan ? buildPlan(plan, v, o.opening) : buildScript(content, v, o.opening));
   let flat = true;
-  let script: Script = buildScript(content, { narrow: false, flat }, o.opening);
+  let script: Script = scriptFor({ narrow: false, flat });
   let sample = sampler(script.keys);
 
   const track = doc.createElement("section");
@@ -541,6 +483,8 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
   const bgSpot = doc.createElement("i");
   const bgFloor = doc.createElement("i");
   bg.append(bgSpot, bgFloor);
+  const air: Air = mountAir(doc, bg);
+  let plates: HTMLElement[] = [];
   track.appendChild(bg);
   const pin = doc.createElement("div");
   pin.className = "xp-pin";
@@ -553,11 +497,13 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
   else doc.body.appendChild(track);
 
   let spot: HTMLElement | null = null;
+  let builtIds = "";
   const nodes = new Map<string, HTMLElement>();
   let film: Film | null = null;
   let W = 0;
   let H = 0;
   let unit = 9.6;
+  let stackH = 0.27;
   let narrow = false;
   let raf = 0;
   let lastT = NaN;
@@ -565,6 +511,7 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
   const reduced = () => !!win.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
   // The track's colours come from the character's own gradient: its base, glow and second colour.
+  let stageBase = "#0d0d10";
   const paintTheme = () => {
     const d: Data = data.design || {};
     const st: string[] = Array.isArray(d.stops) ? d.stops.filter((x: unknown) => typeof x === "string") : [];
@@ -579,6 +526,8 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
     s.setProperty("--xp-t-glass", dark ? "rgba(255,255,255,.055)" : "rgba(255,255,255,.62)");
     s.setProperty("--xp-t-bg", base);
     s.setProperty("--xp-t-accent", glow);
+    stageBase = base;
+    air.set(plan?.look ?? "none", glow, dark ? "#ffffff" : "#101014", dark);
     // A spotlight from above over a deep, slightly lifting floor of the gradient's own colours.
     s.background = `linear-gradient(180deg, ${base} 0%, color-mix(in oklab, ${base} 70%, ${second}) 100%)`;
     const lit = `color-mix(in oklab, ${glow} 12%, ${dark ? "#ffffff" : "#ffffff"})`;
@@ -612,12 +561,24 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
     }
     for (const e of script.els) {
       const n = doc.createElement("div");
-      n.className = `xp-el xp-${e.kind === "swatches" ? "swatches" : e.kind}`;
+      // "stat r" is a stat with the r (right) variant: one class for each word.
+      n.className = `xp-el ${e.kind.split(" ").map((w) => `xp-${w}`).join(" ")}`;
       n.setAttribute("data-xp-el", e.id);
       n.innerHTML = e.html;
+      n.querySelectorAll<HTMLElement>("[data-count]").forEach((c) => (c.dataset.text = c.textContent || ""));
       pin.appendChild(n);
       nodes.set(e.id, n);
     }
+    // Pictures behind the room while a scene plays.
+    for (const pl of plates) pl.remove();
+    plates = (script.plates || []).map((pl) => {
+      const i = doc.createElement("i");
+      i.className = "xp-plate";
+      i.setAttribute("data-xp-plate", pl.id);
+      i.style.backgroundImage = `linear-gradient(180deg, color-mix(in oklab, ${stageBase} 58%, transparent), color-mix(in oklab, ${stageBase} 88%, transparent)), url("${pl.src.replace(/"/g, "%22")}")`;
+      bg.insertBefore(i, bgSpot);
+      return i;
+    });
     // Colour choices repaint the model.
     pin.querySelectorAll<HTMLButtonElement>(".xp-sw").forEach((b, i, all) => {
       b.addEventListener("click", () => {
@@ -634,12 +595,16 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
     narrow = W < 700 || W / H < 0.85;
     unit = narrow ? Math.max(8, W / 36) : Math.max(7, Math.min(W, H * 1.36) / 96);
     track.style.setProperty("--u", `${unit.toFixed(2)}px`);
-    const next = buildScript(content, { narrow, flat }, o.opening);
+    track.classList.toggle("xp-planned", !!plan);
+    if (plan) track.style.setProperty("--xp-tf", narrow ? "3.7" : "4.6");
+    else track.style.removeProperty("--xp-tf");
+    const next = scriptFor({ narrow, flat, stack: stackH });
     script = next;
     sample = sampler(next.keys);
+    air.resize(W, H);
     // Elements come and go with the screen's shape and the model's: draw them again if the set changed.
-    const ids = next.els.map((e) => e.id).join("|");
-    if (ids !== Array.from(nodes.keys()).join("|") || nodes.size === 0) build();
+    const ids = next.els.map((e) => e.id).join("|") + "#" + (next.plates || []).map((x) => x.src).join("|");
+    if (ids !== builtIds || nodes.size === 0) build(), (builtIds = ids);
     track.style.height = `${(script.len + 100) * (H / 100)}px`;
     pin.style.height = `${H}px`;
     // Words that sit below other words go where those words end, whatever size the font made them.
@@ -652,11 +617,25 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
       if (e.after && above && tops.has(e.after)) top = tops.get(e.after)! + above.offsetHeight + (e.gap ?? 1.5) * unit;
       tops.set(e.id, top);
       const spec = e;
-      n.style.left = `${spec.x * 100}%`;
+      // Something that ends at a line (right-aligned) hangs from the right edge, so it has the whole
+      // width left of that line to spread in instead of being squeezed into what is right of it.
+      const right = (spec.ax ?? 0) === 1;
+      const off = (spec.ox || 0) * unit;
+      if (right) (n.style.left = "auto"), (n.style.right = off ? `calc(${(1 - spec.x) * 100}% - ${off.toFixed(1)}px)` : `${(1 - spec.x) * 100}%`);
+      else (n.style.right = "auto"), (n.style.left = off ? `calc(${spec.x * 100}% + ${off.toFixed(1)}px)` : `${spec.x * 100}%`);
       n.style.top = `${top.toFixed(1)}px`;
-      n.style.translate = `${-(spec.ax ?? 0) * 100}% ${-(spec.ay ?? 0) * 100}%`;
+      n.style.translate = `${right ? 0 : -(spec.ax ?? 0) * 100}% ${-(spec.ay ?? 0) * 100}%`;
       if (spec.w) n.style.setProperty("--w", String(spec.w));
       else n.style.removeProperty("--w");
+    }
+    // The words that stand under the figure (opening and closing) are measured, and the figure's
+    // place is drawn again to clear them, whatever size the template's font made them.
+    let st = 0;
+    for (const e of script.els) if (e.kind.startsWith("stack")) st = Math.max(st, (nodes.get(e.id)?.offsetHeight || 0) / H);
+    if (st > 0 && Math.abs(st - stackH) > 0.012) {
+      stackH = st;
+      script = scriptFor({ narrow, flat, stack: stackH });
+      sample = sampler(script.keys);
     }
     if (spot) {
       const s = script.keys[0];
@@ -682,11 +661,16 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
     lastT = t;
     const calm = reduced();
     const far = t < -120 || t > script.len + 160;
+    air.active(!far);
     if (!far) {
       const k = sample(clamp(t, 0, script.len));
       bgSpot.style.opacity = (0.35 + 0.65 * (1 - k.halo * 0.6)).toFixed(2);
       bgFloor.style.opacity = clamp(k.floor).toFixed(2);
     }
+    (script.plates || []).forEach((pl, i) => {
+      const n = plates[i];
+      if (n) n.style.opacity = far ? "0" : visibility(pl.fade, t).vis.toFixed(3);
+    });
     for (const e of script.els) {
       const n = nodes.get(e.id);
       if (!n) continue;
@@ -698,10 +682,25 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
       }
       if (n.style.visibility !== "visible") n.style.visibility = "visible";
       n.style.opacity = vis.toFixed(3);
+      if (e.on) n.classList.toggle("is-on", t >= e.on[0] && t <= e.on[1]);
+      if (e.count) {
+        // Numbers count up while they arrive (and stay whole for a visitor who asked for calm).
+        const k = calm ? 1 : 1 - (1 - clamp((t - e.fade[0]) / Math.max(8, e.fade[1] - e.fade[0] + 14))) ** 3;
+        n.querySelectorAll<HTMLElement>("[data-count]").forEach((c) => {
+          const d = c.dataset;
+          const to = Number(d.count);
+          if (k >= 0.999 || !isFinite(to)) return void (c.textContent = d.text || "");
+          const dec = Number(d.dec) || 0;
+          const v = to * k;
+          c.textContent = `${d.pre || ""}${d.group === "1" ? v.toLocaleString("en-US", { minimumFractionDigits: dec, maximumFractionDigits: dec }) : v.toFixed(dec)}${d.suf || ""}`;
+        });
+      }
       if (calm) continue;
       const rise = (e.rise ?? 1) * unit;
       const dy = (1 - arrive) * rise - (1 - leave) * rise * 0.6 - (e.drift ? (e.drift * H * clamp((t - e.fade[0]) / 100, 0, 2)) : 0);
-      n.style.transform = `translate3d(0, ${dy.toFixed(1)}px, 0)`;
+      const dx = e.slide ? (1 - arrive) * e.slide * unit : 0;
+      const sc = e.pop ? e.pop + (1 - e.pop) * arrive : 1;
+      n.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0)${sc !== 1 ? ` scale(${sc.toFixed(3)})` : ""}`;
     }
   };
   const schedule = () => {
@@ -729,11 +728,15 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
   };
   doc.addEventListener("click", onClick);
 
-  (win as unknown as { __XP_SCENES__?: () => unknown }).__XP_SCENES__ = () => ({ len: script.len, t: Math.round(lastT * 10) / 10, narrow, flat, unit: Math.round(unit * 10) / 10, scenes: script.scenes, els: script.els.map((e) => ({ id: e.id, x: e.x, y: e.y, fade: e.fade })), keys: script.keys.length });
+  (win as unknown as { __XP_SCENES__?: () => unknown }).__XP_SCENES__ = () => ({ planned: !!plan, len: script.len, t: Math.round(lastT * 10) / 10, narrow, flat, unit: Math.round(unit * 10) / 10, scenes: script.scenes, els: script.els.map((e) => ({ id: e.id, x: e.x, y: e.y, fade: e.fade })), keys: script.keys.length });
 
   paintTheme();
   place();
   void doc.fonts?.ready?.then(() => alive && place());
+  // A face the page asks for after the first layout (a web font) changes how many lines a title takes:
+  // lay the words out again whenever one arrives, so what sits below a title still starts where it ends.
+  const onFonts = () => alive && place();
+  doc.fonts?.addEventListener?.("loadingdone", onFonts);
 
   return {
     track,
@@ -750,11 +753,16 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
     },
     update(next) {
       data = next;
-      paintTheme();
       const c = filmContent(data, brand());
-      if (JSON.stringify(c) === JSON.stringify(content) && (!!spot === (o.opening && !!str(data.character?.src)))) return false;
+      const p = planOf();
+      paintTheme();
+      if (JSON.stringify(p) === JSON.stringify(plan) && JSON.stringify(c) === JSON.stringify(content) && (!!spot === (o.opening && !!str(data.character?.src)))) return false;
       content = c;
+      const lookChanged = (p?.look ?? "none") !== (plan?.look ?? "none");
+      plan = p;
+      if (lookChanged) paintTheme();
       nodes.clear();
+      builtIds = "";
       place();
       return true;
     },
@@ -769,7 +777,9 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
       win.removeEventListener("scroll", onScroll);
       win.removeEventListener("resize", onResize);
       doc.removeEventListener("click", onClick);
+      doc.fonts?.removeEventListener?.("loadingdone", onFonts);
       film?.setTrack(null);
+      air.dispose();
       track.remove();
       if (host && host.isConnected) host.textContent = "";
     },

@@ -3,193 +3,132 @@
     "title": "{name}: built for people, read by machines",
     "description": "{name} detects AI agents at the edge and serves them a clean, token-light version of every page, without changing a pixel of what people see."
   },
-  "brand": {
-    "name": "Distill",
-    "showMark": true
-  },
+  "brand": { "name": "Distill" },
   "nav": {
-    "menus": [
-      {
-        "label": "Product",
-        "items": "Edge Agent Detection | Identify crawlers and LLM fetchers in under 2 ms at the CDN edge.\nSemantic HTML Distillation | Strip chrome, scripts, and layout bloat while keeping every fact intact.\nZero Visual Change | Human visitors receive your exact pixel-for-pixel production site."
-      },
-      {
-        "label": "Use cases",
-        "items": "Documentation & Knowledge Bases | Cut agent context windows by up to 94% across technical docs.\nE-Commerce Catalogs | Serve structured pricing, SKUs, and specs directly to shopping agents.\nEditorial & Research | Make long-form journalism and reports cleanly indexable by machines."
-      },
-      {
-        "label": "Resources",
-        "items": "Token Reduction Benchmarks | Compare raw DOM vs. distilled output across 10,000 production pages.\nEdge Integration Guide | Deploy in minutes on Cloudflare Workers, Fastly, or Vercel Edge.\nSpecification & Headers | Inspect Content-Signal and agent negotiation standards."
-      }
+    "links": [
+      { "label": "Product", "href": "#cards-product" },
+      { "label": "How it works", "href": "#steps-how" },
+      { "label": "Pages", "href": "#gallery-belt" },
+      { "label": "Pricing", "href": "#plans-pricing" }
     ],
-    "pricing": "Pricing",
-    "signin": "Sign in",
-    "trial": "Start a free trial",
-    "demo": "Book a demo"
+    "cta": "Book a demo",
+    "ctaHref": "#start"
   },
-  "hero": {
-    "eyebrow": "AI READABILITY",
-    "line1": "Built for people.",
-    "line2": "Read by machines.",
-    "text": "{name} detects AI agents at the edge and serves them a clean, token‑light version of every page, without changing a pixel of what people see.",
-    "button": "Explore {name}"
+  "film": {
+    "on": true,
+    "order": "hero stats-saved steps-how gallery-belt cards-product plans-pricing visit-start finale",
+    "logic": "flip",
+    "look": "sparks",
+    "opening": "spin",
+    "motion": "zoom",
+    "hero": {
+      "title": "Built for people.\nRead by machines.",
+      "text": "{name} detects AI agents at the edge and serves them a clean, token-light version of every page, without changing a pixel of what people see.",
+      "cta": "Explore {name}",
+      "ctaHref": "#steps-how",
+      "comp": "center",
+      "plate": "./media/alloy.webp"
+    },
+    "stats-saved": {
+      "on": true,
+      "eyebrow": "What it saves",
+      "title": "Less to read,\nnothing lost",
+      "text": "",
+      "items": [
+        { "value": "89%", "label": "Fewer tokens, on average" },
+        { "value": "< 2 ms", "label": "Added at the edge, global median" },
+        { "value": "0 bytes", "label": "Changed for people" },
+        { "value": "94%", "label": "Smaller context on technical docs" }
+      ],
+      "comp": "flank",
+      "plate": ""
+    },
+    "steps-how": {
+      "on": true,
+      "eyebrow": "How {name} works",
+      "title": "One origin.\nTwo representations.",
+      "text": "",
+      "items": [
+        { "title": "Detect", "text": "Identify crawlers and LLM fetchers in under 2 ms at the CDN edge." },
+        { "title": "Distil", "text": "Strip chrome, scripts and layout bloat while keeping every fact intact." },
+        { "title": "Serve", "text": "Agents get clean semantic HTML. People get your exact production site." }
+      ],
+      "comp": "flip",
+      "plate": ""
+    },
+    "gallery-belt": {
+      "on": true,
+      "eyebrow": "The belt",
+      "title": "Heavy pages in,\nclean pages out",
+      "text": "",
+      "items": [
+        { "image": "./media/home.webp", "title": "Home page", "text": "70,411 to 6,140 tokens" },
+        { "image": "./media/case.webp", "title": "Case study", "text": "98,432 to 6,300 tokens" },
+        { "image": "./media/vision1.webp", "title": "Vision page", "text": "55,870 to 8,215 tokens" },
+        { "image": "./media/alloy.webp", "title": "Product page", "text": "63,904 to 5,512 tokens" },
+        { "image": "./media/j1.webp", "title": "Journal", "text": "47,316 to 7,602 tokens" }
+      ],
+      "comp": "stage",
+      "plate": ""
+    },
+    "cards-product": {
+      "on": true,
+      "eyebrow": "Product and use cases",
+      "title": "Built for the way\nagents read",
+      "text": "",
+      "items": [
+        { "icon": "bolt", "title": "Edge agent detection", "text": "Identify crawlers and LLM fetchers in under 2 ms at the CDN edge." },
+        { "icon": "code", "title": "Semantic distillation", "text": "Strip chrome, scripts and layout bloat while keeping every fact intact." },
+        { "icon": "shield", "title": "Zero visual change", "text": "Human visitors receive your exact pixel-for-pixel production site." },
+        { "icon": "book", "title": "Docs and knowledge bases", "text": "Cut agent context windows by up to 94% across technical docs." },
+        { "icon": "cart", "title": "E-commerce catalogs", "text": "Serve structured pricing, SKUs and specs directly to shopping agents." },
+        { "icon": "globe", "title": "Editorial and research", "text": "Make long-form journalism and reports cleanly indexable by machines." }
+      ],
+      "comp": "flank",
+      "plate": ""
+    },
+    "plans-pricing": {
+      "on": true,
+      "eyebrow": "Transparent pricing",
+      "title": "Pay per\ndistilled request",
+      "text": "",
+      "hint": "Most teams",
+      "featured": 2,
+      "items": [
+        { "name": "Starter", "price": "$0", "per": "/ month", "text": "", "features": "Up to 50,000 agent reads a month\nEdge detection included", "cta": "Start a free trial", "ctaHref": "mailto:hello@distill.example?subject=Free%20trial" },
+        { "name": "Growth", "price": "$149", "per": "/ month", "text": "", "features": "1M agent reads a month\nCustom edge rules\nA token savings dashboard", "cta": "Start a free trial", "ctaHref": "mailto:hello@distill.example?subject=Free%20trial" },
+        { "name": "Enterprise", "price": "Custom", "per": "", "text": "", "features": "Dedicated points of presence\nSLA and SOC 2 Type II\nA named engineer", "cta": "Book a demo", "ctaHref": "mailto:hello@distill.example?subject=Demo" }
+      ],
+      "comp": "stage",
+      "plate": ""
+    },
+    "visit-start": {
+      "on": true,
+      "eyebrow": "Get started",
+      "title": "Live in minutes",
+      "text": "No changes to your site. Deploy at the edge and watch the savings climb.",
+      "cta": "Start a free trial",
+      "ctaHref": "mailto:hello@distill.example?subject=Free%20trial",
+      "items": [
+        { "icon": "globe", "label": "Runs on", "value": "Cloudflare Workers, Fastly or Vercel Edge" },
+        { "icon": "clock", "label": "Set up in", "value": "Minutes, with no code changes" },
+        { "icon": "shield", "label": "Free trial", "value": "14 days" },
+        { "icon": "chat", "label": "Questions?", "value": "Book a live walkthrough" }
+      ],
+      "comp": "side",
+      "plate": ""
+    },
+    "finale": {
+      "on": true,
+      "title": "Make every page\nreadable to machines.",
+      "text": "One site for people. A distilled one for agents.",
+      "cta": "Book a demo",
+      "ctaHref": "mailto:hello@distill.example?subject=Demo",
+      "comp": "center",
+      "plate": ""
+    }
   },
-  "badge": {
-    "label": "Token reduction",
-    "less": "% less"
-  },
-  "belt": {
-    "site": "Kessler",
-    "label": "Interactive comparison belt: drag to scrub between visual pages and distilled HTML",
-    "cards": [
-      {
-        "layout": "home",
-        "menu": "PRODUCTS, IMPACT, ABOUT",
-        "active": "",
-        "kicker": "",
-        "title": "Advanced materials for a stronger tomorrow.",
-        "emphasis": "",
-        "text": "",
-        "rows": "200x | stronger\n87% | lower emissions",
-        "button": "",
-        "image": "./media/home.webp",
-        "image2": "",
-        "image3": "",
-        "address": "kessler.co/",
-        "original": 70411,
-        "distilled": 6140,
-        "html": "<h1>Kessler — Advanced materials</h1>\n<p>Advanced materials for a stronger\ntomorrow. Ceramic-matrix alloys made\nwith desert sand and solar heat.</p>\n<h2>At a glance</h2>\n<ul>\n  <li>Strength: 200x steel by weight</li>\n  <li>Emissions: 87% lower</li>\n  <li>Plants: Nevada, Atacama, Oman</li>\n  <li>Founded: 2019</li>\n</ul>\n<h2>Products</h2>\n<ul>\n  <li>K-Alloy 7 — structural</li>\n  <li>Basalt fibre — tensile</li>\n  <li>Ceramic matrix — thermal</li>\n</ul>\n<a href=\"/demo\">Book a demo</a>"
-      },
-      {
-        "layout": "price",
-        "menu": "PRODUCTS, PRICING, CONTACT",
-        "active": "PRICING",
-        "kicker": "PER MONTH · INDUSTRIAL",
-        "title": "$2,400",
-        "emphasis": "",
-        "text": "",
-        "rows": "Pilot | $299\nIndustrial | $2,400\nFoundry | Custom",
-        "button": "Start a pilot",
-        "image": "",
-        "image2": "",
-        "image3": "",
-        "address": "kessler.co/pricing",
-        "original": 41208,
-        "distilled": 4960,
-        "html": "<h1>Kessler — Pricing</h1>\n<p>Three plans for every scale of\nproduction. Start small, scale to\nfull foundry output.</p>\n<h2>Pilot — $299 / mo</h2>\n<ul>\n  <li>Sample batches: 4 / mo</li>\n  <li>Alloy grades: 2</li>\n  <li>Support: email</li>\n</ul>\n<h2>Industrial — $2,400 / mo</h2>\n<ul>\n  <li>Tonnage: up to 40 t / mo</li>\n  <li>Alloy grades: all</li>\n  <li>Certification: ISO 9001</li>\n  <li>Support: dedicated engineer</li>\n</ul>"
-      },
-      {
-        "layout": "case",
-        "menu": "PRODUCTS, IMPACT, ABOUT",
-        "active": "",
-        "kicker": "CASE STUDY · ATLAS RAIL",
-        "title": "How Atlas Rail cut track weight by a third in eighteen months",
-        "emphasis": "",
-        "text": "",
-        "rows": "34% | lighter track\n3.4x | service life\n0 | unplanned closures",
-        "button": "",
-        "image": "./media/case.webp",
-        "image2": "",
-        "image3": "",
-        "address": "kessler.co/cases/atlas-rail",
-        "original": 98432,
-        "distilled": 6300,
-        "html": "<h1>Case study: Atlas Rail</h1>\n<p>How Atlas Rail cut track weight by\na third in eighteen months.</p>\n<h2>The challenge</h2>\n<p>1,200 km of desert line, rails\nwarping above 50 °C every summer.</p>\n<h2>The result</h2>\n<ul>\n  <li>34% lighter track sections</li>\n  <li>3.4x longer service life</li>\n  <li>0 unplanned closures in 2025</li>\n</ul>\n<p>We stopped losing summers.\n— Head of Infrastructure</p>"
-      },
-      {
-        "layout": "vision",
-        "menu": "PRODUCTS, VISION, ABOUT",
-        "active": "VISION",
-        "kicker": "",
-        "title": "The {site} vision:",
-        "emphasis": "materials that outlast the people who made them.",
-        "text": "How {site} pours alloy\nat the edge of the desert",
-        "rows": "",
-        "button": "",
-        "image": "./media/vision1.webp",
-        "image2": "./media/vision2.webp",
-        "image3": "",
-        "address": "kessler.co/vision",
-        "original": 55870,
-        "distilled": 8215,
-        "html": "<article>\n<h1>The Kessler vision</h1>\n<p>Materials that outlast the people\nwho made them.</p>\n<p>We build where the sun is\nstrongest and the sand is free:\nthree plants, one closed loop.</p>\n<h2>Principles</h2>\n<ol>\n  <li>Heat from the sun, not gas</li>\n  <li>Sand in, scrap back in</li>\n  <li>Publish every number</li>\n</ol>\n</article>"
-      },
-      {
-        "layout": "alloy",
-        "menu": "PRODUCTS, IMPACT, ABOUT",
-        "active": "",
-        "kicker": "",
-        "title": "The carbon‑negative",
-        "emphasis": "alloy.",
-        "text": "",
-        "rows": "Product | K-Alloy 7\nTensile | 1,940 MPa\nDatasheet | PDF ↗",
-        "button": "",
-        "image": "./media/alloy.webp",
-        "image2": "",
-        "image3": "",
-        "address": "kessler.co/products/k-alloy-7",
-        "original": 63904,
-        "distilled": 5512,
-        "html": "<h1>K-Alloy 7</h1>\n<p>The carbon-negative alloy.</p>\n<h2>Specification</h2>\n<ul>\n  <li>Tensile strength: 1,940 MPa</li>\n  <li>Density: 2.9 g/cm³</li>\n  <li>Max service temp: 1,150 °C</li>\n  <li>CO₂: −0.4 kg per kg made</li>\n</ul>\n<h2>Uses</h2>\n<ul>\n  <li>Rail, bridges, turbine housings</li>\n</ul>\n<a href=\"/k-alloy-7.pdf\">Datasheet</a>"
-      },
-      {
-        "layout": "journal",
-        "menu": "PRODUCTS, JOURNAL, ABOUT",
-        "active": "JOURNAL",
-        "kicker": "",
-        "title": "field notes from the flats",
-        "emphasis": "",
-        "text": "",
-        "rows": "FIELD NOTES | Mining nothing but light on the salt flats\nPLANTS | Atacama, year one\nPROCESS | Why we melt sand at noon",
-        "button": "",
-        "image": "./media/j1.webp",
-        "image2": "./media/j2.webp",
-        "image3": "./media/j3.webp",
-        "address": "kessler.co/journal",
-        "original": 47316,
-        "distilled": 7602,
-        "html": "<h1>Kessler Journal</h1>\n<p>Field notes from the flats.</p>\n<article>\n  <h2>Mining nothing but light</h2>\n  <time>2026-03-14</time>\n</article>\n<article>\n  <h2>Atacama, year one</h2>\n  <time>2026-02-02</time>\n</article>\n<article>\n  <h2>Why we melt sand at noon</h2>\n  <time>2026-01-09</time>\n</article>"
-      }
-    ]
-  },
-  "pricing": {
-    "eyebrow": "TRANSPARENT PRICING",
-    "title": "Pay per distilled request.",
-    "tiers": "Starter | $0 / mo | Up to 50,000 agent reads per month\nGrowth | $149 / mo | 1M agent reads · custom edge rules\nEnterprise | Custom | Dedicated POPs · SLA & SOC 2 Type II",
-    "button": "Start a free trial"
-  },
-  "explore": {
-    "eyebrow": "HOW {name} WORKS",
-    "title": "One origin. Two representations.",
-    "text": "Drag any card left or right across the scanner above to inspect how {name} collapses heavy visual DOM trees into pure semantic HTML with an average 89% token reduction.",
-    "facts": "AVG REDUCTION: 89% fewer tokens\nEDGE OVERHEAD: < 2 ms global median\nHUMAN IMPACT: 0 bytes changed",
-    "button": "Book a demo"
-  },
-  "forms": {
-    "demoEyebrow": "LIVE WALKTHROUGH",
-    "demoTitle": "Book a {name} demo",
-    "demoButton": "Schedule demo",
-    "trialEyebrow": "14-DAY FREE TRIAL",
-    "trialTitle": "Start your free trial",
-    "trialButton": "Create trial workspace",
-    "signinEyebrow": "ACCOUNT ACCESS",
-    "signinTitle": "Sign in to {name}",
-    "signinButton": "Send sign-in link",
-    "signinLink": "",
-    "emailLabel": "Work email",
-    "emailPlaceholder": "you@company.com",
-    "domainLabel": "Site domain",
-    "domainPlaceholder": "kessler.co",
-    "thanksTitle": "Request confirmed",
-    "thanksText": "We'll send edge setup details for {domain} to {email}.",
-    "domainFallback": "your domain",
-    "signinThanksTitle": "Magic link sent",
-    "signinThanksText": "We sent a sign-in link to {email}.",
-    "back": "Back to demo",
-    "error": "That didn't go through. Please try again.",
-    "email": "",
-    "formAction": ""
-  },
+  "footer": { "note": "© {year} {name}. Built for people, read by machines.", "email": "hello@distill.example" },
   "theme": {
     "colors": {
       "bg": "#EEF0F2",
@@ -203,17 +142,16 @@
       "hotDeep": "#D9430F",
       "buttonText": "#FFFFFF"
     },
-    "fonts": {
-      "sans": "Inter",
-      "serif": "Newsreader",
-      "mono": "IBM Plex Mono"
-    }
+    "fonts": { "sans": "Inter", "serif": "Newsreader", "mono": "IBM Plex Mono" }
   },
-  "motion": {
-    "speed": 0.075,
-    "hoverSlow": 0.65,
-    "sparks": true,
-    "particles": true
+  "character": {
+    "src": "/assets/3d/character/character-robot-001.glb",
+    "poster": "/assets/previews/character-robot-001.webp",
+    "name": "Reader One",
+    "wordmark": "DISTILL",
+    "turn": -22,
+    "echo": false
   },
+  "design": { "stops": ["#eef0f2", "#ff5a1f", "#ffe1d3"], "style": "glow", "angle": 160 },
   "extras": []
 }

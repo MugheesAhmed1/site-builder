@@ -3,152 +3,150 @@
     "title": "{name}: Plant Protein Bars",
     "description": "Five bold flavours of plant protein bar. Pressed, not baked."
   },
-  "brand": {
-    "name": "Stride",
-    "showMark": true
-  },
-  "intro": {
-    "show": true,
-    "video": "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261116_131908_b6239896-c077-450c-ad91-575153973fcf.mp4",
-    "start": 0.55,
-    "end": 4.6,
-    "skip": "Skip intro"
-  },
+  "brand": { "name": "Stride" },
   "nav": {
-    "flavors": "Flavors",
-    "inside": "Inside",
-    "shop": "Shop",
-    "range": "Range",
-    "offer": "% OFF",
-    "dibs": "First dibs"
+    "links": [
+      { "label": "Flavours", "href": "#cards-flavours" },
+      { "label": "Inside", "href": "#steps-inside" },
+      { "label": "Shop", "href": "#plans-packs" },
+      { "label": "First dibs", "href": "#visit-dibs" }
+    ],
+    "cta": "Grab a bag",
+    "ctaHref": "#plans-packs"
   },
-  "cart": {
-    "title": "YOUR CART",
-    "empty": "Your bag is empty. Pick a bar or build a 3 pack below.",
-    "clear": "Clear cart",
-    "bar": "{flavour} Bar",
-    "pack": "3 Pack ({flavours})",
-    "checkout": "",
-    "checkoutLabel": "Checkout"
-  },
-  "dibs": {
-    "title": "FIRST DIBS",
-    "text": "Get early access to fresh small-batch drops & 15% off your first box.",
-    "placeholder": "you@domain.com",
-    "button": "Join drop list",
-    "thanks": "You're on the list for limited cold-pressed drops.",
-    "email": "",
-    "formAction": ""
-  },
-  "hero": {
-    "next": "Next flavour",
-    "autoplay": "AUTOPLAY"
-  },
-  "flavours": [
-    {
-      "name": "Peanut Cocoa",
-      "label": "PEANUT\nCOCOA",
-      "color": "#b79474",
-      "ingredients": "Peanuts, oats, dates, cocoa, pea protein, sea salt.",
-      "box": "98, 145, 403, 849",
-      "bit": 1
+  "film": {
+    "on": true,
+    "order": "hero cards-flavours paint-flavour steps-inside stats-bar plans-packs visit-dibs finale",
+    "logic": "rise",
+    "look": "confetti",
+    "opening": "drop",
+    "motion": "pop",
+    "hero": {
+      "title": "Pressed,\nnot baked",
+      "text": "Five bold flavours of plant protein bar. Real food first: oats, nuts and fruit.",
+      "cta": "Grab a bag",
+      "ctaHref": "#plans-packs",
+      "comp": "word",
+      "plate": ""
     },
-    {
-      "name": "Berry Oat",
-      "label": "BERRY\nOAT",
-      "color": "#ab9ac4",
-      "ingredients": "Oats, blueberries, raspberries, dates, pea protein, almonds.",
-      "box": "620, 145, 402, 849",
-      "bit": 0
+    "cards-flavours": {
+      "on": true,
+      "eyebrow": "Five flavours",
+      "title": "Pick your favourite",
+      "text": "Same real ingredients, five bold ways.",
+      "items": [
+        { "icon": "cup", "title": "Peanut Cocoa", "text": "Peanuts, oats, dates, cocoa, pea protein, sea salt." },
+        { "icon": "heart", "title": "Berry Oat", "text": "Oats, blueberries, raspberries, dates, pea protein, almonds." },
+        { "icon": "star", "title": "Salted Caramel", "text": "Dates, cashews, oats, pea protein, sea salt, vanilla." },
+        { "icon": "leaf", "title": "Mint Chip", "text": "Oats, dark chocolate, almonds, pea protein, peppermint oil." },
+        { "icon": "droplet", "title": "Strawberry", "text": "Oats, strawberries, dates, cashews, pea protein, lemon." }
+      ],
+      "comp": "stage",
+      "plate": ""
     },
-    {
-      "name": "Salted Caramel",
-      "label": "SALTED\nCARAMEL",
-      "color": "#d1ad6c",
-      "ingredients": "Dates, cashews, oats, pea protein, sea salt, vanilla.",
-      "box": "1137, 145, 402, 849",
-      "bit": 2
+    "paint-flavour": {
+      "on": true,
+      "eyebrow": "Try a flavour",
+      "title": "Pick a flavour,\nsee its colour",
+      "text": "Tap a flavour to dress the avocado in it.",
+      "hint": "Tap a flavour",
+      "items": [
+        { "title": "As grown", "color": "#7ea23c" },
+        { "title": "Peanut Cocoa", "color": "#b79474" },
+        { "title": "Berry Oat", "color": "#ab9ac4" },
+        { "title": "Salted Caramel", "color": "#d1ad6c" },
+        { "title": "Mint Chip", "color": "#94bdb4" },
+        { "title": "Strawberry", "color": "#d396a7" }
+      ],
+      "comp": "side",
+      "plate": ""
     },
-    {
-      "name": "Mint Chip",
-      "label": "MINT\nCHIP",
-      "color": "#94bdb4",
-      "ingredients": "Oats, dark chocolate, almonds, pea protein, peppermint oil.",
-      "box": "1661, 145, 402, 849",
-      "bit": 3
+    "steps-inside": {
+      "on": true,
+      "eyebrow": "Inside every bar",
+      "title": "Real food,\nfirst",
+      "text": "Oats, nuts, fruit. Nothing you can't say.",
+      "items": [
+        { "title": "Real food, first", "text": "Oats, nuts and fruit, and nothing you cannot say out loud." },
+        { "title": "Pressed, not baked", "text": "Real ingredients, pressed cold, for clean energy." },
+        { "title": "Wrapped same day", "text": "Cold-pressed at dawn and sealed by noon." },
+        { "title": "12 g plant protein", "text": "Steady energy and no crash." }
+      ],
+      "comp": "flip",
+      "plate": ""
     },
-    {
-      "name": "Strawberry",
-      "label": "STRAW-\nBERRY",
-      "color": "#d396a7",
-      "ingredients": "Oats, strawberries, dates, cashews, pea protein, lemon.",
-      "box": "2184, 145, 403, 849",
-      "bit": 4
+    "stats-bar": {
+      "on": true,
+      "eyebrow": "Nutrition",
+      "title": "Per 50 g bar",
+      "text": "",
+      "items": [
+        { "value": "210", "label": "Calories" },
+        { "value": "12 g", "label": "Plant protein" },
+        { "value": "6 g", "label": "Fibre" },
+        { "value": "0.2 g", "label": "Salt" }
+      ],
+      "comp": "flank",
+      "plate": ""
+    },
+    "plans-packs": {
+      "on": true,
+      "eyebrow": "Shop",
+      "title": "Build your pack\nand save",
+      "text": "Mix any flavours. The more you pack, the less you pay.",
+      "hint": "Best value",
+      "featured": 2,
+      "items": [
+        { "name": "One bar", "price": "$2.99", "per": "/ bar", "text": "", "features": "Any of the five flavours\nCold-pressed at dawn", "cta": "Add a bar", "ctaHref": "mailto:hello@stride.example?subject=One%20bar" },
+        { "name": "3 pack", "price": "$7.48", "per": "", "text": "", "features": "Mix any three flavours\nSave $1.49", "cta": "Add a 3 pack", "ctaHref": "mailto:hello@stride.example?subject=3%20pack" },
+        { "name": "Big box", "price": "$24.90", "per": "/ 10 bars", "text": "", "features": "Two of every flavour\nFree delivery", "cta": "Add a box", "ctaHref": "mailto:hello@stride.example?subject=Big%20box" }
+      ],
+      "comp": "stage",
+      "plate": ""
+    },
+    "visit-dibs": {
+      "on": true,
+      "eyebrow": "First dibs",
+      "title": "Be first in line",
+      "text": "Get early access to fresh small-batch drops and 15% off your first box.",
+      "cta": "Join the drop list",
+      "ctaHref": "mailto:hello@stride.example?subject=Drop%20list",
+      "items": [
+        { "icon": "gift", "label": "15% off", "value": "Your first box" },
+        { "icon": "clock", "label": "Early access", "value": "Limited cold-pressed drops" },
+        { "icon": "mail", "label": "Write to us", "value": "hello@stride.example" }
+      ],
+      "comp": "side",
+      "plate": ""
+    },
+    "finale": {
+      "on": true,
+      "title": "Grab\na bag",
+      "text": "Five bold flavours. Same real ingredients. Pick your favourite, or try them all.",
+      "cta": "Shop the bars",
+      "ctaHref": "#plans-packs",
+      "comp": "center",
+      "plate": ""
     }
-  ],
-  "inside": {
-    "steps": [
-      {
-        "title": "REAL FOOD,\nFIRST",
-        "caption": "OATS, NUTS, FRUIT.\nNOTHING YOU CAN'T SAY."
-      },
-      {
-        "title": "PRESSED,\nNOT BAKED",
-        "caption": "REAL INGREDIENTS.\nCLEAN ENERGY."
-      },
-      {
-        "title": "WRAPPED\nSAME DAY",
-        "caption": "COLD-PRESSED AT DAWN.\nSEALED BY NOON."
-      },
-      {
-        "title": "{flavour}",
-        "caption": "12G PLANT PROTEIN.\nNO CRASH."
-      }
-    ]
   },
-  "shop": {
-    "title": "GRAB\nA BAG",
-    "text": "Five bold flavours. Same\nreal ingredients. Pick your\nfavourite (or try them all).",
-    "add": "Add a bag of {flavour} to the cart"
-  },
-  "range": {
-    "line1": "BUILD YOUR",
-    "line2": "PACK &",
-    "line3": "SAVE $1.49",
-    "price": "$7.48",
-    "add": "Add to cart",
-    "added": "Added to cart",
-    "pick": "Pick {count} more"
-  },
-  "pack": {
-    "weight": "50 G",
-    "nutritionTitle": "NUTRITION",
-    "serving": "Serving size 1 bar (50 g)",
-    "nutrition": "Calories | 210\nProtein | 12 g\nTotal fat | 9 g\nCarbohydrate | 22 g\nFibre | 6 g\nSugars | 8 g\nSalt | 0.2 g",
-    "ingredientsTitle": "INGREDIENTS",
-    "barcode": "5 060123 4560",
-    "slogan": "PRESSED, NOT BAKED"
-  },
-  "sheet": {
-    "image": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261116_132032_30242d8c-5062-4d60-8a3d-238f0a2ff788.png&w=2200&q=85",
-    "width": 2688,
-    "height": 1520,
-    "bits": "650, 1090, 340, 305\n110, 1125, 280, 255\n1175, 1110, 320, 285\n1680, 1085, 380, 305\n2280, 1095, 250, 295"
-  },
+  "footer": { "note": "© {year} {name}. Pressed, not baked.", "email": "hello@stride.example" },
   "theme": {
     "colors": {
       "ink": "#1c1a1f",
       "cream": "#f0e8e0",
-      "dark": "#191a1e"
+      "dark": "#191a1e",
+      "accent": "#e2573a"
     },
-    "fonts": {
-      "display": "Archivo Black",
-      "body": "Inter",
-      "mono": "DM Mono"
-    }
+    "fonts": { "display": "Archivo Black", "body": "Inter", "mono": "DM Mono" }
   },
-  "motion": {
-    "autoplay": true
+  "character": {
+    "src": "/assets/3d/prop/food-avocado-001.glb",
+    "poster": "/assets/previews/food-avocado-001.webp",
+    "name": "An avocado",
+    "wordmark": "STRIDE",
+    "turn": -20,
+    "echo": false
   },
+  "design": { "stops": ["#f0e8e0", "#e2573a", "#d1ad6c"], "style": "glow", "angle": 160 },
   "extras": []
 }

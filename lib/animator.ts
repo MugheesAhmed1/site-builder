@@ -348,6 +348,42 @@ export interface Writes {
   texts?: Record<string, string>;
 }
 
+const MAILTO = /^mailto:[^?]+/i;
+const EMAIL = /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/;
+
+/**
+ * The scenes of a story, made safe for this business: the owner's email addresses become this
+ * business's; and on a template made for another kind of business the scenes that state facts only
+ * that business knows (numbers, prices, people, quotes, pictures) are switched off, and the contact
+ * lines are rewritten, instead of inventing any.
+ */
+function planFilm(film: Content, plan: MasterPlan, same: boolean): Content {
+  const out = clone(film) as Content;
+  const mail = emailFor(plan.name);
+  const cat = categoryById(plan.business);
+  for (const id of String(out.order || "").split(/[\s,]+/).filter(Boolean)) {
+    const s = out[id];
+    if (!s || typeof s !== "object") continue;
+    const type = /^[a-z]+/.exec(id)?.[0] || "";
+    if (typeof s.ctaHref === "string") s.ctaHref = s.ctaHref.replace(MAILTO, `mailto:${mail}`);
+    if (Array.isArray(s.items))
+      for (const it of s.items) {
+        if (!it || typeof it !== "object") continue;
+        if (typeof it.ctaHref === "string") it.ctaHref = it.ctaHref.replace(MAILTO, `mailto:${mail}`);
+        if (typeof it.value === "string" && EMAIL.test(it.value)) it.value = it.value.replace(EMAIL, mail);
+      }
+    if (same) continue;
+    if (type === "stats" || type === "people" || type === "plans" || type === "voices" || type === "gallery") s.on = false;
+    else if (type === "visit")
+      s.items = [
+        { icon: "mail", label: "Write to us", value: mail },
+        ...(plan.city ? [{ icon: "pin", label: cat.physical ? "Find us" : "Based in", value: plan.city }] : []),
+        { icon: "clock", label: "We reply", value: "Within one working day" },
+      ];
+  }
+  return out;
+}
+
 /** The finished content: the template's own, rewritten for the plan. */
 export function buildContent(t: TemplateInfo, plan: MasterPlan, writes: Writes = {}): Content {
   let c = clone(t.content);
@@ -364,6 +400,10 @@ export function buildContent(t: TemplateInfo, plan: MasterPlan, writes: Writes =
     if (id === "contact-form") for (const f of b.fields) if (/email$/i.test(f.path)) props[f.path] = emailFor(plan.name);
     return { block: id, props };
   });
+
+  // The story of a template told around one 3D figure: another business's contact lines, numbers, prices,
+  // people, quotes and pictures are never left on this site.
+  if (typeof c.film?.order === "string") c = { ...c, film: planFilm(c.film, plan, t.business.includes(plan.business)) };
 
   // Words: the model's where it wrote them; otherwise the old name becomes the new one.
   const slots = slotsOf(t, c);
@@ -410,14 +450,42 @@ export function buildContent(t: TemplateInfo, plan: MasterPlan, writes: Writes =
  * own services, steps and answers, so a site made without a writer still tells its own story.
  */
 function filmWords(key: string, plan: MasterPlan, cat: ReturnType<typeof categoryById>, w: { what: string; cta: string; headline: string; sub: string }): string | undefined {
-  const m = /^film\.(\w+)(?:\.(\d+))?\.(\w+)$/.exec(key) || /^film\.(\w+)\.(\w+)$/.exec(key);
+  // film.hero.title, film.chips.0.label (the first story) or film.cards-work.items.0.title (a scene of a plan).
+  const m = /^film\.([\w-]+)\.(?:items\.(\d+)\.|(\d+)\.)?(\w+)$/.exec(key);
   if (!m) return undefined;
   const part = m[1];
-  const n = m.length === 4 && m[2] !== undefined ? Number(m[2]) : -1;
-  const field = m[m.length - 1];
+  const n = m[2] !== undefined ? Number(m[2]) : m[3] !== undefined ? Number(m[3]) : -1;
+  const field = m[4];
   const city = plan.city ? ` in ${plan.city}` : "";
   const nameLine = plan.name.length > 14 ? plan.name : plan.name.replace(/\s+/, "\n");
   if (part === "hero") return field === "title" ? w.headline : field === "text" ? w.sub : field === "cta" ? w.cta : undefined;
+  // A scene of a plan (cards-work, steps-journal, visit-talk): the business's own services, steps and answers.
+  const type = /^[a-z]+/.exec(part)?.[0] || part;
+  if (m[2] !== undefined || part !== type) {
+    const blank = " ";
+    const scene = n < 0;
+    if (type === "facts")
+      return scene ? (field === "eyebrow" ? cat.kicker : field === "title" ? `What ${plan.name} does` : field === "text" ? `${upperFirst(w.what)}${city}, made for ${plan.audience || "you"}.` : undefined) : field === "label" ? cat.services[n] : field === "value" ? blank : undefined;
+    if (type === "cards") {
+      if (scene) return field === "eyebrow" ? "What you get" : field === "title" ? `Everything ${plan.name} gives you` : field === "text" ? blank : undefined;
+      const steps = cat.process;
+      if (n < steps.length) return field === "title" ? steps[n].title : field === "text" ? steps[n].description : undefined;
+      const svc = cat.services[n - steps.length] || cat.services[0];
+      return field === "title" ? svc : field === "text" ? `Ask ${plan.name} about it and it is sorted.` : undefined;
+    }
+    if (type === "steps") {
+      if (scene) return field === "eyebrow" ? "How it works" : field === "title" ? `How ${plan.name}\nworks` : field === "text" ? blank : undefined;
+      const st = cat.process[n];
+      return st ? (field === "title" ? st.title : field === "text" ? st.description : undefined) : undefined;
+    }
+    if (type === "faq") {
+      if (scene) return field === "eyebrow" ? "Questions" : field === "title" ? "Good to know" : field === "text" ? blank : undefined;
+      const q = cat.faq[n];
+      return q ? (field === "q" ? q.question : field === "a" ? q.answer : undefined) : undefined;
+    }
+    if (type === "visit" && scene) return field === "eyebrow" ? cat.kicker : field === "title" ? `Talk to\n${plan.name}` : field === "text" ? `Tell ${plan.name} what you need${city}.` : field === "cta" ? w.cta : undefined;
+    return undefined;
+  }
   if (part === "specs") return field === "eyebrow" ? cat.kicker : field === "title" ? nameLine : field === "text" ? `${upperFirst(w.what)}${city}, made for ${plan.audience || "you"}.` : undefined;
   if (part === "chips") {
     const list = [...cat.services, plan.city || cat.kicker];
@@ -456,6 +524,8 @@ export function localTexts(t: TemplateInfo, plan: MasterPlan): Record<string, st
   const sub = `${cat.kicker}${plan.city ? ` in ${plan.city}` : ""}. ${cat.services.slice(0, 3).map((x, i) => (i ? lowerFirst(x) : x)).join(", ")}.`;
   const out: Record<string, string> = {};
   let service = 0;
+  const foreign = !t.business.includes(plan.business);
+  const planned = typeof (t.content as Content)?.film?.order === "string";
   const slots = slotsOf(t, buildContent(t, plan));
   for (const s of slots) {
     const k = s.key;
@@ -469,7 +539,8 @@ export function localTexts(t: TemplateInfo, plan: MasterPlan): Record<string, st
     else if (/^services\.items\.\d+\.title$/.test(k) && service < cat.services.length) out[k] = cat.services[service++];
     else if (/^(?:brand\.)?tagline$/.test(k)) out[k] = cat.kicker;
     else if (k.startsWith("film.")) {
-      const w = filmWords(k, plan, cat, { what, cta, headline, sub });
+      // A story made for this kind of business keeps its own scenes' words (the new name goes in).
+      const w = planned && !foreign ? undefined : filmWords(k, plan, cat, { what, cta, headline, sub });
       if (w !== undefined) out[k] = portfolio ? firstPerson(w) : w;
     }
   }
@@ -477,7 +548,6 @@ export function localTexts(t: TemplateInfo, plan: MasterPlan): Record<string, st
   // rewrites the shared slots only on a template made for another kind of business, whose own
   // words would describe someone else.
   const voice: VoiceInput = { kind: plan.kind, name: plan.name, what, city: plan.city, audience: plan.audience, cta: portfolio ? cta : plan.cta || "", kicker: cat.kicker, services: cat.services, process: cat.process, physical: cat.physical };
-  const foreign = !t.business.includes(plan.business);
   for (const s of slots) {
     if (!portfolio && !foreign && s.key !== "nav.cta") continue;
     const w = voiceFor(s.key, s.example, voice);

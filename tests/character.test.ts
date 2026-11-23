@@ -129,8 +129,13 @@ describe("design into templates", () => {
 
 describe("the character in a template's content", () => {
   it("starts a dark-stage template on a dark gradient even when its page is light", () => {
+    // A light page on a dark stage: the gradient follows the stage, not the page.
+    const roles = { mode: "light", stage: "dark", colors: {}, fonts: {} } as never;
+    const d = { gradient: { dark: ["#06090c", "#22aa66", "#0b1a14"], light: ["#f4f4ef", "#aa66cc", "#e8e0d0"] } } as never;
+    expect(stageFor(d, roles)).toBe("dark");
+    expect(luminance(stageStops(d, roles)[0])).toBeLessThan(0.179);
+    // And with no design system yet, a light template's own colours make a light one.
     const tw = TEMPLATES.find((x) => x.id === "tidewater")!;
-    expect(luminance(tw.content.design.stops[0])).toBeLessThan(0.179);
     expect(luminance(defaultStops(tw.content.theme.colors, "light")[0])).toBeGreaterThan(0.179);
   });
 

@@ -1,13 +1,13 @@
 {
   "id": "ironhouse",
   "name": "Ironhouse",
-  "pitch": "A loud, dark gym site: giant headline lines that split apart as you scroll, a tilted ticker, program cards that stack on each other, a filterable class timetable, monthly or yearly prices that count to the new number, a calorie slider and a free-week sign-up.",
-  "kind": "vite",
+  "pitch": "A loud gym told around one suit of iron: it drops in and lands with a ripple, then stands still while the numbers, the programs, the timetable, the prices, the coaches and the way in slam into place around it, sparks in the air.",
+  "kind": "static",
   "categories": [
+    "Cinematic",
     "Scroll",
-    "Interactive",
-    "Editorial",
-    "Playful"
+    "3D",
+    "Bold"
   ],
   "business": [
     "fitness",
@@ -15,24 +15,22 @@
     "events"
   ],
   "sector": "Gym, boxing club, fitness or yoga studio",
-  "intensity": 8,
-  "heavy": false,
+  "intensity": 9,
+  "heavy": true,
   "licence": {
     "kind": "original",
     "holder": "Site Builder",
-    "note": "Made for the builder as an original template. Pictures are free AI generations (Pollinations) kept in source/public/media.",
+    "note": "Made for the builder as an original template. The story is told around a licensed 3D model from the builder's asset library (character-armored-warrior-001, supplied by the project owner) by the shared film engine (docs/FILM-TEMPLATES.md). Pictures are free AI generations (Pollinations) kept in source/media.",
     "added": "2026-11-18"
   },
   "remoteAssets": [],
   "features": [
-    "Split headline parallax",
-    "Ticker band",
-    "Stacking program cards",
-    "Day and class timetable filter",
-    "Monthly or yearly price switch",
-    "Calorie calculator",
-    "Tilting coach cards",
-    "Free-week sign-up"
+    "One suit of armour at the centre of the whole page",
+    "Drops in and lands",
+    "It holds its pose while the page moves round it",
+    "Sparks in the air",
+    "Programs, timetable, prices and coaches",
+    "A free-week sign-up"
   ],
   "roles": {
     "mode": "dark",
@@ -58,84 +56,18 @@
       "fields": [
         {
           "path": "brand.name",
-          "label": "Gym name",
-          "type": "text",
-          "hint": "Fills every {name} in the text below."
-        },
-        {
-          "path": "brand.phone",
-          "label": "Phone",
+          "label": "Name",
           "type": "text"
-        },
-        {
-          "path": "brand.email",
-          "label": "Email",
-          "type": "text"
-        },
-        {
-          "path": "brand.address",
-          "label": "Address",
-          "type": "text"
-        },
-        {
-          "path": "brand.mapLink",
-          "label": "Map link",
-          "type": "url"
         },
         {
           "path": "seo.title",
-          "label": "Page title (search and browser tab)",
+          "label": "Page title",
           "type": "text"
         },
         {
           "path": "seo.description",
-          "label": "Short description (search and sharing)",
+          "label": "Page description",
           "type": "textarea"
-        }
-      ]
-    },
-    {
-      "group": "Sections",
-      "fields": [
-        {
-          "path": "sections.stats",
-          "label": "Show numbers",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.programs",
-          "label": "Show programs",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.timetable",
-          "label": "Show timetable",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.membership",
-          "label": "Show membership",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.calculator",
-          "label": "Show calorie calculator",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.coaches",
-          "label": "Show coaches",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.stories",
-          "label": "Show member stories",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.trial",
-          "label": "Show free-week sign-up",
-          "type": "toggle"
         }
       ]
     },
@@ -144,9 +76,11 @@
       "fields": [
         {
           "path": "nav.links",
-          "label": "Menu links",
+          "label": "Links (they scroll to the scene of that name)",
           "type": "list",
-          "itemLabel": "Link",
+          "min": 0,
+          "max": 6,
+          "itemLabel": "label",
           "fields": [
             {
               "path": "label",
@@ -156,407 +90,19 @@
             {
               "path": "href",
               "label": "Goes to",
-              "type": "url"
+              "type": "text"
             }
-          ],
-          "min": 0,
-          "max": 6
+          ]
         },
         {
           "path": "nav.cta",
           "label": "Button",
           "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "Opening",
-      "fields": [
+        },
         {
-          "path": "hero.line1",
-          "label": "Big line 1",
+          "path": "nav.ctaHref",
+          "label": "Button goes to",
           "type": "text"
-        },
-        {
-          "path": "hero.line2",
-          "label": "Big line 2 (outlined)",
-          "type": "text"
-        },
-        {
-          "path": "hero.text",
-          "label": "Intro",
-          "type": "textarea"
-        },
-        {
-          "path": "hero.button",
-          "label": "Main button",
-          "type": "text"
-        },
-        {
-          "path": "hero.secondary",
-          "label": "Second button",
-          "type": "text"
-        },
-        {
-          "path": "hero.image",
-          "label": "Picture",
-          "type": "image"
-        },
-        {
-          "path": "hero.ticker",
-          "label": "Ticker words (one per line)",
-          "type": "textarea"
-        }
-      ]
-    },
-    {
-      "group": "Numbers",
-      "fields": [
-        {
-          "path": "stats.items",
-          "label": "Numbers",
-          "type": "list",
-          "itemLabel": "Number",
-          "fields": [
-            {
-              "path": "value",
-              "label": "Number",
-              "type": "text",
-              "hint": "Counts up, e.g. 40+ or 1,800"
-            },
-            {
-              "path": "label",
-              "label": "Label",
-              "type": "text"
-            }
-          ],
-          "min": 0,
-          "max": 6
-        }
-      ]
-    },
-    {
-      "group": "Programs",
-      "fields": [
-        {
-          "path": "programs.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "programs.title",
-          "label": "Heading",
-          "type": "text"
-        },
-        {
-          "path": "programs.items",
-          "label": "Programs",
-          "type": "list",
-          "itemLabel": "Program",
-          "fields": [
-            {
-              "path": "name",
-              "label": "Name",
-              "type": "text"
-            },
-            {
-              "path": "tag",
-              "label": "Type",
-              "type": "text"
-            },
-            {
-              "path": "text",
-              "label": "Text",
-              "type": "textarea"
-            },
-            {
-              "path": "length",
-              "label": "Length",
-              "type": "text"
-            },
-            {
-              "path": "intensity",
-              "label": "Intensity (0 to 5)",
-              "type": "number",
-              "min": 0,
-              "max": 5,
-              "step": 1
-            },
-            {
-              "path": "image",
-              "label": "Picture",
-              "type": "image"
-            }
-          ],
-          "min": 1,
-          "max": 8
-        }
-      ]
-    },
-    {
-      "group": "Timetable",
-      "fields": [
-        {
-          "path": "timetable.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "timetable.title",
-          "label": "Heading",
-          "type": "text"
-        },
-        {
-          "path": "timetable.allLabel",
-          "label": "All classes label",
-          "type": "text"
-        },
-        {
-          "path": "timetable.classes",
-          "label": "Classes (Day | Time | Class | Coach, one per line)",
-          "type": "textarea",
-          "hint": "Days as Mon, Tue, Wed, Thu, Fri, Sat, Sun."
-        },
-        {
-          "path": "timetable.button",
-          "label": "Book button",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "Membership",
-      "fields": [
-        {
-          "path": "membership.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "membership.title",
-          "label": "Heading",
-          "type": "text"
-        },
-        {
-          "path": "membership.monthlyLabel",
-          "label": "Monthly label",
-          "type": "text"
-        },
-        {
-          "path": "membership.yearlyLabel",
-          "label": "Yearly label",
-          "type": "text"
-        },
-        {
-          "path": "membership.yearlyNote",
-          "label": "Yearly saving note",
-          "type": "text"
-        },
-        {
-          "path": "membership.currency",
-          "label": "Currency sign",
-          "type": "text"
-        },
-        {
-          "path": "membership.plans",
-          "label": "Plans",
-          "type": "list",
-          "itemLabel": "Plan",
-          "fields": [
-            {
-              "path": "name",
-              "label": "Name",
-              "type": "text"
-            },
-            {
-              "path": "monthly",
-              "label": "Price a month",
-              "type": "number",
-              "min": 0,
-              "max": 100000,
-              "step": 1
-            },
-            {
-              "path": "yearly",
-              "label": "Price a year",
-              "type": "number",
-              "min": 0,
-              "max": 1000000,
-              "step": 1
-            },
-            {
-              "path": "features",
-              "label": "What's included (one per line)",
-              "type": "textarea"
-            },
-            {
-              "path": "highlight",
-              "label": "Highlight this plan",
-              "type": "toggle"
-            }
-          ],
-          "min": 0,
-          "max": 4
-        },
-        {
-          "path": "membership.button",
-          "label": "Button",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "Calorie calculator",
-      "fields": [
-        {
-          "path": "calculator.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "calculator.title",
-          "label": "Heading",
-          "type": "text"
-        },
-        {
-          "path": "calculator.weightLabel",
-          "label": "Weight label",
-          "type": "text"
-        },
-        {
-          "path": "calculator.sessionsLabel",
-          "label": "Sessions label",
-          "type": "text"
-        },
-        {
-          "path": "calculator.resultLabel",
-          "label": "Result label",
-          "type": "text"
-        },
-        {
-          "path": "calculator.note",
-          "label": "Note",
-          "type": "textarea"
-        },
-        {
-          "path": "calculator.factor",
-          "label": "Calories per kg per session",
-          "type": "number",
-          "min": 2,
-          "max": 15,
-          "step": 0.5
-        }
-      ]
-    },
-    {
-      "group": "Coaches",
-      "fields": [
-        {
-          "path": "coaches.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "coaches.title",
-          "label": "Heading",
-          "type": "text"
-        },
-        {
-          "path": "coaches.items",
-          "label": "Coaches",
-          "type": "list",
-          "itemLabel": "Coach",
-          "fields": [
-            {
-              "path": "name",
-              "label": "Name",
-              "type": "text"
-            },
-            {
-              "path": "role",
-              "label": "Role",
-              "type": "text"
-            },
-            {
-              "path": "bio",
-              "label": "Bio",
-              "type": "textarea"
-            },
-            {
-              "path": "image",
-              "label": "Photo",
-              "type": "image"
-            }
-          ],
-          "min": 0,
-          "max": 12
-        }
-      ]
-    },
-    {
-      "group": "Member stories",
-      "fields": [
-        {
-          "path": "stories.items",
-          "label": "Stories",
-          "type": "list",
-          "itemLabel": "Story",
-          "fields": [
-            {
-              "path": "quote",
-              "label": "Quote",
-              "type": "textarea"
-            },
-            {
-              "path": "name",
-              "label": "Name",
-              "type": "text"
-            }
-          ],
-          "min": 0,
-          "max": 10
-        }
-      ]
-    },
-    {
-      "group": "Free week",
-      "fields": [
-        {
-          "path": "trial.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "trial.title",
-          "label": "Heading",
-          "type": "text"
-        },
-        {
-          "path": "trial.text",
-          "label": "Text",
-          "type": "textarea"
-        },
-        {
-          "path": "trial.goals",
-          "label": "Goals to pick from (one per line)",
-          "type": "textarea"
-        },
-        {
-          "path": "trial.button",
-          "label": "Button",
-          "type": "text"
-        },
-        {
-          "path": "trial.formAction",
-          "label": "Form address (optional)",
-          "type": "url",
-          "hint": "An https form endpoint such as Formspree. Empty: the form only shows the thank-you message."
-        },
-        {
-          "path": "trial.done",
-          "label": "Thank-you message",
-          "type": "textarea",
-          "hint": "{person} is their first name."
         }
       ]
     },
@@ -564,13 +110,13 @@
       "group": "Footer",
       "fields": [
         {
-          "path": "footer.text",
-          "label": "Line",
+          "path": "footer.note",
+          "label": "Small print",
           "type": "text"
         },
         {
-          "path": "footer.legal",
-          "label": "Small print",
+          "path": "footer.email",
+          "label": "Email",
           "type": "text"
         }
       ]
@@ -595,7 +141,7 @@
         },
         {
           "path": "theme.colors.muted",
-          "label": "Soft text",
+          "label": "Quiet text",
           "type": "color"
         },
         {
@@ -605,12 +151,12 @@
         },
         {
           "path": "theme.colors.onAccent",
-          "label": "Text on accent",
+          "label": "Text on the accent",
           "type": "color"
         },
         {
           "path": "theme.colors.hot",
-          "label": "Hot accent",
+          "label": "Hot colour",
           "type": "color"
         },
         {
@@ -621,56 +167,35 @@
       ]
     },
     {
-      "group": "Fonts",
+      "group": "Fonts and shape",
       "fields": [
         {
           "path": "theme.fonts.display",
-          "label": "Headings font",
+          "label": "Headline font",
           "type": "font"
         },
         {
           "path": "theme.fonts.body",
           "label": "Body font",
           "type": "font"
-        }
-      ]
-    },
-    {
-      "group": "Motion",
-      "fields": [
-        {
-          "path": "motion.animate",
-          "label": "Animations on",
-          "type": "toggle"
         },
         {
-          "path": "motion.tickerSpeed",
-          "label": "Ticker seconds per loop",
+          "path": "theme.radius",
+          "label": "Corner roundness",
           "type": "number",
-          "min": 6,
-          "max": 60,
+          "min": 0,
+          "max": 40,
           "step": 1
-        },
-        {
-          "path": "motion.stackCards",
-          "label": "Program cards stack as you scroll",
-          "type": "toggle"
-        },
-        {
-          "path": "motion.heroParallax",
-          "label": "Headline splits and picture follows the pointer",
-          "type": "toggle"
         }
       ]
     },
     {
-      "group": "Library blocks",
+      "group": "Library sections",
       "fields": [
         {
           "path": "extras",
-          "label": "Blocks from the library",
-          "type": "blocks",
-          "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          "label": "Sections from the library (added after the story)",
+          "type": "blocks"
         }
       ]
     }

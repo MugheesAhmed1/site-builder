@@ -1,14 +1,13 @@
 {
   "id": "mossline",
   "name": "Mossline",
-  "pitch": "A floating moss island you scroll into: the camera pushes through the frame, fog rolls in, live field readings pop up and a carbon card counts itself up.",
+  "pitch": "A climate-data company told around one stand of pines: it lifts out of a misty valley, then turns while the live plot readings, the sensor network, the field station's five proofs, the three solutions and the contact come to it.",
   "kind": "static",
   "categories": [
     "Cinematic",
     "Scroll",
-    "Interactive",
-    "Editorial",
-    "Product"
+    "3D",
+    "Climate"
   ],
   "business": [
     "product",
@@ -16,21 +15,22 @@
     "nonprofit"
   ],
   "sector": "Climate tech and environmental data (carbon and biodiversity measurement)",
-  "intensity": 7,
-  "heavy": false,
+  "intensity": 6,
+  "heavy": true,
   "licence": {
     "kind": "owner",
     "holder": "Mughees",
-    "note": "Supplied by its owner as a whole project for use as a builder template.",
+    "note": "Supplied by its owner as a whole project for use as a builder template. Rebuilt on the shared film engine (docs/FILM-TEMPLATES.md) around a licensed 3D model from the builder's asset library (trees-forest-001, CC0 Kenney); the owner's words and pictures are kept in source/media.",
     "added": "2026-11-18"
   },
   "remoteAssets": [],
   "features": [
-    "Scroll-scrubbed video",
-    "Layered parallax",
-    "Clickable hotspots",
-    "Counting stats",
-    "Contact section"
+    "One stand of pines at the centre of the whole page",
+    "Lifts out of the valley as the page opens",
+    "Live plot readings beside the figure",
+    "Network numbers that count up",
+    "Five proofs and three solutions with the owner's pictures",
+    "Email contact"
   ],
   "roles": {
     "mode": "light",
@@ -57,59 +57,18 @@
       "fields": [
         {
           "path": "brand.name",
-          "label": "Business name",
-          "type": "text",
-          "hint": "Fills every {name} in the text below."
-        },
-        {
-          "path": "brand.showMark",
-          "label": "Show the logo mark",
-          "type": "toggle"
+          "label": "Name",
+          "type": "text"
         },
         {
           "path": "seo.title",
-          "label": "Page title (search and browser tab)",
+          "label": "Page title",
           "type": "text"
         },
         {
           "path": "seo.description",
-          "label": "Short description (search and sharing)",
+          "label": "Page description",
           "type": "textarea"
-        }
-      ]
-    },
-    {
-      "group": "Sections",
-      "fields": [
-        {
-          "path": "sections.vision",
-          "label": "Vision",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.hotspots",
-          "label": "Hotspots",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.station",
-          "label": "Proof card",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.solutions",
-          "label": "Solutions cards",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.stats",
-          "label": "Numbers",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.contact",
-          "label": "Contact",
-          "type": "toggle"
         }
       ]
     },
@@ -118,11 +77,11 @@
       "fields": [
         {
           "path": "nav.links",
-          "label": "Menu links",
+          "label": "Links (they scroll to the scene of that name)",
           "type": "list",
           "min": 0,
           "max": 6,
-          "itemLabel": "Link",
+          "itemLabel": "label",
           "fields": [
             {
               "path": "label",
@@ -132,375 +91,34 @@
             {
               "path": "href",
               "label": "Goes to",
-              "type": "url",
-              "hint": "#sol, #contact, or a full address"
-            }
-          ]
-        },
-        {
-          "path": "nav.cta.label",
-          "label": "Button label",
-          "type": "text"
-        },
-        {
-          "path": "nav.cta.href",
-          "label": "Button goes to",
-          "type": "url"
-        }
-      ]
-    },
-    {
-      "group": "Opening",
-      "fields": [
-        {
-          "path": "hero.chip",
-          "label": "Label above the headline",
-          "type": "text"
-        },
-        {
-          "path": "hero.title",
-          "label": "Headline",
-          "type": "text"
-        },
-        {
-          "path": "hero.caption",
-          "label": "Caption (one line per row)",
-          "type": "textarea"
-        },
-        {
-          "path": "hero.hint",
-          "label": "Scroll hint",
-          "type": "text"
-        },
-        {
-          "path": "hero.hudChip",
-          "label": "Reading label",
-          "type": "text"
-        },
-        {
-          "path": "hero.hudLines",
-          "label": "Reading lines",
-          "type": "textarea"
-        },
-        {
-          "path": "hero.image",
-          "label": "Opening picture",
-          "type": "image"
-        },
-        {
-          "path": "hero.imageAlt",
-          "label": "Opening picture description",
-          "type": "text"
-        },
-        {
-          "path": "hero.frontImage",
-          "label": "Foreground cut-out",
-          "type": "image",
-          "hint": "Sits in front of the headline until the video takes over. Leave empty to skip."
-        },
-        {
-          "path": "hero.video",
-          "label": "Push-in video",
-          "type": "video",
-          "hint": "Scrubbed by scroll. Leave empty to keep the still picture."
-        },
-        {
-          "path": "hero.rockImage",
-          "label": "Floating rock picture",
-          "type": "image",
-          "hint": "Leave empty for no rocks."
-        },
-        {
-          "path": "hero.rockCrop",
-          "label": "Rock picture is the original sprite sheet",
-          "type": "toggle",
-          "hint": "Turn off when you upload a single rock picture of your own."
-        }
-      ]
-    },
-    {
-      "group": "Vision",
-      "fields": [
-        {
-          "path": "vision.chip",
-          "label": "Label",
-          "type": "text"
-        },
-        {
-          "path": "vision.title",
-          "label": "Headline (one line per row)",
-          "type": "textarea"
-        },
-        {
-          "path": "vision.text",
-          "label": "Text",
-          "type": "textarea"
-        }
-      ]
-    },
-    {
-      "group": "Hotspots",
-      "fields": [
-        {
-          "path": "hotspots.text",
-          "label": "What you do",
-          "type": "textarea"
-        },
-        {
-          "path": "hotspots.items",
-          "label": "Hotspots",
-          "type": "list",
-          "min": 0,
-          "max": 6,
-          "itemLabel": "Hotspot",
-          "fields": [
-            {
-              "path": "label",
-              "label": "Label",
-              "type": "text"
-            },
-            {
-              "path": "value",
-              "label": "Reading",
-              "type": "text"
-            },
-            {
-              "path": "x",
-              "label": "Across (%)",
-              "type": "number",
-              "min": 0,
-              "max": 100,
-              "step": 1
-            },
-            {
-              "path": "y",
-              "label": "Down (%)",
-              "type": "number",
-              "min": 0,
-              "max": 100,
-              "step": 1
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "group": "Proof card",
-      "fields": [
-        {
-          "path": "station.label",
-          "label": "Label",
-          "type": "text"
-        },
-        {
-          "path": "station.title",
-          "label": "Headline",
-          "type": "text"
-        },
-        {
-          "path": "station.cardTitle",
-          "label": "Card title",
-          "type": "textarea"
-        },
-        {
-          "path": "station.cardNote",
-          "label": "Card note",
-          "type": "text"
-        },
-        {
-          "path": "station.cardValue",
-          "label": "Card number",
-          "type": "number",
-          "min": 0,
-          "max": 1000000,
-          "step": 0.1
-        },
-        {
-          "path": "station.cardUnit",
-          "label": "Unit",
-          "type": "text"
-        },
-        {
-          "path": "station.cardTag",
-          "label": "Tag",
-          "type": "text"
-        },
-        {
-          "path": "station.cardAxis",
-          "label": "Axis labels",
-          "type": "text"
-        },
-        {
-          "path": "station.chart",
-          "label": "Chart points",
-          "type": "text",
-          "hint": "Numbers from 4 to 66, separated by commas. Lower is higher on the chart."
-        },
-        {
-          "path": "station.features",
-          "label": "Features",
-          "type": "list",
-          "min": 0,
-          "max": 7,
-          "itemLabel": "Feature",
-          "fields": [
-            {
-              "path": "title",
-              "label": "Feature",
               "type": "text"
             }
           ]
-        }
-      ]
-    },
-    {
-      "group": "Solutions",
-      "fields": [
-        {
-          "path": "solutions.chip",
-          "label": "Label",
-          "type": "text"
         },
         {
-          "path": "solutions.title",
-          "label": "Headline",
-          "type": "textarea"
-        },
-        {
-          "path": "solutions.text",
-          "label": "Text",
-          "type": "textarea"
-        },
-        {
-          "path": "solutions.cards",
-          "label": "Cards",
-          "type": "list",
-          "min": 0,
-          "max": 6,
-          "itemLabel": "Card",
-          "fields": [
-            {
-              "path": "tag",
-              "label": "Label",
-              "type": "text"
-            },
-            {
-              "path": "title",
-              "label": "Title",
-              "type": "textarea"
-            },
-            {
-              "path": "text",
-              "label": "Text (shows on hover)",
-              "type": "textarea"
-            },
-            {
-              "path": "image",
-              "label": "Picture",
-              "type": "image"
-            },
-            {
-              "path": "focus",
-              "label": "Picture focus",
-              "type": "text",
-              "hint": "Across and down, like 50% 50%."
-            },
-            {
-              "path": "zoom",
-              "label": "Picture zoom (%)",
-              "type": "number",
-              "min": 100,
-              "max": 400,
-              "step": 5
-            },
-            {
-              "path": "href",
-              "label": "Link (optional)",
-              "type": "url"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "group": "Numbers",
-      "fields": [
-        {
-          "path": "stats",
-          "label": "Numbers",
-          "type": "list",
-          "min": 0,
-          "max": 6,
-          "itemLabel": "Number",
-          "fields": [
-            {
-              "path": "value",
-              "label": "Number",
-              "type": "number",
-              "min": 0,
-              "max": 100000000,
-              "step": 0.1
-            },
-            {
-              "path": "decimals",
-              "label": "Decimals",
-              "type": "number",
-              "min": 0,
-              "max": 3,
-              "step": 1
-            },
-            {
-              "path": "label",
-              "label": "Label",
-              "type": "text"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "group": "Contact",
-      "fields": [
-        {
-          "path": "contact.chip",
-          "label": "Label",
-          "type": "text"
-        },
-        {
-          "path": "contact.title",
-          "label": "Headline",
-          "type": "textarea"
-        },
-        {
-          "path": "contact.text",
-          "label": "Text",
-          "type": "textarea"
-        },
-        {
-          "path": "contact.button",
+          "path": "nav.cta",
           "label": "Button",
           "type": "text"
         },
         {
-          "path": "contact.email",
+          "path": "nav.ctaHref",
+          "label": "Button goes to",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Footer",
+      "fields": [
+        {
+          "path": "footer.note",
+          "label": "Small print",
+          "type": "text"
+        },
+        {
+          "path": "footer.email",
           "label": "Email",
           "type": "text"
-        },
-        {
-          "path": "contact.phone",
-          "label": "Phone",
-          "type": "text"
-        },
-        {
-          "path": "contact.address",
-          "label": "Address",
-          "type": "textarea"
-        },
-        {
-          "path": "contact.footer",
-          "label": "Footer",
-          "type": "text",
-          "hint": "{year} becomes this year."
         }
       ]
     },
@@ -514,17 +132,17 @@
         },
         {
           "path": "theme.colors.ink2",
-          "label": "Soft text",
+          "label": "Quiet text",
           "type": "color"
         },
         {
           "path": "theme.colors.mist",
-          "label": "Background",
+          "label": "Page",
           "type": "color"
         },
         {
           "path": "theme.colors.paper",
-          "label": "Panels",
+          "label": "Cards",
           "type": "color"
         },
         {
@@ -534,17 +152,17 @@
         },
         {
           "path": "theme.colors.accent2",
-          "label": "Accent, darker",
+          "label": "Second accent",
           "type": "color"
         },
         {
           "path": "theme.colors.positive",
-          "label": "Good numbers",
+          "label": "Good news",
           "type": "color"
         },
         {
           "path": "theme.colors.deep",
-          "label": "Deep cards",
+          "label": "Deep",
           "type": "color"
         }
       ]
@@ -554,86 +172,31 @@
       "fields": [
         {
           "path": "theme.fonts.sans",
-          "label": "Main font",
+          "label": "Body font",
           "type": "font"
         },
         {
           "path": "theme.fonts.mono",
-          "label": "Label font",
+          "label": "Small print font",
           "type": "font"
         },
         {
           "path": "theme.radius",
-          "label": "Corner rounding (px)",
+          "label": "Corner roundness",
           "type": "number",
           "min": 0,
-          "max": 32,
+          "max": 40,
           "step": 1
         }
       ]
     },
     {
-      "group": "Motion",
-      "fields": [
-        {
-          "path": "motion.storyLength",
-          "label": "Scroll story length (screen heights × 100)",
-          "type": "number",
-          "min": 250,
-          "max": 1200,
-          "step": 10
-        },
-        {
-          "path": "motion.smoothing",
-          "label": "Scroll smoothing",
-          "type": "number",
-          "min": 0,
-          "max": 0.97,
-          "step": 0.01
-        },
-        {
-          "path": "motion.parallax",
-          "label": "Pointer parallax",
-          "type": "number",
-          "min": 0,
-          "max": 3,
-          "step": 0.1
-        },
-        {
-          "path": "motion.fog",
-          "label": "Fog bank",
-          "type": "toggle"
-        },
-        {
-          "path": "motion.rocks",
-          "label": "Floating rocks",
-          "type": "toggle"
-        },
-        {
-          "path": "motion.cardTilt",
-          "label": "Cards tilt with the pointer",
-          "type": "toggle"
-        },
-        {
-          "path": "motion.countUp",
-          "label": "Numbers count up",
-          "type": "toggle"
-        },
-        {
-          "path": "motion.pulse",
-          "label": "Hotspots pulse",
-          "type": "toggle"
-        }
-      ]
-    },
-    {
-      "group": "Library blocks",
+      "group": "Library sections",
       "fields": [
         {
           "path": "extras",
-          "label": "Blocks from the library",
-          "type": "blocks",
-          "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          "label": "Sections from the library (added after the story)",
+          "type": "blocks"
         }
       ]
     }

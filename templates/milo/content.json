@@ -1,129 +1,118 @@
 {
   "seo": {
     "title": "{name} — 3D Artist & Digital Worlds",
-    "description": "Immersive 3D creative portfolio for {name}, a digital artist and 3D world builder crafting cinematic underwater environments, visual identities, and interactive digital experiences."
+    "description": "Immersive 3D portfolio for {name}, a digital artist and world builder: cinematic underwater environments, visual identities and live worlds you can turn with your hand."
   },
-  "brand": { "name": "Milo", "mark": "MILO®", "tagline": "3D ARTIST & DIGITAL WORLDS", "email": "hello@milo.world" },
-  "sections": { "hero": true, "descent": true, "about": true, "services": true, "projects": true, "contact": true, "footer": true },
+  "brand": { "name": "Milo" },
   "nav": {
-    "world": "WORLD",
-    "menu": "MENU",
-    "close": "CLOSE",
-    "chaptersTitle": "DEPTH CHAPTERS",
-    "worksTitle": "SELECTED WORLDS",
-    "chapters": [
-      { "label": "The Surface", "target": "surface" },
-      { "label": "The Descent", "target": "descent" },
-      { "label": "The Creator", "target": "creator" },
-      { "label": "What I Build", "target": "services" },
-      { "label": "Creatures of the Deep", "target": "projects" },
-      { "label": "Emerge & Contact", "target": "contact" }
-    ]
-  },
-  "hero": {
-    "label": "3D ARTIST / DIGITAL WORLDS",
-    "kicker": "ENTER",
-    "line1": "THE",
-    "line2": "WORLD",
-    "text": "I build cinematic 3D worlds, visual identities, and digital experiences that feel alive.",
-    "scrollHint": "SCROLL TO DESCEND"
-  },
-  "descent": { "kicker": "BELOW THE SURFACE", "line1": "DOWN HERE,", "line2": "DETAILS MATTER." },
-  "about": {
-    "number": "01",
-    "label": "THE CREATOR",
-    "text": "I create 3D experiences that live somewhere\nbetween design, technology, and imagination.\nEvery project starts with an idea and ends\nas a world people can step into.",
-    "stats": [
-      { "value": "08+", "label": "YEARS CREATING" },
-      { "value": "42", "label": "WORLDS BUILT" },
-      { "value": "19", "label": "GLOBAL CLIENTS" }
-    ]
-  },
-  "services": {
-    "label": "02 / CAPABILITIES",
-    "title": "WHAT\nI BUILD",
-    "items": [
-      { "title": "3D WORLDS", "description": "Immersive environments, characters, objects, and visual systems designed to make digital experiences feel tangible." },
-      { "title": "MOTION", "description": "Cinematic animation and movement designed to give products, brands, and ideas a sense of energy and personality." },
-      { "title": "DIGITAL ART", "description": "Art-directed visuals combining 3D, lighting, composition, typography, and atmosphere." },
-      { "title": "EXPERIENCES", "description": "Interactive websites and digital experiences where design becomes something users can explore." }
-    ]
-  },
-  "projects": {
-    "label": "03 / SELECTED WORLDS",
-    "title": "CREATURES\nOF THE\nDEEP",
-    "view": "VIEW PROJECT",
-    "clientLabel": "CLIENT",
-    "roleLabel": "ROLE",
-    "deliverablesLabel": "DELIVERABLES",
-    "commission": "COMMISSION A WORLD",
-    "inquirePrefix": "World inspired by",
-    "orbitHint": "DRAG TO ORBIT · SCROLL TO ZOOM",
-    "items": [
-      {
-        "title": "ABYSS", "category": "3D ENVIRONMENT", "year": "2026", "scene": "abyss",
-        "description": "A cinematic exploration of depth, darkness, and bioluminescent life beneath an imagined ocean.",
-        "client": "Oceanic Pavilion", "role": "Direction, Real-Time Shaders & Environment Design",
-        "deliverables": "Real-Time WebGL World\nCustom GLSL Shaders\nSpatial Soundscape",
-        "narrative": "Constructed as a meditative abyssal chamber 4,000 meters below the surface, ABYSS pairs procedural soft-body flora with bioluminescent spore fields that react subtly to viewer presence and current turbulence.",
-        "primary": "#020B12", "secondary": "#082E42"
-      },
-      {
-        "title": "ORBITAL", "category": "ART DIRECTION", "year": "2025", "scene": "orbital",
-        "description": "A visual system built around floating structures, planetary forms, and impossible architecture.",
-        "client": "Kestrel Horizon", "role": "3D Art Direction & Architectural Form Study",
-        "deliverables": "Brand World System\n3D Key Visuals\nMotion Identity",
-        "narrative": "ORBITAL investigates monumental stillness in zero gravity: anisotropic brushed-titanium rings suspended around a dark mineral core, illuminated solely by grazing blue planetary bounce light.",
-        "primary": "#020508", "secondary": "#0E1C28"
-      },
-      {
-        "title": "TIDELINE", "category": "BRAND EXPERIENCE", "year": "2025", "scene": "tideline",
-        "description": "A digital identity designed around movement, fluidity, and the rhythm of changing water.",
-        "client": "Atelier Maris", "role": "Creative Technology & Surface Simulation",
-        "deliverables": "Fluid Shader Engine\nInteractive Flagship\nEditorial Typography",
-        "narrative": "Driven by multi-octave Gerstner wave equations and specular Fresnel reflections, TIDELINE transforms tidal telemetry into a living metallic-liquid horizon that shifts weight with every gesture.",
-        "primary": "#030E14", "secondary": "#0A2B38"
-      },
-      {
-        "title": "ECHO", "category": "INTERACTIVE EXPERIENCE", "year": "2026", "scene": "echo",
-        "description": "An experimental digital world where sound, movement, and visual depth respond to the user.",
-        "client": "Resonance Lab", "role": "Interactive 3D & Procedural Motion",
-        "deliverables": "Harmonic Geometry Rig\nPointer-Reactive Field\nExhibition Installation",
-        "narrative": "ECHO translates harmonic frequencies into suspended sculptural waves and concentric acoustic rings, allowing visitors to perturb standing-wave geometry in real time.",
-        "primary": "#02070A", "secondary": "#072130"
-      }
-    ]
-  },
-  "contact": {
-    "label": "04 / SURFACE",
-    "title": "LET'S\nMAKE\nSOMETHING\nALIVE.",
-    "button": "START A PROJECT",
-    "copy": "COPY",
-    "copied": "COPIED",
-    "socials": [
-      { "label": "INSTAGRAM", "href": "https://instagram.com" },
-      { "label": "BEHANCE", "href": "https://behance.net" },
-      { "label": "DRIBBBLE", "href": "https://dribbble.com" },
-      { "label": "LINKEDIN", "href": "https://linkedin.com" }
+    "links": [
+      { "label": "Creator", "href": "#stats-creator" },
+      { "label": "What I build", "href": "#cards-services" },
+      { "label": "Worlds", "href": "#cards-worlds" },
+      { "label": "Contact", "href": "#visit-contact" }
     ],
-    "formKicker": "NEW COMMISSION",
-    "formTitle": "ENTER A NEW WORLD",
-    "disciplineLabel": "DISCIPLINE",
-    "nameLabel": "NAME",
-    "namePlaceholder": "Alex Rivera",
-    "emailLabel": "EMAIL",
-    "emailPlaceholder": "alex@studio.com",
-    "briefLabel": "WORLD BRIEF",
-    "briefPlaceholder": "Describe your vision, timeline, or atmosphere...",
-    "send": "SEND INQUIRY",
-    "thanksKicker": "TRANSMISSION RECEIVED",
-    "thanksTitle": "Thank you.",
-    "thanksText": "Your brief has been logged. {name} typically responds within 48 hours.",
-    "back": "RETURN TO PORTFOLIO",
-    "error": "The message could not be sent. Please email instead.",
-    "formAction": ""
+    "cta": "Start a project",
+    "ctaHref": "#start"
   },
-  "footer": { "left": "{name}®", "middle": "BUILT BETWEEN IMAGINATION & CODE", "right": "© {year}" },
+  "film": {
+    "on": true,
+    "order": "hero stats-creator cards-services cards-worlds paint-reef visit-contact finale",
+    "logic": "descend",
+    "look": "bubbles",
+    "opening": "reveal",
+    "motion": "drift",
+    "hero": {
+      "title": "Enter the\nworld",
+      "text": "I build cinematic 3D worlds, visual identities and digital experiences that feel alive.",
+      "cta": "Dive in",
+      "ctaHref": "#cards-worlds",
+      "comp": "word",
+      "plate": ""
+    },
+    "stats-creator": {
+      "on": true,
+      "eyebrow": "01 · The creator",
+      "title": "Down here,\ndetails matter",
+      "text": "I make 3D experiences that live between design, technology and imagination, and end as worlds people can step into.",
+      "items": [
+        { "value": "08+", "label": "Years creating" },
+        { "value": "42", "label": "Worlds built" },
+        { "value": "19", "label": "Global clients" }
+      ],
+      "comp": "flank",
+      "plate": ""
+    },
+    "cards-services": {
+      "on": true,
+      "eyebrow": "02 · Capabilities",
+      "title": "What I build",
+      "text": "From a single object to a whole world.",
+      "items": [
+        { "icon": "globe", "title": "3D worlds", "text": "Immersive environments, characters and objects that make digital feel tangible." },
+        { "icon": "pulse", "title": "Motion", "text": "Cinematic animation that gives products, brands and ideas energy and personality." },
+        { "icon": "spark", "title": "Digital art", "text": "Art-directed visuals that combine 3D, lighting, composition, type and atmosphere." },
+        { "icon": "code", "title": "Experiences", "text": "Interactive websites where design becomes something people can explore." }
+      ],
+      "comp": "flank",
+      "plate": ""
+    },
+    "cards-worlds": {
+      "on": true,
+      "eyebrow": "03 · Selected worlds",
+      "title": "Creatures of the deep",
+      "text": "Four worlds, each built to be explored. Turn them yourself further down the page.",
+      "items": [
+        { "icon": "droplet", "title": "ABYSS", "text": "3D environment, 2026. Depth, darkness and bioluminescent life beneath an imagined ocean." },
+        { "icon": "globe", "title": "ORBITAL", "text": "Art direction, 2025. Floating structures, planetary forms and impossible architecture." },
+        { "icon": "wave", "title": "TIDELINE", "text": "Brand experience, 2025. A digital identity built on the rhythm of moving water." },
+        { "icon": "pulse", "title": "ECHO", "text": "Interactive experience, 2026. Sound, movement and depth that answer the visitor." }
+      ],
+      "comp": "stage",
+      "plate": ""
+    },
+    "paint-reef": {
+      "on": true,
+      "eyebrow": "Try the light",
+      "title": "Relight the reef",
+      "text": "Tap a depth to change the colour of the coral.",
+      "hint": "Tap a depth",
+      "items": [
+        { "title": "As made", "color": "#e9f6fb" },
+        { "title": "Shallows", "color": "#2fd6c0" },
+        { "title": "Twilight", "color": "#4b7bff" },
+        { "title": "Bioluminescence", "color": "#8dff6a" },
+        { "title": "Anemone", "color": "#ff6aa8" },
+        { "title": "Abyss", "color": "#8a5cff" }
+      ],
+      "comp": "side",
+      "plate": ""
+    },
+    "visit-contact": {
+      "on": true,
+      "eyebrow": "04 · Surface",
+      "title": "Let's make\nsomething alive",
+      "text": "Describe your vision, timeline or atmosphere. I read every brief.",
+      "cta": "Start a project",
+      "ctaHref": "mailto:hello@milo.world?subject=New%20world",
+      "items": [
+        { "icon": "mail", "label": "Email", "value": "hello@milo.world" },
+        { "icon": "clock", "label": "Reply", "value": "Within 48 hours" },
+        { "icon": "globe", "label": "Elsewhere", "value": "Instagram, Behance, Dribbble and LinkedIn" }
+      ],
+      "comp": "flip",
+      "plate": ""
+    },
+    "finale": {
+      "on": true,
+      "title": "Let's make\nsomething alive.",
+      "text": "Back at the surface, with something that moves.",
+      "cta": "Start a project",
+      "ctaHref": "mailto:hello@milo.world?subject=New%20world",
+      "comp": "center",
+      "plate": ""
+    }
+  },
+  "footer": { "note": "© {year} {name}. Built between imagination and code.", "email": "hello@milo.world" },
   "theme": {
     "colors": {
       "page": "#02070A",
@@ -136,9 +125,23 @@
       "light": "#F2FBFF",
       "lightText": "#02070A"
     },
-    "fonts": { "body": "Manrope" }
+    "fonts": { "display": "Syne", "body": "Manrope" },
+    "radius": 22
   },
-  "ocean": { "show": true, "particles": 1000, "manta": true, "parallax": 1, "fog": 1 },
-  "motion": { "animate": true, "cursor": true, "progress": true },
-  "extras": []
+  "character": {
+    "src": "/assets/3d/nature/nature-coral-xenia-001.glb",
+    "poster": "/assets/previews/nature-coral-xenia-001.webp",
+    "name": "Pulsing xenia coral",
+    "wordmark": "MILO",
+    "turn": -16,
+    "echo": false
+  },
+  "design": { "stops": ["#02070A", "#63E6FF", "#082838"], "style": "glow", "angle": 170 },
+  "extras": [
+    { "block": "world-3d", "props": { "world": "abyss", "orbit": true, "kicker": "ABYSS · 3D environment", "title": "Step inside the Abyss", "body": "Constructed as a meditative chamber 4,000 metres below the surface: soft-body flora and glowing spores that answer your presence. Drag to turn it, scroll to come closer.", "height": 60, "background": "#02070a", "text": "#f2fbff" } },
+    { "block": "world-3d", "props": { "world": "orbital", "orbit": true, "kicker": "ORBITAL · Art direction", "title": "Rings in zero gravity", "body": "Brushed-titanium rings hung around a dark mineral core and lit by blue planetary bounce light. Monumental stillness, made to be turned.", "height": 60, "background": "#020508", "text": "#f2fbff" } },
+    { "block": "world-3d", "props": { "world": "tideline", "orbit": true, "kicker": "TIDELINE · Brand experience", "title": "A liquid metal horizon", "body": "Gerstner waves and Fresnel reflections turn tidal data into a living metallic sea that shifts weight with every gesture.", "height": 60, "background": "#030e14", "text": "#f2fbff" } },
+    { "block": "world-3d", "props": { "world": "echo", "orbit": true, "kicker": "ECHO · Interactive experience", "title": "Sound you can see", "body": "Harmonic frequencies drawn as suspended waves and concentric rings. Move through them and the field answers.", "height": 60, "background": "#02070a", "text": "#f2fbff" } },
+    { "block": "contact-form", "props": { "anchor": "contact", "kicker": "New commission", "title": "Enter a new world", "body": "Describe your vision, timeline or atmosphere. I typically reply within 48 hours.", "email": "hello@milo.world", "phone": "", "formAction": "", "nameLabel": "Name", "emailLabel": "Email", "messageLabel": "World brief", "button": "Send inquiry", "thanksTitle": "Thank you.", "thanksText": "Your brief has been logged. I typically reply within 48 hours.", "error": "The message could not be sent. Please email instead.", "background": "#02070a", "text": "#f2fbff", "accent": "#63e6ff", "buttonText": "#02070a" } }
+  ]
 }

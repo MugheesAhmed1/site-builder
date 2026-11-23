@@ -1,8 +1,8 @@
 // The night valley from the Fernhollow template: thousands of flowers and leaves under the stars,
 // with bloom and grain. It starts when the section comes near the screen and stops when it leaves.
 import { useEffect, useRef } from 'react';
-import { ValleyEngine } from '../../templates/fernhollow/source/src/valley/ValleyEngine';
-import { AudioEngine } from '../../templates/fernhollow/source/src/valley/AudioEngine';
+import { ValleyEngine } from './valley/ValleyEngine';
+import { AudioEngine } from './valley/AudioEngine';
 import { color, num, text, useInView, type BlockProps } from '../kit';
 
 export default function NightValley({ props: p }: BlockProps) {

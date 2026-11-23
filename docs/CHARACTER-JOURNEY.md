@@ -21,8 +21,9 @@ journey ([PRD-JOURNEY.md](PRD-JOURNEY.md)) at `/create`, strictly in this order:
    template (Turntable first, because the whole page is built around one character) with their words, their design system and their character, best matches first, with a
    live preview on desktop or phone.
 5. **Pick a template, or create a new one**: *Create a new template* is the Orbit canvas
-   (`templates/orbit`): the character centre stage on its own gradient with rings and orbiting
-   words, then the library sections the person picks, in the order they pick them.
+   (`templates/orbit`): an astronaut centre stage on a gradient with the studio's scenes round it
+   (since 2026-11-23, like every template: [FILM-TEMPLATES.md](FILM-TEMPLATES.md)), then the library
+   sections the person picks, in the order they pick them.
 6. **The studio** (`/templates/<id>?from=journey`): every word, picture, colour, font, section and
    the model itself can change; the site downloads as a static site or as source.
 
@@ -49,6 +50,14 @@ those roles, puts the character in the hero (and the echo and badge slots where 
 them) on a gradient from its own colours, and colours the library sections by role too. Text on
 the stage swaps to stay readable (contrast is tested for every template and every design system in
 `tests/character.test.ts`).
+
+**Every template tells its story around one figure** ([FILM-TEMPLATES.md](FILM-TEMPLATES.md)): the
+page's scenes (numbers, cards, steps, plans, quotes, contact) arrive round the character, each template
+with its own camera, air and opening. Any figure can be put in a template's place; a colour scene stays
+for the template's own figure and goes for a person or an animal (`composeContent`). On a template made
+for another kind of business the engine switches off the scenes that state facts only the original
+business knows (numbers, prices, people, quotes, pictures) rather than invent any, rewrites the contact
+lines and swaps the owner's email addresses for the new business's (`planFilm` in `lib/animator.ts`).
 
 **The film** ([FILM.md](FILM.md)): by default the character no longer sits in the hero's box. It
 lives on one fixed stage over the page, and every section is a camera shot of it, blended by the
