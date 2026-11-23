@@ -5,6 +5,7 @@
 // page, turned the other way and calmer. In the builder's preview it follows every change.
 import { mountCharacter, type CharacterConfig, type CharacterView } from "./engine";
 import { createFilm, type Film } from "./film";
+import { mountScenes, type Scenes } from "./scenes";
 
 type Data = Record<string, any>;
 
@@ -87,34 +88,89 @@ function start() {
   let film: Film | null = null;
   let filmView: CharacterView | null = null;
   let filmHero: HTMLElement | null = null;
+  // The choreography: a story written around the character (scenes.ts), where the page has a
+  // place for it (an empty [data-xp-film-track]) or after the opening of one that does not.
+  let scenes: Scenes | null = null;
+  let paintOverride: string | null = null;
   const stopFilm = () => {
+    scenes?.detach();
     filmView?.dispose();
     film?.dispose();
     film = null;
     filmView = null;
     filmHero = null;
   };
-  const filmOpts = () => ({ wordmark: str(data.character?.wordmark).slice(0, 40), stops: Array.isArray(data.design?.stops) ? data.design.stops : [] });
+  const filmOpts = () => ({
+    wordmark: str(data.character?.wordmark).slice(0, 40) || (scenes ? str(data.brand?.name).slice(0, 24) : ""),
+    stops: Array.isArray(data.design?.stops) ? data.design.stops : [],
+    onShape: (flat: boolean) => scenes?.shape(flat),
+  });
+  const outsideTrack = (el: Element) => !el.closest(".xp-track");
+  const trackHost = () => document.querySelector<HTMLElement>("[data-xp-film-track]:not(.xp-track)");
+  /** The outermost section that holds an element: the story goes right after it. */
+  const sectionOf = (el: HTMLElement): HTMLElement => {
+    let s = el.closest("section") as HTMLElement | null;
+    while (s && s.parentElement && s.parentElement.closest("section")) s = s.parentElement.closest("section") as HTMLElement;
+    if (s) return s;
+    let top: HTMLElement = el;
+    while (top.parentElement && top.parentElement !== document.body && top.parentElement.children.length < 3) top = top.parentElement;
+    return top;
+  };
+  const syncScenes = () => {
+    const host = trackHost();
+    const heroEl = Array.from(document.querySelectorAll<HTMLElement>('[data-xp-character="hero"]')).find(outsideTrack) || null;
+    const f = data.film;
+    const hasModel = !!str(data.character?.src).trim();
+    const on = !!f && f.on !== false && !lite && hasModel && window.innerHeight > 200;
+    const want = on && (!!host || (!!heroEl && (data.character?.scroll ?? "film") === "film"));
+    const wasOpening = !!scenes && !!scenes.track.closest("[data-xp-film-track]:not(.xp-track)");
+    if (scenes && (!want || !scenes.track.isConnected || wasOpening !== !!host)) {
+      scenes.dispose();
+      scenes = null;
+    }
+    if (want && !scenes) {
+      scenes = mountScenes(document, data, { host, after: host ? null : heroEl ? sectionOf(heroEl) : null, opening: !!host, paint: onPaint });
+    } else if (scenes) scenes.update(data);
+  };
+  const onPaint = (color: string | null) => {
+    paintOverride = color;
+    const v = filmView;
+    const hero = filmHero;
+    if (!v || !hero) return;
+    const cfg = configFor(data, hero);
+    if (cfg) v.update({ finish: paintOverride ? "paint" : cfg.finish, paint: paintOverride || cfg.paint, parts: paintOverride ? "" : cfg.parts });
+  };
 
   let lastCount = -1;
   const sync = () => {
+    syncScenes();
     const spots = Array.from(document.querySelectorAll<HTMLElement>("[data-xp-character]"));
     // The film runs when the hero spot asks for it, on a page big enough to scroll through.
     const hero = spots.find((el) => (el.getAttribute("data-xp-character") || "hero") === "hero") || null;
     const heroCfg = hero && !lite ? configFor(data, hero) : null;
+    // A story the page asked for plays the film whatever the scroll setting says.
+    if (heroCfg && scenes) heroCfg.scroll = "film";
     const filmOn = !!heroCfg && heroCfg.scroll === "film" && window.innerHeight > 200;
     if (!filmOn || (filmHero && filmHero !== hero)) stopFilm();
     if (filmOn && hero && heroCfg) {
-      const cfg = { ...heroCfg, poster: "", entrance: true, react: heroCfg.react === "none" ? ("none" as const) : ("follow" as const) };
+      const cfg = {
+        ...heroCfg,
+        poster: "",
+        entrance: true,
+        react: heroCfg.react === "none" ? ("none" as const) : ("follow" as const),
+        ...(paintOverride ? { finish: "paint" as const, paint: paintOverride, parts: "" } : {}),
+      };
       if (!film) {
         film = createFilm(document, hero, filmOpts());
         filmHero = hero;
         const f = film;
         filmView = mountCharacter(f.stage, { ...cfg, film: f });
         filmView.ready.then((ok) => ok && film === f && f.live());
+        scenes?.attach(f);
       } else {
         film.update(filmOpts());
         filmView?.update(cfg);
+        scenes?.attach(film);
         film.measure();
       }
     }
@@ -159,7 +215,8 @@ function start() {
     pending = requestAnimationFrame(() => {
       pending = 0;
       const spots = document.querySelectorAll("[data-xp-character]");
-      let changed = spots.length !== lastCount || (!!filmHero && !filmHero.isConnected);
+      const host = trackHost();
+      let changed = spots.length !== lastCount || (!!filmHero && !filmHero.isConnected) || (!!host && !host.querySelector(".xp-track")) || (!!scenes && !scenes.track.isConnected);
       if (!changed) for (const el of views.keys()) if (!el.isConnected) changed = true;
       if (changed) sync();
     });

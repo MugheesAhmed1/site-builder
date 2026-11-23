@@ -1,0 +1,93 @@
+{
+  "seo": { "title": "{name} | Made for the night", "description": "{name}: a hand-built electric hypercar. Scroll to watch it lift, turn and show you every angle." },
+  "brand": { "name": "Nocturne" },
+  "nav": {
+    "links": [
+      { "label": "Specs", "href": "#specs" },
+      { "label": "Angles", "href": "#angles" },
+      { "label": "Customize", "href": "#customize" },
+      { "label": "Reviews", "href": "#reviews" }
+    ],
+    "cta": "Reserve yours",
+    "ctaHref": "#start"
+  },
+  "film": {
+    "on": true,
+    "hero": {
+      "title": "Made for\nthe night",
+      "text": "A hand-built electric hypercar with nothing to prove.",
+      "cta": "Reserve yours",
+      "ctaHref": "#start"
+    },
+    "specs": {
+      "on": true,
+      "eyebrow": "Model N1",
+      "title": "Nocturne\nN1",
+      "text": "A carbon shell, three motors and a cabin that wraps around you."
+    },
+    "chips": [
+      { "icon": "range", "label": "720 km", "value": "range" },
+      { "icon": "clockfast", "label": "0-100 km/h", "value": "2.4 s" },
+      { "icon": "gauge", "label": "362 km/h", "value": "top speed" },
+      { "icon": "bolt", "label": "Output", "value": "1,100 hp" },
+      { "icon": "weight", "label": "Carbon tub", "value": "1,290 kg" }
+    ],
+    "ring": { "on": true, "eyebrow": "From above", "title": "Built to turn heads" },
+    "cards": [
+      { "icon": "bolt", "title": "Three-motor drive", "text": "One motor up front and two at the rear, with torque shared to every wheel in milliseconds." },
+      { "icon": "battery", "title": "Solid-state pack", "text": "Dense cells sit flat in the floor and keep the centre of gravity right down." },
+      { "icon": "wind", "title": "Active air", "text": "The wing lifts and the floor seals as the speed climbs, so it stays planted." },
+      { "icon": "seat", "title": "Two seats, one purpose", "text": "Room for two and a weekend away, wrapped in a single carbon shell." },
+      { "icon": "flame", "title": "Fast charging", "text": "Ten to eighty percent in twenty minutes on any 350 kW charger." },
+      { "icon": "shield", "title": "Eight-year cover", "text": "Battery, motors and body, whoever is behind the wheel." }
+    ],
+    "paint": { "on": true, "eyebrow": "Make it yours", "title": "Pick your\nfinish", "text": "Every car leaves the workshop in the colour you choose. Try them here.", "hint": "Tap a colour to repaint it" },
+    "swatches": [
+      { "name": "As made", "color": "#8f95a3" },
+      { "name": "Midnight", "color": "#14151a" },
+      { "name": "Signal red", "color": "#d62839" },
+      { "name": "Cobalt", "color": "#2455e6" },
+      { "name": "Sunrise", "color": "#ffb000" },
+      { "name": "Pearl", "color": "#e8e6e1" }
+    ],
+    "voices": { "on": true, "eyebrow": "Reviews", "title": "What owners\nsay" },
+    "quotes": [
+      { "text": "It disappears around you, then it hits like a wave.", "name": "Maya R.", "role": "Owner, Lisbon" },
+      { "text": "The quietest fast car I have ever driven.", "name": "Tom A.", "role": "Road tester" },
+      { "text": "People stop and stare, every single time.", "name": "Priya S.", "role": "Owner, Dubai" }
+    ],
+    "finale": {
+      "on": true,
+      "title": "Your move",
+      "text": "Orders are open for a small first run. Tell us what you want and we will build it.",
+      "cta": "Reserve yours",
+      "ctaHref": "#contact"
+    }
+  },
+  "footer": { "note": "© {year} {name}", "email": "hello@nocturne.example" },
+  "theme": {
+    "colors": {
+      "page": "#0a0a0d",
+      "surface": "#14141a",
+      "surface2": "#1c1c24",
+      "ink": "#f4f4f7",
+      "muted": "#a4a4b0",
+      "line": "#26262e",
+      "accent": "#b57bff",
+      "accent2": "#5fe0d0",
+      "onAccent": "#0a0a0d"
+    },
+    "fonts": { "display": "Big Shoulders Display", "body": "Manrope" },
+    "radius": 16
+  },
+  "character": {
+    "src": "/assets/3d/vehicle/vehicle-hypercar-black-001.glb",
+    "poster": "/assets/previews/vehicle-hypercar-black-001.webp",
+    "name": "Nocturne N1",
+    "wordmark": "NOCTURNE",
+    "turn": -32,
+    "echo": false
+  },
+  "design": { "stops": ["#0b0b0f", "#9aa3b5", "#22232b"], "style": "glow", "angle": 160 },
+  "extras": []
+}

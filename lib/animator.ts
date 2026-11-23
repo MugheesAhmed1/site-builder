@@ -117,7 +117,7 @@ const NEAREST: Record<string, string[]> = {
   general: ["distill", "mossline", "jack"],
 };
 
-export function rankTemplates(business: string, kind: "website" | "portfolio" = "website"): TemplateInfo[] {
+export function rankTemplates(business: string, kind: "website" | "portfolio" = "website", character = false): TemplateInfo[] {
   const want = kind === "portfolio" ? ["creator", "photo", "agency"] : [business];
   const near = NEAREST[business] || [];
   const score = (t: TemplateInfo) => {
@@ -128,6 +128,8 @@ export function rankTemplates(business: string, kind: "website" | "portfolio" = 
     }
     const n = near.indexOf(t.id);
     if (n >= 0) s = Math.max(s, 60 - n * 10);
+    // A site with a 3D character starts from the template written around one: Turntable.
+    if (character && t.id === "turntable") s += 200;
     return s;
   };
   return [...TEMPLATES].sort((a, b) => score(b) - score(a));
@@ -404,6 +406,41 @@ export function buildContent(t: TemplateInfo, plan: MasterPlan, writes: Writes =
 }
 
 /**
+ * The words of a scroll film (content.film, shown around the 3D character) by rules: the business's
+ * own services, steps and answers, so a site made without a writer still tells its own story.
+ */
+function filmWords(key: string, plan: MasterPlan, cat: ReturnType<typeof categoryById>, w: { what: string; cta: string; headline: string; sub: string }): string | undefined {
+  const m = /^film\.(\w+)(?:\.(\d+))?\.(\w+)$/.exec(key) || /^film\.(\w+)\.(\w+)$/.exec(key);
+  if (!m) return undefined;
+  const part = m[1];
+  const n = m.length === 4 && m[2] !== undefined ? Number(m[2]) : -1;
+  const field = m[m.length - 1];
+  const city = plan.city ? ` in ${plan.city}` : "";
+  const nameLine = plan.name.length > 14 ? plan.name : plan.name.replace(/\s+/, "\n");
+  if (part === "hero") return field === "title" ? w.headline : field === "text" ? w.sub : field === "cta" ? w.cta : undefined;
+  if (part === "specs") return field === "eyebrow" ? cat.kicker : field === "title" ? nameLine : field === "text" ? `${upperFirst(w.what)}${city}, made for ${plan.audience || "you"}.` : undefined;
+  if (part === "chips") {
+    const list = [...cat.services, plan.city || cat.kicker];
+    if (field === "label") return list[n];
+    // A chip's second word stays blank (a space) so it reads as the service alone.
+    if (field === "value") return " ";
+    return undefined;
+  }
+  if (part === "ring") return field === "eyebrow" ? "What you get" : field === "title" ? `Everything ${plan.name} gives you` : undefined;
+  if (part === "cards") {
+    const steps = cat.process;
+    if (n >= 0 && n < steps.length) return field === "title" ? steps[n].title : field === "text" ? steps[n].description : undefined;
+    const faq = cat.faq[n - steps.length];
+    if (faq) return field === "title" ? faq.question.replace(/\?$/, "") : field === "text" ? faq.answer : undefined;
+    const svc = cat.services[n - steps.length - cat.faq.length] || cat.services[0];
+    return field === "title" ? svc : field === "text" ? `Ask ${plan.name} about it and it is sorted.` : undefined;
+  }
+  if (part === "finale") return field === "title" ? "Ready when you are" : field === "text" ? `Tell ${plan.name} what you need${city} and it takes it from there.` : field === "cta" ? w.cta : undefined;
+  if (part === "voices") return field === "title" ? `What people say about ${plan.name}` : undefined;
+  return undefined;
+}
+
+/**
  * Words written by rules for the slots that matter most, used when no model wrote them: the
  * opening, search text, services and the call to action. The rest keep the template's words
  * with the new name, for the person to change in the studio.
@@ -431,6 +468,10 @@ export function localTexts(t: TemplateInfo, plan: MasterPlan): Record<string, st
     else if (/^hero\.(?:button|cta)$/.test(k)) out[k] = Object.values(out).includes(cta) ? "Learn more" : cta;
     else if (/^services\.items\.\d+\.title$/.test(k) && service < cat.services.length) out[k] = cat.services[service++];
     else if (/^(?:brand\.)?tagline$/.test(k)) out[k] = cat.kicker;
+    else if (k.startsWith("film.")) {
+      const w = filmWords(k, plan, cat, { what, cta, headline, sub });
+      if (w !== undefined) out[k] = portfolio ? firstPerson(w) : w;
+    }
   }
   // A person's portfolio speaks in the first person about their craft, in every template. A business
   // rewrites the shared slots only on a template made for another kind of business, whose own

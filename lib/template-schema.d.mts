@@ -30,5 +30,7 @@ export const CHARACTER_GROUPS: SchemaGroup[];
 /** A starting gradient (base, glow, second) from a template's colours, for a dark or light stage. */
 export function defaultStops(colors?: Record<string, string>, tone?: "dark" | "light"): [string, string, string];
 export function characterDefaults(colors?: Record<string, string>, tone?: "dark" | "light"): { character: Content; design: Content };
+/** The scroll film's words when a template has none yet (content.film, docs/FILM.md). */
+export function filmDefaults(): Content;
 /** A template's schema and content with the character's groups and defaults in place. */
 export function withCharacter(schema: SchemaGroup[], content: Content, roles?: { stage?: "dark" | "light" }): { schema: SchemaGroup[]; content: Content };

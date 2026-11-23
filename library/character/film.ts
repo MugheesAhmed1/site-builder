@@ -13,7 +13,7 @@
 //   grows for the view from above.
 import type { FilmDirector, FilmShot } from "./engine";
 
-type Kind = "hero" | "three" | "top" | "side" | "low" | "close" | "echo";
+type Kind = "hero" | "three" | "top" | "side" | "low" | "close" | "echo" | "script";
 
 interface Look {
   /** Where the model faces, in degrees from its resting turn. */
@@ -27,16 +27,20 @@ interface Look {
   word: number;
   /** How much of its free box it fills. */
   fill: number;
+  /** The light pools under it and the spreading ring (the choreography's own: 0 in the rest). */
+  glow: number;
+  pulse: number;
 }
 
 const LOOKS: Record<Kind, Look> = {
-  hero: { face: 0, elev: 7, align: 0, ring: 1, floor: 1, dust: 0.8, halo: 0.25, word: 1, fill: 1 },
-  three: { face: 58, elev: 15, align: 0, ring: 0.25, floor: 1, dust: 1, halo: 0.35, word: 0, fill: 0.92 },
-  top: { face: 120, elev: 78, align: 1, ring: 0, floor: 0.15, dust: 0.5, halo: 1, word: 0, fill: 0.9 },
-  side: { face: 180, elev: 5, align: 0, ring: 0.6, floor: 1, dust: 0.7, halo: 0.3, word: 0, fill: 0.95 },
-  low: { face: -38, elev: -7, align: 0, ring: 0.4, floor: 0.6, dust: 1, halo: 0.45, word: 0, fill: 0.95 },
-  close: { face: 28, elev: 11, align: 0, ring: 0, floor: 0.7, dust: 1, halo: 0.4, word: 0, fill: 1.15 },
-  echo: { face: 42, elev: 9, align: 0, ring: 0.8, floor: 1, dust: 0.8, halo: 0.3, word: 0, fill: 1 },
+  hero: { face: 0, elev: 7, align: 0, ring: 1, floor: 1, dust: 0.8, halo: 0.25, word: 1, fill: 1, glow: 0, pulse: 1 },
+  three: { face: 58, elev: 15, align: 0, ring: 0.25, floor: 1, dust: 1, halo: 0.35, word: 0, fill: 0.92, glow: 0, pulse: 1 },
+  top: { face: 120, elev: 78, align: 1, ring: 0, floor: 0.15, dust: 0.5, halo: 1, word: 0, fill: 0.9, glow: 0, pulse: 1 },
+  side: { face: 180, elev: 5, align: 0, ring: 0.6, floor: 1, dust: 0.7, halo: 0.3, word: 0, fill: 0.95, glow: 0, pulse: 1 },
+  low: { face: -38, elev: -7, align: 0, ring: 0.4, floor: 0.6, dust: 1, halo: 0.45, word: 0, fill: 0.95, glow: 0, pulse: 1 },
+  close: { face: 28, elev: 11, align: 0, ring: 0, floor: 0.7, dust: 1, halo: 0.4, word: 0, fill: 1.15, glow: 0, pulse: 1 },
+  script: { face: 0, elev: 7, align: 0, ring: 0, floor: 1, dust: 0.5, halo: 0, word: 0, fill: 1, glow: 0, pulse: 1 },
+  echo: { face: 42, elev: 9, align: 0, ring: 0.8, floor: 1, dust: 0.8, halo: 0.3, word: 0, fill: 1, glow: 0, pulse: 1 },
 };
 
 /** Shots after the opening: for wide, low models (vehicles) and for everything else. */
@@ -57,6 +61,41 @@ interface Anchor {
   drift: number;
   /** The shape (width over height) the model wants for this shot. */
   want?: number;
+  /** A shot written out by the choreography (scenes.ts): the first or last of the track. */
+  key?: TrackKey;
+}
+
+/** One moment of the choreography's camera; positions are fractions of the screen. */
+export interface TrackKey {
+  /** Scroll position in hundredths of the screen's height from the top of the track. */
+  t: number;
+  cx: number;
+  cy: number;
+  w: number;
+  h: number;
+  /** Turn from the side-on (flat models) or front-on (tall models) view, in degrees. */
+  yaw: number;
+  elev: number;
+  align: number;
+  presence: number;
+  ring: number;
+  floor: number;
+  dust: number;
+  halo: number;
+  word: number;
+  glow: number;
+  pulse: number;
+}
+
+/** A tall section of the page the choreography plays in (its sticky screen stays put). */
+export interface Track {
+  el: HTMLElement;
+  /** How long it scrolls, in hundredths of the screen's height. */
+  len: number;
+  /** The camera at a moment (t as in TrackKey). */
+  sample(t: number): TrackKey;
+  /** True when the track opens the page: it brings its own opening shot and outlined word. */
+  opening: boolean;
 }
 
 interface Box {
@@ -77,7 +116,7 @@ const lerp = (a: number, b: number, k: number) => a + (b - a) * k;
 const STYLE = `.xp-film{position:fixed;inset:0;z-index:4;pointer-events:none;overflow:hidden;contain:strict}
 .xp-film-stage{position:absolute;inset:0}
 .xp-film-halo{position:absolute;left:0;top:0;width:10px;height:10px;border-radius:50%;opacity:0;mix-blend-mode:screen;will-change:transform,opacity}
-.xp-film-word{position:absolute;left:0;right:0;top:0;text-align:center;white-space:nowrap;line-height:.82;font-weight:800;text-transform:uppercase;letter-spacing:-.02em;color:transparent;opacity:0;will-change:transform,opacity;-webkit-mask-image:linear-gradient(180deg,#000 30%,transparent 96%);mask-image:linear-gradient(180deg,#000 30%,transparent 96%)}
+.xp-film-word{position:absolute;left:0;right:0;top:0;transform-origin:50% 0;text-align:center;white-space:nowrap;line-height:.82;font-weight:800;text-transform:uppercase;letter-spacing:-.02em;color:transparent;opacity:0;will-change:transform,opacity;-webkit-mask-image:linear-gradient(180deg,#000 30%,transparent 96%);mask-image:linear-gradient(180deg,#000 30%,transparent 96%)}
 .xp-film-on [data-xp-film-sec] :is(h1,h2,h3){filter:opacity(calc(.22 + .78 * var(--xp-shot,1)));translate:0 calc((1 - var(--xp-shot,1)) * 18px)}
 .xp-film-on [data-xp-character="hero"] > .xp-char-poster{transition:opacity .6s ease}
 .xp-film-on.xp-film-live [data-xp-character="hero"] > .xp-char-poster,.xp-film-on [data-xp-character="echo"] > .xp-char-poster{opacity:0!important}
@@ -227,6 +266,8 @@ export interface FilmOptions {
   wordmark?: string;
   /** Gradient colours: base, glow, second. */
   stops?: string[];
+  /** The model's shape is known (or changed): wide and low, or tall. */
+  onShape?: (flat: boolean) => void;
 }
 
 export interface Film extends FilmDirector {
@@ -237,6 +278,8 @@ export interface Film extends FilmDirector {
   update(next: FilmOptions): void;
   /** Measure the page again (after it changes). */
   measure(): void;
+  /** Hands the camera to a choreography (scenes.ts) while the page is in its track; null to stop. */
+  setTrack(track: Track | null): void;
   dispose(): void;
 }
 
@@ -248,9 +291,9 @@ const lum = (hex: string) => {
 
 /** Top-level sections of the page, in order: section, footer, header blocks and [data-xp-shot]. */
 function sections(doc: Document, layer: HTMLElement): HTMLElement[] {
-  const found = Array.from(doc.querySelectorAll<HTMLElement>("section,footer,[data-xp-shot]")).filter((el) => !layer.contains(el));
+  const found = Array.from(doc.querySelectorAll<HTMLElement>("section,footer,[data-xp-shot]")).filter((el) => !layer.contains(el) && !el.closest("[data-xp-film-track],[data-xp-noshot]"));
   const top = found.filter((el) => !found.some((o) => o !== el && o.contains(el)));
-  const list = top.length ? top : Array.from(doc.body.children).filter((el): el is HTMLElement => el instanceof HTMLElement && el !== layer);
+  const list = top.length ? top : Array.from(doc.body.children).filter((el): el is HTMLElement => el instanceof HTMLElement && el !== layer && !el.matches("[data-xp-film-track],[data-xp-noshot]"));
   return list.filter((el) => el.getBoundingClientRect().height > 120);
 }
 
@@ -334,27 +377,37 @@ export function createFilm(doc: Document, hero: HTMLElement, init: FilmOptions =
       a.box = roomAt(list, a.at, W, H, a.want, W < 700);
     }
   };
+  let track: Track | null = null;
+  let trackTop = 0;
   let secs: HTMLElement[] = [];
   let flat = false;
   let measuredFlat: boolean | null = null;
   let heroTop = 0;
   let heroMid = 0;
   let wordH = 0;
+  let wordK = 1;
   let heroCx = 0;
   let heroW = 0;
   const shotOf = new Map<HTMLElement, number>();
 
+  let haloSoft = "";
+  let haloDisc = "";
+  let haloMode = false;
   const paint = () => {
     const stops = opts.stops || [];
     const base = stops[0] || "#111111";
     const glow = stops[1] || "#7c5cff";
     const dark = lum(base) < 0.2;
-    halo.style.background = `radial-gradient(closest-side, color-mix(in oklab, ${glow} 55%, #ffffff) 0%, color-mix(in oklab, ${glow} 30%, transparent) 45%, transparent 100%)`;
+    haloSoft = `radial-gradient(closest-side, color-mix(in oklab, ${glow} 55%, #ffffff) 0%, color-mix(in oklab, ${glow} 30%, transparent) 45%, transparent 100%)`;
+    // The script's halo is a lit disc: bright to the model's edge, then fading to nothing.
+    const lit = `color-mix(in oklab, ${glow} 16%, ${dark ? "#ffffff" : "#000000"})`;
+    haloDisc = `radial-gradient(closest-side, ${lit} 0%, color-mix(in oklab, ${lit} 88%, transparent) 34%, color-mix(in oklab, ${lit} 52%, transparent) 60%, color-mix(in oklab, ${lit} 16%, transparent) 82%, transparent 100%)`;
+    halo.style.background = haloMode ? haloDisc : haloSoft;
     halo.style.mixBlendMode = dark ? "screen" : "multiply";
     const text = String(opts.wordmark || "").trim();
     word.textContent = text;
     word.style.display = text ? "" : "none";
-    const ink = dark ? "rgba(255,255,255,.42)" : "rgba(0,0,0,.32)";
+    const ink = dark ? "rgba(255,255,255,.6)" : "rgba(0,0,0,.4)";
     word.style.setProperty("-webkit-text-stroke", `1.5px ${ink}`);
     const h1 = doc.querySelector("h1");
     word.style.fontFamily = h1 ? win.getComputedStyle(h1).fontFamily : "inherit";
@@ -372,7 +425,11 @@ export function createFilm(doc: Document, hero: HTMLElement, init: FilmOptions =
     word.style.width = `${span}px`;
     word.style.left = `${clamp(heroCx - span / 2, 0, W - span)}px`;
     word.style.right = "auto";
-    wordH = word.offsetHeight;
+    // A short word on a wide screen would sit squat: stretch it up to a cap height of about a fifth
+    // of the screen, as the tall condensed words of a poster are.
+    const fs = parseFloat(word.style.fontSize) || 100;
+    wordK = clamp((win.innerHeight * 0.215) / (fs * 0.7), 1, 1.9);
+    wordH = word.offsetHeight * wordK;
   };
 
   let measures = 0;
@@ -389,7 +446,7 @@ export function createFilm(doc: Document, hero: HTMLElement, init: FilmOptions =
     const mobile = W < 700;
     const sy = win.scrollY;
     const maxScroll = Math.max(0, doc.documentElement.scrollHeight - H);
-    const skip = (el: Element) => layer.contains(el) || !!el.closest("[data-xp-character]");
+    const skip = (el: Element) => layer.contains(el) || !!el.closest("[data-xp-character],[data-xp-film-track]");
     items = things(doc, skip);
     const list = snapshot(items, win, false);
     const near = snapshot(items, win, true);
@@ -441,6 +498,22 @@ export function createFilm(doc: Document, hero: HTMLElement, init: FilmOptions =
       }
       seq++;
     }
+    // The choreography's track: its first and last moments are shots of their own, and the camera
+    // plays what its script says in between.
+    trackTop = 0;
+    if (track && track.el.isConnected) {
+      const tr = track.el.getBoundingClientRect();
+      trackTop = tr.top + sy;
+      const unit = H / 100;
+      const first = track.sample(0);
+      const last = track.sample(track.len);
+      out.push({ at: trackTop, kind: "script", seq: -1, sec: null, box: null, drift: 0, key: first });
+      out.push({ at: trackTop + track.len * unit, kind: "script", seq: -1, sec: null, box: null, drift: 0, key: last });
+      if (track.opening) {
+        heroCx = W / 2;
+        heroW = W * 0.62;
+      }
+    }
     out.sort((a, b) => a.at - b.at);
     // Until its first shot the model stays in its spot in the hero, so shots above it are dropped.
     const first = out.findIndex((a) => a.kind === "hero");
@@ -449,21 +522,27 @@ export function createFilm(doc: Document, hero: HTMLElement, init: FilmOptions =
     const kept: Anchor[] = [];
     for (const a of out) {
       const prev = kept[kept.length - 1];
-      if (prev && a.at - prev.at < H * 0.22) {
+      if (prev && a.at - prev.at < H * 0.22 && !(a.kind === "script" || prev.kind === "script")) {
         if (prev.kind === "hero" || prev.kind === "echo" || !(a.kind === "hero" || a.kind === "echo")) continue;
         kept.pop();
       }
       kept.push(a);
     }
     if (!kept.length) kept.push({ at: 0, kind: "hero", seq: -1, sec: null, box: spotBox(hero, 0), drift: 0 });
+    // Shots inside the track would only get in the way of its script.
+    if (track && track.el.isConnected) {
+      const end = trackTop + track.len * (H / 100);
+      for (let i = kept.length - 1; i >= 0; i--) if (kept[i].kind !== "script" && kept[i].at > trackTop - 1 && kept[i].at < end + 1) kept.splice(i, 1);
+    }
     anchors = kept;
     shotOf.clear();
     for (const a of anchors) if (a.sec && !shotOf.has(a.sec)) shotOf.set(a.sec, 1);
     // Turns only ever go one way, so scrolling down keeps it turning like a camera on a track.
     let yaw = 0;
     for (const a of anchors) {
+      if (a.key) continue;
       const want = LOOKS[a.kind].face + a.drift;
-      if (a === anchors[0]) yaw = want;
+      if (a === anchors[0] || !Number.isFinite(yaw)) yaw = want;
       else {
         // The same angle, the nearest way round, going on forward rather than back.
         let y = want + 360 * Math.round((yaw - want) / 360);
@@ -476,8 +555,9 @@ export function createFilm(doc: Document, hero: HTMLElement, init: FilmOptions =
   };
 
   // Springs for every value the camera reads, so moves ease in and settle like a crane shot.
-  const keys = ["cx", "cy", "w", "h", "yaw", "elev", "align", "presence", "ring", "floor", "dust", "halo", "word"] as const;
+  const keys = ["cx", "cy", "w", "h", "yaw", "elev", "align", "presence", "ring", "floor", "dust", "halo", "word", "glow", "pulse"] as const;
   type K = (typeof keys)[number];
+  type Vals = Record<K, number>;
   const cur = {} as Record<K, { p: number; v: number }>;
   let primed = false;
   const step = (x: { p: number; v: number }, target: number, dt: number, k = 70) => {
@@ -488,13 +568,28 @@ export function createFilm(doc: Document, hero: HTMLElement, init: FilmOptions =
   };
 
   let lastSec: string = "";
-  const target = (y: number): Record<K, number> => {
+  /** True while the camera is playing a choreography's script (so the halo and word follow it). */
+  let scripted = false;
+  /** Where the camera is in the track, in hundredths of a screen (for the outlined word). */
+  let trackT = 0;
+  const target = (y: number, info: { flat: boolean; turn: number; base: number }): Vals => {
     const W = win.innerWidth;
     const H = win.innerHeight;
     let i = 0;
     while (i < anchors.length - 1 && anchors[i + 1].at <= y) i++;
     const A = anchors[i];
     const B = anchors[Math.min(i + 1, anchors.length - 1)];
+    // The camera's turn is kept as a turn from the base (side on or front on), whatever its origin.
+    const restRel = info.turn - info.base;
+    const turnDelta = info.turn - (info.flat ? -32 : -18);
+    const keyVals = (k: TrackKey): Vals => ({ cx: k.cx * W, cy: k.cy * H, w: k.w * W, h: k.h * H, yaw: k.yaw + turnDelta, elev: k.elev, align: k.align, presence: k.presence, ring: k.ring, floor: k.floor, dust: k.dust, halo: k.halo, word: k.word, glow: k.glow, pulse: k.pulse });
+    scripted = false;
+    // Inside the track: the script plays, exactly.
+    if (track && A.key && B.key && A !== B && y >= A.at) {
+      scripted = true;
+      trackT = clamp((y - A.at) / (H / 100), 0, track.len);
+      return keyVals(track.sample(trackT));
+    }
     const p = A === B ? 0 : clamp((y - A.at) / Math.max(1, B.at - A.at));
     // Hold each shot a while, then move.
     const k = smooth(0.18, 0.82, p);
@@ -510,34 +605,31 @@ export function createFilm(doc: Document, hero: HTMLElement, init: FilmOptions =
       const shift = a.kind === "hero" || a.kind === "echo" ? Math.max(0, a.at - y) * (a.kind === "hero" ? 0 : 1) : 0;
       return { cx: b.x + b.w / 2, cy: b.y + b.h / 2 + shift, w, h };
     };
-    const ba = boxFor(A, B);
-    const bb = boxFor(B, A);
-    const la = LOOKS[A.kind];
-    const lb = LOOKS[B.kind];
-    const ya = (A as Anchor & { yaw: number }).yaw ?? 0;
-    const yb = (B as Anchor & { yaw: number }).yaw ?? 0;
+    const valsOf = (a: Anchor, other: Anchor): Vals => {
+      if (a.key) return keyVals(a.key);
+      const b = boxFor(a, other);
+      const l = LOOKS[a.kind];
+      const has = a.box ? 1 : 0;
+      return { cx: b.cx, cy: b.cy, w: b.w, h: b.h, yaw: restRel + ((a as Anchor & { yaw: number }).yaw ?? 0), elev: l.elev, align: l.align, presence: has, ring: l.ring, floor: l.floor, dust: l.dust, halo: l.halo * has, word: l.word, glow: l.glow, pulse: l.pulse };
+    };
+    const va = valsOf(A, B);
+    const vb = valsOf(B, A);
+    // The shortest way round when a script's turn meets a shot's.
+    if (!!A.key !== !!B.key) vb.yaw += 360 * Math.round((va.yaw - vb.yaw) / 360);
     // Before the first shot (a hero lower on the page) the spot scrolls with the page.
     let lead = 0;
     if (y < anchors[0].at && anchors[0].kind === "hero") lead = anchors[0].at - y;
-    const pa = A.box ? 1 : 0;
-    const pb = B.box ? 1 : 0;
     // A spot that has scrolled well off the screen takes the model with it.
     const heroGone = A.kind === "hero" && A === B ? clamp((y - A.at) / (H * 0.9)) : 0;
-    return {
-      cx: lerp(ba.cx, bb.cx, k),
-      cy: lerp(ba.cy, bb.cy, k) + lead - heroGone * H * 0.6,
-      w: lerp(ba.w, bb.w, k),
-      h: lerp(ba.h, bb.h, k),
-      yaw: lerp(ya, yb, k),
-      elev: lerp(la.elev, lb.elev, k),
-      align: lerp(la.align, lb.align, k),
-      presence: lerp(pa, pb, k) * (1 - heroGone),
-      ring: lerp(la.ring, lb.ring, k),
-      floor: lerp(la.floor, lb.floor, k),
-      dust: lerp(la.dust, lb.dust, k),
-      halo: lerp(la.halo * pa, lb.halo * pb, k),
-      word: lerp(la.word, lb.word, k),
-    };
+    // The script's last moment goes up the screen with the page when its track lets go.
+    let leave = 0;
+    if (A.key && A === B && track) leave = Math.max(0, y - A.at);
+    const out = {} as Vals;
+    for (const key of keys) out[key] = lerp(va[key], vb[key], k);
+    out.cy += lead - heroGone * H * 0.6 - leave;
+    out.presence *= 1 - heroGone;
+    if (leave) out.presence *= 1 - clamp(leave / (H * 0.8));
+    return out;
   };
 
   const focus = (y: number) => {
@@ -600,46 +692,58 @@ export function createFilm(doc: Document, hero: HTMLElement, init: FilmOptions =
       if (measuredFlat !== info.flat) {
         measuredFlat = info.flat;
         flat = info.flat;
+        opts.onShape?.(flat);
         measure();
       }
       const y = win.scrollY;
       liveMeasure(y);
-      const t = target(y);
-      // Near a fixed spot (the hero, the echo) the template placed it on purpose: no dodging.
+      const t = target(y, info);
+      // Near a fixed spot (the hero, the echo, the choreography) the page placed it on purpose: no dodging.
       let ni = 0;
       for (let i = 1; i < anchors.length; i++) if (Math.abs(anchors[i].at - y) < Math.abs(anchors[ni].at - y)) ni = i;
-      const spot = anchors[ni] && (anchors[ni].kind === "hero" || anchors[ni].kind === "echo");
+      const spot = scripted || (anchors[ni] && (anchors[ni].kind === "hero" || anchors[ni].kind === "echo" || anchors[ni].kind === "script"));
       if (spot) dodgeWant = 1;
       else if (performance.now() - lastDodge > 250) {
         lastDodge = performance.now();
         checkDodge(y, primed ? { cx: cur.cx.p, cy: cur.cy.p, w: cur.w.p, h: cur.h.p } : t);
       }
-      if (info.reduced) dodge = dodgeWant;
+      if (info.reduced || (win as unknown as { __XP_FILM_SNAP__?: boolean }).__XP_FILM_SNAP__) dodge = dodgeWant;
       else {
         const a = (dodgeWant - dodge) * 90 - dodgeV * 19;
         dodgeV += a * Math.min(dt, 0.05);
         dodge = clamp(dodge + dodgeV * Math.min(dt, 0.05));
       }
       t.presence *= dodge;
-      if (!primed || info.reduced) {
+      // Checks in a browser can ask for every move to land at once (window.__XP_FILM_SNAP__).
+      const snap = !!(win as unknown as { __XP_FILM_SNAP__?: boolean }).__XP_FILM_SNAP__;
+      if (!primed || info.reduced || snap) {
         for (const k of keys) cur[k] = { p: t[k], v: 0 };
         primed = true;
       } else for (const k of keys) step(cur[k], t[k], Math.min(dt, 0.05), k === "yaw" || k === "elev" ? 42 : 70);
       focus(y);
       const v = (k: K) => cur[k].p;
       // The halo and the wordmark live in the page, behind the model.
-      const size = Math.max(v("w"), v("h")) * 1.5;
+      // The script's halo is a disc a little bigger than the model; the page's a soft glow.
+      if (scripted !== haloMode) {
+        haloMode = scripted;
+        halo.style.background = haloMode ? haloDisc : haloSoft;
+      }
+      const size = Math.max(v("w"), v("h")) * (scripted ? 1.28 : 1.5);
       halo.style.width = halo.style.height = `${size}px`;
       halo.style.transform = `translate(${v("cx") - size / 2}px, ${v("cy") - size / 2}px)`;
-      halo.style.opacity = String(clamp(v("halo")) * 0.6);
+      halo.style.opacity = String(clamp(v("halo")) * (scripted ? 0.9 : 0.6));
       const wo = clamp(v("word"));
       word.style.opacity = String(wo);
-      // Its middle sits a little above the middle of the hero's spot, and it drifts up slower than the page.
-      word.style.transform = `translateY(${heroMid - wordH * 0.62 - y * 0.55}px)`;
+      if (track && track.opening) {
+        // In the opening track the word sits near the top of the screen and drifts up slowly.
+        const H = win.innerHeight;
+        const t0 = scripted ? trackT : Math.max(0, (y - trackTop) / (H / 100));
+        word.style.transform = `translateY(${H * 0.13 - wordH * 0.1 - t0 * (H / 100) * 0.1}px) scaleY(${wordK.toFixed(3)})`;
+      } else word.style.transform = `translateY(${heroMid - wordH * 0.62 - y * 0.55}px) scaleY(${wordK.toFixed(3)})`;
       // Stepping out of the way: it shrinks as it fades, so it never hangs over words as a ghost.
       const pr = clamp(v("presence"));
       const shrink = 0.55 + 0.45 * pr;
-      return { cx: v("cx"), cy: v("cy"), w: v("w") * shrink, h: v("h") * shrink, yaw: v("yaw"), elev: v("elev"), align: clamp(v("align")), presence: pr * pr, ring: clamp(v("ring")), floor: clamp(v("floor")), dust: clamp(v("dust")) };
+      return { cx: v("cx"), cy: v("cy"), w: v("w") * shrink, h: v("h") * shrink, yaw: v("yaw"), elev: v("elev"), align: clamp(v("align")), presence: pr * pr, ring: clamp(v("ring")), floor: clamp(v("floor")), dust: clamp(v("dust")), glow: clamp(v("glow")), pulse: clamp(v("pulse")) };
     },
     live() {
       doc.documentElement.classList.add("xp-film-live");
@@ -650,6 +754,10 @@ export function createFilm(doc: Document, hero: HTMLElement, init: FilmOptions =
       fitWord();
     },
     measure,
+    setTrack(next) {
+      track = next;
+      measure();
+    },
     dispose() {
       mo?.disconnect();
       if (re) win.clearTimeout(re);

@@ -227,6 +227,10 @@ export function characterFrom(m: ModelInfo, current: Content = {}): Content {
 /** The whole content for a template, a design system and a model: what the journey's step 6 starts from. */
 export function composeContent(content: Content, roles: TemplateRoles, d: DesignSystem, m?: ModelInfo | null): Content {
   const next = applyDesign(content, roles, d);
-  if (m) next.character = { ...characterFrom(m, next.character), paint: next.character.paint, speed: next.character.speed, motion: next.character.motion };
+  if (m) {
+    next.character = { ...characterFrom(m, next.character), paint: next.character.paint, speed: next.character.speed, motion: next.character.motion };
+    // Colour choices repaint the whole model: right for a car or a product, wrong for a person or an animal.
+    if (next.film?.paint && (m.category === "character" || m.category === "nature")) next.film = { ...next.film, paint: { ...next.film.paint, on: false } };
+  }
   return next;
 }

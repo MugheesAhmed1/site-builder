@@ -42,7 +42,52 @@ for the whole page.
 
 Reduced motion: shots still change per section, but without springs, dust or heading moves.
 
+## The choreography: every section built around the one character
+
+The shot-per-section film above works on any page. On top of it sits a *choreography*
+(`library/character/scenes.ts`): a tall track of scroll, one sticky screen, where a script moves the
+camera and brings every word, chip, card, swatch and quote in and out on the **same scroll clock**
+as the model, so the whole page is the story of one object. It was written by measuring a cinematic
+car page frame by frame (positions, fade windows, camera yaw and height, timing), technique only.
+
+- **Where it plays.** A template with an empty `[data-xp-film-track]` opens with it (Turntable). On
+  any other template with a character, the runtime injects the track right after the hero's section
+  (the story begins at the specs). It needs `content.film` (defaults come from `withCharacter`) and
+  `film.on !== false`.
+- **Scenes** (`LEN` = lengths in hundredths of a screen): *hero* (the model low and big, an outlined
+  wordmark behind it, words to the side; it lifts off with a spreading ring, light pools under its
+  wheels and dust, then floats while the wordmark fades), *specs* (three-quarter view, title, up to
+  six chips floating below), *ring* (camera climbs and swings to straight above, a lit halo opens,
+  six cards slide in around it and out again), *paint* (rear three-quarter, colour swatches repaint
+  the model), *voices* (reviews), *finale* (a closing call to action). Scenes switch off with
+  `film.specs.on`, `ring.on`, `paint.on`, `voices.on`, `finale.on`.
+- **The script is data.** `buildScript(content, {narrow, flat}, opening)` returns camera keys (a
+  box on the screen, turn, camera height, set levels) and element specs with fade windows
+  (`fade: [in0, in1, out0, out1]`). `sampler` interpolates the keys (monotone, no overshoot);
+  `visibility` gives each element's opacity. Variants: wide and flat (cars, boats), wide and tall
+  (people, animals: they stay upright and turn slowly), narrow (phones: one column, one card at a
+  time).
+- **The camera fits the real outline.** The engine keeps about 1,500 points on the model's surface
+  and each frame projects them through the actual lens, so the model's silhouette (not its
+  bounding box) fills the script's box exactly, whatever turn or height. A box in the script is
+  therefore the model's own space on screen.
+- **The room.** A sticky viewport layer behind the model carries a spotlight from above and a lit
+  band of floor (the character's own colours), eased by the script's `floor` and `halo` values.
+- **Content** (`content.film`, all text editable in the studio): hero, specs, chips
+  (`icon`, `label`, `value`), ring, cards (`icon`, `title`, `text`), paint and swatches, voices and
+  quotes, finale. In the journey the rules (`filmWords` in `lib/animator.ts`) or the AI writer write
+  it from the business's own services, steps and answers; colour choices are off for people and
+  animals (repainting them whole makes no sense).
+
 ## Checking it
+
+The script is tested without a browser (`tests/scenes.test.ts`). The look is checked frame by frame
+against the reference in a real browser: `window.__XP_SCENES__()` returns the track's length, scenes
+and elements; `window.__XP_FILM_SNAP__ = true` lands every move at once so a screenshot at a given
+scroll is exact. Render a built template with `preview.html#xp=<content json>` (Playwright with
+swiftshader and a local static server).
+
+## The film's own checks
 
 `window.__XP_FILM__()` in a page returns the shots and the camera's current values. Screenshots of
 six templates scrolled top to bottom with the black hypercar are the check used when it was built
@@ -52,5 +97,5 @@ room finder and the defaults.
 ## Next
 
 - Callout chips pinned to points on the model, written from the interview (specs, features).
-- A template built around the model's silhouette (flanking cards, a feature section from above).
-- The AI picks the shot list per site.
+- More scenes (a close-up on a detail, a before/after) chosen by the AI from the business.
+- Smoke and soft light shafts in the room, as in the reference.

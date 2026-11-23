@@ -18,7 +18,7 @@ journey ([PRD-JOURNEY.md](PRD-JOURNEY.md)) at `/create`, strictly in this order:
    contrast checks. Accent, type pair, light or dark, background style, corners and motion can be tuned, with
    a live mock of the site beside the controls.
 4. **The template library, shown as their own site** (`components/journey/TemplateStep.tsx`): every
-   template with their words, their design system and their character, best matches first, with a
+   template (Turntable first, because the whole page is built around one character) with their words, their design system and their character, best matches first, with a
    live preview on desktop or phone.
 5. **Pick a template, or create a new one**: *Create a new template* is the Orbit canvas
    (`templates/orbit`): the character centre stage on its own gradient with rings and orbiting
