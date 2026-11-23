@@ -269,6 +269,43 @@ describe("a saved site comes back whole", () => {
       delete (globalThis as { localStorage?: unknown }).localStorage;
     }
   });
+
+  it("gives a site saved before the page's story the story, and keeps a motion its owner chose", async () => {
+    const { TEMPLATES, loadContent } = await import("@/lib/templates");
+    const store = new Map<string, string>();
+    (globalThis as { localStorage?: unknown }).localStorage = {
+      getItem: (k: string) => store.get(k) ?? null,
+      setItem: (k: string, v: string) => void store.set(k, v),
+      removeItem: (k: string) => void store.delete(k),
+    };
+    try {
+      const t = TEMPLATES.find((x) => x.id === "orbit") || TEMPLATES[0];
+      const key = `xp-template:v2:${t.id}`;
+      const old = { ...t.content };
+      delete old.film;
+      const saved = (src: string, scroll: string, more: Record<string, unknown> = {}) => JSON.stringify({ ...old, ...more, character: { ...old.character, src, scroll } });
+      const model = "/assets/3d/vehicle/vehicle-hypercar-black-001.glb";
+
+      // Saved when "It turns" was the only default: it now travels with the page, with the story's words.
+      store.set(key, saved(model, "turn"));
+      const c = loadContent(t);
+      expect(c.character.scroll).toBe("film");
+      expect(c.film.on).toBe(true);
+      expect(c.film.cards.length).toBeGreaterThan(0);
+
+      // Another motion was a choice, and so is "It turns" once the story exists.
+      store.set(key, saved(model, "zoom"));
+      expect(loadContent(t).character.scroll).toBe("zoom");
+      store.set(key, saved(model, "turn", { film: t.content.film }));
+      expect(loadContent(t).character.scroll).toBe("turn");
+
+      // No model, nothing to tell the story about.
+      store.set(key, saved("", "turn"));
+      expect(loadContent(t).character.scroll).toBe("turn");
+    } finally {
+      delete (globalThis as { localStorage?: unknown }).localStorage;
+    }
+  });
 });
 
 describe("words by rules, in the right voice", () => {

@@ -79,6 +79,13 @@ car page frame by frame (positions, fade windows, camera yaw and height, timing)
   it from the business's own services, steps and answers; colour choices are off for people and
   animals (repainting them whole makes no sense).
 
+## Sites saved before the story
+
+A site kept in the browser before the story existed has `character.scroll: "turn"` (then the only
+default) and no `content.film`. `loadContent` (lib/templates.ts) gives it the story: `film` comes
+from the template's defaults and `scroll` becomes `"film"` when a model is in place. Once a site
+has `content.film`, its scroll motion is the owner's choice and is never changed.
+
 ## Checking it
 
 The script is tested without a browser (`tests/scenes.test.ts`). The look is checked frame by frame
