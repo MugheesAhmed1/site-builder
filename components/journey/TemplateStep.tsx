@@ -48,7 +48,7 @@ export default function TemplateStep({
   onCustomise: (t: TemplateInfo, c: Content) => void;
 }) {
   const fresh = templateById(NEW_TEMPLATE);
-  const ranked = useMemo(() => rankTemplates(brief.business, brief.kind).filter((t) => t.id !== NEW_TEMPLATE), [brief.business, brief.kind]);
+  const ranked = useMemo(() => rankTemplates(brief.business, brief.kind, true).filter((t) => t.id !== NEW_TEMPLATE), [brief.business, brief.kind]);
   const t = templateById(tid) || ranked[0];
   const isNew = t.id === NEW_TEMPLATE;
   const chosen = isNew ? blocks ?? blocksFor(brief, design.motion, t.id, 4) : undefined;

@@ -18,7 +18,7 @@ journey ([PRD-JOURNEY.md](PRD-JOURNEY.md)) at `/create`, strictly in this order:
    contrast checks. Accent, type pair, light or dark, background style, corners and motion can be tuned, with
    a live mock of the site beside the controls.
 4. **The template library, shown as their own site** (`components/journey/TemplateStep.tsx`): every
-   template with their words, their design system and their character, best matches first, with a
+   template (Turntable first, because the whole page is built around one character) with their words, their design system and their character, best matches first, with a
    live preview on desktop or phone.
 5. **Pick a template, or create a new one**: *Create a new template* is the Orbit canvas
    (`templates/orbit`): the character centre stage on its own gradient with rings and orbiting
@@ -49,6 +49,10 @@ those roles, puts the character in the hero (and the echo and badge slots where 
 them) on a gradient from its own colours, and colours the library sections by role too. Text on
 the stage swaps to stay readable (contrast is tested for every template and every design system in
 `tests/character.test.ts`).
+
+**The film** ([FILM.md](FILM.md)): by default the character no longer sits in the hero's box. It
+lives on one fixed stage over the page, and every section is a camera shot of it, blended by the
+scroll position, with a studio set and an outlined wordmark.
 
 ## A 3D model from a photo
 

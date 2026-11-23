@@ -3097,6 +3097,22 @@
         ]
       },
       {
+        "src": "/assets/previews/vehicle-hypercar-black-001.webp",
+        "type": "image",
+        "label": "Its picture (shown while it loads)",
+        "from": [
+          "turntable"
+        ],
+        "business": [
+          "auto",
+          "product",
+          "shop",
+          "creator",
+          "agency",
+          "general"
+        ]
+      },
+      {
         "src": "/lib/media/landscape.webp",
         "type": "image",
         "label": "Before picture",
@@ -3213,7 +3229,8 @@
           "brightline",
           "fernhollow",
           "milo",
-          "orbit"
+          "orbit",
+          "turntable"
         ]
       },
       {
@@ -3308,6 +3325,12 @@
         "family": "DM Sans",
         "from": [
           "tidewater"
+        ]
+      },
+      {
+        "family": "Big Shoulders Display",
+        "from": [
+          "turntable"
         ]
       }
     ],
@@ -3491,6 +3514,21 @@
           "sea": "#1f4a5c",
           "dark": "#12202a",
           "onDark": "#f3ede4"
+        }
+      },
+      {
+        "from": "turntable",
+        "name": "Turntable",
+        "colors": {
+          "page": "#0a0a0d",
+          "surface": "#14141a",
+          "surface2": "#1c1c24",
+          "ink": "#f4f4f7",
+          "muted": "#a4a4b0",
+          "line": "#26262e",
+          "accent": "#b57bff",
+          "accent2": "#5fe0d0",
+          "onAccent": "#0a0a0d"
         }
       }
     ]

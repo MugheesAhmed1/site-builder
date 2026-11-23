@@ -91,6 +91,8 @@ export const rulesTexts = (t: TemplateInfo, plan: MasterPlan) => localTexts(t, p
 export function contentFor(t: TemplateInfo, plan: MasterPlan, d: DesignSystem, model: ModelInfo | null, opts: { texts?: Record<string, string>; email?: string } = {}): Content {
   let c = buildContent(t, plan, { texts: opts.texts ?? localTexts(t, plan) });
   c = composeContent(c, rolesOf(t), d, model);
+  // The site's name, outlined behind the character in the opening shot.
+  if (model && c.character && !String(c.character.wordmark || "").trim()) c.character = { ...c.character, wordmark: plan.name.slice(0, 24) };
   if (opts.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(opts.email)) {
     const generated = `hello@${plan.name.toLowerCase().replace(/[^a-z0-9]+/g, "").slice(0, 24) || "studio"}.com`;
     c = JSON.parse(JSON.stringify(c).split(generated).join(opts.email)) as Content;

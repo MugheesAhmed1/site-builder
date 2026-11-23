@@ -31,8 +31,16 @@ import {
   type Material,
   type Object3D,
   type Texture,
+  AdditiveBlending,
+  BufferGeometry,
+  Float32BufferAttribute,
+  Points,
+  PointsMaterial,
+  Sprite,
+  SpriteMaterial,
 } from "three";
 import { GLTFLoader, type GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { Reflector } from "three/examples/jsm/objects/Reflector.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
@@ -40,7 +48,44 @@ import { clone as cloneSkinned } from "three/examples/jsm/utils/SkeletonUtils.js
 
 export type CharacterMotion = "float" | "sway" | "spin" | "still";
 export type CharacterReact = "follow" | "drag" | "both" | "none";
-export type CharacterScroll = "turn" | "rise" | "zoom" | "none";
+export type CharacterScroll = "turn" | "rise" | "zoom" | "film" | "none";
+
+/**
+ * One frame of the film (library/character/film.ts): where on the screen the model sits and how
+ * the camera sees it. The film's director works this out from the scroll position every frame.
+ */
+export interface FilmShot {
+  /** The box on the screen the model fills, in CSS pixels of the viewport. */
+  cx: number;
+  cy: number;
+  w: number;
+  h: number;
+  /** Turn added to the resting turn, in degrees. */
+  yaw: number;
+  /** How far the camera has climbed above the model, in degrees (0 side on, 80 from above). */
+  elev: number;
+  /** 0..1: turn its long side to run up the screen (for the view from above). */
+  align: number;
+  /** 0..1: how much of the model shows (0 when a section has no room for it). */
+  presence: number;
+  /** 0..1 each: the glowing ring on the floor, the reflective floor and the dust. */
+  ring: number;
+  floor: number;
+  dust: number;
+  /** 0..1: the soft light under the model, as if it hovers (two pools under a car's wheels). */
+  glow?: number;
+  /** 0..1: one ring spreading out from under the model (0 before, 1 when it has faded away). */
+  pulse?: number;
+}
+
+export interface FilmDirector {
+  /**
+   * The shot for this frame; dt in seconds. `flat` is true for wide, low models (cars, boats).
+   * `turn` is the model's resting turn and `base` the turn that shows a flat model side on (nose
+   * left) or a tall one from the front: the shot's yaw is added to `base`.
+   */
+  shot(dt: number, info: { flat: boolean; reduced: boolean; turn: number; base: number }): FilmShot;
+}
 export type CharacterFinish = "original" | "paint" | "clay" | "chrome";
 
 export interface CharacterConfig {
@@ -77,6 +122,10 @@ export interface CharacterConfig {
   quality?: "auto" | "high" | "low";
   /** Speed of idle motion, 0.2 to 2. */
   speed?: number;
+  /** The film: the host is a fixed full-screen layer and this director moves the camera. */
+  film?: FilmDirector | null;
+  /** The studio set in the film: reflective floor, ring and dust (default on). */
+  studio?: boolean;
 }
 
 export interface CharacterView {
@@ -136,6 +185,82 @@ function shadowTexture(): Texture {
   t.colorSpace = SRGBColorSpace;
   return t;
 }
+
+function ringTexture(): Texture {
+  const c = document.createElement("canvas");
+  c.width = c.height = 256;
+  const g = c.getContext("2d")!;
+  const r = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+  r.addColorStop(0, "rgba(255,255,255,0.10)");
+  r.addColorStop(0.62, "rgba(255,255,255,0.04)");
+  r.addColorStop(0.8, "rgba(255,255,255,0.9)");
+  r.addColorStop(0.84, "rgba(255,255,255,0.35)");
+  r.addColorStop(1, "rgba(255,255,255,0)");
+  g.fillStyle = r;
+  g.fillRect(0, 0, 256, 256);
+  const t = new CanvasTexture(c);
+  t.colorSpace = SRGBColorSpace;
+  return t;
+}
+
+function glowTexture(): Texture {
+  const c = document.createElement("canvas");
+  c.width = c.height = 128;
+  const g = c.getContext("2d")!;
+  const r = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+  r.addColorStop(0, "rgba(255,255,255,0.95)");
+  r.addColorStop(0.25, "rgba(255,255,255,0.5)");
+  r.addColorStop(0.6, "rgba(255,255,255,0.12)");
+  r.addColorStop(1, "rgba(255,255,255,0)");
+  g.fillStyle = r;
+  g.fillRect(0, 0, 128, 128);
+  const t = new CanvasTexture(c);
+  t.colorSpace = SRGBColorSpace;
+  return t;
+}
+
+function dotTexture(): Texture {
+  const c = document.createElement("canvas");
+  c.width = c.height = 32;
+  const g = c.getContext("2d")!;
+  const r = g.createRadialGradient(16, 16, 0, 16, 16, 16);
+  r.addColorStop(0, "rgba(255,255,255,1)");
+  r.addColorStop(0.35, "rgba(255,255,255,0.5)");
+  r.addColorStop(1, "rgba(255,255,255,0)");
+  g.fillStyle = r;
+  g.fillRect(0, 0, 32, 32);
+  const t = new CanvasTexture(c);
+  t.colorSpace = SRGBColorSpace;
+  return t;
+}
+
+/** A floor that mirrors the model, fading out from the middle (a wet studio floor). */
+const FLOOR_SHADER = {
+  name: "XpFloor",
+  uniforms: { color: { value: null }, tDiffuse: { value: null }, textureMatrix: { value: null }, strength: { value: 0.3 } },
+  vertexShader: /* glsl */ `
+    uniform mat4 textureMatrix;
+    varying vec4 vUvP;
+    varying vec2 vUv2;
+    void main() {
+      vUvP = textureMatrix * vec4(position, 1.0);
+      vUv2 = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }`,
+  fragmentShader: /* glsl */ `
+    uniform sampler2D tDiffuse;
+    uniform float strength;
+    varying vec4 vUvP;
+    varying vec2 vUv2;
+    void main() {
+      vec4 b = texture2DProj(tDiffuse, vUvP);
+      float r = distance(vUv2, vec2(0.5));
+      float fade = smoothstep(0.5, 0.06, r);
+      gl_FragColor = vec4(b.rgb, b.a * strength * fade);
+      #include <tonemapping_fragment>
+      #include <colorspace_fragment>
+    }`,
+};
 
 function screenTexture(stops: string[]): Texture {
   const c = document.createElement("canvas");
@@ -247,6 +372,91 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
   shadow.renderOrder = -1;
   root.add(shadow);
 
+  // ------------------------------------------------------------ the film's studio set
+  // A wet floor that mirrors the model, a glowing ring under it and dust in the light. They stay
+  // level while the model turns, and each fades in and out with the shot.
+  const film = () => o.film || null;
+  const set = new Group();
+  scene.add(set);
+  let floor: Reflector | null = null;
+  let ring: Mesh | null = null;
+  let pulse: Mesh | null = null;
+  let dust: Points | null = null;
+  // Light pools under the model: two along its length for a flat model, one for a tall one.
+  const glowG = new Group();
+  const pools: Sprite[] = [];
+  const setTextures: Texture[] = [];
+  const buildSet = () => {
+    if (!film() || o.studio === false || set.children.length) return;
+    const lowEnd = o.quality === "low" || (win.innerWidth || 1000) < 700;
+    if (!lowEnd) {
+      const tw = Math.round(clamp((win.innerWidth || 1200) * 0.5, 256, 1024));
+      floor = new Reflector(new PlaneGeometry(9, 9), { textureWidth: tw, textureHeight: tw, clipBias: 0.003, multisample: 0, shader: FLOOR_SHADER });
+      const fm = floor.material as Material & { transparent: boolean; depthWrite: boolean };
+      fm.transparent = true;
+      fm.depthWrite = false;
+      floor.rotation.x = -Math.PI / 2;
+      floor.position.y = -0.001;
+      floor.renderOrder = -2;
+      set.add(floor);
+    }
+    const rt = ringTexture();
+    setTextures.push(rt);
+    ring = new Mesh(new PlaneGeometry(1, 1), new MeshBasicMaterial({ map: rt, transparent: true, depthWrite: false, blending: AdditiveBlending, opacity: 0 }));
+    ring.rotation.x = -Math.PI / 2;
+    ring.position.y = 0.004;
+    set.add(ring);
+    pulse = new Mesh(new PlaneGeometry(1, 1), new MeshBasicMaterial({ map: rt, transparent: true, depthWrite: false, blending: AdditiveBlending, opacity: 0 }));
+    pulse.rotation.x = -Math.PI / 2;
+    pulse.position.y = 0.005;
+    pulse.visible = false;
+    set.add(pulse);
+    const gt = glowTexture();
+    setTextures.push(gt);
+    // Light pools are sprites: they face the lens, so they read as a glow under the model from any height.
+    for (let i = 0; i < 2; i++) {
+      const m = new Sprite(new SpriteMaterial({ map: gt, transparent: true, depthWrite: false, depthTest: false, blending: AdditiveBlending, opacity: 0, color: "#cfe2ff" }));
+      m.renderOrder = 6;
+      m.visible = false;
+      glowG.add(m);
+      pools.push(m);
+    }
+    scene.add(glowG);
+    const dt = dotTexture();
+    setTextures.push(dt);
+    const n = lowEnd ? 200 : 640;
+    const pos: number[] = [];
+    let seed = 7;
+    const R = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+    // Sparks on and near the floor, mostly in front of the model, as light dust in a studio.
+    for (let i = 0; i < n; i++) {
+      const high = R() < 0.14;
+      pos.push((R() - 0.5) * 9, high ? 0.5 + R() * 1.6 : R() * R() * 0.7, -1.4 + R() * 5.4);
+    }
+    const geo = new BufferGeometry();
+    geo.setAttribute("position", new Float32BufferAttribute(pos, 3));
+    dust = new Points(geo, new PointsMaterial({ map: dt, size: 0.045, sizeAttenuation: true, transparent: true, depthWrite: false, blending: AdditiveBlending, opacity: 0 }));
+    set.add(dust);
+  };
+  const disposeSet = () => {
+    scene.remove(glowG);
+    glowG.clear();
+    for (const m of pools) m.material.dispose();
+    pools.length = 0;
+    for (const x of [floor, ring, pulse, dust]) {
+      if (!x) continue;
+      x.geometry.dispose();
+      (x as Reflector).dispose?.();
+      ((x as Mesh).material as Material).dispose?.();
+    }
+    for (const t of setTextures) t.dispose();
+    setTextures.length = 0;
+    set.clear();
+    floor = ring = pulse = null;
+    dust = null;
+  };
+  buildSet();
+
   let model: Object3D | null = null;
   let mixer: AnimationMixer | null = null;
   let clips: AnimationClip[] = [];
@@ -256,6 +466,11 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
   let loadedSrc = "";
   const fitSphere = new Sphere(new Vector3(0, 1, 0), 1.2);
   let height = 2;
+  // The model's size along x, y and z after it is normalised (its biggest side is 2).
+  const dims = new Vector3(2, 2, 2);
+  // About fifteen hundred points on the model's surface (x, y, z, in the normalised frame), so the
+  // film can fit the model's true outline into a box instead of its bounding box.
+  let outline: Float32Array | null = null;
   let gone = false;
 
   // ------------------------------------------------------------ colour
@@ -268,6 +483,10 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
     hemi.groundColor.set(new Color(base).lerp(new Color(second), 0.3));
     (shadow.material as MeshBasicMaterial).color.set(new Color(base).multiplyScalar(0.25));
     shadow.visible = o.shadow !== false;
+    if (ring) (ring.material as MeshBasicMaterial).color.set(new Color(glow).lerp(new Color("#ffffff"), 0.35));
+    if (pulse) (pulse.material as MeshBasicMaterial).color.set(new Color(glow).lerp(new Color("#ffffff"), 0.5));
+    for (const m of pools) m.material.color.set(new Color(glow).lerp(new Color("#d8e6ff"), 0.7));
+    if (dust) (dust.material as PointsMaterial).color.set(new Color(glow).lerp(new Color("#ffffff"), 0.6));
   };
 
   const restoreMaterials = () => {
@@ -373,6 +592,31 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
     return (fitSphere.radius / Math.sin(f / 2)) * 1.06;
   };
 
+  /** Points on the surface of every mesh, spread evenly, in the frame the model is normalised to. */
+  const sampleOutline = (root0: Object3D, ox: number, oy: number, oz: number, k: number) => {
+    const meshes: Mesh[] = [];
+    let total = 0;
+    root0.traverse((x) => {
+      const mm = x as Mesh;
+      const pos = mm.isMesh ? mm.geometry?.attributes?.position : null;
+      if (pos) (meshes.push(mm), (total += pos.count));
+    });
+    const step = Math.max(1, Math.floor(total / 1500));
+    const out: number[] = [];
+    const v = new Vector3();
+    for (const mm of meshes) {
+      const pos = mm.geometry.attributes.position;
+      mm.updateMatrixWorld(true);
+      for (let i = 0; i < pos.count; i += step) {
+        if (typeof mm.getVertexPosition === "function") mm.getVertexPosition(i, v);
+        else v.fromBufferAttribute(pos, i);
+        v.applyMatrix4(mm.matrixWorld);
+        out.push((v.x - ox) * k, (v.y - oy) * k, (v.z - oz) * k);
+      }
+    }
+    return out.length >= 12 ? new Float32Array(out) : null;
+  };
+
   /**
    * The model, posed as it will be seen (the first frame of its clip, so a rigged character whose
    * clips move its hips is measured where it stands), then centred on the ground and sized so
@@ -401,9 +645,11 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
     const c = box.getCenter(new Vector3());
     const big = Math.max(s.x, s.y, s.z) || 1;
     const k = 2 / big;
+    outline = sampleOutline(m, c.x, box.min.y, c.z, k);
     m.position.set(-c.x, -box.min.y, -c.z);
     wrap.scale.setScalar(k);
     height = s.y * k;
+    dims.set(s.x * k, s.y * k, s.z * k);
     const foot = Math.max(s.x, s.z) * k;
     fitSphere.center.set(0, height / 2, 0);
     fitSphere.radius = Math.max(0.55, Math.hypot(s.x * k, s.y * k, s.z * k) / 2);
@@ -467,7 +713,8 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
         setModel(gltf);
         host.classList.remove("xp-char--loading", "xp-char--failed");
         drawNow();
-        canvas.style.opacity = "1";
+        if (!film()) canvas.style.opacity = "1";
+        else canvasAlpha = -1;
         poster.style.opacity = "0";
         resolveReady(true);
         host.dispatchEvent(new CustomEvent("xp-character", { bubbles: true, detail: { ok: true, clips: clips.map((c) => c.name) } }));
@@ -561,7 +808,7 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
   canvas.addEventListener("pointerenter", () => (pointer.inside = true));
   canvas.addEventListener("pointerleave", () => (pointer.inside = false));
   const setInteractive = () => {
-    canvas.style.pointerEvents = o.react === "none" ? "none" : "auto";
+    canvas.style.pointerEvents = o.react === "none" || film() ? "none" : "auto";
     canvas.style.cursor = o.react === "none" ? "default" : wantDrag() ? "grab" : "pointer";
   };
   setInteractive();
@@ -585,6 +832,172 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
     const r = host.getBoundingClientRect();
     // 0 while it sits in view, rising to 1 as it scrolls up and away.
     return clamp(-r.top / Math.max(1, r.height), 0, 1);
+  };
+
+  /**
+   * The film's camera: the director says where on the screen the model goes and from how high
+   * the camera looks; the camera moves back until the model, as seen from there, fills that box,
+   * and the lens shifts so the box sits where the director wants it.
+   */
+  let canvasAlpha = -1;
+  let clearedHidden = false;
+  let view3 = new Float32Array(0);
+  const filmFrame = (director: FilmDirector, dt: number, s: number) => {
+    const flat = dims.y < Math.max(dims.x, dims.z) * 0.62;
+    // Side on for a flat model whose long side is front to back (nose left, for models made the
+    // usual way), from the front for a tall one.
+    const base = flat && dims.x < dims.z ? -90 : 0;
+    const sh = director.shot(dt, { flat, reduced, turn: o.turn ?? 0, base });
+    const W = size.w;
+    const H = size.h;
+    // Turn: the shot's turn, and for the view from above the turn that runs its long side up.
+    let total = base + sh.yaw;
+    if (sh.align > 0.001) {
+      const base = dims.x >= dims.z ? 90 : 0;
+      const k = Math.round((total - base) / 180);
+      total = total + (base + k * 180 - total) * sh.align;
+    }
+    root.rotation.y = total * DEG;
+    const yawR = root.rotation.y + turnG.rotation.y;
+    const elev = clamp(sh.elev, -12, 86) * DEG;
+    const vt = Math.tan((camera.fov * DEG) / 2);
+    const ht = vt * camera.aspect;
+    const bw = Math.max(40, sh.w);
+    const bh = Math.max(40, sh.h);
+    const tall = dims.y * s;
+    // Where the camera looks: a little above the middle, and lower the more it looks down.
+    const tc = (tall / 2) * (1 - Math.sin(elev) * 0.6);
+    const cyW = root.position.y + tc;
+    let dist: number;
+    let tx = sh.cx;
+    let ty = sh.cy;
+    if (outline) {
+      // The model's outline as the camera sees it: sideways, up and how far toward the lens.
+      const n = outline.length / 3;
+      if (view3.length < n * 3) view3 = new Float32Array(n * 3);
+      const ce = Math.cos(elev);
+      const se = Math.sin(elev);
+      const cr = Math.cos(yawR);
+      const sr = Math.sin(yawR);
+      let near = 0;
+      let wx0 = Infinity;
+      let wx1 = -Infinity;
+      let wy0 = Infinity;
+      let wy1 = -Infinity;
+      for (let i = 0; i < n; i++) {
+        const x = outline[i * 3] * s;
+        const y = outline[i * 3 + 1] * s - tc;
+        const z = outline[i * 3 + 2] * s;
+        const sx = x * cr + z * sr;
+        const sz = -x * sr + z * cr;
+        const py = y * ce - sz * se;
+        const pd = y * se + sz * ce;
+        view3[i * 3] = sx;
+        view3[i * 3 + 1] = py;
+        view3[i * 3 + 2] = pd;
+        if (sx < wx0) wx0 = sx;
+        if (sx > wx1) wx1 = sx;
+        if (py < wy0) wy0 = py;
+        if (py > wy1) wy1 = py;
+        if (pd > near) near = pd;
+      }
+      const halfBoxW = bw / W;
+      const halfBoxH = bh / H;
+      // A first guess from the flat outline, then the lens's real perspective, three times over.
+      dist = Math.max((wx1 - wx0) / 2 / (ht * halfBoxW), (wy1 - wy0) / 2 / (vt * halfBoxH)) + near;
+      let nx0 = 0;
+      let nx1 = 0;
+      let ny0 = 0;
+      let ny1 = 0;
+      for (let pass = 0; pass < 4; pass++) {
+        nx0 = ny0 = Infinity;
+        nx1 = ny1 = -Infinity;
+        for (let i = 0; i < n; i++) {
+          const z = Math.max(0.05, dist - view3[i * 3 + 2]);
+          const X = view3[i * 3] / (z * ht);
+          const Y = view3[i * 3 + 1] / (z * vt);
+          if (X < nx0) nx0 = X;
+          if (X > nx1) nx1 = X;
+          if (Y < ny0) ny0 = Y;
+          if (Y > ny1) ny1 = Y;
+        }
+        if (pass === 3) break;
+        const f = Math.max((nx1 - nx0) / 2 / halfBoxW, (ny1 - ny0) / 2 / halfBoxH);
+        const d0 = near * 0.6;
+        dist = d0 + (dist - d0) * f * 1.012;
+      }
+      // The outline's middle goes to the box's middle.
+      tx = sh.cx - ((nx0 + nx1) / 2) * (W / 2);
+      ty = sh.cy + ((ny0 + ny1) / 2) * (H / 2);
+    } else {
+      const cy = Math.abs(Math.cos(yawR));
+      const sy = Math.abs(Math.sin(yawR));
+      const across = (cy * dims.x + sy * dims.z) * s;
+      const deep = (sy * dims.x + cy * dims.z) * s;
+      const halfW = across / 2;
+      const halfH = (tall * Math.cos(elev) + deep * Math.sin(elev)) / 2;
+      const depth = (deep * Math.cos(elev) + tall * Math.sin(elev)) / 2;
+      dist = Math.max(halfW / (ht * (bw / W)), halfH / (vt * (bh / H))) * 1.06 + depth;
+    }
+    camera.position.set(0, cyW + Math.sin(elev) * dist, Math.cos(elev) * dist);
+    camera.lookAt(0, cyW, 0);
+    camera.setViewOffset(W, H, -(tx - W / 2), -(ty - H / 2), W, H);
+    // The set, level under the model.
+    set.position.set(0, root.position.y, 0);
+    set.scale.setScalar(s);
+    const foot = Math.max(dims.x, dims.z);
+    if (ring) {
+      ring.scale.set(foot * 1.35, foot * 1.35, 1);
+      (ring.material as MeshBasicMaterial).opacity = clamp(sh.ring, 0, 1) * 0.85;
+      ring.visible = sh.ring > 0.01;
+    }
+    if (pulse) {
+      const k = clamp(sh.pulse ?? 1, 0, 1);
+      const a = Math.sin(Math.min(1, k * 5) * Math.PI / 2) * (1 - k);
+      pulse.visible = k > 0.001 && k < 0.999 && a > 0.01;
+      if (pulse.visible) {
+        pulse.scale.set(foot * (1.15 + 1.6 * k), foot * (1.15 + 1.6 * k), 1);
+        (pulse.material as MeshBasicMaterial).opacity = a * 0.9;
+      }
+    }
+    if (pools.length) {
+      const g = clamp(sh.glow ?? 0, 0, 1);
+      glowG.visible = g > 0.01;
+      if (glowG.visible) {
+        glowG.position.set(0, root.position.y, 0);
+        glowG.rotation.y = root.rotation.y;
+        glowG.scale.setScalar(s);
+        const alongX = dims.x >= dims.z;
+        const len = alongX ? dims.x : dims.z;
+        const two = flat;
+        pools.forEach((m, i) => {
+          m.visible = two || i === 0;
+          const off = two ? (i === 0 ? -1 : 1) * len * 0.29 : 0;
+          m.position.set(alongX ? off : 0, two ? -0.045 : 0.03, alongX ? 0 : off);
+          // A wide, low blob under each wheel of a flat model; one under the feet of a tall one.
+          if (two) m.scale.set(len * 0.32, len * 0.11, 1);
+          else m.scale.set(foot * 1.5, foot * 0.62, 1);
+          m.material.opacity = g * (two ? 0.85 : 0.6);
+        });
+      }
+    }
+    if (floor) {
+      floor.visible = sh.floor > 0.01;
+      (floor.material as unknown as { uniforms: { strength: { value: number } } }).uniforms.strength.value = clamp(sh.floor, 0, 1) * 0.34;
+    }
+    if (dust) {
+      (dust.material as PointsMaterial).opacity = clamp(sh.dust, 0, 1) * 0.95;
+      dust.visible = sh.dust > 0.01;
+      if (!reduced) {
+        dust.rotation.y = t * 0.035;
+        dust.position.y = Math.sin(t * 0.3) * 0.05;
+      }
+    }
+    const a = Math.round(clamp(sh.presence, 0, 1) * 100) / 100;
+    if (a !== canvasAlpha) {
+      canvasAlpha = a;
+      canvas.style.opacity = String(a);
+    }
   };
 
   const drawNow = () => {
@@ -630,7 +1043,7 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
     }
     mixer?.update(reduced ? 0 : dt * speed);
 
-    const scrollTurn = o.scroll === "turn" ? sp * Math.PI * 0.75 : 0;
+    const scrollTurn = o.scroll === "turn" || (o.scroll === "film" && !film()) ? sp * Math.PI * 0.75 : 0;
     const rise = o.scroll === "rise" ? sp * 0.7 : 0;
     const zoom = o.scroll === "zoom" ? 1 - sp * 0.28 : 1;
     const sc = clamp(o.scale ?? 1, 0.4, 1.8);
@@ -643,9 +1056,21 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
     root.scale.setScalar(s);
     root.position.y = (o.lift ?? 0) * 0.9 + rise;
 
-    const dist = fitDistance() * zoom;
-    camera.position.set(0, fitSphere.center.y * s + root.position.y + dist * 0.08, dist);
-    camera.lookAt(0, fitSphere.center.y * s + root.position.y, 0);
+    const director = film();
+    if (director) {
+      filmFrame(director, dt, s);
+      // Stepped out of the way: nothing to draw (the canvas is hidden), so skip the GPU work.
+      if (canvasAlpha <= 0) {
+        if (!clearedHidden) gl.clear(), (clearedHidden = true);
+        needs = false;
+        return;
+      }
+      clearedHidden = false;
+    } else {
+      const dist = fitDistance() * zoom;
+      camera.position.set(0, fitSphere.center.y * s + root.position.y + dist * 0.08, dist);
+      camera.lookAt(0, fitSphere.center.y * s + root.position.y, 0);
+    }
     gl.render(scene, camera);
     needs = false;
 
@@ -682,7 +1107,7 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
   const io =
     typeof IntersectionObserver !== "undefined"
       ? new IntersectionObserver((es) => {
-          visible = es[es.length - 1]?.isIntersecting ?? true;
+          visible = film() ? true : (es[es.length - 1]?.isIntersecting ?? true);
           if (visible) wake();
         }, { rootMargin: "120px" })
       : null;
@@ -697,6 +1122,15 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
   };
   reducedQuery?.addEventListener?.("change", onReduced);
 
+  if (film()) {
+    // A darker studio with stronger highlights, so glossy models read as expensive.
+    scene.environmentIntensity = 0.62;
+    key.intensity = 2.6;
+    key.position.set(1.2, 4.2, 2.4);
+    rim.intensity = 3.2;
+    fill.intensity = 0.3;
+    gl.toneMappingExposure = 1.12;
+  }
   resize();
   light();
   load();
@@ -746,6 +1180,7 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
       win.removeEventListener("pointermove", onMove);
       reducedQuery?.removeEventListener?.("change", onReduced);
       setModel(null);
+      disposeSet();
       shadow.geometry.dispose();
       (shadow.material as Material).dispose();
       shadowTex.dispose();

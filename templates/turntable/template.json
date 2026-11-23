@@ -1,0 +1,273 @@
+{
+  "id": "turntable",
+  "name": "Turntable",
+  "pitch": "A scroll film around one 3D model: it lifts off, turns to show every angle, with spec chips, cards, colours and reviews placed around it. The whole page is the story of your character.",
+  "kind": "static",
+  "categories": [
+    "3D",
+    "Scroll",
+    "Cinematic",
+    "Product",
+    "Characters"
+  ],
+  "business": [
+    "auto",
+    "product",
+    "shop",
+    "creator",
+    "agency",
+    "general"
+  ],
+  "sector": "Anything built around one hero object: a vehicle, a product, a mascot or a character",
+  "intensity": 9,
+  "heavy": true,
+  "licence": {
+    "kind": "original",
+    "holder": "Site Builder",
+    "note": "Made for the builder: the first template written entirely around its 3D character (docs/FILM.md).",
+    "added": "2026-11-23"
+  },
+  "remoteAssets": [],
+  "features": [
+    "Scroll-scrubbed 3D film",
+    "Spec chips and cards around the model",
+    "Colour choices that repaint it",
+    "Wet floor, ring, dust and halo",
+    "Light or dark"
+  ],
+  "roles": {
+    "mode": "dark",
+    "modes": [
+      "light",
+      "dark"
+    ],
+    "stage": "dark",
+    "colors": {
+      "page": "page",
+      "surface": "surface",
+      "surface2": "surface2",
+      "ink": "ink",
+      "muted": "muted",
+      "line": "line",
+      "accent": "accent",
+      "accent2": "accent2",
+      "onAccent": "onAccent"
+    },
+    "fonts": {
+      "display": "display",
+      "body": "body"
+    },
+    "radius": "radius"
+  },
+  "schema": [
+    {
+      "group": "Business",
+      "fields": [
+        {
+          "path": "brand.name",
+          "label": "Name",
+          "type": "text"
+        },
+        {
+          "path": "seo.title",
+          "label": "Page title",
+          "type": "text"
+        },
+        {
+          "path": "seo.description",
+          "label": "Page description",
+          "type": "textarea"
+        }
+      ]
+    },
+    {
+      "group": "Menu",
+      "fields": [
+        {
+          "path": "nav.links",
+          "label": "Links (they scroll to the scene named in the address: specs, angles, customize, reviews, start)",
+          "type": "list",
+          "min": 0,
+          "max": 6,
+          "itemLabel": "label",
+          "fields": [
+            {
+              "path": "label",
+              "label": "Label",
+              "type": "text"
+            },
+            {
+              "path": "href",
+              "label": "Goes to",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "path": "nav.cta",
+          "label": "Button",
+          "type": "text"
+        },
+        {
+          "path": "nav.ctaHref",
+          "label": "Button goes to",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Opening scene",
+      "fields": [
+        {
+          "path": "film.hero.title",
+          "label": "Headline",
+          "type": "textarea",
+          "hint": "One line per row."
+        },
+        {
+          "path": "film.hero.text",
+          "label": "Words under it",
+          "type": "textarea"
+        },
+        {
+          "path": "film.hero.cta",
+          "label": "Button",
+          "type": "text"
+        },
+        {
+          "path": "film.hero.ctaHref",
+          "label": "Button goes to",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Closing scene",
+      "fields": [
+        {
+          "path": "film.finale.on",
+          "label": "Show the closing scene",
+          "type": "toggle"
+        },
+        {
+          "path": "film.finale.title",
+          "label": "Headline",
+          "type": "textarea"
+        },
+        {
+          "path": "film.finale.text",
+          "label": "Words under it",
+          "type": "textarea"
+        },
+        {
+          "path": "film.finale.cta",
+          "label": "Button",
+          "type": "text"
+        },
+        {
+          "path": "film.finale.ctaHref",
+          "label": "Button goes to",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Footer",
+      "fields": [
+        {
+          "path": "footer.note",
+          "label": "Small print",
+          "type": "text"
+        },
+        {
+          "path": "footer.email",
+          "label": "Email",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "group": "Colours",
+      "fields": [
+        {
+          "path": "theme.colors.page",
+          "label": "Page",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.surface",
+          "label": "Cards",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.surface2",
+          "label": "Raised cards",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.ink",
+          "label": "Text",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.muted",
+          "label": "Quiet text",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.line",
+          "label": "Lines",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.accent",
+          "label": "Accent",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.accent2",
+          "label": "Second accent",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.onAccent",
+          "label": "Text on the accent",
+          "type": "color"
+        }
+      ]
+    },
+    {
+      "group": "Fonts and shape",
+      "fields": [
+        {
+          "path": "theme.fonts.display",
+          "label": "Headline font",
+          "type": "font"
+        },
+        {
+          "path": "theme.fonts.body",
+          "label": "Body font",
+          "type": "font"
+        },
+        {
+          "path": "theme.radius",
+          "label": "Corner roundness",
+          "type": "number",
+          "min": 0,
+          "max": 40,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "group": "Library sections",
+      "fields": [
+        {
+          "path": "extras",
+          "label": "Sections from the library (added after the story)",
+          "type": "blocks"
+        }
+      ]
+    }
+  ]
+}

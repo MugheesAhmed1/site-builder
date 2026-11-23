@@ -89,7 +89,7 @@ describe("importing a project zip", () => {
 
 describe("registered templates", () => {
   it("has every imported template", () => {
-    expect(TEMPLATES.map((t) => t.id).sort()).toEqual(["ashgrove", "brightline", "cornerstone", "distill", "fernhollow", "ironhouse", "jack", "lithos", "milo", "mossline", "orbit", "stride", "tidewater"]);
+    expect(TEMPLATES.map((t) => t.id).sort()).toEqual(["ashgrove", "brightline", "cornerstone", "distill", "fernhollow", "ironhouse", "jack", "lithos", "milo", "mossline", "orbit", "stride", "tidewater", "turntable"]);
   });
 
   for (const t of TEMPLATES) {
