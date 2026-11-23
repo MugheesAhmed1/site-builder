@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { CAPS, COMPS, LOGICS, LOOKS, MOTIONS, OPENINGS, SCENE_TYPES, buildPlan, filmPlan, typeOf } from "@/library/character/plan";
+import { CAPS, COMPS, INTRO, LOGICS, LOOKS, MOTIONS, OPENINGS, SCENE_TYPES, buildPlan, filmPlan, typeOf } from "@/library/character/plan";
 import { NOW } from "@/library/character/scene-kit";
 import { SCENE_CAPS, SCENE_COMPS, SCENE_LOGICS, SCENE_LOOKS, SCENE_MOTIONS, SCENE_OPENINGS, SCENE_TYPES as SCHEMA_TYPES, hasPlan, normalizeFilm, schemaProblems } from "@/lib/template-schema.mjs";
 import { TEMPLATES, templateById } from "@/lib/templates";
@@ -123,7 +123,7 @@ describe.each(planned.map((t) => [t.id, t] as const))("the story of %s", (_id, t
         expect(f[0], `${where} ${e.id}`).toBeLessThanOrEqual(f[1]);
         expect(f[1], `${where} ${e.id}`).toBeLessThanOrEqual(f[2]);
         expect(f[2], `${where} ${e.id}`).toBeLessThanOrEqual(f[3]);
-        if (f[0] > NOW) expect(f[0], `${where} ${e.id}`).toBeGreaterThanOrEqual(-10);
+        if (f[0] > NOW) expect(f[0], `${where} ${e.id}`).toBeGreaterThanOrEqual(-(s.intro ?? 0) - 10);
       }
       // The scenes lie end to end and the track is as long as they are.
       let at = 0;
@@ -132,6 +132,29 @@ describe.each(planned.map((t) => [t.id, t] as const))("the story of %s", (_id, t
         at += sc.len;
       }
       expect(s.len, where).toBeGreaterThanOrEqual(at - 1);
+    }
+  });
+
+  it("plays its opening by itself: the clock starts before 0, the figure has arrived and the hero's words are in at 0", () => {
+    const plan = filmPlan(t.content, String(t.content.brand?.name || t.name))!;
+    for (const v of SHAPES) {
+      const s = buildPlan(plan, v, true);
+      const where = `${t.id} ${v.narrow ? "phone" : "wide"} ${v.flat ? "flat" : "tall"}`;
+      expect(s.intro, where).toBe(INTRO[film.opening as keyof typeof INTRO]);
+      expect(s.keys[0].t, where).toBe(-s.intro!);
+      expect(
+        s.keys.some((k) => k.t === 0),
+        where,
+      ).toBe(true);
+      // Every word of the hero is fully in by 0, and stays until the scroll takes it away.
+      const words = s.els.filter((e) => e.id.startsWith("hero-") && !e.id.endsWith("-cue"));
+      expect(words.length, where).toBeGreaterThan(0);
+      for (const e of words) {
+        expect(e.fade[1], `${where} ${e.id}`).toBeLessThanOrEqual(0);
+        expect(e.fade[2], `${where} ${e.id}`).toBeGreaterThanOrEqual(0);
+      }
+      // A track that does not open the page has no opening to play.
+      expect(buildPlan(plan, v, false).intro ?? 0, where).toBe(0);
     }
   });
 

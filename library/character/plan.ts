@@ -37,6 +37,8 @@ export const LOGICS = ["turntable", "orbit", "drift", "flip", "rise", "descend",
 export const LOOKS = ["studio", "embers", "snow", "bubbles", "petals", "fireflies", "confetti", "sparks", "stars", "leaves", "none"] as const;
 /** How the figure arrives in the opening scene. */
 export const OPENINGS = ["lift", "drop", "spin", "zoom", "reveal"] as const;
+/** How long each opening plays by itself when the page opens, in the story's own units (about 50 ms each; scenes.ts). */
+export const INTRO: Record<(typeof OPENINGS)[number], number> = { lift: 12, drop: 34, spin: 34, zoom: 30, reveal: 30 };
 /** How words and cards arrive. */
 export const MOTIONS = ["rise", "slide", "pop", "zoom", "drift"] as const;
 
@@ -313,6 +315,8 @@ export function buildPlan(plan_: FilmPlan, v: Variant, opening: boolean): Script
   const els: ElSpec[] = [];
   const scenes: SceneInfo[] = [];
   const plates: PlateSpec[] = [];
+  /** How long the opening plays by itself before the first scroll position (the hero sets it). */
+  let intro = 0;
   let prev: TrackKey = { ...BASE };
   const k = (t: number, slot: Slot | null, p: Partial<TrackKey> = {}) => {
     const next: TrackKey = { ...prev, t, ...(slot ? { cx: slot[0], cy: slot[1], w: slot[2], h: slot[3] } : {}), ...p };
@@ -338,7 +342,7 @@ export function buildPlan(plan_: FilmPlan, v: Variant, opening: boolean): Script
     });
   /** Where the figure begins the page and where it ends it: low and big beside the words, or above them. */
   const homeSlot = (center: boolean): Slot => {
-    if (!center) return N ? (F ? [0.5, 0.745, 0.96, 0.6] : [0.5, 0.7, 0.84, 0.46]) : F ? [0.526, 0.68, 0.74, 0.6] : [0.67, 0.55, 0.38, 0.76];
+    if (!center) return N ? (F ? [0.5, 0.745, 0.96, 0.6] : [0.5, 0.7, 0.84, 0.46]) : F ? [0.566, 0.68, 0.74, 0.6] : [0.71, 0.55, 0.38, 0.76];
     const base: Slot = N ? (F ? [0.5, 0.36, 0.92, 0.3] : [0.5, 0.38, 0.5, 0.36]) : F ? [0.5, 0.42, 0.64, 0.46] : [0.5, 0.42, 0.3, 0.54];
     // Its feet stay above the words that stand under it (they are measured: v.stack is their height).
     const over = base[1] + base[3] / 2 - (STACK_Y - (v.stack ?? 0.27) - 0.03);
@@ -412,48 +416,56 @@ export function buildPlan(plan_: FilmPlan, v: Variant, opening: boolean): Script
     switch (s.type) {
       // ------------------------------------------------ the opening
       case "hero": {
-        const center = s.comp === "center";
+        // A tall figure on a phone stands above its words (there is no room beside it): the same stack as a centred hero.
+        const center = s.comp === "center" || (N && !F);
         const l = look(plan_.logic, i, list.length, "side", F);
         const up = (x: number) => (F ? x : x * 0.35);
         // The figure low and big, then lifted into the light while the camera eases back.
         const hero: Slot = homeSlot(center);
         const yaw0 = F ? 0 : -22;
-        const settle = (dy: number, dw: number): Slot => [hero[0] + (center || N ? 0 : 0.04), hero[1] - dy, hero[2] - dw, hero[3]];
+        const settle = (dy: number, dw: number): Slot => [hero[0], hero[1] - dy, hero[2] - dw, hero[3]];
+        // The opening plays by itself when the page opens: the story's clock runs from -I to 0 (mountScenes),
+        // so the figure has arrived and every word is in place when a visitor first sees the page. Scrolling
+        // then lifts it into the light.
+        const I = (INTRO as Record<string, number>)[plan_.opening] ?? INTRO.lift;
+        intro = I;
         switch (plan_.opening) {
           case "drop":
             // Hangs in the air above the floor, then falls and lands: a ripple spreads from the impact.
-            k(a, [hero[0], hero[1] - (F ? 0.3 : 0.13), hero[2] * 0.92, hero[3] * 0.92], { yaw: yaw0 + 24, elev: 15, floor: 0.4, dust: 0.3, word: 1, glow: 0, pulse: 1, ring: 0, lift: F ? 0.6 : 0.3 });
-            k(a + 20, hero, { yaw: yaw0, elev: 7, floor: 1, dust: 0.5, lift: 0 });
-            k(a + 21, null, { pulse: 0 });
-            k(a + 34, settle(0.02, 0), { pulse: 0.45, glow: 0.4, dust: 0.7, lift: up(0.05) });
-            k(a + 50, settle(0.05, 0.005), { pulse: 1, glow: 1, dust: 0.9, word: 0.92, lift: up(0.16) });
+            k(-I, [hero[0], hero[1] - (F ? 0.3 : 0.13), hero[2] * 0.92, hero[3] * 0.92], { yaw: yaw0 + 24, elev: 15, floor: 0.4, dust: 0.3, word: 1, glow: 0, pulse: 1, ring: 0, lift: F ? 0.6 : 0.3 });
+            k(-14, hero, { yaw: yaw0, elev: 7, floor: 1, dust: 0.5, lift: 0 });
+            k(-13, null, { pulse: 0 });
+            k(0, settle(0.02, 0), { pulse: 0.45, glow: 0.4, dust: 0.7, lift: up(0.05) });
+            k(50, settle(0.05, 0.005), { pulse: 1, glow: 1, dust: 0.9, word: 0.92, lift: up(0.16) });
             break;
           case "spin":
             // Whirls into place from a full turn away, and settles as it lifts.
-            k(a, hero, { yaw: yaw0 - 330, elev: 9, floor: 1, dust: 0.5, word: 1, glow: 0, pulse: 1, ring: 0, lift: 0 });
-            k(a + 18, null, { yaw: yaw0 - 200 });
-            k(a + 34, settle(0.03, 0), { yaw: yaw0 - 70, glow: 0.6, dust: 0.7, lift: up(0.12) });
-            k(a + 50, settle(0.06, 0.01), { yaw: yaw0, elev: 7, glow: 1, dust: 0.9, word: 0.92, lift: up(0.24) });
+            k(-I, hero, { yaw: yaw0 - 330, elev: 9, floor: 1, dust: 0.5, word: 1, glow: 0, pulse: 1, ring: 0, lift: 0 });
+            k(-I * 0.5, null, { yaw: yaw0 - 170 });
+            k(0, settle(0.03, 0), { yaw: yaw0, elev: 7, glow: 0.6, dust: 0.7, lift: up(0.12) });
+            k(50, settle(0.06, 0.01), { glow: 1, dust: 0.9, word: 0.92, lift: up(0.24) });
             break;
           case "zoom":
             // Rushes in from far away, down out of a high view.
-            k(a, [hero[0], hero[1] - 0.05, hero[2] * 0.24, hero[3] * 0.24], { yaw: yaw0 + 50, elev: 22, floor: 0.6, dust: 1, word: 1, glow: 0.3, pulse: 1, ring: 0, lift: up(0.1) });
-            k(a + 26, hero, { yaw: yaw0 + 12, elev: 9, floor: 1, dust: 0.7, glow: 0.5 });
-            k(a + 50, settle(0.05, 0.005), { yaw: yaw0, elev: 7, glow: 1, dust: 0.9, word: 0.92, lift: up(0.2) });
+            k(-I, [hero[0], hero[1] - 0.05, hero[2] * 0.24, hero[3] * 0.24], { yaw: yaw0 + 50, elev: 22, floor: 0.6, dust: 1, word: 1, glow: 0.3, pulse: 1, ring: 0, lift: up(0.1) });
+            k(0, hero, { yaw: yaw0 + 6, elev: 9, floor: 1, dust: 0.7, glow: 0.5 });
+            k(50, settle(0.05, 0.005), { yaw: yaw0, elev: 7, glow: 1, dust: 0.9, word: 0.92, lift: up(0.2) });
             break;
           case "reveal":
             // Comes out of the dark: the light grows round it first.
-            k(a, hero, { yaw: yaw0, elev: 7, presence: 0.5, floor: 0.35, dust: 1, word: 0.2, glow: 0, pulse: 1, ring: 0, lift: up(0.1) });
-            k(a + 26, settle(0.02, 0), { presence: 1, floor: 0.75, glow: 0.4, word: 0.6 });
-            k(a + 50, settle(0.05, 0.005), { floor: 1, glow: 1, dust: 0.9, word: 0.92, lift: up(0.2) });
+            k(-I, hero, { yaw: yaw0, elev: 7, presence: 0.15, floor: 0.2, dust: 1, word: 0.2, glow: 0, pulse: 1, ring: 0, lift: up(0.1) });
+            k(0, settle(0.02, 0), { presence: 1, floor: 0.75, glow: 0.4, word: 0.6 });
+            k(50, settle(0.05, 0.005), { floor: 1, glow: 1, dust: 0.9, word: 0.92, lift: up(0.2) });
             break;
           default:
-            // Lifts off: a ring spreads from under it, light pools gather beneath, the dust wakes up.
-            k(a, hero, { yaw: yaw0, elev: 7, floor: 1, dust: 0.45, word: 1, glow: 0, pulse: 1, ring: 0 });
-            k(a + 14, null, { pulse: 0 });
-            k(a + 26, settle(0.04, 0), { pulse: 0.3, glow: 0.35, dust: 0.6, lift: up(0.12) });
-            k(a + 38, settle(0.05, 0.005), { pulse: 0.65, glow: 0.6, dust: 0.75, lift: up(0.22) });
-            k(a + 50, settle(0.065, 0.01), { pulse: 1, glow: 1, dust: 0.9, word: 0.92, lift: up(0.3) });
+            // Lifts off: it takes its place on the floor, then a ring spreads from under it, light pools gather
+            // beneath, the dust wakes up.
+            k(-I, hero, { yaw: yaw0, elev: 7, presence: 0.2, floor: 0.5, dust: 0.2, word: 0.5, glow: 0, pulse: 1, ring: 0 });
+            k(0, hero, { presence: 1, floor: 1, dust: 0.45, word: 1 });
+            k(14, null, { pulse: 0 });
+            k(26, settle(0.04, 0), { pulse: 0.3, glow: 0.35, dust: 0.6, lift: up(0.12) });
+            k(38, settle(0.05, 0.005), { pulse: 0.65, glow: 0.6, dust: 0.75, lift: up(0.22) });
+            k(50, settle(0.065, 0.01), { pulse: 1, glow: 1, dust: 0.9, word: 0.92, lift: up(0.3) });
         }
         // Once the words have gone, a centred figure grows to the middle of the screen (the next scene begins from there).
         const far: Slot = center ? (N ? [hero[0], hero[1] - 0.075, hero[2] * 0.97, hero[3]] : F ? [0.5, 0.5, 0.7, 0.54] : [0.5, 0.5, 0.34, 0.66]) : N ? (F ? [0.5, 0.5, 0.94, 0.6] : [0.5, 0.52, 0.8, 0.36]) : F ? [0.607, 0.505, 0.645, 0.6] : [0.7, 0.52, 0.36, 0.72];
@@ -461,15 +473,15 @@ export function buildPlan(plan_: FilmPlan, v: Variant, opening: boolean): Script
         k(a + 125, null, { word: 0 });
         k(a + 150, far, { elev: 11, yaw: l.yaw * 0.3, word: 0 });
         if (center) {
-          stack(`${s.id}-stack`, s, [NOW, NOW, a + 6, a + 43]);
+          stack(`${s.id}-stack`, s, [-I * 0.6, -I * 0.1, a + 6, a + 43]);
         } else {
           const x = N ? 0.07 : 0.03;
           const ty = N ? 0.3 : 0.285;
-          el({ id: `${s.id}-title`, kind: "title", html: lines(s.title), x, y: ty, fade: [NOW, NOW, a + 6, a + 43] });
-          if (s.text) el({ id: `${s.id}-text`, kind: "text", html: esc(s.text), x, y: 0, after: `${s.id}-title`, gap: 1.8, w: 30, fade: [NOW, NOW, a + 5, a + 38] });
-          if (s.cta) el({ id: `${s.id}-cta`, kind: "cta", html: `<a class="xp-btn" href="${esc(s.ctaHref)}">${esc(s.cta)}</a>`, x, y: 0, after: s.text ? `${s.id}-text` : `${s.id}-title`, gap: 2.4, fade: [NOW, NOW, a + 2, a + 35] });
+          el({ id: `${s.id}-title`, kind: "title", html: lines(s.title), x, y: ty, fade: [-I * 0.7, -I * 0.25, a + 6, a + 43] });
+          if (s.text) el({ id: `${s.id}-text`, kind: "text", html: esc(s.text), x, y: 0, after: `${s.id}-title`, gap: 1.8, w: 30, fade: [-I * 0.55, -I * 0.1, a + 5, a + 38] });
+          if (s.cta) el({ id: `${s.id}-cta`, kind: "cta", html: `<a class="xp-btn" href="${esc(s.ctaHref)}">${esc(s.cta)}</a>`, x, y: 0, after: s.text ? `${s.id}-text` : `${s.id}-title`, gap: 2.4, fade: [-I * 0.4, 0, a + 2, a + 35] });
         }
-        el({ id: `${s.id}-cue`, kind: "cue", html: `<span>Scroll</span><i></i>`, x: 0.5, y: 0.915, ax: 0.5, fade: [NOW, NOW, a + 0, a + 14] });
+        el({ id: `${s.id}-cue`, kind: "cue", html: `<span>Scroll</span><i></i>`, x: 0.5, y: 0.915, ax: 0.5, fade: [-I * 0.3, 0, a + 3, a + 16] });
         break;
       }
 
@@ -735,7 +747,7 @@ export function buildPlan(plan_: FilmPlan, v: Variant, opening: boolean): Script
   // On a phone a headline stays inside the screen (it wraps instead of running past the edge).
   if (N) for (const e of els) if (e.kind.startsWith("title") && !e.w) e.w = 31;
   if (!keys.length) k(0, [0.5, 0.5, 0.5, 0.5], {});
-  return { len: Math.max(at, 1), keys, els, scenes, plates };
+  return { len: Math.max(at, 1), keys, els, scenes, plates, intro };
 }
 
 void clamp;

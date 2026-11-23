@@ -81,6 +81,12 @@ export interface Script {
   els: ElSpec[];
   scenes: SceneInfo[];
   plates?: PlateSpec[];
+  /**
+   * How long the opening plays by itself when the page opens, in the story's own units: the story's
+   * clock starts at -intro and runs up to 0, where the page rests until the first scroll. Its keys and
+   * the words' first fades lie in that run. 0 or absent: the page opens already at 0.
+   */
+  intro?: number;
 }
 
 export type Slot = [number, number, number, number];

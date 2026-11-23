@@ -510,6 +510,21 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
   let alive = true;
   const reduced = () => !!win.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
+  // The opening plays by itself when the page opens at the top (script.intro, plan.ts): the story's clock
+  // starts below 0 and runs up to it while the figure arrives and the words come in, and the page then
+  // rests at 0 until the first scroll. A visitor who asked for calm, a page opened part-way down and the
+  // checks in a browser (window.__XP_FILM_SNAP__) all start at 0.
+  const flags = win as unknown as { __XP_FILM_SNAP__?: boolean; __XP_INTRO_T__?: number };
+  /** Where the clock stands before the page's own scroll: below 0 while the opening plays. A check in a browser can set it to look at any moment. */
+  let introT = 0;
+  let introDone = false;
+  let introRaf = 0;
+  let introTimer = 0;
+  const shift = () => (typeof flags.__XP_INTRO_T__ === "number" ? flags.__XP_INTRO_T__ : introT);
+  const mayPlay = () => !!script.intro && !reduced() && !flags.__XP_FILM_SNAP__ && typeof flags.__XP_INTRO_T__ !== "number" && win.scrollY < win.innerHeight * 0.12;
+  if (mayPlay()) introT = -(script.intro || 0);
+  else introDone = true;
+
   // The track's colours come from the character's own gradient: its base, glow and second colour.
   let stageBase = "#0d0d10";
   const paintTheme = () => {
@@ -638,7 +653,8 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
       sample = sampler(script.keys);
     }
     if (spot) {
-      const s = script.keys[0];
+      // Where the figure stands once the opening has played (the picture shows there until it is drawn).
+      const s = sample(0);
       spot.style.left = `${(s.cx - s.w / 2) * 100}%`;
       spot.style.top = `${(s.cy - s.h / 2) * 100}%`;
       spot.style.width = `${s.w * 100}%`;
@@ -649,21 +665,23 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
     draw();
   };
 
-  const trackFor = (): Track => ({ el: track, len: script.len, sample: (t) => sample(t), opening: o.opening });
+  const trackFor = (): Track => ({ el: track, len: script.len, sample: (t) => sample(t), opening: o.opening, shift });
 
   /** Every element at the page's place in the story. */
   const draw = () => {
     raf = 0;
     if (!alive) return;
     const r = track.getBoundingClientRect();
-    const t = -r.top / (H / 100);
+    const at = -r.top / (H / 100);
+    // The opening's run-up lies before the page's first scroll position.
+    const t = at + shift();
     if (t === lastT) return;
     lastT = t;
     const calm = reduced();
-    const far = t < -120 || t > script.len + 160;
+    const far = at < -120 || at > script.len + 160;
     air.active(!far);
     if (!far) {
-      const k = sample(clamp(t, 0, script.len));
+      const k = sample(clamp(t, -(script.intro || 0), script.len));
       bgSpot.style.opacity = (0.35 + 0.65 * (1 - k.halo * 0.6)).toFixed(2);
       bgFloor.style.opacity = clamp(k.floor).toFixed(2);
     }
@@ -706,7 +724,47 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
   const schedule = () => {
     if (!raf && alive) raf = win.requestAnimationFrame(draw);
   };
-  const onScroll = () => schedule();
+  /** Ends the opening's run at once (the page was scrolled well away, or is being taken down). */
+  const finishIntro = () => {
+    introDone = true;
+    introT = 0;
+    if (introRaf) win.cancelAnimationFrame(introRaf), (introRaf = 0);
+    if (introTimer) win.clearTimeout(introTimer), (introTimer = 0);
+    lastT = NaN;
+    schedule();
+  };
+  /** Plays the opening: it waits a moment for the model to be on screen, then runs up to 0 and slows as it lands. */
+  const startIntro = () => {
+    if (introDone || introRaf || !alive) return;
+    if (!mayPlay()) return finishIntro();
+    const began = performance.now();
+    let prev = 0;
+    let ran = 0;
+    const tick = (now: number) => {
+      introRaf = 0;
+      if (!alive || introDone) return;
+      if (!prev) {
+        if (!doc.documentElement.classList.contains("xp-film-live") && now - began < 700) return void (introRaf = win.requestAnimationFrame(tick));
+        prev = now;
+      }
+      // Time runs a frame at a time, never more than 50 ms of it: the first frames of a model (its shaders
+      // compile) or a tab that was in the background do not skip the opening.
+      ran += Math.min(now - prev, 50);
+      prev = now;
+      const len = script.intro || 0;
+      const k = len ? clamp(ran / (len * 48)) : 1;
+      introT = k >= 1 ? 0 : -len * (1 - k) ** 3;
+      lastT = NaN;
+      draw();
+      if (k < 1) introRaf = win.requestAnimationFrame(tick);
+      else introDone = true;
+    };
+    introRaf = win.requestAnimationFrame(tick);
+  };
+  const onScroll = () => {
+    if (!introDone && win.scrollY > H * 0.5) finishIntro();
+    else schedule();
+  };
   const onResize = () => {
     if (win.innerWidth === W && Math.abs(win.innerHeight - H) < 64) return schedule();
     place();
@@ -732,6 +790,8 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
 
   paintTheme();
   place();
+  // The film asks for the opening when it takes over the page; if it never does, the opening plays anyway.
+  if (!introDone) introTimer = win.setTimeout(() => ((introTimer = 0), startIntro()), 1500);
   void doc.fonts?.ready?.then(() => alive && place());
   // A face the page asks for after the first layout (a web font) changes how many lines a title takes:
   // lay the words out again whenever one arrives, so what sits below a title still starts where it ends.
@@ -747,6 +807,7 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
       film = f;
       f.setTrack(trackFor());
       schedule();
+      startIntro();
     },
     detach() {
       film = null;
@@ -774,6 +835,8 @@ export function mountScenes(doc: Document, data: Data, o: ScenesOptions): Scenes
     dispose() {
       alive = false;
       if (raf) win.cancelAnimationFrame(raf);
+      if (introRaf) win.cancelAnimationFrame(introRaf);
+      if (introTimer) win.clearTimeout(introTimer);
       win.removeEventListener("scroll", onScroll);
       win.removeEventListener("resize", onResize);
       doc.removeEventListener("click", onClick);

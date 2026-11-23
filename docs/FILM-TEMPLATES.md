@@ -47,7 +47,7 @@ Icons: any name in `ICON_NAMES` (`library/character/scene-kit.ts`); an unknown n
 
 - **Logic** (how the camera moves scene to scene): `turntable` (a steady turn), `orbit` (a wide circuit), `drift` (a slow sway), `flip` (the view flips side to side), `rise` (the figure climbs scene by scene), `descend` (it sinks), `still` (it holds still and the light moves).
 - **Look** (what fills the air): `studio`, `embers`, `snow`, `bubbles`, `petals`, `fireflies`, `confetti`, `sparks`, `stars`, `leaves`, `none`.
-- **Opening** (how the figure arrives): `lift`, `drop` (falls and lands with a ripple), `spin`, `zoom` (rushes in from far), `reveal` (out of the dark).
+- **Opening** (how the figure arrives): `lift` (takes its place, then a ring spreads from under it), `drop` (falls and lands with a ripple), `spin`, `zoom` (rushes in from far), `reveal` (out of the dark). The opening plays by itself when the page opens at the top, in about a second and a half (`INTRO` in `plan.ts`: the story's clock runs from below 0 up to 0, and the words come in as the figure arrives); the page then rests in the hero pose until the first scroll lifts the figure into the light. It does not play for a visitor who asked for calm, or for a page opened part-way down.
 - **Motion** (how words and cards arrive): `rise`, `slide`, `pop`, `zoom`, `drift`.
 
 `library/character/plan.ts` and `lib/template-schema.mjs` hold the same lists; `tests/plan.test.ts` fails if they drift.
@@ -78,7 +78,7 @@ The shell draws the menu, the story (`xp-lib/xp-character.js` reads `content.fil
 
 ### Checking a template frame by frame
 
-Software WebGL is enough: open `public/tpl/<id>/site/preview.html#xp=<encoded content>` in Chromium with `--use-angle=swiftshader`, scroll to each scene's middle (`window.__XP_SCENES__()` lists `{id, at, len}` in units of the viewport's height; scroll to `at + len / 2`), and look at the frame. Do it on three shapes: a wide screen (1440 × 900), the opposite model shape (a wide flat figure such as a hypercar against a tall one), and a phone (390 × 844). Look for: words on top of the figure or of each other, anything past the screen's edge, a button below the fold, a scene whose figure is hidden by cards.
+Software WebGL is enough: open `public/tpl/<id>/site/preview.html#xp=<encoded content>` in Chromium with `--use-angle=swiftshader`, scroll to each scene's middle (`window.__XP_SCENES__()` lists `{id, at, len}` in units of the viewport's height; scroll to `at + len / 2`), and look at the frame. To see a moment of the opening, set `window.__XP_INTRO_T__` to a number from `-INTRO[opening]` to 0 (before the page starts, with an init script, so the opening does not play by itself) and send a `scroll` event. Do it on three shapes: a wide screen (1440 × 900), the opposite model shape (a wide flat figure such as a hypercar against a tall one), and a phone (390 × 844). Look for: words on top of the figure or of each other, anything past the screen's edge, a button below the fold, a scene whose figure is hidden by cards.
 
 ## In the journey
 
@@ -114,8 +114,8 @@ A person in the journey ([CHARACTER-JOURNEY.md](CHARACTER-JOURNEY.md)) may put a
 
 | Piece | File |
 | --- | --- |
-| The plan: parsing, caps, the figure's path and every element | `library/character/plan.ts` |
-| The room: layout, the scene styles, elements and plates | `library/character/scenes.ts` |
+| The plan: parsing, caps, the figure's path, every element and the opening's run-up (`INTRO`) | `library/character/plan.ts` |
+| The room: layout, the scene styles, elements and plates, and the clock that plays the opening | `library/character/scenes.ts` |
 | Icons, shared helpers, the camera's keys | `library/character/scene-kit.ts` |
 | The air (look) | `library/character/air.ts` |
 | The shell | `templates/_kit/film-shell.{js,css}` |
