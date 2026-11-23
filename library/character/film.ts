@@ -30,17 +30,19 @@ interface Look {
   /** The light pools under it and the spreading ring (the choreography's own: 0 in the rest). */
   glow: number;
   pulse: number;
+  /** How high it hovers above the floor, as a fraction of its own height (the floor stays put). */
+  lift: number;
 }
 
 const LOOKS: Record<Kind, Look> = {
-  hero: { face: 0, elev: 7, align: 0, ring: 1, floor: 1, dust: 0.8, halo: 0.25, word: 1, fill: 1, glow: 0, pulse: 1 },
-  three: { face: 58, elev: 15, align: 0, ring: 0.25, floor: 1, dust: 1, halo: 0.35, word: 0, fill: 0.92, glow: 0, pulse: 1 },
-  top: { face: 120, elev: 78, align: 1, ring: 0, floor: 0.15, dust: 0.5, halo: 1, word: 0, fill: 0.9, glow: 0, pulse: 1 },
-  side: { face: 180, elev: 5, align: 0, ring: 0.6, floor: 1, dust: 0.7, halo: 0.3, word: 0, fill: 0.95, glow: 0, pulse: 1 },
-  low: { face: -38, elev: -7, align: 0, ring: 0.4, floor: 0.6, dust: 1, halo: 0.45, word: 0, fill: 0.95, glow: 0, pulse: 1 },
-  close: { face: 28, elev: 11, align: 0, ring: 0, floor: 0.7, dust: 1, halo: 0.4, word: 0, fill: 1.15, glow: 0, pulse: 1 },
-  script: { face: 0, elev: 7, align: 0, ring: 0, floor: 1, dust: 0.5, halo: 0, word: 0, fill: 1, glow: 0, pulse: 1 },
-  echo: { face: 42, elev: 9, align: 0, ring: 0.8, floor: 1, dust: 0.8, halo: 0.3, word: 0, fill: 1, glow: 0, pulse: 1 },
+  hero: { face: 0, elev: 7, align: 0, ring: 1, floor: 1, dust: 0.8, halo: 0.25, word: 1, fill: 1, glow: 0, pulse: 1, lift: 0 },
+  three: { face: 58, elev: 15, align: 0, ring: 0.25, floor: 1, dust: 1, halo: 0.35, word: 0, fill: 0.92, glow: 0, pulse: 1, lift: 0 },
+  top: { face: 120, elev: 78, align: 1, ring: 0, floor: 0.15, dust: 0.5, halo: 1, word: 0, fill: 0.9, glow: 0, pulse: 1, lift: 0 },
+  side: { face: 180, elev: 5, align: 0, ring: 0.6, floor: 1, dust: 0.7, halo: 0.3, word: 0, fill: 0.95, glow: 0, pulse: 1, lift: 0 },
+  low: { face: -38, elev: -7, align: 0, ring: 0.4, floor: 0.6, dust: 1, halo: 0.45, word: 0, fill: 0.95, glow: 0, pulse: 1, lift: 0 },
+  close: { face: 28, elev: 11, align: 0, ring: 0, floor: 0.7, dust: 1, halo: 0.4, word: 0, fill: 1.15, glow: 0, pulse: 1, lift: 0 },
+  script: { face: 0, elev: 7, align: 0, ring: 0, floor: 1, dust: 0.5, halo: 0, word: 0, fill: 1, glow: 0, pulse: 1, lift: 0 },
+  echo: { face: 42, elev: 9, align: 0, ring: 0.8, floor: 1, dust: 0.8, halo: 0.3, word: 0, fill: 1, glow: 0, pulse: 1, lift: 0 },
 };
 
 /** Shots after the opening: for wide, low models (vehicles) and for everything else. */
@@ -85,6 +87,7 @@ export interface TrackKey {
   word: number;
   glow: number;
   pulse: number;
+  lift: number;
 }
 
 /** A tall section of the page the choreography plays in (its sticky screen stays put). */
@@ -555,7 +558,7 @@ export function createFilm(doc: Document, hero: HTMLElement, init: FilmOptions =
   };
 
   // Springs for every value the camera reads, so moves ease in and settle like a crane shot.
-  const keys = ["cx", "cy", "w", "h", "yaw", "elev", "align", "presence", "ring", "floor", "dust", "halo", "word", "glow", "pulse"] as const;
+  const keys = ["cx", "cy", "w", "h", "yaw", "elev", "align", "presence", "ring", "floor", "dust", "halo", "word", "glow", "pulse", "lift"] as const;
   type K = (typeof keys)[number];
   type Vals = Record<K, number>;
   const cur = {} as Record<K, { p: number; v: number }>;
@@ -582,7 +585,7 @@ export function createFilm(doc: Document, hero: HTMLElement, init: FilmOptions =
     // The camera's turn is kept as a turn from the base (side on or front on), whatever its origin.
     const restRel = info.turn - info.base;
     const turnDelta = info.turn - (info.flat ? -32 : -18);
-    const keyVals = (k: TrackKey): Vals => ({ cx: k.cx * W, cy: k.cy * H, w: k.w * W, h: k.h * H, yaw: k.yaw + turnDelta, elev: k.elev, align: k.align, presence: k.presence, ring: k.ring, floor: k.floor, dust: k.dust, halo: k.halo, word: k.word, glow: k.glow, pulse: k.pulse });
+    const keyVals = (k: TrackKey): Vals => ({ cx: k.cx * W, cy: k.cy * H, w: k.w * W, h: k.h * H, yaw: k.yaw + turnDelta, elev: k.elev, align: k.align, presence: k.presence, ring: k.ring, floor: k.floor, dust: k.dust, halo: k.halo, word: k.word, glow: k.glow, pulse: k.pulse, lift: k.lift ?? 0 });
     scripted = false;
     // Inside the track: the script plays, exactly.
     if (track && A.key && B.key && A !== B && y >= A.at) {
@@ -610,7 +613,7 @@ export function createFilm(doc: Document, hero: HTMLElement, init: FilmOptions =
       const b = boxFor(a, other);
       const l = LOOKS[a.kind];
       const has = a.box ? 1 : 0;
-      return { cx: b.cx, cy: b.cy, w: b.w, h: b.h, yaw: restRel + ((a as Anchor & { yaw: number }).yaw ?? 0), elev: l.elev, align: l.align, presence: has, ring: l.ring, floor: l.floor, dust: l.dust, halo: l.halo * has, word: l.word, glow: l.glow, pulse: l.pulse };
+      return { cx: b.cx, cy: b.cy, w: b.w, h: b.h, yaw: restRel + ((a as Anchor & { yaw: number }).yaw ?? 0), elev: l.elev, align: l.align, presence: has, ring: l.ring, floor: l.floor, dust: l.dust, halo: l.halo * has, word: l.word, glow: l.glow, pulse: l.pulse, lift: l.lift };
     };
     const va = valsOf(A, B);
     const vb = valsOf(B, A);
@@ -743,7 +746,7 @@ export function createFilm(doc: Document, hero: HTMLElement, init: FilmOptions =
       // Stepping out of the way: it shrinks as it fades, so it never hangs over words as a ghost.
       const pr = clamp(v("presence"));
       const shrink = 0.55 + 0.45 * pr;
-      return { cx: v("cx"), cy: v("cy"), w: v("w") * shrink, h: v("h") * shrink, yaw: v("yaw"), elev: v("elev"), align: clamp(v("align")), presence: pr * pr, ring: clamp(v("ring")), floor: clamp(v("floor")), dust: clamp(v("dust")), glow: clamp(v("glow")), pulse: clamp(v("pulse")) };
+      return { cx: v("cx"), cy: v("cy"), w: v("w") * shrink, h: v("h") * shrink, yaw: v("yaw"), elev: v("elev"), align: clamp(v("align")), presence: pr * pr, ring: clamp(v("ring")), floor: clamp(v("floor")), dust: clamp(v("dust")), glow: clamp(v("glow")), pulse: clamp(v("pulse")), lift: clamp(v("lift")) };
     },
     live() {
       doc.documentElement.classList.add("xp-film-live");
