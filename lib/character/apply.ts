@@ -218,6 +218,9 @@ export function characterFrom(m: ModelInfo, current: Content = {}): Content {
     screen: m.display?.screen || "",
     credit: m.credit || "",
     turn: typeof current.turn === "number" && current.src ? current.turn : vehicle ? -32 : -18,
+    // The film (camera moves through the page) unless the person picked another scroll motion.
+    scroll: current.scroll && current.scroll !== "turn" ? current.scroll : "film",
+    studio: current.studio !== false,
   };
 }
 

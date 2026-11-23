@@ -50,6 +50,10 @@ them) on a gradient from its own colours, and colours the library sections by ro
 the stage swaps to stay readable (contrast is tested for every template and every design system in
 `tests/character.test.ts`).
 
+**The film** ([FILM.md](FILM.md)): by default the character no longer sits in the hero's box. It
+lives on one fixed stage over the page, and every section is a camera shot of it, blended by the
+scroll position, with a studio set and an outlined wordmark.
+
 ## A 3D model from a photo
 
 `components/character/PhotoTo3D.tsx`, `lib/character/photo.ts`:
