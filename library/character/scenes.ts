@@ -116,7 +116,7 @@ export interface Script {
 
 type Slot = [number, number, number, number];
 
-const BASE: TrackKey = { t: 0, cx: 0.5, cy: 0.5, w: 0.5, h: 0.5, yaw: 0, elev: 8, align: 0, presence: 1, ring: 0, floor: 1, dust: 0.5, halo: 0, word: 0, glow: 0, pulse: 1 };
+const BASE: TrackKey = { lift: 0, t: 0, cx: 0.5, cy: 0.5, w: 0.5, h: 0.5, yaw: 0, elev: 8, align: 0, presence: 1, ring: 0, floor: 1, dust: 0.5, halo: 0, word: 0, glow: 0, pulse: 1 };
 
 /** Scene lengths, in hundredths of a screen of scrolling. */
 const LEN = { hero: 150, specs: 125, ring: 195, paint: 150, voices: 140, finale: 100 };
@@ -187,6 +187,8 @@ export function buildScript(c: FilmContent, v: Variant, opening: boolean): Scrip
   const el = (e: ElSpec) => els.push(e);
   const F = v.flat;
   const N = v.narrow;
+  // Cars and boats hover high above the floor; a person or an animal only lifts a little.
+  const up = (x: number) => (F ? x : x * 0.35);
   let at = 0;
   const scene = (id: string, slug: string, len: number) => {
     scenes.push({ id, slug, at, len });
@@ -206,9 +208,9 @@ export function buildScript(c: FilmContent, v: Variant, opening: boolean): Scrip
     k(a + 14, null, { pulse: 0 });
     // Lift off: a ring spreads from under it, light pools gather beneath, the dust wakes up.
     const lift = (dy: number, dw: number): Slot => [hero[0] + (N ? 0 : 0.04), hero[1] - dy, hero[2] - dw, hero[3]];
-    k(a + 26, lift(0.045, 0), { pulse: 0.3, glow: 0.35, dust: 0.6 });
-    k(a + 38, lift(0.055, 0.005), { pulse: 0.65, glow: 0.6, dust: 0.75 });
-    k(a + 50, lift(0.073, 0.01), { pulse: 1, glow: 1, dust: 0.9, word: 0.92 });
+    k(a + 26, lift(0.045, 0), { pulse: 0.3, glow: 0.35, dust: 0.6, lift: up(0.12) });
+    k(a + 38, lift(0.055, 0.005), { pulse: 0.65, glow: 0.6, dust: 0.75, lift: up(0.22) });
+    k(a + 50, lift(0.073, 0.01), { pulse: 1, glow: 1, dust: 0.9, word: 0.92, lift: up(0.3) });
     // Then it floats while the camera pulls back and the big word fades.
     const far: Slot = N ? (F ? [0.5, 0.5, 0.94, 0.6] : [0.5, 0.52, 0.8, 0.36]) : F ? [0.607, 0.505, 0.645, 0.6] : [0.7, 0.52, 0.36, 0.72];
     k(a + 80, N ? [0.5, 0.58, 0.95, 0.6] : F ? [0.585, 0.555, 0.71, 0.6] : [0.685, 0.535, 0.37, 0.74], { elev: 9, word: 0.5, dust: 1, yaw: F ? 0 : -16 });
@@ -316,7 +318,7 @@ export function buildScript(c: FilmContent, v: Variant, opening: boolean): Scrip
     const a = scene("paint", "customize", LEN.paint);
     const slot: Slot = N ? (F ? [0.5, 0.34, 0.92, 0.6] : [0.5, 0.34, 0.6, 0.4]) : F ? [0.36, 0.57, 0.62, 0.6] : [0.34, 0.55, 0.34, 0.74];
     const rear = F ? -135 : 150;
-    k(a + 30, slot, { yaw: rear, elev: 14, halo: 0.3, floor: 1, dust: 0.9, glow: F ? 0.7 : 0.35, ring: 0 });
+    k(a + 30, slot, { yaw: rear, elev: 14, halo: 0.3, floor: 1, dust: 0.9, glow: F ? 0.7 : 0.35, ring: 0, lift: up(0.18) });
     k(a + LEN.paint - 20, [slot[0], slot[1] - 0.01, slot[2], slot[3]], { yaw: rear - 18, elev: 12 });
     const x = N ? 0.07 : 0.62;
     const ein = a + 36;
@@ -341,7 +343,7 @@ export function buildScript(c: FilmContent, v: Variant, opening: boolean): Scrip
   if (c.voices.on && c.quotes.length) {
     const a = scene("voices", "reviews", LEN.voices);
     const slot: Slot = N ? (F ? [0.5, 0.78, 0.92, 0.6] : [0.5, 0.74, 0.5, 0.34]) : F ? [0.66, 0.68, 0.62, 0.6] : [0.7, 0.55, 0.34, 0.74];
-    k(a + 30, slot, { yaw: F ? -200 : 215, elev: 6, halo: 0.1, floor: 1, dust: 0.8, glow: F ? 0.5 : 0.3 });
+    k(a + 30, slot, { yaw: F ? -200 : 215, elev: 6, halo: 0.1, floor: 1, dust: 0.8, glow: F ? 0.5 : 0.3, lift: up(0.12) });
     k(a + LEN.voices - 20, [slot[0] + 0.01, slot[1], slot[2], slot[3]], { yaw: F ? -214 : 232 });
     const x = N ? 0.07 : 0.05;
     const ein = a + 16;

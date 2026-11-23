@@ -76,6 +76,8 @@ export interface FilmShot {
   glow?: number;
   /** 0..1: one ring spreading out from under the model (0 before, 1 when it has faded away). */
   pulse?: number;
+  /** 0..1: how high it hovers above the floor, as a fraction of its own height. */
+  lift?: number;
 }
 
 export interface FilmDirector {
@@ -943,8 +945,11 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
     camera.lookAt(0, cyW, 0);
     camera.setViewOffset(W, H, -(tx - W / 2), -(ty - H / 2), W, H);
     // The set, level under the model.
-    set.position.set(0, root.position.y, 0);
+    // It hovers: the model rises while the floor, ring and dust stay on the ground, and its soft shadow goes down with them.
+    const lifted = clamp(sh.lift ?? 0, 0, 1) * dims.y * s;
+    set.position.set(0, root.position.y - lifted, 0);
     set.scale.setScalar(s);
+    shadow.position.y = 0.002 - lifted / Math.max(0.01, s);
     const foot = Math.max(dims.x, dims.z);
     if (ring) {
       ring.scale.set(foot * 1.35, foot * 1.35, 1);
