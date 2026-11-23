@@ -759,6 +759,7 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
    * and the lens shifts so the box sits where the director wants it.
    */
   let canvasAlpha = -1;
+  let clearedHidden = false;
   const filmFrame = (director: FilmDirector, dt: number, s: number) => {
     const flat = dims.y < Math.max(dims.x, dims.z) * 0.62;
     const sh = director.shot(dt, { flat, reduced });
@@ -879,6 +880,13 @@ export function mountCharacter(host: HTMLElement, init: CharacterConfig): Charac
     const director = film();
     if (director) {
       filmFrame(director, dt, s);
+      // Stepped out of the way: nothing to draw (the canvas is hidden), so skip the GPU work.
+      if (canvasAlpha <= 0) {
+        if (!clearedHidden) gl.clear(), (clearedHidden = true);
+        needs = false;
+        return;
+      }
+      clearedHidden = false;
     } else {
       const dist = fitDistance() * zoom;
       camera.position.set(0, fitSphere.center.y * s + root.position.y + dist * 0.08, dist);
