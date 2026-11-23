@@ -65,11 +65,22 @@ const STORE = (id: string) => `xp-template:v2:${id}`;
 export function loadContent(t: TemplateInfo): Content {
   try {
     const saved = JSON.parse(localStorage.getItem(STORE(t.id)) || "null");
-    if (saved && typeof saved === "object") return merge(t.content, saved) as Content;
+    if (saved && typeof saved === "object") return withTheStory(merge(t.content, saved) as Content, saved);
   } catch {
     /* private mode or a bad copy: start from the defaults */
   }
   return clone(t.content);
+}
+
+/**
+ * A site saved before the page's story existed has the scroll motion that was then the only
+ * default ("It turns") and none of the story's words. It takes the story now, as a new site would,
+ * with the template's words for it. A site saved after that keeps whatever its owner chose.
+ */
+function withTheStory(c: Content, saved: Record<string, unknown>): Content {
+  const ch = c.character;
+  if ("film" in saved || !ch || typeof ch !== "object" || !ch.src || ch.scroll !== "turn") return c;
+  return { ...c, character: { ...ch, scroll: "film" } };
 }
 
 function merge(base: unknown, saved: unknown): unknown {
