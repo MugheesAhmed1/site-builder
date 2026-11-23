@@ -3,99 +3,145 @@
     "title": "{name} | Wood-fire kitchen and wine bar",
     "description": "Seasonal plates cooked over oak and embers, natural wine and a long table for friends. Book a table tonight."
   },
-  "brand": {
-    "name": "Ashgrove",
-    "phone": "+44 20 7946 0321",
-    "email": "table@ashgrove.kitchen",
-    "address": "21 Cinder Lane, Shoreditch, London",
-    "mapLink": "https://maps.google.com/?q=Shoreditch+London",
-    "currency": "£"
-  },
+  "brand": { "name": "Ashgrove" },
   "nav": {
     "links": [
-      { "label": "Story", "href": "#story" },
-      { "label": "Menu", "href": "#menu" },
-      { "label": "Private dining", "href": "#private" },
-      { "label": "Find us", "href": "#visit" }
+      { "label": "Story", "href": "#steps-story" },
+      { "label": "Plates", "href": "#gallery-plates" },
+      { "label": "Menu", "href": "#cards-menu" },
+      { "label": "Private dining", "href": "#visit-private" },
+      { "label": "Find us", "href": "#visit-find" }
     ],
-    "cta": "Book a table"
+    "cta": "Book a table",
+    "ctaHref": "#start"
   },
-  "hero": {
-    "kicker": "Wood-fire kitchen · Since 2014",
-    "title": "Cooked over fire, served with care.",
-    "text": "Seasonal plates from oak and embers, natural wine and a room that glows.",
-    "button": "Book a table",
-    "secondary": "See the menu",
-    "image": "./media/hero.webp",
-    "embers": 70
+  "film": {
+    "on": true,
+    "order": "hero steps-story gallery-plates cards-menu stats-fire visit-private voices visit-find finale",
+    "logic": "drift",
+    "look": "embers",
+    "opening": "drop",
+    "motion": "rise",
+    "hero": {
+      "title": "Cooked over fire,\nserved with care.",
+      "text": "Seasonal plates from oak and embers, natural wine and a room that glows.",
+      "cta": "Book a table",
+      "ctaHref": "#start",
+      "comp": "word",
+      "plate": "./media/hero.webp"
+    },
+    "steps-story": {
+      "on": true,
+      "eyebrow": "Our story",
+      "title": "How we\ncook",
+      "text": "Three things we have never changed since the first night in 2014.",
+      "items": [
+        { "title": "One oven, one rule.", "text": "Everything that leaves our kitchen has met the fire. We light the oven at noon with English oak, and it sets the pace for the whole day." },
+        { "title": "Close to the farm.", "text": "Our vegetables come from two farms in Kent, our fish from day boats in Cornwall. The menu changes when they do." },
+        { "title": "A room to stay in.", "text": "Candles, brick and a long communal table. Come for one plate at the bar or stay for the whole night." }
+      ],
+      "comp": "side",
+      "plate": "./media/room.webp"
+    },
+    "gallery-plates": {
+      "on": true,
+      "eyebrow": "From the fire",
+      "title": "Plates people come back for",
+      "text": "",
+      "items": [
+        { "image": "./media/d1.webp", "title": "Ember lamb chops", "text": "Salsa verde, charred lemon. £24" },
+        { "image": "./media/d2.webp", "title": "Burrata flatbread", "text": "Blistered tomatoes, oregano. £16" },
+        { "image": "./media/d3.webp", "title": "Charred broccoli", "text": "Tahini, chilli, toasted seeds. £11" },
+        { "image": "./media/d4.webp", "title": "Whole sea bass", "text": "Fennel, brown butter. £29" },
+        { "image": "./media/d5.webp", "title": "Smoked chocolate tart", "text": "Crème fraîche. £9" }
+      ],
+      "comp": "stage",
+      "plate": ""
+    },
+    "cards-menu": {
+      "on": true,
+      "eyebrow": "The menu",
+      "title": "Tonight's menu",
+      "text": "Menus change with the season. Tell us about allergies when you book.",
+      "items": [
+        { "icon": "fork", "title": "Small plates", "text": "Sourdough and cultured butter, smoked almonds, ember carrots, burrata flatbread." },
+        { "icon": "flame", "title": "From the fire", "text": "Ember lamb chops, whole sea bass, half chicken, aged rib-eye for two." },
+        { "icon": "heart", "title": "Sweet", "text": "Smoked chocolate tart, burnt honey ice cream, roasted plums with custard." },
+        { "icon": "cup", "title": "Drinks", "text": "Natural reds, orange wine from Georgia, an oak-smoked old fashioned." }
+      ],
+      "comp": "stage",
+      "plate": ""
+    },
+    "stats-fire": {
+      "on": true,
+      "eyebrow": "By the numbers",
+      "title": "Ten years of\noak and embers",
+      "text": "",
+      "items": [
+        { "value": "2014", "label": "The night we lit the oven" },
+        { "value": "24", "label": "Seats at the long table" },
+        { "value": "2", "label": "Kent farms we cook from" },
+        { "value": "100%", "label": "Of it touched by fire" }
+      ],
+      "comp": "flank",
+      "plate": ""
+    },
+    "visit-private": {
+      "on": true,
+      "eyebrow": "Private dining",
+      "title": "The long table\nis yours.",
+      "text": "Up to 24 guests around our oak table, with a set menu cooked for your night. Birthdays, team dinners, rehearsal suppers.",
+      "cta": "Ask about a date",
+      "ctaHref": "mailto:table@ashgrove.kitchen",
+      "items": [
+        { "icon": "users", "label": "Guests", "value": "Up to 24" },
+        { "icon": "fork", "label": "Set menus", "value": "From £55" },
+        { "icon": "cup", "label": "Wine", "value": "Your own sommelier" },
+        { "icon": "calendar", "label": "Whole room", "value": "Hire it on Sundays" }
+      ],
+      "comp": "flip",
+      "plate": ""
+    },
+    "voices": {
+      "on": true,
+      "eyebrow": "Kind words",
+      "title": "Said at\nthe table",
+      "items": [
+        { "text": "The lamb is the best thing I ate all year, and the room is somewhere you want to stay.", "name": "Hannah L.", "role": "Regular since 2018" },
+        { "text": "We booked the long table for forty minutes of dinner and stayed four hours.", "name": "Dev P.", "role": "Birthday dinner" },
+        { "text": "Honest cooking, warm people. Exactly what a neighbourhood place should be.", "name": "Marta K.", "role": "Neighbour" }
+      ],
+      "comp": "side",
+      "plate": ""
+    },
+    "visit-find": {
+      "on": true,
+      "eyebrow": "Find us",
+      "title": "Come hungry",
+      "text": "Two minutes from Shoreditch High Street station. Walk-ins welcome at the bar.",
+      "cta": "Book a table",
+      "ctaHref": "mailto:table@ashgrove.kitchen",
+      "items": [
+        { "icon": "pin", "label": "Address", "value": "21 Cinder Lane, Shoreditch, London" },
+        { "icon": "clock", "label": "Tuesday to Thursday", "value": "17:30 to 23:00" },
+        { "icon": "clock", "label": "Friday and Saturday", "value": "12:00 to 00:00" },
+        { "icon": "clock", "label": "Sunday", "value": "12:00 to 21:00. Closed Monday" },
+        { "icon": "phone", "label": "Call us", "value": "+44 20 7946 0321" }
+      ],
+      "comp": "side",
+      "plate": ""
+    },
+    "finale": {
+      "on": true,
+      "title": "See you\nat the fire",
+      "text": "We hold tables for fifteen minutes. For groups over eight, ask about private dining.",
+      "cta": "Book a table",
+      "ctaHref": "mailto:table@ashgrove.kitchen",
+      "comp": "center",
+      "plate": ""
+    }
   },
-  "story": {
-    "kicker": "Our story",
-    "chapters": [
-      { "title": "One oven, one rule.", "text": "Everything that leaves our kitchen has met the fire. We light the oven at noon with English oak, and it sets the pace for the whole day.", "image": "./media/chef.webp" },
-      { "title": "Close to the farm.", "text": "Our vegetables come from two farms in Kent, our fish from day boats in Cornwall. The menu changes when they do, sometimes twice a week.", "image": "./media/d6.webp" },
-      { "title": "A room to stay in.", "text": "Candles, brick and a long communal table. Come for one plate at the bar or stay for the whole night.", "image": "./media/room.webp" }
-    ]
-  },
-  "signature": {
-    "kicker": "From the fire",
-    "title": "Plates people come back for.",
-    "items": [
-      { "name": "Ember lamb chops", "note": "Salsa verde, charred lemon", "price": "24", "image": "./media/d1.webp" },
-      { "name": "Burrata flatbread", "note": "Blistered tomatoes, oregano", "price": "16", "image": "./media/d2.webp" },
-      { "name": "Charred broccoli", "note": "Tahini, chilli, toasted seeds", "price": "11", "image": "./media/d3.webp" },
-      { "name": "Whole sea bass", "note": "Fennel, brown butter", "price": "29", "image": "./media/d4.webp" },
-      { "name": "Smoked chocolate tart", "note": "Crème fraîche", "price": "9", "image": "./media/d5.webp" },
-      { "name": "Ember carrots", "note": "Yoghurt, dukkah", "price": "10", "image": "./media/d6.webp" }
-    ]
-  },
-  "menu": {
-    "kicker": "The menu",
-    "title": "Tonight's menu.",
-    "note": "Menus change with the season. Tell us about allergies when you book.",
-    "categories": [
-      { "name": "Small plates", "dishes": "Sourdough, cultured butter | 5 | baked every morning\nSmoked almonds | 4 | rosemary salt\nCharred broccoli | 11 | tahini, chilli, toasted seeds\nEmber carrots | 10 | yoghurt, dukkah\nBurrata flatbread | 16 | blistered tomatoes, oregano" },
-      { "name": "From the fire", "dishes": "Ember lamb chops | 24 | salsa verde, charred lemon\nWhole sea bass | 29 | fennel, brown butter\nHalf chicken | 22 | garlic, thyme, crisp potatoes\nAged rib-eye, 400g | 48 | for two, bone marrow butter\nSquash steak | 17 | sage, hazelnut, ricotta" },
-      { "name": "Sweet", "dishes": "Smoked chocolate tart | 9 | crème fraîche\nBurnt honey ice cream | 7 | olive oil, sea salt\nRoasted plums | 8 | almond crumble, custard" },
-      { "name": "Drinks", "dishes": "House natural red | 7 / 32 | glass or bottle\nOrange wine, Georgia | 9 / 42 | skin contact\nSmoked old fashioned | 12 | oak-smoked bourbon\nNo-proof spritz | 7 | rhubarb, tonic" }
-    ]
-  },
-  "private": {
-    "kicker": "Private dining",
-    "title": "The long table is yours.",
-    "text": "Up to 24 guests around our oak table, with a set menu cooked for your night. Birthdays, team dinners, rehearsal suppers.",
-    "points": "Up to 24 guests\nSet menus from £55\nYour own sommelier\nWhole-room hire on Sundays",
-    "button": "Ask about a date",
-    "image": "./media/room.webp"
-  },
-  "booking": {
-    "kicker": "Reservations",
-    "title": "Book a table.",
-    "text": "We hold tables for 15 minutes. For groups over 8, see private dining.",
-    "times": "17:30\n18:00\n18:30\n19:00\n19:30\n20:00\n20:30\n21:00\n21:30",
-    "maxParty": 8,
-    "days": 14,
-    "closedDays": "1",
-    "formAction": "",
-    "done": "See you {when}, {person}. A table for {party} is held under your name."
-  },
-  "visit": {
-    "kicker": "Find us",
-    "hours": "Tuesday – Thursday | 17:30 – 23:00\nFriday – Saturday | 12:00 – 00:00\nSunday | 12:00 – 21:00\nMonday | Closed",
-    "note": "Two minutes from Shoreditch High Street station. Walk-ins welcome at the bar."
-  },
-  "footer": {
-    "text": "Cooked over fire, served with care.",
-    "legal": "© {year} {name}."
-  },
-  "sections": {
-    "story": true,
-    "signature": true,
-    "menu": true,
-    "private": true,
-    "booking": true,
-    "visit": true
-  },
+  "footer": { "note": "© {year} {name}. Cooked over fire, served with care.", "email": "table@ashgrove.kitchen" },
   "theme": {
     "colors": {
       "page": "#14100d",
@@ -107,16 +153,16 @@
       "line": "#3a2f27",
       "onAccent": "#14100d"
     },
-    "fonts": {
-      "display": "Fraunces",
-      "body": "Work Sans"
-    }
+    "fonts": { "display": "Fraunces", "body": "Work Sans" }
   },
-  "motion": {
-    "animate": true,
-    "embers": true,
-    "flicker": true,
-    "spinPlates": true
+  "character": {
+    "src": "/assets/3d/prop/food-dinner-001.glb",
+    "poster": "/assets/previews/food-dinner-001.webp",
+    "name": "The Sunday roast",
+    "wordmark": "ASHGROVE",
+    "turn": -20,
+    "echo": false
   },
+  "design": { "stops": ["#14100d", "#e2833b", "#2b1a10"], "style": "glow", "angle": 170 },
   "extras": []
 }

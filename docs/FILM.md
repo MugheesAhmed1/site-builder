@@ -6,6 +6,10 @@ one box in the hero at a fixed zoom and scrolled away like a picture. Now, with
 `content.character.scroll = "film"` (the default for new sites), it becomes the camera's subject
 for the whole page.
 
+This page describes the Turntable's own, fixed story. Every other template tells its story as a plan
+of scenes round one figure (numbers, cards, steps, plans, quotes, contact, a colour picker): see
+[FILM-TEMPLATES.md](FILM-TEMPLATES.md). The camera, the set and the director below are shared.
+
 ## How it works
 
 `library/character/film.ts` (the director) and `library/character/engine.ts` (the camera and set):

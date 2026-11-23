@@ -1,14 +1,13 @@
 {
   "id": "fernhollow",
   "name": "Fernhollow",
-  "pitch": "A night valley of glowing flowers in real WebGL that grows as you move, with bloom, film grain, ambient sound and a studio drawer for work, about, journal and contact.",
-  "kind": "vite",
+  "pitch": "A night studio told around one growing thing: it comes out of the dark and the camera climbs as you scroll, fireflies drifting past, while the studio's story, its work, its journal and the way to start a conversation arrive around it.",
+  "kind": "static",
   "categories": [
     "3D",
-    "WebGL",
-    "Interactive",
-    "Experimental",
-    "Cinematic"
+    "Cinematic",
+    "Scroll",
+    "Editorial"
   ],
   "business": [
     "agency",
@@ -16,21 +15,22 @@
     "consulting"
   ],
   "sector": "Creative and design studio (portfolio, journal and enquiries)",
-  "intensity": 8,
+  "intensity": 7,
   "heavy": true,
   "licence": {
     "kind": "owner",
     "holder": "Mughees",
-    "note": "Supplied by its owner as a whole project for use as a builder template.",
+    "note": "Supplied by its owner as a whole project for use as a builder template. Rebuilt on the shared film engine (docs/FILM-TEMPLATES.md) around a licensed 3D model from the builder's asset library (bush-001, CC0 KayKit); the owner's words and pictures are kept in source/media.",
     "added": "2026-11-18"
   },
   "remoteAssets": [],
   "features": [
-    "three.js valley",
-    "Grows as you move",
-    "Ambient sound",
-    "Work and journal drawer",
-    "Contact form"
+    "One sprout at the centre of the whole page",
+    "It comes out of the dark",
+    "Fireflies in the air",
+    "The camera climbs as you scroll",
+    "About, work and journal told around it",
+    "A way to start a conversation"
   ],
   "roles": {
     "mode": "dark",
@@ -52,44 +52,18 @@
       "fields": [
         {
           "path": "brand.name",
-          "label": "Studio name",
-          "type": "text",
-          "hint": "Fills every {name} in the text below."
+          "label": "Name",
+          "type": "text"
         },
         {
           "path": "seo.title",
-          "label": "Page title (search and browser tab)",
+          "label": "Page title",
           "type": "text"
         },
         {
           "path": "seo.description",
-          "label": "Short description (search and sharing)",
+          "label": "Page description",
           "type": "textarea"
-        }
-      ]
-    },
-    {
-      "group": "Sections",
-      "fields": [
-        {
-          "path": "sections.work",
-          "label": "Work",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.about",
-          "label": "About",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.journal",
-          "label": "Journal",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.contact",
-          "label": "Contact",
-          "type": "toggle"
         }
       ]
     },
@@ -97,160 +71,12 @@
       "group": "Menu",
       "fields": [
         {
-          "path": "nav.work",
-          "label": "Work link",
-          "type": "text"
-        },
-        {
-          "path": "nav.about",
-          "label": "About link",
-          "type": "text"
-        },
-        {
-          "path": "nav.journal",
-          "label": "Journal link",
-          "type": "text"
-        },
-        {
-          "path": "nav.cta",
-          "label": "Contact button",
-          "type": "text"
-        },
-        {
-          "path": "nav.close",
-          "label": "Close button",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "Opening",
-      "fields": [
-        {
-          "path": "hero.title",
-          "label": "Headline",
-          "type": "text"
-        },
-        {
-          "path": "hero.caption1",
-          "label": "Caption, line 1",
-          "type": "text"
-        },
-        {
-          "path": "hero.caption2",
-          "label": "Caption, line 2",
-          "type": "text"
-        },
-        {
-          "path": "hero.button",
-          "label": "Arrow button label (for screen readers)",
-          "type": "text"
-        },
-        {
-          "path": "hero.opens",
-          "label": "Arrow button opens",
-          "type": "select",
-          "options": [
-            {
-              "value": "work",
-              "label": "Work"
-            },
-            {
-              "value": "about",
-              "label": "About"
-            },
-            {
-              "value": "journal",
-              "label": "Journal"
-            },
-            {
-              "value": "contact",
-              "label": "Contact"
-            }
-          ]
-        },
-        {
-          "path": "hero.hint",
-          "label": "Corner hint",
-          "type": "text"
-        },
-        {
-          "path": "hero.showSoundButton",
-          "label": "Show the sound button",
-          "type": "toggle"
-        }
-      ]
-    },
-    {
-      "group": "Work",
-      "fields": [
-        {
-          "path": "work.label",
-          "label": "Drawer title",
-          "type": "text"
-        },
-        {
-          "path": "work.items",
-          "label": "Projects",
-          "type": "list",
-          "min": 0,
-          "max": 12,
-          "itemLabel": "Project",
-          "fields": [
-            {
-              "path": "title",
-              "label": "Name",
-              "type": "text"
-            },
-            {
-              "path": "discipline",
-              "label": "Discipline",
-              "type": "text"
-            },
-            {
-              "path": "year",
-              "label": "Year",
-              "type": "text"
-            },
-            {
-              "path": "summary",
-              "label": "Summary",
-              "type": "textarea"
-            },
-            {
-              "path": "link",
-              "label": "Link (optional)",
-              "type": "url"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "group": "About",
-      "fields": [
-        {
-          "path": "about.label",
-          "label": "Drawer title",
-          "type": "text"
-        },
-        {
-          "path": "about.title",
-          "label": "Headline",
-          "type": "text"
-        },
-        {
-          "path": "about.text",
-          "label": "Text",
-          "type": "textarea"
-        },
-        {
-          "path": "about.facts",
-          "label": "Facts",
+          "path": "nav.links",
+          "label": "Links (they scroll to the scene of that name)",
           "type": "list",
           "min": 0,
           "max": 6,
-          "itemLabel": "Fact",
+          "itemLabel": "label",
           "fields": [
             {
               "path": "label",
@@ -258,118 +84,36 @@
               "type": "text"
             },
             {
-              "path": "value",
-              "label": "Value",
+              "path": "href",
+              "label": "Goes to",
               "type": "text"
             }
           ]
+        },
+        {
+          "path": "nav.cta",
+          "label": "Button",
+          "type": "text"
+        },
+        {
+          "path": "nav.ctaHref",
+          "label": "Button goes to",
+          "type": "text"
         }
       ]
     },
     {
-      "group": "Journal",
+      "group": "Footer",
       "fields": [
         {
-          "path": "journal.label",
-          "label": "Drawer title",
+          "path": "footer.note",
+          "label": "Small print",
           "type": "text"
         },
         {
-          "path": "journal.entries",
-          "label": "Entries",
-          "type": "list",
-          "min": 0,
-          "max": 12,
-          "itemLabel": "Entry",
-          "fields": [
-            {
-              "path": "date",
-              "label": "Date",
-              "type": "text"
-            },
-            {
-              "path": "title",
-              "label": "Title",
-              "type": "text"
-            },
-            {
-              "path": "excerpt",
-              "label": "Excerpt",
-              "type": "textarea"
-            },
-            {
-              "path": "link",
-              "label": "Link (optional)",
-              "type": "url"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "group": "Contact",
-      "fields": [
-        {
-          "path": "contact.label",
-          "label": "Drawer title",
+          "path": "footer.email",
+          "label": "Email",
           "type": "text"
-        },
-        {
-          "path": "contact.nameLabel",
-          "label": "Name label",
-          "type": "text"
-        },
-        {
-          "path": "contact.namePlaceholder",
-          "label": "Name hint",
-          "type": "text"
-        },
-        {
-          "path": "contact.emailLabel",
-          "label": "Email label",
-          "type": "text"
-        },
-        {
-          "path": "contact.emailPlaceholder",
-          "label": "Email hint",
-          "type": "text"
-        },
-        {
-          "path": "contact.noteLabel",
-          "label": "Message label",
-          "type": "text"
-        },
-        {
-          "path": "contact.notePlaceholder",
-          "label": "Message hint",
-          "type": "text"
-        },
-        {
-          "path": "contact.button",
-          "label": "Send button",
-          "type": "text"
-        },
-        {
-          "path": "contact.thanksTitle",
-          "label": "Thank-you headline",
-          "type": "text"
-        },
-        {
-          "path": "contact.thanksText",
-          "label": "Thank-you text",
-          "type": "textarea"
-        },
-        {
-          "path": "contact.email",
-          "label": "Send messages to (email)",
-          "type": "text",
-          "hint": "Opens the visitor's email app with the message filled in."
-        },
-        {
-          "path": "contact.formAction",
-          "label": "Or post to a form service (https)",
-          "type": "url",
-          "hint": "For example a Formspree or Basin endpoint. Wins over email."
         }
       ]
     },
@@ -383,17 +127,17 @@
         },
         {
           "path": "theme.colors.buttonText",
-          "label": "Button text",
+          "label": "Text on buttons",
           "type": "color"
         },
         {
           "path": "theme.colors.background",
-          "label": "Page background",
+          "label": "Page",
           "type": "color"
         },
         {
           "path": "theme.colors.panel",
-          "label": "Drawer",
+          "label": "Cards",
           "type": "color"
         }
       ]
@@ -412,218 +156,22 @@
           "type": "font"
         },
         {
-          "path": "theme.headlineSize",
-          "label": "Headline size (px)",
-          "type": "number",
-          "min": 60,
-          "max": 240,
-          "step": 2
-        },
-        {
-          "path": "theme.pillRadius",
-          "label": "Button rounding (px)",
+          "path": "theme.radius",
+          "label": "Corner roundness",
           "type": "number",
           "min": 0,
-          "max": 99,
+          "max": 40,
           "step": 1
         }
       ]
     },
     {
-      "group": "Valley",
-      "fields": [
-        {
-          "path": "valley.sky",
-          "label": "Sky",
-          "type": "color"
-        },
-        {
-          "path": "valley.fog",
-          "label": "Fog",
-          "type": "color"
-        },
-        {
-          "path": "valley.fogDensity",
-          "label": "Fog thickness",
-          "type": "number",
-          "min": 0,
-          "max": 0.08,
-          "step": 0.001
-        },
-        {
-          "path": "valley.flowers",
-          "label": "Flower colours",
-          "type": "colors",
-          "min": 1,
-          "max": 8
-        },
-        {
-          "path": "valley.leaves",
-          "label": "Leaf colours",
-          "type": "colors",
-          "min": 1,
-          "max": 6
-        },
-        {
-          "path": "valley.glow",
-          "label": "Flower glow",
-          "type": "color"
-        },
-        {
-          "path": "valley.rays",
-          "label": "Light rays",
-          "type": "toggle"
-        },
-        {
-          "path": "valley.rayColor",
-          "label": "Ray colour",
-          "type": "color"
-        },
-        {
-          "path": "valley.stars",
-          "label": "Stars",
-          "type": "number",
-          "min": 0,
-          "max": 2000,
-          "step": 10
-        },
-        {
-          "path": "valley.starColor",
-          "label": "Star colour",
-          "type": "color"
-        },
-        {
-          "path": "valley.flowerCount",
-          "label": "Flowers",
-          "type": "number",
-          "min": 1000,
-          "max": 30000,
-          "step": 500
-        },
-        {
-          "path": "valley.leafCount",
-          "label": "Leaves",
-          "type": "number",
-          "min": 0,
-          "max": 20000,
-          "step": 500
-        },
-        {
-          "path": "valley.dust",
-          "label": "Floating dust",
-          "type": "number",
-          "min": 0,
-          "max": 4000,
-          "step": 50
-        },
-        {
-          "path": "valley.bloom",
-          "label": "Bloom",
-          "type": "number",
-          "min": 0,
-          "max": 2,
-          "step": 0.01
-        },
-        {
-          "path": "valley.grain",
-          "label": "Film grain",
-          "type": "number",
-          "min": 0,
-          "max": 0.2,
-          "step": 0.005
-        },
-        {
-          "path": "valley.vignette",
-          "label": "Vignette",
-          "type": "number",
-          "min": 0,
-          "max": 1,
-          "step": 0.01
-        }
-      ]
-    },
-    {
-      "group": "Motion",
-      "fields": [
-        {
-          "path": "valley.drift",
-          "label": "Idle camera drift",
-          "type": "number",
-          "min": 0,
-          "max": 3,
-          "step": 0.1
-        },
-        {
-          "path": "valley.wander",
-          "label": "Scroll and swipe speed",
-          "type": "number",
-          "min": 0.2,
-          "max": 3,
-          "step": 0.1
-        },
-        {
-          "path": "valley.sway",
-          "label": "Flower sway",
-          "type": "number",
-          "min": 0,
-          "max": 3,
-          "step": 0.1
-        }
-      ]
-    },
-    {
-      "group": "Sound",
-      "fields": [
-        {
-          "path": "sound.enabled",
-          "label": "Ambient sound",
-          "type": "toggle"
-        },
-        {
-          "path": "sound.volume",
-          "label": "Volume",
-          "type": "number",
-          "min": 0,
-          "max": 1,
-          "step": 0.01
-        },
-        {
-          "path": "sound.mood",
-          "label": "Mood",
-          "type": "select",
-          "options": [
-            {
-              "value": "night",
-              "label": "Night"
-            },
-            {
-              "value": "warm",
-              "label": "Warm"
-            },
-            {
-              "value": "airy",
-              "label": "Airy"
-            }
-          ]
-        },
-        {
-          "path": "sound.wind",
-          "label": "Wind",
-          "type": "number",
-          "min": 0,
-          "max": 1,
-          "step": 0.01
-        }
-      ]
-    },
-    {
-      "group": "Library blocks",
+      "group": "Library sections",
       "fields": [
         {
           "path": "extras",
-          "label": "Blocks from the library",
-          "type": "blocks",
-          "hint": "Add any section, effect or scene from the shared library. They show at the end of every drawer."
+          "label": "Sections from the library (added after the story)",
+          "type": "blocks"
         }
       ]
     }

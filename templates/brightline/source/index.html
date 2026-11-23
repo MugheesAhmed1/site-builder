@@ -1,20 +1,36 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Brightline</title>
-    <meta name="description" content="" />
-    <meta property="og:title" content="" />
-    <meta property="og:description" content="" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <script src="./xp-content.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="en" data-nav="split" data-foot="cols">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brightline</title>
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+  <script src="./xp-content.js"></script>
+  <link rel="stylesheet" href="./film-shell.css">
+  <style>
+    /* Brightline: a calm dental clinic told around one friendly figure (docs/FILM-TEMPLATES.md).
+       The story is drawn by xp-lib/xp-character.js from content.film; this page brings its light
+       colours, its soft serif and the menu. Every colour, font and word comes from xp-content.js. */
+    :root{
+      --c-page:#f6f8f6;--c-surface:#ffffff;--c-text:#0f2a2a;--c-muted:#5b706d;--c-accent:#1f8a78;--c-accentSoft:#d8efe9;--c-highlight:#f4c95d;--c-dark:#0f2a2a;--c-onAccent:#ffffff;
+      --f-display:"Instrument Serif";--f-body:"Manrope";
+      --bg:var(--c-page);--surface:var(--c-surface);--ink:var(--c-text);--mut:var(--c-muted);--line:color-mix(in oklab,var(--c-text) 12%,transparent);--acc:var(--c-accent);--onacc:var(--c-onAccent);
+      --r:28px;--stage:#f6f8f6;--xp-ink:#0f2a2a;--xp-ink2:#43605c;
+      --brand-case:none;
+      --mark:polygon(10% 8%,30% 0,50% 9%,70% 0,90% 8%,100% 35%,88% 62%,80% 100%,62% 100%,54% 70%,46% 70%,38% 100%,20% 100%,12% 62%,0 35%);
+    }
+    /* the story, dressed calm: a soft serif at rest, very round corners, white glass cards */
+    .xp-track{--xp-tt:none;--xp-tw:400;--xp-tls:-.012em;--xp-tlh:1.02;--xp-ts:1.2;--xp-els:.2em;--xp-r:2.8;--xp-card:rgba(255,255,255,.74)}
+    .nav .brand{font-weight:400;letter-spacing:0;font-size:clamp(22px,2.4vw,30px)}
+    .nav .brand i{width:18px;height:22px}
+    .nav a.l{font-weight:500}
+  </style>
+</head>
+<body>
+  <div id="xp-root"></div>
+  <script src="./film-shell.js"></script>
+</body>
 </html>

@@ -230,7 +230,15 @@ export function composeContent(content: Content, roles: TemplateRoles, d: Design
   if (m) {
     next.character = { ...characterFrom(m, next.character), paint: next.character.paint, speed: next.character.speed, motion: next.character.motion };
     // Colour choices repaint the whole model: right for a car or a product, wrong for a person or an animal.
-    if (next.film?.paint && (m.category === "character" || m.category === "nature")) next.film = { ...next.film, paint: { ...next.film.paint, on: false } };
+    const repaints = m.category === "character" || m.category === "nature";
+    if (next.film?.paint && repaints) next.film = { ...next.film, paint: { ...next.film.paint, on: false } };
+    // The scenes of a story made of a plan: a colour scene stays where the template's own figure
+    // was kept (rocks in Lithos, coral in Milo) and goes where another figure was put in its place.
+    if (repaints && typeof next.film?.order === "string" && content.character?.src !== m.asset) {
+      const film = { ...next.film };
+      for (const id of Object.keys(film)) if (/^paint(?:[-_\d]|$)/.test(id) && film[id] && typeof film[id] === "object") film[id] = { ...film[id], on: false };
+      next.film = film;
+    }
   }
   return next;
 }

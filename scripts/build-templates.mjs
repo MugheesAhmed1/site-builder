@@ -26,8 +26,21 @@ const KIT = join(TEMPLATES, "_kit");
 // Shared template files (templates/_kit) are kept identical in every template that uses them.
 // The character kit (character.tsx, character.css) goes into every template that has a src folder.
 const ALWAYS = new Set(["character.tsx", "character.css"]);
+// A template that draws its story with the shared page (docs/FILM-TEMPLATES.md) loads
+// ./film-shell.js and ./film-shell.css from next to its index.html; it gets its copies here.
+const FILM_KIT = ["film-shell.js", "film-shell.css"];
+function syncFilmKit(src) {
+  const page = join(src, "index.html");
+  if (!existsSync(page) || !/\.\/film-shell\.js/.test(readFileSync(page, "utf8"))) return;
+  for (const f of FILM_KIT) {
+    const want = readFileSync(join(KIT, f), "utf8");
+    const to = join(src, f);
+    if (!existsSync(to) || readFileSync(to, "utf8") !== want) writeFileSync(to, want);
+  }
+}
 function syncKit(src) {
   if (!existsSync(KIT)) return;
+  syncFilmKit(src);
   for (const f of readdirSync(KIT)) {
     const to = join(src, "src", f);
     if (!existsSync(to) && !(ALWAYS.has(f) && existsSync(join(src, "src")))) continue;

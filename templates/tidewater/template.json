@@ -1,13 +1,13 @@
 {
   "id": "tidewater",
   "name": "Tidewater",
-  "pitch": "A cinematic boutique hotel: a full-screen arrival that slips from day to night and settles into a frame as you scroll, a booking bar with dates and guests that prices the stay, rooms that slide sideways, experience panels that open on hover and a guest book that drifts past.",
-  "kind": "vite",
+  "pitch": "A small hotel above the sea, told around one boat: it lifts into place, then drifts as you scroll while the four rooms, the house, three days that drift, the guest book and the way to get there come to it.",
+  "kind": "static",
   "categories": [
     "Cinematic",
     "Scroll",
-    "Interactive",
-    "Editorial"
+    "3D",
+    "Travel"
   ],
   "business": [
     "hotel",
@@ -15,28 +15,25 @@
     "food"
   ],
   "sector": "Boutique hotel, guesthouse or holiday villa",
-  "intensity": 7,
-  "heavy": false,
+  "intensity": 6,
+  "heavy": true,
   "licence": {
     "kind": "original",
     "holder": "Site Builder",
-    "note": "Made for the builder as an original template. Pictures are free AI generations (Pollinations) kept in source/public/media.",
+    "note": "Made for the builder as an original template. Rebuilt on the shared film engine (docs/FILM-TEMPLATES.md) around a model the owner supplied and cleared for commercial use (vehicle-yacht-001 in the builder's asset library). Pictures are free AI generations (Pollinations) kept in source/media.",
     "added": "2026-11-18"
   },
   "remoteAssets": [],
   "features": [
-    "Day to night scroll arrival",
-    "Day and night switch",
-    "Booking bar with live price",
-    "Sideways room gallery",
-    "Room details",
-    "Opening experience panels",
-    "Guest book marquee",
-    "Offers sign-up"
+    "One boat at the centre of the whole page",
+    "Lifts into place, then drifts as you scroll",
+    "Four rooms with prices, and three experiences",
+    "The guest book and how to get there",
+    "A stay offer to finish"
   ],
   "roles": {
     "mode": "light",
-    "stage": "dark",
+    "stage": "light",
     "colors": {
       "page": "page",
       "surface": "surface",
@@ -58,94 +55,18 @@
       "fields": [
         {
           "path": "brand.name",
-          "label": "Hotel name",
-          "type": "text",
-          "hint": "Fills every {name} in the text below."
-        },
-        {
-          "path": "brand.place",
-          "label": "Place (under the logo)",
-          "type": "text"
-        },
-        {
-          "path": "brand.phone",
-          "label": "Phone",
-          "type": "text"
-        },
-        {
-          "path": "brand.email",
-          "label": "Email",
-          "type": "text"
-        },
-        {
-          "path": "brand.address",
-          "label": "Address",
-          "type": "text"
-        },
-        {
-          "path": "brand.mapLink",
-          "label": "Map link",
-          "type": "url"
-        },
-        {
-          "path": "brand.currency",
-          "label": "Currency sign",
+          "label": "Name",
           "type": "text"
         },
         {
           "path": "seo.title",
-          "label": "Page title (search and browser tab)",
+          "label": "Page title",
           "type": "text"
         },
         {
           "path": "seo.description",
-          "label": "Short description (search and sharing)",
+          "label": "Page description",
           "type": "textarea"
-        }
-      ]
-    },
-    {
-      "group": "Sections",
-      "fields": [
-        {
-          "path": "sections.booking",
-          "label": "Show booking bar",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.intro",
-          "label": "Show intro",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.rooms",
-          "label": "Show rooms",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.experiences",
-          "label": "Show experiences",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.amenities",
-          "label": "Show amenities strip",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.reviews",
-          "label": "Show guest book",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.location",
-          "label": "Show location",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.offers",
-          "label": "Show offers sign-up",
-          "type": "toggle"
         }
       ]
     },
@@ -154,9 +75,11 @@
       "fields": [
         {
           "path": "nav.links",
-          "label": "Menu links",
+          "label": "Links (they scroll to the scene of that name)",
           "type": "list",
-          "itemLabel": "Link",
+          "min": 0,
+          "max": 6,
+          "itemLabel": "label",
           "fields": [
             {
               "path": "label",
@@ -166,381 +89,18 @@
             {
               "path": "href",
               "label": "Goes to",
-              "type": "url"
+              "type": "text"
             }
-          ],
-          "min": 0,
-          "max": 6,
-          "hint": "The first two sit left of the name, the rest on the right."
+          ]
         },
         {
           "path": "nav.cta",
-          "label": "Booking button",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "Arrival",
-      "fields": [
-        {
-          "path": "hero.kicker",
-          "label": "Small line above",
-          "type": "text"
-        },
-        {
-          "path": "hero.title",
-          "label": "Headline",
-          "type": "textarea"
-        },
-        {
-          "path": "hero.text",
-          "label": "Intro",
-          "type": "textarea"
-        },
-        {
-          "path": "hero.image",
-          "label": "Day picture",
-          "type": "image"
-        },
-        {
-          "path": "hero.nightImage",
-          "label": "Night picture",
-          "type": "image",
-          "hint": "Fades in as people scroll. Leave empty for day only."
-        },
-        {
-          "path": "hero.imageAlt",
-          "label": "Picture description",
-          "type": "text"
-        },
-        {
-          "path": "hero.dayLabel",
-          "label": "Day switch label",
-          "type": "text"
-        },
-        {
-          "path": "hero.nightLabel",
-          "label": "Night switch label",
-          "type": "text"
-        },
-        {
-          "path": "hero.scrollHint",
-          "label": "Scroll hint",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "Booking",
-      "fields": [
-        {
-          "path": "booking.checkIn",
-          "label": "Arrive label",
-          "type": "text"
-        },
-        {
-          "path": "booking.checkOut",
-          "label": "Leave label",
-          "type": "text"
-        },
-        {
-          "path": "booking.guests",
-          "label": "Guests label",
-          "type": "text"
-        },
-        {
-          "path": "booking.room",
-          "label": "Room label",
-          "type": "text"
-        },
-        {
-          "path": "booking.button",
           "label": "Button",
           "type": "text"
         },
         {
-          "path": "booking.maxGuests",
-          "label": "Most guests",
-          "type": "number",
-          "min": 1,
-          "max": 20,
-          "step": 1
-        },
-        {
-          "path": "booking.taxNote",
-          "label": "Price note",
-          "type": "textarea"
-        },
-        {
-          "path": "booking.formAction",
-          "label": "Form address (optional)",
-          "type": "url",
-          "hint": "An https form endpoint such as Formspree. Empty: the form only shows the thank-you message."
-        },
-        {
-          "path": "booking.done",
-          "label": "Thank-you message",
-          "type": "textarea",
-          "hint": "{person}, {room}, {nights} and {date} are filled in."
-        }
-      ]
-    },
-    {
-      "group": "Intro",
-      "fields": [
-        {
-          "path": "intro.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "intro.text",
-          "label": "Statement (lights up as you scroll)",
-          "type": "textarea"
-        },
-        {
-          "path": "intro.signature",
-          "label": "Signature",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "Rooms",
-      "fields": [
-        {
-          "path": "rooms.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "rooms.title",
-          "label": "Heading",
-          "type": "textarea"
-        },
-        {
-          "path": "rooms.hint",
-          "label": "Hint",
-          "type": "textarea"
-        },
-        {
-          "path": "rooms.items",
-          "label": "Rooms",
-          "type": "list",
-          "itemLabel": "Room",
-          "fields": [
-            {
-              "path": "name",
-              "label": "Name",
-              "type": "text"
-            },
-            {
-              "path": "size",
-              "label": "Size",
-              "type": "text"
-            },
-            {
-              "path": "sleeps",
-              "label": "Sleeps",
-              "type": "number",
-              "min": 1,
-              "max": 12,
-              "step": 1
-            },
-            {
-              "path": "price",
-              "label": "Price per night",
-              "type": "number",
-              "min": 0,
-              "max": 100000,
-              "step": 1
-            },
-            {
-              "path": "image",
-              "label": "Picture",
-              "type": "image"
-            },
-            {
-              "path": "text",
-              "label": "Description",
-              "type": "textarea"
-            },
-            {
-              "path": "features",
-              "label": "Features (one per line)",
-              "type": "textarea"
-            }
-          ],
-          "min": 1,
-          "max": 12
-        }
-      ]
-    },
-    {
-      "group": "Experiences",
-      "fields": [
-        {
-          "path": "experiences.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "experiences.title",
-          "label": "Heading",
-          "type": "text"
-        },
-        {
-          "path": "experiences.items",
-          "label": "Experiences",
-          "type": "list",
-          "itemLabel": "Experience",
-          "fields": [
-            {
-              "path": "name",
-              "label": "Name",
-              "type": "text"
-            },
-            {
-              "path": "tag",
-              "label": "Small label",
-              "type": "text"
-            },
-            {
-              "path": "text",
-              "label": "Text",
-              "type": "textarea"
-            },
-            {
-              "path": "image",
-              "label": "Picture",
-              "type": "image"
-            }
-          ],
-          "min": 1,
-          "max": 5
-        }
-      ]
-    },
-    {
-      "group": "Amenities strip",
-      "fields": [
-        {
-          "path": "amenities.items",
-          "label": "Amenities (one per line)",
-          "type": "textarea"
-        }
-      ]
-    },
-    {
-      "group": "Guest book",
-      "fields": [
-        {
-          "path": "reviews.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "reviews.items",
-          "label": "Reviews",
-          "type": "list",
-          "itemLabel": "Review",
-          "fields": [
-            {
-              "path": "quote",
-              "label": "Quote",
-              "type": "textarea"
-            },
-            {
-              "path": "name",
-              "label": "Name",
-              "type": "text"
-            }
-          ],
-          "min": 0,
-          "max": 16
-        },
-        {
-          "path": "reviews.speed",
-          "label": "Seconds per loop (lower is faster)",
-          "type": "number",
-          "min": 10,
-          "max": 120,
-          "step": 5
-        }
-      ]
-    },
-    {
-      "group": "Location",
-      "fields": [
-        {
-          "path": "location.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "location.title",
-          "label": "Heading",
-          "type": "text"
-        },
-        {
-          "path": "location.distances",
-          "label": "Distances (Place | Time, one per line)",
-          "type": "textarea"
-        },
-        {
-          "path": "location.note",
-          "label": "Note",
-          "type": "textarea"
-        },
-        {
-          "path": "location.image",
-          "label": "Picture",
-          "type": "image"
-        },
-        {
-          "path": "location.button",
-          "label": "Map button",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "Offers",
-      "fields": [
-        {
-          "path": "offers.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "offers.title",
-          "label": "Heading",
-          "type": "text"
-        },
-        {
-          "path": "offers.text",
-          "label": "Text",
-          "type": "textarea"
-        },
-        {
-          "path": "offers.placeholder",
-          "label": "Email placeholder",
-          "type": "text"
-        },
-        {
-          "path": "offers.button",
-          "label": "Button",
-          "type": "text"
-        },
-        {
-          "path": "offers.formAction",
-          "label": "Form address (optional)",
-          "type": "url"
-        },
-        {
-          "path": "offers.done",
-          "label": "Thank-you message",
+          "path": "nav.ctaHref",
+          "label": "Button goes to",
           "type": "text"
         }
       ]
@@ -549,13 +109,13 @@
       "group": "Footer",
       "fields": [
         {
-          "path": "footer.text",
-          "label": "Line",
+          "path": "footer.note",
+          "label": "Small print",
           "type": "text"
         },
         {
-          "path": "footer.legal",
-          "label": "Small print",
+          "path": "footer.email",
+          "label": "Email",
           "type": "text"
         }
       ]
@@ -580,7 +140,7 @@
         },
         {
           "path": "theme.colors.muted",
-          "label": "Soft text",
+          "label": "Quiet text",
           "type": "color"
         },
         {
@@ -590,12 +150,12 @@
         },
         {
           "path": "theme.colors.sea",
-          "label": "Offers band",
+          "label": "Sea",
           "type": "color"
         },
         {
           "path": "theme.colors.dark",
-          "label": "Dark (buttons, footer)",
+          "label": "Dark",
           "type": "color"
         },
         {
@@ -606,11 +166,11 @@
       ]
     },
     {
-      "group": "Fonts",
+      "group": "Fonts and shape",
       "fields": [
         {
           "path": "theme.fonts.display",
-          "label": "Headings font",
+          "label": "Headline font",
           "type": "font"
         },
         {
@@ -621,38 +181,12 @@
       ]
     },
     {
-      "group": "Motion",
-      "fields": [
-        {
-          "path": "motion.animate",
-          "label": "Animations on",
-          "type": "toggle"
-        },
-        {
-          "path": "motion.dayToNight",
-          "label": "Day turns to night as you scroll",
-          "type": "toggle"
-        },
-        {
-          "path": "motion.heroZoom",
-          "label": "Arrival picture zooms and frames",
-          "type": "toggle"
-        },
-        {
-          "path": "motion.sidewaysRooms",
-          "label": "Rooms slide sideways on wide screens",
-          "type": "toggle"
-        }
-      ]
-    },
-    {
-      "group": "Library blocks",
+      "group": "Library sections",
       "fields": [
         {
           "path": "extras",
-          "label": "Blocks from the library",
-          "type": "blocks",
-          "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          "label": "Sections from the library (added after the story)",
+          "type": "blocks"
         }
       ]
     }

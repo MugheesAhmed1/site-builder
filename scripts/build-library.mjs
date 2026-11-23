@@ -168,6 +168,13 @@ for (const t of templates) {
   const colors = t.content?.theme?.colors;
   if (colors && typeof colors === "object") palettes.push({ from: t.id, name: t.name, colors: Object.fromEntries(Object.entries(colors).filter(([, c]) => typeof c === "string" && /^#[0-9a-f]{6}$/i.test(c))) });
 }
+// Every picture and film in a template's own media folder, whether its story uses it or not.
+for (const t of templates)
+  for (const sub of ["source/media", "source/public/media"]) {
+    const dir = join(ROOT, "templates", t.id, sub);
+    if (!existsSync(dir)) continue;
+    for (const f of readdirSync(dir).sort()) if (/\.(webp|jpe?g|png|mp4|webm)$/i.test(f)) addMedia(`./media/${f}`, /\.(mp4|webm)$/i.test(f) ? "video" : "image", f.replace(/\.\w+$/, "").replace(/[-_]/g, " "), t);
+  }
 for (const b of blocks) for (const f of b.fields) if ((f.type === "image" || f.type === "video") && String(b.defaults[f.path] || "").startsWith("lib:")) addMedia(`/lib/media/${b.defaults[f.path].slice(4)}`, f.type, f.label, { id: "library", business: b.business });
 if (existsSync(join(LIB, "media"))) for (const f of readdirSync(join(LIB, "media"))) addMedia(`/lib/media/${f}`, "image", f.replace(/\.\w+$/, "").replace(/-/g, " "), { id: "library", business: [] });
 

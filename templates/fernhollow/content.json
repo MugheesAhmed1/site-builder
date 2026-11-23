@@ -7,155 +7,181 @@
     "name": "Fernhollow"
   },
   "nav": {
-    "work": "Work",
-    "about": "About",
-    "journal": "Journal",
+    "links": [
+      {
+        "label": "Work",
+        "href": "#cards-work"
+      },
+      {
+        "label": "About",
+        "href": "#facts-about"
+      },
+      {
+        "label": "Journal",
+        "href": "#steps-journal"
+      }
+    ],
     "cta": "Let’s talk",
-    "close": "Close"
+    "ctaHref": "#start"
   },
-  "sections": {
-    "work": true,
-    "about": true,
-    "journal": true,
-    "contact": true
+  "film": {
+    "on": true,
+    "order": "hero facts-about cards-work steps-journal visit-talk finale",
+    "logic": "rise",
+    "look": "fireflies",
+    "opening": "reveal",
+    "motion": "drift",
+    "hero": {
+      "title": "Grown,\nnot built.",
+      "text": "Rooted in nature. Built for what’s next.",
+      "cta": "See our work",
+      "ctaHref": "#cards-work",
+      "comp": "word",
+      "plate": ""
+    },
+    "facts-about": {
+      "on": true,
+      "eyebrow": "About {name}",
+      "title": "Craft for living\ndigital ecosystems",
+      "text": "An independent studio partnering with ecological research initiatives, climate pioneers and cultural institutions.",
+      "items": [
+        {
+          "icon": "layers",
+          "label": "Practice",
+          "value": "Spatial web and ecological systems"
+        },
+        {
+          "icon": "leaf",
+          "label": "Ethos",
+          "value": "Low-carbon, open botanical data"
+        },
+        {
+          "icon": "pin",
+          "label": "Studio",
+          "value": "Tāmaki Makaurau · Remote"
+        }
+      ],
+      "comp": "side",
+      "plate": ""
+    },
+    "cards-work": {
+      "on": true,
+      "eyebrow": "Selected work",
+      "title": "Things we have grown",
+      "text": "",
+      "items": [
+        {
+          "icon": "map",
+          "title": "Kauri Watershed Atlas",
+          "text": "2026. Live catchment telemetry and a living forest restoration archive for watershed stewards."
+        },
+        {
+          "icon": "layers",
+          "title": "Mycelium Material Index",
+          "text": "2025. An open library of regenerative mycelium composites, with lifecycle carbon data."
+        },
+        {
+          "icon": "leaf",
+          "title": "Solstice Seed Commons",
+          "text": "2025. A seed-saving network that connects regional growers with heritage alpine cultivars."
+        }
+      ],
+      "comp": "stage",
+      "plate": ""
+    },
+    "steps-journal": {
+      "on": true,
+      "eyebrow": "Field journal",
+      "title": "Notes from\nthe valley",
+      "text": "",
+      "items": [
+        {
+          "title": "Software that ages like timber, not plastic",
+          "text": "Autumn 2026. Notes on low-energy rendering, patient motion curves and interfaces that stay legible for decades."
+        },
+        {
+          "title": "Listening to nocturnal pollinators in coastal valleys",
+          "text": "Winter 2026. Field recordings and light-level studies behind our dark-first botanical visual language."
+        }
+      ],
+      "comp": "flip",
+      "plate": ""
+    },
+    "visit-talk": {
+      "on": true,
+      "eyebrow": "Start a conversation",
+      "title": "Tell us what\nyou are growing",
+      "text": "A few lines about the project is plenty. We read every note.",
+      "cta": "Let’s talk",
+      "ctaHref": "mailto:hello@fernhollow.example",
+      "items": [
+        {
+          "icon": "mail",
+          "label": "Write to us",
+          "value": "hello@fernhollow.example"
+        },
+        {
+          "icon": "pin",
+          "label": "Studio",
+          "value": "Tāmaki Makaurau, Aotearoa · Remote"
+        },
+        {
+          "icon": "clock",
+          "label": "We reply",
+          "value": "Within two working days"
+        },
+        {
+          "icon": "users",
+          "label": "Working with",
+          "value": "Research initiatives, climate pioneers and cultural institutions"
+        }
+      ],
+      "comp": "side",
+      "plate": ""
+    },
+    "finale": {
+      "on": true,
+      "title": "Rooted in nature.\nBuilt for what’s next.",
+      "text": "Tell us what you are growing.",
+      "cta": "Let’s talk",
+      "ctaHref": "mailto:hello@fernhollow.example",
+      "comp": "center",
+      "plate": ""
+    }
   },
-  "hero": {
-    "title": "Grown, not built.",
-    "caption1": "Rooted in nature.",
-    "caption2": "Built for what’s next.",
-    "button": "See our work",
-    "opens": "work",
-    "hint": "Scroll to wander",
-    "showSoundButton": true
-  },
-  "work": {
-    "label": "Selected Work",
-    "items": [
-      {
-        "title": "Kauri Watershed Atlas",
-        "discipline": "Ecological Mapping · Spatial Web",
-        "year": "2026",
-        "summary": "Interactive catchment telemetry and living forest restoration archive built for Aotearoa watershed stewards.",
-        "link": ""
-      },
-      {
-        "title": "Mycelium Material Index",
-        "discipline": "Design System · Tactile Archive",
-        "year": "2025",
-        "summary": "Open-source material library cataloging regenerative mycelium composites, lifecycle carbon data, and tactile acoustics.",
-        "link": ""
-      },
-      {
-        "title": "Solstice Seed Commons",
-        "discipline": "Brand Identity · Digital Platform",
-        "year": "2025",
-        "summary": "Community seed-saving network connecting regional botanical growers with heritage alpine and meadow cultivars.",
-        "link": ""
-      }
-    ]
-  },
-  "about": {
-    "label": "About {name}",
-    "title": "Regenerative craft for living digital ecosystems.",
-    "text": "{name} is an independent regenerative design studio partnering with ecological research initiatives, climate pioneers, and cultural institutions. We treat every digital space like a cultivated habitat—lightweight, adaptive, and attuned to natural rhythms.",
-    "facts": [
-      {
-        "label": "Practice",
-        "value": "Spatial Web & Ecological Systems"
-      },
-      {
-        "label": "Ethos",
-        "value": "Low-carbon, open botanical data"
-      },
-      {
-        "label": "Studio",
-        "value": "Tāmaki Makaurau · Remote"
-      }
-    ]
-  },
-  "journal": {
-    "label": "Field Journal",
-    "entries": [
-      {
-        "date": "Autumn 2026",
-        "title": "Software that ages like timber, not plastic",
-        "excerpt": "Notes on low-energy rendering, patient motion curves, and interfaces designed to stay legible for decades.",
-        "link": ""
-      },
-      {
-        "date": "Winter 2026",
-        "title": "Listening to nocturnal pollinators in coastal valleys",
-        "excerpt": "Field recordings and light-level studies informing our dark-first botanical visual language.",
-        "link": ""
-      }
-    ]
-  },
-  "contact": {
-    "label": "Start a Conversation",
-    "nameLabel": "Name",
-    "namePlaceholder": "Your name",
-    "emailLabel": "Email",
-    "emailPlaceholder": "you@domain.com",
-    "noteLabel": "Project Note",
-    "notePlaceholder": "Tell us what you are growing...",
-    "button": "Send message",
-    "thanksTitle": "Note received.",
-    "thanksText": "Thank you for reaching out to {name}. We will reply within two working days.",
-    "email": "",
-    "formAction": ""
+  "footer": {
+    "note": "© {year} {name}. Grown, not built.",
+    "email": "hello@fernhollow.example"
   },
   "theme": {
     "colors": {
       "text": "#f5efe2",
       "buttonText": "#151510",
-      "background": "#000000",
+      "background": "#040708",
       "panel": "#0b0d0b"
     },
     "fonts": {
       "display": "Antonio",
       "body": "Manrope"
     },
-    "headlineSize": 158,
-    "pillRadius": 99
+    "radius": 20
   },
-  "valley": {
-    "sky": "#030508",
-    "fog": "#04070b",
-    "fogDensity": 0.022,
-    "flowers": [
-      "#f5efe2",
-      "#f6e6c9",
-      "#e6c2b8",
-      "#b6bfe8",
-      "#9dd6c3",
-      "#f0c888"
-    ],
-    "leaves": [
-      "#132820",
-      "#1b362b",
-      "#254437",
-      "#182a31"
-    ],
-    "glow": "#f5e6c2",
-    "rays": true,
-    "rayColor": "#cfdcf0",
-    "stars": 450,
-    "starColor": "#dbe2f0",
-    "flowerCount": 15000,
-    "leafCount": 10000,
-    "dust": 1400,
-    "bloom": 0.58,
-    "grain": 0.045,
-    "vignette": 0.44,
-    "drift": 1,
-    "wander": 1,
-    "sway": 1
+  "character": {
+    "src": "/assets/3d/nature/bush-001.glb",
+    "poster": "/assets/previews/bush-001.webp",
+    "name": "The first sprout",
+    "wordmark": "FERNHOLLOW",
+    "turn": -18,
+    "echo": false
   },
-  "sound": {
-    "enabled": true,
-    "volume": 0.36,
-    "mood": "night",
-    "wind": 0.35
+  "design": {
+    "stops": [
+      "#040708",
+      "#f5e6c2",
+      "#0c1612"
+    ],
+    "style": "glow",
+    "angle": 168
   },
   "extras": []
 }

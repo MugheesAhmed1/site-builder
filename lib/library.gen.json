@@ -998,10 +998,10 @@
       "files": [
         "library/blocks/night-valley.json",
         "library/blocks/night-valley.tsx",
-        "library/kit.ts",
-        "templates/fernhollow/source/src/valley/AudioEngine.ts",
-        "templates/fernhollow/source/src/valley/ValleyEngine.ts",
-        "templates/fernhollow/source/src/valley/textures.ts"
+        "library/blocks/valley/AudioEngine.ts",
+        "library/blocks/valley/ValleyEngine.ts",
+        "library/blocks/valley/textures.ts",
+        "library/kit.ts"
       ]
     },
     {
@@ -1924,47 +1924,31 @@
       "files": [
         "library/blocks/world-3d.json",
         "library/blocks/world-3d.tsx",
-        "library/kit.ts",
-        "templates/milo/source/src/components/ProjectVisualScene.tsx",
-        "templates/milo/source/src/data/portfolioData.ts",
-        "templates/milo/source/src/hooks/usePortfolioHooks.ts",
-        "templates/milo/source/src/utils/webgl.ts",
-        "templates/milo/source/src/xp.ts"
+        "library/blocks/world/ProjectVisualScene.tsx",
+        "library/blocks/world/webgl.ts",
+        "library/kit.ts"
       ]
     }
   ],
   "assets": {
     "media": [
       {
+        "src": "/assets/previews/food-dinner-001.webp",
+        "type": "image",
+        "label": "Its picture (shown while it loads)",
+        "from": [
+          "ashgrove"
+        ],
+        "business": [
+          "food",
+          "events",
+          "hotel"
+        ]
+      },
+      {
         "src": "/tpl/ashgrove/site/media/hero.webp",
         "type": "image",
-        "label": "Picture",
-        "from": [
-          "ashgrove"
-        ],
-        "business": [
-          "food",
-          "events",
-          "hotel"
-        ]
-      },
-      {
-        "src": "/tpl/ashgrove/site/media/chef.webp",
-        "type": "image",
-        "label": "Chapters 1: Picture",
-        "from": [
-          "ashgrove"
-        ],
-        "business": [
-          "food",
-          "events",
-          "hotel"
-        ]
-      },
-      {
-        "src": "/tpl/ashgrove/site/media/d6.webp",
-        "type": "image",
-        "label": "Chapters 2: Picture",
+        "label": "Picture behind this scene",
         "from": [
           "ashgrove"
         ],
@@ -1977,7 +1961,7 @@
       {
         "src": "/tpl/ashgrove/site/media/room.webp",
         "type": "image",
-        "label": "Chapters 3: Picture",
+        "label": "Picture behind this scene",
         "from": [
           "ashgrove"
         ],
@@ -1990,7 +1974,7 @@
       {
         "src": "/tpl/ashgrove/site/media/d1.webp",
         "type": "image",
-        "label": "Plates 1: Round picture, from above",
+        "label": "Pictures (up to 5) 1: Picture",
         "from": [
           "ashgrove"
         ],
@@ -2003,7 +1987,7 @@
       {
         "src": "/tpl/ashgrove/site/media/d2.webp",
         "type": "image",
-        "label": "Plates 2: Round picture, from above",
+        "label": "Pictures (up to 5) 2: Picture",
         "from": [
           "ashgrove"
         ],
@@ -2016,7 +2000,7 @@
       {
         "src": "/tpl/ashgrove/site/media/d3.webp",
         "type": "image",
-        "label": "Plates 3: Round picture, from above",
+        "label": "Pictures (up to 5) 3: Picture",
         "from": [
           "ashgrove"
         ],
@@ -2029,7 +2013,7 @@
       {
         "src": "/tpl/ashgrove/site/media/d4.webp",
         "type": "image",
-        "label": "Plates 4: Round picture, from above",
+        "label": "Pictures (up to 5) 4: Picture",
         "from": [
           "ashgrove"
         ],
@@ -2042,7 +2026,7 @@
       {
         "src": "/tpl/ashgrove/site/media/d5.webp",
         "type": "image",
-        "label": "Plates 5: Round picture, from above",
+        "label": "Pictures (up to 5) 5: Picture",
         "from": [
           "ashgrove"
         ],
@@ -2053,74 +2037,9 @@
         ]
       },
       {
-        "src": "/tpl/brightline/site/media/smile.webp",
+        "src": "/assets/previews/character-kid-001.webp",
         "type": "image",
-        "label": "Picture",
-        "from": [
-          "brightline"
-        ],
-        "business": [
-          "dentist",
-          "health",
-          "hospital"
-        ]
-      },
-      {
-        "src": "/tpl/brightline/site/media/room.webp",
-        "type": "image",
-        "label": "Treatments 1: Picture",
-        "from": [
-          "brightline"
-        ],
-        "business": [
-          "dentist",
-          "health",
-          "hospital"
-        ]
-      },
-      {
-        "src": "/tpl/brightline/site/media/dr1.webp",
-        "type": "image",
-        "label": "Treatments 3: Picture",
-        "from": [
-          "brightline"
-        ],
-        "business": [
-          "dentist",
-          "health",
-          "hospital"
-        ]
-      },
-      {
-        "src": "/tpl/brightline/site/media/dr2.webp",
-        "type": "image",
-        "label": "Treatments 4: Picture",
-        "from": [
-          "brightline"
-        ],
-        "business": [
-          "dentist",
-          "health",
-          "hospital"
-        ]
-      },
-      {
-        "src": "/tpl/brightline/site/media/kids.webp",
-        "type": "image",
-        "label": "Treatments 5: Picture",
-        "from": [
-          "brightline"
-        ],
-        "business": [
-          "dentist",
-          "health",
-          "hospital"
-        ]
-      },
-      {
-        "src": "/tpl/brightline/site/media/dr3.webp",
-        "type": "image",
-        "label": "Treatments 6: Picture",
+        "label": "Its picture (shown while it loads)",
         "from": [
           "brightline"
         ],
@@ -2133,7 +2052,7 @@
       {
         "src": "/tpl/brightline/site/media/hero.webp",
         "type": "image",
-        "label": "Picture",
+        "label": "Picture behind this scene",
         "from": [
           "brightline"
         ],
@@ -2144,9 +2063,74 @@
         ]
       },
       {
+        "src": "/tpl/brightline/site/media/room.webp",
+        "type": "image",
+        "label": "Picture behind this scene",
+        "from": [
+          "brightline"
+        ],
+        "business": [
+          "dentist",
+          "health",
+          "hospital"
+        ]
+      },
+      {
+        "src": "/tpl/brightline/site/media/dr1.webp",
+        "type": "image",
+        "label": "People (up to 4) 1: Picture",
+        "from": [
+          "brightline"
+        ],
+        "business": [
+          "dentist",
+          "health",
+          "hospital"
+        ]
+      },
+      {
+        "src": "/tpl/brightline/site/media/dr2.webp",
+        "type": "image",
+        "label": "People (up to 4) 2: Picture",
+        "from": [
+          "brightline"
+        ],
+        "business": [
+          "dentist",
+          "health",
+          "hospital"
+        ]
+      },
+      {
+        "src": "/tpl/brightline/site/media/dr3.webp",
+        "type": "image",
+        "label": "People (up to 4) 3: Picture",
+        "from": [
+          "brightline"
+        ],
+        "business": [
+          "dentist",
+          "health",
+          "hospital"
+        ]
+      },
+      {
+        "src": "/assets/previews/building-house-001.webp",
+        "type": "image",
+        "label": "Its picture (shown while it loads)",
+        "from": [
+          "cornerstone"
+        ],
+        "business": [
+          "property",
+          "consulting",
+          "law"
+        ]
+      },
+      {
         "src": "/tpl/cornerstone/site/media/hero.webp",
         "type": "image",
-        "label": "Picture",
+        "label": "Picture behind this scene",
         "from": [
           "cornerstone"
         ],
@@ -2159,7 +2143,7 @@
       {
         "src": "/tpl/cornerstone/site/media/p1.webp",
         "type": "image",
-        "label": "Homes 1: Picture",
+        "label": "Pictures (up to 5) 1: Picture",
         "from": [
           "cornerstone"
         ],
@@ -2172,7 +2156,7 @@
       {
         "src": "/tpl/cornerstone/site/media/p2.webp",
         "type": "image",
-        "label": "Homes 2: Picture",
+        "label": "Pictures (up to 5) 2: Picture",
         "from": [
           "cornerstone"
         ],
@@ -2185,7 +2169,7 @@
       {
         "src": "/tpl/cornerstone/site/media/p3.webp",
         "type": "image",
-        "label": "Homes 3: Picture",
+        "label": "Pictures (up to 5) 3: Picture",
         "from": [
           "cornerstone"
         ],
@@ -2198,20 +2182,7 @@
       {
         "src": "/tpl/cornerstone/site/media/p4.webp",
         "type": "image",
-        "label": "Homes 4: Picture",
-        "from": [
-          "cornerstone"
-        ],
-        "business": [
-          "property",
-          "consulting",
-          "law"
-        ]
-      },
-      {
-        "src": "/tpl/cornerstone/site/media/p5.webp",
-        "type": "image",
-        "label": "Homes 5: Picture",
+        "label": "Pictures (up to 5) 4: Picture",
         "from": [
           "cornerstone"
         ],
@@ -2224,7 +2195,7 @@
       {
         "src": "/tpl/cornerstone/site/media/p6.webp",
         "type": "image",
-        "label": "Homes 6: Picture",
+        "label": "Pictures (up to 5) 5: Picture",
         "from": [
           "cornerstone"
         ],
@@ -2237,7 +2208,7 @@
       {
         "src": "/tpl/cornerstone/site/media/interior.webp",
         "type": "image",
-        "label": "Picture",
+        "label": "Picture behind this scene",
         "from": [
           "cornerstone"
         ],
@@ -2250,7 +2221,7 @@
       {
         "src": "/tpl/cornerstone/site/media/agent1.webp",
         "type": "image",
-        "label": "Agents 1: Photo",
+        "label": "People (up to 4) 1: Picture",
         "from": [
           "cornerstone"
         ],
@@ -2263,7 +2234,7 @@
       {
         "src": "/tpl/cornerstone/site/media/agent2.webp",
         "type": "image",
-        "label": "Agents 2: Photo",
+        "label": "People (up to 4) 2: Picture",
         "from": [
           "cornerstone"
         ],
@@ -2274,35 +2245,9 @@
         ]
       },
       {
-        "src": "/tpl/distill/site/media/home.webp",
+        "src": "/assets/previews/character-robot-001.webp",
         "type": "image",
-        "label": "Cards 1: Picture",
-        "from": [
-          "distill"
-        ],
-        "business": [
-          "product",
-          "consulting",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/distill/site/media/case.webp",
-        "type": "image",
-        "label": "Cards 3: Picture",
-        "from": [
-          "distill"
-        ],
-        "business": [
-          "product",
-          "consulting",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/distill/site/media/vision1.webp",
-        "type": "image",
-        "label": "Cards 4: Picture",
+        "label": "Its picture (shown while it loads)",
         "from": [
           "distill"
         ],
@@ -2315,7 +2260,46 @@
       {
         "src": "/tpl/distill/site/media/alloy.webp",
         "type": "image",
-        "label": "Cards 5: Picture",
+        "label": "Picture behind this scene",
+        "from": [
+          "distill"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/distill/site/media/home.webp",
+        "type": "image",
+        "label": "Pictures (up to 5) 1: Picture",
+        "from": [
+          "distill"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/distill/site/media/case.webp",
+        "type": "image",
+        "label": "Pictures (up to 5) 2: Picture",
+        "from": [
+          "distill"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/distill/site/media/vision1.webp",
+        "type": "image",
+        "label": "Pictures (up to 5) 3: Picture",
         "from": [
           "distill"
         ],
@@ -2328,7 +2312,7 @@
       {
         "src": "/tpl/distill/site/media/j1.webp",
         "type": "image",
-        "label": "Cards 6: Picture",
+        "label": "Pictures (up to 5) 5: Picture",
         "from": [
           "distill"
         ],
@@ -2339,48 +2323,35 @@
         ]
       },
       {
-        "src": "/tpl/distill/site/media/vision2.webp",
+        "src": "/assets/previews/bush-001.webp",
         "type": "image",
-        "label": "Cards 4: Second picture (vision, journal)",
+        "label": "Its picture (shown while it loads)",
         "from": [
-          "distill"
+          "fernhollow"
         ],
         "business": [
-          "product",
-          "consulting",
-          "agency"
+          "agency",
+          "photo",
+          "consulting"
         ]
       },
       {
-        "src": "/tpl/distill/site/media/j2.webp",
+        "src": "/assets/previews/character-armored-warrior-001.webp",
         "type": "image",
-        "label": "Cards 6: Second picture (vision, journal)",
+        "label": "Its picture (shown while it loads)",
         "from": [
-          "distill"
+          "ironhouse"
         ],
         "business": [
-          "product",
-          "consulting",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/distill/site/media/j3.webp",
-        "type": "image",
-        "label": "Cards 6: Third picture (journal)",
-        "from": [
-          "distill"
-        ],
-        "business": [
-          "product",
-          "consulting",
-          "agency"
+          "fitness",
+          "health",
+          "events"
         ]
       },
       {
         "src": "/tpl/ironhouse/site/media/hero.webp",
         "type": "image",
-        "label": "Picture",
+        "label": "Picture behind this scene",
         "from": [
           "ironhouse"
         ],
@@ -2393,7 +2364,7 @@
       {
         "src": "/tpl/ironhouse/site/media/c1.webp",
         "type": "image",
-        "label": "Programs 1: Picture",
+        "label": "Pictures (up to 5) 1: Picture",
         "from": [
           "ironhouse"
         ],
@@ -2406,7 +2377,7 @@
       {
         "src": "/tpl/ironhouse/site/media/c2.webp",
         "type": "image",
-        "label": "Programs 2: Picture",
+        "label": "Pictures (up to 5) 2: Picture",
         "from": [
           "ironhouse"
         ],
@@ -2419,7 +2390,7 @@
       {
         "src": "/tpl/ironhouse/site/media/c3.webp",
         "type": "image",
-        "label": "Programs 3: Picture",
+        "label": "Pictures (up to 5) 3: Picture",
         "from": [
           "ironhouse"
         ],
@@ -2432,7 +2403,7 @@
       {
         "src": "/tpl/ironhouse/site/media/c4.webp",
         "type": "image",
-        "label": "Programs 4: Picture",
+        "label": "Pictures (up to 5) 4: Picture",
         "from": [
           "ironhouse"
         ],
@@ -2445,7 +2416,7 @@
       {
         "src": "/tpl/ironhouse/site/media/coach1.webp",
         "type": "image",
-        "label": "Coaches 1: Photo",
+        "label": "People (up to 4) 1: Picture",
         "from": [
           "ironhouse"
         ],
@@ -2458,7 +2429,7 @@
       {
         "src": "/tpl/ironhouse/site/media/coach2.webp",
         "type": "image",
-        "label": "Coaches 2: Photo",
+        "label": "People (up to 4) 2: Picture",
         "from": [
           "ironhouse"
         ],
@@ -2471,7 +2442,7 @@
       {
         "src": "/tpl/ironhouse/site/media/coach3.webp",
         "type": "image",
-        "label": "Coaches 3: Photo",
+        "label": "People (up to 4) 3: Picture",
         "from": [
           "ironhouse"
         ],
@@ -2482,269 +2453,9 @@
         ]
       },
       {
-        "src": "/tpl/jack/site/media/portrait.webp",
+        "src": "/assets/previews/abstract-torus-knot-001.webp",
         "type": "image",
-        "label": "Portrait",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/reel-1.webp",
-        "type": "image",
-        "label": "Top row 1: Picture",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/reel-2.webp",
-        "type": "image",
-        "label": "Top row 2: Picture",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/reel-3.webp",
-        "type": "image",
-        "label": "Top row 3: Picture",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/reel-4.webp",
-        "type": "image",
-        "label": "Top row 4: Picture",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/reel-5.webp",
-        "type": "image",
-        "label": "Top row 5: Picture",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/reel-6.webp",
-        "type": "image",
-        "label": "Bottom row 1: Picture",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/reel-7.webp",
-        "type": "image",
-        "label": "Bottom row 2: Picture",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/reel-8.webp",
-        "type": "image",
-        "label": "Bottom row 3: Picture",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/reel-9.webp",
-        "type": "image",
-        "label": "Bottom row 4: Picture",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/reel-10.webp",
-        "type": "image",
-        "label": "Bottom row 5: Picture",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/decor1.webp",
-        "type": "image",
-        "label": "Picture, top left",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/decor2.webp",
-        "type": "image",
-        "label": "Picture, bottom left",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/decor3.webp",
-        "type": "image",
-        "label": "Picture, top right",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/decor4.webp",
-        "type": "image",
-        "label": "Picture, bottom right",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/project-1a.webp",
-        "type": "image",
-        "label": "Projects 1: Small picture 1",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/project-2a.webp",
-        "type": "image",
-        "label": "Projects 2: Small picture 1",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/project-3a.webp",
-        "type": "image",
-        "label": "Projects 3: Small picture 1",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/project-1b.webp",
-        "type": "image",
-        "label": "Projects 1: Small picture 2",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/project-2b.webp",
-        "type": "image",
-        "label": "Projects 2: Small picture 2",
-        "from": [
-          "jack"
-        ],
-        "business": [
-          "creator",
-          "photo",
-          "agency"
-        ]
-      },
-      {
-        "src": "/tpl/jack/site/media/project-3b.webp",
-        "type": "image",
-        "label": "Projects 3: Small picture 2",
+        "label": "Its picture (shown while it loads)",
         "from": [
           "jack"
         ],
@@ -2757,7 +2468,7 @@
       {
         "src": "/tpl/jack/site/media/project-1c.webp",
         "type": "image",
-        "label": "Projects 1: Main picture",
+        "label": "Picture behind this scene",
         "from": [
           "jack"
         ],
@@ -2768,9 +2479,9 @@
         ]
       },
       {
-        "src": "/tpl/jack/site/media/project-2c.webp",
+        "src": "/tpl/jack/site/media/reel-1.webp",
         "type": "image",
-        "label": "Projects 2: Main picture",
+        "label": "Pictures (up to 5) 1: Picture",
         "from": [
           "jack"
         ],
@@ -2781,9 +2492,9 @@
         ]
       },
       {
-        "src": "/tpl/jack/site/media/project-3c.webp",
+        "src": "/tpl/jack/site/media/reel-6.webp",
         "type": "image",
-        "label": "Projects 3: Main picture",
+        "label": "Pictures (up to 5) 2: Picture",
         "from": [
           "jack"
         ],
@@ -2791,12 +2502,103 @@
           "creator",
           "photo",
           "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/reel-4.webp",
+        "type": "image",
+        "label": "Pictures (up to 5) 3: Picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/reel-9.webp",
+        "type": "image",
+        "label": "Pictures (up to 5) 4: Picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/reel-3.webp",
+        "type": "image",
+        "label": "Pictures (up to 5) 5: Picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/project-1b.webp",
+        "type": "image",
+        "label": "Pictures (up to 5) 1: Picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/project-2b.webp",
+        "type": "image",
+        "label": "Pictures (up to 5) 2: Picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/project-3a.webp",
+        "type": "image",
+        "label": "Pictures (up to 5) 3: Picture",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/assets/previews/rocks-001.webp",
+        "type": "image",
+        "label": "Its picture (shown while it loads)",
+        "from": [
+          "lithos"
+        ],
+        "business": [
+          "school",
+          "product",
+          "nonprofit"
         ]
       },
       {
         "src": "/tpl/lithos/site/media/surface.webp",
         "type": "image",
-        "label": "Picture on top",
+        "label": "Picture behind this scene",
         "from": [
           "lithos"
         ],
@@ -2809,7 +2611,7 @@
       {
         "src": "/tpl/lithos/site/media/strata.webp",
         "type": "image",
-        "label": "Picture the spotlight reveals",
+        "label": "Picture behind this scene",
         "from": [
           "lithos"
         ],
@@ -2822,7 +2624,7 @@
       {
         "src": "/tpl/lithos/site/media/guide-fossils.webp",
         "type": "image",
-        "label": "Guides 1: Picture",
+        "label": "Pictures (up to 5) 1: Picture",
         "from": [
           "lithos"
         ],
@@ -2835,7 +2637,7 @@
       {
         "src": "/tpl/lithos/site/media/guide-minerals.webp",
         "type": "image",
-        "label": "Guides 2: Picture",
+        "label": "Pictures (up to 5) 2: Picture",
         "from": [
           "lithos"
         ],
@@ -2848,7 +2650,7 @@
       {
         "src": "/tpl/lithos/site/media/guide-canyons.webp",
         "type": "image",
-        "label": "Guides 3: Picture",
+        "label": "Pictures (up to 5) 3: Picture",
         "from": [
           "lithos"
         ],
@@ -2861,7 +2663,7 @@
       {
         "src": "/tpl/lithos/site/media/tour.webp",
         "type": "image",
-        "label": "Background picture",
+        "label": "Picture behind this scene",
         "from": [
           "lithos"
         ],
@@ -2872,9 +2674,22 @@
         ]
       },
       {
-        "src": "/tpl/mossline/site/media/plate.webp",
+        "src": "/assets/previews/nature-coral-xenia-001.webp",
         "type": "image",
-        "label": "Opening picture",
+        "label": "Its picture (shown while it loads)",
+        "from": [
+          "milo"
+        ],
+        "business": [
+          "creator",
+          "agency",
+          "photo"
+        ]
+      },
+      {
+        "src": "/assets/previews/trees-forest-001.webp",
+        "type": "image",
+        "label": "Its picture (shown while it loads)",
         "from": [
           "mossline"
         ],
@@ -2885,9 +2700,9 @@
         ]
       },
       {
-        "src": "/tpl/mossline/site/media/push.mp4",
-        "type": "video",
-        "label": "Push-in video",
+        "src": "/tpl/mossline/site/media/plate.webp",
+        "type": "image",
+        "label": "Picture behind this scene",
         "from": [
           "mossline"
         ],
@@ -2900,7 +2715,7 @@
       {
         "src": "/tpl/mossline/site/media/card-1.webp",
         "type": "image",
-        "label": "Cards 1: Picture",
+        "label": "Pictures (up to 5) 1: Picture",
         "from": [
           "mossline"
         ],
@@ -2913,7 +2728,7 @@
       {
         "src": "/tpl/mossline/site/media/card-2.webp",
         "type": "image",
-        "label": "Cards 2: Picture",
+        "label": "Pictures (up to 5) 2: Picture",
         "from": [
           "mossline"
         ],
@@ -2926,7 +2741,7 @@
       {
         "src": "/tpl/mossline/site/media/card-3.webp",
         "type": "image",
-        "label": "Cards 3: Picture",
+        "label": "Pictures (up to 5) 3: Picture",
         "from": [
           "mossline"
         ],
@@ -2954,9 +2769,9 @@
         ]
       },
       {
-        "src": "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261116_131908_b6239896-c077-450c-ad91-575153973fcf.mp4",
-        "type": "video",
-        "label": "Film",
+        "src": "/assets/previews/food-avocado-001.webp",
+        "type": "image",
+        "label": "Its picture (shown while it loads)",
         "from": [
           "stride"
         ],
@@ -2967,22 +2782,9 @@
         ]
       },
       {
-        "src": "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261116_132032_30242d8c-5062-4d60-8a3d-238f0a2ff788.png&w=2200&q=85",
+        "src": "/assets/previews/vehicle-yacht-001.webp",
         "type": "image",
-        "label": "Sheet with every bar and ingredient",
-        "from": [
-          "stride"
-        ],
-        "business": [
-          "shop",
-          "food",
-          "product"
-        ]
-      },
-      {
-        "src": "/tpl/tidewater/site/media/hero.webp",
-        "type": "image",
-        "label": "Day picture",
+        "label": "Its picture (shown while it loads)",
         "from": [
           "tidewater"
         ],
@@ -2993,9 +2795,9 @@
         ]
       },
       {
-        "src": "/tpl/tidewater/site/media/night.webp",
+        "src": "/tpl/tidewater/site/media/hero.webp",
         "type": "image",
-        "label": "Night picture",
+        "label": "Picture behind this scene",
         "from": [
           "tidewater"
         ],
@@ -3008,7 +2810,7 @@
       {
         "src": "/tpl/tidewater/site/media/room1.webp",
         "type": "image",
-        "label": "Rooms 1: Picture",
+        "label": "Pictures (up to 5) 1: Picture",
         "from": [
           "tidewater"
         ],
@@ -3021,7 +2823,7 @@
       {
         "src": "/tpl/tidewater/site/media/room2.webp",
         "type": "image",
-        "label": "Rooms 2: Picture",
+        "label": "Pictures (up to 5) 2: Picture",
         "from": [
           "tidewater"
         ],
@@ -3034,7 +2836,7 @@
       {
         "src": "/tpl/tidewater/site/media/room3.webp",
         "type": "image",
-        "label": "Rooms 3: Picture",
+        "label": "Pictures (up to 5) 3: Picture",
         "from": [
           "tidewater"
         ],
@@ -3047,7 +2849,7 @@
       {
         "src": "/tpl/tidewater/site/media/room4.webp",
         "type": "image",
-        "label": "Rooms 4: Picture",
+        "label": "Pictures (up to 5) 4: Picture",
         "from": [
           "tidewater"
         ],
@@ -3060,7 +2862,7 @@
       {
         "src": "/tpl/tidewater/site/media/spa.webp",
         "type": "image",
-        "label": "Experiences 1: Picture",
+        "label": "Pictures (up to 5) 1: Picture",
         "from": [
           "tidewater"
         ],
@@ -3073,7 +2875,7 @@
       {
         "src": "/tpl/tidewater/site/media/dining.webp",
         "type": "image",
-        "label": "Experiences 2: Picture",
+        "label": "Pictures (up to 5) 2: Picture",
         "from": [
           "tidewater"
         ],
@@ -3086,7 +2888,7 @@
       {
         "src": "/tpl/tidewater/site/media/boat.webp",
         "type": "image",
-        "label": "Experiences 3: Picture",
+        "label": "Pictures (up to 5) 3: Picture",
         "from": [
           "tidewater"
         ],
@@ -3110,6 +2912,331 @@
           "creator",
           "agency",
           "general"
+        ]
+      },
+      {
+        "src": "/tpl/ashgrove/site/media/chef.webp",
+        "type": "image",
+        "label": "chef",
+        "from": [
+          "ashgrove"
+        ],
+        "business": [
+          "food",
+          "events",
+          "hotel"
+        ]
+      },
+      {
+        "src": "/tpl/ashgrove/site/media/d6.webp",
+        "type": "image",
+        "label": "d6",
+        "from": [
+          "ashgrove"
+        ],
+        "business": [
+          "food",
+          "events",
+          "hotel"
+        ]
+      },
+      {
+        "src": "/tpl/brightline/site/media/kids.webp",
+        "type": "image",
+        "label": "kids",
+        "from": [
+          "brightline"
+        ],
+        "business": [
+          "dentist",
+          "health",
+          "hospital"
+        ]
+      },
+      {
+        "src": "/tpl/brightline/site/media/smile.webp",
+        "type": "image",
+        "label": "smile",
+        "from": [
+          "brightline"
+        ],
+        "business": [
+          "dentist",
+          "health",
+          "hospital"
+        ]
+      },
+      {
+        "src": "/tpl/cornerstone/site/media/p5.webp",
+        "type": "image",
+        "label": "p5",
+        "from": [
+          "cornerstone"
+        ],
+        "business": [
+          "property",
+          "consulting",
+          "law"
+        ]
+      },
+      {
+        "src": "/tpl/distill/site/media/j2.webp",
+        "type": "image",
+        "label": "j2",
+        "from": [
+          "distill"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/distill/site/media/j3.webp",
+        "type": "image",
+        "label": "j3",
+        "from": [
+          "distill"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/distill/site/media/vision2.webp",
+        "type": "image",
+        "label": "vision2",
+        "from": [
+          "distill"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/decor1.webp",
+        "type": "image",
+        "label": "decor1",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/decor2.webp",
+        "type": "image",
+        "label": "decor2",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/decor3.webp",
+        "type": "image",
+        "label": "decor3",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/decor4.webp",
+        "type": "image",
+        "label": "decor4",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/portrait.webp",
+        "type": "image",
+        "label": "portrait",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/project-1a.webp",
+        "type": "image",
+        "label": "project 1a",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/project-2a.webp",
+        "type": "image",
+        "label": "project 2a",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/project-2c.webp",
+        "type": "image",
+        "label": "project 2c",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/project-3b.webp",
+        "type": "image",
+        "label": "project 3b",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/project-3c.webp",
+        "type": "image",
+        "label": "project 3c",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/reel-10.webp",
+        "type": "image",
+        "label": "reel 10",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/reel-2.webp",
+        "type": "image",
+        "label": "reel 2",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/reel-5.webp",
+        "type": "image",
+        "label": "reel 5",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/reel-7.webp",
+        "type": "image",
+        "label": "reel 7",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/jack/site/media/reel-8.webp",
+        "type": "image",
+        "label": "reel 8",
+        "from": [
+          "jack"
+        ],
+        "business": [
+          "creator",
+          "photo",
+          "agency"
+        ]
+      },
+      {
+        "src": "/tpl/mossline/site/media/push.mp4",
+        "type": "video",
+        "label": "push",
+        "from": [
+          "mossline"
+        ],
+        "business": [
+          "product",
+          "consulting",
+          "nonprofit"
+        ]
+      },
+      {
+        "src": "/tpl/tidewater/site/media/night.webp",
+        "type": "image",
+        "label": "night",
+        "from": [
+          "tidewater"
+        ],
+        "business": [
+          "hotel",
+          "events",
+          "food"
         ]
       },
       {
@@ -3286,6 +3413,12 @@
         ]
       },
       {
+        "family": "Syne",
+        "from": [
+          "milo"
+        ]
+      },
+      {
         "family": "Inter Tight",
         "from": [
           "mossline"
@@ -3400,7 +3533,7 @@
         "colors": {
           "text": "#f5efe2",
           "buttonText": "#151510",
-          "background": "#000000",
+          "background": "#040708",
           "panel": "#0b0d0b"
         }
       },
@@ -3427,7 +3560,7 @@
           "surface": "#141414",
           "light": "#ffffff",
           "lightText": "#0c0c0c",
-          "headingFrom": "#646973",
+          "headingFrom": "#93a1ae",
           "headingTo": "#bbccd7",
           "grad1": "#18011f",
           "grad2": "#b600a8",
@@ -3499,7 +3632,8 @@
         "colors": {
           "ink": "#1c1a1f",
           "cream": "#f0e8e0",
-          "dark": "#191a1e"
+          "dark": "#191a1e",
+          "accent": "#e2573a"
         }
       },
       {

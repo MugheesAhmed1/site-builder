@@ -291,7 +291,9 @@ describe("a saved site comes back whole", () => {
       const c = loadContent(t);
       expect(c.character.scroll).toBe("film");
       expect(c.film.on).toBe(true);
-      expect(c.film.cards.length).toBeGreaterThan(0);
+      // Orbit tells its story as a plan of scenes (docs/FILM-TEMPLATES.md): the saved copy gets them all.
+      expect(c.film.order).toBe(t.content.film.order);
+      expect(c.film["cards-do"].items.length).toBeGreaterThan(0);
 
       // Another motion was a choice, and so is "It turns" once the story exists.
       store.set(key, saved(model, "zoom"));
@@ -299,9 +301,18 @@ describe("a saved site comes back whole", () => {
       store.set(key, saved(model, "turn", { film: t.content.film }));
       expect(loadContent(t).character.scroll).toBe("turn");
 
-      // No model, nothing to tell the story about.
+      // A story made of a plan takes its own figure when the saved copy had none, and tells its story with it.
       store.set(key, saved("", "turn"));
-      expect(loadContent(t).character.scroll).toBe("turn");
+      const bare = loadContent(t);
+      expect(bare.character.src).toBe(t.content.character.src);
+      expect(bare.character.scroll).toBe("film");
+
+      // A template with a fixed story (the Turntable) with no model: nothing to tell the story about.
+      const fixed = TEMPLATES.find((x) => typeof x.content.film?.order !== "string" && x.content.character?.src)!;
+      const oldFixed = { ...fixed.content };
+      delete oldFixed.film;
+      store.set(`xp-template:v2:${fixed.id}`, JSON.stringify({ ...oldFixed, character: { ...oldFixed.character, src: "", scroll: "turn" } }));
+      expect(loadContent(fixed).character.scroll).toBe("turn");
     } finally {
       delete (globalThis as { localStorage?: unknown }).localStorage;
     }
@@ -338,8 +349,9 @@ describe("words by rules, in the right voice", () => {
 
   it("writes a portfolio in the first person and a business in its own words", async () => {
     const { planFromBrief, rulesTexts } = await import("@/lib/journey/plan");
-    const { templateById } = await import("@/lib/templates");
-    const orbit = templateById("orbit")!;
+    // A conventional one-page site (hero, features, about, contact): the shape an imported project has.
+    const classic = (await import("./fixtures/classic-page.json")).default as never;
+    const orbit = classic;
     const d = { id: "x", name: "x", note: "", accent: "#7f5d4a", accent2: "#c49a7a", tintHue: 30, tint: 0.2, mode: "dark", gradient: { style: "glow", angle: 160, light: ["#fff", "#eee", "#ddd"], dark: ["#111", "#222", "#333"] }, fonts: { pair: "x", display: "Fredoka", body: "Nunito" }, radius: "soft", motion: "calm" } as never;
     const sara = { ...startBrief("Portfolio for a 3D motion designer called Sara Khan"), tone: "Playful" };
     const words = rulesTexts(orbit, planFromBrief(sara, orbit, d));

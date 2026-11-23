@@ -1,6 +1,6 @@
 // A small live 3D world the visitor can turn and zoom (the project worlds from the Milo template).
 import { useState } from 'react';
-import { ProjectVisualScene } from '../../templates/milo/source/src/components/ProjectVisualScene';
+import { ProjectVisualScene } from './world/ProjectVisualScene';
 import { color, num, text, useInView, type BlockProps } from '../kit';
 
 const WORLDS = ['abyss', 'orbital', 'tideline', 'echo'] as const;

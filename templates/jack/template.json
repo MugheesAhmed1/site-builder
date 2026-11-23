@@ -1,13 +1,13 @@
 {
   "id": "jack",
   "name": "Jack",
-  "pitch": "A bold one-person portfolio: a giant gradient headline with a portrait that follows the cursor, scroll-driven image reels, a word-by-word about section, big numbered services and project cards that stack as you scroll.",
-  "kind": "vite",
+  "pitch": "A one-person 3D portfolio told around one showpiece: a chrome knot spins into place under the stars, then turns a quarter more with every scene while the reel, the about, the numbered services, the projects and the way to hire come to it.",
+  "kind": "static",
   "categories": [
+    "Cinematic",
     "Scroll",
-    "Interactive",
-    "Editorial",
-    "Playful"
+    "3D",
+    "Portfolio"
   ],
   "business": [
     "creator",
@@ -15,12 +15,12 @@
     "agency"
   ],
   "sector": "Freelance 3D artist and designer portfolio (modeling, rendering, motion, branding, web)",
-  "intensity": 7,
-  "heavy": false,
+  "intensity": 8,
+  "heavy": true,
   "licence": {
     "kind": "owner",
     "holder": "Mughees",
-    "note": "Supplied by its owner as a whole project for use as a builder template.",
+    "note": "Supplied by its owner as a whole project for use as a builder template. Rebuilt on the shared film engine (docs/FILM-TEMPLATES.md) around a licensed 3D model from the builder's asset library (abstract-torus-knot-001, original to Site Builder); the owner's words and pictures are kept in source/media.",
     "added": "2026-11-18"
   },
   "remoteAssets": [],
@@ -56,11 +56,12 @@
     ]
   },
   "features": [
-    "Magnetic portrait",
-    "Scroll-driven image reels",
-    "Word-by-word reveal",
-    "Stacking project cards",
-    "Contact form"
+    "One chrome knot at the centre of the whole page",
+    "Spins into place",
+    "It turns a quarter more with every scene",
+    "Showcase reel and selected projects",
+    "Numbered services",
+    "A way to start a project"
   ],
   "roles": {
     "mode": "dark",
@@ -89,44 +90,18 @@
       "fields": [
         {
           "path": "brand.name",
-          "label": "Your name",
-          "type": "text",
-          "hint": "Fills every {name} in the text below."
+          "label": "Name",
+          "type": "text"
         },
         {
           "path": "seo.title",
-          "label": "Page title (search and browser tab)",
+          "label": "Page title",
           "type": "text"
         },
         {
           "path": "seo.description",
-          "label": "Short description (search and sharing)",
+          "label": "Page description",
           "type": "textarea"
-        }
-      ]
-    },
-    {
-      "group": "Sections",
-      "fields": [
-        {
-          "path": "sections.marquee",
-          "label": "Image reels",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.about",
-          "label": "About",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.services",
-          "label": "Services",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.projects",
-          "label": "Projects",
-          "type": "toggle"
         }
       ]
     },
@@ -134,354 +109,34 @@
       "group": "Menu",
       "fields": [
         {
-          "path": "nav.about",
-          "label": "About link",
-          "type": "text"
-        },
-        {
-          "path": "nav.services",
-          "label": "Services link",
-          "type": "text"
-        },
-        {
-          "path": "nav.projects",
-          "label": "Projects link",
-          "type": "text"
-        },
-        {
-          "path": "nav.contact",
-          "label": "Contact link",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "Opening",
-      "fields": [
-        {
-          "path": "hero.title",
-          "label": "Headline",
-          "type": "text"
-        },
-        {
-          "path": "hero.tagline",
-          "label": "Line under it",
-          "type": "textarea"
-        },
-        {
-          "path": "hero.portrait",
-          "label": "Portrait",
-          "type": "image"
-        },
-        {
-          "path": "hero.portraitAlt",
-          "label": "Portrait description",
-          "type": "text"
-        },
-        {
-          "path": "hero.blend",
-          "label": "Fade the portrait's edges into the page",
-          "type": "toggle"
-        }
-      ]
-    },
-    {
-      "group": "Buttons",
-      "fields": [
-        {
-          "path": "buttons.contact",
-          "label": "Contact button",
-          "type": "text"
-        },
-        {
-          "path": "buttons.project",
-          "label": "Project button",
-          "type": "text"
-        },
-        {
-          "path": "buttons.visit",
-          "label": "Project link button",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "Image reels",
-      "fields": [
-        {
-          "path": "marquee.label",
-          "label": "Description (for screen readers)",
-          "type": "text"
-        },
-        {
-          "path": "marquee.row1",
-          "label": "Top row",
+          "path": "nav.links",
+          "label": "Links (they scroll to the scene of that name)",
           "type": "list",
-          "itemLabel": "Picture",
+          "min": 0,
+          "max": 6,
+          "itemLabel": "label",
           "fields": [
             {
-              "path": "image",
-              "label": "Picture",
-              "type": "image"
+              "path": "label",
+              "label": "Label",
+              "type": "text"
+            },
+            {
+              "path": "href",
+              "label": "Goes to",
+              "type": "text"
             }
-          ],
-          "min": 0,
-          "max": 16
+          ]
         },
         {
-          "path": "marquee.row2",
-          "label": "Bottom row",
-          "type": "list",
-          "itemLabel": "Picture",
-          "fields": [
-            {
-              "path": "image",
-              "label": "Picture",
-              "type": "image"
-            }
-          ],
-          "min": 0,
-          "max": 16
-        }
-      ]
-    },
-    {
-      "group": "About",
-      "fields": [
-        {
-          "path": "about.title",
-          "label": "Title",
+          "path": "nav.cta",
+          "label": "Button",
           "type": "text"
         },
         {
-          "path": "about.text",
-          "label": "Text (lights up word by word)",
-          "type": "textarea"
-        },
-        {
-          "path": "about.decor1",
-          "label": "Picture, top left",
-          "type": "image"
-        },
-        {
-          "path": "about.decor2",
-          "label": "Picture, bottom left",
-          "type": "image"
-        },
-        {
-          "path": "about.decor3",
-          "label": "Picture, top right",
-          "type": "image"
-        },
-        {
-          "path": "about.decor4",
-          "label": "Picture, bottom right",
-          "type": "image"
-        },
-        {
-          "path": "about.blend",
-          "label": "Fade the pictures' edges into the page",
-          "type": "toggle"
-        }
-      ]
-    },
-    {
-      "group": "Services",
-      "fields": [
-        {
-          "path": "services.title",
-          "label": "Title",
+          "path": "nav.ctaHref",
+          "label": "Button goes to",
           "type": "text"
-        },
-        {
-          "path": "services.items",
-          "label": "Services",
-          "type": "list",
-          "itemLabel": "Service",
-          "fields": [
-            {
-              "path": "number",
-              "label": "Number",
-              "type": "text"
-            },
-            {
-              "path": "name",
-              "label": "Name",
-              "type": "text"
-            },
-            {
-              "path": "description",
-              "label": "Description",
-              "type": "textarea"
-            }
-          ],
-          "min": 0,
-          "max": 12
-        }
-      ]
-    },
-    {
-      "group": "Projects",
-      "fields": [
-        {
-          "path": "projects.title",
-          "label": "Title",
-          "type": "text"
-        },
-        {
-          "path": "projects.items",
-          "label": "Projects",
-          "type": "list",
-          "itemLabel": "Project",
-          "fields": [
-            {
-              "path": "number",
-              "label": "Number",
-              "type": "text"
-            },
-            {
-              "path": "name",
-              "label": "Name",
-              "type": "text"
-            },
-            {
-              "path": "category",
-              "label": "Category",
-              "type": "text"
-            },
-            {
-              "path": "year",
-              "label": "Year",
-              "type": "text"
-            },
-            {
-              "path": "summary",
-              "label": "Summary",
-              "type": "textarea"
-            },
-            {
-              "path": "deliverables",
-              "label": "Deliverables (comma or one per line)",
-              "type": "textarea"
-            },
-            {
-              "path": "image1",
-              "label": "Small picture 1",
-              "type": "image"
-            },
-            {
-              "path": "image2",
-              "label": "Small picture 2",
-              "type": "image"
-            },
-            {
-              "path": "image3",
-              "label": "Main picture",
-              "type": "image"
-            },
-            {
-              "path": "link",
-              "label": "Link (optional)",
-              "type": "url"
-            }
-          ],
-          "min": 0,
-          "max": 12
-        }
-      ]
-    },
-    {
-      "group": "Contact form",
-      "fields": [
-        {
-          "path": "contact.kicker",
-          "label": "Label",
-          "type": "text"
-        },
-        {
-          "path": "contact.title",
-          "label": "Title",
-          "type": "text"
-        },
-        {
-          "path": "contact.nameLabel",
-          "label": "Name label",
-          "type": "text"
-        },
-        {
-          "path": "contact.namePlaceholder",
-          "label": "Name hint",
-          "type": "text"
-        },
-        {
-          "path": "contact.emailLabel",
-          "label": "Email label",
-          "type": "text"
-        },
-        {
-          "path": "contact.emailPlaceholder",
-          "label": "Email hint",
-          "type": "text"
-        },
-        {
-          "path": "contact.serviceLabel",
-          "label": "Service label",
-          "type": "text",
-          "hint": "The choices are your services."
-        },
-        {
-          "path": "contact.briefLabel",
-          "label": "Message label",
-          "type": "text"
-        },
-        {
-          "path": "contact.briefPlaceholder",
-          "label": "Message hint",
-          "type": "textarea"
-        },
-        {
-          "path": "contact.prefill",
-          "label": "Message started from a project",
-          "type": "textarea",
-          "hint": "{project} becomes the project's name."
-        },
-        {
-          "path": "contact.button",
-          "label": "Send button",
-          "type": "text"
-        },
-        {
-          "path": "contact.thanksTitle",
-          "label": "Thank-you title",
-          "type": "text"
-        },
-        {
-          "path": "contact.thanksText",
-          "label": "Thank-you text",
-          "type": "textarea",
-          "hint": "{visitor}, {service} and {email} are filled in."
-        },
-        {
-          "path": "contact.done",
-          "label": "Close button",
-          "type": "text"
-        },
-        {
-          "path": "contact.error",
-          "label": "Error message",
-          "type": "text"
-        },
-        {
-          "path": "contact.email",
-          "label": "Send messages to (email)",
-          "type": "text",
-          "hint": "Opens the visitor's email app with the message filled in."
-        },
-        {
-          "path": "contact.formAction",
-          "label": "Or post to a form service (https)",
-          "type": "url",
-          "hint": "For example a Formspree or Basin endpoint. Wins over email."
         }
       ]
     },
@@ -489,10 +144,14 @@
       "group": "Footer",
       "fields": [
         {
-          "path": "footer",
-          "label": "Footer line (optional)",
-          "type": "text",
-          "hint": "{year} becomes this year."
+          "path": "footer.note",
+          "label": "Small print",
+          "type": "text"
+        },
+        {
+          "path": "footer.email",
+          "label": "Email",
+          "type": "text"
         }
       ]
     },
@@ -511,105 +170,81 @@
         },
         {
           "path": "theme.colors.surface",
-          "label": "Cards and inputs",
+          "label": "Cards",
           "type": "color"
         },
         {
           "path": "theme.colors.light",
-          "label": "Services background",
+          "label": "Light",
           "type": "color"
         },
         {
           "path": "theme.colors.lightText",
-          "label": "Services text",
+          "label": "Text on light",
           "type": "color"
         },
         {
           "path": "theme.colors.headingFrom",
-          "label": "Headline gradient, top",
+          "label": "Headline, from",
           "type": "color"
         },
         {
           "path": "theme.colors.headingTo",
-          "label": "Headline gradient, bottom",
+          "label": "Headline, to",
           "type": "color"
         },
         {
           "path": "theme.colors.grad1",
-          "label": "Button gradient 1",
+          "label": "Gradient 1",
           "type": "color"
         },
         {
           "path": "theme.colors.grad2",
-          "label": "Button gradient 2",
+          "label": "Gradient 2",
           "type": "color"
         },
         {
           "path": "theme.colors.grad3",
-          "label": "Button gradient 3",
+          "label": "Gradient 3",
           "type": "color"
         },
         {
           "path": "theme.colors.grad4",
-          "label": "Button gradient 4",
+          "label": "Gradient 4",
           "type": "color"
         },
         {
           "path": "theme.colors.buttonText",
-          "label": "Button text",
+          "label": "Text on buttons",
           "type": "color"
         }
       ]
     },
     {
-      "group": "Font",
+      "group": "Fonts and shape",
       "fields": [
         {
           "path": "theme.fonts.display",
-          "label": "Font",
+          "label": "Headline font",
           "type": "font"
+        },
+        {
+          "path": "theme.radius",
+          "label": "Corner roundness",
+          "type": "number",
+          "min": 0,
+          "max": 40,
+          "step": 1
         }
       ]
     },
     {
-      "group": "Motion",
-      "fields": [
-        {
-          "path": "motion.animate",
-          "label": "Animations on",
-          "type": "toggle"
-        },
-        {
-          "path": "motion.marqueeSpeed",
-          "label": "Reel speed",
-          "type": "number",
-          "min": 0,
-          "max": 1.5,
-          "step": 0.05
-        },
-        {
-          "path": "motion.magnet",
-          "label": "Portrait pull (0 is off)",
-          "type": "number",
-          "min": 0,
-          "max": 5,
-          "step": 0.5
-        },
-        {
-          "path": "motion.cardStack",
-          "label": "Project cards shrink as they stack",
-          "type": "toggle"
-        }
-      ]
-    },
-    {
-      "group": "Library blocks",
+      "group": "Library sections",
       "fields": [
         {
           "path": "extras",
-          "label": "Blocks from the library",
-          "type": "blocks",
-          "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          "label": "Sections from the library (added after the story)",
+          "type": "blocks"
         }
       ]
     }

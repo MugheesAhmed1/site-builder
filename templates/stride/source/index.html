@@ -1,18 +1,38 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Stride: Plant Protein Bars</title>
-    <meta name="description" content="Five bold flavours of plant protein bar. Pressed, not baked." />
-    <meta property="og:title" content="Stride: Plant Protein Bars" />
-    <meta property="og:description" content="Five bold flavours of plant protein bar. Pressed, not baked." />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <script src="./xp-content.js"></script>
-  </head>
-  <body class="locked">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="en" data-nav="bar" data-foot="cols">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stride</title>
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+  <script src="./xp-content.js"></script>
+  <link rel="stylesheet" href="./film-shell.css">
+  <style>
+    /* Stride: a snack brand told around one piece of fruit (docs/FILM-TEMPLATES.md). The story is
+       drawn by xp-lib/xp-character.js from content.film; this page brings its cream and ink, its
+       heavy capitals, its monospace small print and the menu. Every colour, font and word comes
+       from xp-content.js. */
+    :root{
+      --c-ink:#1c1a1f;--c-cream:#f0e8e0;--c-dark:#191a1e;--c-accent:#e2573a;
+      --f-display:"Archivo Black";--f-body:"Inter";--f-mono:"DM Mono";
+      --bg:var(--c-cream);--surface:#fffaf4;--ink:var(--c-ink);--mut:color-mix(in oklab,var(--c-ink) 62%,var(--c-cream));--line:color-mix(in oklab,var(--c-ink) 16%,transparent);--acc:var(--c-ink);--onacc:var(--c-cream);
+      --r:22px;--stage:#f0e8e0;--xp-ink:#1c1a1f;--xp-ink2:#4f4a52;
+      --brand-case:uppercase;
+      --mark:circle(50% at 50% 50%);
+    }
+    /* the story, dressed loud: heavy capitals, a monospace whisper for the small print, chunky corners */
+    .xp-track{--xp-tt:uppercase;--xp-tw:400;--xp-tls:-.01em;--xp-tlh:.94;--xp-ts:.96;--xp-els:.14em;--xp-r:2.1;--xp-card:rgba(255,250,244,.78)}
+    .xp-track .xp-eyebrow,.xp-track .xp-stat .lb,.xp-track .xp-plan .pr small,.xp-track .xp-fact .tx i,.xp-track .xp-step .no{font-family:var(--f-mono),ui-monospace,SFMono-Regular,Menlo,monospace}
+    .nav .brand{font-size:clamp(20px,2.3vw,28px);letter-spacing:-.01em}
+    .nav .brand i{width:18px;height:18px;background:var(--c-accent)}
+    .nav a.l{font-family:var(--f-mono),ui-monospace,monospace;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+  </style>
+</head>
+<body>
+  <div id="xp-root"></div>
+  <script src="./film-shell.js"></script>
+</body>
 </html>

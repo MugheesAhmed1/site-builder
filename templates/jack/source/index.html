@@ -1,18 +1,38 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jack</title>
-    <meta name="description" content="" />
-    <meta property="og:title" content="" />
-    <meta property="og:description" content="" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <script src="./xp-content.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="en" data-nav="bar" data-foot="line">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jack</title>
+  <meta name="description" content="">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+  <script src="./xp-content.js"></script>
+  <link rel="stylesheet" href="./film-shell.css">
+  <style>
+    /* Jack: a one-person 3D portfolio told around one showpiece (docs/FILM-TEMPLATES.md). The
+       story is drawn by xp-lib/xp-character.js from content.film; this page brings its black, its
+       silver-to-blue headline gradient, its sans and the menu. Every colour, font and word comes
+       from xp-content.js. */
+    :root{
+      --c-page:#0c0c0c;--c-text:#d7e2ea;--c-surface:#141414;--c-light:#ffffff;--c-lightText:#0c0c0c;--c-headingFrom:#93a1ae;--c-headingTo:#bbccd7;--c-grad1:#18011f;--c-grad2:#b600a8;--c-grad3:#7621b0;--c-grad4:#be4c00;--c-buttonText:#ffffff;
+      --f-display:"Kanit";--f-body:var(--f-display);
+      --bg:var(--c-page);--surface:var(--c-surface);--ink:var(--c-text);--mut:color-mix(in oklab,var(--c-text) 60%,var(--c-page));--line:color-mix(in oklab,var(--c-text) 15%,transparent);--acc:var(--c-light);--onacc:var(--c-lightText);
+      --r:14px;--stage:#0c0c0c;--xp-ink:#d7e2ea;--xp-ink2:#9aa6b0;
+      --brand-case:none;
+      --mark:polygon(50% 0,100% 50%,50% 100%,0 50%,24% 50%,50% 24%,76% 50%,50% 76%,24% 50%,0 50%);
+    }
+    /* the story, dressed bold: a light sans set big, headlines that fade from grey to silver-blue */
+    .xp-track{--xp-tt:none;--xp-tw:500;--xp-tls:-.03em;--xp-tlh:.98;--xp-ts:1.2;--xp-els:.26em;--xp-r:1.5;--xp-card:rgba(215,226,234,.06)}
+    .xp-track .xp-title{background:linear-gradient(180deg,var(--c-headingTo),var(--c-headingFrom));-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.08em}
+    .nav .brand{font-weight:600;letter-spacing:.02em;font-size:clamp(20px,2.2vw,28px)}
+    .nav .brand i{width:18px;height:18px}
+    .nav a.l{font-weight:400}
+  </style>
+</head>
+<body>
+  <div id="xp-root"></div>
+  <script src="./film-shell.js"></script>
+</body>
 </html>

@@ -1,12 +1,13 @@
 {
   "id": "lithos",
   "name": "Lithos",
-  "pitch": "A full-screen photo you dig into: the cursor is a spotlight that reveals a second picture underneath, with a two-line serif headline, side notes and pop-up panels for a layer list and sign-up.",
-  "kind": "vite",
+  "pitch": "A geology course told around one heap of rock: it rushes in from far away, then sinks layer by layer while the chapters, the field guides, the crust's six layers (tap one to repaint the rocks in its colour), the plans and the live tour come to it.",
+  "kind": "static",
   "categories": [
     "Cinematic",
-    "Interactive",
-    "Editorial"
+    "Scroll",
+    "3D",
+    "Education"
   ],
   "business": [
     "school",
@@ -14,20 +15,22 @@
     "nonprofit"
   ],
   "sector": "Online course and field-guide platform (geology and earth science education)",
-  "intensity": 6,
-  "heavy": false,
+  "intensity": 7,
+  "heavy": true,
   "licence": {
     "kind": "owner",
     "holder": "Mughees",
-    "note": "Supplied by its owner as a whole project for use as a builder template.",
+    "note": "Supplied by its owner as a whole project for use as a builder template. Rebuilt on the shared film engine (docs/FILM-TEMPLATES.md) around a licensed 3D model from the builder's asset library (rocks-001, CC0 KayKit); the owner's words and pictures are kept in source/media.",
     "added": "2026-11-18"
   },
   "remoteAssets": [],
   "features": [
-    "Cursor spotlight reveal",
-    "Two pictures",
-    "Layer list panel",
-    "Sign-up form"
+    "One heap of rock at the centre of the whole page",
+    "Rushes in, then sinks as you scroll",
+    "Tap a layer to repaint the rocks",
+    "Course chapters, field guides and the six layers of the crust",
+    "Plans and a live tour",
+    "Sign up"
   ],
   "roles": {
     "mode": "dark",
@@ -52,24 +55,18 @@
       "fields": [
         {
           "path": "brand.name",
-          "label": "Business name",
-          "type": "text",
-          "hint": "Fills every {name} in the text below."
+          "label": "Name",
+          "type": "text"
         },
         {
           "path": "seo.title",
-          "label": "Page title (search and browser tab)",
+          "label": "Page title",
           "type": "text"
         },
         {
           "path": "seo.description",
-          "label": "Short description (search and sharing)",
+          "label": "Page description",
           "type": "textarea"
-        },
-        {
-          "path": "brand.showMark",
-          "label": "Show the logo mark",
-          "type": "toggle"
         }
       ]
     },
@@ -78,9 +75,11 @@
       "fields": [
         {
           "path": "nav.links",
-          "label": "Menu links",
+          "label": "Links (they scroll to the scene of that name)",
           "type": "list",
-          "itemLabel": "Link",
+          "min": 0,
+          "max": 6,
+          "itemLabel": "label",
           "fields": [
             {
               "path": "label",
@@ -90,341 +89,19 @@
             {
               "path": "href",
               "label": "Goes to",
-              "type": "url"
+              "type": "text"
             }
-          ],
-          "min": 0,
-          "max": 7
+          ]
         },
         {
           "path": "nav.cta",
-          "label": "Sign-up button",
-          "type": "text",
-          "hint": "Leave empty to hide it."
-        }
-      ]
-    },
-    {
-      "group": "Opening",
-      "fields": [
-        {
-          "path": "hero.line1",
-          "label": "Headline, line 1 (italic)",
-          "type": "text"
-        },
-        {
-          "path": "hero.line2",
-          "label": "Headline, line 2",
-          "type": "text"
-        },
-        {
-          "path": "hero.left",
-          "label": "Left note",
-          "type": "textarea"
-        },
-        {
-          "path": "hero.right",
-          "label": "Right note",
-          "type": "textarea"
-        },
-        {
-          "path": "hero.button",
           "label": "Button",
-          "type": "text",
-          "hint": "Opens the layer list."
-        },
-        {
-          "path": "hero.image",
-          "label": "Picture on top",
-          "type": "image"
-        },
-        {
-          "path": "hero.imageAlt",
-          "label": "Picture description",
           "type": "text"
         },
         {
-          "path": "hero.revealImage",
-          "label": "Picture the spotlight reveals",
-          "type": "image"
-        }
-      ]
-    },
-    {
-      "group": "Sections",
-      "fields": [
-        {
-          "path": "sections.course",
-          "label": "Course",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.guides",
-          "label": "Field guides",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.geology",
-          "label": "Geology layers",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.plans",
-          "label": "Plans",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.tour",
-          "label": "Live tour",
-          "type": "toggle"
-        },
-        {
-          "path": "sections.footer",
-          "label": "Footer",
-          "type": "toggle"
-        }
-      ]
-    },
-    {
-      "group": "Course",
-      "fields": [
-        {
-          "path": "course.kicker",
-          "label": "Small heading",
+          "path": "nav.ctaHref",
+          "label": "Button goes to",
           "type": "text"
-        },
-        {
-          "path": "course.title",
-          "label": "Title",
-          "type": "text"
-        },
-        {
-          "path": "course.text",
-          "label": "Text",
-          "type": "textarea"
-        },
-        {
-          "path": "course.chapters",
-          "label": "Chapters",
-          "type": "list",
-          "itemLabel": "Chapter",
-          "min": 0,
-          "max": 12,
-          "fields": [
-            {
-              "path": "title",
-              "label": "Title",
-              "type": "text"
-            },
-            {
-              "path": "text",
-              "label": "Text",
-              "type": "textarea"
-            },
-            {
-              "path": "length",
-              "label": "Length",
-              "type": "text"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "group": "Field guides",
-      "fields": [
-        {
-          "path": "guides.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "guides.title",
-          "label": "Title",
-          "type": "text"
-        },
-        {
-          "path": "guides.text",
-          "label": "Text",
-          "type": "textarea"
-        },
-        {
-          "path": "guides.items",
-          "label": "Guides",
-          "type": "list",
-          "itemLabel": "Guide",
-          "min": 0,
-          "max": 9,
-          "fields": [
-            {
-              "path": "tag",
-              "label": "Tag",
-              "type": "text"
-            },
-            {
-              "path": "title",
-              "label": "Title",
-              "type": "text"
-            },
-            {
-              "path": "text",
-              "label": "Text",
-              "type": "textarea"
-            },
-            {
-              "path": "image",
-              "label": "Picture",
-              "type": "image"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "group": "Geology layers",
-      "fields": [
-        {
-          "path": "geology.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "geology.title",
-          "label": "Title",
-          "type": "text"
-        },
-        {
-          "path": "geology.text",
-          "label": "Text",
-          "type": "textarea"
-        },
-        {
-          "path": "geology.layers",
-          "label": "Layers (top first)",
-          "type": "list",
-          "itemLabel": "Layer",
-          "min": 1,
-          "max": 10,
-          "fields": [
-            {
-              "path": "name",
-              "label": "Name",
-              "type": "text"
-            },
-            {
-              "path": "age",
-              "label": "Age",
-              "type": "text"
-            },
-            {
-              "path": "color",
-              "label": "Colour",
-              "type": "color"
-            },
-            {
-              "path": "thickness",
-              "label": "Thickness",
-              "type": "number",
-              "min": 1,
-              "max": 6,
-              "step": 1
-            },
-            {
-              "path": "text",
-              "label": "Text",
-              "type": "textarea"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "group": "Plans",
-      "fields": [
-        {
-          "path": "plans.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "plans.title",
-          "label": "Title",
-          "type": "text"
-        },
-        {
-          "path": "plans.text",
-          "label": "Text",
-          "type": "textarea"
-        },
-        {
-          "path": "plans.tiers",
-          "label": "Plans",
-          "type": "list",
-          "itemLabel": "Plan",
-          "min": 0,
-          "max": 4,
-          "fields": [
-            {
-              "path": "name",
-              "label": "Name",
-              "type": "text"
-            },
-            {
-              "path": "price",
-              "label": "Price",
-              "type": "text"
-            },
-            {
-              "path": "period",
-              "label": "Per",
-              "type": "text"
-            },
-            {
-              "path": "features",
-              "label": "Features (one per line)",
-              "type": "textarea"
-            },
-            {
-              "path": "button",
-              "label": "Button (opens sign-up)",
-              "type": "text"
-            },
-            {
-              "path": "featured",
-              "label": "Highlight this plan",
-              "type": "toggle"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "group": "Live tour",
-      "fields": [
-        {
-          "path": "tour.kicker",
-          "label": "Small heading",
-          "type": "text"
-        },
-        {
-          "path": "tour.title",
-          "label": "Title",
-          "type": "text"
-        },
-        {
-          "path": "tour.text",
-          "label": "Text",
-          "type": "textarea"
-        },
-        {
-          "path": "tour.button",
-          "label": "Button (opens sign-up)",
-          "type": "text"
-        },
-        {
-          "path": "tour.image",
-          "label": "Background picture",
-          "type": "image"
         }
       ]
     },
@@ -432,121 +109,14 @@
       "group": "Footer",
       "fields": [
         {
-          "path": "footer.left",
-          "label": "Left text",
+          "path": "footer.note",
+          "label": "Small print",
           "type": "text"
         },
         {
-          "path": "footer.right",
-          "label": "Right text",
+          "path": "footer.email",
+          "label": "Email",
           "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "Layer list panel",
-      "fields": [
-        {
-          "path": "explore.kicker",
-          "label": "Label",
-          "type": "text"
-        },
-        {
-          "path": "explore.title",
-          "label": "Title",
-          "type": "text"
-        },
-        {
-          "path": "explore.text",
-          "label": "Text",
-          "type": "textarea"
-        },
-        {
-          "path": "explore.layers",
-          "label": "Layers",
-          "type": "list",
-          "itemLabel": "Layer",
-          "fields": [
-            {
-              "path": "name",
-              "label": "Name",
-              "type": "text"
-            },
-            {
-              "path": "detail",
-              "label": "Detail (right)",
-              "type": "text"
-            },
-            {
-              "path": "text",
-              "label": "Text",
-              "type": "textarea"
-            }
-          ],
-          "min": 0,
-          "max": 8
-        },
-        {
-          "path": "explore.button",
-          "label": "Close button",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "group": "Sign-up panel",
-      "fields": [
-        {
-          "path": "signup.kicker",
-          "label": "Label",
-          "type": "text"
-        },
-        {
-          "path": "signup.title",
-          "label": "Title",
-          "type": "text"
-        },
-        {
-          "path": "signup.text",
-          "label": "Text",
-          "type": "textarea"
-        },
-        {
-          "path": "signup.label",
-          "label": "Email label",
-          "type": "text"
-        },
-        {
-          "path": "signup.placeholder",
-          "label": "Email hint",
-          "type": "text"
-        },
-        {
-          "path": "signup.button",
-          "label": "Button",
-          "type": "text"
-        },
-        {
-          "path": "signup.thanksTitle",
-          "label": "Thank-you title",
-          "type": "text"
-        },
-        {
-          "path": "signup.thanksText",
-          "label": "Thank-you text",
-          "type": "textarea"
-        },
-        {
-          "path": "signup.email",
-          "label": "Send messages to (email)",
-          "type": "text",
-          "hint": "Opens the visitor's email app with the message filled in."
-        },
-        {
-          "path": "signup.formAction",
-          "label": "Or post to a form service (https)",
-          "type": "url",
-          "hint": "For example a Formspree or Basin endpoint. Wins over email."
         }
       ]
     },
@@ -554,18 +124,18 @@
       "group": "Colours",
       "fields": [
         {
-          "path": "theme.colors.text",
-          "label": "Text",
-          "type": "color"
-        },
-        {
           "path": "theme.colors.accent",
-          "label": "Accent button",
+          "label": "Accent",
           "type": "color"
         },
         {
           "path": "theme.colors.accentHover",
-          "label": "Accent, on hover",
+          "label": "Accent on hover",
+          "type": "color"
+        },
+        {
+          "path": "theme.colors.text",
+          "label": "Text",
           "type": "color"
         },
         {
@@ -575,27 +145,27 @@
         },
         {
           "path": "theme.colors.panel",
-          "label": "Panels",
+          "label": "Cards",
           "type": "color"
         },
         {
           "path": "theme.colors.button",
-          "label": "Sign-up button",
+          "label": "Buttons",
           "type": "color"
         },
         {
           "path": "theme.colors.buttonText",
-          "label": "Sign-up button text",
+          "label": "Text on buttons",
           "type": "color"
         }
       ]
     },
     {
-      "group": "Fonts and size",
+      "group": "Fonts and shape",
       "fields": [
         {
           "path": "theme.fonts.display",
-          "label": "Headline font (italic line)",
+          "label": "Headline font",
           "type": "font"
         },
         {
@@ -604,54 +174,22 @@
           "type": "font"
         },
         {
-          "path": "theme.headlineSize",
-          "label": "Headline size (px)",
+          "path": "theme.radius",
+          "label": "Corner roundness",
           "type": "number",
-          "min": 40,
-          "max": 180,
-          "step": 2
+          "min": 0,
+          "max": 40,
+          "step": 1
         }
       ]
     },
     {
-      "group": "Motion",
-      "fields": [
-        {
-          "path": "motion.spotlight",
-          "label": "Spotlight size (px)",
-          "type": "number",
-          "min": 80,
-          "max": 600,
-          "step": 10
-        },
-        {
-          "path": "motion.follow",
-          "label": "Spotlight follow speed",
-          "type": "number",
-          "min": 0.02,
-          "max": 1,
-          "step": 0.01
-        },
-        {
-          "path": "motion.zoomIn",
-          "label": "Picture zooms in on load",
-          "type": "toggle"
-        },
-        {
-          "path": "motion.entrance",
-          "label": "Words rise in on load",
-          "type": "toggle"
-        }
-      ]
-    },
-    {
-      "group": "Library blocks",
+      "group": "Library sections",
       "fields": [
         {
           "path": "extras",
-          "label": "Blocks from the library",
-          "type": "blocks",
-          "hint": "Add any section, effect or scene from the shared library below this template's own sections."
+          "label": "Sections from the library (added after the story)",
+          "type": "blocks"
         }
       ]
     }

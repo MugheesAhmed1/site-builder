@@ -1,52 +1,94 @@
 {
-  "seo": { "title": "{name} | Built around one bright idea", "description": "{name}: a studio built around one bright idea, with a 3D character at its heart." },
+  "seo": {
+    "title": "{name} | Built around one bright idea",
+    "description": "{name}: a studio built around one bright idea, with a 3D character at its heart."
+  },
   "brand": { "name": "Orbit" },
-  "sections": { "intro": true, "features": true, "about": true, "contact": true },
   "nav": {
     "links": [
-      { "label": "What we do", "href": "#features" },
-      { "label": "About", "href": "#about" },
-      { "label": "Contact", "href": "#contact" }
+      { "label": "What we do", "href": "#cards-do" },
+      { "label": "About", "href": "#facts-about" },
+      { "label": "Contact", "href": "#visit-contact" }
     ],
     "cta": "Get in touch",
-    "ctaHref": "#contact"
+    "ctaHref": "#start"
   },
-  "hero": {
-    "kicker": "A new kind of studio",
-    "title": "Built around\none bright idea.",
-    "text": "Everything here, every colour, word and motion, follows the character in the middle. Change it, and the whole site follows.",
-    "cta": "Start a project",
-    "ctaHref": "#contact",
-    "cta2": "See what we do",
-    "cta2Href": "#features",
-    "tags": "Design, Motion, 3D, Story"
+  "film": {
+    "on": true,
+    "order": "hero cards-do facts-about voices-client visit-contact finale",
+    "logic": "drift",
+    "look": "stars",
+    "opening": "zoom",
+    "motion": "drift",
+    "hero": {
+      "title": "Built around\none bright idea.",
+      "text": "Everything here, every colour, word and motion, follows the character in the middle. Change it, and the whole site follows.",
+      "cta": "Start a project",
+      "ctaHref": "#start",
+      "comp": "center",
+      "plate": ""
+    },
+    "cards-do": {
+      "on": true,
+      "eyebrow": "What we do",
+      "title": "Three things, done properly",
+      "text": "We make things people remember: clear ideas, told with a little wonder.",
+      "items": [
+        { "icon": "spark", "title": "Ideas", "text": "We start with what makes you different and say it in plain words." },
+        { "icon": "layers", "title": "Design", "text": "Colour, type and motion drawn from one character, so it all belongs together." },
+        { "icon": "bolt", "title": "Launch", "text": "Fast, accessible pages that look sharp on every phone and screen." }
+      ],
+      "comp": "stage",
+      "plate": ""
+    },
+    "facts-about": {
+      "on": true,
+      "eyebrow": "About",
+      "title": "Small team,\nbig curiosity",
+      "text": "{name} is a small studio that likes hard problems and simple answers.",
+      "items": [
+        { "icon": "users", "label": "Team", "value": "Small, senior and curious" },
+        { "icon": "star", "label": "Approach", "value": "Hard problems, simple answers" },
+        { "icon": "heart", "label": "Clients", "value": "A few at a time, closely" }
+      ],
+      "comp": "flip",
+      "plate": ""
+    },
+    "voices-client": {
+      "on": true,
+      "eyebrow": "Kind words",
+      "title": "Heard\nat the door",
+      "items": [
+        { "text": "They took a fuzzy idea and made it feel obvious.", "name": "A happy client", "role": "" }
+      ],
+      "comp": "side",
+      "plate": ""
+    },
+    "visit-contact": {
+      "on": true,
+      "eyebrow": "Contact",
+      "title": "Let's make\nsomething together",
+      "text": "Tell us about your idea. We answer every message within a day.",
+      "cta": "Write to us",
+      "ctaHref": "mailto:hello@orbit.studio?subject=A%20project",
+      "items": [
+        { "icon": "mail", "label": "Write to us", "value": "hello@orbit.studio" },
+        { "icon": "clock", "label": "We reply", "value": "Within a day" }
+      ],
+      "comp": "side",
+      "plate": ""
+    },
+    "finale": {
+      "on": true,
+      "title": "Let's make\nsomething together",
+      "text": "Tell us about your idea.",
+      "cta": "Write to us",
+      "ctaHref": "mailto:hello@orbit.studio?subject=A%20project",
+      "comp": "center",
+      "plate": ""
+    }
   },
-  "intro": { "text": "We make things people remember: clear ideas, told with a little wonder, built to work on every screen." },
-  "features": {
-    "kicker": "What we do",
-    "title": "Three things, done properly",
-    "items": [
-      { "title": "Ideas", "text": "We start with what makes you different and say it in plain words." },
-      { "title": "Design", "text": "Colour, type and motion drawn from one character, so it all belongs together." },
-      { "title": "Launch", "text": "Fast, accessible pages that look sharp on every phone and screen." }
-    ]
-  },
-  "about": {
-    "kicker": "About",
-    "title": "Small team, big curiosity",
-    "text": "{name} is a small studio that likes hard problems and simple answers. We work closely with a few clients at a time.",
-    "quote": "They took a fuzzy idea and made it feel obvious.",
-    "by": "A happy client"
-  },
-  "contact": {
-    "title": "Let's make something together",
-    "text": "Tell us about your idea. We answer every message within a day.",
-    "email": "hello@orbit.studio",
-    "phone": "",
-    "address": "",
-    "button": "Write to us"
-  },
-  "footer": { "note": "© {year} {name}" },
+  "footer": { "note": "© {year} {name}", "email": "hello@orbit.studio" },
   "theme": {
     "colors": {
       "page": "#0d0b17",
@@ -62,12 +104,13 @@
     "fonts": { "display": "Unbounded", "body": "Manrope" },
     "radius": 18
   },
-  "motion": { "orbits": true, "reveal": true, "marquee": true },
   "character": {
     "src": "/assets/3d/character/character-astronaut-001.glb",
     "poster": "/assets/previews/character-astronaut-001.webp",
     "name": "Little Astronaut",
-    "echo": true
+    "wordmark": "ORBIT",
+    "turn": -18,
+    "echo": false
   },
   "design": { "stops": ["#120d26", "#6d4dff", "#1d1640"], "style": "glow", "angle": 160 },
   "extras": []
